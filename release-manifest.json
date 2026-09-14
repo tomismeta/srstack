@@ -6,7 +6,7 @@
   "digest_convention": "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest",
   "content_files": {
     "LICENSE": "577937d78be98b8639c8b4ade19b9864cb65243b5d2cf76d032357d0aae6ad85",
-    "README.md": "729b6adfe9fb82237368c539fea7b5b8085746ed31bbbe789bd26d72055cf0b2",
+    "README.md": "d54a0b0ed1735d6d0dcf9618872c16007e2d4267ec7cc4ce7192a40a743d294e",
     "SKILL.md": "c6a3ec4186cfe9ffc406f051ae760c2e0aea13aa21f16affe80ca7639e75710a",
     "assets/coverage.json": "f670bfa9a97a8d167d49a5e5b9eff317ae17cbd385828c45ec1d0379b3070a89",
     "assets/entity-index.json": "9c319c92d5fd4444069608cdd3856f8e0cec5bd2aa3dd667118aefe92d27c28a",
@@ -51,5 +51,5 @@
     "references/updates.md": "ddeab0585d5788d781e6e1d7e5397e2e345c97667b9d4b0f38d2625863c59628",
     "scripts/scenario.py": "36c27465ffd706b243952835605519a95331310da259959f6efb71f85a188949"
   },
-  "content_sha256": "12aa91621013af80addf7deae8fd1509a8805679513d5c4ac7d3abdc9e46df63"
+  "content_sha256": "9c8845acf72e30916f02396542c7417e9971bc51fada981e5413c7bc4773cc90"
 }
