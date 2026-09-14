@@ -42,13 +42,13 @@ Specific intent precedes broad topic. Do not preload indexes or related guides.
 | Supply, holdings, income, flows, LP fees, reconciliation | [research workflow](references/research-workflow.md) |
 | Setup or host loading | [installation](references/installation.md) |
 | Protocol / charters / reserves | [protocol](references/protocol.md) / [charters](references/charters.md) / [reserves](references/reserves.md) |
-| History or updates / documents / risks | [updates](references/updates.md) / [documents](references/documents.md) / [risks](references/risks.md) |
+| Current updates / documents / risks | [updates](references/updates.md) / [documents](references/documents.md) / [risks](references/risks.md) |
 
 Generic research: choose the relevant topic; use documents for source discovery. Follow direct topic links to needed records. Only when an ID's file is unknown, use [source index](assets/sources.json) or [parameter index](assets/parameters.json). Never load all groups. Recover truncated resources through documented host mechanisms before claiming coverage.
 
-Cite original sources, locators and dates. Packaged records stop at their review/retrieval boundary; current claims need fresh evidence. Distinguish publisher intent, historical statements, observations and assumptions; mirrors are not corroboration and newer is not automatically authoritative. Align entity, ownership, units, interval and price/state anchors before combining quantities. Missing coverage is not zero; unknown/redacted values stay unknown.
+Cite original sources, locators and retrieval dates. This package is current-only, not a historical-claims archive. Current claims need suitably fresh evidence; unavailable implementation details stay not established rather than being filled from discarded alternatives. Align entity, ownership, units, interval and price/state anchors before combining quantities. Missing coverage is not zero; unknown values stay unknown.
 
-For Robinhood Chain (4663), use `https://robin.etherscan.io/` for contract navigation and new explorer checks. Preserve older source-provider URLs as provenance. Access failures are gaps, not an unverified-source verdict or permission to silently switch providers.
+For Robinhood Chain (4663), use `https://robin.etherscan.io/` for contract navigation and new explorer checks. Read each record's current source-publication status: bytecode, ABI availability, Similar Match and exact verification are different. Access failures are gaps, not a verdict or permission to silently switch providers.
 
 ## Action boundary
 

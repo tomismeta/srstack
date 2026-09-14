@@ -3,7 +3,7 @@
   "reviewed_on": "2026-09-14",
   "scope": "Publisher-attributed Robinhood deployment directory, with separate corroboration and verification limits; not a chain census",
   "publisher_attributed_records": 14,
-  "explorer_corroborated_records": 5,
+  "explorer_corroborated_records": 14,
   "groups": [
     {
       "id": "robinhood",
@@ -28,7 +28,7 @@
       "scope": "12 protocol modules and2 shared infrastructure entries from all4 official directory tabs"
     }
   ],
-  "status": "Official site lists the addresses on Robinhood Chain4663. Code/ABI correspondence, current ownership, activation and audit coverage remain separate unresolved questions.",
+  "status": "All14 publisher-listed addresses display bytecode on RobinScan.13have no published source/ABI; Multicall has Similar Match source/ABI. These are current explorer observations, not audits.",
   "source_ids": [
     "sr-contract-directory",
     "sr-etherscan-chainlist"

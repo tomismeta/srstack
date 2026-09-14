@@ -1,6 +1,6 @@
 # Protocol: system and routing
 
-Publisher design, not verified deployment. Current whitepaper: `sr-whitepaper-v1`, captured 2026-09-14T22:15:13.789Z; [source index](../assets/sources.json). Earlier `sr-whitepaper` and website presentations retain their own dates.
+Publisher design, not verified deployment. Current whitepaper: `sr-whitepaper-v1`; retrieval dates and provenance are in the [source index](../assets/sources.json).
 
 ## System and ownership — whitepaper §§1–2
 
@@ -13,7 +13,7 @@ Trading generates fees and pool-flow measurements; issuance credits branch balan
 - [Supply and policy](protocol-policy.md): supply identities, deposit conversions, flow signals, published multiplier recurrence and source-only limits; [monetary parameters](../assets/parameters/monetary.json).
 - [Charters](charters.md): branches, founding entry, auctions, exits and dormancy; [participation parameters](../assets/parameters/participation.json).
 - [Reserves](reserves.md): separate founding/ongoing allocations, ownership and buybacks; [reserve parameters](../assets/parameters/reserves.json).
-- [Launch trading](launch-trading.md): finalization, tax contradictions and activation claims; [launch parameters](../assets/parameters/launch.json).
+- [Launch trading](launch-trading.md): finalization, tax gaps and activation; [launch parameters](../assets/parameters/launch.json).
 - [Risks](risks.md): non-upgradeability does not eliminate owner discretion or the optional guardian.
 
 ## Publisher's feedback-loop thesis — §14
@@ -27,6 +27,6 @@ These are the publisher's incentive arguments, not guaranteed rational behavior,
 
 ## Presentation is not state
 
-The earlier mint snapshot said not live; protocol counters, About diagrams and launch banners are time-bounded presentation, not authenticated state. About's opening describes issuance into an LP, whereas current §3 separates ledger accrual and withdrawal minting from genesis liquidity. Do not merge those descriptions. The separately reviewed deployment directory and protocol-condition additions remain available through [contracts](contracts.md); publication of addresses or conditions is not code/ABI correspondence. [sr-mint; sr-protocol; sr-about; sr-app-about; sr-whitepaper-v1: currency; sr-contract-directory; sr-protocol-conditions]
+The token page displayed the canonical pool as not launched; the charter page displayed ongoing auctions as not enabled. These are time-bounded presentation, not authenticated state. The deployment directory and protocol conditions are available through [contracts](contracts.md); publication of addresses or conditions does not establish code/ABI correspondence. [sr-token-page-v1; sr-charters-page-v1; sr-contract-directory; sr-protocol-conditions]
 
-See [documents](documents.md) for all sixteen current sections and dated baseline coverage, and [conflicts](risk-conflicts.md) for incompatible source claims.
+See [documents](documents.md) for all sixteen current sections and [risks](risks.md) for remaining evidence gaps.

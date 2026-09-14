@@ -12,7 +12,7 @@ Wallet tokens differ from issuance credits; charter counts differ from branch co
 
 ## 2. Authenticate before ABI reads
 
-The packaged [entity index](../assets/entity-index.json) routes 14 publisher-listed Robinhood addresses, with prior explorer corroboration for five; read each record with the group's shared limits. Attribution is not source/ABI verification or activation. Prefer the recorded Robinhood Etherscan links for new explorer checks, retaining older providers only as provenance. Report Etherscan access failures without inventing a verification status. Namesakes, infrastructure contracts, unrelated frontend network settings and user-supplied addresses remain leads, not interchangeable official identities.
+The [entity index](../assets/entity-index.json) routes 14 publisher-listed Robinhood addresses, all with Etherscan-displayed bytecode. Read each record's source-publication status and shared limits: the 12 protocol modules and Pool Manager lack published source/ABI; Multicall has Similar Match source/ABI. Neither publisher attribution nor a similar match establishes exact code correspondence, ownership or activation. Use the recorded Robinhood Etherscan links; failures remain gaps. Shared infrastructure and user-supplied addresses are not interchangeable protocol identities.
 
 1. Establish original publisher attribution, chain/environment, generation and role, retaining URLs and publication/retrieval times.
 2. Through permitted RPC, use `eth_chainId` and `eth_getBlockByNumber`; record number, hash, timestamp and UTC retrieval. An old cached block is not current; do not assume finality.

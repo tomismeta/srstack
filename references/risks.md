@@ -1,12 +1,12 @@
 # Risks and disclosure limits
 
-Documented limits, not vulnerability findings or an audit. Current publisher source: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1`. Earlier notices and presentations remain separately dated in [website core](../assets/sources/website-core.json) and [website context](../assets/sources/website-context.json).
+Documented limits, not vulnerability findings or an audit. Current publisher source: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1`.
 
 ## Publisher disclaimer — §16
 
-STANDARD is described as experimental, not a bank or regulated financial institution, with no customer funds/accounts and no investment advice. Reserves are protocol property and not redeemable (`reserve-redemption-policy`). About's earlier “holds no deposits” wording must not be confused with the current token-to-ledger deposit-conversion mechanism: conversion does not create a reserve-redemption entitlement. [sr-whitepaper-v1: currency, disclaimer; sr-disclaimer; sr-about; sr-app-about]
+STANDARD is described as experimental, not a bank or regulated financial institution, with no customer funds/accounts and no investment advice. Reserves are protocol property and not redeemable (`reserve-redemption-policy`). Token-to-ledger deposit conversion does not create a reserve-redemption entitlement. [sr-whitepaper-v1: currency, disclaimer]
 
-Earlier whitepaper/About notices call their material design overviews rather than implementation specifications and warn that omitted safeguards matter. Preserve those notices with their dated sources; the current frozen section text is not an authenticated implementation specification either. Neither canonical-site rhetoric, a code line count nor published addresses establishes deployed-bytecode correspondence. [sr-whitepaper: opening notice; sr-about; sr-app-about]
+The whitepaper warns that implementation safeguards are absent from its overview. Neither publisher text, a code line count nor published addresses establishes deployed-bytecode correspondence. [sr-whitepaper-v1]
 
 ## Non-upgradeable does not mean uncontrolled — §12
 
@@ -21,14 +21,14 @@ An **optional**, not necessarily configured, guardian can pause auctions and vau
 
 ## Published facts and remaining limits
 
-The current whitepaper has sixteen sections, including new **Immutables**, and its launch summary is now visible. Policy bounds/recurrence, exit pressure/fee formula, license floor, founding split and owner controls are no longer “still redacted.” Exact parameter records carry current facts, dated prior values and explicit limits. [sr-whitepaper-v1: policy, branches, exits, reserves, immutables, parameters]
+The current whitepaper has sixteen sections, including Immutables. Policy bounds/recurrence, exit pressure/fee formula, license floor, founding split and owner controls are documented in the [parameter catalog](../assets/parameters.json), with source-only limits.
 
-Two current contradictions prevent an executable source-only interpretation: §12 launch taxes open 90%/90%, versus §15's 20%/40%; and §7's geometric-to-floor auction equation differs from §§7–8's four-hour gap-halving prose. Steady taxes agree at 2%/3%. Preserve conflicts rather than choosing a preferred formula or claiming code resolves them. [Source conflicts](risk-conflicts.md)
+**Launch tax rates/curve and ongoing auction price curve: Not established from current source; verified implementation required.** Leave disputed values unknown; do not produce executable rates or quotes from them.
 
-The separately added deployment directory and protocol conditions remain publisher evidence, not source-code/ABI verification. Authenticated implementation, permissions, audit correspondence, reserve custody and live balances remain distinct evidence requirements. [Contracts](contracts.md) and [inspection](inspection.md) retain those boundaries. [sr-contract-directory; sr-protocol-conditions]
+The deployment directory and protocol conditions are publisher evidence, not source-code/ABI verification. Authenticated implementation, permissions, audit correspondence, reserve custody and live balances remain distinct evidence requirements. [Contracts](contracts.md) and [inspection](inspection.md) retain those boundaries. [sr-contract-directory; sr-protocol-conditions]
 
 ## What economics alone cannot establish
 
 Burning, retirement, redistribution, permanent liquidity and buybacks are not promises of returns, realizable exit prices, solvency, continuous settlement or manipulation resistance. Published recurrence is not a future multiplier forecast. Numerical scenario output remains **Hypothetical—not contract-verified or a forecast.**
 
-Use [policy](protocol-policy.md), [auctions](auctions.md), [exits](exits.md), [reserves](reserves.md) and the [parameter catalog](../assets/parameters.json) for topic-specific facts. [Audit history](announcement-history.md) records claims, not security assurance. Do not classify missing evidence as a vulnerability or call this public-source review an audit.
+Use [policy](protocol-policy.md), [auctions](auctions.md), [exits](exits.md), [reserves](reserves.md) and the [parameter catalog](../assets/parameters.json) for topic-specific facts. Do not classify missing evidence as a vulnerability or call this public-source review an audit.

@@ -1,17 +1,17 @@
 {
   "schema_version": 1,
-  "scope": "Whitepaper v1.0 and companion token/charter pages captured2026-09-14; not a whole-site or code audit",
-  "reviewed_at": "2026-09-14T22:18:03.462Z",
+  "reviewed_at": "2026-09-14T23:20:36.997Z",
+  "scope": "Current primary documentation only",
   "records": [
     {
       "id": "sr-whitepaper-v1",
       "url": "https://www.standardreserve.xyz/whitepaper/",
       "publisher": "The Standard Reserve",
       "published_at": null,
-      "retrieved_at": "2026-09-14T22:15:13.789Z",
+      "retrieved_at": "2026-09-14T23:17:04.545Z",
       "revision_label": "Whitepaper v1.0",
-      "review_depth": "All16 rendered sections, tables and available TeX equation annotations; original summaries and parameter records, not an implementation audit",
-      "claim_stage": "publisher design specification with explicitly tracked internal conflicts; not source/bytecode verification",
+      "review_depth": "All16 rendered sections, tables and available equation annotations",
+      "claim_stage": "current publisher design statements, not implementation verification",
       "locators": [
         {
           "label": "Introduction",
@@ -78,42 +78,10 @@
           "url": "https://www.standardreserve.xyz/whitepaper/#disclaimer"
         }
       ],
-      "supersedes_source_ids": [
-        "sr-whitepaper"
-      ],
-      "summary": "Reveals launch base issuance, policy and epoch settings, withdrawal-fee formula and bounds, and owner/guardian controls; distinguishes deposit conversions from permanent removals and founding finalization from ongoing auctions. Stable IDs route exact settings through the parameter index. Earlier same-day redactions remain historical evidence.",
-      "conflicts": [
-        {
-          "id": "launch-tax-open",
-          "locators": [
-            "#immutables",
-            "#parameters"
-          ],
-          "claims": [
-            "Immutables: precommitted90% buy/90% sell open, decaying to2%/3%.",
-            "Launch parameters:20% buy/40% sell open, decaying to2%/3%."
-          ],
-          "resolution": "Unresolved; do not choose an executable tax schedule."
-        },
-        {
-          "id": "auction-decay",
-          "locators": [
-            "#branches equation7.1",
-            "#branches table",
-            "#auctions"
-          ],
-          "claims": [
-            "Equation7.1 interpolates geometrically from start price to floor over24hours.",
-            "Table/prose halves the gap to floor every4hours, then settles at floor."
-          ],
-          "resolution": "Different curves in general; exact applied auction behavior needs verified implementation evidence."
-        }
-      ],
+      "summary": "Current documented currency accounting, launch references, policy bounds, charter and auction mechanics, withdrawal envelope, reserves and owner/guardian controls. Exact supported settings are in the parameter catalog.",
       "limits": [
-        "The document itself warns that implementation safeguards are absent from its overview.",
-        "Launch references and owner ceilings are not current state or immutable future assumptions.",
-        "Historical sr-whitepaper evidence remains available; other unrefreshed source pages retain their own dates.",
-        "Etherscan Central Bank source access was retried2026-09-14T22:16:54.566Z and remained blocked byHTTP403/Cloudflare; no verified ABI, code correspondence or numerical execution path is inferred."
+        "Applied launch-tax and daily auction-decay rules are not established from the current source; verified implementation required.",
+        "Publisher design does not establish current deployed values, implementation safeguards, activation or audited safety."
       ]
     },
     {
@@ -121,16 +89,15 @@
       "url": "https://www.standardreserve.xyz/app/token/",
       "publisher": "The Standard Reserve official website",
       "published_at": null,
-      "retrieved_at": "2026-09-14T22:18:03.457Z",
-      "review_depth": "Full rendered topic text, displayed conditions and links; no wallet or independent RPC",
-      "claim_stage": "publisher explanation and dated frontend observation, not independently verified on-chain state",
+      "retrieved_at": "2026-09-14T23:20:36.342Z",
+      "review_depth": "Rendered topic text and current availability panel",
+      "claim_stage": "publisher explanation and dated frontend observation",
       "locators": [
-        "About STANDARD; supply/burn/holding sections"
+        "About STANDARD; supply, burns and holding"
       ],
-      "summary": "Explains100M genesis liquidity plus900M issuance budget, permanent burns/ledger removals, and no branch issuance or governance from token holding alone. At displayed block63155561 the canonical pool was not launched.",
+      "summary": "Explains genesis liquidity and issuance budget, permanent removals and the distinction between holding tokens and earning through branches. The captured panel reports the canonical pool not launched.",
       "limits": [
-        "Current-state panels are dated website observations, not current guarantees, quotes or verified contract reads.",
-        "Exact numeric authority and conflicting rules remain in the canonical parameter catalog and v1 whitepaper evidence."
+        "Frontend observations are time-bounded, not independent RPC verification, executable quotes or guaranteed current state."
       ]
     },
     {
@@ -138,16 +105,15 @@
       "url": "https://www.standardreserve.xyz/app/protocol/charters/",
       "publisher": "The Standard Reserve official website",
       "published_at": null,
-      "retrieved_at": "2026-09-14T22:18:03.462Z",
-      "review_depth": "Full rendered topic text, displayed conditions and links; no wallet or independent RPC",
-      "claim_stage": "publisher explanation and dated frontend observation, not independently verified on-chain state",
+      "retrieved_at": "2026-09-14T23:20:36.997Z",
+      "review_depth": "Rendered topic text and current availability panel",
+      "claim_stage": "publisher explanation and dated frontend observation",
       "locators": [
-        "Charters & Auctions; availability, earning, expansion, withdrawal and before-you-bid sections"
+        "Charters & Auctions; availability, earning, expansion, withdrawal"
       ],
-      "summary": "Explains one starting branch, ten-branch cap, three license purchases per charter/day, full retirement burning the charter,2\u201360% withdrawal fees and30-day activity duty. At displayed block63155581 daily charter/license auctions were not enabled.",
+      "summary": "Explains charter/branch limits, expansion, proportional retirement, full exit burning the charter and activity duties. The captured panel reports daily charter/license auctions not enabled.",
       "limits": [
-        "Current-state panels are dated website observations, not current guarantees, quotes or verified contract reads.",
-        "Exact numeric authority and conflicting rules remain in the canonical parameter catalog and v1 whitepaper evidence."
+        "Frontend observations are time-bounded, not independent RPC verification, executable quotes or guaranteed current state."
       ]
     }
   ]

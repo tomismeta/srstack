@@ -1,21 +1,17 @@
-# Launch mint: current design and dated schedule
+# Launch mint
 
-Current design: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§6,11–12,15, captured 2026-09-14T22:15:13.789Z. The earlier thread was reviewed through 2026-09-14T16:40:35Z; [mint records](../assets/sources/launch-mint.json) and [trading records](../assets/sources/launch-trading.json) preserve it. Exact values and their histories: [launch parameters](../assets/parameters/launch.json). None is an observed mint/finalization transaction.
+Current publisher design: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§6,11–12,15; retrieval dates remain in source records. Exact settings: [launch parameters](../assets/parameters/launch.json). Design terms are not observed mint or finalization transactions.
 
-## Current founding terms
+## Founding terms
 
-Whitelist entry charges `whitelist-liquidity-fee` with `whitelist-wallet-limit`; `genesis-charters` is the founding allocation. All remaining supply goes to a public Dutch auction open to everyone, whitelist participants included. `founding-public-transaction-limit` and `founding-wallet-limit` constrain public transactions and combined holdings across the two phases. The public sale decays exponentially for `genesis-public-auction-duration` to `genesis-public-auction-floor`, then remains there. `genesis-public-auction-curve` retains the absence of an exact implementation function; do not substitute the ongoing daily curve. The opening price's announcement provenance remains separate from the paper's immutability claim. [sr-whitepaper-v1: charters, immutables]
+Whitelist entry charges `whitelist-liquidity-fee` with `whitelist-wallet-limit`; `genesis-charters` is the founding allocation. Remaining supply enters a public Dutch auction open to everyone, including whitelist participants. `founding-public-transaction-limit` and `founding-wallet-limit` constrain public transactions and combined holdings across both phases. The source describes exponential decay over `genesis-public-auction-duration` to `genesis-public-auction-floor`, then a fixed floor. The exact executable curve is not established from current source; verified implementation required. [sr-whitepaper-v1: charters]
 
-`founding-proceeds-escrow` and `founding-accrual-start` distinguish this sale from ongoing instant auctions. No founding accrual occurs during distribution; finalization starts all founding charters together. The same described atomic transaction launches liquidity, the tax clock and epoch one. The owner sets `founding-launch-price`; `founding-whitelist-window-control` allows pre-opening changes but freezes timestamps once open. [Genesis](genesis.md) and [reserves](reserves.md) explain the now-published proceeds split. [sr-whitepaper-v1: charters, reserves, immutables]
+`founding-proceeds-escrow` and `founding-accrual-start` distinguish this sale from ongoing instant auctions. No founding accrual occurs during distribution; finalization starts all founding charters together. The same described atomic transaction launches liquidity, the tax clock and epoch one. The owner sets `founding-launch-price`; `founding-whitelist-window-control` permits pre-opening changes but freezes timestamps once open. [Genesis](genesis.md) and [reserves](reserves.md) explain the proceeds split. [sr-whitepaper-v1: charters, reserves, immutables]
 
-## Earlier announcement schedule, preserved rather than repaired
+## Availability and gaps
 
-The [root](https://x.com/standard_rsv/status/2098969960404103353) says “in 2 days, on 9/14.” RSS supplies September 13 UTC; the individual X page displayed September 12 at 9:00 PM while the profile displayed September 13. Do not convert the relative phrase into an exact publication clock. [sr-post-2098969960404103353]
+Exact scheduled clock times and the public opening price: **Not established from current source; verified implementation required.** Wallet eligibility and sale availability require separate authenticated evidence; a design document does not establish either.
 
-[Mint Details](https://x.com/standard_rsv/status/2098969964283846751) and [Mint Schedule](https://x.com/standard_rsv/status/2098969968201359736) announce the whitelist window followed by the remaining public sale. Canonical schedule records are `whitelist-window-start`, `whitelist-window-end`, `whitelist-window-duration`, `genesis-public-auction-end`, `genesis-public-auction-duration`, `genesis-public-auction-start-price` and `genesis-public-auction-floor`.
+The token page displayed the pool as not launched, and the charter page displayed ongoing auctions as not enabled. These source-dated UI observations are not authenticated chain state or proof of subsequent activation. [sr-token-page-v1; sr-charters-page-v1]
 
-The schedule says **EST literally in September**. Do not silently substitute EDT or invent a UTC conversion. Its image distinguishes token launch **without liquidity** at allowlist opening from later liquidity addition, auction closing and emissions. Current finalization prose supplies the design relationship, not proof that the announced clock schedule was executed. [sr-post-2098969968201359736; sr-whitepaper-v1: reserves]
-
-The [closing reply](https://x.com/standard_rsv/status/2098969986190733410) repeats the event date and its reviewed image marks the thread's last post. That boundary is not an entire-account archive guarantee. Robinhood branding in launch graphics alone does not authenticate deployment or partnership scope; [contracts](contracts.md) retains the later, separately sourced directory/condition evidence.
-
-[Trading](launch-trading.md) covers conflicting launch-tax descriptions and activation. [History](announcement-history.md) records the superseded free-mint promise; [genesis](genesis.md) covers selection and eligibility boundaries.
+[Trading](launch-trading.md) covers taxes and pool settings; [contracts](contracts.md) routes deployment identity and implementation limits. Reading these materials does not authorize a wallet connection or mint.

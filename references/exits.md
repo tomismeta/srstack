@@ -6,7 +6,7 @@ Publisher design: [v1 sources](../assets/sources/website-v1.json), `sr-whitepape
 
 For accrued balance A and b branches before retirement, retiring k branches releases A × k/b before the resolution fee and removes that earning capacity. Tokens are minted to the wallet net of the fee. Retiring every branch burns the charter. This pro-rata relation is a source description, not an implementation rounding/settlement algorithm. [sr-whitepaper-v1: exits]
 
-The published pressure and fee formulas are now visible. W is system-wide tokens withdrawn over `exit-lookback`, D is everything still held at the bank, and E is `exit-pressure-denominator-floor`:
+The published pressure and fee formulas use W for system-wide tokens withdrawn over `exit-lookback`, D for everything still held at the bank, and E for `exit-pressure-denominator-floor`:
 
 P = W / max(D + W, E)
 

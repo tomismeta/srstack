@@ -82,7 +82,7 @@ Identify whether the user is modeling one new charter at launch or an existing c
 
 Offer an **optional exit-pressure comparison** using the published quiet/elevated/heavy/bank-run fee reference records (`quiet-exit-fee`, `elevated-exit-fee`, `heavy-exit-fee`, `bank-run-exit-fee`). Read their statuses: rounded example fees are approximate, not exact evaluated quotes. The user must choose the cases and approve each fixed fee proxy; never select quiet conditions as a neutral default. Keep price/growth/other inputs identical for a fee-only comparison. Do not evaluate the dynamic withdrawal formula in launcher glue or treat marginal fee examples as amount-specific contract quotes.
 
-Keep token price, license cost, acquisition markup, regular sale fee, slippage, gas, future tax and growth assumptions missing until supplied or explicitly proposed and approved. In particular, do not resolve the conflicting launch tax schedule by choosing one claim, copy a reported protocol tax into the separate sale-fee field, or convert a disabled auction into a zero-cost purchase. Funding with credits remains a fixed model path, not a verified deposit/license transaction sequence.
+Keep token price, license cost, acquisition markup, regular sale fee, slippage, gas, future tax and growth assumptions missing until supplied or explicitly proposed and approved. Applied launch-tax rules are not established from current evidence. Do not copy a reported protocol tax into the separate sale-fee field or convert a disabled auction into a zero-cost purchase. Funding with credits remains a fixed model path, not a verified deposit/license transaction sequence.
 
 Show **documented reference → proposed scenario value → limitation** in a compact sheet, mark remaining gaps, then obtain approval of all completed economic inputs and mode. Continue with the guided workflow; no JSON questionnaire, network refresh or financial action is implied.
 
@@ -90,7 +90,7 @@ Show **documented reference → proposed scenario value → limitation** in a co
 
 Use only when the user requests contract-informed planning or provides relevant observations. Read the selected [Robinhood identity records](../assets/entities/robinhood.json) with their shared limits and `sr-protocol-conditions` in [deployment sources](../assets/sources/deployments.json). An ordinary scenario does not require loading these resources or fetching live data.
 
-The package now has publisher-attributed addresses, not an authenticated executable adapter. Etherscan source/ABI access was blocked during review. Do not guess getters, selectors, storage slots or ABI fragments. Independent reads require the identity/ABI/block checks in [inspection](inspection.md); otherwise label website values as dated publisher-displayed observations. No automatic refresh, persistence or extra parameters injected into the engine.
+The package has publisher-attributed addresses and current Etherscan publication checks, not an authenticated executable adapter. Protocol-module source/ABI is not published in those checks; the Multicall Similar Match does not establish protocol semantics. Do not guess getters, selectors, storage slots or ABI fragments. Independent reads require the identity/ABI/block checks in [inspection](inspection.md); otherwise label website values as dated publisher-displayed observations. No automatic refresh, persistence or extra parameters injected into the engine.
 
 | Planning need | Relevant evidence and mapping boundary |
 |---|---|

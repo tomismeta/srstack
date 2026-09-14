@@ -4,11 +4,11 @@ Model `"1"`, schema `1`. Return to [planning workflow](planning.md) for executio
 
 ## Published mechanics versus fixed proxies
 
-The refreshed whitepaper publishes the unscaled **700,000 STANDARD/day launch base**, an owner-only downward base-rate ratchet, the multiplier epoch policy (0.2–1.25, launch 1, launch epoch 3 days), and a quadratic withdrawal-fee curve driven by system-wide trailing-seven-day withdrawals and remaining bank balances. These are publisher statements, not verified source-code/ABI correspondence or live configuration. Earlier redacted evidence remains dated history; those publications are no longer described as unavailable.
+The current whitepaper publishes the unscaled **700,000 STANDARD/day launch base**, an owner-only downward base-rate ratchet, the multiplier epoch policy (0.2–1.25, launch 1, launch epoch 3 days), and a quadratic withdrawal-fee curve driven by system-wide trailing-seven-day withdrawals and remaining bank balances. These are publisher statements, not verified source-code/ABI correspondence or live configuration.
 
-Model `"1"` still uses explicit fixed base issuance, multiplier, license cost and resolution-fee inputs. It does not execute the published dynamic policy, auction equations or withdrawal settlement. No economic defaults are introduced; holding a launch value constant is itself a future assumption. The reviewed [partial conformance checks](planning-conformance.md) enforce the documented base-rate ceiling, multiplier bounds and resolution-fee envelope, not a live rate, dynamic path or particular withdrawal fee; projection arithmetic is unchanged.
+Model `"1"` uses explicit fixed base issuance, multiplier, license cost and resolution-fee inputs. It does not execute dynamic policy, auction mechanics or withdrawal settlement. No economic defaults are introduced; holding a launch value constant is itself a future assumption. The reviewed [partial conformance checks](planning-conformance.md) enforce the documented base-rate ceiling, multiplier bounds and resolution-fee envelope, not a live rate, dynamic path or particular withdrawal fee.
 
-The whitepaper's launch tax statements conflict (§12 90%/90% versus §15 20%/40%, toward 2%/3%), as do the license auction's geometric-to-floor equation (§7) and four-hour gap-halving prose (§§7–8). No executable interpretation is chosen. The published multiplier equation's zero-signal hold versus the regime table's zero-flow contraction description also needs implementation correspondence. Source formulas remain evidence strings, not runnable algorithms.
+Applied launch tax and auction mechanics: **Not established from current source; verified implementation required.** Applied dynamic multiplier transitions also require verified implementation. Source formulas remain evidence strings, not runnable algorithms.
 
 ## Model order and accounting
 
@@ -60,7 +60,7 @@ Top level: `schema_version: 1`, `model_version: "1"`, `detail`, `mode`, `classif
 - `expansion_eth_spent`, `total_outlay_eth`, `estimated_eth_recovered`, `net_cash_eth`, `delta_vs_keep_eth`, `break_even_price_eth`;
 - `licenses_bought`, `skipped_attempts`.
 
-Summary omits purchase records, daily history and per-fee drilldown, not conformance or evidence boundaries. Top-level limitations retain partial checks; published mechanics versus fixed proxies; unresolved fee application, dynamic policy, auction conflicts and credits-payment feasibility; absent residual valuation; and the lack of quotes or contract verification.
+Summary omits purchase records, daily history and per-fee drilldown, not conformance or evidence boundaries. Top-level limitations retain partial checks; published mechanics versus fixed proxies; unresolved fee application, dynamic policy, auction mechanics and credits-payment feasibility; absent residual valuation; and the lack of quotes or contract verification.
 
 `detail: "full"` returns full conformance and strategy accounting: credits before exit/released, resolution fee, license tokens purchased, token-purchase ETH, license gas and each sequential sale deduction, alongside the summary fields. `purchases` records each purchase day's `day`, `branches_added`, `license_tokens_spent`, and `external_eth_spent`; a credits-funded purchase is not an external token purchase.
 

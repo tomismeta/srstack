@@ -8,13 +8,13 @@ Founding proceeds escrow until finalization. The owner sets launch price; finali
 
 Allocation components: `founding-floor-bid`, `founding-pol-remainder-share`, `founding-contraction-remainder-share`, `founding-expansion-remainder-share`. The remainder percentages must not be applied to gross receipts.
 
-Current §11 now expressly separates this founding allocation from steady-state trading/charter-auction receipts. The earlier §6/§11 blanket-routing wording tension belongs to dated `sr-whitepaper`, not an unresolved absence of the founding split today. Do not use the ongoing fee percentages for founding proceeds. [sr-whitepaper: charters, reserves; sr-whitepaper-v1: reserves]
+The founding allocation is separate from steady-state trading/charter-auction receipts. Do not use ongoing fee percentages for founding proceeds. [sr-whitepaper-v1: reserves]
 
 ## Ongoing ETH routing — §11
 
-Current net flow selects the active vault: expansion when positive, contraction otherwise. Shares are `ongoing-active-vault-share`, `ongoing-pol-share`, `ongoing-team-share`. Of the POL allocation, `pol-swap-share` is swapped to STANDARD, paired with remaining ETH and added as permanent liquidity. “No insider allocation” in About is not a claim that the team receives no ongoing fees. §12 also allows bounded owner changes to fee splits. [sr-whitepaper-v1: policy, reserves, immutables; sr-about; sr-app-about]
+Current net flow selects the active vault: expansion when positive, contraction otherwise. Shares are `ongoing-active-vault-share`, `ongoing-pol-share`, `ongoing-team-share`. Of the POL allocation, `pol-swap-share` is swapped to STANDARD, paired with remaining ETH and added as permanent liquidity. §12 allows bounded owner changes to fee splits. [sr-whitepaper-v1: policy, reserves, immutables]
 
-The current whitepaper publishes steady buy/sell taxes, but contradicts itself on launch opening rates; [launch trading](launch-trading.md) preserves the distinction. The canonical pool's LP fee and tick spacing are separate from protocol taxes. The token companion explicitly says taxes apply **on top of** the LP fee; it does not establish the precise computation order or fee base. The protocol position's fees earned in STANDARD are burned (`standard-trading-fee-burn-share`). ETH diagrams do not supersede that token-side statement. [sr-whitepaper-v1: currency, reserves, parameters; sr-token-page-v1]
+The whitepaper publishes steady buy/sell taxes; launch rates and the executable tax curve are not established from current source and require verified implementation. The canonical pool's LP fee and tick spacing are separate from protocol taxes. The token companion says taxes apply **on top of** the LP fee; precise computation order and fee base remain unverified. The protocol position's fees earned in STANDARD are burned (`standard-trading-fee-burn-share`). [sr-whitepaper-v1: currency, reserves, parameters; sr-token-page-v1]
 
 ## Reserve assets and ownership
 
@@ -38,4 +38,4 @@ Contraction-buyback/POL-pairing execution starts owner-cranked; the owner can ma
 
 ## Accounting boundaries
 
-Keep founding proceeds, ongoing auction receipts, LP fees, protocol taxes, accrued issuance, wallet mints, deposit conversions, ledger removals, redistribution, reserve holdings and buyback spend separate. A reserve purchase is not banker income; a deposit conversion is not a permanent burn; an announced allocation is not an observed transfer. [Contracts](contracts.md) retains the separately added deployment/condition evidence and implementation limits; [conflicts](risk-conflicts.md) identifies unresolved source discrepancies.
+Keep founding proceeds, ongoing auction receipts, LP fees, protocol taxes, accrued issuance, wallet mints, deposit conversions, ledger removals, redistribution, reserve holdings and buyback spend separate. A reserve purchase is not banker income; a deposit conversion is not a permanent burn; a documented allocation is not an observed transfer. [Contracts](contracts.md) retains deployment/condition evidence and implementation limits; [risks](risks.md) identifies remaining evidence gaps.

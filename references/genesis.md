@@ -1,6 +1,6 @@
 # Genesis entry
 
-Current design: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§6,11–12,15. Earlier mint presentation and announcements retain their dates in [website core](../assets/sources/website-core.json) and [launch mint](../assets/sources/launch-mint.json). Exact economics: [launch parameters](../assets/parameters/launch.json).
+Current design: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§6,11–12,15. Exact economics: [launch parameters](../assets/parameters/launch.json).
 
 ## Paid founding distribution
 
@@ -8,7 +8,7 @@ The whitelist mint charges `whitelist-liquidity-fee`, with `whitelist-wallet-lim
 
 Exact combined-wallet and public-transaction limits are `founding-wallet-limit` and `founding-public-transaction-limit`; they are distinct from the whitelist claim limit.
 
-This paid model supersedes the earlier free-genesis promise. Use [history](announcement-history.md) for that attributed change, never as current pricing. The dated mint-page selection description mentions wallet activity and contributions in replies, quote posts and DMs; checking eligibility does not reserve a mint. Its counters are not authenticated whitelist state. Reading the page does not authorize connecting a wallet or minting. [sr-mint; sr-post-2098969964283846751]
+Wallet eligibility and live sale availability are not established by the design document. Reading a page does not authorize connecting a wallet or minting.
 
 ## Escrow and finalization
 
@@ -22,6 +22,6 @@ The allocation components are `founding-floor-bid`, `founding-pol-remainder-shar
 
 The owner may change the whitelist window only before opening; opening freezes its timestamps. The whitepaper calls the whitelist price and public opening price/curve immutable, but does not itself supply every implementation detail. [sr-whitepaper-v1: immutables]
 
-`founding-whitelist-window-control` is the authoritative source-policy record; scheduled clock times retain separate announcement provenance.
+`founding-whitelist-window-control` records that source policy. Exact scheduled clock times and the public opening price are not established from current source; verified implementation required.
 
-[Launch mint](launch-mint.md) preserves the earlier EST schedule and token-without-liquidity graphic. The current token page displayed the pool as not launched; the charter page displayed ongoing auctions not enabled. Those rendered observations do not prove a later finalization or activation. [sr-token-page-v1; sr-charters-page-v1]
+[Launch mint](launch-mint.md) summarizes founding terms and remaining gaps. The token page displayed the pool as not launched; the charter page displayed ongoing auctions not enabled. Those rendered observations do not prove finalization or activation. [sr-token-page-v1; sr-charters-page-v1]

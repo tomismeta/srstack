@@ -15,14 +15,10 @@ When enabled, ongoing purchases execute immediately at the current price, first 
 
 [Source: sr-whitepaper-v1: branches, auctions]
 
-## Published floor and unresolved decay conflict
+## Published floor and price-curve gap
 
-§7 now publishes `license-floor-formula`: P_floor = 2 × (700,000 × m / N), using the launch base, policy multiplier and total system branches. `license-floor-yield-days` captures its two-day yield interpretation. The source also permits later base-rate reductions; do not infer live floor recomputation, snapshot timing or rounding without implementation evidence. [sr-whitepaper-v1: branches equation 7.1; policy]
+§7 publishes `license-floor-formula`: P_floor = 2 × (700,000 × m / N), using the launch base, policy multiplier and total system branches. `license-floor-yield-days` captures its two-day yield interpretation. The source also permits later base-rate reductions; do not infer live floor recomputation, snapshot timing or rounding without implementation evidence. [sr-whitepaper-v1: branches equation 7.1; policy]
 
-**The same source gives incompatible price paths.** Equation 7.1 is geometric interpolation to the floor over a full day:
+**Auction price curve: Not established from current source; verified implementation required.** Do not calculate purchase quotes from the source-only floor or substitute the founding-sale description. [sr-whitepaper-v1: branches, auctions]
 
-P(t) = P_start × (P_floor / P_start)^(t / 24h).
-
-But §§7–8 prose says the **gap to the floor halves every four hours**, then settles at the floor for the rest of the day (`license-decay-setting`). The equation and that prose do not generally describe the same curve. The prose does not establish the exact floor-settlement cutoff either. Preserve both as source claims; **do not select, execute, endorse or use either as a purchase quote**. Founding-auction prose is a separate description and resolves neither. [sr-whitepaper-v1: branches equation 7.1; auctions Decay]
-
-The publisher's early-buy certainty versus wait-for-price tradeoff and illustrative `license-repricing-week-multiple` are explanations, not guaranteed allocation, returns or prices. Owner-adjustable floors, windows and half-lives add a state dependency; [risks](risks.md) describes that authority. Source-code/ABI correspondence remains unverified. See [conflicts](risk-conflicts.md).
+The publisher's early-buy certainty versus wait-for-price tradeoff and illustrative `license-repricing-week-multiple` are explanations, not guaranteed allocation, returns or prices. Owner-adjustable floors, windows and decay settings add a state dependency; [risks](risks.md) describes that authority. Source-code/ABI correspondence remains unverified.

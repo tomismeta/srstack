@@ -1,11 +1,10 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-14T22:18:03.462Z",
-  "scope": "Dated baseline seven sitemap presentations preserved; current whitepaper sixteen sections and two companion pages refreshed separately, alongside existing deployment-directory and protocol-condition additions; not a full website refresh or verified deployment audit",
+  "reviewed_at": "2026-09-14T23:20:36.997Z",
+  "scope": "Current whitepaper sixteen sections and two companion pages, with deployment-directory and protocol-condition evidence; not a whole-site or implementation audit",
   "source_index": "assets/sources.json",
   "parameter_catalog": "assets/parameters.json",
   "deployment_addition": {
-    "reviewed_at": "2026-09-14T21:55:34.068Z",
     "source_ids": [
       "sr-contract-directory",
       "sr-protocol-conditions"
@@ -13,131 +12,26 @@
     "source_file": "assets/sources/deployments.json",
     "entity_index": "assets/entity-index.json",
     "limits": [
-      "Only the four contract-directory groups and three protocol-condition tabs were refreshed. Baseline source dates and canonical parameters remain unchanged."
+      "Retrieval dates and observation boundaries remain in the deployment source records; publisher addresses and conditions are not verified implementation or current-state guarantees."
     ]
   },
+  "explorer_coverage": {
+    "source_file": "assets/sources/etherscan.json",
+    "record_count": 14,
+    "limits": ["Public address-page bytecode and source-publication observations only; not an independent source/bytecode audit."]
+  },
   "limits": [
-    "Sitemap coverage is not an exhaustive website or announcement archive.",
-    "Earlier whitepaper redactions remain dated historical observations, not current missing disclosures; no hidden facts inferred.",
-    "About variants and redirected app root are presentation variants, not independent corroboration.",
-    "Launch-announcement and image terms are integrated in topic prose and parameters; post-by-post provenance is in the announcement source groups.",
-    "Current whitepaper formulas are source-only; internal launch-tax and auction-decay contradictions remain unresolved, without code/ABI correspondence."
+    "Coverage is limited to the named current sources, not every website surface.",
+    "Published formulas and parameters are source-only, not source-code/ABI correspondence.",
+    "Launch tax rates/curve and ongoing auction price curve: Not established from current source; verified implementation required.",
+    "Companion displayed blocks, times and availability are UI observations, not independently authenticated chain reads."
   ],
   "pages": [
-    {
-      "source_id": "sr-protocol",
-      "url": "https://www.standardreserve.xyz/app/protocol/",
-      "final_url": "https://www.standardreserve.xyz/app/protocol/",
-      "retrieved_at": "2026-09-14T16:32:30.634Z",
-      "review_status": "full-rendered-text-and-links-reviewed",
-      "topics": [
-        "references/protocol.md"
-      ],
-      "source_file": "assets/sources/website-core.json"
-    },
-    {
-      "source_id": "sr-mint",
-      "url": "https://www.standardreserve.xyz/app/mint/",
-      "final_url": "https://www.standardreserve.xyz/app/mint/",
-      "retrieved_at": "2026-09-14T16:32:30.649Z",
-      "review_status": "full-rendered-text-and-links-reviewed",
-      "topics": [
-        "references/genesis.md"
-      ],
-      "source_file": "assets/sources/website-core.json"
-    },
-    {
-      "source_id": "sr-whitepaper",
-      "url": "https://www.standardreserve.xyz/whitepaper/",
-      "final_url": "https://www.standardreserve.xyz/whitepaper/",
-      "retrieved_at": "2026-09-14T16:32:30.664Z",
-      "review_status": "full-rendered-text-and-links-reviewed",
-      "topics": [
-        "references/protocol.md",
-        "references/protocol-policy.md",
-        "references/charters.md",
-        "references/genesis.md",
-        "references/auctions.md",
-        "references/exits.md",
-        "references/reserves.md",
-        "references/risks.md",
-        "references/risk-conflicts.md"
-      ],
-      "source_file": "assets/sources/website-core.json"
-    },
-    {
-      "source_id": "sr-about",
-      "url": "https://www.standardreserve.xyz/about/",
-      "final_url": "https://www.standardreserve.xyz/about/",
-      "retrieved_at": "2026-09-14T16:32:30.676Z",
-      "review_status": "full-rendered-text-and-links-reviewed",
-      "topics": [
-        "references/protocol.md",
-        "references/protocol-policy.md",
-        "references/charters.md",
-        "references/genesis.md",
-        "references/auctions.md",
-        "references/exits.md",
-        "references/reserves.md",
-        "references/risks.md",
-        "references/risk-conflicts.md"
-      ],
-      "source_file": "assets/sources/website-context.json"
-    },
-    {
-      "source_id": "sr-app-about",
-      "url": "https://www.standardreserve.xyz/app/about/",
-      "final_url": "https://www.standardreserve.xyz/app/about/",
-      "retrieved_at": "2026-09-14T16:32:30.695Z",
-      "review_status": "full-rendered-text-and-links-reviewed",
-      "topics": [
-        "references/protocol.md",
-        "references/protocol-policy.md",
-        "references/charters.md",
-        "references/genesis.md",
-        "references/auctions.md",
-        "references/exits.md",
-        "references/reserves.md",
-        "references/risks.md",
-        "references/risk-conflicts.md"
-      ],
-      "relationship": {
-        "type": "same-substantive-explainer-different-shell",
-        "source_id": "sr-about"
-      },
-      "source_file": "assets/sources/website-context.json"
-    },
-    {
-      "source_id": "sr-disclaimer",
-      "url": "https://www.standardreserve.xyz/disclaimer/",
-      "final_url": "https://www.standardreserve.xyz/disclaimer/",
-      "retrieved_at": "2026-09-14T16:32:30.706Z",
-      "review_status": "full-rendered-text-and-links-reviewed",
-      "topics": [
-        "references/risks.md"
-      ],
-      "source_file": "assets/sources/website-context.json"
-    },
-    {
-      "source_id": "sr-app-redirect",
-      "url": "https://www.standardreserve.xyz/app/",
-      "final_url": "https://www.standardreserve.xyz/app/protocol/",
-      "retrieved_at": "2026-09-14T16:32:30.716Z",
-      "review_status": "full-rendered-text-and-links-reviewed",
-      "topics": [
-        "references/protocol.md"
-      ],
-      "relationship": {
-        "type": "redirect-to",
-        "source_id": "sr-protocol"
-      },
-      "source_file": "assets/sources/website-context.json"
-    },
     {
       "source_id": "sr-whitepaper-v1",
       "url": "https://www.standardreserve.xyz/whitepaper/",
       "final_url": "https://www.standardreserve.xyz/whitepaper/",
-      "retrieved_at": "2026-09-14T22:15:13.789Z",
+      "retrieved_at": "2026-09-14T23:17:04.545Z",
       "review_status": "full-frozen-text-and-equation-annotations-reviewed",
       "topics": [
         "references/documents.md",
@@ -148,8 +42,7 @@
         "references/auctions.md",
         "references/exits.md",
         "references/reserves.md",
-        "references/risks.md",
-        "references/risk-conflicts.md"
+        "references/risks.md"
       ],
       "source_file": "assets/sources/website-v1.json"
     },
@@ -157,7 +50,7 @@
       "source_id": "sr-token-page-v1",
       "url": "https://www.standardreserve.xyz/app/token/",
       "final_url": "https://www.standardreserve.xyz/app/token/",
-      "retrieved_at": "2026-09-14T22:18:03.457Z",
+      "retrieved_at": "2026-09-14T23:20:36.342Z",
       "review_status": "full-frozen-rendered-text-reviewed",
       "topics": [
         "references/protocol-policy.md",
@@ -170,7 +63,7 @@
       "source_id": "sr-charters-page-v1",
       "url": "https://www.standardreserve.xyz/app/protocol/charters/",
       "final_url": "https://www.standardreserve.xyz/app/protocol/charters/",
-      "retrieved_at": "2026-09-14T22:18:03.462Z",
+      "retrieved_at": "2026-09-14T23:20:36.997Z",
       "review_status": "full-frozen-rendered-text-reviewed",
       "topics": [
         "references/charters.md",
@@ -190,7 +83,7 @@
       "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
       "topics": [
         "references/protocol.md",
-        "references/risk-conflicts.md"
+        "references/risks.md"
       ],
       "source_file": "assets/sources/website-v1.json"
     },
@@ -203,7 +96,7 @@
       "topics": [
         "references/protocol.md",
         "references/reserves.md",
-        "references/risk-conflicts.md"
+        "references/risks.md"
       ],
       "source_file": "assets/sources/website-v1.json"
     },
@@ -216,7 +109,7 @@
       "topics": [
         "references/protocol-policy.md",
         "references/reserves.md",
-        "references/risk-conflicts.md"
+        "references/risks.md"
       ],
       "source_file": "assets/sources/website-v1.json"
     },
@@ -228,7 +121,7 @@
       "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
       "topics": [
         "references/protocol-policy.md",
-        "references/risk-conflicts.md"
+        "references/risks.md"
       ],
       "source_file": "assets/sources/website-v1.json"
     },
@@ -277,7 +170,7 @@
       "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
       "topics": [
         "references/auctions.md",
-        "references/risk-conflicts.md"
+        "references/risks.md"
       ],
       "source_file": "assets/sources/website-v1.json"
     },
@@ -289,7 +182,7 @@
       "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
       "topics": [
         "references/exits.md",
-        "references/risk-conflicts.md"
+        "references/risks.md"
       ],
       "source_file": "assets/sources/website-v1.json"
     },
@@ -301,7 +194,7 @@
       "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
       "topics": [
         "references/exits.md",
-        "references/risk-conflicts.md"
+        "references/risks.md"
       ],
       "source_file": "assets/sources/website-v1.json"
     },
@@ -324,7 +217,6 @@
       "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
       "topics": [
         "references/risks.md",
-        "references/risk-conflicts.md",
         "references/reserves.md",
         "references/exits.md"
       ],
@@ -338,7 +230,7 @@
       "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
       "topics": [
         "references/exits.md",
-        "references/risk-conflicts.md"
+        "references/risks.md"
       ],
       "source_file": "assets/sources/website-v1.json"
     },
@@ -380,433 +272,6 @@
         "references/risks.md"
       ],
       "source_file": "assets/sources/website-v1.json"
-    }
-  ],
-  "additional_sources": [
-    {
-      "source_id": "sr-sitemap",
-      "url": "https://www.standardreserve.xyz/sitemap.xml",
-      "review_status": "full-xml-reviewed",
-      "topics": [
-        "references/documents.md"
-      ],
-      "source_file": "assets/sources/website-context.json"
-    },
-    {
-      "source_id": "sr-x-profile",
-      "url": "https://x.com/standard_rsv",
-      "review_status": "captured-profile-and-five-visible-posts-reviewed",
-      "topics": [
-        "references/documents.md",
-        "references/announcement-history.md"
-      ],
-      "source_file": "assets/sources/website-context.json"
-    },
-    {
-      "source_id": "sr-whitepaper-historical-free",
-      "url": "https://www.standardreserve.xyz/whitepaper/#charters",
-      "review_status": "historical-charter-excerpt-reviewed-superseded",
-      "topics": [
-        "references/announcement-history.md",
-        "references/genesis.md"
-      ],
-      "source_file": "assets/sources/history-participation.json"
-    }
-  ],
-  "launch_summary_redactions": [
-    {
-      "label": "Hard cap",
-      "parameter_ids": [
-        "hard-cap"
-      ],
-      "source_id": "sr-whitepaper",
-      "observed_at": "2026-09-14T16:32:30.664Z",
-      "scope": "Historical redacted summary label; current section 15 is published. Consult current parameter records and limits."
-    },
-    {
-      "label": "Genesis liquidity",
-      "parameter_ids": [
-        "genesis-liquidity"
-      ],
-      "source_id": "sr-whitepaper",
-      "observed_at": "2026-09-14T16:32:30.664Z",
-      "scope": "Historical redacted summary label; current section 15 is published. Consult current parameter records and limits."
-    },
-    {
-      "label": "Base issuance",
-      "parameter_ids": [
-        "base-issuance"
-      ],
-      "source_id": "sr-whitepaper",
-      "observed_at": "2026-09-14T16:32:30.664Z",
-      "scope": "Historical redacted summary label; current section 15 is published. Consult current parameter records and limits."
-    },
-    {
-      "label": "Multiplier m",
-      "parameter_ids": [
-        "multiplier-floor",
-        "multiplier-ceiling",
-        "multiplier-launch",
-        "multiplier-update-rule"
-      ],
-      "source_id": "sr-whitepaper",
-      "observed_at": "2026-09-14T16:32:30.664Z",
-      "scope": "Historical redacted summary label; current section 15 is published. Consult current parameter records and limits."
-    },
-    {
-      "label": "Epoch",
-      "parameter_ids": [
-        "epoch-length"
-      ],
-      "source_id": "sr-whitepaper",
-      "observed_at": "2026-09-14T16:32:30.664Z",
-      "scope": "Historical redacted summary label; current section 15 is published. Consult current parameter records and limits."
-    },
-    {
-      "label": "Founding Charters",
-      "parameter_ids": [
-        "genesis-charters"
-      ],
-      "source_id": "sr-whitepaper",
-      "observed_at": "2026-09-14T16:32:30.664Z",
-      "scope": "Historical redacted summary label; current section 15 is published. Consult current parameter records and limits."
-    },
-    {
-      "label": "Charter auctions",
-      "parameter_ids": [
-        "initial-daily-charter-count",
-        "charter-count-policy",
-        "charter-reserve-price",
-        "charter-open-multiple"
-      ],
-      "source_id": "sr-whitepaper",
-      "observed_at": "2026-09-14T16:32:30.664Z",
-      "scope": "Historical redacted summary label; current section 15 is published. Consult current parameter records and limits."
-    },
-    {
-      "label": "Branches per charter",
-      "parameter_ids": [
-        "initial-branches",
-        "maximum-branches"
-      ],
-      "source_id": "sr-whitepaper",
-      "observed_at": "2026-09-14T16:32:30.664Z",
-      "scope": "Historical redacted summary label; current section 15 is published. Consult current parameter records and limits."
-    },
-    {
-      "label": "Expansion licenses",
-      "parameter_ids": [
-        "licenses-per-day",
-        "licenses-per-charter-per-day"
-      ],
-      "source_id": "sr-whitepaper",
-      "observed_at": "2026-09-14T16:32:30.664Z",
-      "scope": "Historical redacted summary label; current section 15 is published. Consult current parameter records and limits."
-    },
-    {
-      "label": "License floor",
-      "parameter_ids": [
-        "license-floor-formula",
-        "license-floor-yield-days"
-      ],
-      "source_id": "sr-whitepaper",
-      "observed_at": "2026-09-14T16:32:30.664Z",
-      "scope": "Historical redacted summary label; current section 15 is published. Consult current parameter records and limits."
-    },
-    {
-      "label": "Trading fee",
-      "parameter_ids": [
-        "trading-fee"
-      ],
-      "source_id": "sr-whitepaper",
-      "observed_at": "2026-09-14T16:32:30.664Z",
-      "scope": "Historical redacted summary label; current section 15 is published. Consult current parameter records and limits."
-    },
-    {
-      "label": "Fee split",
-      "parameter_ids": [
-        "ongoing-active-vault-share",
-        "ongoing-pol-share",
-        "ongoing-team-share"
-      ],
-      "source_id": "sr-whitepaper",
-      "observed_at": "2026-09-14T16:32:30.664Z",
-      "scope": "Historical redacted summary label; current section 15 is published. Consult current parameter records and limits."
-    },
-    {
-      "label": "Resolution fee",
-      "parameter_ids": [
-        "resolution-fee-floor",
-        "resolution-fee-ceiling",
-        "resolution-fee-formula"
-      ],
-      "source_id": "sr-whitepaper",
-      "observed_at": "2026-09-14T16:32:30.664Z",
-      "scope": "Historical redacted summary label; current section 15 is published. Consult current parameter records and limits."
-    },
-    {
-      "label": "Dormancy",
-      "parameter_ids": [
-        "dormancy-period",
-        "dormancy-bounty-share",
-        "dormancy-bounty-cap",
-        "dormancy-revocation-fee"
-      ],
-      "source_id": "sr-whitepaper",
-      "observed_at": "2026-09-14T16:32:30.664Z",
-      "scope": "Historical redacted summary label; current section 15 is published. Consult current parameter records and limits."
-    },
-    {
-      "label": "Buyback execution",
-      "parameter_ids": [
-        "buyback-tick",
-        "buyback-vault-fraction",
-        "buyback-pool-fraction"
-      ],
-      "source_id": "sr-whitepaper",
-      "observed_at": "2026-09-14T16:32:30.664Z",
-      "scope": "Historical redacted summary label; current section 15 is published. Consult current parameter records and limits."
-    }
-  ],
-  "announcement_topics": [
-    {
-      "source_file": "assets/sources/launch-mint.json",
-      "topics": [
-        "references/launch-mint.md",
-        "references/genesis.md"
-      ]
-    },
-    {
-      "source_file": "assets/sources/launch-trading.json",
-      "topics": [
-        "references/launch-trading.md"
-      ]
-    },
-    {
-      "source_file": "assets/sources/history-audits.json",
-      "topics": [
-        "references/announcement-history.md"
-      ]
-    },
-    {
-      "source_file": "assets/sources/history-participation.json",
-      "topics": [
-        "references/announcement-history.md"
-      ]
-    },
-    {
-      "source_file": "assets/sources/history-mechanics.json",
-      "topics": [
-        "references/announcement-history.md",
-        "references/protocol-policy.md"
-      ]
-    },
-    {
-      "source_file": "assets/sources/announcements-context.json",
-      "topics": [
-        "references/announcement-history.md"
-      ]
-    }
-  ],
-  "baseline_reviewed_at": "2026-09-14T16:44:02Z",
-  "whitepaper_v1_addition": {
-    "reviewed_at": "2026-09-14T22:15:13.789Z",
-    "source_ids": [
-      "sr-whitepaper-v1",
-      "sr-token-page-v1",
-      "sr-charters-page-v1"
-    ],
-    "source_file": "assets/sources/website-v1.json",
-    "section_count": 16,
-    "limits": [
-      "Only frozen whitepaper text/equation annotations and the two companion captures were reviewed for this addition.",
-      "Companion displayed block/time anchors and availability messages are UI observations, not independently authenticated chain reads.",
-      "Original sr-whitepaper and announcement timestamps are preserved; current conflicts do not erase earlier evidence."
-    ]
-  },
-  "whitepaper_section_history": [
-    {
-      "number": 1,
-      "id": "introduction",
-      "source_id": "sr-whitepaper",
-      "locator": "https://www.standardreserve.xyz/whitepaper/#introduction",
-      "review_status": "full-visible-section-equations-and-redactions-reviewed",
-      "topics": [
-        "references/protocol.md",
-        "references/risk-conflicts.md"
-      ],
-      "source_file": "assets/sources/website-core.json"
-    },
-    {
-      "number": 2,
-      "id": "entities",
-      "source_id": "sr-whitepaper",
-      "locator": "https://www.standardreserve.xyz/whitepaper/#entities",
-      "review_status": "full-visible-section-equations-and-redactions-reviewed",
-      "topics": [
-        "references/protocol.md",
-        "references/reserves.md",
-        "references/risk-conflicts.md"
-      ],
-      "source_file": "assets/sources/website-core.json"
-    },
-    {
-      "number": 3,
-      "id": "currency",
-      "source_id": "sr-whitepaper",
-      "locator": "https://www.standardreserve.xyz/whitepaper/#currency",
-      "review_status": "full-visible-section-equations-and-redactions-reviewed",
-      "topics": [
-        "references/protocol-policy.md",
-        "references/reserves.md",
-        "references/risk-conflicts.md"
-      ],
-      "source_file": "assets/sources/website-core.json"
-    },
-    {
-      "number": 4,
-      "id": "net-flow",
-      "source_id": "sr-whitepaper",
-      "locator": "https://www.standardreserve.xyz/whitepaper/#net-flow",
-      "review_status": "full-visible-section-equations-and-redactions-reviewed",
-      "topics": [
-        "references/protocol-policy.md",
-        "references/risk-conflicts.md"
-      ],
-      "source_file": "assets/sources/website-core.json"
-    },
-    {
-      "number": 5,
-      "id": "policy",
-      "source_id": "sr-whitepaper",
-      "locator": "https://www.standardreserve.xyz/whitepaper/#policy",
-      "review_status": "full-visible-section-equations-and-redactions-reviewed",
-      "topics": [
-        "references/protocol-policy.md"
-      ],
-      "source_file": "assets/sources/website-core.json"
-    },
-    {
-      "number": 6,
-      "id": "charters",
-      "source_id": "sr-whitepaper",
-      "locator": "https://www.standardreserve.xyz/whitepaper/#charters",
-      "review_status": "full-visible-section-equations-and-redactions-reviewed",
-      "topics": [
-        "references/genesis.md",
-        "references/charters.md",
-        "references/auctions.md",
-        "references/reserves.md"
-      ],
-      "source_file": "assets/sources/website-core.json"
-    },
-    {
-      "number": 7,
-      "id": "branches",
-      "source_id": "sr-whitepaper",
-      "locator": "https://www.standardreserve.xyz/whitepaper/#branches",
-      "review_status": "full-visible-section-equations-and-redactions-reviewed",
-      "topics": [
-        "references/charters.md",
-        "references/auctions.md"
-      ],
-      "source_file": "assets/sources/website-core.json"
-    },
-    {
-      "number": 8,
-      "id": "auctions",
-      "source_id": "sr-whitepaper",
-      "locator": "https://www.standardreserve.xyz/whitepaper/#auctions",
-      "review_status": "full-visible-section-equations-and-redactions-reviewed",
-      "topics": [
-        "references/auctions.md",
-        "references/risk-conflicts.md"
-      ],
-      "source_file": "assets/sources/website-core.json"
-    },
-    {
-      "number": 9,
-      "id": "exits",
-      "source_id": "sr-whitepaper",
-      "locator": "https://www.standardreserve.xyz/whitepaper/#exits",
-      "review_status": "full-visible-section-equations-and-redactions-reviewed",
-      "topics": [
-        "references/exits.md",
-        "references/risk-conflicts.md"
-      ],
-      "source_file": "assets/sources/website-core.json"
-    },
-    {
-      "number": 10,
-      "id": "dormancy",
-      "source_id": "sr-whitepaper",
-      "locator": "https://www.standardreserve.xyz/whitepaper/#dormancy",
-      "review_status": "full-visible-section-equations-and-redactions-reviewed",
-      "topics": [
-        "references/exits.md",
-        "references/risk-conflicts.md"
-      ],
-      "source_file": "assets/sources/website-core.json"
-    },
-    {
-      "number": 11,
-      "id": "reserves",
-      "source_id": "sr-whitepaper",
-      "locator": "https://www.standardreserve.xyz/whitepaper/#reserves",
-      "review_status": "full-visible-section-equations-and-redactions-reviewed",
-      "topics": [
-        "references/reserves.md"
-      ],
-      "source_file": "assets/sources/website-core.json"
-    },
-    {
-      "number": 12,
-      "id": "transfers",
-      "source_id": "sr-whitepaper",
-      "locator": "https://www.standardreserve.xyz/whitepaper/#transfers",
-      "review_status": "full-visible-section-equations-and-redactions-reviewed",
-      "topics": [
-        "references/exits.md",
-        "references/risk-conflicts.md"
-      ],
-      "source_file": "assets/sources/website-core.json"
-    },
-    {
-      "number": 13,
-      "id": "flywheels",
-      "source_id": "sr-whitepaper",
-      "locator": "https://www.standardreserve.xyz/whitepaper/#flywheels",
-      "review_status": "full-visible-section-equations-and-redactions-reviewed",
-      "topics": [
-        "references/protocol.md"
-      ],
-      "source_file": "assets/sources/website-core.json"
-    },
-    {
-      "number": 14,
-      "id": "parameters",
-      "source_id": "sr-whitepaper",
-      "locator": "https://www.standardreserve.xyz/whitepaper/#parameters",
-      "review_status": "full-visible-section-equations-and-redactions-reviewed",
-      "topics": [
-        "references/risks.md",
-        "references/protocol-policy.md",
-        "references/auctions.md",
-        "references/exits.md",
-        "references/reserves.md"
-      ],
-      "source_file": "assets/sources/website-core.json"
-    },
-    {
-      "number": 15,
-      "id": "disclaimer",
-      "source_id": "sr-whitepaper",
-      "locator": "https://www.standardreserve.xyz/whitepaper/#disclaimer",
-      "review_status": "full-visible-section-equations-and-redactions-reviewed",
-      "topics": [
-        "references/risks.md"
-      ],
-      "source_file": "assets/sources/website-core.json"
     }
   ]
 }

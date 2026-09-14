@@ -12,11 +12,10 @@ The current companion page displayed both daily charter auctions and expansion l
 
 ## Follow the question
 
-- [Genesis entry](genesis.md): paid whitelist/public entry, escrow and common accrual start at finalization. [Launch mint](launch-mint.md) preserves dated schedule and timezone limitations.
-- [Ongoing auctions](auctions.md): separate license/charter opens, capacity and **conflicting decay descriptions**, not an executable curve.
+- [Genesis entry](genesis.md): paid whitelist/public entry, escrow and common accrual start at finalization. [Launch mint](launch-mint.md) summarizes founding terms and scheduling gaps.
+- [Ongoing auctions](auctions.md): separate license/charter opens, capacity and a price-curve gap.
 - [Exits and dormancy](exits.md): retirement, published fee formula, qualifying activity, transfer grace and unresolved bounty ordering.
 - [Reserves](reserves.md): founding versus ongoing routing, and assets owned by the protocol rather than bankers.
 - [Risks](risks.md): owner controls and optional guardian despite non-upgradeability.
-- [History](announcement-history.md): superseded free-mint promise, never current pricing.
 
 The current source distinguishes permanent ledger removal from token-deposit conversion; [supply accounting](protocol-policy.md) explains why not every removed ledger unit was a circulating token. Source/ABI correspondence remains unverified.

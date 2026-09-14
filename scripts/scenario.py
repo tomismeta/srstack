@@ -112,8 +112,8 @@ LIMITATIONS = [
     "fixed base, multiplier and resolution-fee inputs remain scenario proxies. "
     "No dynamic policy or withdrawal settlement algorithm is implemented.",
     "Acquisition context, license pricing, resolution and sale fee/tax bases "
-    "and their application remain unchecked assumptions. Whitepaper launch "
-    "tax and auction-decay statements conflict; the engine selects neither.",
+    "and their application remain unchecked assumptions. Applied launch tax "
+    "and auction mechanics are not established; verified implementation required.",
 ]
 SUMMARY_LIMITATIONS = [
     "All economic values are user assumptions; publisher checks are partial, "
@@ -124,8 +124,8 @@ SUMMARY_LIMITATIONS = [
     "Published base issuance, multiplier policy and withdrawal curves do not "
     "verify execution; fixed inputs remain proxies. Acquisition and license "
     "prices, auction inventory, fee/tax application and credits-payment feasibility "
-    "remain unchecked. Launch tax and auction-decay statements conflict; "
-    "sequential sale haircuts remain a model assumption.",
+    "remain unchecked. Applied launch tax and auction mechanics are not established; "
+    "verified implementation required. Sequential sale haircuts are model assumptions.",
     "Retained branches and credits have no residual valuation; partial/no-exit "
     "cash P&L is not total return. No forecast, recommendation or liquidity guarantee.",
 ]
@@ -287,7 +287,7 @@ PARAMETER_IDS = {
         "resolution-fee-floor", "resolution-fee-ceiling",
     ),
     "monetary.json": (
-        "issuance-budget", "frontend-policy-range", "base-issuance",
+        "issuance-budget", "base-issuance",
         "multiplier-floor", "multiplier-ceiling", "trading-fee", "multiplier-update-rule",
     ),
     "launch.json": ("launch-trading-tax-curve", "whitelist-liquidity-fee"),
@@ -313,9 +313,7 @@ CONTEXT_UNITS = {
     "whitelist-liquidity-fee": "ETH per whitelist mint",
 }
 PARAMETER_STATUSES = frozenset((
-    "documented-visible", "documented-approximate", "redacted",
-    "not-established", "announced",
-    "observed frontend publication, not deployed configuration",
+    "documented-visible", "documented-approximate", "not-established",
 ))
 
 
@@ -327,7 +325,7 @@ def _plain_text(value):
 
 def _record_schema(record):
     _keys(record, {"id", "value", "unit", "status", "source_ids", "locator", "limits"},
-          {"history"}, "parameter record")
+          set(), "parameter record")
     if not isinstance(record["id"], str) or not IDENTIFIER.fullmatch(record["id"]):
         raise InputError("invalid parameter id")
     if not _plain_text(record["unit"]) or not _plain_text(record["locator"]):
@@ -341,8 +339,6 @@ def _record_schema(record):
         elif isinstance(value, str):
             if not _plain_text(value):
                 raise InputError("invalid parameter value")
-        elif isinstance(value, dict) and record["id"] == "frontend-policy-range":
-            _keys(value, {"minimum", "maximum"}, set(), "frontend range")
         else:
             raise InputError("unsupported parameter value format")
     sources = record["source_ids"]
@@ -353,18 +349,6 @@ def _record_schema(record):
     limits = record["limits"]
     if not isinstance(limits, list) or any(not _plain_text(limit) for limit in limits):
         raise InputError("invalid parameter limits")
-    if "history" in record:
-        if not isinstance(record["history"], list):
-            raise InputError("invalid parameter history")
-        for historical in record["history"]:
-            _keys(historical, {"value", "unit", "status", "observed_at",
-                              "source_ids", "locator", "limits"}, set(), "parameter history")
-            if historical["status"] != "superseded" or not _plain_text(historical["observed_at"]):
-                raise InputError("invalid parameter history")
-            # Validate historical metadata without treating it as an active rule.
-            prior = {key: value for key, value in historical.items() if key != "observed_at"}
-            prior.update(id=record["id"], status="documented-visible")
-            _record_schema(prior)
 
 
 def _read_parameter_file(directory, filename):
@@ -467,18 +451,6 @@ def _load_parameters():
             if identifier == "maximum-branches" and value <= ZERO:
                 raise InputError("maximum branches must be positive")
             record["value"] = value
-        frontend = records["frontend-policy-range"]
-        if (frontend["unit"] != "multiplier range displayed by protocol page"
-                or frontend["status"] != "observed frontend publication, not deployed configuration"):
-            raise InputError("unsupported frontend range metadata")
-        _keys(frontend["value"], {"minimum", "maximum"}, set(), "frontend range")
-        bounds = {
-            key: _decimal(value, "frontend range")
-            for key, value in frontend["value"].items()
-        }
-        if not ZERO <= bounds["minimum"] <= bounds["maximum"]:
-            raise InputError("invalid frontend range")
-        frontend["value"] = bounds
         for identifier, unit in BOUND_UNITS.items():
             record = records[identifier]
             if record["unit"] != unit or record["status"] != "documented-visible":
@@ -503,15 +475,11 @@ def _load_parameters():
 
 
 def _evidence(record):
-    sources = record["source_ids"]
-    kind = ("frontend_publication" if record["id"] == "frontend-policy-range"
-            else "official_announcement" if any(source.startswith("sr-post-") for source in sources)
-            else "whitepaper")
     return {
         "parameter_id": record["id"], "documented_value": record["value"],
         "unit": record["unit"], "status": record["status"],
-        "source_ids": list(sources), "locator": record["locator"],
-        "source_kind": kind, "source_limits": list(record["limits"]),
+        "source_ids": list(record["source_ids"]), "locator": record["locator"],
+        "source_kind": "whitepaper", "source_limits": list(record["limits"]),
     }
 
 
@@ -557,11 +525,11 @@ def _conformance(config, records, files):
 
     unresolved_fields = {
         "base_daily_issuance": ("base-issuance", "The unscaled launch base rate is published and owner-decreasable; holding a user-supplied base rate fixed remains a future assumption, not verified live configuration."),
-        "license_cost_tokens": ("license-floor-formula", "User-supplied fixed license cost is a proxy, not an auction quote; the published floor does not resolve conflicting auction-decay statements."),
+        "license_cost_tokens": ("license-floor-formula", "User-supplied fixed license cost is a proxy, not an auction quote. Applied auction mechanics: not established from current source; verified implementation required."),
         "sale_fee_pct": ("trading-fee", "Directional steady-state trading rates are published; the user-supplied separate sale-fee haircut and its applied basis remain model assumptions, not a verified additional charge."),
         "entry_cost_eth": ("whitelist-liquidity-fee", "User-supplied acquisition cost; whitelist mint pricing is context only, not a universal entry cost or bound."),
         "resolution_fee_pct": ("resolution-fee-formula", "The system-wide pressure curve is published; a fixed user-supplied fee remains a proxy without verified pressure inputs, commit timing or settlement ordering."),
-        "sale_tax_pct": ("launch-trading-tax-curve", "User-supplied sale tax is a proxy; launch rates conflict within the whitepaper, and timing, basis and executable application remain unresolved."),
+        "sale_tax_pct": ("launch-trading-tax-curve", "User-supplied sale tax is a proxy. Applied tax: not established from current source; verified implementation required."),
         "multiplier": ("multiplier-update-rule", "The epoch policy rule and bounds are published; a user-supplied constant multiplier remains a future proxy, not a verified dynamic policy path or on-chain configuration."),
     }
     inputs = []

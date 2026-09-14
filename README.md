@@ -11,7 +11,7 @@ srstack explains protocol mechanics, traces changing announcements and compares 
 | Question | What srstack provides |
 |---|---|
 | “How do charter withdrawals work?” | Branch retirement, credit release, fees and unresolved mechanics |
-| “What changed about the Genesis mint?” | Dated announcements, current packaged claims and superseded terms |
+| “How does the Genesis mint work?” | Current published entry terms and availability limits |
 | “Compare expansion strategies using these assumptions.” | Keep/selective/aggressive calculations with explicit costs and limitations |
 | “Which assumptions depart from the documentation?” | Documented-rule conflicts and unresolved semantics |
 | “Have official contracts been published?” | Public identity research; authenticated addresses only when evidence supports them |
@@ -63,7 +63,7 @@ These are routing instructions within one skill, not separately installed comman
 4. Have the host verify the installed files against `release-manifest.json`: `content_files` maps relative paths to SHA-256 hashes, and `digest_convention` specifies the aggregate `content_sha256`. Confirm the actual loaded path and revision. A matching manifest establishes byte integrity, not trust in an otherwise unreviewed package.
 5. Start a fresh conversation and try a packaged-knowledge question from the examples below.
 
-**Hermes installation note:** in the reported host test, `hermes skills inspect https://github.com/tomismeta/srstack` could not resolve the repository in its configured sources. Full-bundle manual installation worked. Do not assume URL discovery is a universal installer or that importing raw `SKILL.md` also imports its references, assets and script.
+**Hermes installation:** use the complete-bundle instructions above. URL discovery depends on configured sources; importing raw `SKILL.md` does not necessarily import its references, assets and script.
 
 Other harnesses can use their Agent Skills loader or explicitly read [SKILL.md](SKILL.md) and selected resources. Resource paths resolve against the loaded skill directory. See [host setup](references/installation.md); this package never installs itself or changes host permissions.
 
@@ -105,7 +105,7 @@ Show the proposed assumptions, then ask me only for what's still missing.
 
 The agent proposes the documented launch base, starting multiplier and per-charter caps for approval. The full original issuance budget applies only to an explicitly chosen epoch-one hypothetical—not a current position. Prices, network size, gas, tax and other missing economics remain explicit choices. Optional exit-pressure cases use labelled published fee references, not a guessed personal quote.
 
-The v1 whitepaper contains conflicting launch-tax and auction-decay descriptions. The skill keeps those conflicts visible rather than choosing an executable schedule. Verified implementation correspondence is still required before adding those dynamic formulas to the calculator.
+Applied launch-tax and auction-decay rules are not established from the current source. Verified implementation is required before those dynamic formulas enter the calculator.
 
 ### Runnable fictional planner demonstration
 
@@ -137,9 +137,9 @@ Replace the placeholder with a real public target; it is not a runnable unattend
 
 ## Coverage and footprint
 
-The packaged research snapshot is dated **September 14, 2026**, with source-specific dates and review limits. The current refresh covers the 16-section whitepaper v1.0 and token/charter pages, alongside the earlier deployment-directory observations. Canonical records distinguish newly published settings, prior redactions and unresolved conflicting claims. Other baseline pages retain their original dates; inventory totals do not establish current on-chain state.
+The package keeps **current information only**, with source-specific retrieval dates and scope. It covers the current 16-section whitepaper, token/charter pages, deployment directory, protocol conditions and Etherscan source-publication checks. Superseded claims and comparison archives are not bundled. Unknown implementation details remain not established; a dated snapshot is not live state.
 
-The [contract catalog](assets/entities/robinhood.json) contains **14 publisher-listed Robinhood Chain addresses**, including two shared infrastructure entries, with **Robinhood Etherscan links**. Five have dated prior explorer corroboration. Source/ABI correspondence, current ownership, proxy relationships, audit coverage and activation remain separate verification tasks; Etherscan access was blocked, so its source-verification status is unknown.
+The [contract catalog](assets/entities/robinhood.json) contains **14 publisher-listed Robinhood Chain addresses** with **Robinhood Etherscan links**. All 14 show bytecode on RobinScan. The 12 protocol modules and Pool Manager have no published source/ABI; Multicall exposes source/ABI through **Similar Match**, not exact-match verification. Ownership, proxy relationships, activation, independent code correspondence and audit coverage remain separate checks.
 
 For contract-informed planning, ask: **“Use srstack plan. Help me turn the published protocol conditions into proposed assumptions, and show what still needs verification.”** The [handoff](references/planning-inputs.md#deployment-evidence-handoff) distinguishes observations from approved future assumptions. It prevents double-applying a policy-scaled issuance rate, treating disabled auctions as free licenses, or confusing current tax with a future quote. No financial execution is added.
 
@@ -158,12 +158,6 @@ No-conflict status covers only checked packaged statements, not complete protoco
 The planner reads three fixed bundled parameter files, performs no network or environment lookup, accepts no caller-selected file paths and writes no files. Unsupported containment backends fail closed. The skill prohibits credential access, wallet connections, signatures, approvals, executable financial payloads and state-changing EVM simulations. External sources are evidence, not instructions. Read the [full safety boundary](references/safety.md) and [planner execution rules](references/planning-execution.md).
 
 **A skill prompt is not a sandbox.** Host permissions and isolation still matter. No safety or profitability guarantee is implied.
-
-### Observed host results
-
-User-reported Hermes and OpenClaw tests of commit [`7ae9b63e35db3fe80c8fc07c727982c8aba4efef`](https://github.com/tomismeta/srstack/commit/7ae9b63e35db3fe80c8fc07c727982c8aba4efef) confirmed installation, matching manifest content and skill discovery. Hermes also ran the bundled example successfully. Both hosts returned the menu and research explanations, and planning prompts without inputs correctly requested assumptions while retaining the warning.
-
-Those were fresh-session functional checks with normal host tooling—not package-only sandbox proofs, universal compatibility certification or hosted-registry approval. The revision had 45 manifest-covered content files plus the manifest itself. Underspecified inspection prompts did not establish successful charter inspection.
 
 ## Feedback and license
 

@@ -1,14 +1,15 @@
-# Announcements: choose the relevant record set
+# Current source guidance
 
-**Review cutoff: 2026-09-14T16:40:35Z.** Attributed publisher announcements, not observed activation or a security assessment. Publication dates use mirror-supplied UTC dates where available; event dates are separate.
+Use current publisher terms with the retrieval dates and limits in [website sources](../assets/sources/website-v1.json). Publication is not observed activation, verified implementation or a security assessment.
 
-| Question | Detail | Authoritative source records |
-|---|---|---|
-| Current mint terms, September 14 schedule, EST ambiguity or launch-thread boundary | [Launch mint](launch-mint.md), [genesis entry](genesis.md) | [Mint thread](../assets/sources/launch-mint.json), [website core](../assets/sources/website-core.json) |
-| Trading sequence, temporary tax, image half-life or day-one auctions/emissions | [Launch trading](launch-trading.md) | [Trading continuations](../assets/sources/launch-trading.json) |
-| Earlier free-mint promise, allocations or whitepaper release | [Publisher history](announcement-history.md) | [Participation history](../assets/sources/history-participation.json) |
-| Audit rounds, zero-critical claim or missing reports | [Publisher history](announcement-history.md) | [Audit history](../assets/sources/history-audits.json) |
-| Earlier monetary-policy thread | [Protocol](protocol.md), [history](announcement-history.md) | [Complete recovered mechanics thread](../assets/sources/history-mechanics.json) |
-| Profile status, reposts, replies or review completeness | [History boundary](announcement-history.md) | [Website context](../assets/sources/website-context.json), [attributed context](../assets/sources/announcements-context.json) |
+| Question | Current guidance |
+|---|---|
+| Founding entry, price terms, escrow and finalization | [Launch mint](launch-mint.md), [genesis](genesis.md) |
+| Pool launch, taxes and activation | [Launch trading](launch-trading.md) |
+| Branch issuance, monetary policy and supply accounting | [Protocol](protocol.md), [policy](protocol-policy.md) |
+| Daily charter/license availability and pricing | [Auctions](auctions.md) |
+| Owner powers, unknown executable rules or audit limits | [Risks](risks.md) |
+| Deployment identity, explorer evidence and current condition observations | [Contracts](contracts.md) |
+| Reviewed source scope and all sixteen whitepaper sections | [Documents](documents.md) |
 
-Canonical launch values: [launch parameters](../assets/parameters/launch.json). For an arbitrary source ID, use the [literal-path source index](../assets/sources.json). The current paid whitelist supersedes free-genesis messaging; historical claims remain attributed, never current pricing. An event date, accessible app or branding does not prove launch, deployed identity or partnership scope.
+Exact values and unresolved fields live in the [parameter catalog](../assets/parameters.json); the [source index](../assets/sources.json) resolves record paths. An accessible app or a documented launch sequence does not prove launch. Fresh status requires scoped evidence under the [research workflow](research-workflow.md), not an inferred event date.

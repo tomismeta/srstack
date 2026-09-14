@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "scope": "Publisher design, not verified deployment",
-  "reviewed_at": "2026-09-14T22:15:13.789Z",
+  "scope": "Current Whitepaper v1.0 publisher design, not verified deployment",
+  "reviewed_at": "2026-09-14T23:17:04.545Z",
   "records": [
     {"id":"buyback-burn-share","value":100,"unit":"percent of purchased STANDARD","status":"documented-visible","source_ids":["sr-whitepaper-v1"],"locator":"§3 Currency; §11 Reserves","limits":[]},
     {"id":"ongoing-active-vault-share","value":70,"unit":"percent of ongoing protocol ETH","status":"documented-visible","source_ids":["sr-whitepaper-v1"],"locator":"§11 The steady-state split; §15 Fee split","limits":["Post-launch trading fees and charter-auction proceeds only; founding proceeds use the separate first-25-ETH then 60/20/20 allocation. Owner may tune fee splits; team share is capped at 20% under §12."]},
