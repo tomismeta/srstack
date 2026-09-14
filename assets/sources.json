@@ -3,6 +3,12 @@
   "purpose": "Bounded routing index; source records are authoritative in the groups below",
   "groups": [
     {
+      "id": "website-v1",
+      "path": "assets/sources/website-v1.json",
+      "record_ids": ["sr-whitepaper-v1", "sr-token-page-v1", "sr-charters-page-v1"],
+      "scope": "Current 16-section whitepaper v1.0, published conflicts, and refreshed token/charter pages; earlier baseline retained separately"
+    },
+    {
       "id": "deployments",
       "path": "assets/sources/deployments.json",
       "record_ids": [
@@ -26,7 +32,7 @@
         "sr-mint",
         "sr-whitepaper"
       ],
-      "scope": "Current protocol, mint and whitepaper presentations"
+      "scope": "Earlier same-day protocol, mint and whitepaper baseline; current whitepaper is routed through website-v1"
     },
     {
       "id": "website-context",

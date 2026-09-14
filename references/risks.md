@@ -1,27 +1,34 @@
 # Risks and disclosure limits
 
-Documented limitations, not vulnerability findings or an audit. Sources: [website core](../assets/sources/website-core.json) and [website context](../assets/sources/website-context.json).
+Documented limits, not vulnerability findings or an audit. Current publisher source: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1`. Earlier notices and presentations remain separately dated in [website core](../assets/sources/website-core.json) and [website context](../assets/sources/website-context.json).
 
-## What the publisher disclaims — whitepaper §15
+## Publisher disclaimer — §16
 
-The publisher calls STANDARD experimental, says it is not a bank or regulated financial institution, holds no customer funds, offers no accounts, gives no investment advice and places participation at the user's risk. The About footer says “holds no deposits” rather than “holds no customer funds.” Those disclaimers coexist with protocol-held liquidity and bank-held reserves; do not confuse protocol asset ownership with a customer deposit or reserve-redemption entitlement. [sr-whitepaper: disclaimer; sr-disclaimer; sr-about; sr-app-about]
+STANDARD is described as experimental, not a bank or regulated financial institution, with no customer funds/accounts and no investment advice. Reserves are protocol property and not redeemable (`reserve-redemption-policy`). About's earlier “holds no deposits” wording must not be confused with the current token-to-ledger deposit-conversion mechanism: conversion does not create a reserve-redemption entitlement. [sr-whitepaper-v1: currency, disclaimer; sr-disclaimer; sr-about; sr-app-about]
 
-The whitepaper and both About forms explicitly call themselves **design overviews, not implementation specifications**. They say crucial safeguards are omitted, copying the document alone can cause loss, and only the official deployment is canonical. That notice is a publisher claim; it neither authenticates an address nor proves the claimed safeguards exist or work. [sr-whitepaper: opening notice; sr-about; sr-app-about]
+Earlier whitepaper/About notices call their material design overviews rather than implementation specifications and warn that omitted safeguards matter. Preserve those notices with their dated sources; the current frozen section text is not an authenticated implementation specification either. Neither canonical-site rhetoric, a code line count nor published addresses establishes deployed-bytecode correspondence. [sr-whitepaper: opening notice; sr-about; sr-app-about]
 
-## Concrete disclosure limits — §14 and related sections
+## Non-upgradeable does not mean uncontrolled — §12
 
-The launch-parameter summary remains entirely redacted and says final parameters will be announced closer to launch. Some values are visible in earlier prose or tables. Retain each visible claim at its exact locator; do not erase it merely because the summary hides it, or treat it as verified final deployment configuration. Missing policy, exit-fee and auction settings remain null with `redacted` or `not-established` status. [sr-whitepaper: parameters, policy, branches, exits]
+The whitepaper claims no proxies or code-migration mechanism (`protocol-upgrade-policy`). It separately describes substantial owner discretion:
 
-The overview does not supply authenticated deployment identities, full implementation rules, access-control permissions, audit evidence, reserve custody terms or live balances. The absence of those details in this reviewed material is not proof they do not exist elsewhere. See [contracts](contracts.md) before making identity or implementation claims.
+- **Fixed constraints:** cap, base-rate ceiling with downward-only ratchet, multiplier rule, resolution curve, revocation fee, manual-tax ceiling, precommitted launch-tax schedule, vault execution bounds and founding price/curve constraints.
+- **Bounded tuning:** epoch length, taxes, daily license/charter counts, fee splits, auction floors/windows/decay half-lives. Exact bounds live in `epoch-length-minimum`, `epoch-length-maximum`, `owner-manual-tax-ceiling`, `licenses-per-day-owner-ceiling`, `charters-per-day-owner-ceiling`, `ongoing-team-share-owner-ceiling` and `auction-owner-controls`. The whitelist window freezes when the sale opens (`founding-whitelist-window-control`).
+- **Owner identity and process:** the source says production deployment initially assigns sole ownership to the broadcast sender/deployer, with no protocol-enforced delay, notice period, threshold or cancellation window. A later manual Ownable2Step transfer of selected contracts to a Safe/multisig is possible, but no recipient is deployed/configured/assigned by production launch (`owner-control-policy`). This describes launch setup, not verified current owner state.
+- **One-way switches:** charter transferability and permissionless contraction-buyback/POL-pairing execution may be enabled permanently (`transfer-enablement`, `vault-execution-enablement`). Expansion reserve purchases remain owner-only (`expansion-reserve-purchase-policy`).
 
-## Locate the relevant uncertainty
+An **optional**, not necessarily configured, guardian can pause auctions and vault purchases only. It cannot pause withdrawals, touch funds or change parameters; the owner can disable or permanently renounce it (`guardian-powers`). Do not infer that withdrawals cannot revert: §9 expressly retains independent settlement dependencies. [sr-whitepaper-v1: exits, immutables]
 
-- [Source conflicts](risk-conflicts.md): genesis/ongoing proceeds, issuance destination, autonomy/controls, ledger spending, dormancy arithmetic, launch timestamps and tax text/image tension.
-- [Policy](protocol-policy.md), [auctions](auctions.md), [exits](exits.md), [reserves](reserves.md): mechanics and exact missing inputs. Values live in [monetary](../assets/parameters/monetary.json), [participation](../assets/parameters/participation.json), [reserves](../assets/parameters/reserves.json), [launch](../assets/parameters/launch.json).
-- [Audit history](announcement-history.md): claims and missing reports, not security assurance.
+## Published facts and remaining limits
+
+The current whitepaper has sixteen sections, including new **Immutables**, and its launch summary is now visible. Policy bounds/recurrence, exit pressure/fee formula, license floor, founding split and owner controls are no longer “still redacted.” Exact parameter records carry current facts, dated prior values and explicit limits. [sr-whitepaper-v1: policy, branches, exits, reserves, immutables, parameters]
+
+Two current contradictions prevent an executable source-only interpretation: §12 launch taxes open 90%/90%, versus §15's 20%/40%; and §7's geometric-to-floor auction equation differs from §§7–8's four-hour gap-halving prose. Steady taxes agree at 2%/3%. Preserve conflicts rather than choosing a preferred formula or claiming code resolves them. [Source conflicts](risk-conflicts.md)
+
+The separately added deployment directory and protocol conditions remain publisher evidence, not source-code/ABI verification. Authenticated implementation, permissions, audit correspondence, reserve custody and live balances remain distinct evidence requirements. [Contracts](contracts.md) and [inspection](inspection.md) retain those boundaries. [sr-contract-directory; sr-protocol-conditions]
 
 ## What economics alone cannot establish
 
-License burning, branch retirement, fee redistribution, permanent liquidity and buybacks are described mechanisms, not a promise of returns, realizable exit prices, profitability, solvency, continuous withdrawal availability or safety from manipulation. The publisher's “rational move,” anti-run, anti-sniping and defense narratives require distinct implementation and outcome evidence; they are not adopted as established results. [sr-whitepaper: net-flow, policy, branches, exits, reserves, flywheels; sr-post-2098969974044066298]
+Burning, retirement, redistribution, permanent liquidity and buybacks are not promises of returns, realizable exit prices, solvency, continuous settlement or manipulation resistance. Published recurrence is not a future multiplier forecast. Numerical scenario output remains **Hypothetical—not contract-verified or a forecast.**
 
-Do not classify an unknown as a vulnerability, nor call a public-source review a security audit. Explain the documented mechanism, the exact missing evidence and the conclusion it prevents. Use [research workflow](research-workflow.md) for scoped public reads and [safety](safety.md) for action boundaries.
+Use [policy](protocol-policy.md), [auctions](auctions.md), [exits](exits.md), [reserves](reserves.md) and the [parameter catalog](../assets/parameters.json) for topic-specific facts. [Audit history](announcement-history.md) records claims, not security assurance. Do not classify missing evidence as a vulnerability or call this public-source review an audit.

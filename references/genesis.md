@@ -1,11 +1,27 @@
 # Genesis entry
 
-Sources: [website core](../assets/sources/website-core.json) (`sr-whitepaper` §6, `sr-mint`), [launch mint](../assets/sources/launch-mint.json). Exact economics: [launch parameters](../assets/parameters/launch.json); ongoing branch capacity: [participation parameters](../assets/parameters/participation.json).
+Current design: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§6,11–12,15. Earlier mint presentation and announcements retain their dates in [website core](../assets/sources/website-core.json) and [launch mint](../assets/sources/launch-mint.json). Exact economics: [launch parameters](../assets/parameters/launch.json).
 
-**Current entry-cost claim:** §6 and the mint page now describe a **whitelist liquidity fee** (`whitelist-liquidity-fee`), not a free whitelist mint. All remaining genesis places proceed to a public descending Dutch auction after the whitelist window. The current §6 claim is **all genesis mint proceeds for initial liquidity and protocol vaults, none for the team** (`genesis-protocol-proceeds-share`, `genesis-team-proceeds-share`). The internal liquidity/vault allocation remains unknown (`genesis-liquidity-vault-split`). This supersedes earlier free-mint messaging; use [updates](updates.md) for that attributed history, not as current pricing. [sr-whitepaper: charters; sr-mint; sr-post-2098969964283846751]
+## Paid founding distribution
 
-The founding supply and whitelist wallet cap are `genesis-charters` and `whitelist-wallet-limit`. The mint page describes selection based on wallet activity and contributions in replies, quote posts and DMs, says more wallets will be added, and warns that checking eligibility does not reserve a mint. Its rendered allocation counter is not authenticated whitelist state. Reading that presentation does not authorize wallet connection or a mint. [sr-mint; sr-whitepaper: charters]
+The whitelist mint charges `whitelist-liquidity-fee`, with `whitelist-wallet-limit`; `genesis-charters` is the founding supply. Remaining charters enter a public Dutch sale open to everyone, including whitelist participants. §6 specifies one charter per public transaction and a combined three-charter wallet cap across both phases. Public pricing decays exponentially to the whitelist price over `genesis-public-auction-duration` and remains there. The exact implementation function is not established by that prose (`genesis-public-auction-curve`); do not borrow the daily-auction equation. [sr-whitepaper-v1: charters]
 
-The mint snapshot said not live yet. [Launch mint](launch-mint.md) preserves the whitelist/public schedule, undisclosed genesis decay curve and graphic distinguishing token launch without liquidity from later liquidity/emissions. [Launch trading](launch-trading.md) covers the promised post-mint activation and initially disabled additional charter auctions; none establishes that activation occurred.
+Exact combined-wallet and public-transaction limits are `founding-wallet-limit` and `founding-public-transaction-limit`; they are distinct from the whitelist claim limit.
 
-For proceeds ownership and the tension with §11’s blanket fee wording, see [reserves](reserves.md).
+This paid model supersedes the earlier free-genesis promise. Use [history](announcement-history.md) for that attributed change, never as current pricing. The dated mint-page selection description mentions wallet activity and contributions in replies, quote posts and DMs; checking eligibility does not reserve a mint. Its counters are not authenticated whitelist state. Reading the page does not authorize connecting a wallet or minting. [sr-mint; sr-post-2098969964283846751]
+
+## Escrow and finalization
+
+Founding proceeds escrow until finalization. Founding charters accrue nothing during the sale; finalization starts accrual for all of them together with epoch one. The owner sets the launch price. In the same described atomic transaction, the pool launches, the tax-decay clock starts and emissions begin. [sr-whitepaper-v1: charters, reserves]
+
+Canonical lifecycle records: `founding-proceeds-escrow`, `founding-accrual-start`, `founding-launch-price`.
+
+The first 25 ETH of accepted proceeds forms a protocol-owned floor bid below launch price. Of the remainder, 60% is held for POL pairing as price discovers, 20% funds contraction and 20% expansion. The token allocation is single-sided above launch price; there is no team share of founding proceeds. `genesis-liquidity-vault-split`, `genesis-protocol-proceeds-share` and `genesis-team-proceeds-share` are authoritative parameter records. This is **not** the ongoing fee split. [sr-whitepaper-v1: currency, reserves, parameters]
+
+The allocation components are `founding-floor-bid`, `founding-pol-remainder-share`, `founding-contraction-remainder-share` and `founding-expansion-remainder-share`; the percentages apply after the floor bid, not to total receipts.
+
+The owner may change the whitelist window only before opening; opening freezes its timestamps. The whitepaper calls the whitelist price and public opening price/curve immutable, but does not itself supply every implementation detail. [sr-whitepaper-v1: immutables]
+
+`founding-whitelist-window-control` is the authoritative source-policy record; scheduled clock times retain separate announcement provenance.
+
+[Launch mint](launch-mint.md) preserves the earlier EST schedule and token-without-liquidity graphic. The current token page displayed the pool as not launched; the charter page displayed ongoing auctions not enabled. Those rendered observations do not prove a later finalization or activation. [sr-token-page-v1; sr-charters-page-v1]

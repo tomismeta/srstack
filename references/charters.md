@@ -1,19 +1,22 @@
 # Charters and branches
 
-Publisher design: [core sources](../assets/sources/website-core.json), `sr-whitepaper` §§6–10,12. Exact ongoing settings: [participation parameters](../assets/parameters/participation.json); genesis settings: [launch parameters](../assets/parameters/launch.json).
+Publisher design: [current sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§6–10,12–13 and `sr-charters-page-v1`. Exact ongoing settings: [participation parameters](../assets/parameters/participation.json); founding settings: [launch parameters](../assets/parameters/launch.json).
 
 ## Charter and branch lifecycle — §§6–7
 
-A charter is an initially soulbound NFT licensing its holder to run a bank and receive issuance. It opens with `initial-branches` and can hold `maximum-branches`. Branches divide the epoch's issue pro rata; new branches accrue from opening, not retroactively. An expansion license paid in $STANDARD opens an additional branch, with payment burned according to `license-burn-share`. [sr-whitepaper: charters, branches]
+A charter is an initially soulbound NFT licensing its holder to run a bank and receive issuance. It opens with `initial-branches` and can hold `maximum-branches`. Branches divide issuance pro rata; a new branch earns from opening, not retroactively. An expansion license opens another branch and permanently removes its payment value (`license-burn-share`). Token holding alone does not earn branch issuance or confer governance rights. [sr-whitepaper-v1: charters, branches, currency; sr-token-page-v1]
 
-Retiring branches withdraws their proportional share of the charter's accrued balance and destroys the retired earning capacity. Retiring the final branch burns the charter. The described return path is purchasing a new charter at auction; a closed charter does not reopen. Purchasing another seat does not preserve the retired branches. [sr-whitepaper: charters, exits]
+Retirement releases the retired branches' proportional share of accrued balance, net of a resolution fee, and destroys their earning capacity. Retiring the final branch burns the charter. The described return path is purchasing a new charter at auction; a closed charter does not reopen. [sr-whitepaper-v1: charters, exits]
+
+The current companion page displayed both daily charter auctions and expansion licenses as **not enabled**, with a displayed block/time anchor preserved in its source record. This is a rendered observation, not an independently authenticated activation check. Founding distribution precedes the one-time license activation described by the whitepaper; daily charter supply initially remains `initial-daily-charter-count`. [sr-charters-page-v1; sr-whitepaper-v1: branches, auctions]
 
 ## Follow the question
 
-- [Genesis entry](genesis.md): current paid whitelist, remaining public supply, selection and proceeds. [Launch mint](launch-mint.md) has the dated schedule, EST ambiguity and token-without-liquidity graphic.
-- [Ongoing auctions](auctions.md): daily charter/license purchases, exponential price, limits, rollover and hidden floor. Do not substitute these rules for the genesis auction.
-- [Exits and dormancy](exits.md): pro-rata retirement, resolution fee, bounty ordering, check-in and future NFT transferability.
-- [Reserves](reserves.md): genesis versus ongoing ETH routing and ownership.
-- [History](announcement-history.md): superseded free-mint promise, never current entry pricing.
+- [Genesis entry](genesis.md): paid whitelist/public entry, escrow and common accrual start at finalization. [Launch mint](launch-mint.md) preserves dated schedule and timezone limitations.
+- [Ongoing auctions](auctions.md): separate license/charter opens, capacity and **conflicting decay descriptions**, not an executable curve.
+- [Exits and dormancy](exits.md): retirement, published fee formula, qualifying activity, transfer grace and unresolved bounty ordering.
+- [Reserves](reserves.md): founding versus ongoing routing, and assets owned by the protocol rather than bankers.
+- [Risks](risks.md): owner controls and optional guardian despite non-upgradeability.
+- [History](announcement-history.md): superseded free-mint promise, never current pricing.
 
-Ledger credits versus spendable/burnable wallet tokens remain unresolved; see [conflicts](risk-conflicts.md).
+The current source distinguishes permanent ledger removal from token-deposit conversion; [supply accounting](protocol-policy.md) explains why not every removed ledger unit was a circulating token. Source/ABI correspondence remains unverified.

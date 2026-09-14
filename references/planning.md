@@ -20,6 +20,8 @@ For an underspecified request, start with:
 
 Adapt these questions to the supplied context rather than repeating the checklist. Suggest documented mode for ordinary comparisons; explain that stress is an explicit choice to explore departures. Offer a 30-day/full-exit illustration only as a proposed scenario, never as a recommendation or an accepted default. No calculation is required during intake.
 
+If the user asks for **documented launch settings**, use the [launch proposal](planning-inputs.md#documented-launch-settings). Fill the documented reference values internally, explain them in plain language, and ask only for the remaining position, budget, horizon, market and fee assumptions. The request authorizes a proposal—not a silent run, current-state claim or preselected exit-pressure case.
+
 ### 2. Fill gaps without inventing economics
 
 After the essentials, collect the remaining assumptions in small groups. Explain unfamiliar concepts before asking for values. Distinguish user inputs, dated sourced observations, proposed hypotheses and unresolved gaps. A current observation is not a future constant or an executable quote.
@@ -31,7 +33,7 @@ When the user asks to use published contracts or current protocol conditions, fo
 | Schema version, case IDs/names, summary detail, history off | Set internally; these do not change economics. IDs and labels must remain valid plain data. |
 | Mode, horizon, exit choice, selective target/cadence | Propose a suitable comparison setup, but obtain approval before execution. No silent documented-to-stress switch. |
 | Flat price, unchanged external branches, constant issuance multiplier | May propose as clearly labelled illustrative hypotheses, not neutral forecasts or low-risk economic facts. Approval is required. |
-| Holdings, initial cost, network size, issuance/budget, token/license price, protocol fees, acquisition markup, sale slippage/tax | Ask for values or explain the evidence gap. Do not guess, substitute zero or borrow fixture values. Fresh public research is a separate user-authorized step, not an automatic lookup. |
+| Holdings, initial cost, network size, issuance/budget, token/license price, protocol fees, acquisition markup, sale slippage/tax | Ask for missing values or explain the evidence gap. Documented launch references may be proposed through the launch workflow, not silently accepted. Do not guess, substitute zero or borrow fixture values. Fresh public research is a separate user-authorized step, not an automatic lookup. |
 | Gas | Ask for an ETH estimate for entry, each successful expansion purchase and terminal exit. No universal gas constant. An estimate needs a stated basis; network gas price alone is insufficient without chain and transaction-cost information. |
 
 If a user cannot estimate gas, offer **explicit gas exclusion for a preliminary comparison**, or ask them to approve specific hypothetical values/ranges. Only after approval may exclusion be encoded as zero for the agreed gas fields; label the result **before the excluded gas costs**, never all-in. Entry, per-purchase and terminal gas are different charges. Do not exclude protocol fees, slippage or other costs merely because gas was excluded.

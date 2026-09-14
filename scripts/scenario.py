@@ -103,13 +103,17 @@ LIMITATIONS = [
     "or realized return is implied. Entry cost and initial credits are supplied "
     "by the caller; no entry price or per-branch price is inferred.",
     "Matching a publisher cap does not verify a live position or establish "
-    "protocol feasibility. The displayed frontend policy range is not a "
-    "verified on-chain multiplier bound.",
+    "protocol feasibility. Whitepaper multiplier bounds are documented policy "
+    "claims, not verified on-chain configuration or a future multiplier path.",
     "The model does not check global auction inventory, endogenous external "
     "branch growth, continuous policy/accrual, fee redistribution, dormancy, "
     "or whether credits can actually pay for licenses.",
+    "The launch base rate, multiplier policy and withdrawal curve are published; "
+    "fixed base, multiplier and resolution-fee inputs remain scenario proxies. "
+    "No dynamic policy or withdrawal settlement algorithm is implemented.",
     "Acquisition context, license pricing, resolution and sale fee/tax bases "
-    "and their application remain unchecked assumptions, even in documented mode.",
+    "and their application remain unchecked assumptions. Whitepaper launch "
+    "tax and auction-decay statements conflict; the engine selects neither.",
 ]
 SUMMARY_LIMITATIONS = [
     "All economic values are user assumptions; publisher checks are partial, "
@@ -117,10 +121,11 @@ SUMMARY_LIMITATIONS = [
     "Offline Decimal counterfactuals, not EVM accounting or executable transactions; "
     "shared exogenous price, external-branch and gross issuance paths exclude "
     "endogenous growth, continuous accrual, dormancy and fee redistribution.",
-    "Acquisition and license prices, auction inventory, resolution and sale fee/tax "
-    "bases, continuous policy and credits-payment feasibility remain unchecked; "
-    "the frontend multiplier range is not an on-chain bound. Sequential sale "
-    "haircuts are a model assumption.",
+    "Published base issuance, multiplier policy and withdrawal curves do not "
+    "verify execution; fixed inputs remain proxies. Acquisition and license "
+    "prices, auction inventory, fee/tax application and credits-payment feasibility "
+    "remain unchecked. Launch tax and auction-decay statements conflict; "
+    "sequential sale haircuts remain a model assumption.",
     "Retained branches and credits have no residual valuation; partial/no-exit "
     "cash P&L is not total return. No forecast, recommendation or liquidity guarantee.",
 ]
@@ -279,10 +284,11 @@ PARAMETER_IDS = {
     "participation.json": (
         "maximum-branches", "licenses-per-charter-per-day",
         "license-floor-formula", "resolution-fee-formula",
+        "resolution-fee-floor", "resolution-fee-ceiling",
     ),
     "monetary.json": (
         "issuance-budget", "frontend-policy-range", "base-issuance",
-        "trading-fee", "multiplier-update-rule",
+        "multiplier-floor", "multiplier-ceiling", "trading-fee", "multiplier-update-rule",
     ),
     "launch.json": ("launch-trading-tax-curve", "whitelist-liquidity-fee"),
 }
@@ -291,11 +297,17 @@ CAP_UNITS = {
     "licenses-per-charter-per-day": "licenses per charter per day",
     "issuance-budget": "STANDARD cumulative issuance",
 }
-CONTEXT_UNITS = {
+BOUND_UNITS = {
     "base-issuance": "STANDARD per day",
+    "multiplier-floor": "multiplier",
+    "multiplier-ceiling": "multiplier",
+    "resolution-fee-floor": "percent",
+    "resolution-fee-ceiling": "percent",
+}
+CONTEXT_UNITS = {
     "license-floor-formula": "STANDARD price rule",
     "resolution-fee-formula": "fee rule",
-    "trading-fee": "fee rate; basis not disclosed",
+    "trading-fee": "percent by trade direction",
     "multiplier-update-rule": "policy rule",
     "launch-trading-tax-curve": "complete applied fee rule",
     "whitelist-liquidity-fee": "ETH per whitelist mint",
@@ -467,6 +479,17 @@ def _load_parameters():
         if not ZERO <= bounds["minimum"] <= bounds["maximum"]:
             raise InputError("invalid frontend range")
         frontend["value"] = bounds
+        for identifier, unit in BOUND_UNITS.items():
+            record = records[identifier]
+            if record["unit"] != unit or record["status"] != "documented-visible":
+                raise InputError("unsupported numeric bound metadata")
+            value = _decimal(record["value"], "parameter bound")
+            if value < ZERO or (unit == "percent" and value > HUNDRED):
+                raise InputError("invalid numeric bound")
+            record["value"] = value
+        for prefix in ("multiplier", "resolution-fee"):
+            if records[prefix + "-floor"]["value"] > records[prefix + "-ceiling"]["value"]:
+                raise InputError("invalid ordered bounds")
         for identifier, unit in CONTEXT_UNITS.items():
             if records[identifier]["unit"] != unit:
                 raise InputError("unsupported contextual parameter unit")
@@ -507,8 +530,7 @@ def _conformance(config, records, files):
     def check(path, value, identifier, relation):
         record = records[identifier]
         documented = record["value"]
-        conforms = (value <= documented if relation == "<=" else
-                    documented["minimum"] <= value <= documented["maximum"])
+        conforms = value <= documented if relation == "<=" else value >= documented
         constraint = {
             "input_path": path, "provided_value": value, "relation": relation,
             "parameter_id": identifier, "conforms": conforms,
@@ -518,24 +540,29 @@ def _conformance(config, records, files):
         else:
             cite(identifier)
         constraints.append(constraint)
-        by_path[path] = constraint
+        by_path.setdefault(path, []).append(constraint)
 
     for field in ("initial_branches", "max_branches", "selective_target"):
         check(field, config[field], "maximum-branches", "<=")
     check("daily_license_limit", config["daily_license_limit"], "licenses-per-charter-per-day", "<=")
     check("remaining_issuance_budget", config["remaining_issuance_budget"], "issuance-budget", "<=")
+    check("base_daily_issuance", config["base_daily_issuance"], "base-issuance", "<=")
     for index, scenario in enumerate(config["scenarios"]):
-        check("scenarios." + str(index) + ".multiplier", scenario["multiplier"],
-              "frontend-policy-range", "within_inclusive")
+        path = "scenarios." + str(index) + ".multiplier"
+        check(path, scenario["multiplier"], "multiplier-floor", ">=")
+        check(path, scenario["multiplier"], "multiplier-ceiling", "<=")
+        path = "scenarios." + str(index) + ".resolution_fee_pct"
+        check(path, scenario["resolution_fee_pct"], "resolution-fee-floor", ">=")
+        check(path, scenario["resolution_fee_pct"], "resolution-fee-ceiling", "<=")
 
     unresolved_fields = {
-        "base_daily_issuance": ("base-issuance", "User-supplied base issuance; source rate semantics remain unresolved."),
-        "license_cost_tokens": ("license-floor-formula", "User-supplied fixed license cost is a proxy, not an established auction or floor quote."),
-        "sale_fee_pct": ("trading-fee", "User-supplied sale fee; source rate and applied fee basis remain unresolved."),
+        "base_daily_issuance": ("base-issuance", "The unscaled launch base rate is published and owner-decreasable; holding a user-supplied base rate fixed remains a future assumption, not verified live configuration."),
+        "license_cost_tokens": ("license-floor-formula", "User-supplied fixed license cost is a proxy, not an auction quote; the published floor does not resolve conflicting auction-decay statements."),
+        "sale_fee_pct": ("trading-fee", "Directional steady-state trading rates are published; the user-supplied separate sale-fee haircut and its applied basis remain model assumptions, not a verified additional charge."),
         "entry_cost_eth": ("whitelist-liquidity-fee", "User-supplied acquisition cost; whitelist mint pricing is context only, not a universal entry cost or bound."),
-        "resolution_fee_pct": ("resolution-fee-formula", "User-supplied resolution fee is a proxy for unresolved dynamic fee semantics."),
-        "sale_tax_pct": ("launch-trading-tax-curve", "User-supplied sale tax is a proxy; timing, decay, basis, and applied tax rule remain unresolved."),
-        "multiplier": ("multiplier-update-rule", "User-supplied constant multiplier is a proxy; frontend range checks do not resolve continuous policy or establish on-chain bounds."),
+        "resolution_fee_pct": ("resolution-fee-formula", "The system-wide pressure curve is published; a fixed user-supplied fee remains a proxy without verified pressure inputs, commit timing or settlement ordering."),
+        "sale_tax_pct": ("launch-trading-tax-curve", "User-supplied sale tax is a proxy; launch rates conflict within the whitepaper, and timing, basis and executable application remain unresolved."),
+        "multiplier": ("multiplier-update-rule", "The epoch policy rule and bounds are published; a user-supplied constant multiplier remains a future proxy, not a verified dynamic policy path or on-chain configuration."),
     }
     inputs = []
     unresolved = []
@@ -543,12 +570,12 @@ def _conformance(config, records, files):
     def describe(path, field, value):
         classification = "user_selected"
         explanation = "User-selected scenario assumption; not verified against a live protocol or position."
-        constraint = by_path.get(path)
-        if constraint is not None:
-            if constraint["conforms"]:
-                explanation = "User-selected value within a checked publisher bound; not a verified live position or protocol parameter."
+        path_constraints = by_path.get(path, [])
+        if path_constraints:
+            if all(constraint["conforms"] for constraint in path_constraints):
+                explanation = "User-selected value within checked publisher bounds; not a verified live position or protocol parameter."
             if (field in ("max_branches", "daily_license_limit")
-                    and value == records[constraint["parameter_id"]]["value"]):
+                    and value == records[path_constraints[0]["parameter_id"]]["value"]):
                 classification = "source_backed"
                 explanation = "Matches the packaged publisher cap only; not contract-verified or a live configuration claim."
         unknown = unresolved_fields.get(field)
@@ -570,14 +597,14 @@ def _conformance(config, records, files):
                     "path": path, "explanation": explanation,
                     "parameter_ids": [identifier],
                 })
-        if constraint is not None and not constraint["conforms"]:
+        if any(not constraint["conforms"] for constraint in path_constraints):
             classification = "inconsistent"
             explanation = "Conflicts with the checked packaged publisher statement; allowed only in stress mode. " + explanation
         entry = {"path": path, "classification": classification}
         if full:
             entry.update(value=value, origin="user_supplied", explanation=explanation)
-            if constraint is not None:
-                entry["constraints"] = [constraint]
+            if path_constraints:
+                entry["constraints"] = path_constraints
             if source_evidence is not None:
                 entry["evidence"] = source_evidence
         inputs.append(entry)

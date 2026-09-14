@@ -1,37 +1,41 @@
 # Fees, reserves and defense
 
-Scope: publisher-design accounting and announcements, not observed treasury holdings or deployed restrictions. Sources: [website core](../assets/sources/website-core.json), [About context](../assets/sources/website-context.json), [mint announcement](../assets/sources/launch-mint.json). Exact settings: [reserve parameters](../assets/parameters/reserves.json); genesis proceeds: [launch parameters](../assets/parameters/launch.json).
+Publisher accounting, not observed holdings or deployed restrictions. Current source: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§3,6,11–12,15. Exact settings: [reserve parameters](../assets/parameters/reserves.json), [launch parameters](../assets/parameters/launch.json).
 
-## Genesis funding is not the ongoing fee split
+## Founding funding is not the ongoing fee split
 
-Current whitepaper §6 and the mint-details announcement allocate genesis mint proceeds to initial liquidity and protocol vaults, with no team share: `genesis-protocol-proceeds-share`, `genesis-team-proceeds-share`. The whitelist entry charge is `whitelist-liquidity-fee`; public-genesis auction economics are separate in [charters](charters.md). The division between genesis liquidity and the vaults is not disclosed (`genesis-liquidity-vault-split`). [sr-whitepaper: charters; sr-mint; sr-post-2098969964283846751]
+Founding proceeds escrow until finalization. The owner sets launch price; finalization launches the pool and starts the tax clock and epoch-one emissions in one described atomic transaction. The genesis token allocation is single-sided above launch price with no upper price ceiling. The first 25 ETH of accepted proceeds forms a floor bid below that price; the remaining proceeds split 60% to a protocol-held POL pairing reserve, 20% to contraction and 20% to expansion. There is no founding team share. Canonical records: `genesis-liquidity-vault-split`, `genesis-protocol-proceeds-share`, `genesis-team-proceeds-share`. [sr-whitepaper-v1: currency, charters, reserves, parameters]
 
-Whitepaper §11 uses broader wording, “all protocol ETH,” including trading fees and charter auctions, for an active-vault/POL/team split. Preserve that wording tension: the current specific genesis destination must not silently be replaced by the ongoing fee-engine split. Post-genesis auction ETH is explicitly described as entering the fee engine. [sr-whitepaper: charters, reserves]
+Allocation components: `founding-floor-bid`, `founding-pol-remainder-share`, `founding-contraction-remainder-share`, `founding-expansion-remainder-share`. The remainder percentages must not be applied to gross receipts.
+
+Current §11 now expressly separates this founding allocation from steady-state trading/charter-auction receipts. The earlier §6/§11 blanket-routing wording tension belongs to dated `sr-whitepaper`, not an unresolved absence of the founding split today. Do not use the ongoing fee percentages for founding proceeds. [sr-whitepaper: charters, reserves; sr-whitepaper-v1: reserves]
 
 ## Ongoing ETH routing — §11
 
-Each epoch's active vault is chosen from the sign of current net flow: expansion when positive, contraction otherwise. Canonical shares are `ongoing-active-vault-share`, `ongoing-pol-share`, `ongoing-team-share`. The POL allocation is partly swapped to $STANDARD (`pol-swap-share`), paired with the remaining ETH and added to liquidity described as permanent. The team receives its ongoing share; “no insider allocation” on About is not a claim of no fee revenue. [sr-whitepaper: policy, reserves; sr-about; sr-app-about]
+Current net flow selects the active vault: expansion when positive, contraction otherwise. Shares are `ongoing-active-vault-share`, `ongoing-pol-share`, `ongoing-team-share`. Of the POL allocation, `pol-swap-share` is swapped to STANDARD, paired with remaining ETH and added as permanent liquidity. “No insider allocation” in About is not a claim that the team receives no ongoing fees. §12 also allows bounded owner changes to fee splits. [sr-whitepaper-v1: policy, reserves, immutables; sr-about; sr-app-about]
 
-Both buy and sell activity are described as producing ETH fees, but the regular `trading-fee` setting is redacted. The whitepaper separately says trading fees earned in $STANDARD are burned (`standard-trading-fee-burn-share`). That statement should not be discarded because the simplified flow diagrams show ETH fees; exact hook accounting and token-denominated fee handling need implementation evidence. [sr-whitepaper: entities, reserves, parameters]
+The current whitepaper publishes steady buy/sell taxes, but contradicts itself on launch opening rates; [launch trading](launch-trading.md) preserves the distinction. The canonical pool's LP fee and tick spacing are separate from protocol taxes. The token companion explicitly says taxes apply **on top of** the LP fee; it does not establish the precise computation order or fee base. The protocol position's fees earned in STANDARD are burned (`standard-trading-fee-burn-share`). ETH diagrams do not supersede that token-side statement. [sr-whitepaper-v1: currency, reserves, parameters; sr-token-page-v1]
 
 ## Reserve assets and ownership
 
-The expansion vault accumulates ETH and purchases tokenized gold and comparable hard assets. The bank, not the charter holder, is described as holding these reserves. The sources do not identify authenticated reserve assets, issuers, custody/redemption terms, current balances, valuation policy, purchase venues or an individual charter redemption right against reserves. Reserve accumulation is a stated mechanism, not proof of holdings, a fixed exchange-rate peg or a guaranteed token-price floor. [sr-whitepaper: reserves]
+Expansion accumulates ETH and purchases tokenized gold and comparable assets. Reserves are protocol property and are not redeemable by charter holders. Sources do not authenticate reserve issuers, custody/redemption terms, balances, valuation policy or purchase venues. Reserve accumulation is neither evidence of holdings nor a fixed peg or guaranteed price floor. ExpansionVault reserve purchases remain owner-only even if the separate execution switch is opened. [sr-whitepaper-v1: reserves, immutables, disclaimer]
 
-Genesis liquidity is described as full-range and protocol-owned, with the position never withdrawable; later POL additions are described as permanent. These are ownership/constraint claims, not verified deployed permissions or a guarantee of a particular ETH exit value. Token withdrawal by a banker is distinct from withdrawing the protocol's LP position. [sr-whitepaper: currency, reserves]
+Genesis liquidity and subsequent POL additions are described as permanent/non-withdrawable. Those restrictions are not verified deployed permissions or a guarantee of ETH exit value. A banker withdrawing tokens is not withdrawing the protocol's LP position. [sr-whitepaper-v1: currency, reserves]
+
+Authoritative ownership/authority records: `reserve-redemption-policy`, `pol-withdrawal-policy`, `expansion-reserve-purchase-policy`.
 
 ## Contraction execution
 
-The contraction vault buys $STANDARD on the market and burns the purchase (`buyback-burn-share`). For vault balance V and pool reserves R, the published tick rule is:
+Contraction buys STANDARD on-market and burns all purchases (`buyback-burn-share`). For vault balance V and pool reserves R, the published rule is:
 
 spend_tick = min(a × V, b × R)
 
-Here a = `buyback-vault-fraction`, b = `buyback-pool-fraction`, and cadence = `buyback-tick`. Use commensurate denominations; the overview does not fully define the reserve measurement R. The prose's near-daily-depth figure is `buyback-daily-depth-bound`, an approximate description, not a constant daily budget. Unspent balance rolls forward and the vault is described as unable to sell. The publisher says rate-limited steps avoid a single baitable execution; that safety claim is not independently tested here. [sr-whitepaper: reserves equation 11.1]
+Here a = `buyback-vault-fraction`, b = `buyback-pool-fraction`, and cadence = `buyback-tick`. Commensurate denominations and the exact measurement of R still need implementation evidence. `buyback-daily-depth-bound` is an approximate source description, not a fixed daily budget. Unspent balance rolls forward and the vault is described as unable to sell. [sr-whitepaper-v1: reserves equation 11.1]
 
-## Temporary launch tax
+`buyback-spend-formula` stores this source-only formula; `vault-execution-enablement` separately records who may execute it.
 
-[Launch trading](launch-trading.md) preserves the announced tax, body/image half-life tension and unspecified allocation/fee basis. Do not infer launch-tax routing from either genesis proceeds or the regular ETH split.
+Contraction-buyback/POL-pairing execution starts owner-cranked; the owner can make it permissionless through a one-way switch. Optional guardian pauses cover auctions and vault purchases, not withdrawals. Non-upgradeability does not imply autonomous execution or absent operational controls. [sr-whitepaper-v1: immutables]
 
 ## Accounting boundaries
 
-Keep swap fees, genesis receipts, post-genesis auction receipts, internal accrued issuance, wallet token mints, fee redistribution, reserve holdings, buyback spend and burns separate. A reserve purchase is not banker income; a token burn is not ETH proceeds; an announced allocation is not an observed transfer. Current holdings, burn totals and earned fees need authenticated identities, explicit time/block anchors and complete relevant event coverage. Use [contracts](contracts.md) and [research workflow](research-workflow.md); unresolved claims are in [risks](risks.md).
+Keep founding proceeds, ongoing auction receipts, LP fees, protocol taxes, accrued issuance, wallet mints, deposit conversions, ledger removals, redistribution, reserve holdings and buyback spend separate. A reserve purchase is not banker income; a deposit conversion is not a permanent burn; an announced allocation is not an observed transfer. [Contracts](contracts.md) retains the separately added deployment/condition evidence and implementation limits; [conflicts](risk-conflicts.md) identifies unresolved source discrepancies.

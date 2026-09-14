@@ -96,6 +96,17 @@ The agent asks only for missing decisions in small groups, explains unfamiliar i
 
 No numerical comparison runs until all economic assumptions and the mode are explicit and approved. A complete, already acknowledged input can still use the direct path without another questionnaire. See the [planning workflow](references/planning.md).
 
+To start from published reference values instead of supplying every protocol setting:
+
+```text
+Use srstack plan with the documented launch settings.
+Show the proposed assumptions, then ask me only for what's still missing.
+```
+
+The agent proposes the documented launch base, starting multiplier and per-charter caps for approval. The full original issuance budget applies only to an explicitly chosen epoch-one hypothetical—not a current position. Prices, network size, gas, tax and other missing economics remain explicit choices. Optional exit-pressure cases use labelled published fee references, not a guessed personal quote.
+
+The v1 whitepaper contains conflicting launch-tax and auction-decay descriptions. The skill keeps those conflicts visible rather than choosing an executable schedule. Verified implementation correspondence is still required before adding those dynamic formulas to the calculator.
+
 ### Runnable fictional planner demonstration
 
 ```text
@@ -126,13 +137,13 @@ Replace the placeholder with a real public target; it is not a runnable unattend
 
 ## Coverage and footprint
 
-The packaged research snapshot is dated **September 14, 2026**: **43 source records and 94 parameter records**, with source-specific dates and review limits. Deployment-directory and protocol-condition additions were captured at 21:52–21:55 UTC; other baseline pages and canonical economic parameters were not refreshed. Publisher claims, superseded statements and observations remain distinct. Counts do not establish current on-chain state.
+The packaged research snapshot is dated **September 14, 2026**, with source-specific dates and review limits. The current refresh covers the 16-section whitepaper v1.0 and token/charter pages, alongside the earlier deployment-directory observations. Canonical records distinguish newly published settings, prior redactions and unresolved conflicting claims. Other baseline pages retain their original dates; inventory totals do not establish current on-chain state.
 
 The [contract catalog](assets/entities/robinhood.json) contains **14 publisher-listed Robinhood Chain addresses**, including two shared infrastructure entries, with **Robinhood Etherscan links**. Five have dated prior explorer corroboration. Source/ABI correspondence, current ownership, proxy relationships, audit coverage and activation remain separate verification tasks; Etherscan access was blocked, so its source-verification status is unknown.
 
 For contract-informed planning, ask: **“Use srstack plan. Help me turn the published protocol conditions into proposed assumptions, and show what still needs verification.”** The [handoff](references/planning-inputs.md#deployment-evidence-handoff) distinguishes observations from approved future assumptions. It prevents double-applying a policy-scaled issuance rate, treating disabled auctions as free licenses, or confusing current tax with a future quote. No financial execution is added.
 
-The complete bundle is **under 350 KiB across 48 files**, excluding Git metadata. The entry file routes to selected references and indexed records; the whole bundle is not intended to load for every question. Selective loading depends on the host, and disk size is not per-question token cost.
+The package uses selected references and indexed records rather than loading the whole corpus for every question. The reference indexes own current inventory counts; disk size is not per-question token cost, and selective loading depends on the host.
 
 Basic packaged research needs only a resource reader. Planning uses existing **Python 3.10+ and its standard library**, with no pip dependencies; required OS containment primitives must also be available. Contract inspection requires authenticated contract identities and permitted public, read-only chain queries. No wallet connector, telemetry or self-update process is bundled.
 

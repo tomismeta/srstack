@@ -254,7 +254,7 @@
         "These observations do not share one block across tabs. No block hashes or independent RPC checks established.",
         "Do not silently copy observations into a constant-price/rate/tax scenario. User approval and compatible semantics are required.",
         "No usable token-market or license quote, active epoch, withdrawal fee quote, or gas estimate established by this capture.",
-        "Original94 canonical parameter records and planner math remain unchanged; these observations are separate evidence, not overrides."
+        "This capture did not change the then-existing94 canonical records or planner math. These observations remain separate evidence, not overrides; later whitepaper refreshes have their own source records."
       ]
     }
   ]

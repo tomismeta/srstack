@@ -1,53 +1,54 @@
 # Documents and reviewed coverage
 
-This directory maps the discovered public documentation to concise topic references. [Coverage](../assets/coverage.json) is the machine-readable page/section map; [source index](../assets/sources.json) resolves provenance groups. [Parameters](../assets/parameters.json) is the authoritative package location for economic values and explicit unknowns.
+[Coverage](../assets/coverage.json) maps pages and sections to concise topic references; the [source index](../assets/sources.json) resolves provenance groups. [Parameters](../assets/parameters.json) is authoritative for exact settings, current conflicts, limits and prior observations.
 
-## Website discovery boundary
+## Dated website coverage
 
-The reviewed [sitemap](https://www.standardreserve.xyz/sitemap.xml) lists the seven URLs below. All seven page presentations were reviewed in the September 14 snapshot; redirects and shared-content forms are not independent corroboration. Sitemap coverage is not a claim to have found every possible website URL, implementation document or social post. [sr-sitemap]
+The earlier September 14 sitemap review covered seven page presentations. The current addition refreshes the whitepaper and two companion pages, **not every website surface**. Redirects and shared presentations are not independent corroboration; sitemap coverage is not an exhaustive URL or announcement archive. [sr-sitemap]
 
-| Source | URL and role | Read next |
+| Source | Role and boundary | Read next |
 |---|---|---|
-| `sr-protocol` | [Protocol Information](https://www.standardreserve.xyz/app/protocol/): navigation, launch banner, flow introduction and links to mint, whitepaper and About. Rendered counters are not economic configuration. | [Protocol](protocol.md) |
-| `sr-mint` | [Mint](https://www.standardreserve.xyz/app/mint/): not-live presentation, whitelist liquidity fee, allocation/selection explanation, eligibility warning and public-genesis auction announcement. No address check or wallet action performed. | [Genesis entry](genesis.md) |
-| `sr-whitepaper` | [Whitepaper](https://www.standardreserve.xyz/whitepaper/): v0.1 design overview, implementation warning, mechanics and still-redacted launch summary. | Section map below |
-| `sr-about` | [How It Works](https://www.standardreserve.xyz/about/): standalone visual explanation of policy, charters, branches, retirement, fee response and feedback loops; examples are not live state. | [Protocol](protocol.md), [charters](charters.md), [reserves](reserves.md), [risks](risks.md) |
-| `sr-app-about` | [App About](https://www.standardreserve.xyz/app/about/): same substantive explainer in the app navigation shell, not a distinct whitepaper or independent confirmation. | Same topics as standalone About |
-| `sr-disclaimer` | [Disclaimer](https://www.standardreserve.xyz/disclaimer/): experimental/non-bank/no-customer-funds/no-advice statement, also present in whitepaper. About uses no-deposits wording. | [Risks](risks.md) |
-| `sr-app-redirect` | [App root](https://www.standardreserve.xyz/app/): observed final URL is `/app/protocol/`, not an additional substantive document. | [Protocol](protocol.md) |
+| `sr-whitepaper-v1` | [Current whitepaper](https://www.standardreserve.xyz/whitepaper/), captured 2026-09-14T22:15:13.789Z: sixteen sections, visible equations/tables and newly included Immutables. | Section map below |
+| `sr-token-page-v1` | [Token](https://www.standardreserve.xyz/app/token/), captured 22:18:03.457Z: supply/removal explanation, LP-fee versus protocol-tax distinction and displayed not-launched pool. Block/time/counters remain UI evidence. | [Supply](protocol-policy.md), [trading](launch-trading.md) |
+| `sr-charters-page-v1` | [Charters & Auctions](https://www.standardreserve.xyz/app/protocol/charters/), captured 22:18:03.462Z: entry/branch/retirement explanation; displayed disabled auctions. | [Charters](charters.md), [auctions](auctions.md) |
+| `sr-protocol` | Earlier [Protocol Information](https://www.standardreserve.xyz/app/protocol/) navigation/banner/flow and links; rendered counters are not configuration. | [Protocol](protocol.md) |
+| `sr-mint` | Earlier [Mint](https://www.standardreserve.xyz/app/mint/) not-live presentation, liquidity fee, selection and eligibility warning. No wallet/address check performed. | [Genesis](genesis.md) |
+| `sr-whitepaper` | Earlier same-URL v0.1 snapshot: fifteen sections and redacted summary, preserved as dated evidence, **not current disclosure status**. | [History](announcement-history.md) |
+| `sr-about`, `sr-app-about` | Earlier [standalone](https://www.standardreserve.xyz/about/) and [app](https://www.standardreserve.xyz/app/about/) explainers; same substantive content, different shell, examples not state. | [Protocol](protocol.md), [conflicts](risk-conflicts.md) |
+| `sr-disclaimer` | Earlier [Disclaimer](https://www.standardreserve.xyz/disclaimer/), non-bank/no-customer-funds/no-advice scope. | [Risks](risks.md) |
+| `sr-app-redirect` | Earlier [app root](https://www.standardreserve.xyz/app/) redirected to protocol page, not another substantive document. | [Protocol](protocol.md) |
 
-## Whitepaper section map
+## Current whitepaper: all sixteen sections
 
-All section texts, visible equations and tables were reviewed, including redacted placeholders. “Reviewed” means the published material was read, not that hidden parameters were recovered or mechanics were tested.
+Frozen text and equation annotations were reviewed. Coverage means source reading, not code inspection, execution, independent fact confirmation or discovery of hidden content. All locators below belong to `sr-whitepaper-v1` and retain the source's anchors.
 
-| Section / source locator (`sr-whitepaper`) | Topic coverage |
+| Section / locator | Topic coverage |
 |---|---|
-| 01 `#introduction` | [Protocol](protocol.md): monetary-economy scope and publisher autonomy claim |
-| 02 `#entities` | [Protocol](protocol.md): token, pool, central bank, charters, branches, vaults and flows |
-| 03 `#currency` | [Supply and policy](protocol-policy.md): genesis versus withdrawal minting, cumulative budget, burns, supply identities; [reserves](reserves.md): LP ownership |
-| 04 `#net-flow` | [Supply and policy](protocol-policy.md): current flow versus trailing policy signal |
-| 05 `#policy` | [Supply and policy](protocol-policy.md): streamed issuance, asymmetric policy and hidden rule/settings |
-| 06 `#charters` | [Genesis](genesis.md): revised entry and remaining public supply; [charters](charters.md): lifecycle; [reserves](reserves.md): proceeds distinction |
-| 07 `#branches` | [Charters](charters.md): branch shares and paid expansion; [auctions](auctions.md): visible curve and hidden floor |
-| 08 `#auctions` | [Auctions](auctions.md): separate daily license/charter opens, payment, decay, caps, close and rollover rules |
-| 09 `#exits` | [Exits](exits.md): pro-rata retirement, minting, pressure, commitment fee and redistribution |
-| 10 `#dormancy` | [Exits](exits.md): reporting, bounty, revocation, shutdown/check-in; [conflicts](risk-conflicts.md): unresolved payout ordering |
-| 11 `#reserves` | [Reserves](reserves.md): ongoing ETH split, asset ownership, POL and tick-limited buyback equation |
-| 12 `#transfers` | [Exits](exits.md): future one-way transfer switch and whole-seat movement |
-| 13 `#flywheels` | [Protocol](protocol.md): publisher's adoption/expansion/fee/policy feedback-loop thesis |
-| 14 `#parameters` | [Parameters](../assets/parameters.json): canonical visible and missing settings; [risks](risks.md): redacted summary versus earlier disclosures |
-| 15 `#disclaimer` | [Risks](risks.md): experimental protocol and legal/financial scope disclaimer |
+| 01 `#introduction` | [Protocol](protocol.md): closed-economy model and publisher authority rhetoric |
+| 02 `#entities` | [Protocol](protocol.md): six entities and trading/issuance/auction flows |
+| 03 `#currency` | [Supply](protocol-policy.md): genesis liquidity, original issuance budget, withdrawal mints, permanent burns/ledger removals versus deposit conversions, revised supply identities |
+| 04 `#net-flow` | [Policy](protocol-policy.md): current-epoch fee routing versus trailing-completed-epoch issuance signal |
+| 05 `#policy` | [Policy](protocol-policy.md): unscaled launch base, downward owner ratchet, published multiplier rule/bounds, streaming and source-only timing illustrations |
+| 06 `#charters` | [Genesis](genesis.md): paid entry, limits, escrow/finalization; [charters](charters.md): lifecycle |
+| 07 `#branches` | [Charters](charters.md): issuance shares; [auctions](auctions.md): owner activation, floor formula and equation/prose decay conflict |
+| 08 `#auctions` | [Auctions](auctions.md): license versus charter prices, caps, payments, unsold handling and contradictory decay descriptions |
+| 09 `#exits` | [Exits](exits.md): retirement, published pressure/fee formula, commitment claim, redistribution and settlement-dependency limits |
+| 10 `#dormancy` | [Exits](exits.md): qualifying activity, transfer timestamp/grace, report/revocation/bounty and unresolved payout order |
+| 11 `#reserves` | [Reserves](reserves.md): founding versus ongoing allocation, atomic finalization, ownership and buyback formula |
+| 12 `#immutables` | [Risks](risks.md): non-upgradeability, bounded owner tuning, deployer ownership/no enforced delay, one-way switches, optional guardian; [conflicts](risk-conflicts.md): tax contradiction |
+| 13 `#transfers` | [Exits](exits.md): future whole-seat transfer and one-way enablement |
+| 14 `#flywheels` | [Protocol](protocol.md): publisher's adoption/expansion/fee/policy thesis, not guaranteed outcomes |
+| 15 `#parameters` | [Parameters](../assets/parameters.json): visible launch settings; [trading](launch-trading.md): tax contradiction, LP fee and holding cap |
+| 16 `#disclaimer` | [Risks](risks.md): experimental/non-bank scope and non-redeemable protocol reserves |
 
-The document keeps the v0.1 label despite changed genesis wording. `sr-whitepaper-historical-free` records the superseded charter section observed earlier; it is not a second current whitepaper or a source for today's entry price. [History](announcement-history.md) preserves the change with dates and attribution.
+The earlier `sr-whitepaper` and superseded `sr-whitepaper-historical-free` retain their observations. Source evolution is not package/software release history. The former's redactions must not be described as still present in current guidance. [Announcement history](announcement-history.md)
 
-## Announcements and linked identity discovery
+## Announcements and deployment additions
 
-Website navigation links [@standard_rsv](https://x.com/standard_rsv). The reviewed profile bio says no token or NFT set is live yet; that is time-bounded publisher wording, not independent deployment verification (`sr-x-profile`). Post-level statements, reply/image distinctions, audit announcements and publication/retrieval dates belong in [updates](updates.md) and its source records.
+[Updates](updates.md) routes the earlier official profile, recovered launch/policy threads, audits, allocations and image-specific claims. Their stated dates and time-bounded not-live language are not silently refreshed. The launch thread adds schedule and tax claims; current paper contradictions and changes remain explicit rather than overwriting announcement history.
 
-The launch thread adds genesis scheduling, temporary trading-tax terms, a schedule graphic distinguishing token launch without liquidity from later liquidity addition, and day-one auction/emission sequencing. These extend rather than replace the daily-auction design; their numerical settings are in [launch parameters](../assets/parameters/launch.json). [sr-post-2098969960404103353; sr-post-2098969968201359736; sr-post-2098969974044066298; sr-post-2098969982503915891]
-
-No whitepaper label, canonical-site notice, source-code line-count claim, audit announcement or screenshot authenticates a deployed contract by itself. Use [contracts](contracts.md) for identity status and [research workflow](research-workflow.md) for fresh public evidence. This package does not treat linked scripts, frontend examples or unreviewed URLs as implementation specifications.
+The separately reviewed `sr-contract-directory` and `sr-protocol-conditions` additions remain intact, with their entity index and source group accessible through [contracts](contracts.md). Those surfaces are publisher identity/condition evidence, not an authenticated source-code/ABI or deployed-bytecode audit. No whitepaper, line count, audit claim or screenshot closes that gap.
 
 ## Direct provenance routes
 
-[Website core](../assets/sources/website-core.json): protocol, mint, whitepaper. [Website context](../assets/sources/website-context.json): About variants, disclaimer, app redirect, sitemap and profile. [Updates](updates.md) routes the complete recovered launch/policy threads, audit and allocation history, critical images and third-party context without requiring unrelated source groups.
+[Current website v1](../assets/sources/website-v1.json): current whitepaper/token/charter companions. [Website core](../assets/sources/website-core.json): earlier protocol/mint/whitepaper. [Website context](../assets/sources/website-context.json): About variants, disclaimer, redirect, sitemap and profile. [Updates](updates.md): announcement groups. [Research workflow](research-workflow.md): scoped fresh evidence without financial actions.
