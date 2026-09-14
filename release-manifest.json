@@ -6,8 +6,8 @@
   "digest_convention": "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest",
   "content_files": {
     "LICENSE": "577937d78be98b8639c8b4ade19b9864cb65243b5d2cf76d032357d0aae6ad85",
-    "README.md": "d54a0b0ed1735d6d0dcf9618872c16007e2d4267ec7cc4ce7192a40a743d294e",
-    "SKILL.md": "c6a3ec4186cfe9ffc406f051ae760c2e0aea13aa21f16affe80ca7639e75710a",
+    "README.md": "5f9f18050eaad2debf1300bea8dfbe2b9b5d42232fd57fd35a53eee098949389",
+    "SKILL.md": "0d6e6f33f24f9e8d3dfab01c7c708a37fcce9f166593028292da1d7c8d7b55fc",
     "assets/coverage.json": "f670bfa9a97a8d167d49a5e5b9eff317ae17cbd385828c45ec1d0379b3070a89",
     "assets/entity-index.json": "9c319c92d5fd4444069608cdd3856f8e0cec5bd2aa3dd667118aefe92d27c28a",
     "assets/examples/planning.json": "bf52f6caf2d381690abd2cc43d6e61bce6c45ed109b16becfce7d57bfaf526da",
@@ -38,9 +38,9 @@
     "references/launch-trading.md": "43e6aa14b455a762f93a86d67502b7463c13803d853a11c13a67fdfdb26dc076",
     "references/planning-conformance.md": "d6132e8afd559e40d2714925210c1c9c3507a866996b08f1d828496a83e2afb7",
     "references/planning-execution.md": "4e911d91dc542bc58bdd8b390ffa1d9f1206ee20d73091348359ab121437060b",
-    "references/planning-inputs.md": "a35e062952dbdf3262d0cc559afdd277bc155ed3338ae3771e799259a5f6f7b0",
-    "references/planning-model.md": "39392a92b6ed63e8318f264728308b837f35d2113a2d1b163767a14322572095",
-    "references/planning.md": "26dff365c84a424e7c24fd93341550fbbe8c7486a8fe515edc8f8ffdc72ce387",
+    "references/planning-inputs.md": "86da25ad59ebce4af6e0ceeeaf670ea7c18fb2a09a3856bf1d8fde0c0afa3575",
+    "references/planning-model.md": "13107dca2df6d862ecc2e39c5c2805141967e5bfa202cf7175ad2ee362611538",
+    "references/planning.md": "5f6687f91e7305dec18ae96df17f1108bac6434440b3b55d51ec3623fe9f34b3",
     "references/protocol-policy.md": "9acf092679b08f2a3abf891d5bf6eba18c1115c93a7019f9ba01f81143d3c8bc",
     "references/protocol.md": "e511c796c2a5dc432a89703888818e97cee5019b69ad40a24a19ad55e9359ffb",
     "references/research-workflow.md": "7ebdda63eb0b449eb00b8d5a55737d8db66638cd3f291a704e34435306d55d2c",
@@ -49,7 +49,7 @@
     "references/risks.md": "eaccf719a593ded081b5fc96e94a57e9f4dbdeebe40caf9680c819b23b009213",
     "references/safety.md": "515e07800506211de1a72c5465146e970ce4f385c9108c95c6ac1432c8fbbcf6",
     "references/updates.md": "ddeab0585d5788d781e6e1d7e5397e2e345c97667b9d4b0f38d2625863c59628",
-    "scripts/scenario.py": "36c27465ffd706b243952835605519a95331310da259959f6efb71f85a188949"
+    "scripts/scenario.py": "82600a85df5df3b22aa747038dbc205bfa1c61bd9825d8b15f606806a9cc629d"
   },
-  "content_sha256": "9c8845acf72e30916f02396542c7417e9971bc51fada981e5413c7bc4773cc90"
+  "content_sha256": "c7872bb7a20b0ad45412d111b3849fd1a2a900bb9bacc09f7ca44837399f9a7b"
 }

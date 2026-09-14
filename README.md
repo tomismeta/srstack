@@ -19,7 +19,7 @@ srstack explains protocol mechanics, traces changing announcements and compares 
 One skill, three routes:
 
 - **Research:** source-linked explanations, documented parameters and evidence gaps.
-- **Plan:** deterministic local calculations. Documented mode blocks known conflicts; stress mode reports departures. Neither supplies economic defaults or relaxes safety boundaries.
+- **Plan:** a guided conversation: describe your position, budget and goal, review a plain-language assumption sheet, then approve a local comparison. The agent builds the JSON internally. Documented mode blocks known conflicts; stress mode reports explicitly approved departures. No silent economic defaults.
 - **Inspect:** on-demand public evidence for a supplied target, after authenticating identities and read interfaces. No fabricated contract adapter, background monitor or wallet connection.
 
 Research topics: [protocol](references/protocol.md) · [charters](references/charters.md) · [reserves](references/reserves.md) · [contracts](references/contracts.md) · [updates](references/updates.md) · [documents](references/documents.md) · [risks](references/risks.md).
@@ -82,7 +82,19 @@ Use srstack to explain charter withdrawals.
 Use only the packaged references and cite the source links.
 ```
 
-Expected: a sourced explanation, including fees and evidence gaps. Planning requests without complete assumptions ask for inputs; they are not numerical smoke tests.
+Expected: a sourced explanation, including fees and evidence gaps.
+
+### Guided planning
+
+```text
+Use srstack to help me compare keeping my branches versus expanding.
+I have 2 branches and 100 credits, can spend another 0.25 ETH,
+and want to compare a full exit after 30 days. Walk me through the assumptions.
+```
+
+The agent asks only for missing decisions in small groups, explains unfamiliar inputs and proposes a plain-language assumption sheet. Approve it or change individual items; you do not need to supply JSON. Missing data stays missing rather than becoming a made-up number. If gas is unknown, you may explicitly approve a preliminary comparison excluding specified gas costs; those results must be labelled before the excluded costs, not all-in.
+
+No numerical comparison runs until all economic assumptions and the mode are explicit and approved. A complete, already acknowledged input can still use the direct path without another questionnaire. See the [planning workflow](references/planning.md).
 
 ### Runnable fictional planner demonstration
 
@@ -118,7 +130,7 @@ The packaged research snapshot is dated **September 14, 2026**: **34 source reco
 
 **No official contract addresses are authenticated in the packaged snapshot.** This does not establish that no deployment exists. Fresh public research may establish new evidence; the installed package does not update itself.
 
-The complete bundle is roughly **255 KiB across 46 files**, excluding Git metadata. The 3.7 KiB entry file routes to selected references and indexed records; the whole bundle is not intended to load for every question. Selective loading depends on the host, and disk size is not per-question token cost.
+The complete bundle is **under 300 KiB across 46 files**, excluding Git metadata. The entry file routes to selected references and indexed records; the whole bundle is not intended to load for every question. Selective loading depends on the host, and disk size is not per-question token cost.
 
 Basic packaged research needs only a resource reader. Planning uses existing **Python 3.10+ and its standard library**, with no pip dependencies; required OS containment primitives must also be available. Contract inspection requires authenticated contract identities and permitted public, read-only chain queries. No wallet connector, telemetry or self-update process is bundled.
 
@@ -126,7 +138,7 @@ Basic packaged research needs only a resource reader. Planning uses existing **P
 
 Every planning answer begins with:
 
-> **Hypothetical scenario—not contract-verified. Based on our interpretation of the whitepaper and official announcements, plus your assumptions. Not a forecast or executable quote.**
+> **Hypothetical—not contract-verified or a forecast.**
 
 No-conflict status covers only checked packaged statements, not complete protocol feasibility. Unknown mechanics and explicit user assumptions remain visible. A source-matching parameter is not contract verification, a forecast or an executable price.
 

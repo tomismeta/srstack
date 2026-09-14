@@ -1,6 +1,6 @@
 # Planning inputs: schema 1
 
-Load to construct or repair input, not before executing an already complete request. Return to [planning workflow](planning.md); all planning answers require its visible first warning.
+Agent-facing translation reference, not a user questionnaire. Collect and confirm assumptions through the [guided planning workflow](planning.md), then construct or repair JSON internally. Do not dump this table or require users to know field names. Already complete requests need no schema read. Every planning answer starts with the workflow's short warning.
 
 The root must be an object with every field below, except optional `detail` and `include_history`. No other root or scenario keys are accepted. Numeric fields accept JSON numbers or numeric strings; strings are preferable for exact decimal entry. All bounds are inclusive. Integer fields require integral values, not booleans or non-integral numbers. Decimal arithmetic uses 50-digit precision; economic output amounts are decimal strings, and counts are integers. This is not exact EVM arithmetic.
 

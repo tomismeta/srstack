@@ -12,9 +12,9 @@ Independent research, hypothetical planning and public inspection—not an offic
 
 ## Planning warning: visible first
 
-Start **every planning answer** with this exact paragraph, before headings, numbers, tables or missing-input questions:
+Start **every planning answer** with this exact short line, before headings, numbers, tables or missing-input questions:
 
-Hypothetical scenario—not contract-verified. Based on our interpretation of the whitepaper and official announcements, plus your assumptions. Not a forecast or executable quote.
+Hypothetical—not contract-verified or a forecast.
 
 Required also for stress, documented, sensitivity, blocked and unavailable-runtime answers. JSON warnings, links and footers do not replace it. Label independently supported observations separately.
 
@@ -23,7 +23,7 @@ Required also for stress, documented, sensitivity, blocked and unavailable-runti
 For only `srstack`, `Use srstack` or a host equivalent, print this menu without reads or requests:
 
 - **research** — Source-grounded explanations and evidence gaps.
-- **plan** — Hypothetical strategy comparison; explicit mode and inputs, permitted local Python required.
+- **plan** — Guided hypothetical comparison; approve assumptions in plain language, then run the permitted local planner.
 - **inspect** — On-demand authenticated public snapshot; no wallet or monitoring.
 
 Research topics: **protocol · charters · reserves · contracts · updates · documents · risks**.

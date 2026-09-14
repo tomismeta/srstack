@@ -27,11 +27,7 @@ from decimal import (
 
 MAX_INPUT_BYTES = 65536
 MAX_PARAMETER_BYTES = 65536
-WARNING = (
-    "Hypothetical scenario—not contract-verified. Based on our interpretation "
-    "of the whitepaper and official announcements, plus your assumptions. "
-    "Not a forecast or executable quote."
-)
+WARNING = "Hypothetical—not contract-verified or a forecast."
 MAX_DEPTH = 8
 PRECISION = 50
 ZERO = Decimal(0)

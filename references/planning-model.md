@@ -42,7 +42,7 @@ Otherwise it is `null`, including partial/no exit. It is a terminal-price thresh
 
 ## Output selection
 
-Top level: `schema_version: 1`, `model_version: "1"`, `detail`, `mode`, `classification: "hypothetical"`, `warning`, normalized `assumptions`, `conformance`, `limitations`, and `scenarios`. Economic decimals are normalized decimal strings, counts are integers; the engine does not authenticate provenance. Every scenario retains `id`, `name`, `warning`, `final_token_price_eth`, and three `results`; every strategy retains the exact warning too. JSON warnings never replace the first visible warning paragraph.
+Top level: `schema_version: 1`, `model_version: "1"`, `detail`, `mode`, `classification: "hypothetical"`, `warning`, normalized `assumptions`, `conformance`, `limitations`, and `scenarios`. Economic decimals are normalized decimal strings, counts are integers; the engine does not authenticate provenance. Every scenario retains `id`, `name`, `warning`, `final_token_price_eth`, and three `results`; every strategy retains the exact warning too. JSON warnings never replace the first visible warning line.
 
 `detail: "summary"` is the default. Normalized inputs appear once in root `assumptions`; [compact conformance](planning-conformance.md) shares canonical evidence by parameter ID. Each strategy retains exactly:
 
