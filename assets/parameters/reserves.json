@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "scope": "Publisher design, not verified deployment",
+  "reviewed_at": "2026-09-14T16:44:37Z",
+  "records": [
+    {"id":"buyback-burn-share","value":100,"unit":"percent of purchased STANDARD","status":"documented-visible","source_ids":["sr-whitepaper"],"locator":"§3 Currency; §11 Reserves","limits":[]},
+    {"id":"ongoing-active-vault-share","value":70,"unit":"percent of ongoing protocol ETH","status":"documented-visible","source_ids":["sr-whitepaper"],"locator":"§11 Fee split","limits":["§11 says all protocol ETH; §6 separately assigns genesis proceeds to initial liquidity and vaults without a team share. Do not apply this split to genesis."]},
+    {"id":"ongoing-pol-share","value":15,"unit":"percent of ongoing protocol ETH","status":"documented-visible","source_ids":["sr-whitepaper"],"locator":"§11 Fee split","limits":["§11 says all protocol ETH; §6 separately assigns genesis proceeds to initial liquidity and vaults without a team share. Do not apply this split to genesis."]},
+    {"id":"ongoing-team-share","value":15,"unit":"percent of ongoing protocol ETH","status":"documented-visible","source_ids":["sr-whitepaper"],"locator":"§11 Fee split","limits":["§11 says all protocol ETH; §6 separately assigns genesis proceeds to initial liquidity and vaults without a team share. Do not apply this split to genesis."]},
+    {"id":"pol-swap-share","value":50,"unit":"percent of POL ETH allocation swapped to STANDARD","status":"documented-visible","source_ids":["sr-whitepaper"],"locator":"§11 Fee split","limits":[]},
+    {"id":"buyback-tick","value":1,"unit":"hour","status":"documented-visible","source_ids":["sr-whitepaper"],"locator":"§11 Buyback execution","limits":[]},
+    {"id":"buyback-vault-fraction","value":0.1,"unit":"fraction of vault balance per tick","status":"documented-visible","source_ids":["sr-whitepaper"],"locator":"§11 equation 11.1","limits":[]},
+    {"id":"buyback-pool-fraction","value":0.002,"unit":"fraction of pool reserves per tick","status":"documented-visible","source_ids":["sr-whitepaper"],"locator":"§11 equation 11.1","limits":[]},
+    {"id":"standard-trading-fee-burn-share","value":100,"unit":"percent of trading fees earned in STANDARD","status":"documented-visible","source_ids":["sr-whitepaper"],"locator":"§11 Reserves","limits":[]},
+    {"id":"buyback-daily-depth-bound","value":5,"unit":"percent of pool depth per day","status":"documented-approximate","source_ids":["sr-whitepaper"],"locator":"§11 Buyback execution","limits":["Publisher near-value description; depends on balances and pool depth, not a fixed daily spend."]}
+  ]
+}

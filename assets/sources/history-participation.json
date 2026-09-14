@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-09-14T16:40:35.079Z",
+  "scope": "Bounded official-account profile, launch/mechanics threads, RSS and selected images; not an entire-account archive.",
+  "records": [
+    {
+      "id": "sr-whitepaper-historical-free",
+      "url": "https://www.standardreserve.xyz/whitepaper/",
+      "publisher": "The Standard Reserve",
+      "published_at": null,
+      "retrieved_at": "2026-09-11T14:50:44.346Z",
+      "review_depth": "Historical rendered extraction: §6 Charter text reviewed for superseded genesis terms",
+      "claim_stage": "superseded documented design",
+      "document_version": "v0.1",
+      "locators": [
+        {
+          "label": "§6 Charters, historical observed revision",
+          "url": "https://www.standardreserve.xyz/whitepaper/#charters"
+        }
+      ],
+      "retrieval_mechanism": "Previously captured public rendered-text snapshot; historical observation timestamp inherited, not a fresh retrieval of the old website revision",
+      "limits": [
+        "The same URL and v0.1 label now show different genesis terms.",
+        "Historical text says Founding Charters were free, with no sale/proceeds and team-seeded genesis liquidity; these are superseded claims, not current entry pricing.",
+        "Only the historical charter section was reviewed for this record; no historical deployed behavior was verified."
+      ],
+      "superseded_by": [
+        "sr-whitepaper",
+        "sr-post-2098969964283846751"
+      ]
+    },
+    {
+      "id": "sr-post-2097126276998013081",
+      "url": "https://x.com/standard_rsv/status/2097126276998013081",
+      "publisher": "@standard_rsv",
+      "published_at": "2026-09-08T00:54:01.000Z",
+      "retrieved_at": "2026-09-14T16:39:49.534Z",
+      "review_depth": "Full RSS item and rendered X text",
+      "claim_stage": "publisher announcement, not verified deployment",
+      "locators": [
+        "RSS item 2097126276998013081"
+      ],
+      "limits": [
+        "Publication timestamp is mirror-supplied; mirror delivery is not independent corroboration.",
+        "Attached media not visually reviewed."
+      ],
+      "post_id": "2097126276998013081",
+      "post_type": "original",
+      "retrieval": {
+        "mechanism": "public RSS mirror",
+        "url": "https://x.noodl3.net/standard_rsv/rss",
+        "browser_url": "https://x.com/standard_rsv",
+        "browser_retrieved_at": "2026-09-14T16:38:23.509Z"
+      },
+      "summary": "Announces second allocation round and participant-selection rationale; no independent wallet allocation verification.",
+      "displayed_date": "Sep 8"
+    },
+    {
+      "id": "sr-post-2093328953931116590",
+      "url": "https://x.com/standard_rsv/status/2093328953931116590",
+      "publisher": "@standard_rsv",
+      "published_at": "2026-08-28T13:24:49.000Z",
+      "retrieved_at": "2026-09-14T16:39:49.534Z",
+      "review_depth": "Full RSS item and rendered X text",
+      "claim_stage": "publisher announcement, not verified deployment",
+      "locators": [
+        "RSS item 2093328953931116590"
+      ],
+      "limits": [
+        "Publication timestamp is mirror-supplied; mirror delivery is not independent corroboration.",
+        "Attached media not visually reviewed."
+      ],
+      "post_id": "2093328953931116590",
+      "post_type": "original",
+      "retrieval": {
+        "mechanism": "public RSS mirror",
+        "url": "https://x.noodl3.net/standard_rsv/rss",
+        "browser_url": "https://x.com/standard_rsv",
+        "browser_retrieved_at": "2026-09-14T16:38:23.509Z"
+      },
+      "summary": "Announces first Genesis Charter allocation wave for active DeFi/NFT wallets, educators and early supporters, with more wallets planned.",
+      "displayed_date": "Aug 28"
+    },
+    {
+      "id": "sr-post-2091510125051969891",
+      "url": "https://x.com/standard_rsv/status/2091510125051969891",
+      "publisher": "@standard_rsv",
+      "published_at": "2026-08-23T12:57:26.000Z",
+      "retrieved_at": "2026-09-14T16:39:49.534Z",
+      "review_depth": "Full RSS item text; attached image visually reviewed",
+      "claim_stage": "publisher announcement, not verified deployment",
+      "locators": [
+        "RSS item 2091510125051969891",
+        "https://x.com/standard_rsv/status/2091510125051969891/photo/1"
+      ],
+      "limits": [
+        "Publication timestamp is mirror-supplied; mirror delivery is not independent corroboration."
+      ],
+      "post_id": "2091510125051969891",
+      "post_type": "original",
+      "retrieval": {
+        "mechanism": "public RSS mirror",
+        "url": "https://x.noodl3.net/standard_rsv/rss"
+      },
+      "summary": "Announces whitepaper live and no token/NFT live yet; promises no surprise launch; links project homepage, not an immutable release.",
+      "media": [
+        {
+          "url": "https://pbs.twimg.com/media/HQaIQf3bUAANe2u.jpg",
+          "observation": "Website promotional screenshot with Launch App button and disclaimer; no release revision or deployment identifier."
+        }
+      ]
+    },
+    {
+      "id": "sr-post-2089721404195483991",
+      "url": "https://x.com/standard_rsv/status/2089721404195483991",
+      "publisher": "@standard_rsv",
+      "published_at": "2026-08-18T14:29:42.000Z",
+      "retrieved_at": "2026-09-14T16:39:49.534Z",
+      "review_depth": "Full RSS item and rendered X text",
+      "claim_stage": "publisher announcement, not verified deployment",
+      "locators": [
+        "RSS item 2089721404195483991"
+      ],
+      "limits": [
+        "Publication timestamp is mirror-supplied; mirror delivery is not independent corroboration.",
+        "Attached media not visually reviewed.",
+        "Video element had no exposed src; playback/transcript/audio not reviewed."
+      ],
+      "post_id": "2089721404195483991",
+      "post_type": "original",
+      "retrieval": {
+        "mechanism": "public RSS mirror",
+        "url": "https://x.noodl3.net/standard_rsv/rss",
+        "browser_url": "https://x.com/standard_rsv/status/2089721404195483991",
+        "browser_retrieved_at": "2026-09-14T16:40:35.073Z"
+      },
+      "summary": "Promises future design explanations; video content not reviewed. No new mechanical setting established by text.",
+      "disposition": "accounted; routine teaser/reminder, no additional mechanics"
+    },
+    {
+      "id": "sr-post-2089347764018938176",
+      "url": "https://x.com/standard_rsv/status/2089347764018938176",
+      "publisher": "@standard_rsv",
+      "published_at": "2026-08-17T13:44:59.000Z",
+      "retrieved_at": "2026-09-14T16:39:49.534Z",
+      "review_depth": "Full RSS item text",
+      "claim_stage": "publisher announcement, not verified deployment",
+      "locators": [
+        "RSS item 2089347764018938176"
+      ],
+      "limits": [
+        "Publication timestamp is mirror-supplied; mirror delivery is not independent corroboration.",
+        "Attached media not visually reviewed."
+      ],
+      "post_id": "2089347764018938176",
+      "post_type": "original",
+      "retrieval": {
+        "mechanism": "public RSS mirror",
+        "url": "https://x.noodl3.net/standard_rsv/rss"
+      },
+      "summary": "Announces curated whitelist for active onchain participants and educators; promotional assertions excluded.",
+      "disposition": "accounted; routine teaser/reminder, no additional mechanics"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-09-14",
+  "scope": "Official identities authenticated from the reviewed source set; not a chain census",
+  "authenticated_contract_records": 0,
+  "groups": [],
+  "status": "No official contract address authenticated in the reviewed website and launch announcement evidence",
+  "source_ids": ["sr-protocol", "sr-whitepaper", "sr-mint", "sr-post-2098969960404103353"],
+  "identity_key": ["chain_id", "address"],
+  "conceptual_roles_not_deployment_records": ["currency", "charter", "issuing authority", "canonical pool and hook", "expansion-license auction", "charter auction", "fee routing", "reserve vault", "buyback vault", "protocol-owned liquidity"],
+  "limits": [
+    "No candidate or infrastructure address is substituted for an official identity",
+    "No assertion that deployments do not exist or that published addresses cannot appear after retrieval",
+    "New observations require fresh authentication; answer-time discovery does not silently modify this index"
+  ],
+  "workflow": "references/contracts.md"
+}

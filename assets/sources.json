@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "purpose": "Bounded routing index; source records are authoritative in the groups below",
+  "groups": [
+    {
+      "id": "website-core",
+      "path": "assets/sources/website-core.json",
+      "record_ids": [
+        "sr-protocol",
+        "sr-mint",
+        "sr-whitepaper"
+      ],
+      "scope": "Current protocol, mint and whitepaper presentations"
+    },
+    {
+      "id": "website-context",
+      "path": "assets/sources/website-context.json",
+      "record_ids": [
+        "sr-about",
+        "sr-app-about",
+        "sr-disclaimer",
+        "sr-app-redirect",
+        "sr-sitemap",
+        "sr-x-profile"
+      ],
+      "scope": "Explainer variants, disclaimer, navigation discovery and profile status"
+    },
+    {
+      "id": "launch-mint",
+      "path": "assets/sources/launch-mint.json",
+      "record_ids": [
+        "sr-post-2098969960404103353",
+        "sr-post-2098969964283846751",
+        "sr-post-2098969968201359736",
+        "sr-post-2098969986190733410"
+      ],
+      "scope": "Complete launch thread: root, mint terms, schedule and closing; trading continuations in launch-trading"
+    },
+    {
+      "id": "launch-trading",
+      "path": "assets/sources/launch-trading.json",
+      "record_ids": [
+        "sr-post-2098969974044066298",
+        "sr-post-2098969982503915891"
+      ],
+      "scope": "Launch thread trading-tax and day-one activation continuations"
+    },
+    {
+      "id": "history-audits",
+      "path": "assets/sources/history-audits.json",
+      "record_ids": [
+        "sr-post-2098183945926119589",
+        "sr-post-2095171541604639094",
+        "sr-post-2092602073011695793"
+      ],
+      "scope": "Audit-round and report promises; publisher claims, not reviewed audit reports"
+    },
+    {
+      "id": "history-participation",
+      "path": "assets/sources/history-participation.json",
+      "record_ids": [
+        "sr-whitepaper-historical-free",
+        "sr-post-2097126276998013081",
+        "sr-post-2093328953931116590",
+        "sr-post-2091510125051969891",
+        "sr-post-2089721404195483991",
+        "sr-post-2089347764018938176"
+      ],
+      "scope": "Superseded free-genesis terms, allocation waves, whitepaper release and early launch messaging"
+    },
+    {
+      "id": "history-mechanics",
+      "path": "assets/sources/history-mechanics.json",
+      "record_ids": [
+        "sr-post-2090446255084188133",
+        "sr-post-2090446255730122834",
+        "sr-post-2090446256040464715",
+        "sr-post-2090446256397054276"
+      ],
+      "scope": "Complete recovered monetary-policy thread including official continuations and closing image"
+    },
+    {
+      "id": "announcements-context",
+      "path": "assets/sources/announcements-context.json",
+      "record_ids": [
+        "sr-post-2090125508080222328",
+        "sr-post-2098972822853067233",
+        "sr-post-2090446567157235834",
+        "sr-post-2089721648656380354",
+        "sr-post-2096959555603194079",
+        "sr-post-2089728279683170614"
+      ],
+      "scope": "Attributed third-party replies and reposted opinion, excluded from protocol facts"
+    }
+  ],
+  "lookup": "Match a source ID to groups.record_ids and read that literal package-root-relative path. The index does not duplicate authoritative records.",
+  "rules": [
+    "Publication time, claimed event time, retrieval time, review depth and claim stage are independent",
+    "Original URLs identify statements even when retrieved via a mirror; mirrors are not independent corroboration",
+    "Source-specific numeric parameter values live in assets/parameters.json, not this index",
+    "Coverage is bounded by the recorded discovery/retrieval scope; a stopped feed is not a complete account archive",
+    "No scanner history, native-host transcripts or review verdicts belong in this source catalog"
+  ]
+}

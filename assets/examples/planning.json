@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "mode": "documented",
+  "detail": "summary",
+  "assumptions_acknowledged": true,
+  "days": 30,
+  "initial_branches": 2,
+  "initial_credits": "100",
+  "other_branches": 998,
+  "max_branches": 6,
+  "daily_license_limit": 1,
+  "base_daily_issuance": "1000",
+  "remaining_issuance_budget": "20000",
+  "initial_token_price_eth": "0.001",
+  "entry_cost_eth": "0.5",
+  "entry_gas_eth": "0.002",
+  "license_cost_tokens": "50",
+  "license_gas_eth": "0.001",
+  "expansion_budget_eth": "0.25",
+  "buy_cost_markup_pct": "2",
+  "sale_fee_pct": "1",
+  "sale_slippage_pct": "3",
+  "exit_gas_eth": "0.002",
+  "funding": "external",
+  "selective_target": 4,
+  "selective_interval_days": 7,
+  "exit_mode": "all",
+  "scenarios": [
+    {
+      "id": "fictional-flat",
+      "name": "Fictional flat-price illustration",
+      "multiplier": "1",
+      "other_branch_growth_pct": "0.5",
+      "price_growth_pct": "0",
+      "resolution_fee_pct": "5",
+      "sale_tax_pct": "2"
+    }
+  ],
+  "include_history": false
+}

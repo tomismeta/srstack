@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-09-14T16:40:35.079Z",
+  "scope": "Bounded official-account profile, launch/mechanics threads, RSS and selected images; not an entire-account archive.",
+  "records": [
+    {
+      "id": "sr-post-2090446255084188133",
+      "url": "https://x.com/standard_rsv/status/2090446255084188133",
+      "publisher": "@standard_rsv",
+      "published_at": "2026-08-20T14:30:00.000Z",
+      "retrieved_at": "2026-09-14T16:39:49.534Z",
+      "review_depth": "Full RSS item and rendered X text; attached image visually reviewed",
+      "claim_stage": "publisher announcement, not verified deployment",
+      "locators": [
+        "RSS item 2090446255084188133",
+        "https://x.com/standard_rsv/status/2090446255084188133/photo/1"
+      ],
+      "limits": [
+        "Publication timestamp is mirror-supplied; mirror delivery is not independent corroboration."
+      ],
+      "post_id": "2090446255084188133",
+      "post_type": "original",
+      "retrieval": {
+        "mechanism": "public RSS mirror",
+        "url": "https://x.noodl3.net/standard_rsv/rss",
+        "browser_url": "https://x.com/standard_rsv/status/2090446255084188133",
+        "browser_retrieved_at": "2026-09-14T16:39:37.606Z"
+      },
+      "summary": "Introduces reflexive monetary policy and NFT participation; claims hard-reserve backing. No identified reserve assets, holdings or redemption rights established by post.",
+      "media": [
+        {
+          "url": "https://pbs.twimg.com/media/HQKGv1-a0AEry2t?format=webp&name=medium",
+          "observation": "The monetary policy; one token, one economy, powered by NFTs."
+        }
+      ]
+    },
+    {
+      "id": "sr-post-2090446255730122834",
+      "url": "https://x.com/standard_rsv/status/2090446255730122834",
+      "publisher": "@standard_rsv",
+      "published_at": null,
+      "retrieved_at": "2026-09-14T16:39:37.606Z",
+      "review_depth": "Rendered individual thread text",
+      "claim_stage": "publisher announcement, not verified deployment",
+      "locators": [
+        "Rendered post 2090446255730122834"
+      ],
+      "limits": [
+        "Exact publication timestamp not established; displayed date retained separately."
+      ],
+      "post_id": "2090446255730122834",
+      "post_type": "reply",
+      "retrieval": {
+        "mechanism": "unauthenticated official X browser",
+        "url": "https://x.com/standard_rsv/status/2090446255084188133"
+      },
+      "summary": "Explains publisher design: inflows expand token and reserves; outflows tighten supply. Claimed defensive outcome is not observed market behavior.",
+      "displayed_date": "Aug 20",
+      "thread_root_id": "2090446255084188133"
+    },
+    {
+      "id": "sr-post-2090446256040464715",
+      "url": "https://x.com/standard_rsv/status/2090446256040464715",
+      "publisher": "@standard_rsv",
+      "published_at": "2026-08-20T14:30:00.000Z",
+      "retrieved_at": "2026-09-14T16:39:49.534Z",
+      "review_depth": "Full RSS item and rendered X text",
+      "claim_stage": "publisher announcement, not verified deployment",
+      "locators": [
+        "RSS item 2090446256040464715"
+      ],
+      "limits": [
+        "Publication timestamp is mirror-supplied; mirror delivery is not independent corroboration."
+      ],
+      "post_id": "2090446256040464715",
+      "post_type": "reply",
+      "retrieval": {
+        "mechanism": "public RSS mirror",
+        "url": "https://x.noodl3.net/standard_rsv/rss",
+        "browser_url": "https://x.com/standard_rsv/status/2090446255084188133",
+        "browser_retrieved_at": "2026-09-14T16:39:37.606Z"
+      },
+      "summary": "Describes capital-flow-responsive issuance and reserve accumulation; promotional defensive claims not verified.",
+      "displayed_date": "Aug 20",
+      "thread_root_id": "2090446255084188133"
+    },
+    {
+      "id": "sr-post-2090446256397054276",
+      "url": "https://x.com/standard_rsv/status/2090446256397054276",
+      "publisher": "@standard_rsv",
+      "published_at": "2026-08-20T14:30:00.000Z",
+      "retrieved_at": "2026-09-14T16:39:49.534Z",
+      "review_depth": "Full RSS item and rendered X text; attached image visually reviewed",
+      "claim_stage": "publisher announcement, not verified deployment",
+      "locators": [
+        "RSS item 2090446256397054276",
+        "https://x.com/standard_rsv/status/2090446256397054276/photo/1"
+      ],
+      "limits": [
+        "Publication timestamp is mirror-supplied; mirror delivery is not independent corroboration."
+      ],
+      "post_id": "2090446256397054276",
+      "post_type": "reply",
+      "retrieval": {
+        "mechanism": "public RSS mirror",
+        "url": "https://x.noodl3.net/standard_rsv/rss",
+        "browser_url": "https://x.com/standard_rsv/status/2090446255084188133",
+        "browser_retrieved_at": "2026-09-14T16:39:37.606Z"
+      },
+      "summary": "Teases later NFT mechanics; closing image identifies final post of mechanics thread.",
+      "displayed_date": "Aug 20",
+      "thread_root_id": "2090446255084188133",
+      "disposition": "accounted; routine teaser/reminder, no additional mechanics",
+      "media": [
+        {
+          "url": "https://pbs.twimg.com/media/HQKEUOIa0AAblvU?format=webp&name=medium",
+          "observation": "A new standard is coming; this is the last post in this thread."
+        }
+      ]
+    }
+  ]
+}

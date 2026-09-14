@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "scope": "Publisher design, not verified deployment",
+  "reviewed_at": "2026-09-14T16:47:11.626Z",
+  "records": [
+    {"id":"hard-cap","value":1000000000,"unit":"STANDARD","status":"documented-visible","source_ids":["sr-whitepaper"],"locator":"§3 Currency","limits":[]},
+    {"id":"token-decimals","value":18,"unit":"decimal places","status":"documented-visible","source_ids":["sr-whitepaper"],"locator":"§3 Currency","limits":[]},
+    {"id":"genesis-liquidity","value":100000000,"unit":"STANDARD","status":"documented-visible","source_ids":["sr-whitepaper"],"locator":"§3 Currency","limits":[]},
+    {"id":"issuance-budget","value":900000000,"unit":"STANDARD cumulative issuance","status":"documented-visible","source_ids":["sr-whitepaper"],"locator":"§3 Currency","limits":[]},
+    {"id":"signal-lookback","value":2,"unit":"completed epochs","status":"documented-visible","source_ids":["sr-whitepaper"],"locator":"§4 Net flow","limits":[]},
+    {"id":"vesting","value":0,"unit":"vesting arrangements claimed","status":"documented-visible","source_ids":["sr-about","sr-app-about"],"locator":"About: It all begins with charters","limits":["Publisher headline; not an independently verified allocation schedule. Ongoing team fee revenue is a different accounting scope."]},
+    {"id":"unlocks","value":0,"unit":"unlocks claimed","status":"documented-visible","source_ids":["sr-about","sr-app-about"],"locator":"About: It all begins with charters","limits":["Publisher headline; not an independently verified allocation schedule. Ongoing team fee revenue is a different accounting scope."]},
+    {"id":"insider-allocation","value":0,"unit":"insider allocation claimed","status":"documented-visible","source_ids":["sr-about","sr-app-about"],"locator":"About: It all begins with charters","limits":["Publisher headline; not an independently verified allocation schedule. Ongoing team fee revenue is a different accounting scope."]},
+    {"id":"base-issuance","value":null,"unit":"STANDARD per day","status":"redacted","source_ids":["sr-whitepaper"],"locator":"§5 base rate and equation 5.1; §14 Base issuance","limits":["Not recoverable from the reviewed visible source; do not supply calculator defaults."]},
+    {"id":"multiplier-floor","value":null,"unit":"multiplier","status":"redacted","source_ids":["sr-whitepaper"],"locator":"§5 Multiplier range","limits":["Not recoverable from the reviewed visible source; do not supply calculator defaults."]},
+    {"id":"multiplier-ceiling","value":null,"unit":"multiplier","status":"redacted","source_ids":["sr-whitepaper"],"locator":"§5 Multiplier range and ceiling prose","limits":["Not recoverable from the reviewed visible source; do not supply calculator defaults."]},
+    {"id":"multiplier-launch","value":null,"unit":"multiplier","status":"redacted","source_ids":["sr-whitepaper"],"locator":"§5 Launch value","limits":["Not recoverable from the reviewed visible source; do not supply calculator defaults."]},
+    {"id":"epoch-length","value":null,"unit":"time","status":"redacted","source_ids":["sr-whitepaper"],"locator":"§5 Epoch length; §14 Epoch","limits":["Not recoverable from the reviewed visible source; do not supply calculator defaults."]},
+    {"id":"rate-cut","value":null,"unit":"multiplier change per epoch","status":"redacted","source_ids":["sr-whitepaper"],"locator":"§5 Rate cut","limits":["Not recoverable from the reviewed visible source; do not supply calculator defaults."]},
+    {"id":"rate-raise","value":null,"unit":"multiplier change per epoch","status":"redacted","source_ids":["sr-whitepaper"],"locator":"§5 Rate raise","limits":["Not recoverable from the reviewed visible source; do not supply calculator defaults."]},
+    {"id":"multiplier-update-rule","value":null,"unit":"policy rule","status":"redacted","source_ids":["sr-whitepaper"],"locator":"§5 equation 5.2","limits":["Not recoverable from the reviewed visible source; do not supply calculator defaults."]},
+    {"id":"time-to-full-issue","value":null,"unit":"days","status":"redacted","source_ids":["sr-whitepaper"],"locator":"§5 Sustained inflows prose","limits":["Not recoverable from the reviewed visible source; do not supply calculator defaults."]},
+    {"id":"time-to-multiplier-ceiling","value":null,"unit":"time","status":"redacted","source_ids":["sr-whitepaper"],"locator":"§5 Sustained inflows prose","limits":["Not recoverable from the reviewed visible source; do not supply calculator defaults."]},
+    {"id":"time-ceiling-to-floor","value":null,"unit":"time","status":"redacted","source_ids":["sr-whitepaper"],"locator":"§5 Sustained exodus prose","limits":["Not recoverable from the reviewed visible source; do not supply calculator defaults."]},
+    {"id":"ceiling-to-floor-dilution-cut","value":null,"unit":"fraction","status":"redacted","source_ids":["sr-whitepaper"],"locator":"§5 Cutting dilution prose","limits":["Not recoverable from the reviewed visible source; do not supply calculator defaults."]},
+    {"id":"trading-fee","value":null,"unit":"fee rate; basis not disclosed","status":"redacted","source_ids":["sr-whitepaper"],"locator":"§14 Trading fee","limits":["Not recoverable from the reviewed visible source; do not supply calculator defaults."]},
+    {"id":"frontend-policy-range","value":{"minimum":"0.2","maximum":"1.25"},"unit":"multiplier range displayed by protocol page","status":"observed frontend publication, not deployed configuration","source_ids":["sr-protocol"],"locator":"Rotating POLICY RATE scene, observed 2026-09-14T16:47:11.626Z","limits":["Whitepaper multiplier bounds remain redacted; no current multiplier or final applied bounds established."]}
+  ]
+}
