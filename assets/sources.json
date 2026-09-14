@@ -3,6 +3,22 @@
   "purpose": "Bounded routing index; source records are authoritative in the groups below",
   "groups": [
     {
+      "id": "deployments",
+      "path": "assets/sources/deployments.json",
+      "record_ids": [
+        "sr-contract-directory",
+        "sr-etherscan-chainlist",
+        "sr-deployment-standard",
+        "sr-deployment-charter-nft",
+        "sr-deployment-central-bank",
+        "sr-deployment-trading-hook",
+        "sr-deployment-genesis-minter",
+        "sr-central-bank-creation-tx",
+        "sr-protocol-conditions"
+      ],
+      "scope": "Robinhood directory attribution, preferred Etherscan routing, dated frontend planning observations and prior explorer corroboration"
+    },
+    {
       "id": "website-core",
       "path": "assets/sources/website-core.json",
       "record_ids": [

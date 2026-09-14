@@ -24,6 +24,8 @@ Adapt these questions to the supplied context rather than repeating the checklis
 
 After the essentials, collect the remaining assumptions in small groups. Explain unfamiliar concepts before asking for values. Distinguish user inputs, dated sourced observations, proposed hypotheses and unresolved gaps. A current observation is not a future constant or an executable quote.
 
+When the user asks to use published contracts or current protocol conditions, follow the [deployment-evidence handoff](planning-inputs.md#deployment-evidence-handoff). It maps relevant roles and dated observations to proposed inputs without treating addresses, frontend labels or current values as verified future economics. It does not authorize a transaction or relax approval.
+
 | Kind | Treatment |
 |---|---|
 | Schema version, case IDs/names, summary detail, history off | Set internally; these do not change economics. IDs and labels must remain valid plain data. |

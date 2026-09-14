@@ -1,9 +1,16 @@
 {
   "schema_version": 1,
   "reviewed_at": "2026-09-14T16:44:02Z",
-  "scope": "All seven sitemap page presentations and all fifteen visible whitepaper sections; publisher design, not verified deployment",
+  "scope": "Baseline seven sitemap page presentations and fifteen visible whitepaper sections, plus separately dated deployment-directory and protocol-condition additions; not a full website refresh or verified deployment audit",
   "source_index": "assets/sources.json",
   "parameter_catalog": "assets/parameters.json",
+  "deployment_addition": {
+    "reviewed_at": "2026-09-14T21:55:34.068Z",
+    "source_ids": ["sr-contract-directory", "sr-protocol-conditions"],
+    "source_file": "assets/sources/deployments.json",
+    "entity_index": "assets/entity-index.json",
+    "limits": ["Only the four contract-directory groups and three protocol-condition tabs were refreshed. Baseline source dates and canonical parameters remain unchanged."]
+  },
   "limits": [
     "Sitemap coverage is not an exhaustive website or announcement archive.",
     "Redactions are reviewed as missing content; no hidden parameters inferred.",

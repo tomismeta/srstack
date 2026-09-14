@@ -48,6 +48,8 @@ Generic research: choose the relevant topic; use documents for source discovery.
 
 Cite original sources, locators and dates. Packaged records stop at their review/retrieval boundary; current claims need fresh evidence. Distinguish publisher intent, historical statements, observations and assumptions; mirrors are not corroboration and newer is not automatically authoritative. Align entity, ownership, units, interval and price/state anchors before combining quantities. Missing coverage is not zero; unknown/redacted values stay unknown.
 
+For Robinhood Chain (4663), use `https://robin.etherscan.io/` for contract navigation and new explorer checks. Preserve older source-provider URLs as provenance. Access failures are gaps, not an unverified-source verdict or permission to silently switch providers.
+
 ## Action boundary
 
 Read [safety](references/safety.md) before external retrieval or planning execution. Only bounded public reads, authenticated ABI `view`/`pure` queries and the verified fixed planner are allowed. No wallets, credentials, signatures, executable transaction/authorization payloads, state changes or state-changing simulations—even delegated or agent-owned. No downloaded code, guessed addresses/ABIs, arbitrary planner paths/rules, installed-record rewriting or background monitoring. Report capability/evidence gaps; never broaden access to bypass them.

@@ -1,0 +1,383 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-09-14T21:52:18.279Z",
+  "chain": {
+    "id": 4663,
+    "name": "Robinhood Chain",
+    "source_ids": [
+      "sr-contract-directory",
+      "sr-etherscan-chainlist"
+    ],
+    "rpc_chain_id_independently_checked": false
+  },
+  "scope": "Four official website directory groups; publisher-attributed roles, not an exhaustive deployed-system graph. Addresses matched the earlier website bundle. Other-chain bundle records are intentionally excluded.",
+  "explorer_policy": {
+    "preferred_family": "Etherscan",
+    "base_url": "https://robin.etherscan.io",
+    "source_ids": [
+      "sr-etherscan-chainlist"
+    ],
+    "verification_access": "Contract-page retrieval blocked by HTTP403/Cloudflare during2026-09-14 checks; no Etherscan source/ABI reviewed. Not a claim that source is unverified there."
+  },
+  "shared_evidence_limits": {
+    "applies_to": "Every record; read with selected records",
+    "runtime_code_or_abi_correspondence": "not-established",
+    "current_ownership_and_privileges": "not-independently-verified",
+    "proxy_and_implementation_relationships": "not-established",
+    "audit_to_deployment_correspondence": "not-established",
+    "current_activation_and_market_state": "not-established",
+    "earlier_blockscout_source_verification": "The five explorer-reported records returned is_verified=false during their observation window; this says nothing about Etherscan or later verification.",
+    "infrastructure": "Listing shared infrastructure does not make it project-authored or authenticate a particular pool. Pool manager is not a pool address.",
+    "actions": "Addresses and explorer links are research inputs, not executable integrations. No wallet or state-changing action is enabled."
+  },
+  "records": [
+    {
+      "id": "sr-robinhood-standard",
+      "chain_id": 4663,
+      "address": "0x88ad8DdF1E3898412146a534538d418c6F8A9062",
+      "name": "$STANDARD",
+      "role": "The token: withdrawal mints, deposit conversions, and permanent burns.",
+      "group": "core",
+      "scope": "protocol-module",
+      "explorer_url": "https://robin.etherscan.io/address/0x88ad8DdF1E3898412146a534538d418c6F8A9062#code",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-contract-directory"
+        ],
+        "locator": "Core / $STANDARD",
+        "retrieved_at": "2026-09-14T21:52:18.171Z"
+      },
+      "deployment_evidence": {
+        "status": "explorer-reported-contract",
+        "source_ids": [
+          "sr-deployment-standard"
+        ],
+        "creation_transaction_hash": "0x081e46605286e632b6b7352a42a269115e266447e1c4a05df42204639dadc024",
+        "creator_address": "0x5977B25419f9c0dDcB2F89fE204955622f4F57ea",
+        "observation_window_utc": [
+          "2026-09-14T21:45:06Z",
+          "2026-09-14T21:48:05Z"
+        ]
+      }
+    },
+    {
+      "id": "sr-robinhood-charter-nft",
+      "chain_id": 4663,
+      "address": "0x69101f92427376FA80476A997d024cf9dC3EaE39",
+      "name": "Charter NFT",
+      "role": "Bank ownership, charter lifecycles, and transferability.",
+      "group": "core",
+      "scope": "protocol-module",
+      "explorer_url": "https://robin.etherscan.io/address/0x69101f92427376FA80476A997d024cf9dC3EaE39#code",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-contract-directory"
+        ],
+        "locator": "Core / Charter NFT",
+        "retrieved_at": "2026-09-14T21:52:18.171Z"
+      },
+      "deployment_evidence": {
+        "status": "explorer-reported-contract",
+        "source_ids": [
+          "sr-deployment-charter-nft"
+        ],
+        "creation_transaction_hash": "0x081e46605286e632b6b7352a42a269115e266447e1c4a05df42204639dadc024",
+        "creator_address": "0x5977B25419f9c0dDcB2F89fE204955622f4F57ea",
+        "observation_window_utc": [
+          "2026-09-14T21:45:06Z",
+          "2026-09-14T21:48:05Z"
+        ]
+      }
+    },
+    {
+      "id": "sr-robinhood-central-bank",
+      "chain_id": 4663,
+      "address": "0x5977B25419f9c0dDcB2F89fE204955622f4F57ea",
+      "name": "Central Bank",
+      "role": "Issuance, branch balances, withdrawals, and monetary policy.",
+      "group": "core",
+      "scope": "protocol-module",
+      "explorer_url": "https://robin.etherscan.io/address/0x5977B25419f9c0dDcB2F89fE204955622f4F57ea#code",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-contract-directory"
+        ],
+        "locator": "Core / Central Bank",
+        "retrieved_at": "2026-09-14T21:52:18.171Z"
+      },
+      "deployment_evidence": {
+        "status": "explorer-reported-contract",
+        "source_ids": [
+          "sr-deployment-central-bank"
+        ],
+        "creation_transaction_hash": "0x081e46605286e632b6b7352a42a269115e266447e1c4a05df42204639dadc024",
+        "creator_address": "0x361E3A6ccF8fF8B1D85e33ad4436F4c8270F9607",
+        "observation_window_utc": [
+          "2026-09-14T21:45:06Z",
+          "2026-09-14T21:48:05Z"
+        ]
+      }
+    },
+    {
+      "id": "sr-robinhood-tax-hook",
+      "chain_id": 4663,
+      "address": "0xF1eE073811B14359D850825E48d200483200eDcd",
+      "name": "Trading Hook",
+      "role": "The canonical pool\u2019s flow signal and trading taxes.",
+      "group": "core",
+      "scope": "protocol-module",
+      "explorer_url": "https://robin.etherscan.io/address/0xF1eE073811B14359D850825E48d200483200eDcd#code",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-contract-directory"
+        ],
+        "locator": "Core / Trading Hook",
+        "retrieved_at": "2026-09-14T21:52:18.171Z"
+      },
+      "deployment_evidence": {
+        "status": "explorer-reported-contract",
+        "source_ids": [
+          "sr-deployment-trading-hook"
+        ],
+        "creation_transaction_hash": "0xbd20dfe4a8f4ee8d2357c25de4e5a195b18f443539a05338772ca02d3079e794",
+        "creator_address": "0x4e59b44847b379578588920cA78FbF26c0B4956C",
+        "observation_window_utc": [
+          "2026-09-14T21:45:06Z",
+          "2026-09-14T21:48:05Z"
+        ]
+      }
+    },
+    {
+      "id": "sr-robinhood-genesis-minter",
+      "chain_id": 4663,
+      "address": "0xF54B589EADC2aaE98b96DaD58d89BCBF27503e46",
+      "name": "Founding Sale",
+      "role": "Founding charters and the initial liquidity launch.",
+      "group": "auctions",
+      "scope": "protocol-module",
+      "explorer_url": "https://robin.etherscan.io/address/0xF54B589EADC2aaE98b96DaD58d89BCBF27503e46#code",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-contract-directory"
+        ],
+        "locator": "Auctions / Founding Sale",
+        "retrieved_at": "2026-09-14T21:52:18.197Z"
+      },
+      "deployment_evidence": {
+        "status": "explorer-reported-contract",
+        "source_ids": [
+          "sr-deployment-genesis-minter"
+        ],
+        "creation_transaction_hash": "0xdfb4dd0d6ed886a4ce441126ced8769c666283cbe161dbf690aa597d55089f2d",
+        "creator_address": "0x361E3A6ccF8fF8B1D85e33ad4436F4c8270F9607",
+        "observation_window_utc": [
+          "2026-09-14T21:45:06Z",
+          "2026-09-14T21:48:05Z"
+        ]
+      }
+    },
+    {
+      "id": "sr-robinhood-charter-auction",
+      "chain_id": 4663,
+      "address": "0x65B4f85b4A64424F6bA0fFe0C535100bc6888892",
+      "name": "Charter Auction",
+      "role": "Daily charter sales in ETH.",
+      "group": "auctions",
+      "scope": "protocol-module",
+      "explorer_url": "https://robin.etherscan.io/address/0x65B4f85b4A64424F6bA0fFe0C535100bc6888892#code",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-contract-directory"
+        ],
+        "locator": "Auctions / Charter Auction",
+        "retrieved_at": "2026-09-14T21:52:18.197Z"
+      },
+      "deployment_evidence": {
+        "status": "not-independently-checked",
+        "source_ids": []
+      }
+    },
+    {
+      "id": "sr-robinhood-license-auction",
+      "chain_id": 4663,
+      "address": "0xA45CE49303EEd5846F841BFd4bAC6aE8C805EC05",
+      "name": "Expansion License Auction",
+      "role": "Additional branches, paid for with $STANDARD.",
+      "group": "auctions",
+      "scope": "protocol-module",
+      "explorer_url": "https://robin.etherscan.io/address/0xA45CE49303EEd5846F841BFd4bAC6aE8C805EC05#code",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-contract-directory"
+        ],
+        "locator": "Auctions / Expansion License Auction",
+        "retrieved_at": "2026-09-14T21:52:18.197Z"
+      },
+      "deployment_evidence": {
+        "status": "not-independently-checked",
+        "source_ids": []
+      }
+    },
+    {
+      "id": "sr-robinhood-expansion-vault",
+      "chain_id": 4663,
+      "address": "0x6f457765035958725367a1D4C1f6064b047DAdB3",
+      "name": "Expansion Vault",
+      "role": "Holds ETH and purchases approved reserve assets.",
+      "group": "treasury",
+      "scope": "protocol-module",
+      "explorer_url": "https://robin.etherscan.io/address/0x6f457765035958725367a1D4C1f6064b047DAdB3#code",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-contract-directory"
+        ],
+        "locator": "Treasury / Expansion Vault",
+        "retrieved_at": "2026-09-14T21:52:18.247Z"
+      },
+      "deployment_evidence": {
+        "status": "not-independently-checked",
+        "source_ids": []
+      }
+    },
+    {
+      "id": "sr-robinhood-contraction-vault",
+      "chain_id": 4663,
+      "address": "0x796e80E8ABcedc30c700A9587F7933d3342B8946",
+      "name": "Contraction Vault",
+      "role": "Rate-limited market buybacks and burns.",
+      "group": "treasury",
+      "scope": "protocol-module",
+      "explorer_url": "https://robin.etherscan.io/address/0x796e80E8ABcedc30c700A9587F7933d3342B8946#code",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-contract-directory"
+        ],
+        "locator": "Treasury / Contraction Vault",
+        "retrieved_at": "2026-09-14T21:52:18.247Z"
+      },
+      "deployment_evidence": {
+        "status": "not-independently-checked",
+        "source_ids": []
+      }
+    },
+    {
+      "id": "sr-robinhood-pol-manager",
+      "chain_id": 4663,
+      "address": "0x242F3e67BEf43470C2434d95E7D618E19f87c8f8",
+      "name": "Liquidity Manager",
+      "role": "Initial and ongoing protocol-owned liquidity.",
+      "group": "treasury",
+      "scope": "protocol-module",
+      "explorer_url": "https://robin.etherscan.io/address/0x242F3e67BEf43470C2434d95E7D618E19f87c8f8#code",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-contract-directory"
+        ],
+        "locator": "Treasury / Liquidity Manager",
+        "retrieved_at": "2026-09-14T21:52:18.247Z"
+      },
+      "deployment_evidence": {
+        "status": "not-independently-checked",
+        "source_ids": []
+      }
+    },
+    {
+      "id": "sr-robinhood-fee-splitter",
+      "chain_id": 4663,
+      "address": "0xaa12DEda4aC19233A315777b17ff6ff5029D01b2",
+      "name": "Fee Splitter",
+      "role": "Routes revenue to vaults, permanent liquidity, etc.",
+      "group": "treasury",
+      "scope": "protocol-module",
+      "explorer_url": "https://robin.etherscan.io/address/0xaa12DEda4aC19233A315777b17ff6ff5029D01b2#code",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-contract-directory"
+        ],
+        "locator": "Treasury / Fee Splitter",
+        "retrieved_at": "2026-09-14T21:52:18.247Z"
+      },
+      "deployment_evidence": {
+        "status": "not-independently-checked",
+        "source_ids": []
+      }
+    },
+    {
+      "id": "sr-robinhood-registry",
+      "chain_id": 4663,
+      "address": "0x855C294dD019E9e0d84C058cFF7404f5F2dDCa4b",
+      "name": "Address Registry",
+      "role": "Contract relationships and permissionless execution control.",
+      "group": "infrastructure",
+      "scope": "protocol-module",
+      "explorer_url": "https://robin.etherscan.io/address/0x855C294dD019E9e0d84C058cFF7404f5F2dDCa4b#code",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-contract-directory"
+        ],
+        "locator": "Infrastructure / Address Registry",
+        "retrieved_at": "2026-09-14T21:52:18.279Z"
+      },
+      "deployment_evidence": {
+        "status": "not-independently-checked",
+        "source_ids": []
+      }
+    },
+    {
+      "id": "sr-robinhood-pool-manager",
+      "chain_id": 4663,
+      "address": "0x8366a39CC670B4001A1121B8F6A443A643e40951",
+      "name": "Uniswap v4 Pool Manager",
+      "role": "Shared infrastructure hosting the canonical pool.",
+      "group": "infrastructure",
+      "scope": "shared-infrastructure",
+      "explorer_url": "https://robin.etherscan.io/address/0x8366a39CC670B4001A1121B8F6A443A643e40951#code",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-contract-directory"
+        ],
+        "locator": "Infrastructure / Uniswap v4 Pool Manager",
+        "retrieved_at": "2026-09-14T21:52:18.279Z"
+      },
+      "deployment_evidence": {
+        "status": "not-independently-checked",
+        "source_ids": []
+      }
+    },
+    {
+      "id": "sr-robinhood-multicall3",
+      "chain_id": 4663,
+      "address": "0xca11bde05977b3631167028862be2a173976ca11",
+      "name": "Multicall",
+      "role": "Shared infrastructure for batched contract reads.",
+      "group": "infrastructure",
+      "scope": "shared-infrastructure",
+      "explorer_url": "https://robin.etherscan.io/address/0xca11bde05977b3631167028862be2a173976ca11#code",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-contract-directory"
+        ],
+        "locator": "Infrastructure / Multicall",
+        "retrieved_at": "2026-09-14T21:52:18.279Z"
+      },
+      "deployment_evidence": {
+        "status": "not-independently-checked",
+        "source_ids": []
+      }
+    }
+  ]
+}

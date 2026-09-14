@@ -4,7 +4,15 @@ Identity research, not an execution guide. The [entity index](../assets/entity-i
 
 ## Packaged boundary
 
-No official Standard Reserve contract address is authenticated in the reviewed packaged sources. This does **not** establish that no deployment exists. The launch thread says addresses will be published before launch: `sr-post-2098969960404103353` in [launch-mint sources](../assets/sources/launch-mint.json); see [launch-mint](launch-mint.md) for context. Namesakes, similar bytecode, explorer searches, frontend/wallet network settings and user-supplied links are not project attribution. Do not provide speculative candidate addresses.
+The official website now lists **14 addresses on Robinhood Chain, chain ID 4663**: 12 protocol modules and two shared infrastructure entries. Read [the Robinhood catalog](../assets/entities/robinhood.json), including its shared evidence limits, for full addresses, roles, preferred Etherscan links and per-record attribution. [Deployment sources](../assets/sources/deployments.json) retain the original evidence. The earlier no-address/no-configured-deployment observation is superseded by the directory captured September 14, 2026 at 21:52 UTC; this does not refresh other packaged pages or economic parameters.
+
+The five records with prior explorer corroboration—STANDARD, Central Bank, Charter NFT, Trading Hook and Founding Sale/Genesis Minter—were reported as contracts by Blockscout. The other nine are publisher-listed but were not independently checked. Blockscout's earlier unverified-source flags are provider-specific. Etherscan contract-page access was blocked during review, so **Etherscan source-verification status is unknown**, not “unverified.” Current ownership, proxy/implementation relationships, authenticated ABIs, deployment-to-audit correspondence and activation remain unestablished.
+
+Use **[Robinhood Etherscan](https://robin.etherscan.io/)** for navigation and new explorer checks. Match chain plus full address; Ethereum `etherscan.io` is chain 1. Keep historical Blockscout URLs as evidence provenance, not preferred navigation. If Etherscan access is blocked, report the gap rather than silently substituting a provider or inferring status.
+
+The directory also lists a pool manager and Multicall as shared infrastructure. Neither is project-authored merely because listed; a pool manager is not a unique canonical-pool address. Do not import Arbitrum or local-test records from the frontend bundle into this Robinhood group.
+
+For planning, use the [deployment-evidence handoff](planning-inputs.md#deployment-evidence-handoff). An address enables targeted research, not automatic gas estimates, economic defaults, ABI calls or financial actions.
 
 ## Authenticate the requested role
 

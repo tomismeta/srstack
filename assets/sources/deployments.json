@@ -1,0 +1,261 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-09-14T21:55:34.068Z",
+  "scope": "Official directory attribution, Etherscan routing, dated parameter-page observations and bounded prior explorer corroboration; no live feed",
+  "records": [
+    {
+      "id": "sr-contract-directory",
+      "url": "https://www.standardreserve.xyz/app/protocol/contracts/",
+      "publisher": "The Standard Reserve official website",
+      "published_at": null,
+      "retrieved_at": "2026-09-14T21:52:18.279Z",
+      "review_depth": "Rendered Core, Auctions, Treasury and Infrastructure tabs; full address, name, role and explorer link for all14 entries",
+      "claim_stage": "publisher deployment attribution and dated frontend control/activation claims; not independent RPC or code verification",
+      "locators": [
+        "Robinhood Chain \u00b7 Chain ID4663",
+        "Core",
+        "Auctions",
+        "Treasury",
+        "Infrastructure",
+        "Controls at block63,140,464"
+      ],
+      "summary": "Official directory now displays14 addresses, matching the previously discovered Robinhood bundle record. At capture, the page said the pool was not initialized and trading had not launched; buyback/liquidity execution owner-operated and expansion reserve purchases owner-only. These are dated website claims, not live guarantees.",
+      "limits": [
+        "Earlier no-deployment-configured frontend message is superseded by this later rendered capture.",
+        "No wallet connection, control refresh button, transaction, source verification or independent RPC used.",
+        "Site links point to Blockscout; skill navigation prefers Robinhood Etherscan without changing evidence provenance.",
+        "No full refresh of other website pages, economic parameter records or launch schedules."
+      ]
+    },
+    {
+      "id": "sr-etherscan-chainlist",
+      "url": "https://api.etherscan.io/v2/chainlist",
+      "publisher": "Etherscan",
+      "published_at": null,
+      "retrieved_at": "2026-09-14",
+      "retrieval_window_utc": [
+        "2026-09-14T21:48:05Z",
+        "2026-09-14T21:50:09Z"
+      ],
+      "review_depth": "Complete62-entry JSON chain list; Robinhood Chain4663 row and explorer/API endpoints",
+      "claim_stage": "explorer network routing evidence, not deployment or code verification",
+      "locators": [
+        "result entry with chainid4663"
+      ],
+      "summary": "Robinhood Chain4663 maps to https://robin.etherscan.io/ and the Etherscan V2 API with chainid4663.",
+      "limits": [
+        "Direct token and Central Bank page reads received HTTP403; browser retry hit Cloudflare. No source/ABI content retrieved.",
+        "Ethereum etherscan.io is chain1 and is not interchangeable with Robinhood Etherscan."
+      ]
+    },
+    {
+      "id": "sr-deployment-standard",
+      "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0x88ad8DdF1E3898412146a534538d418c6F8A9062",
+      "publisher": "Robinhood Chain Blockscout explorer",
+      "published_at": null,
+      "retrieved_at": "2026-09-14",
+      "retrieval_window_utc": [
+        "2026-09-14T21:45:06Z",
+        "2026-09-14T21:48:05Z"
+      ],
+      "review_depth": "Address API response: contract presence, creation status/transaction/creator, source-verification flag; not source or runtime bytecode review",
+      "claim_stage": "dated explorer-reported deployment corroboration",
+      "locators": [
+        "is_contract",
+        "creation_status",
+        "creation_transaction_hash",
+        "creator_address_hash",
+        "is_verified"
+      ],
+      "summary": "Reported is_contract=true, creation_status=success and is_verified=false. Creation transaction 0x081e46605286e632b6b7352a42a269115e266447e1c4a05df42204639dadc024; creator 0x5977B25419f9c0dDcB2F89fE204955622f4F57ea.",
+      "limits": [
+        "Historical corroboration retained; new navigation uses Etherscan.",
+        "Source-verification flag is Blockscout-specific, not Etherscan status.",
+        "No independent eth_chainId, pinned-block eth_getCode, proxy detection or source/bytecode correspondence."
+      ]
+    },
+    {
+      "id": "sr-deployment-charter-nft",
+      "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0x69101f92427376FA80476A997d024cf9dC3EaE39",
+      "publisher": "Robinhood Chain Blockscout explorer",
+      "published_at": null,
+      "retrieved_at": "2026-09-14",
+      "retrieval_window_utc": [
+        "2026-09-14T21:45:06Z",
+        "2026-09-14T21:48:05Z"
+      ],
+      "review_depth": "Address API response: contract presence, creation status/transaction/creator, source-verification flag; not source or runtime bytecode review",
+      "claim_stage": "dated explorer-reported deployment corroboration",
+      "locators": [
+        "is_contract",
+        "creation_status",
+        "creation_transaction_hash",
+        "creator_address_hash",
+        "is_verified"
+      ],
+      "summary": "Reported is_contract=true, creation_status=success and is_verified=false. Creation transaction 0x081e46605286e632b6b7352a42a269115e266447e1c4a05df42204639dadc024; creator 0x5977B25419f9c0dDcB2F89fE204955622f4F57ea.",
+      "limits": [
+        "Historical corroboration retained; new navigation uses Etherscan.",
+        "Source-verification flag is Blockscout-specific, not Etherscan status.",
+        "No independent eth_chainId, pinned-block eth_getCode, proxy detection or source/bytecode correspondence."
+      ]
+    },
+    {
+      "id": "sr-deployment-central-bank",
+      "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0x5977B25419f9c0dDcB2F89fE204955622f4F57ea",
+      "publisher": "Robinhood Chain Blockscout explorer",
+      "published_at": null,
+      "retrieved_at": "2026-09-14",
+      "retrieval_window_utc": [
+        "2026-09-14T21:45:06Z",
+        "2026-09-14T21:48:05Z"
+      ],
+      "review_depth": "Address API response: contract presence, creation status/transaction/creator, source-verification flag; not source or runtime bytecode review",
+      "claim_stage": "dated explorer-reported deployment corroboration",
+      "locators": [
+        "is_contract",
+        "creation_status",
+        "creation_transaction_hash",
+        "creator_address_hash",
+        "is_verified"
+      ],
+      "summary": "Reported is_contract=true, creation_status=success and is_verified=false. Creation transaction 0x081e46605286e632b6b7352a42a269115e266447e1c4a05df42204639dadc024; creator 0x361E3A6ccF8fF8B1D85e33ad4436F4c8270F9607.",
+      "limits": [
+        "Historical corroboration retained; new navigation uses Etherscan.",
+        "Source-verification flag is Blockscout-specific, not Etherscan status.",
+        "No independent eth_chainId, pinned-block eth_getCode, proxy detection or source/bytecode correspondence."
+      ]
+    },
+    {
+      "id": "sr-deployment-trading-hook",
+      "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0xF1eE073811B14359D850825E48d200483200eDcd",
+      "publisher": "Robinhood Chain Blockscout explorer",
+      "published_at": null,
+      "retrieved_at": "2026-09-14",
+      "retrieval_window_utc": [
+        "2026-09-14T21:45:06Z",
+        "2026-09-14T21:48:05Z"
+      ],
+      "review_depth": "Address API response: contract presence, creation status/transaction/creator, source-verification flag; not source or runtime bytecode review",
+      "claim_stage": "dated explorer-reported deployment corroboration",
+      "locators": [
+        "is_contract",
+        "creation_status",
+        "creation_transaction_hash",
+        "creator_address_hash",
+        "is_verified"
+      ],
+      "summary": "Reported is_contract=true, creation_status=success and is_verified=false. Creation transaction 0xbd20dfe4a8f4ee8d2357c25de4e5a195b18f443539a05338772ca02d3079e794; creator 0x4e59b44847b379578588920cA78FbF26c0B4956C.",
+      "limits": [
+        "Historical corroboration retained; new navigation uses Etherscan.",
+        "Source-verification flag is Blockscout-specific, not Etherscan status.",
+        "No independent eth_chainId, pinned-block eth_getCode, proxy detection or source/bytecode correspondence."
+      ]
+    },
+    {
+      "id": "sr-deployment-genesis-minter",
+      "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0xF54B589EADC2aaE98b96DaD58d89BCBF27503e46",
+      "publisher": "Robinhood Chain Blockscout explorer",
+      "published_at": null,
+      "retrieved_at": "2026-09-14",
+      "retrieval_window_utc": [
+        "2026-09-14T21:45:06Z",
+        "2026-09-14T21:48:05Z"
+      ],
+      "review_depth": "Address API response: contract presence, creation status/transaction/creator, source-verification flag; not source or runtime bytecode review",
+      "claim_stage": "dated explorer-reported deployment corroboration",
+      "locators": [
+        "is_contract",
+        "creation_status",
+        "creation_transaction_hash",
+        "creator_address_hash",
+        "is_verified"
+      ],
+      "summary": "Reported is_contract=true, creation_status=success and is_verified=false. Creation transaction 0xdfb4dd0d6ed886a4ce441126ced8769c666283cbe161dbf690aa597d55089f2d; creator 0x361E3A6ccF8fF8B1D85e33ad4436F4c8270F9607.",
+      "limits": [
+        "Historical corroboration retained; new navigation uses Etherscan.",
+        "Source-verification flag is Blockscout-specific, not Etherscan status.",
+        "No independent eth_chainId, pinned-block eth_getCode, proxy detection or source/bytecode correspondence."
+      ]
+    },
+    {
+      "id": "sr-central-bank-creation-tx",
+      "url": "https://robinhoodchain.blockscout.com/api/v2/transactions/0x081e46605286e632b6b7352a42a269115e266447e1c4a05df42204639dadc024",
+      "publisher": "Robinhood Chain Blockscout explorer",
+      "published_at": null,
+      "retrieved_at": "2026-09-14",
+      "retrieval_window_utc": [
+        "2026-09-14T21:45:06Z",
+        "2026-09-14T21:48:05Z"
+      ],
+      "review_depth": "Selected transaction response fields: hash, result, status, created_contract, sender, block_number and timestamp; no bytecode decoding",
+      "claim_stage": "explorer-reported successful creation; not finality or source verification",
+      "locators": [
+        "block_number63123983",
+        "timestamp2026-09-14T21:24:22.000000Z",
+        "result success; status ok"
+      ],
+      "summary": "Reports Central Bank creation at block63,123,983, 2026-09-14T21:24:22Z. Token and Charter NFT address responses cite the same transaction and Central Bank as creator.",
+      "limits": [
+        "Block hash and independent RPC evidence not established. No claim of finalized deployment, ownership, active trading or audit coverage."
+      ]
+    },
+    {
+      "id": "sr-protocol-conditions",
+      "url": "https://www.standardreserve.xyz/app/protocol/live/",
+      "publisher": "The Standard Reserve official website",
+      "published_at": null,
+      "retrieved_at": "2026-09-14T21:55:34.068Z",
+      "review_depth": "Rendered Policy & fees, Auctions, Treasury & controls tabs; displayed values and state qualifiers, no independent RPC or ABI review",
+      "claim_stage": "dated publisher-displayed contract readings; not independently verified on-chain state",
+      "locators": [
+        "Policy & fees: displayed block63142127, retrieved2026-09-14T21:55:12.343Z",
+        "Auctions and Treasury & controls: displayed block63142275, retrieved2026-09-14T21:55:34.020Z through21:55:34.068Z"
+      ],
+      "displayed_observations": {
+        "policy_and_fees": {
+          "displayed_block": 63142127,
+          "issuance_state": "Pre-launch: issuance has not started",
+          "multiplier": "1x",
+          "base_issuance_rate": "700,000 / day",
+          "base_rate_qualifier": "Policy-scaled STANDARD; actual issuance can stop at budget or epoch boundary",
+          "current_streamed_rate": "0 / day",
+          "streamed_rate_qualifier": "Daily equivalent including recycled fees, shared by all branches",
+          "epoch": "Not started",
+          "epoch_duration": "3 days",
+          "open_branches": "337",
+          "buy_tax": "90%",
+          "sell_tax": "90%",
+          "tax_qualifier": "Current protocol tax, changeable before execution; pool LP fee is separate",
+          "withdrawal_fee_estimate": "Not started"
+        },
+        "auctions": {
+          "displayed_block": 63142275,
+          "charter_auction": "Not enabled",
+          "license_auction": "Not enabled; becomes available after activation"
+        },
+        "treasury_and_controls": {
+          "displayed_block": 63142275,
+          "minted_token_supply": "100,000,000 STANDARD",
+          "max_supply": "1,000,000,000 STANDARD",
+          "permanently_burned": "0",
+          "accrued_bank_balances": "0",
+          "expansion_vault_native_balance": "0 ETH",
+          "contraction_vault_native_balance": "0 ETH",
+          "reserve_token_coverage": "Not indexed on this page",
+          "buyback_and_liquidity_execution": "owner-operated",
+          "reserve_purchases": "owner-only",
+          "expansion_purchases_paused": false,
+          "buybacks_paused": false
+        }
+      },
+      "summary": "Potential dated planning context, not ready-made inputs. Pre-launch zero streaming is not a future zero forecast; disabled auctions do not provide a free license quote. Source labels the displayed base rate policy-scaled; planner applies its own multiplier. Supply is not remaining gross issuance budget.",
+      "limits": [
+        "These observations do not share one block across tabs. No block hashes or independent RPC checks established.",
+        "Do not silently copy observations into a constant-price/rate/tax scenario. User approval and compatible semantics are required.",
+        "No usable token-market or license quote, active epoch, withdrawal fee quote, or gas estimate established by this capture.",
+        "Original94 canonical parameter records and planner math remain unchanged; these observations are separate evidence, not overrides."
+      ]
+    }
+  ]
+}

@@ -1,17 +1,49 @@
 {
   "schema_version": 1,
   "reviewed_on": "2026-09-14",
-  "scope": "Official identities authenticated from the reviewed source set; not a chain census",
-  "authenticated_contract_records": 0,
-  "groups": [],
-  "status": "No official contract address authenticated in the reviewed website and launch announcement evidence",
-  "source_ids": ["sr-protocol", "sr-whitepaper", "sr-mint", "sr-post-2098969960404103353"],
-  "identity_key": ["chain_id", "address"],
-  "conceptual_roles_not_deployment_records": ["currency", "charter", "issuing authority", "canonical pool and hook", "expansion-license auction", "charter auction", "fee routing", "reserve vault", "buyback vault", "protocol-owned liquidity"],
+  "scope": "Publisher-attributed Robinhood deployment directory, with separate corroboration and verification limits; not a chain census",
+  "publisher_attributed_records": 14,
+  "explorer_corroborated_records": 5,
+  "groups": [
+    {
+      "id": "robinhood",
+      "path": "assets/entities/robinhood.json",
+      "chain_id": 4663,
+      "record_ids": [
+        "sr-robinhood-standard",
+        "sr-robinhood-charter-nft",
+        "sr-robinhood-central-bank",
+        "sr-robinhood-tax-hook",
+        "sr-robinhood-genesis-minter",
+        "sr-robinhood-charter-auction",
+        "sr-robinhood-license-auction",
+        "sr-robinhood-expansion-vault",
+        "sr-robinhood-contraction-vault",
+        "sr-robinhood-pol-manager",
+        "sr-robinhood-fee-splitter",
+        "sr-robinhood-registry",
+        "sr-robinhood-pool-manager",
+        "sr-robinhood-multicall3"
+      ],
+      "scope": "12 protocol modules and2 shared infrastructure entries from all4 official directory tabs"
+    }
+  ],
+  "status": "Official site lists the addresses on Robinhood Chain4663. Code/ABI correspondence, current ownership, activation and audit coverage remain separate unresolved questions.",
+  "source_ids": [
+    "sr-contract-directory",
+    "sr-etherscan-chainlist"
+  ],
+  "identity_key": [
+    "chain_id",
+    "address"
+  ],
+  "lookup": "Read the literal group path, then the selected record with its shared_evidence_limits. No host-specific record query selector is assumed.",
+  "explorer_preference": "Use https://robin.etherscan.io for Robinhood navigation and new checks. Preserve original evidence-provider URLs; Ethereum etherscan.io is another chain.",
   "limits": [
-    "No candidate or infrastructure address is substituted for an official identity",
-    "No assertion that deployments do not exist or that published addresses cannot appear after retrieval",
-    "New observations require fresh authentication; answer-time discovery does not silently modify this index"
+    "No Arbitrum or local-test bundle addresses are promoted to this deployment.",
+    "Shared infrastructure is not project-authored, and a pool manager is not the canonical pool.",
+    "Publisher attribution is not source verification, ABI authentication, activation or audited safety.",
+    "Do not persist changing balances or infer live values from this identity index."
   ],
   "workflow": "references/contracts.md"
 }

@@ -126,11 +126,13 @@ Replace the placeholder with a real public target; it is not a runnable unattend
 
 ## Coverage and footprint
 
-The packaged research snapshot is dated **September 14, 2026**: **34 source records and 94 parameter records**, with source-specific dates and review limits. Publisher claims, superseded statements and observations remain distinct. Counts do not establish current on-chain state.
+The packaged research snapshot is dated **September 14, 2026**: **43 source records and 94 parameter records**, with source-specific dates and review limits. Deployment-directory and protocol-condition additions were captured at 21:52–21:55 UTC; other baseline pages and canonical economic parameters were not refreshed. Publisher claims, superseded statements and observations remain distinct. Counts do not establish current on-chain state.
 
-**No official contract addresses are authenticated in the packaged snapshot.** This does not establish that no deployment exists. Fresh public research may establish new evidence; the installed package does not update itself.
+The [contract catalog](assets/entities/robinhood.json) contains **14 publisher-listed Robinhood Chain addresses**, including two shared infrastructure entries, with **Robinhood Etherscan links**. Five have dated prior explorer corroboration. Source/ABI correspondence, current ownership, proxy relationships, audit coverage and activation remain separate verification tasks; Etherscan access was blocked, so its source-verification status is unknown.
 
-The complete bundle is **under 300 KiB across 46 files**, excluding Git metadata. The entry file routes to selected references and indexed records; the whole bundle is not intended to load for every question. Selective loading depends on the host, and disk size is not per-question token cost.
+For contract-informed planning, ask: **“Use srstack plan. Help me turn the published protocol conditions into proposed assumptions, and show what still needs verification.”** The [handoff](references/planning-inputs.md#deployment-evidence-handoff) distinguishes observations from approved future assumptions. It prevents double-applying a policy-scaled issuance rate, treating disabled auctions as free licenses, or confusing current tax with a future quote. No financial execution is added.
+
+The complete bundle is **under 350 KiB across 48 files**, excluding Git metadata. The entry file routes to selected references and indexed records; the whole bundle is not intended to load for every question. Selective loading depends on the host, and disk size is not per-question token cost.
 
 Basic packaged research needs only a resource reader. Planning uses existing **Python 3.10+ and its standard library**, with no pip dependencies; required OS containment primitives must also be available. Contract inspection requires authenticated contract identities and permitted public, read-only chain queries. No wallet connector, telemetry or self-update process is bundled.
 
