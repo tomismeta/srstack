@@ -2,6 +2,8 @@
 
 For users/maintainers—not permission for an agent to install itself or change configuration. Install the complete reviewed package root containing `SKILL.md`, script, references, assets, license and manifest together. Avoid same-name stale copies. Select a trusted reviewed commit; a manifest checksum comparison establishes byte integrity, not source authenticity or model validity.
 
+The repository also contains maintenance tools and CI configuration that are not runtime resources. Follow the [reviewed-commit export steps](../README.md#quick-start) to produce only manifest-listed content plus the manifest. Do not install the entire repository, run maintenance commands as skill actions, or start discovery before export succeeds.
+
 ## Hermes
 
 Primary root: `~/.hermes/skills/`; named profiles may use another Hermes home. Put the package at that profile's `skills/srstack/`, or in an explicitly configured external skill directory containing `srstack/`. Do not duplicate across roots.

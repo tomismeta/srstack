@@ -28,15 +28,18 @@ These are routing instructions within one skill, not separately installed comman
 
 ## Quick start
 
+The export machine needs Git and Python 3.10+. An installed research-only host does not need Python; planning execution does.
+
 1. Review [SKILL.md](SKILL.md), the [safety boundary](references/safety.md) and the complete package. Select a full immutable commit SHA you trust and have reviewed, not the moving `main` branch.
-2. From your chosen working directory (the intended workspace for OpenClaw workspace installation), clone a review copy and check out that revision:
+2. From your chosen working directory (the intended workspace for OpenClaw workspace installation), clone a review copy and select that revision:
 
    ```sh
-   git clone https://github.com/tomismeta/srstack.git srstack-review
-   git -C srstack-review checkout --detach REVIEWED_COMMIT_SHA
+   REVIEWED_COMMIT=REVIEWED_COMMIT_SHA
+   git clone https://github.com/tomismeta/srstack.git srstack-review &&
+   git -C srstack-review checkout --detach "$REVIEWED_COMMIT"
    ```
 
-   Replace `REVIEWED_COMMIT_SHA` with the full SHA you reviewed; it is a placeholder, not a release identifier.
+   Replace `REVIEWED_COMMIT_SHA` with the full 40-character commit SHA you reviewed; it is a placeholder, not a release identifier. Stop on any error. The export command below independently checks that the selected commit matches the checkout, so a failed checkout cannot silently install the default branch.
 
 3. Choose **one** installation parent. For Hermes' default profile:
 
@@ -50,15 +53,18 @@ These are routing instructions within one skill, not separately installed comman
    SKILL_PARENT="$PWD/skills"
    ```
 
-   Named profiles and managed installations may use different roots; use the intended host's configured location. Then export the complete reviewed Git tree, without `.git`, into a new skill folder:
+   Named profiles and managed installations may use different roots; use the intended host's configured location. Export the reviewed commit's manifest-listed runtime files into a new skill folder:
 
    ```sh
    mkdir -p "$SKILL_PARENT" &&
-   mkdir "$SKILL_PARENT/srstack" &&
-   git -C srstack-review archive HEAD | tar -x -C "$SKILL_PARENT/srstack"
+   python3 -B srstack-review/maintenance/package.py export \
+     --commit "$REVIEWED_COMMIT" \
+     --destination "$SKILL_PARENT/srstack"
    ```
 
-   The final folder must not already exist. For updates, preserve customizations outside the active folder and replace the old installation cleanly; do not overlay files or leave a shadowing same-name copy. The reviewed tree should contain only the manifest-listed package content plus `release-manifest.json` itself.
+   The destination must not already exist. Export validates the selected commit's runtime membership, per-file hashes and aggregate digest before creating it. It reads committed content, not uncommitted runtime edits, and excludes Git metadata, maintenance tools, tests, CI configuration and local build/cache artifacts. Failed exports clean up the new destination. Review the helper itself as part of the selected commit; do not run unreviewed local modifications.
+
+   For updates, preserve customizations outside the active folder and replace the old installation cleanly. Do not overlay files or leave a shadowing same-name copy. Start or refresh the host only after export succeeds. Directly copying the whole repository is not equivalent to exporting the runtime package.
 
 4. Have the host verify the installed files against `release-manifest.json`: `content_files` maps relative paths to SHA-256 hashes, and `digest_convention` specifies the aggregate `content_sha256`. Confirm the actual loaded path and revision. A matching manifest establishes byte integrity, not trust in an otherwise unreviewed package.
 5. Start a fresh conversation and try a packaged-knowledge question from the examples below.
@@ -159,8 +165,23 @@ The planner reads three fixed bundled parameter files, performs no network or en
 
 **A skill prompt is not a sandbox.** Host permissions and isolation still matter. No safety or profitability guarantee is implied.
 
+## Repository validation
+
+These commands run from the **repository root**, not the installed skill folder:
+
+```sh
+python3 -B maintenance/package.py verify
+python3 -B maintenance/check-planner.py
+python3 -B maintenance/check-package.py
+python3 -B maintenance/package.py archive
+```
+
+The checks use Python's standard library and local Git; they do not call explorers, connect wallets or use model/API credentials. CI runs them on Python 3.10 and 3.14, with read-only repository permissions and commit-pinned Actions. GitHub checkout and Python provisioning require network access; the validation commands themselves are offline. CI verifies the committed manifest rather than regenerating it, and checks deterministic ZIP output. It does not upload artifacts, tag, publish releases or monitor contracts.
+
+After deliberate runtime changes, regenerate the manifest with `python3 -B maintenance/package.py build`, then run the checks above. `dist/srstack-0.1.0.zip` contains only the runtime package. Maintenance tooling and CI files are repository-only and never authorize an installed skill to execute them.
+
 ## Feedback and license
 
 Report reproducible problems through [GitHub issues](https://github.com/tomismeta/srstack/issues), including the host/version, package commit, actual loaded path and redacted reproduction. Never upload wallet credentials, private RPC URLs or private conversation history.
 
-Original code and summaries are [MIT-licensed](LICENSE). Third-party documents, posts, media, trademarks and protocol code retain their owners' rights. Source links do not transfer those rights.
+Original srstack code, summaries and instructions are [MIT-licensed](LICENSE). Third-party documents, posts, media, trademarks and protocol code retain their owners' rights and are excluded from that grant. Source links and quotations do not transfer those rights or imply affiliation.

@@ -2,11 +2,11 @@
   "schema_version": 1,
   "name": "srstack",
   "version": "0.1.0",
-  "scope": "Package knowledge, procedures, and explicit bundled planner; excludes manifest and external research/maintenance/browser calculator",
+  "scope": "Runtime knowledge and bundled planner; excludes manifest, repository maintenance, CI, Git metadata, and build/cache artifacts",
   "digest_convention": "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest",
   "content_files": {
-    "LICENSE": "577937d78be98b8639c8b4ade19b9864cb65243b5d2cf76d032357d0aae6ad85",
-    "README.md": "cdb5b5f65dc4fbd591ba5d6e3783f3682d1748b1e407422172a2a6f4a490a592",
+    "LICENSE": "14b82531e814378b84e97596f68a98c70becee3251b206c545d4f07d73105af3",
+    "README.md": "960e4c8d385b2d361913a1d4fa009779fe4b6c6420200b188864c67a2379ab8f",
     "SKILL.md": "916e6b2b1ce2112f612bb2e88391afd0e8e59494b4fefdd57dbd9750f0a47f9d",
     "assets/coverage.json": "7e11ab4697fcaaea8429c00dccfea61612de26b5beee106fc19eca1a338fcba0",
     "assets/entities/robinhood.json": "8f9345927e70794f904e2732cf41a711559e6cbf3f59b97ece0bc239d2bcf214",
@@ -28,7 +28,7 @@
     "references/exits.md": "b53cdaf91f24cfdb0d367a6bceb078bee2713577b2208273d99b3792f32bfd20",
     "references/genesis.md": "8df5a723b497b046400d2c0c0d90aa12c8b3922684965d98b804af31c00193e2",
     "references/inspection.md": "ba7d0cc869720e52a24ffa8a3cf66b40a4180bfbee9281f22abe826a2cbdc866",
-    "references/installation.md": "09dd72a6390e0749dd15b112ffaa8e17f36586f7a2b9b41a71768dfd41243226",
+    "references/installation.md": "2d3def81546e7c194f3fe334aeaaca6367f952e28331382be03df8fc3803b441",
     "references/launch-mint.md": "0c45c1d9cac3172150e0929d2ed89134bec8d7d31d8dac4131fd992cce312864",
     "references/launch-trading.md": "2ebd74486857b43398e502ca9e9801e21c5150f165b7d865257cebf4f113e3c0",
     "references/planning-conformance.md": "a625b69170c2bbcad70f60ad173b4acb8641e63e62ffd5a57e37982dffa16d24",
@@ -45,5 +45,5 @@
     "references/updates.md": "d05274f96b5a57924a7d3314535fc78a8ce3d8b02ebafa1fbca39e1778f70994",
     "scripts/scenario.py": "228b52cd14a2cf8e4fcf17958626fbb1b3f613a041308c9b216a078ca680e2e5"
   },
-  "content_sha256": "e6b7e3c15d9feb52d9206383268b5a2c48f976619e99d2710b6e13809cc34fb8"
+  "content_sha256": "655ce77a83495e5b971fe35bf3060a3523afd022f420eec59f3e65ba16402be6"
 }
