@@ -172,11 +172,26 @@ printf '%s' '{"schema_version":1,"view":"protocol"}' | python3 -B -I scripts/sna
 
 Views are `protocol`, `auctions` and `charter`; the last requires integer `charter_id`. `detail: "full"` adds raw responses and call mappings. Default answers show useful values first, with at most one short note such as **“RPC snapshot; publisher ABI.”**
 
+## Contract coverage
+
+The [contract catalog](assets/entities/robinhood.json) contains **14 publisher-listed identities on Robinhood Chain (4663)**. The fixed [publisher read interface](assets/interfaces/robinhood-reads.json) supports selected live reads from **six**:
+
+| Contract | Questions supported by fresh reads |
+|---|---|
+| **$STANDARD** | What are total token supply, maximum supply and hard cap? `totalSupply()` is not necessarily circulating supply. |
+| **Central Bank** | What are the issuance rate, multiplier, stream rate, branch count and epoch? What budget remains according to the issuance counters? |
+| **Charter NFT** | Who owns public charter X? Combined with Central Bank reads, how many branches and pending credits does it have? |
+| **Trading Hook** | What are current buy/sell taxes? Is an override active? Is the pool initialized? |
+| **Expansion License Auction** | Is it started or paused? How much inventory remains? Is there a usable current price, and what is the auction duration? |
+| **Charter Auction** | Are daily charter sales enabled? Is inventory available, and what is the usable ETH price and auction duration? |
+
+The other eight have **identity and documented-role coverage, not fixed-helper live-read support**: Founding Sale, Expansion Vault, Contraction Vault, Liquidity Manager, Fee Splitter, Address Registry, Uniswap v4 Pool Manager and Multicall. Their addresses and explorer links are in the catalog; current holdings, permissions and implementation details require separate fresh research.
+
+**Publisher-listed addresses and publisher ABIs are not independently verified Solidity source code.** The package bundles no independently verified contract source and stores no explorer verification verdicts. Current verification status requires a fresh explorer check. Getter observations do not establish complete administrator powers, upgradeability, audit correspondence or exploit resistance. Source dates identify reference provenance, not live-state freshness.
+
 ## Coverage and footprint
 
 The package covers the 16-section whitepaper, contract identities and publisher ABI definitions. It stores no changing-state snapshots, recap metrics or explorer verification verdicts. Current balances, rates, supply, inventory, prices, activation, verification status and announcements require fresh retrieval; unavailable data stays unavailable.
-
-The [contract catalog](assets/entities/robinhood.json) contains 14 publisher-listed Robinhood addresses and Etherscan links, not cached deployment verdicts. The [publisher read interface](assets/interfaces/robinhood-reads.json) enables selected block-scoped observations without claiming independently verified source code, audited safety or complete privilege analysis. Source dates identify reference provenance, not live-state freshness.
 
 For evidence-assisted planning, ask: **“Use srstack plan. Read the current protocol and auction settings, propose inputs, then ask me for what is missing.”** The [handoff](references/planning-inputs.md#deployment-evidence-handoff) keeps observations separate from approved future assumptions. It distinguishes current stream rates, remaining-budget accounting, sale taxes, LP fees and unavailable auctions. No financial execution is added.
 
