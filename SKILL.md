@@ -34,6 +34,8 @@ Invite a route or question. These are intents, not registered tools.
 
 Specific intent precedes broad topic. Do not preload indexes or related guides.
 
+Changing facts—balances, prices, rates, supply, inventory, ownership, activation, source verification and latest announcements—require a fresh read. Never answer them from packaged snapshots or recap figures. If the read is unavailable, say so; do not fall back to a launch reference. Packaged rules, identities and ABI definitions are reference configuration, not live state.
+
 | Intent | First resource |
 |---|---|
 | Plan, what-if, economics, sensitivity | [planning](references/planning.md) |

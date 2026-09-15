@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "reviewed_at": "2026-09-15T18:27:00.404Z",
-  "scope": "Current primary documentation only",
+  "scope": "Primary documentation provenance and companion-page routing; no stored application state",
   "records": [
     {
       "id": "sr-whitepaper-v1",
@@ -11,7 +11,7 @@
       "retrieved_at": "2026-09-15T18:07:19.421Z",
       "revision_label": "Whitepaper v1.0",
       "review_depth": "All16 rendered sections, tables and available equation annotations",
-      "claim_stage": "current publisher design statements, not implementation verification",
+      "claim_stage": "publisher design statements, not implementation verification or live state",
       "locators": [
         {
           "label": "Introduction",
@@ -78,10 +78,10 @@
           "url": "https://www.standardreserve.xyz/whitepaper/#disclaimer"
         }
       ],
-      "summary": "Current publisher documentation for supply accounting, launch settings, epoch policy, charter operations, withdrawals, outside liquidity and controls.",
+      "summary": "Publisher rule documentation for supply accounting, launch settings, epoch policy, charter operations, withdrawals, outside liquidity and controls.",
       "limits": [
         "Publisher documentation is not independently verified source code.",
-        "Use current observations for changeable settings; ongoing auction execution details remain unestablished."
+        "Fetch changeable settings and auction execution details on demand or report unavailable; source dates do not establish current state."
       ]
     },
     {
@@ -90,14 +90,14 @@
       "publisher": "The Standard Reserve official website",
       "published_at": null,
       "retrieved_at": "2026-09-15T18:27:00.244Z",
-      "review_depth": "Rendered topic text and current availability panel",
-      "claim_stage": "publisher explanation and dated frontend observation",
+      "review_depth": "Token topic explanation and page routing",
+      "claim_stage": "publisher explanation, not stored frontend observations",
       "locators": [
         "About STANDARD; supply, burns and holding"
       ],
-      "summary": "Current token supply/burn/holding explanation. Dynamic panel was still loading in this capture; no zero or absent-state conclusion is drawn.",
+      "summary": "Publisher explanation of STANDARD supply, burns and holding, with a live panel for related token conditions.",
       "limits": [
-        "Frontend observations are time-bounded, not independent RPC verification, executable quotes or guaranteed current state."
+        "Read changing panel values on demand or report unavailable; do not infer zero, absence or current state from documentation."
       ]
     },
     {
@@ -106,14 +106,14 @@
       "publisher": "The Standard Reserve official website",
       "published_at": null,
       "retrieved_at": "2026-09-15T18:27:00.404Z",
-      "review_depth": "Rendered topic text and current availability panel",
-      "claim_stage": "publisher explanation and dated frontend observation",
+      "review_depth": "Charter and auction topic explanation and page routing",
+      "claim_stage": "publisher explanation, not stored frontend observations",
       "locators": [
         "Charters & Auctions; availability, earning, expansion, withdrawal"
       ],
-      "summary": "Current charter and auction explanation. The capture reports daily charter sales not enabled and expansion licenses sold out, not inactive or free.",
+      "summary": "Publisher explanation of charters, auctions, earning, expansion and withdrawals, with live panels for availability and auction conditions.",
       "limits": [
-        "Frontend observations are time-bounded, not independent RPC verification, executable quotes or guaranteed current state."
+        "Read changing availability, prices and auction state on demand or report unavailable; documentation is not an executable quote."
       ]
     }
   ]

@@ -102,16 +102,14 @@ The agent asks only for missing decisions in small groups, explains unfamiliar i
 
 No numerical comparison runs until all economic assumptions and the mode are explicit and approved. A complete, already acknowledged input can still use the direct path without another questionnaire. See the [planning workflow](references/planning.md).
 
-To start from published reference values instead of supplying every protocol setting:
+To start from current protocol observations:
 
 ```text
-Use srstack plan with the documented launch settings.
+Use srstack plan. Read the current protocol and auction settings.
 Show the proposed assumptions, then ask me only for what's still missing.
 ```
 
-The agent proposes the documented launch base, starting multiplier and per-charter caps for approval. The full original issuance budget applies only to an explicitly chosen epoch-one hypothetical—not a current position. Prices, network size, gas, tax and other missing economics remain explicit choices. Optional exit-pressure cases use labelled published fee references, not a guessed personal quote.
-
-The launch tax schedule is now published. Current settings can be read as observations; future rates, prices and availability still need approved assumptions. The scenario model does not reproduce dynamic contract execution.
+The agent proposes supported fresh observations for approval, then asks for missing assumptions. Documented ceilings are constraints, not current rates or balances. Failed reads are not filled from launch defaults, recap figures or fictional examples. Holding current settings constant into the future requires approval; the scenario model does not reproduce dynamic contract execution.
 
 ### Runnable fictional planner demonstration
 
@@ -151,9 +149,9 @@ Views are `protocol`, `auctions` and `charter`; the last requires integer `chart
 
 ## Coverage and footprint
 
-The package keeps current information only: the 16-section whitepaper, live application, contract directory and latest official summary post. The latest recap is labelled as a publisher report; proposals such as shorter auctions are not treated as deployed changes. Source records retain evidence dates without forcing them into every response.
+The package covers the 16-section whitepaper, contract identities and publisher ABI definitions. It stores no changing-state snapshots, recap metrics or explorer verification verdicts. Current balances, rates, supply, inventory, prices, activation, verification status and announcements require fresh retrieval; unavailable data stays unavailable.
 
-The [contract catalog](assets/entities/robinhood.json) lists 14 Robinhood addresses with Etherscan links. Explorer source publication and the [publisher read interface](assets/interfaces/robinhood-reads.json) are separate evidence. The latter enables selected block-scoped reads without claiming independently verified source code, audited safety or complete privilege analysis.
+The [contract catalog](assets/entities/robinhood.json) contains 14 publisher-listed Robinhood addresses and Etherscan links, not cached deployment verdicts. The [publisher read interface](assets/interfaces/robinhood-reads.json) enables selected block-scoped observations without claiming independently verified source code, audited safety or complete privilege analysis. Source dates identify reference provenance, not live-state freshness.
 
 For evidence-assisted planning, ask: **“Use srstack plan. Read the current protocol and auction settings, propose inputs, then ask me for what is missing.”** The [handoff](references/planning-inputs.md#deployment-evidence-handoff) keeps observations separate from approved future assumptions. It distinguishes current stream rates, remaining-budget accounting, sale taxes, LP fees and unavailable auctions. No financial execution is added.
 

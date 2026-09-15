@@ -27,3 +27,5 @@ Qualifying wallet-clock resets are explicitly listed: creating a charter, buying
 ## Transferability — §§12–13
 
 The owner may enable initially disabled charter transfers through a one-way switch (`transfer-enablement`). Thereafter the seat moves with branches and balance intact. The publisher calls a seat sale an exit without directly selling $STANDARD; no secondary-market availability or price is established. The whitepaper describes authority, not an observed enablement transaction. An optional guardian may pause auctions and vault purchases, **not withdrawals**; see [risks](risks.md). [sr-whitepaper-v1: immutables, transfers]
+
+For a selected charter's balance, dormancy or transfer status, use fresh authenticated reads through [inspection](inspection.md) where supported. Published lifecycle rules do not establish that charter's current state; report unsupported or unavailable fields as unknown.

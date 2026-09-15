@@ -1,14 +1,14 @@
 # Documents and reviewed coverage
 
-[Coverage](../assets/coverage.json) maps the current whitepaper and companion pages to topic references. The [source index](../assets/sources.json) resolves provenance and retrieval dates; [parameters](../assets/parameters.json) holds exact settings and limits. Coverage means source reading, not code inspection, execution or independent confirmation.
+[Coverage](../assets/coverage.json) maps the reviewed whitepaper and companion pages to topic references. The [source index](../assets/sources.json) resolves provenance and review dates; [parameters](../assets/parameters.json) holds published rule definitions, reference values and limits—not current configuration. Coverage means source reading, not code inspection, execution or independent confirmation.
 
-## Current primary sources
+## Primary-source routes
 
 | Source | Role and boundary | Read next |
 |---|---|---|
 | `sr-whitepaper-v1` | [Whitepaper v1.0](https://www.standardreserve.xyz/whitepaper/): all sixteen rendered sections, visible equations and tables. | Section map below |
-| `sr-token-page-v1` | [Token](https://www.standardreserve.xyz/app/token/): supply/removal explanation, LP-fee versus protocol-tax distinction and displayed pool status. Counters and status remain source-dated UI observations. | [Supply](protocol-policy.md), [trading](launch-trading.md) |
-| `sr-charters-page-v1` | [Charters & Auctions](https://www.standardreserve.xyz/app/protocol/charters/): entry, branches, retirement and displayed auction status. | [Charters](charters.md), [auctions](auctions.md) |
+| `sr-token-page-v1` | [Token](https://www.standardreserve.xyz/app/token/): supply/removal explanation and LP-fee versus protocol-tax distinction. Retrieve displayed counters and pool status freshly when requested. | [Supply](protocol-policy.md), [trading](launch-trading.md) |
+| `sr-charters-page-v1` | [Charters & Auctions](https://www.standardreserve.xyz/app/protocol/charters/): entry, branches and retirement. Retrieve auction status freshly when requested. | [Charters](charters.md), [auctions](auctions.md) |
 
 ## Whitepaper: all sixteen sections
 
@@ -33,10 +33,10 @@ All locators below belong to `sr-whitepaper-v1` in [current website sources](../
 | 15 `#parameters` | [Parameters](../assets/parameters.json): documented settings; [trading](launch-trading.md): LP fee and tax gap |
 | 16 `#disclaimer` | [Risks](risks.md): experimental/non-bank scope and non-redeemable protocol reserves |
 
-The current launch tax schedule is published. Use current getters for observations and keep future rates as assumptions. Exact auction execution and transaction-specific amounts remain outside the fixed scenario model.
+The published launch tax schedule is a reference rule, not the current tax rate. Use fresh getters for observations and keep future rates as assumptions. Exact auction execution and transaction-specific amounts remain outside the fixed scenario model.
 
 ## Deployment evidence and fresh research
 
-`sr-contract-directory` and `sr-protocol-conditions` route identity and application evidence. `sr-publisher-read-interface` supports the bounded RPC helper, and `sr-latest-summary` records the current official recap. Use [contracts](contracts.md), [inspection](inspection.md) and [updates](updates.md) for the relevant path; full evidence is available when requested.
+`sr-contract-directory` supplies identity provenance; `sr-protocol-conditions` routes fresh application reads. `sr-publisher-read-interface` documents the bounded RPC helper. Use [contracts](contracts.md), [inspection](inspection.md) and [updates](updates.md) for the relevant path. Unavailable fresh evidence leaves dynamic questions unanswered, not filled from stored observations.
 
 This coverage is not a whole-site audit. [Updates](updates.md) routes current topic questions; [research workflow](research-workflow.md) describes scoped fresh evidence without financial actions.

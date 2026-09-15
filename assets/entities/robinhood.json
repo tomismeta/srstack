@@ -8,25 +8,24 @@
       "sr-contract-directory",
       "sr-etherscan-chainlist",
       "sr-publisher-read-interface"
-    ],
-    "rpc_chain_id_independently_checked": true
+    ]
   },
-  "scope": "Current four-group official Robinhood directory with per-record Etherscan evidence; not a census of all deployments.",
+  "scope": "Publisher-attributed four-group Robinhood deployment identity directory; not a chain census or stored explorer verification.",
   "explorer_policy": {
     "preferred_family": "Etherscan",
     "base_url": "https://robin.etherscan.io",
     "source_ids": [
       "sr-etherscan-chainlist"
     ],
-    "verification_access": "Public address pages accessible; use each record source_publication status. No contract write interface is enabled."
+    "verification_access": "Follow each record explorer_url for an on-demand publication check or report unavailable. Do not store explorer verdicts. No contract write interface is enabled."
   },
   "shared_evidence_limits": {
     "applies_to": "Every record; read with selected records",
-    "source_correspondence": "Etherscan publication labels are recorded per entity. Independent exact source/bytecode correspondence is not established.",
-    "current_ownership_and_privileges": "The snapshot helper can observe selected owner getters using the publisher ABI; complete privilege structure and future settings are not established.",
-    "proxy_and_implementation_relationships": "not-established",
-    "audit_to_deployment_correspondence": "not-established",
-    "current_activation_and_market_state": "Use an on-demand snapshot for current observations; no live state is fixed by this identity catalog.",
+    "source_correspondence": "Check publication and exact source/bytecode correspondence on demand or report unavailable; publisher identity attribution does not establish either.",
+    "current_ownership_and_privileges": "Use on-demand reads for selected owner getters and fresh evidence for the privilege structure; no current ownership or privilege observations are stored here.",
+    "proxy_and_implementation_relationships": "Require fresh evidence; not established by identity attribution.",
+    "audit_to_deployment_correspondence": "Require fresh evidence; not established by identity attribution.",
+    "current_activation_and_market_state": "Use an on-demand snapshot or report unavailable; no live state or fallback observation is stored in this identity catalog.",
     "infrastructure": "Shared infrastructure is not project-authored merely because listed; the pool manager is not a unique canonical pool.",
     "actions": "Research identity and navigation only; no wallet, signing or transaction path."
   },
@@ -47,21 +46,6 @@
         ],
         "locator": "Core / $STANDARD",
         "retrieved_at": "2026-09-15T18:29:31.059Z"
-      },
-      "deployment_evidence": {
-        "status": "explorer-reported-contract",
-        "source_ids": [
-          "sr-etherscan-standard"
-        ],
-        "observation": "Bytecode displayed on the address page",
-        "retrieved_at": "2026-09-14T23:19:26.181Z"
-      },
-      "source_publication": {
-        "status": "not-published",
-        "abi_available": false,
-        "source_ids": [
-          "sr-etherscan-standard"
-        ]
       }
     },
     {
@@ -80,21 +64,6 @@
         ],
         "locator": "Core / Charter NFT",
         "retrieved_at": "2026-09-15T18:29:31.059Z"
-      },
-      "deployment_evidence": {
-        "status": "explorer-reported-contract",
-        "source_ids": [
-          "sr-etherscan-charter-nft"
-        ],
-        "observation": "Bytecode displayed on the address page",
-        "retrieved_at": "2026-09-14T23:19:26.430Z"
-      },
-      "source_publication": {
-        "status": "not-published",
-        "abi_available": false,
-        "source_ids": [
-          "sr-etherscan-charter-nft"
-        ]
       }
     },
     {
@@ -113,21 +82,6 @@
         ],
         "locator": "Core / Central Bank",
         "retrieved_at": "2026-09-15T18:29:31.059Z"
-      },
-      "deployment_evidence": {
-        "status": "explorer-reported-contract",
-        "source_ids": [
-          "sr-etherscan-central-bank"
-        ],
-        "observation": "Bytecode displayed on the address page",
-        "retrieved_at": "2026-09-14T23:19:26.659Z"
-      },
-      "source_publication": {
-        "status": "not-published",
-        "abi_available": false,
-        "source_ids": [
-          "sr-etherscan-central-bank"
-        ]
       }
     },
     {
@@ -146,21 +100,6 @@
         ],
         "locator": "Core / Trading Hook",
         "retrieved_at": "2026-09-15T18:29:31.059Z"
-      },
-      "deployment_evidence": {
-        "status": "explorer-reported-contract",
-        "source_ids": [
-          "sr-etherscan-tax-hook"
-        ],
-        "observation": "Bytecode displayed on the address page",
-        "retrieved_at": "2026-09-14T23:19:26.832Z"
-      },
-      "source_publication": {
-        "status": "not-published",
-        "abi_available": false,
-        "source_ids": [
-          "sr-etherscan-tax-hook"
-        ]
       }
     },
     {
@@ -179,21 +118,6 @@
         ],
         "locator": "Auctions / Founding Sale",
         "retrieved_at": "2026-09-15T18:29:31.066Z"
-      },
-      "deployment_evidence": {
-        "status": "explorer-reported-contract",
-        "source_ids": [
-          "sr-etherscan-genesis-minter"
-        ],
-        "observation": "Bytecode displayed on the address page",
-        "retrieved_at": "2026-09-14T23:19:26.998Z"
-      },
-      "source_publication": {
-        "status": "not-published",
-        "abi_available": false,
-        "source_ids": [
-          "sr-etherscan-genesis-minter"
-        ]
       }
     },
     {
@@ -212,21 +136,6 @@
         ],
         "locator": "Auctions / Charter Auction",
         "retrieved_at": "2026-09-15T18:29:31.066Z"
-      },
-      "deployment_evidence": {
-        "status": "explorer-reported-contract",
-        "source_ids": [
-          "sr-etherscan-charter-auction"
-        ],
-        "observation": "Bytecode displayed on the address page",
-        "retrieved_at": "2026-09-14T23:19:27.192Z"
-      },
-      "source_publication": {
-        "status": "not-published",
-        "abi_available": false,
-        "source_ids": [
-          "sr-etherscan-charter-auction"
-        ]
       }
     },
     {
@@ -245,21 +154,6 @@
         ],
         "locator": "Auctions / Expansion License Auction",
         "retrieved_at": "2026-09-15T18:29:31.066Z"
-      },
-      "deployment_evidence": {
-        "status": "explorer-reported-contract",
-        "source_ids": [
-          "sr-etherscan-license-auction"
-        ],
-        "observation": "Bytecode displayed on the address page",
-        "retrieved_at": "2026-09-14T23:19:27.342Z"
-      },
-      "source_publication": {
-        "status": "not-published",
-        "abi_available": false,
-        "source_ids": [
-          "sr-etherscan-license-auction"
-        ]
       }
     },
     {
@@ -278,21 +172,6 @@
         ],
         "locator": "Treasury / Expansion Vault",
         "retrieved_at": "2026-09-15T18:29:31.071Z"
-      },
-      "deployment_evidence": {
-        "status": "explorer-reported-contract",
-        "source_ids": [
-          "sr-etherscan-expansion-vault"
-        ],
-        "observation": "Bytecode displayed on the address page",
-        "retrieved_at": "2026-09-14T23:19:27.557Z"
-      },
-      "source_publication": {
-        "status": "not-published",
-        "abi_available": false,
-        "source_ids": [
-          "sr-etherscan-expansion-vault"
-        ]
       }
     },
     {
@@ -311,21 +190,6 @@
         ],
         "locator": "Treasury / Contraction Vault",
         "retrieved_at": "2026-09-15T18:29:31.071Z"
-      },
-      "deployment_evidence": {
-        "status": "explorer-reported-contract",
-        "source_ids": [
-          "sr-etherscan-contraction-vault"
-        ],
-        "observation": "Bytecode displayed on the address page",
-        "retrieved_at": "2026-09-14T23:19:27.756Z"
-      },
-      "source_publication": {
-        "status": "not-published",
-        "abi_available": false,
-        "source_ids": [
-          "sr-etherscan-contraction-vault"
-        ]
       }
     },
     {
@@ -344,21 +208,6 @@
         ],
         "locator": "Treasury / Liquidity Manager",
         "retrieved_at": "2026-09-15T18:29:31.071Z"
-      },
-      "deployment_evidence": {
-        "status": "explorer-reported-contract",
-        "source_ids": [
-          "sr-etherscan-pol-manager"
-        ],
-        "observation": "Bytecode displayed on the address page",
-        "retrieved_at": "2026-09-14T23:19:27.972Z"
-      },
-      "source_publication": {
-        "status": "not-published",
-        "abi_available": false,
-        "source_ids": [
-          "sr-etherscan-pol-manager"
-        ]
       }
     },
     {
@@ -377,21 +226,6 @@
         ],
         "locator": "Treasury / Fee Splitter",
         "retrieved_at": "2026-09-15T18:29:31.071Z"
-      },
-      "deployment_evidence": {
-        "status": "explorer-reported-contract",
-        "source_ids": [
-          "sr-etherscan-fee-splitter"
-        ],
-        "observation": "Bytecode displayed on the address page",
-        "retrieved_at": "2026-09-14T23:19:28.166Z"
-      },
-      "source_publication": {
-        "status": "not-published",
-        "abi_available": false,
-        "source_ids": [
-          "sr-etherscan-fee-splitter"
-        ]
       }
     },
     {
@@ -410,21 +244,6 @@
         ],
         "locator": "Infrastructure / Address Registry",
         "retrieved_at": "2026-09-15T18:29:31.074Z"
-      },
-      "deployment_evidence": {
-        "status": "explorer-reported-contract",
-        "source_ids": [
-          "sr-etherscan-registry"
-        ],
-        "observation": "Bytecode displayed on the address page",
-        "retrieved_at": "2026-09-14T23:19:28.366Z"
-      },
-      "source_publication": {
-        "status": "not-published",
-        "abi_available": false,
-        "source_ids": [
-          "sr-etherscan-registry"
-        ]
       }
     },
     {
@@ -443,21 +262,6 @@
         ],
         "locator": "Infrastructure / Uniswap v4 Pool Manager",
         "retrieved_at": "2026-09-15T18:29:31.074Z"
-      },
-      "deployment_evidence": {
-        "status": "explorer-reported-contract",
-        "source_ids": [
-          "sr-etherscan-pool-manager"
-        ],
-        "observation": "Bytecode displayed on the address page",
-        "retrieved_at": "2026-09-14T23:19:32.219Z"
-      },
-      "source_publication": {
-        "status": "not-published",
-        "abi_available": false,
-        "source_ids": [
-          "sr-etherscan-pool-manager"
-        ]
       }
     },
     {
@@ -476,22 +280,6 @@
         ],
         "locator": "Infrastructure / Multicall",
         "retrieved_at": "2026-09-15T18:29:31.074Z"
-      },
-      "deployment_evidence": {
-        "status": "explorer-reported-contract",
-        "source_ids": [
-          "sr-etherscan-multicall3"
-        ],
-        "observation": "Bytecode displayed on the address page",
-        "retrieved_at": "2026-09-14T23:19:32.366Z"
-      },
-      "source_publication": {
-        "status": "similar-match",
-        "abi_available": true,
-        "source_ids": [
-          "sr-etherscan-multicall3"
-        ],
-        "match_reference_url": "https://sepolia.arbiscan.io/address/0x8a6cc5ceb86e8a5b9d40337a5f7808992bb72d2d#code"
       }
     }
   ],
@@ -508,7 +296,6 @@
     "kind": "Uniswap v4 pool ID, not a separate contract address",
     "source_ids": [
       "sr-contract-directory"
-    ],
-    "observed_at": "2026-09-15T18:26:50.104Z"
+    ]
   }
 }

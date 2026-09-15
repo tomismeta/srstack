@@ -119,7 +119,6 @@ def verify_content(files):
     if f'version: "{VERSION}"' not in skill:
         raise ValueError("Unexpected version; update release tooling deliberately")
     source_ids = set()
-    source_urls = set()
     index = parsed["assets/sources.json"]
     source_paths = set()
     for group in index["groups"]:
@@ -135,8 +134,7 @@ def verify_content(files):
             if record["id"] in source_ids:
                 raise ValueError(f"Duplicate source ID: {record['id']}")
             source_ids.add(record["id"])
-            source_urls.add(record["url"])
-            for field in ["publisher", "retrieved_at", "review_depth", "claim_stage"]:
+            for field in ["url", "publisher", "retrieved_at", "review_depth", "claim_stage"]:
                 if not record.get(field):
                     raise ValueError(f"Missing source {field}: {record['id']}")
     if source_paths != {path for path in parsed if path.startswith("assets/sources/")}:
@@ -189,22 +187,14 @@ def verify_content(files):
                 raise ValueError(f"Wrong-chain/nonpreferred explorer: {record['id']}")
             if record["attribution"]["status"] != "publisher-listed" or not record["attribution"]["source_ids"]:
                 raise ValueError(f"Missing publisher attribution: {record['id']}")
-            deployment = record["deployment_evidence"]
-            if deployment["status"] not in {"explorer-reported-contract", "not-independently-checked"}:
-                raise ValueError(f"Invalid deployment status: {record['id']}")
-            if deployment["status"] == "explorer-reported-contract" and not deployment["source_ids"]:
-                raise ValueError(f"Missing deployment evidence: {record['id']}")
         entities.extend(group_records)
     identities = {(record["chain_id"], record["address"].lower()) for record in entities}
     if len(identities) != len(entities) or len({record["id"] for record in entities}) != len(entities):
         raise ValueError("Duplicate entity identity or record ID")
     if entity_index["publisher_attributed_records"] != len(entities):
         raise ValueError("Entity attribution count mismatch")
-    corroborated = sum(record["deployment_evidence"]["status"] == "explorer-reported-contract" for record in entities)
-    if entity_index["explorer_corroborated_records"] != corroborated:
-        raise ValueError("Entity corroboration count mismatch")
     return {"files": len(files), "sources": len(source_ids), "parameters": len(records),
-            "entities": len(entities), "explorer_corroborated_entities": corroborated,
+            "entities": len(entities),
             "max_file_bytes": max(map(len, files.values()))}
 
 

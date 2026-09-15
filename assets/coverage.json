@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "reviewed_at": "2026-09-15T18:29:31.074Z",
-  "scope": "Current whitepaper, application, publisher read interface and latest official recap; not an implementation audit",
+  "scope": "Whitepaper section routing, application discovery and publisher read interface provenance; no stored protocol state or implementation audit",
   "source_index": "assets/sources.json",
   "parameter_catalog": "assets/parameters.json",
   "deployment_addition": {
@@ -12,20 +12,13 @@
     "source_file": "assets/sources/deployments.json",
     "entity_index": "assets/entity-index.json",
     "limits": [
-      "Retrieval dates and observation boundaries remain in the deployment source records; publisher addresses and conditions are not verified implementation or current-state guarantees."
-    ]
-  },
-  "explorer_coverage": {
-    "source_file": "assets/sources/etherscan.json",
-    "record_count": 14,
-    "limits": [
-      "Public address-page bytecode and source-publication observations only; not an independent source/bytecode audit."
+      "Retrieval dates identify directory and page provenance. Publisher identity attribution is not implementation verification or a current-state guarantee."
     ]
   },
   "limits": [
     "Publisher documentation and ABI are not independently verified source code.",
     "Live values come from bounded block-scoped reads; current observations are not future guarantees.",
-    "Application panels and recap metrics retain their own source scope."
+    "Read changing application panels and official updates on demand or report unavailable; no stored observations or recap fallback."
   ],
   "pages": [
     {
@@ -33,7 +26,7 @@
       "url": "https://www.standardreserve.xyz/whitepaper/",
       "final_url": "https://www.standardreserve.xyz/whitepaper/",
       "retrieved_at": "2026-09-15T18:07:19.421Z",
-      "review_status": "full-frozen-text-and-equation-annotations-reviewed",
+      "review_status": "documentation-text-and-equation-annotations-reviewed",
       "topics": [
         "references/documents.md",
         "references/protocol.md",
@@ -52,7 +45,7 @@
       "url": "https://www.standardreserve.xyz/app/token/",
       "final_url": "https://www.standardreserve.xyz/app/token/",
       "retrieved_at": "2026-09-15T18:27:00.244Z",
-      "review_status": "static-text-reviewed; dynamic panel loading",
+      "review_status": "topic-explanation-reviewed",
       "topics": [
         "references/protocol-policy.md",
         "references/reserves.md",
@@ -65,7 +58,7 @@
       "url": "https://www.standardreserve.xyz/app/protocol/charters/",
       "final_url": "https://www.standardreserve.xyz/app/protocol/charters/",
       "retrieved_at": "2026-09-15T18:27:00.404Z",
-      "review_status": "full-frozen-rendered-text-reviewed",
+      "review_status": "topic-explanation-reviewed",
       "topics": [
         "references/charters.md",
         "references/auctions.md",
@@ -81,7 +74,7 @@
       "id": "introduction",
       "source_id": "sr-whitepaper-v1",
       "locator": "https://www.standardreserve.xyz/whitepaper/#introduction",
-      "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
+      "review_status": "documentation-section-and-equation-annotations-reviewed",
       "topics": [
         "references/protocol.md",
         "references/risks.md"
@@ -93,7 +86,7 @@
       "id": "entities",
       "source_id": "sr-whitepaper-v1",
       "locator": "https://www.standardreserve.xyz/whitepaper/#entities",
-      "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
+      "review_status": "documentation-section-and-equation-annotations-reviewed",
       "topics": [
         "references/protocol.md",
         "references/reserves.md",
@@ -106,7 +99,7 @@
       "id": "currency",
       "source_id": "sr-whitepaper-v1",
       "locator": "https://www.standardreserve.xyz/whitepaper/#currency",
-      "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
+      "review_status": "documentation-section-and-equation-annotations-reviewed",
       "topics": [
         "references/protocol-policy.md",
         "references/reserves.md",
@@ -119,7 +112,7 @@
       "id": "net-flow",
       "source_id": "sr-whitepaper-v1",
       "locator": "https://www.standardreserve.xyz/whitepaper/#net-flow",
-      "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
+      "review_status": "documentation-section-and-equation-annotations-reviewed",
       "topics": [
         "references/protocol-policy.md",
         "references/risks.md"
@@ -131,7 +124,7 @@
       "id": "policy",
       "source_id": "sr-whitepaper-v1",
       "locator": "https://www.standardreserve.xyz/whitepaper/#policy",
-      "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
+      "review_status": "documentation-section-and-equation-annotations-reviewed",
       "topics": [
         "references/protocol-policy.md"
       ],
@@ -142,7 +135,7 @@
       "id": "charters",
       "source_id": "sr-whitepaper-v1",
       "locator": "https://www.standardreserve.xyz/whitepaper/#charters",
-      "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
+      "review_status": "documentation-section-and-equation-annotations-reviewed",
       "topics": [
         "references/genesis.md",
         "references/charters.md",
@@ -156,7 +149,7 @@
       "id": "branches",
       "source_id": "sr-whitepaper-v1",
       "locator": "https://www.standardreserve.xyz/whitepaper/#branches",
-      "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
+      "review_status": "documentation-section-and-equation-annotations-reviewed",
       "topics": [
         "references/charters.md",
         "references/auctions.md"
@@ -168,7 +161,7 @@
       "id": "auctions",
       "source_id": "sr-whitepaper-v1",
       "locator": "https://www.standardreserve.xyz/whitepaper/#auctions",
-      "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
+      "review_status": "documentation-section-and-equation-annotations-reviewed",
       "topics": [
         "references/auctions.md",
         "references/risks.md"
@@ -180,7 +173,7 @@
       "id": "exits",
       "source_id": "sr-whitepaper-v1",
       "locator": "https://www.standardreserve.xyz/whitepaper/#exits",
-      "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
+      "review_status": "documentation-section-and-equation-annotations-reviewed",
       "topics": [
         "references/exits.md",
         "references/risks.md"
@@ -192,7 +185,7 @@
       "id": "dormancy",
       "source_id": "sr-whitepaper-v1",
       "locator": "https://www.standardreserve.xyz/whitepaper/#dormancy",
-      "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
+      "review_status": "documentation-section-and-equation-annotations-reviewed",
       "topics": [
         "references/exits.md",
         "references/risks.md"
@@ -204,7 +197,7 @@
       "id": "reserves",
       "source_id": "sr-whitepaper-v1",
       "locator": "https://www.standardreserve.xyz/whitepaper/#reserves",
-      "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
+      "review_status": "documentation-section-and-equation-annotations-reviewed",
       "topics": [
         "references/reserves.md"
       ],
@@ -215,7 +208,7 @@
       "id": "immutables",
       "source_id": "sr-whitepaper-v1",
       "locator": "https://www.standardreserve.xyz/whitepaper/#immutables",
-      "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
+      "review_status": "documentation-section-and-equation-annotations-reviewed",
       "topics": [
         "references/risks.md",
         "references/reserves.md",
@@ -228,7 +221,7 @@
       "id": "transfers",
       "source_id": "sr-whitepaper-v1",
       "locator": "https://www.standardreserve.xyz/whitepaper/#transfers",
-      "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
+      "review_status": "documentation-section-and-equation-annotations-reviewed",
       "topics": [
         "references/exits.md",
         "references/risks.md"
@@ -240,7 +233,7 @@
       "id": "flywheels",
       "source_id": "sr-whitepaper-v1",
       "locator": "https://www.standardreserve.xyz/whitepaper/#flywheels",
-      "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
+      "review_status": "documentation-section-and-equation-annotations-reviewed",
       "topics": [
         "references/protocol.md"
       ],
@@ -251,7 +244,7 @@
       "id": "parameters",
       "source_id": "sr-whitepaper-v1",
       "locator": "https://www.standardreserve.xyz/whitepaper/#parameters",
-      "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
+      "review_status": "documentation-section-and-equation-annotations-reviewed",
       "topics": [
         "references/documents.md",
         "references/risks.md",
@@ -268,7 +261,7 @@
       "id": "disclaimer",
       "source_id": "sr-whitepaper-v1",
       "locator": "https://www.standardreserve.xyz/whitepaper/#disclaimer",
-      "review_status": "full-frozen-section-text-and-equation-annotations-reviewed",
+      "review_status": "documentation-section-and-equation-annotations-reviewed",
       "topics": [
         "references/risks.md"
       ],
@@ -288,15 +281,5 @@
     "limits": [
       "Only the fixed publisher ABI surface; no financial methods or caller endpoints."
     ]
-  },
-  "latest_summary": {
-    "source_ids": [
-      "sr-latest-summary",
-      "sr-recap-genesis",
-      "sr-recap-trading",
-      "sr-recap-bootstrapping",
-      "sr-recap-licenses"
-    ],
-    "source_file": "assets/sources/live-interface.json"
   }
 }

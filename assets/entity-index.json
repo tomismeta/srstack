@@ -1,9 +1,8 @@
 {
   "schema_version": 1,
   "reviewed_on": "2026-09-14",
-  "scope": "Publisher-attributed Robinhood deployment directory, with separate corroboration and verification limits; not a chain census",
+  "scope": "Publisher-attributed Robinhood deployment identity directory; not a chain census or stored verification result",
   "publisher_attributed_records": 14,
-  "explorer_corroborated_records": 14,
   "groups": [
     {
       "id": "robinhood",
@@ -28,7 +27,6 @@
       "scope": "12 protocol modules and2 shared infrastructure entries from all4 official directory tabs"
     }
   ],
-  "status": "All14 publisher-listed addresses display bytecode on RobinScan.13have no published source/ABI; Multicall has Similar Match source/ABI. These are current explorer observations, not audits.",
   "source_ids": [
     "sr-contract-directory",
     "sr-etherscan-chainlist"

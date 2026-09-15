@@ -4,7 +4,7 @@ Publisher design: [v1 sources](../assets/sources/website-v1.json), `sr-whitepape
 
 ## Availability, payments and capacity
 
-The license auction remains dormant until owner activation, then starts a fresh `auction-duration` first day. Additional charter supply starts at `initial-daily-charter-count` and remains policy-controlled (`charter-count-policy`). Current application observations show licenses sold out and daily charter sales not enabled. Use the `auctions` snapshot for a fresh status rather than treating a price-function output as buyable inventory. [sr-whitepaper-v1: branches, auctions; sr-charters-page-v1; sr-publisher-read-interface]
+The published lifecycle keeps the license auction dormant until owner activation, then starts a fresh `auction-duration` first day. Additional charter supply starts at `initial-daily-charter-count` and remains policy-controlled (`charter-count-policy`). Use a fresh `auctions` snapshot for activation, configured duration and inventory; do not infer them from these reference rules or treat a price-function output as buyable inventory. If the read is unavailable, current availability is unknown. [sr-whitepaper-v1: branches, auctions; sr-publisher-read-interface]
 
 When enabled, ongoing purchases execute immediately at the current price, first come first served, with no bids, escrow or refunds. Unsold daily capacity does not roll over; unpurchased charters are never minted. The **founding sale does escrow proceeds** until finalization, so §8's no-escrow description must not be generalized to it. [sr-whitepaper-v1: charters, auctions]
 
@@ -21,4 +21,4 @@ When enabled, ongoing purchases execute immediately at the current price, first 
 
 **Auction price curve: Not established from current source; verified implementation required.** Do not calculate purchase quotes from the source-only floor or substitute the founding-sale description. [sr-whitepaper-v1: branches, auctions]
 
-The publisher's early-buy certainty versus wait-for-price tradeoff and illustrative `license-repricing-week-multiple` are explanations, not guaranteed allocation, returns or prices. Owner-adjustable floors, windows and decay settings add a state dependency; [risks](risks.md) describes that authority. Source-code/ABI correspondence remains unverified.
+The publisher's early-buy certainty versus wait-for-price tradeoff and illustrative `license-repricing-week-multiple` are explanations, not guaranteed allocation, returns or prices. Owner-adjustable floors, windows and decay settings require fresh state; [risks](risks.md) describes that authority. Design text does not establish source-code/ABI correspondence.

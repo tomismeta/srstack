@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "reviewed_at": "2026-09-15T18:29:31.074Z",
-  "scope": "Current directory attribution, chain routing and latest conditions only",
+  "scope": "Publisher identity provenance, chain routing and live conditions page discovery; no stored state",
   "records": [
     {
       "id": "sr-contract-directory",
@@ -9,8 +9,8 @@
       "publisher": "The Standard Reserve official website",
       "published_at": null,
       "retrieved_at": "2026-09-15T18:29:31.074Z",
-      "review_depth": "All four directory tabs: full addresses, names, roles; canonical-market panel checked separately in same refresh.",
-      "claim_stage": "publisher attribution and dated frontend availability statements",
+      "review_depth": "Identity attribution across the Core, Auctions, Treasury and Infrastructure directory tabs, with canonical pool identity.",
+      "claim_stage": "publisher identity attribution, not deployment-state verification",
       "locators": [
         "Core",
         "Auctions",
@@ -18,7 +18,7 @@
         "Infrastructure",
         "Robinhood Chain4663"
       ],
-      "summary": "Current directory displays Robinhood Chain4663 modules and an initialized ETH/STANDARD v4 pool, ID0xc73f3cd3fb68288e63f008e08ef69caa0437224e420963c6aeb4526178e87ad9, 1%LP fee, tickspacing200 and the listed Trading Hook. Buyback/liquidity execution is displayed owner-operated; reserve purchases owner-only.",
+      "summary": "Publisher directory for Robinhood Chain 4663 contract addresses, names, roles and canonical ETH/STANDARD v4 pool identity. Use the entity catalog for identity routing; fetch activation, ownership and execution permissions on demand.",
       "limits": [
         "No independent source/ABI correspondence, current ownership, activation or audit verification."
       ]
@@ -45,27 +45,15 @@
       "publisher": "The Standard Reserve official website",
       "published_at": null,
       "retrieved_at": "2026-09-15T17:54:28.824Z",
-      "review_depth": "Rendered current Policy & fees panel at displayed block63848162; direct publisher-ABI RPC checks recorded separately.",
-      "claim_stage": "dated publisher-displayed readings, not independent RPC observations",
+      "review_depth": "Policy & fees page routing and scope",
+      "claim_stage": "live publisher page discovery, not stored readings or independent RPC verification",
       "locators": [
-        "Policy & fees; displayed block63848162"
+        "Policy & fees"
       ],
-      "displayed_observations": {
-        "displayed_block": 63848162,
-        "emissions_started": true,
-        "epoch": 1,
-        "multiplier": 1,
-        "policy_scaled_base_rate": "700000 STANDARD/day",
-        "streamed_rate": "700000 STANDARD/day",
-        "open_branches": 1099,
-        "buy_tax_percent": 2,
-        "sell_tax_percent": 3,
-        "withdrawal_fee_estimate_percent": "2.01"
-      },
-      "summary": "Live first-epoch website readings; the marginal withdrawal estimate is not an amount-specific quote.",
+      "summary": "Publisher page for policy, issuance, branch and fee conditions. Read the page or the bounded RPC interface on demand; no displayed values or availability state are stored here.",
       "limits": [
-        "Website-displayed values, not direct RPC evidence.",
-        "Use the snapshot helper for a fresh block-scoped observation; future settings remain assumptions."
+        "Website-displayed values are publisher readings, not direct RPC evidence or amount-specific executable quotes.",
+        "Fetch a fresh block-scoped observation when supported or report unavailable; never fall back to saved state. Future settings remain assumptions."
       ]
     }
   ]

@@ -1,19 +1,14 @@
 {
   "schema_version": 1,
-  "purpose": "Current-only source routing; no superseded claims or competing interpretation archive",
+  "purpose": "Source routing and reference provenance only; no stored protocol state, recap claims or superseded interpretations",
   "groups": [
     {
       "id": "live-interface",
       "path": "assets/sources/live-interface.json",
       "record_ids": [
-        "sr-publisher-read-interface",
-        "sr-latest-summary",
-        "sr-recap-genesis",
-        "sr-recap-trading",
-        "sr-recap-bootstrapping",
-        "sr-recap-licenses"
+        "sr-publisher-read-interface"
       ],
-      "scope": "Publisher read interface and latest launch summary"
+      "scope": "Publisher read interface provenance"
     },
     {
       "id": "website-v1",
@@ -33,33 +28,12 @@
         "sr-etherscan-chainlist",
         "sr-protocol-conditions"
       ],
-      "scope": "Current attribution, routing and conditions"
-    },
-    {
-      "id": "etherscan",
-      "path": "assets/sources/etherscan.json",
-      "record_ids": [
-        "sr-etherscan-standard",
-        "sr-etherscan-charter-nft",
-        "sr-etherscan-central-bank",
-        "sr-etherscan-tax-hook",
-        "sr-etherscan-genesis-minter",
-        "sr-etherscan-charter-auction",
-        "sr-etherscan-license-auction",
-        "sr-etherscan-expansion-vault",
-        "sr-etherscan-contraction-vault",
-        "sr-etherscan-pol-manager",
-        "sr-etherscan-fee-splitter",
-        "sr-etherscan-registry",
-        "sr-etherscan-pool-manager",
-        "sr-etherscan-multicall3"
-      ],
-      "scope": "Current explorer source-publication evidence"
+      "scope": "Publisher identity attribution, chain routing and live conditions page discovery"
     }
   ],
   "lookup": "Match source ID to groups.record_ids and read the literal path.",
   "rules": [
-    "Source and retrieval dates qualify every observation; current-only does not mean live.",
+    "Source and retrieval dates identify reference origin, not the freshness of protocol state. Read dynamic values and updates on demand or report unavailable; never fall back to stored observations.",
     "Use original source URLs and record scope. Exact canonical parameters live in assets/parameters.json.",
     "Unavailable or unresolved implementation details remain not-established; never select a value merely to fill a gap."
   ]

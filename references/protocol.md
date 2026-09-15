@@ -27,6 +27,6 @@ These are the publisher's incentive arguments, not guaranteed rational behavior,
 
 ## Presentation is not state
 
-The application is live. Use the `protocol` snapshot for current issuance, supply and tax readings, and `auctions` for availability. These use the publisher's fixed ABI with block and binding checks; they do not assert source-code equivalence. Keep the default answer focused on the requested values. [sr-protocol-conditions; sr-publisher-read-interface]
+Use a fresh `protocol` snapshot for current issuance, supply and tax readings, and `auctions` for availability. These use the publisher's fixed ABI with block and binding checks; they do not assert source-code equivalence. If fresh reads are unavailable, report the requested values as unknown rather than using saved state or launch defaults. Keep the answer focused on the requested values. [sr-protocol-conditions; sr-publisher-read-interface]
 
 See [documents](documents.md) for all sixteen current sections and [risks](risks.md) for remaining evidence gaps.

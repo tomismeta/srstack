@@ -12,6 +12,6 @@ Whitelist entry charges `whitelist-liquidity-fee` with `whitelist-wallet-limit`;
 
 Exact scheduled clock times and the public opening price: **Not established from current source; verified implementation required.** Wallet eligibility and sale availability require separate authenticated evidence; a design document does not establish either.
 
-The latest official recap reports the public founding sale sold out in 11 seconds. The protocol page now displays a live first epoch. Use current snapshot status for availability; do not offer a completed founding sale as an executable opportunity. [sr-recap-genesis; sr-protocol-conditions]
+For sale availability or finalization, obtain fresh authenticated state through [inspection](inspection.md) where the fixed reader covers the question; use [updates](updates.md) for official announcements. If the relevant state cannot be read, report it as unknown. Founding terms alone are not a live offer. [sr-protocol-conditions; sr-publisher-read-interface]
 
 [Trading](launch-trading.md) covers taxes and pool settings; [contracts](contracts.md) routes deployment identity and implementation limits. Reading these materials does not authorize a wallet connection or mint.

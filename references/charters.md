@@ -8,7 +8,7 @@ A charter is an initially soulbound NFT licensing its holder to run a bank and r
 
 Retirement releases the retired branches' proportional share of accrued balance, net of a resolution fee, and destroys their earning capacity. Retiring the final branch burns the charter. The described return path is purchasing a new charter at auction; a closed charter does not reopen. [sr-whitepaper-v1: charters, exits]
 
-The current companion page displayed both daily charter auctions and expansion licenses as **not enabled**, with a displayed block/time anchor preserved in its source record. This is a rendered observation, not an independently authenticated activation check. Founding distribution precedes the one-time license activation described by the whitepaper; daily charter supply initially remains `initial-daily-charter-count`. [sr-charters-page-v1; sr-whitepaper-v1: branches, auctions]
+The whitepaper places founding distribution before one-time license activation and defines `initial-daily-charter-count` as the initial daily charter supply. Those are lifecycle rules, not current availability. Use a fresh `auctions` snapshot for activation and inventory; unavailable reads leave the requested status unknown. [sr-whitepaper-v1: branches, auctions; sr-publisher-read-interface]
 
 ## Follow the question
 
@@ -18,4 +18,4 @@ The current companion page displayed both daily charter auctions and expansion l
 - [Reserves](reserves.md): founding versus ongoing routing, and assets owned by the protocol rather than bankers.
 - [Risks](risks.md): owner controls and optional guardian despite non-upgradeability.
 
-The current source distinguishes permanent ledger removal from token-deposit conversion; [supply accounting](protocol-policy.md) explains why not every removed ledger unit was a circulating token. Source/ABI correspondence remains unverified.
+The source distinguishes permanent ledger removal from token-deposit conversion; [supply accounting](protocol-policy.md) explains why not every removed ledger unit was a circulating token. Design text does not establish source/ABI correspondence.

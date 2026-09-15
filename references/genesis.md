@@ -23,4 +23,4 @@ The owner may change the whitelist window only before opening; opening freezes i
 
 `founding-whitelist-window-control` records that source policy. Exact scheduled clock times and the public opening price are not established from current source; verified implementation required.
 
-[Launch mint](launch-mint.md) summarizes founding terms. The latest official recap reports the public sellout; current protocol readings show an active epoch. Use the snapshot helper for current availability rather than treating founding terms as a live offer. [sr-recap-genesis; sr-protocol-conditions]
+[Launch mint](launch-mint.md) summarizes founding terms. Use fresh authenticated reads for current availability and finalization, and [updates](updates.md) for official announcements. If the requested state cannot be read, report it as unknown; founding terms do not establish a live offer. [sr-protocol-conditions; sr-publisher-read-interface]

@@ -64,27 +64,20 @@ For sensitivity analysis, specify one scenario per cell, or up to nine cells in 
 
 The complete [fictional example](../assets/examples/planning.json) is for explicit example/tutorial requests only. It selects schema 1, documented mode and summary detail; none of its numbers is a default, recommendation, live value or parameter authority.
 
-## Documented launch settings
+## Current protocol inputs
 
-“Use the documented launch settings” is a request to prepare a **partial assumption sheet**, not permission to manufacture a complete scenario. Read the named records in [monetary](../assets/parameters/monetary.json) and [participation](../assets/parameters/participation.json), with [whitepaper v1 evidence](../assets/sources/website-v1.json) where interpretation is needed. Use current canonical record values, units, statuses and limits; do not hardcode a second preset catalog or fall back to the fictional example.
+Prepare a partial assumption sheet from fresh reads, not a stored launch preset. Use `protocol` and `auctions`; use `charter` only when the user supplies a public charter ID. Read the result's status and material errors before proposing values.
 
-| Proposed item | Canonical record and approval condition |
+| Proposed input | Fresh source and approval boundary |
 |---|---|
-| Unscaled launch base per day | `base-issuance` → `base_daily_issuance`. Published launch baseline/ceiling, not a fresh reading; owner may lower it. Holding that base fixed over the horizon needs approval. |
-| Starting policy multiplier | `multiplier-launch` → the case's `multiplier`. Keeping it constant is a model simplification; the published policy changes by epoch. |
-| Maximum branches | `maximum-branches` → `max_branches`, if accepted. It is a per-charter cap, not a recommendation to expand to it. |
-| Daily purchase cap | `licenses-per-charter-per-day` → `daily_license_limit`, if accepted. It does not guarantee auction activation, inventory, price or successful purchases. |
-| Separate LP-fee proxy | Read `canonical-pool-lp-fee` from [launch parameters](../assets/parameters/launch.json). It may be proposed for `sale_fee_pct` only as the chosen separate LP-fee proxy, not the protocol sell tax or an all-in fee. The engine's sequential haircut basis remains a model assumption; user approval is required. |
-| Original gross issuance budget | `issuance-budget` may be proposed as the starting budget only for an explicitly agreed epoch-one hypothetical before any base issuance. It is not a current remaining balance. For an existing/later position, keep remaining budget unresolved until supported or explicitly assumed. |
-| Epoch length | `epoch-length` is context for the proposal; do not inject an unsupported schema field. The fixed daily model does not reproduce settlement gaps or an evolving policy path. |
+| Base issuance and multiplier | Use `base_issuance_per_day` and `multiplier`; holding either constant requires approval. A documented ceiling is not the current rate. |
+| Position | Use the selected charter's observed branches and pending balance, or the user's explicit hypothetical position. Do not infer ownership or balances. |
+| Network and budget | Use same-block branch counts and the counter-based budget difference with their stated meanings. Do not substitute original supply or launch totals. |
+| License cost | Only an available auction price can inform a current purchase assumption. Sold-out, paused or unstarted means unavailable—not a last-sale quote or free license. |
+| Taxes, fees and gas | Current taxes are observations, not future guarantees. LP fee, slippage and gas remain distinct inputs. Any unsupported amount requires the user's explicit assumption. |
+| Strategy and limits | Use documented bounds as constraints and ask for the user's budget, target, cadence, horizon and endpoint. Constraints do not prove current inventory or affordability. |
 
-Identify whether the user is modeling one new charter at launch or an existing charter. Do not assume balances, whitelist eligibility, starting network size, a zero-credit position or a universal acquisition price. A whitelist fee can be proposed only for that explicitly chosen route; public-auction floor and current price are different.
-
-Offer an **optional exit-pressure comparison** using the published quiet/elevated/heavy/bank-run fee reference records (`quiet-exit-fee`, `elevated-exit-fee`, `heavy-exit-fee`, `bank-run-exit-fee`). Read their statuses: rounded example fees are approximate, not exact evaluated quotes. The user must choose the cases and approve each fixed fee proxy; never select quiet conditions as a neutral default. Keep price/growth/other inputs identical for a fee-only comparison. Do not evaluate the dynamic withdrawal formula in launcher glue or treat marginal fee examples as amount-specific contract quotes.
-
-Keep token price, license cost, acquisition markup, regular sale fee, slippage, gas, future tax and growth assumptions missing until supplied or explicitly proposed and approved. Current publisher-ABI tax reads are observations, not a future tax schedule or proof of execution. Do not copy a protocol tax into the separate sale-fee field or convert an unavailable auction into a zero-cost purchase. Funding with credits remains a fixed model path, not an established deposit/license transaction sequence.
-
-Show **documented reference → proposed scenario value → limitation** in a compact sheet, mark remaining gaps, then obtain approval of all completed economic inputs and mode. Continue with the guided workflow; no JSON questionnaire, network refresh or financial action is implied.
+If live access fails, state the missing input and ask whether the user wants a clearly hypothetical scenario. Do not backfill it from stored observations, launch settings, recap figures or the fictional example. Show only useful proposals and the next questions; obtain approval of complete economic inputs before running the model.
 
 ## Deployment-evidence handoff
 

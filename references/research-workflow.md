@@ -8,7 +8,7 @@ Identify entity/generation, network, metric, denomination, owner/beneficiary, in
 
 Follow direct relevant topic/record paths. Load [contracts](contracts.md) and [entity index](../assets/entity-index.json) for identity, [source index](../assets/sources.json) only for unknown record locations, and [parameter index](../assets/parameters.json) for publisher-design values—not live state. Unknown values stay unknown, not calculator defaults or conventions.
 
-Offline answers stop at source retrieval/review boundaries. Current claims need fresh evidence: UTC retrieval, original URL/provider, source timestamp and freshness limits. Distinguish publication, claimed event, retrieval and chain observation times; a freshly retrieved page can describe an old proposal.
+Offline answers can explain packaged identities, interfaces and published rules, not changing state. Dynamic claims require fresh evidence: UTC retrieval, original URL/provider, source timestamp and freshness limits. Distinguish publication, claimed event, retrieval and chain observation times; a freshly retrieved page can describe an old proposal. If retrieval is unavailable, report the requested result as unavailable—never fall back to a saved observation.
 
 ## 2. Authenticate and discover
 
@@ -59,4 +59,4 @@ Align entity/generation, definitions, anchors, coverage and methodology before c
 
 Stop affected conclusions for unauthenticated identity/ABI, missing history, stale/incomparable prices, malformed results, exhausted bounds, incomplete enumeration, conflicting anchors or arithmetic anomalies. Report supported partial coverage and unavailable conclusions; no credentials, paid accounts, broader permissions, unbounded indexing or simulation to bridge gaps.
 
-Answer first with the requested fact or specific gap. Default to at most one short relevant note and one or two source links/time anchors when needed; for the fixed reader use “RPC snapshot; publisher ABI.” Keep raw inputs, hashes, exact locators, full provenance/classifications, derivations and exhaustive coverage traces internally or for requested detail. Surface material conflicts and unknowns, not a boilerplate limitations list. Failure is not zero; narrow success is not a security audit or proof of launch, solvency or complete history.
+Answer first with the requested fact or specific gap. Default to at most one short relevant note and one or two source links/time anchors when needed; for the fixed reader use “RPC snapshot; publisher ABI.” Keep raw inputs, hashes, exact locators, provenance and derivations in the session or answer for requested detail, not installed resources or observation-history files. Surface material conflicts and unknowns, not a boilerplate limitations list. Failure is not zero; narrow success is not a security audit or proof of launch, solvency or complete history.

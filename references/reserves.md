@@ -13,7 +13,7 @@ The founding allocation is separate from steady-state trading/charter-auction re
 
 Current net flow selects the active vault: expansion when positive, contraction otherwise. Shares are `ongoing-active-vault-share`, `ongoing-pol-share`, `ongoing-team-share`. Of the POL allocation, `pol-swap-share` is swapped to STANDARD, paired with remaining ETH and added as permanent liquidity. §12 allows bounded owner changes to fee splits. [sr-whitepaper-v1: policy, reserves, immutables]
 
-The current launch schedule is published in `launch-trading-tax-curve`: opening taxes decay to the steady buy/sell floors. Read current tax getters for a snapshot rather than treating launch values as current fees. The canonical pool's LP fee is separate; transaction-specific fee bases remain model assumptions. Protocol-position STANDARD fees are burned. [sr-whitepaper-v1: currency, reserves, parameters]
+The published launch rule in `launch-trading-tax-curve` describes opening taxes decaying to the steady buy/sell floors. Read fresh tax getters rather than treating launch values as current fees; unavailable reads leave current fees unknown. The canonical pool's LP fee is separate; transaction-specific fee bases remain model assumptions. Protocol-position STANDARD fees are burned under the published design. [sr-whitepaper-v1: currency, reserves, parameters]
 
 Outside liquidity opens after the launch schedule reaches its floors. The publisher says withdrawn ETH principal is taxed at the sell rate and STANDARD principal at the buy rate; accrued LP fees are untaxed. See `outside-liquidity-tax-policy`. This is a description, not an executable liquidity action. [sr-whitepaper-v1: reserves]
 
@@ -39,4 +39,4 @@ Contraction-buyback/POL-pairing execution starts owner-cranked; the owner can ma
 
 ## Accounting boundaries
 
-Keep founding proceeds, ongoing auction receipts, LP fees, protocol taxes, accrued issuance, wallet mints, deposit conversions, ledger removals, redistribution, reserve holdings and buyback spend separate. A reserve purchase is not banker income; a deposit conversion is not a permanent burn; a documented allocation is not an observed transfer. [Contracts](contracts.md) retains deployment/condition evidence and implementation limits; [risks](risks.md) identifies remaining evidence gaps.
+Keep founding proceeds, ongoing auction receipts, LP fees, protocol taxes, accrued issuance, wallet mints, deposit conversions, ledger removals, redistribution, reserve holdings and buyback spend separate. A reserve purchase is not banker income; a deposit conversion is not a permanent burn; a documented allocation is not an observed transfer. [Contracts](contracts.md) routes identity provenance and fresh verification; [risks](risks.md) identifies evidence boundaries.
