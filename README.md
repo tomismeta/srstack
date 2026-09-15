@@ -1,20 +1,23 @@
 # srstack
 
-**Standard Reserve research, hypothetical planning and public inspection for AI agents.**
+**Standard Reserve research, guided scenario planning and live read-only inspection for AI agents.**
 
-srstack explains protocol mechanics, traces changing announcements and compares expansion strategies using explicit assumptions. It is one independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product, trading bot or wallet toolkit.
+srstack explains documented protocol mechanics, reads current public state and compares expansion strategies using assumptions you approve. It is one independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product, trading bot or wallet toolkit.
 
-**Initial version 0.1.0; planner schema/model 1.** No published tags or releases. Identify installed revisions by an exact reviewed commit.
+**0.1.0 release candidate · planner schema/model 1.** Install an exact reviewed commit; a moving branch is not a pinned release.
 
 ## What you can ask
 
 | Question | What srstack provides |
 |---|---|
 | “How do charter withdrawals work?” | Branch retirement, credit release, fees and unresolved mechanics |
-| “How does the Genesis mint work?” | Current published entry terms and availability limits |
+| “What are the current issuance rate and buy/sell taxes?” | Fresh block-scoped protocol observations, not stored launch values |
 | “Compare expansion strategies using these assumptions.” | Keep/selective/aggressive calculations with explicit costs and limitations |
 | “Which assumptions depart from the documentation?” | Documented-rule conflicts and unresolved semantics |
-| “Have official contracts been published?” | Public identity research; authenticated addresses only when evidence supports them |
+| “Are expansion licenses available at a usable price?” | Fresh auction status and inventory; no purchasable quote when unavailable |
+| “Show the branches and pending balance of this public charter.” | A charter-ID-specific snapshot; no wallet connection or claim that you own it |
+| “Which contracts are listed, and is their source verified?” | Publisher-listed identities and explorer links; verification status requires a fresh explorer check |
+| “What has the team announced?” | Fresh official-post research where the host can retrieve it; no bundled recap |
 
 One skill, three routes:
 
@@ -26,9 +29,20 @@ Research topics: [protocol](references/protocol.md) · [charters](references/cha
 
 These are routing instructions within one skill, not separately installed commands. `Use srstack` returns the three-route menu. `/srstack` works where the host registers an installed skill command; other command syntax varies by host.
 
+## Requirements
+
+| Capability | Host requirements | Network access |
+|---|---|---|
+| Explain packaged rules | Read the skill and its selected resources | None |
+| Research announcements or explorer status | Permitted public web retrieval | Relevant official pages or explorer |
+| Run approved scenarios | Trusted package, permitted Python 3.10+ execution and safe JSON input | None; the planner is offline |
+| Inspect current state | Trusted package and permitted Python 3.10+ execution | Fixed public Robinhood Chain RPC |
+
+Both helpers use only Python's standard library: no pip dependencies, wallet connector or RPC credentials. Execution also requires the filesystem protections described in [execution](references/planning-execution.md); unsupported hosts fail closed. Missing execution or retrieval capability produces an explanation, not invented results. The skill does not install dependencies or change host permissions.
+
 ## Quick start
 
-The export machine needs Git and Python 3.10+. An installed research-only host does not need Python; planning execution does.
+The export machine needs Git and Python 3.10+. The installed host needs only the capabilities for the routes you use.
 
 1. Review [SKILL.md](SKILL.md), the [safety boundary](references/safety.md) and the complete package. Select a full immutable commit SHA you trust and have reviewed, not the moving `main` branch.
 2. From your chosen working directory (the intended workspace for OpenClaw workspace installation), clone a review copy and select that revision:
@@ -69,7 +83,7 @@ The export machine needs Git and Python 3.10+. An installed research-only host d
 4. Have the host verify the installed files against `release-manifest.json`: `content_files` maps relative paths to SHA-256 hashes, and `digest_convention` specifies the aggregate `content_sha256`. Confirm the actual loaded path and revision. A matching manifest establishes byte integrity, not trust in an otherwise unreviewed package.
 5. Start a fresh conversation and try a packaged-knowledge question from the examples below.
 
-**Hermes installation:** use the complete-bundle instructions above. URL discovery depends on configured sources; importing raw `SKILL.md` does not necessarily import its references, assets and script.
+**Hermes installation:** use the complete-bundle instructions above. URL discovery depends on configured sources; importing raw `SKILL.md` does not necessarily import its references, assets and scripts.
 
 Other harnesses can use their Agent Skills loader or explicitly read [SKILL.md](SKILL.md) and selected resources. Resource paths resolve against the loaded skill directory. See [host setup](references/installation.md); this package never installs itself or changes host permissions.
 
@@ -130,14 +144,25 @@ python3 -B -I scripts/scenario.py < assets/examples/planning.json
 
 Expected: exit 0 and JSON containing the warning, the three strategies and their conformance report. This tests the engine, not host discovery or sandbox isolation. `scripts/scenario.py` is the only intended planner executable; do not substitute model-generated formulas or downloaded helpers. Routine output is compact; request `detail: "full"` for detailed accounting and purchase schedules. History requires full detail.
 
-### Live protocol and auction reads
+### Live protocol, auction and charter reads
 
 ```text
 Use srstack inspect protocol. Show current issuance and buy/sell taxes.
 Use srstack inspect auctions. Are licenses available, and what price is actually usable?
+Use srstack inspect charter <public charter ID>. Show its branches and pending balance.
 ```
 
 The reader checks the chain, block, code, module bindings and scalar decoding. Sold-out or disabled auctions do not produce purchasable quotes. A specific charter request also needs its public charter ID; it never needs a wallet connection.
+
+Replace `<public charter ID>` with the ID to inspect.
+
+| View | Selected observations |
+|---|---|
+| `protocol` | Issuance and epoch context, branch count, token supply, counter-based remaining budget, buy/sell tax and pool/emissions state |
+| `auctions` | License and daily-charter activation, pause state, inventory, duration and available current prices |
+| `charter` | Public owner, branch count, pending balance and related issuance context |
+
+Each invocation uses one checked block. Failed fields remain missing with errors; fatal failures return no snapshot. Results are not saved or reused as a fallback. These are selected publisher-ABI reads, not a complete contract audit.
 
 Advanced users can request the same protocol snapshot from the reviewed installed root:
 
@@ -164,6 +189,8 @@ Packaged research needs a resource reader. Calculations and live snapshots use *
 Answers lead with content. Estimates get a short label; observations get a brief source note where needed. Detailed provenance and assumptions are available on request, not repeated as small print.
 
 The scenario engine is offline. The snapshot helper reads two fixed catalogs and permits only its pinned view/pure calls on the configured Robinhood addresses. Both reject unsupported inputs and write no files. No wallets, credentials, signatures, transaction payloads or state-changing simulations. See [safety](references/safety.md) and [execution](references/planning-execution.md) for the full boundary.
+
+The reader does **not** supply a token market-price feed, liquidity-depth analysis, an amount-specific withdrawal quote or a transaction gas estimate. The planner does **not** reproduce changing policy, auction competition or contract execution; it compares explicit hypothetical inputs rather than forecasting returns. Source verification and announcements use separate fresh web research, not the RPC helper.
 
 Skill instructions do not enforce host isolation, and estimates are not guaranteed returns.
 
