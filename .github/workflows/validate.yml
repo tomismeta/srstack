@@ -38,6 +38,6 @@ jobs:
       - name: Check deterministic runtime archive
         run: |
           python3 -B maintenance/package.py archive
-          cp dist/srstack-0.2.0.zip "${RUNNER_TEMP}/srstack-first.zip"
+          cp dist/srstack-0.1.1.zip "${RUNNER_TEMP}/srstack-first.zip"
           python3 -B maintenance/package.py archive
-          cmp "${RUNNER_TEMP}/srstack-first.zip" dist/srstack-0.2.0.zip
+          cmp "${RUNNER_TEMP}/srstack-first.zip" dist/srstack-0.1.1.zip

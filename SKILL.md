@@ -4,7 +4,7 @@ description: Standard Reserve research, planning, and public inspection.
 license: MIT
 compatibility: Python 3.10+ for fixed helpers; network access for live public RPC, indicative prices and web research. Packaged research and scenario calculations work offline.
 metadata:
-  version: "0.2.0"
+  version: "0.1.1"
 ---
 
 # srstack

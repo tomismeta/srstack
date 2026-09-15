@@ -4,7 +4,7 @@
 
 srstack explains documented protocol mechanics, reads current public state and compares expansion strategies using assumptions you approve. It is one independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product, trading bot or wallet toolkit.
 
-**0.2.0 candidate · planner schema/model 1.** This README describes the candidate, including shared market pricing and gross valuation. Export an exact reviewed commit to try it; published versions and their separate audit evidence remain on the [releases page](https://github.com/tomismeta/srstack/releases). No 0.2.0 release is published yet.
+**0.1.1 candidate · planner schema/model 1.** This README describes the candidate, including shared market pricing and gross valuation. Export an exact reviewed commit to try it; published versions and their separate audit evidence remain on the [releases page](https://github.com/tomismeta/srstack/releases). No 0.1.1 release is published yet.
 
 ## What you can ask
 
@@ -257,7 +257,7 @@ python3 -B maintenance/package.py archive
 
 The checks use Python's standard library and local Git; they do not call explorers, connect wallets or use model/API credentials. CI runs them on Python 3.10 and 3.14, with read-only repository permissions and commit-pinned Actions. GitHub checkout and Python provisioning require network access; the validation commands themselves are offline. CI verifies the committed manifest rather than regenerating it, and checks deterministic ZIP output. It does not upload artifacts, tag, publish releases or monitor contracts.
 
-After deliberate runtime changes, regenerate the manifest with `python3 -B maintenance/package.py build`, then run the checks above. `dist/srstack-0.2.0.zip` contains only the candidate runtime package. Maintenance tooling and CI files are repository-only and never authorize an installed skill to execute them.
+After deliberate runtime changes, regenerate the manifest with `python3 -B maintenance/package.py build`, then run the checks above. `dist/srstack-0.1.1.zip` contains only the candidate runtime package. Maintenance tooling and CI files are repository-only and never authorize an installed skill to execute them.
 
 ## Feedback and license
 

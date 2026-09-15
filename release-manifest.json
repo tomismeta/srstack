@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "name": "srstack",
-  "version": "0.2.0",
+  "version": "0.1.1",
   "scope": "Runtime knowledge, fixed public readers and scenario planner; excludes manifest, repository maintenance, CI, Git metadata, and build/cache artifacts",
   "digest_convention": "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest",
   "content_files": {
     "LICENSE": "14b82531e814378b84e97596f68a98c70becee3251b206c545d4f07d73105af3",
-    "README.md": "d542e988ba060f587b51e63552d0f9f86d6613358614764bf19121bb27f4c8e8",
-    "SKILL.md": "0ff69bb22d24a16ce427116c502f8336f5bf2cbf20006a53454e990983ea01ec",
+    "README.md": "4fe89bc443ceed596c7da152523bfcd1a7a7518dcbe832cc2b76fedd402bb0e7",
+    "SKILL.md": "34c27a3fb664094e2aa0519c3a90d1568fc3c7389314f08e166fddffbf4e713e",
     "assets/coverage.json": "39612caed6c126c5d682e7ea5dcdb4946e829df249b08783a65c265e95c2e3ff",
     "assets/entities/robinhood.json": "d27d4800566cbe9180fb1e1f01d73af95b66004baea189de497dd138375017c6",
     "assets/entity-index.json": "b6252fdf556f2b5c2bf38f89c771e00c09036cd360f076b75325f4ae7132d4ee",
@@ -34,7 +34,7 @@
     "references/launch-mint.md": "5c656467bbf6afec16b08ad31ece9330662d4c64958a361e1fe65b9be96857a8",
     "references/launch-trading.md": "07461713f8a7cb625090ad9f3e1a2f9fa611a3e2eb057be6566daeecee36d74b",
     "references/planning-conformance.md": "b4ca8f71ae8a847809b72329d406963d4d89537a79e1e60e0b17dced1bb1e7d4",
-    "references/planning-execution.md": "ca9d829ed41458f6db9ce0d2710b88f1fad59244b912ed9b8e1224c15ff7f1af",
+    "references/planning-execution.md": "56feacf15e89f07e9a7c2aea41392550ae6705768e79f54a4eb154e69b37b3eb",
     "references/planning-inputs.md": "7f9e0a857b86f8864df811680c3d5a2fb0bf53b9e5be2422794feda98177ec40",
     "references/planning-model.md": "dfd15d1d43d6d477ee1c026a60f0c021306bb8fbfeb76589b8f5895acb401dbb",
     "references/planning.md": "9e1b528005c29f812fbe79da24109aec3ccbc18f1fe217f6c3ff74b14a63f0b0",
@@ -45,9 +45,9 @@
     "references/risks.md": "1d0fd888dc7d21a6e19a852ef7693f5690797963f7757711837237de42e0abe3",
     "references/safety.md": "5466e42608246fc3e184428945e761f25c221e2346a4ff30ba8f0700677c4e50",
     "references/updates.md": "f154a03f39f9fad5d9c79faf9e5cadaf6a5cc234c849c4dc36e2bae9158e3d68",
-    "scripts/price.py": "3da6b3ae6f8f2f8c21d49d24fa25488198823d6bef3780d36e0f692fb152e813",
+    "scripts/price.py": "dad8dba5508c5590f399b62ce0fa6b00d403089aaf1dbf9c7b5a37d8302ee608",
     "scripts/scenario.py": "7afec27cb24467965fcf01912340e0d135e74145c34ef709db4a940ae0bc6172",
     "scripts/snapshot.py": "3757e4c56f41716151d94f7d4fe9ecd0f678bddd78798ebc01d4cb86d32b967a"
   },
-  "content_sha256": "899916022de8c0531dbb463d03c26b7ba174312bd9473f2354936a9da2432e24"
+  "content_sha256": "f1c6372d0d194dc02590abd167b2d678a09ca4c9a9257c55460d44fa32e98a03"
 }

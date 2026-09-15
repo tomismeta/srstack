@@ -219,7 +219,7 @@ def _https_request(connection, path, deadline, monotonic):
         if monotonic() >= deadline:
             raise PriceError("price request deadline exceeded before sending")
         connection.request("GET", path, headers={"Accept": "application/json",
-                           "User-Agent": "srstack/0.2.0 (+https://github.com/tomismeta/srstack)"})
+                           "User-Agent": "srstack/0.1.1 (+https://github.com/tomismeta/srstack)"})
         response = connection.getresponse()
         if response.status != 200:
             raise PriceError("price HTTP request failed; redirects are not followed")
