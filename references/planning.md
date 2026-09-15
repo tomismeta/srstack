@@ -1,14 +1,14 @@
 # Plan: guided workflow and execution index
 
-Every planning answer starts with this exact short line, including intake, assumption approval, blocked runs and unavailable execution:
+Answer the user's question first. Intake and assumption approval need no opening disclaimer. Label calculated comparisons **Estimate**; use at most one short relevant note by default (for example, “Hypothetical scenario, not a forecast.”). Keep any material blocker, unknown or approved cost exclusion visible, without repeating boilerplate.
 
-Hypothetical—not contract-verified or a forecast.
+Use one or two source links and an observation time only when they help the answer. Keep raw hashes, full provenance, per-field classifications and long limitations internally or in requested full output—not in every reply.
 
 ## Conversation first; JSON is internal
 
 Help the user build a scenario in ordinary language. Do not open with a JSON template, schema field list or a demand for schema-1 input. Read [input definitions](planning-inputs.md) when translating or repairing assumptions; the agent owns that translation. Show raw JSON only when requested. Use plain-language questions in the response, not a blocking interactive tool in one-shot hosts.
 
-Reuse information already supplied. Ask only the next missing decisions, grouped into at most three short questions per turn. Do not ask for wallet access, private identifiers or a complete financial history. A hypothetical position needs no public address.
+Reuse supplied information. Default intake to roughly 150 words: at most four relevant observed values, then at most three short questions. Do not print a complete missing-field checklist or two large tables while still establishing position, budget and endpoint. A full approval sheet comes once the inputs are ready. Do not ask for wallet access, private identifiers or financial history.
 
 ### 1. Establish the comparison
 
@@ -26,7 +26,7 @@ If the user asks for **documented launch settings**, use the [launch proposal](p
 
 After the essentials, collect the remaining assumptions in small groups. Explain unfamiliar concepts before asking for values. Distinguish user inputs, dated sourced observations, proposed hypotheses and unresolved gaps. A current observation is not a future constant or an executable quote.
 
-When the user asks to use published contracts or current protocol conditions, follow the [deployment-evidence handoff](planning-inputs.md#deployment-evidence-handoff). It maps relevant roles and dated observations to proposed inputs without treating addresses, frontend labels or current values as verified future economics. It does not authorize a transaction or relax approval.
+When the user asks to use published contracts or current protocol conditions, follow the [deployment-evidence handoff](planning-inputs.md#deployment-evidence-handoff). The fixed public snapshot reader can supply block-scoped observations using a publisher ABI without claiming verified source correspondence. This does not authorize a transaction or turn current values into future constants.
 
 | Kind | Treatment |
 |---|---|
@@ -46,7 +46,7 @@ When material information remains unknown, offer a qualitative explanation, a us
 
 ### 3. Present an assumption sheet and obtain approval
 
-Before a newly assembled run, show a compact plain-language table: **item · value/unit · basis or status**. Group related quantities, but keep every economically meaningful input visible. Translate the schema rather than showing its keys. Include:
+Once the core decisions and remaining economic inputs are supplied, present one compact approval sheet before execution. Group related quantities, but keep every economically meaningful value visible. Until then, show only the next useful proposals and questions, not an exhaustive draft. The complete approval sheet includes:
 
 - Mode, horizon, starting branches/credits and initial position cost.
 - Expansion budget, funding source, branch cap, daily purchase limit, selective target and interval.
@@ -55,7 +55,7 @@ Before a newly assembled run, show a compact plain-language table: **item · val
 - Entry/per-purchase/terminal gas, exit choice, resolution fee, sale tax, sale fee and slippage.
 - Each case's issuance multiplier and daily price/external-branch growth assumptions.
 
-Mark **provided**, **sourced observation**, **proposed** or **missing**; retain source dates, units and relevant block/quote anchors outside engine input. Group shared assumptions once. Highlight exclusions and unresolved mechanics. Don't pretend a partially completed table is runnable.
+Group shared assumptions once and mark only meaningful proposed values, gaps and exclusions visibly. Retain all input origins, source dates, units and relevant block/quote anchors internally outside engine input; do not print a classification for every field. Don't pretend a partially completed table is runnable.
 
 Ask: **“Approve these hypothetical assumptions, or tell me what to change.”** If values are still missing, ask for those instead of inviting blanket approval. “Use sensible defaults” or “looks good” does not supply an omitted value. Approval applies only to the shown complete values and mode; it acknowledges the hypothetical scenario, not contract feasibility. Economic edits require approval of the changes before rerunning. Do not repeat intake or demand another confirmation when the user has already explicitly approved a complete hypothetical configuration.
 
@@ -65,7 +65,7 @@ Build schema-1 JSON internally from the approved assumptions, with explicit mode
 
 Read [safety](safety.md) and [execution](planning-execution.md). Verify the trusted installed manifest/script/three fixed parameter-file hashes, then use permitted Python 3.10+, the fixed planner and separate JSON stdin. Missing runtime, verification or safe transport means a stated gap—not installed tools, broader access or invented results. The only intended calculator is `scripts/scenario.py`; do not substitute agent arithmetic or generated model code.
 
-Lead with the comparison relevant to the user's goal, then a small keep/selective/aggressive table and the important assumptions/evidence gaps. Report actual execution, mode, conflicts and unresolved semantics. Documented conflicts block numerical results; explain the conflict and offer an input correction or explicitly approved stress rerun, never silently change either. Both modes require valid packaged rules. Separate hypothetical cash from unvalued retained positions; no forecasts, investment recommendations, contract verification or executable quotes. Retain any approved cost-exclusion labels in every affected comparison, including sensitivity runs.
+Lead with the comparison relevant to the user's goal, labelled **Estimate**, then a small keep/selective/aggressive table. State whether execution succeeded and the selected mode; highlight material conflicts, unknowns and approved cost exclusions without dumping conformance. Documented conflicts block numerical results; explain the conflict and offer an input correction or explicitly approved stress rerun, never silently change either. Separate hypothetical cash from unvalued retained positions; no forecasts, investment recommendations, contract verification or executable quotes. Detailed assumptions, evidence and limitations remain available on request.
 
 Offer a focused next adjustment rather than another schema dump. No automatic inspection, refresh, persistence or monitoring.
 

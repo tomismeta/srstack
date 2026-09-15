@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-14T23:20:36.997Z",
-  "scope": "Current whitepaper sixteen sections and two companion pages, with deployment-directory and protocol-condition evidence; not a whole-site or implementation audit",
+  "reviewed_at": "2026-09-15T18:29:31.074Z",
+  "scope": "Current whitepaper, application, publisher read interface and latest official recap; not an implementation audit",
   "source_index": "assets/sources.json",
   "parameter_catalog": "assets/parameters.json",
   "deployment_addition": {
@@ -18,20 +18,21 @@
   "explorer_coverage": {
     "source_file": "assets/sources/etherscan.json",
     "record_count": 14,
-    "limits": ["Public address-page bytecode and source-publication observations only; not an independent source/bytecode audit."]
+    "limits": [
+      "Public address-page bytecode and source-publication observations only; not an independent source/bytecode audit."
+    ]
   },
   "limits": [
-    "Coverage is limited to the named current sources, not every website surface.",
-    "Published formulas and parameters are source-only, not source-code/ABI correspondence.",
-    "Launch tax rates/curve and ongoing auction price curve: Not established from current source; verified implementation required.",
-    "Companion displayed blocks, times and availability are UI observations, not independently authenticated chain reads."
+    "Publisher documentation and ABI are not independently verified source code.",
+    "Live values come from bounded block-scoped reads; current observations are not future guarantees.",
+    "Application panels and recap metrics retain their own source scope."
   ],
   "pages": [
     {
       "source_id": "sr-whitepaper-v1",
       "url": "https://www.standardreserve.xyz/whitepaper/",
       "final_url": "https://www.standardreserve.xyz/whitepaper/",
-      "retrieved_at": "2026-09-14T23:17:04.545Z",
+      "retrieved_at": "2026-09-15T18:07:19.421Z",
       "review_status": "full-frozen-text-and-equation-annotations-reviewed",
       "topics": [
         "references/documents.md",
@@ -50,8 +51,8 @@
       "source_id": "sr-token-page-v1",
       "url": "https://www.standardreserve.xyz/app/token/",
       "final_url": "https://www.standardreserve.xyz/app/token/",
-      "retrieved_at": "2026-09-14T23:20:36.342Z",
-      "review_status": "full-frozen-rendered-text-reviewed",
+      "retrieved_at": "2026-09-15T18:27:00.244Z",
+      "review_status": "static-text-reviewed; dynamic panel loading",
       "topics": [
         "references/protocol-policy.md",
         "references/reserves.md",
@@ -63,7 +64,7 @@
       "source_id": "sr-charters-page-v1",
       "url": "https://www.standardreserve.xyz/app/protocol/charters/",
       "final_url": "https://www.standardreserve.xyz/app/protocol/charters/",
-      "retrieved_at": "2026-09-14T23:20:36.997Z",
+      "retrieved_at": "2026-09-15T18:27:00.404Z",
       "review_status": "full-frozen-rendered-text-reviewed",
       "topics": [
         "references/charters.md",
@@ -273,5 +274,29 @@
       ],
       "source_file": "assets/sources/website-v1.json"
     }
-  ]
+  ],
+  "read_interface": {
+    "source_ids": [
+      "sr-publisher-read-interface"
+    ],
+    "path": "assets/interfaces/robinhood-reads.json",
+    "profiles": [
+      "protocol",
+      "charter",
+      "auctions"
+    ],
+    "limits": [
+      "Only the fixed publisher ABI surface; no financial methods or caller endpoints."
+    ]
+  },
+  "latest_summary": {
+    "source_ids": [
+      "sr-latest-summary",
+      "sr-recap-genesis",
+      "sr-recap-trading",
+      "sr-recap-bootstrapping",
+      "sr-recap-licenses"
+    ],
+    "source_file": "assets/sources/live-interface.json"
+  }
 }

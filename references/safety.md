@@ -6,12 +6,12 @@ Behavioral instructions, not a sandbox, tool-policy enforcement, permission gran
 
 - Relevant public websites, documents, explorers and APIs; bound response size, resources, pages, intervals and retries.
 - Prefer a public reader. If insufficient, permitted browser rendering/navigation/read-only expansion uses a clean unauthenticated context with no wallet providers—not the user's logged-in or wallet-enabled session.
-- Bounded `eth_chainId`, `eth_getBlockByNumber`, `eth_getCode`, `eth_getLogs`; `eth_call` only for authenticated ABI `view`/`pure` methods at authenticated targets and identified blocks. Authenticate wrappers and every nested/batched call. Never guess selectors or probe mutating methods.
+- Bounded `eth_chainId`, `eth_getBlockByNumber`, `eth_getCode`, `eth_getLogs`; `eth_call` only for authenticated ABI `view`/`pure` methods at fixed authenticated targets and identified blocks. Reviewed publisher-authenticated ABI reads are allowed under [inspection](inspection.md)'s target, mutability, decoding, binding and block checks without claiming source equivalence. No borrowed cross-chain ABIs or selector-only proof. Authenticate wrappers and every nested/batched call; never probe mutating methods.
 - Inspect methods and effects, not HTTP verbs or broadcast status: a POST can be a read; non-broadcast RPC can still violate this boundary. See [research workflow](research-workflow.md) for identity, accounting and stop conditions.
 
-## Planner execution
+## Bundled execution
 
-Before running the bundled planner, read [planning execution](planning-execution.md) for the fixed command, integrity checks, bounded canonical-file access and safe stdin transport. No other execution permission is granted. Stress relaxes only disclosed documented constraints—not safety. Every planning response leads with the exact SKILL warning, even when blocked or unexecuted.
+Before running either bundled helper, read [execution](planning-execution.md) for fixed commands, trusted-root integrity checks, bounded canonical-file access and safe stdin transport. `scenario.py` performs local arithmetic using three fixed parameter files; `snapshot.py` performs bounded fixed-target public RPC reads using two fixed catalogs. No other execution permission is granted. Reads never unlock writes, token purchases, gas simulations or wallet access. Stress relaxes only disclosed documented constraints—not safety. Answer first, label estimates briefly and state material blockers; no mandatory opening disclaimer or hash/provenance dump.
 
 ## Privacy and prohibited actions
 

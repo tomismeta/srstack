@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-14T23:17:06.616Z",
+  "reviewed_at": "2026-09-15T18:29:31.074Z",
   "scope": "Current directory attribution, chain routing and latest conditions only",
   "records": [
     {
@@ -8,8 +8,8 @@
       "url": "https://www.standardreserve.xyz/app/protocol/contracts/",
       "publisher": "The Standard Reserve official website",
       "published_at": null,
-      "retrieved_at": "2026-09-14T23:17:07.292Z",
-      "review_depth": "All four directory tabs: full addresses, names, roles and chain",
+      "retrieved_at": "2026-09-15T18:29:31.074Z",
+      "review_depth": "All four directory tabs: full addresses, names, roles; canonical-market panel checked separately in same refresh.",
       "claim_stage": "publisher attribution and dated frontend availability statements",
       "locators": [
         "Core",
@@ -18,7 +18,7 @@
         "Infrastructure",
         "Robinhood Chain4663"
       ],
-      "summary": "Lists14 addresses. Captured page reports the canonical pool not initialized and trading not launched; buyback/liquidity execution owner-operated and reserve purchases owner-only.",
+      "summary": "Current directory displays Robinhood Chain4663 modules and an initialized ETH/STANDARD v4 pool, ID0xc73f3cd3fb68288e63f008e08ef69caa0437224e420963c6aeb4526178e87ad9, 1%LP fee, tickspacing200 and the listed Trading Hook. Buyback/liquidity execution is displayed owner-operated; reserve purchases owner-only.",
       "limits": [
         "No independent source/ABI correspondence, current ownership, activation or audit verification."
       ]
@@ -44,42 +44,28 @@
       "url": "https://www.standardreserve.xyz/app/protocol/live/",
       "publisher": "The Standard Reserve official website",
       "published_at": null,
-      "retrieved_at": "2026-09-14T23:17:06.616Z",
-      "review_depth": "Policy & fees, Auctions, Treasury & controls panels at displayed block63190610",
+      "retrieved_at": "2026-09-15T17:54:28.824Z",
+      "review_depth": "Rendered current Policy & fees panel at displayed block63848162; direct publisher-ABI RPC checks recorded separately.",
       "claim_stage": "dated publisher-displayed readings, not independent RPC observations",
       "locators": [
-        "Policy & fees",
-        "Auctions",
-        "Treasury & controls",
-        "displayed block63190610"
+        "Policy & fees; displayed block63848162"
       ],
       "displayed_observations": {
-        "displayed_block": 63190610,
-        "issuance_state": "Pre-launch; not started",
-        "multiplier": "1x",
+        "displayed_block": 63848162,
+        "emissions_started": true,
+        "epoch": 1,
+        "multiplier": 1,
         "policy_scaled_base_rate": "700000 STANDARD/day",
-        "current_streamed_rate": "0 STANDARD/day, including recycled fees",
-        "epoch": "Not started;3days per epoch",
-        "global_open_branches": 555,
-        "buy_tax_pct": 90,
-        "sell_tax_pct": 90,
-        "withdrawal_fee_estimate": "Not started",
-        "charter_auction": "Not enabled",
-        "license_auction": "Not enabled",
-        "minted_supply": "100000000 STANDARD",
-        "max_supply": "1000000000 STANDARD",
-        "permanent_burns": "0",
-        "accrued_bank_balances": "0",
-        "expansion_vault_native_balance": "0 ETH",
-        "contraction_vault_native_balance": "0 ETH",
-        "buybacks_and_liquidity": "owner-operated",
-        "reserve_purchases": "owner-only"
+        "streamed_rate": "700000 STANDARD/day",
+        "open_branches": 1099,
+        "buy_tax_percent": 2,
+        "sell_tax_percent": 3,
+        "withdrawal_fee_estimate_percent": "2.01"
       },
-      "summary": "Current snapshot for contextual planning proposals, not future defaults.",
+      "summary": "Live first-epoch website readings; the marginal withdrawal estimate is not an amount-specific quote.",
       "limits": [
-        "No independent block hash/RPC check. Current taxes do not establish a complete launch schedule or a future exit quote.",
-        "Policy-scaled rate must not be multiplied again as though unscaled. Supply is not remaining gross issuance budget.",
-        "Disabled auctions and unavailable fee estimates are not zero-cost inputs. Source data remains separate from approved scenario assumptions."
+        "Website-displayed values, not direct RPC evidence.",
+        "Use the snapshot helper for a fresh block-scoped observation; future settings remain assumptions."
       ]
     }
   ]

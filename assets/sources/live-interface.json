@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "scope": "Current publisher interface evidence and current summary announcement",
+  "records": [
+    {
+      "id": "sr-publisher-read-interface",
+      "url": "https://www.standardreserve.xyz/assets/app-CIqwBLws.js",
+      "publisher": "The Standard Reserve official application",
+      "published_at": null,
+      "retrieved_at": "2026-09-15T17:55:28.734Z",
+      "review_depth": "Literal ABI arrays, target bindings, read-call ordering, integer scale/conversion and availability handling; selected68scalar view/pure calls reviewed",
+      "claim_stage": "publisher-supplied ABI and frontend mappings; not source/bytecode verification",
+      "locators": [
+        "ABI variables te,Jt,Nn,We,Ys,kr",
+        "_b/Mb currentTaxBps ordering: truebuy,falsesell",
+        "MC: originalbudget minus cumulativeIssued; hardcap minus maxSupply",
+        "vA: perbranch integer streamrate division",
+        "auction display state/closing-price mapping"
+      ],
+      "bundle_sha256": "b3df8d48b6877e4e526b17f9f5be8716d2651908535b1cebb95d8b24c3f97de2",
+      "summary": "Fixed read interface for protocol, charter and auction snapshots using the public Robinhood RPC endpoint. All selected selectors appeared in the deployed code; selected binding getters returned the configured related addresses. These checks support read alignment, not exact code equivalence.",
+      "limits": [
+        "No borrowed cross-chain ABI; no downloaded code is executed by the helper.",
+        "Only the selected scalar view/pure surface is included; no financial actions, raw caller endpoints or selectors.",
+        "Old-block state may be unavailable from this public provider; do not silently replace a pinned read with latest.",
+        "Current price-function output may continue decaying after sellout; it is not a purchasable quote without availability."
+      ],
+      "read_validation": {
+        "rpc_url": "https://rpc.mainnet.chain.robinhood.com/",
+        "chain_id": 4663,
+        "block_number": 63853782,
+        "block_hash": "0xb5006b176c08df8fcac8a970ebf30037e11feeec7ede154d2ceab9ced432c028",
+        "selected_selectors_present_in_code": 68,
+        "binding_getters_matched": 8,
+        "limits": "Observed code and bindings support the selected read surface; not independently verified source equivalence."
+      }
+    },
+    {
+      "id": "sr-latest-summary",
+      "url": "https://x.com/standard_rsv/status/2099915418010046574",
+      "publisher": "@standard_rsv",
+      "published_at": "2026-09-15",
+      "retrieved_at": "2026-09-15T18:07:22.138Z",
+      "review_depth": "Full official root recap text and graphic; official continuations reviewed separately; replies from other handles excluded",
+      "claim_stage": "publisher launch recap, not independently measured current metrics",
+      "locators": [
+        "First24H recap; displayed11:37AM Sep15"
+      ],
+      "summary": "Publisher reports94% unique charter ownership,7800 unique token holders,1.2%floating-supply burn, substantial liquidity and bootstrapped vaults. Comparative liquidity language is a publisher claim, not an independent ranking.",
+      "limits": [
+        "Metrics describe the stated recap window, not current RPC state. Floating-supply denominator and comparative liquidity methodology are not independently established.",
+        "The recap image is branding, not additional numerical evidence."
+      ]
+    },
+    {
+      "id": "sr-recap-genesis",
+      "url": "https://x.com/standard_rsv/status/2099915420975403199",
+      "publisher": "@standard_rsv",
+      "published_at": "2026-09-15",
+      "retrieved_at": "2026-09-15T18:08:16.038Z",
+      "review_depth": "Full target official post, excluding quoted third-party endorsement",
+      "claim_stage": "publisher retrospective claim",
+      "locators": [
+        "Genesis sale recap"
+      ],
+      "summary": "Publisher reports the public founding sale sold out in11seconds and describes a last-minute signing worker plus browser verification as its anti-bot approach.",
+      "limits": [
+        "Not an endorsement, implementation verification or permission for the skill to sign or mint."
+      ]
+    },
+    {
+      "id": "sr-recap-trading",
+      "url": "https://x.com/standard_rsv/status/2099915423680708881",
+      "publisher": "@standard_rsv",
+      "published_at": "2026-09-15",
+      "retrieved_at": "2026-09-15T18:08:18.576Z",
+      "review_depth": "Full official trading recap text",
+      "claim_stage": "publisher metrics and operational statement",
+      "locators": [
+        "Trading recap"
+      ],
+      "summary": "Publisher reports22477ETH canonical-pool volume, active liquidity placement and over700ETH left for protocol POL/buybacks; says routing issues with DEX providers are being worked on.",
+      "limits": [
+        "Reported figures and relative-volume comparisons are not independently reconciled. Do not treat route availability or displayed prices as executable quotes."
+      ]
+    },
+    {
+      "id": "sr-recap-bootstrapping",
+      "url": "https://x.com/standard_rsv/status/2099915427308851374",
+      "publisher": "@standard_rsv",
+      "published_at": "2026-09-15",
+      "retrieved_at": "2026-09-15T18:07:22.138Z",
+      "review_depth": "Complete official post text in thread; image not numerically analyzed",
+      "claim_stage": "publisher recap",
+      "locators": [
+        "Protocol Bootstrapping"
+      ],
+      "summary": "Publisher reports15M initial active liquidity and over2400ETH bootstrapped across protocol vaults during the first epoch.",
+      "limits": [
+        "Do not add these figures to overlapping volume, liquidity or vault measures; units/valuation basis for15M are not independently established."
+      ]
+    },
+    {
+      "id": "sr-recap-licenses",
+      "url": "https://x.com/standard_rsv/status/2099915431456948479",
+      "publisher": "@standard_rsv",
+      "published_at": "2026-09-15",
+      "retrieved_at": "2026-09-15T18:07:22.138Z",
+      "review_depth": "Complete official post text in thread; image not numerically analyzed",
+      "claim_stage": "publisher recap and possible future change",
+      "locators": [
+        "License auction recap"
+      ],
+      "summary": "Publisher reports100licenses sold in3minutes and says12-hour auctions are being considered for timezone access.",
+      "limits": [
+        "Considering12hours is not an implemented schedule. Current auction duration must come from a fresh read; no canonical parameter is changed by this proposal."
+      ]
+    }
+  ]
+}

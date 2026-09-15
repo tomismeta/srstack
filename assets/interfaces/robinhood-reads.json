@@ -1,0 +1,1146 @@
+{
+  "schema_version": 1,
+  "chain_id": 4663,
+  "rpc_url": "https://rpc.mainnet.chain.robinhood.com/",
+  "entity_catalog": "assets/entities/robinhood.json",
+  "source_ids": [
+    "sr-publisher-read-interface"
+  ],
+  "contracts": {
+    "centralBank": "sr-robinhood-central-bank",
+    "standard": "sr-robinhood-standard",
+    "charterNFT": "sr-robinhood-charter-nft",
+    "taxHook": "sr-robinhood-tax-hook",
+    "licenseAuction": "sr-robinhood-license-auction",
+    "charterAuction": "sr-robinhood-charter-auction"
+  },
+  "calls": [
+    {
+      "id": "emissions_started",
+      "contract": "centralBank",
+      "function": "emissionsStarted",
+      "signature": "emissionsStarted()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "bool",
+      "decimals": 0,
+      "unit": "boolean",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x5adf0021"
+    },
+    {
+      "id": "base_issuance_per_day",
+      "contract": "centralBank",
+      "function": "baseIssuancePerDay",
+      "signature": "baseIssuancePerDay()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD/day",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x17388786"
+    },
+    {
+      "id": "multiplier",
+      "contract": "centralBank",
+      "function": "multiplierWad",
+      "signature": "multiplierWad()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "multiplier",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x47481b0b"
+    },
+    {
+      "id": "stream_rate_per_second",
+      "contract": "centralBank",
+      "function": "currentStreamRatePerSecond",
+      "signature": "currentStreamRatePerSecond()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD/second",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x708a0dd0"
+    },
+    {
+      "id": "total_branches",
+      "contract": "centralBank",
+      "function": "totalBranches",
+      "signature": "totalBranches()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "branches",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x95c90089"
+    },
+    {
+      "id": "epoch_number",
+      "contract": "centralBank",
+      "function": "epochNumber",
+      "signature": "epochNumber()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "epoch",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0xf4145a83"
+    },
+    {
+      "id": "epoch_start",
+      "contract": "centralBank",
+      "function": "epochStart",
+      "signature": "epochStart()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "unix-seconds",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x15e5a1e5"
+    },
+    {
+      "id": "epoch_end",
+      "contract": "centralBank",
+      "function": "epochEnd",
+      "signature": "epochEnd()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "unix-seconds",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x4bb6b58f"
+    },
+    {
+      "id": "epoch_days",
+      "contract": "centralBank",
+      "function": "epochDays",
+      "signature": "epochDays()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "days",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x63652bd1"
+    },
+    {
+      "id": "issuance_budget",
+      "contract": "centralBank",
+      "function": "ISSUANCE_BUDGET",
+      "signature": "ISSUANCE_BUDGET()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0xef0062a0"
+    },
+    {
+      "id": "cumulative_issued",
+      "contract": "centralBank",
+      "function": "cumulativeIssued",
+      "signature": "cumulativeIssued()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0xf9e02c89"
+    },
+    {
+      "id": "pending_bank_total",
+      "contract": "centralBank",
+      "function": "totalPendingLive",
+      "signature": "totalPendingLive()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x31b337ea"
+    },
+    {
+      "id": "token_total_supply",
+      "contract": "standard",
+      "function": "totalSupply",
+      "signature": "totalSupply()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD",
+      "profiles": [
+        "protocol"
+      ],
+      "selector": "0x18160ddd"
+    },
+    {
+      "id": "token_max_supply",
+      "contract": "standard",
+      "function": "maxSupply",
+      "signature": "maxSupply()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD",
+      "profiles": [
+        "protocol"
+      ],
+      "selector": "0xd5abeb01"
+    },
+    {
+      "id": "token_hard_cap",
+      "contract": "standard",
+      "function": "HARD_CAP",
+      "signature": "HARD_CAP()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD",
+      "profiles": [
+        "protocol"
+      ],
+      "selector": "0x3a03171c"
+    },
+    {
+      "id": "token_decimals",
+      "contract": "standard",
+      "function": "decimals",
+      "signature": "decimals()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint8",
+      "decimals": 0,
+      "unit": "decimals",
+      "profiles": [
+        "protocol",
+        "charter",
+        "auctions"
+      ],
+      "selector": "0x313ce567"
+    },
+    {
+      "id": "buy_tax_percent",
+      "contract": "taxHook",
+      "function": "currentTaxBps",
+      "signature": "currentTaxBps(bool)",
+      "mutability": "view",
+      "input_types": [
+        "bool"
+      ],
+      "args": [
+        true
+      ],
+      "output_type": "uint256",
+      "decimals": 2,
+      "unit": "percent",
+      "profiles": [
+        "protocol"
+      ],
+      "selector": "0xa578d578"
+    },
+    {
+      "id": "sell_tax_percent",
+      "contract": "taxHook",
+      "function": "currentTaxBps",
+      "signature": "currentTaxBps(bool)",
+      "mutability": "view",
+      "input_types": [
+        "bool"
+      ],
+      "args": [
+        false
+      ],
+      "output_type": "uint256",
+      "decimals": 2,
+      "unit": "percent",
+      "profiles": [
+        "protocol"
+      ],
+      "selector": "0xa578d578"
+    },
+    {
+      "id": "pool_initialized",
+      "contract": "taxHook",
+      "function": "poolInitialized",
+      "signature": "poolInitialized()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "bool",
+      "decimals": 0,
+      "unit": "boolean",
+      "profiles": [
+        "protocol"
+      ],
+      "selector": "0xb98ad255"
+    },
+    {
+      "id": "zero_amount_withdrawal_fee_percent",
+      "contract": "centralBank",
+      "function": "previewResolutionFeeWad",
+      "signature": "previewResolutionFeeWad(uint256)",
+      "mutability": "view",
+      "input_types": [
+        "uint256"
+      ],
+      "args": [
+        0
+      ],
+      "output_type": "uint256",
+      "decimals": 16,
+      "unit": "percent",
+      "profiles": [
+        "protocol"
+      ],
+      "selector": "0x01e275a7"
+    },
+    {
+      "id": "charter_branches",
+      "contract": "centralBank",
+      "function": "branchCountOf",
+      "signature": "branchCountOf(uint256)",
+      "mutability": "view",
+      "input_types": [
+        "uint256"
+      ],
+      "args": [
+        "$charter_id"
+      ],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "branches",
+      "profiles": [
+        "charter"
+      ],
+      "selector": "0xe1b8a032"
+    },
+    {
+      "id": "charter_pending",
+      "contract": "centralBank",
+      "function": "pendingOf",
+      "signature": "pendingOf(uint256)",
+      "mutability": "view",
+      "input_types": [
+        "uint256"
+      ],
+      "args": [
+        "$charter_id"
+      ],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD",
+      "profiles": [
+        "charter"
+      ],
+      "selector": "0x7e7feaa7"
+    },
+    {
+      "id": "charter_owner",
+      "contract": "charterNFT",
+      "function": "ownerOf",
+      "signature": "ownerOf(uint256)",
+      "mutability": "view",
+      "input_types": [
+        "uint256"
+      ],
+      "args": [
+        "$charter_id"
+      ],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "charter"
+      ],
+      "selector": "0x6352211e"
+    },
+    {
+      "id": "license_started",
+      "contract": "licenseAuction",
+      "function": "started",
+      "signature": "started()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "bool",
+      "decimals": 0,
+      "unit": "boolean",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x1f2698ab"
+    },
+    {
+      "id": "license_paused",
+      "contract": "licenseAuction",
+      "function": "paused",
+      "signature": "paused()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "bool",
+      "decimals": 0,
+      "unit": "boolean",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x5c975abb"
+    },
+    {
+      "id": "license_current_day",
+      "contract": "licenseAuction",
+      "function": "currentDay",
+      "signature": "currentDay()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "auction-day",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x5c9302c9"
+    },
+    {
+      "id": "license_auction_anchor",
+      "contract": "licenseAuction",
+      "function": "auctionAnchor",
+      "signature": "auctionAnchor()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "unix-seconds",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0xf08fb30f"
+    },
+    {
+      "id": "license_day_seconds",
+      "contract": "licenseAuction",
+      "function": "AUCTION_DAY",
+      "signature": "AUCTION_DAY()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "seconds",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0xb2b2b29c"
+    },
+    {
+      "id": "license_current_price",
+      "contract": "licenseAuction",
+      "function": "currentPrice",
+      "signature": "currentPrice()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x9d1b464a"
+    },
+    {
+      "id": "license_remaining",
+      "contract": "licenseAuction",
+      "function": "remainingToday",
+      "signature": "remainingToday()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "items",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0xfc3c5515"
+    },
+    {
+      "id": "license_sold",
+      "contract": "licenseAuction",
+      "function": "soldToday",
+      "signature": "soldToday()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "items",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0xa08c6922"
+    },
+    {
+      "id": "license_day_floor",
+      "contract": "licenseAuction",
+      "function": "dayFloorPrice",
+      "signature": "dayFloorPrice()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x55d92de0"
+    },
+    {
+      "id": "license_last_sale_price",
+      "contract": "licenseAuction",
+      "function": "lastSalePrice",
+      "signature": "lastSalePrice()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x86f5960f"
+    },
+    {
+      "id": "license_last_sale_day",
+      "contract": "licenseAuction",
+      "function": "lastSaleDay",
+      "signature": "lastSaleDay()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "auction-day",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x5bb3ae5c"
+    },
+    {
+      "id": "license_start_multiplier",
+      "contract": "licenseAuction",
+      "function": "startMultiplier",
+      "signature": "startMultiplier()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "multiplier",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x6d9c3033"
+    },
+    {
+      "id": "charter_auction_started",
+      "contract": "charterAuction",
+      "function": "started",
+      "signature": "started()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "bool",
+      "decimals": 0,
+      "unit": "boolean",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x1f2698ab"
+    },
+    {
+      "id": "charter_auction_paused",
+      "contract": "charterAuction",
+      "function": "paused",
+      "signature": "paused()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "bool",
+      "decimals": 0,
+      "unit": "boolean",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x5c975abb"
+    },
+    {
+      "id": "charter_auction_current_day",
+      "contract": "charterAuction",
+      "function": "currentDay",
+      "signature": "currentDay()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "auction-day",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x5c9302c9"
+    },
+    {
+      "id": "charter_auction_anchor",
+      "contract": "charterAuction",
+      "function": "auctionAnchor",
+      "signature": "auctionAnchor()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "unix-seconds",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0xf08fb30f"
+    },
+    {
+      "id": "charter_auction_day_seconds",
+      "contract": "charterAuction",
+      "function": "AUCTION_DAY",
+      "signature": "AUCTION_DAY()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "seconds",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0xb2b2b29c"
+    },
+    {
+      "id": "charter_auction_current_price",
+      "contract": "charterAuction",
+      "function": "currentPrice",
+      "signature": "currentPrice()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "ETH",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x9d1b464a"
+    },
+    {
+      "id": "charter_auction_remaining",
+      "contract": "charterAuction",
+      "function": "remainingToday",
+      "signature": "remainingToday()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "items",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0xfc3c5515"
+    },
+    {
+      "id": "charter_auction_sold",
+      "contract": "charterAuction",
+      "function": "soldToday",
+      "signature": "soldToday()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "items",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0xa08c6922"
+    },
+    {
+      "id": "charter_auction_day_floor",
+      "contract": "charterAuction",
+      "function": "dayFloorPrice",
+      "signature": "dayFloorPrice()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "ETH",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x55d92de0"
+    },
+    {
+      "id": "charter_auction_last_sale_price",
+      "contract": "charterAuction",
+      "function": "lastSalePrice",
+      "signature": "lastSalePrice()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "ETH",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x86f5960f"
+    },
+    {
+      "id": "charter_auction_last_sale_day",
+      "contract": "charterAuction",
+      "function": "lastSaleDay",
+      "signature": "lastSaleDay()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "auction-day",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x5bb3ae5c"
+    },
+    {
+      "id": "charter_auction_start_multiplier",
+      "contract": "charterAuction",
+      "function": "startMultiplier",
+      "signature": "startMultiplier()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "multiplier",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x6d9c3033"
+    },
+    {
+      "id": "central_bank_owner",
+      "contract": "centralBank",
+      "function": "owner",
+      "signature": "owner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "protocol"
+      ],
+      "selector": "0x8da5cb5b"
+    },
+    {
+      "id": "charter_contract_owner",
+      "contract": "charterNFT",
+      "function": "owner",
+      "signature": "owner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "charter"
+      ],
+      "selector": "0x8da5cb5b"
+    },
+    {
+      "id": "trading_hook_owner",
+      "contract": "taxHook",
+      "function": "owner",
+      "signature": "owner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "protocol"
+      ],
+      "selector": "0x8da5cb5b"
+    },
+    {
+      "id": "license_auction_owner",
+      "contract": "licenseAuction",
+      "function": "owner",
+      "signature": "owner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x8da5cb5b"
+    },
+    {
+      "id": "charter_auction_owner",
+      "contract": "charterAuction",
+      "function": "owner",
+      "signature": "owner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x8da5cb5b"
+    },
+    {
+      "id": "binding_centralBank_standard",
+      "contract": "centralBank",
+      "function": "standard",
+      "signature": "standard()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [],
+      "binds_to": "standard",
+      "selector": "0x5a3b7e42"
+    },
+    {
+      "id": "binding_centralBank_charterNFT",
+      "contract": "centralBank",
+      "function": "charterNFT",
+      "signature": "charterNFT()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [],
+      "binds_to": "charterNFT",
+      "selector": "0x9488f538"
+    },
+    {
+      "id": "binding_standard_centralBank",
+      "contract": "standard",
+      "function": "centralBank",
+      "signature": "centralBank()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [],
+      "binds_to": "centralBank",
+      "selector": "0x9a4a0fb2"
+    },
+    {
+      "id": "binding_charterNFT_centralBank",
+      "contract": "charterNFT",
+      "function": "centralBank",
+      "signature": "centralBank()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [],
+      "binds_to": "centralBank",
+      "selector": "0x9a4a0fb2"
+    },
+    {
+      "id": "binding_taxHook_centralBank",
+      "contract": "taxHook",
+      "function": "centralBank",
+      "signature": "centralBank()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [],
+      "binds_to": "centralBank",
+      "selector": "0x9a4a0fb2"
+    },
+    {
+      "id": "binding_taxHook_standard",
+      "contract": "taxHook",
+      "function": "standard",
+      "signature": "standard()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [],
+      "binds_to": "standard",
+      "selector": "0x5a3b7e42"
+    },
+    {
+      "id": "binding_licenseAuction_bank",
+      "contract": "licenseAuction",
+      "function": "bank",
+      "signature": "bank()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [],
+      "binds_to": "centralBank",
+      "selector": "0x76cdb03b"
+    },
+    {
+      "id": "binding_charterAuction_bank",
+      "contract": "charterAuction",
+      "function": "bank",
+      "signature": "bank()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [],
+      "binds_to": "centralBank",
+      "selector": "0x76cdb03b"
+    },
+    {
+      "id": "tax_decay_start",
+      "contract": "taxHook",
+      "function": "taxDecayStart",
+      "signature": "taxDecayStart()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "unix-seconds",
+      "profiles": [
+        "protocol"
+      ],
+      "selector": "0x70cdbb24"
+    },
+    {
+      "id": "tax_decay_duration",
+      "contract": "taxHook",
+      "function": "taxDecayDuration",
+      "signature": "taxDecayDuration()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "seconds",
+      "profiles": [
+        "protocol"
+      ],
+      "selector": "0x45e9dc6c"
+    },
+    {
+      "id": "tax_half_life",
+      "contract": "taxHook",
+      "function": "taxHalfLife",
+      "signature": "taxHalfLife()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "seconds",
+      "profiles": [
+        "protocol"
+      ],
+      "selector": "0xdd037d05"
+    },
+    {
+      "id": "launch_buy_tax_percent",
+      "contract": "taxHook",
+      "function": "decayStartBuyBps",
+      "signature": "decayStartBuyBps()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 2,
+      "unit": "percent",
+      "profiles": [
+        "protocol"
+      ],
+      "selector": "0xa10881ba"
+    },
+    {
+      "id": "launch_sell_tax_percent",
+      "contract": "taxHook",
+      "function": "decayStartSellBps",
+      "signature": "decayStartSellBps()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 2,
+      "unit": "percent",
+      "profiles": [
+        "protocol"
+      ],
+      "selector": "0xa2d33ef3"
+    },
+    {
+      "id": "steady_buy_tax_percent",
+      "contract": "taxHook",
+      "function": "decayFloorBuyBps",
+      "signature": "decayFloorBuyBps()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 2,
+      "unit": "percent",
+      "profiles": [
+        "protocol"
+      ],
+      "selector": "0x095ba5c9"
+    },
+    {
+      "id": "steady_sell_tax_percent",
+      "contract": "taxHook",
+      "function": "decayFloorSellBps",
+      "signature": "decayFloorSellBps()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 2,
+      "unit": "percent",
+      "profiles": [
+        "protocol"
+      ],
+      "selector": "0x03937d55"
+    },
+    {
+      "id": "tax_overridden",
+      "contract": "taxHook",
+      "function": "taxOverridden",
+      "signature": "taxOverridden()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "bool",
+      "decimals": 0,
+      "unit": "boolean",
+      "profiles": [
+        "protocol"
+      ],
+      "selector": "0xdd2365c8"
+    }
+  ],
+  "limits": [
+    "ABI is publisher-supplied, not independently source-verified.",
+    "Only the listed scalar view/pure methods are callable. No raw selector/address/RPC overrides."
+  ],
+  "publisher_bundle": {
+    "url": "https://www.standardreserve.xyz/assets/app-CIqwBLws.js",
+    "sha256": "b3df8d48b6877e4e526b17f9f5be8716d2651908535b1cebb95d8b24c3f97de2",
+    "retrieved_at": "2026-09-15T17:55:28.734Z"
+  }
+}

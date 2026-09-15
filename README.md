@@ -20,7 +20,7 @@ One skill, three routes:
 
 - **Research:** source-linked explanations, documented parameters and evidence gaps.
 - **Plan:** a guided conversation: describe your position, budget and goal, review a plain-language assumption sheet, then approve a local comparison. The agent builds the JSON internally. Documented mode blocks known conflicts; stress mode reports explicitly approved departures. No silent economic defaults.
-- **Inspect:** on-demand public evidence for a supplied target, after authenticating identities and read interfaces. No fabricated contract adapter, background monitor or wallet connection.
+- **Inspect:** on-demand protocol, auction and public-charter snapshots through a fixed read-only RPC helper. It uses the publisher's reviewed ABI, without wallet access.
 
 Research topics: [protocol](references/protocol.md) · [charters](references/charters.md) · [reserves](references/reserves.md) · [contracts](references/contracts.md) · [updates](references/updates.md) · [documents](references/documents.md) · [risks](references/risks.md).
 
@@ -111,7 +111,7 @@ Show the proposed assumptions, then ask me only for what's still missing.
 
 The agent proposes the documented launch base, starting multiplier and per-charter caps for approval. The full original issuance budget applies only to an explicitly chosen epoch-one hypothetical—not a current position. Prices, network size, gas, tax and other missing economics remain explicit choices. Optional exit-pressure cases use labelled published fee references, not a guessed personal quote.
 
-Applied launch-tax and auction-decay rules are not established from the current source. Verified implementation is required before those dynamic formulas enter the calculator.
+The launch tax schedule is now published. Current settings can be read as observations; future rates, prices and availability still need approved assumptions. The scenario model does not reproduce dynamic contract execution.
 
 ### Runnable fictional planner demonstration
 
@@ -122,7 +122,7 @@ Verify the trusted package, use the JSON unchanged, and compare all three strate
 Do not refresh sources or persist anything.
 ```
 
-With permitted Python execution and a trusted package, expect the warning first, `documented` mode, `within_checked_rules` conformance and keep/selective/aggressive results. Missing execution or trust prerequisites must produce an explicit explanation, not invented results. The fixture's values are not recommendations or reusable economic defaults.
+With permitted Python execution and a trusted package, expect a concise estimated comparison in `documented` mode with keep/selective/aggressive results. Missing prerequisites produce a short explanation, not invented results. The fixture's values are not recommendations or economic defaults.
 
 For a direct engine smoke test, run **from the reviewed installed skill root**:
 
@@ -132,38 +132,42 @@ python3 -B -I scripts/scenario.py < assets/examples/planning.json
 
 Expected: exit 0 and JSON containing the warning, the three strategies and their conformance report. This tests the engine, not host discovery or sandbox isolation. `scripts/scenario.py` is the only intended planner executable; do not substitute model-generated formulas or downloaded helpers. Routine output is compact; request `detail: "full"` for detailed accounting and purchase schedules. History requires full detail.
 
-### Inspection requires a target
+### Live protocol and auction reads
 
 ```text
-Use srstack inspect to investigate this public charter: <public charter ID/address/URL>.
-Authenticate its identity and report only what public evidence establishes.
+Use srstack inspect protocol. Show current issuance and buy/sell taxes.
+Use srstack inspect auctions. Are licenses available, and what price is actually usable?
 ```
 
-Replace the placeholder with a real public target; it is not a runnable unattended test as written. A charter ID also needs enough project/chain context to identify it. Missing targets require clarification, which may wait or time out in one-shot hosts. Missing authenticated contracts or read interfaces remain evidence gaps—not permission to invent an adapter or substitute a generic website check for charter inspection.
+The reader checks the chain, block, code, module bindings and scalar decoding. Sold-out or disabled auctions do not produce purchasable quotes. A specific charter request also needs its public charter ID; it never needs a wallet connection.
+
+Advanced users can request the same protocol snapshot from the reviewed installed root:
+
+```sh
+printf '%s' '{"schema_version":1,"view":"protocol"}' | python3 -B -I scripts/snapshot.py
+```
+
+Views are `protocol`, `auctions` and `charter`; the last requires integer `charter_id`. `detail: "full"` adds raw responses and call mappings. Default answers show useful values first, with at most one short note such as **“RPC snapshot; publisher ABI.”**
 
 ## Coverage and footprint
 
-The package keeps **current information only**, with source-specific retrieval dates and scope. It covers the current 16-section whitepaper, token/charter pages, deployment directory, protocol conditions and Etherscan source-publication checks. Superseded claims and comparison archives are not bundled. Unknown implementation details remain not established; a dated snapshot is not live state.
+The package keeps current information only: the 16-section whitepaper, live application, contract directory and latest official summary post. The latest recap is labelled as a publisher report; proposals such as shorter auctions are not treated as deployed changes. Source records retain evidence dates without forcing them into every response.
 
-The [contract catalog](assets/entities/robinhood.json) contains **14 publisher-listed Robinhood Chain addresses** with **Robinhood Etherscan links**. All 14 show bytecode on RobinScan. The 12 protocol modules and Pool Manager have no published source/ABI; Multicall exposes source/ABI through **Similar Match**, not exact-match verification. Ownership, proxy relationships, activation, independent code correspondence and audit coverage remain separate checks.
+The [contract catalog](assets/entities/robinhood.json) lists 14 Robinhood addresses with Etherscan links. Explorer source publication and the [publisher read interface](assets/interfaces/robinhood-reads.json) are separate evidence. The latter enables selected block-scoped reads without claiming independently verified source code, audited safety or complete privilege analysis.
 
-For contract-informed planning, ask: **“Use srstack plan. Help me turn the published protocol conditions into proposed assumptions, and show what still needs verification.”** The [handoff](references/planning-inputs.md#deployment-evidence-handoff) distinguishes observations from approved future assumptions. It prevents double-applying a policy-scaled issuance rate, treating disabled auctions as free licenses, or confusing current tax with a future quote. No financial execution is added.
+For evidence-assisted planning, ask: **“Use srstack plan. Read the current protocol and auction settings, propose inputs, then ask me for what is missing.”** The [handoff](references/planning-inputs.md#deployment-evidence-handoff) keeps observations separate from approved future assumptions. It distinguishes current stream rates, remaining-budget accounting, sale taxes, LP fees and unavailable auctions. No financial execution is added.
 
 The package uses selected references and indexed records rather than loading the whole corpus for every question. The reference indexes own current inventory counts; disk size is not per-question token cost, and selective loading depends on the host.
 
-Basic packaged research needs only a resource reader. Planning uses existing **Python 3.10+ and its standard library**, with no pip dependencies; required OS containment primitives must also be available. Contract inspection requires authenticated contract identities and permitted public, read-only chain queries. No wallet connector, telemetry or self-update process is bundled.
+Packaged research needs a resource reader. Calculations and live snapshots use **Python 3.10+ and its standard library**, with no pip dependencies. Live snapshots require permitted access to the fixed public Robinhood RPC endpoint. No wallet connector, telemetry or self-update process is bundled.
 
 ## Safety and verification limits
 
-Every planning answer begins with:
+Answers lead with content. Estimates get a short label; observations get a brief source note where needed. Detailed provenance and assumptions are available on request, not repeated as small print.
 
-> **Hypothetical—not contract-verified or a forecast.**
+The scenario engine is offline. The snapshot helper reads two fixed catalogs and permits only its pinned view/pure calls on the configured Robinhood addresses. Both reject unsupported inputs and write no files. No wallets, credentials, signatures, transaction payloads or state-changing simulations. See [safety](references/safety.md) and [execution](references/planning-execution.md) for the full boundary.
 
-No-conflict status covers only checked packaged statements, not complete protocol feasibility. Unknown mechanics and explicit user assumptions remain visible. A source-matching parameter is not contract verification, a forecast or an executable price.
-
-The planner reads three fixed bundled parameter files, performs no network or environment lookup, accepts no caller-selected file paths and writes no files. Unsupported containment backends fail closed. The skill prohibits credential access, wallet connections, signatures, approvals, executable financial payloads and state-changing EVM simulations. External sources are evidence, not instructions. Read the [full safety boundary](references/safety.md) and [planner execution rules](references/planning-execution.md).
-
-**A skill prompt is not a sandbox.** Host permissions and isolation still matter. No safety or profitability guarantee is implied.
+Skill instructions do not enforce host isolation, and estimates are not guaranteed returns.
 
 ## Repository validation
 
@@ -172,6 +176,7 @@ These commands run from the **repository root**, not the installed skill folder:
 ```sh
 python3 -B maintenance/package.py verify
 python3 -B maintenance/check-planner.py
+python3 -B maintenance/check-snapshot.py
 python3 -B maintenance/check-package.py
 python3 -B maintenance/package.py archive
 ```

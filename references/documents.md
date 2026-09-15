@@ -33,10 +33,10 @@ All locators below belong to `sr-whitepaper-v1` in [current website sources](../
 | 15 `#parameters` | [Parameters](../assets/parameters.json): documented settings; [trading](launch-trading.md): LP fee and tax gap |
 | 16 `#disclaimer` | [Risks](risks.md): experimental/non-bank scope and non-redeemable protocol reserves |
 
-Launch tax rates/curve and ongoing auction price curve: **Not established from current source; verified implementation required.** No alternative schedule or executable quote is inferred.
+The current launch tax schedule is published. Use current getters for observations and keep future rates as assumptions. Exact auction execution and transaction-specific amounts remain outside the fixed scenario model.
 
 ## Deployment evidence and fresh research
 
-`sr-contract-directory` and `sr-protocol-conditions` are routed through [contracts](contracts.md), the [entity index](../assets/entity-index.json) and [deployment sources](../assets/sources/deployments.json). Publisher identity and condition evidence does not establish source-code/ABI or deployed-bytecode correspondence. Explorer observations retain their own scope in those records.
+`sr-contract-directory` and `sr-protocol-conditions` route identity and application evidence. `sr-publisher-read-interface` supports the bounded RPC helper, and `sr-latest-summary` records the current official recap. Use [contracts](contracts.md), [inspection](inspection.md) and [updates](updates.md) for the relevant path; full evidence is available when requested.
 
 This coverage is not a whole-site audit. [Updates](updates.md) routes current topic questions; [research workflow](research-workflow.md) describes scoped fresh evidence without financial actions.

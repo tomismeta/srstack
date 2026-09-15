@@ -8,15 +8,15 @@ metadata:
 
 # srstack
 
-Independent research, hypothetical planning and public inspection—not an official service, audit, live feed or transaction integration. Use existing host permissions; this skill is not a sandbox.
+Independent Standard Reserve research, guided scenario planning and bounded public reads. Use existing host permissions; no wallet or transaction actions.
 
-## Planning warning: visible first
+## Answer style
 
-Start **every planning answer** with this exact short line, before headings, numbers, tables or missing-input questions:
+Lead with the answer, useful numbers or next question—not a disclaimer. For a simple question use a short paragraph or small table, not both repeating the same facts. Default to roughly 3–6 useful lines; expand only when the question needs it.
 
-Hypothetical—not contract-verified or a forecast.
+Use at most one short caveat when it changes interpretation: **“Estimate; inputs held constant.”** or **“RPC snapshot using publisher ABI.”** Mark missing values and excluded costs directly. Do not repeat generic warnings, long limitations or provenance tables.
 
-Required also for stress, documented, sensitivity, blocked and unavailable-runtime answers. JSON warnings, links and footers do not replace it. Label independently supported observations separately.
+Normally cite one or two useful source links. A short observation time is enough when freshness matters; omit block numbers/hashes unless requested. Keep raw responses, call mappings and detailed assumptions available on request. Never call publisher-ABI reads source-verified or present estimates as guaranteed returns.
 
 ## Bare invocation
 
@@ -24,7 +24,7 @@ For only `srstack`, `Use srstack` or a host equivalent, print this menu without 
 
 - **research** — Source-grounded explanations and evidence gaps.
 - **plan** — Guided hypothetical comparison; approve assumptions in plain language, then run the permitted local planner.
-- **inspect** — On-demand authenticated public snapshot; no wallet or monitoring.
+- **inspect** — On-demand public protocol, auction or charter snapshot; no wallet or monitoring.
 
 Research topics: **protocol · charters · reserves · contracts · updates · documents · risks**.
 
@@ -46,10 +46,10 @@ Specific intent precedes broad topic. Do not preload indexes or related guides.
 
 Generic research: choose the relevant topic; use documents for source discovery. Follow direct topic links to needed records. Only when an ID's file is unknown, use [source index](assets/sources.json) or [parameter index](assets/parameters.json). Never load all groups. Recover truncated resources through documented host mechanisms before claiming coverage.
 
-Cite original sources, locators and retrieval dates. This package is current-only, not a historical-claims archive. Current claims need suitably fresh evidence; unavailable implementation details stay not established rather than being filled from discarded alternatives. Align entity, ownership, units, interval and price/state anchors before combining quantities. Missing coverage is not zero; unknown values stay unknown.
+Use current evidence and preserve its units and scope. The package is current-only, not a historical-claims archive. Distinguish documented facts, RPC observations, website-reported values and approved assumptions; use brief labels, not a wall of caveats. Missing or failed reads are unknown, never zero. Source details are expandable on request.
 
 For Robinhood Chain (4663), use `https://robin.etherscan.io/` for contract navigation and new explorer checks. Read each record's current source-publication status: bytecode, ABI availability, Similar Match and exact verification are different. Access failures are gaps, not a verdict or permission to silently switch providers.
 
 ## Action boundary
 
-Read [safety](references/safety.md) before external retrieval or planning execution. Only bounded public reads, authenticated ABI `view`/`pure` queries and the verified fixed planner are allowed. No wallets, credentials, signatures, executable transaction/authorization payloads, state changes or state-changing simulations—even delegated or agent-owned. No downloaded code, guessed addresses/ABIs, arbitrary planner paths/rules, installed-record rewriting or background monitoring. Report capability/evidence gaps; never broaden access to bypass them.
+Read [safety](references/safety.md) before external retrieval or execution. Use the fixed `scripts/snapshot.py` for its supported public reads and `scripts/scenario.py` for approved calculations. Publisher-supplied read interfaces require fixed targets, declared view/pure methods, decoding/binding checks and block context; they do not imply verified source code. No wallets, credentials, signatures, executable transaction/authorization payloads, state changes or state-changing simulations—even delegated or agent-owned. No downloaded code execution, guessed addresses/ABIs, arbitrary reader endpoints/selectors, installed-record rewriting or background monitoring.

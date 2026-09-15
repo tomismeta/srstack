@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "scope": "Current Whitepaper v1.0 publisher design, not verified deployment",
-  "reviewed_at": "2026-09-14T23:17:04.545Z",
+  "reviewed_at": "2026-09-15T18:07:19.421Z",
   "records": [
     {"id":"license-burn-share","value":100,"unit":"percent of license payment","status":"documented-visible","source_ids":["sr-whitepaper-v1"],"locator":"§3 Currency; §7 Branches","limits":[]},
     {"id":"resolution-burn-share","value":50,"unit":"percent of resolution fee","status":"documented-visible","source_ids":["sr-whitepaper-v1"],"locator":"§3 Currency; §9 Exits","limits":[]},

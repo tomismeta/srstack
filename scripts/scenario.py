@@ -112,8 +112,8 @@ LIMITATIONS = [
     "fixed base, multiplier and resolution-fee inputs remain scenario proxies. "
     "No dynamic policy or withdrawal settlement algorithm is implemented.",
     "Acquisition context, license pricing, resolution and sale fee/tax bases "
-    "and their application remain unchecked assumptions. Applied launch tax "
-    "and auction mechanics are not established; verified implementation required.",
+    "and their application remain unchecked assumptions. The published launch "
+    "schedule does not guarantee a future tax rate or executable auction price.",
 ]
 SUMMARY_LIMITATIONS = [
     "All economic values are user assumptions; publisher checks are partial, "
@@ -124,8 +124,8 @@ SUMMARY_LIMITATIONS = [
     "Published base issuance, multiplier policy and withdrawal curves do not "
     "verify execution; fixed inputs remain proxies. Acquisition and license "
     "prices, auction inventory, fee/tax application and credits-payment feasibility "
-    "remain unchecked. Applied launch tax and auction mechanics are not established; "
-    "verified implementation required. Sequential sale haircuts are model assumptions.",
+    "remain unchecked. Published launch taxes do not establish future execution; "
+    "auction pricing and sequential sale haircuts remain model assumptions.",
     "Retained branches and credits have no residual valuation; partial/no-exit "
     "cash P&L is not total return. No forecast, recommendation or liquidity guarantee.",
 ]
@@ -309,7 +309,7 @@ CONTEXT_UNITS = {
     "resolution-fee-formula": "fee rule",
     "trading-fee": "percent by trade direction",
     "multiplier-update-rule": "policy rule",
-    "launch-trading-tax-curve": "complete applied fee rule",
+    "launch-trading-tax-curve": "published launch tax schedule",
     "whitelist-liquidity-fee": "ETH per whitelist mint",
 }
 PARAMETER_STATUSES = frozenset((
@@ -529,7 +529,7 @@ def _conformance(config, records, files):
         "sale_fee_pct": ("trading-fee", "Directional steady-state trading rates are published; the user-supplied separate sale-fee haircut and its applied basis remain model assumptions, not a verified additional charge."),
         "entry_cost_eth": ("whitelist-liquidity-fee", "User-supplied acquisition cost; whitelist mint pricing is context only, not a universal entry cost or bound."),
         "resolution_fee_pct": ("resolution-fee-formula", "The system-wide pressure curve is published; a fixed user-supplied fee remains a proxy without verified pressure inputs, commit timing or settlement ordering."),
-        "sale_tax_pct": ("launch-trading-tax-curve", "User-supplied sale tax is a proxy. Applied tax: not established from current source; verified implementation required."),
+        "sale_tax_pct": ("launch-trading-tax-curve", "The current launch schedule is published; a fixed future sale tax remains an approved assumption, not an execution quote."),
         "multiplier": ("multiplier-update-rule", "The epoch policy rule and bounds are published; a user-supplied constant multiplier remains a future proxy, not a verified dynamic policy path or on-chain configuration."),
     }
     inputs = []

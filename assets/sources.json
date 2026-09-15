@@ -3,6 +3,19 @@
   "purpose": "Current-only source routing; no superseded claims or competing interpretation archive",
   "groups": [
     {
+      "id": "live-interface",
+      "path": "assets/sources/live-interface.json",
+      "record_ids": [
+        "sr-publisher-read-interface",
+        "sr-latest-summary",
+        "sr-recap-genesis",
+        "sr-recap-trading",
+        "sr-recap-bootstrapping",
+        "sr-recap-licenses"
+      ],
+      "scope": "Publisher read interface and latest launch summary"
+    },
+    {
       "id": "website-v1",
       "path": "assets/sources/website-v1.json",
       "record_ids": [

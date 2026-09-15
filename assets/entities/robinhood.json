@@ -1,14 +1,15 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-14T23:19:32.366Z",
+  "reviewed_at": "2026-09-15T18:29:31.074Z",
   "chain": {
     "id": 4663,
     "name": "Robinhood Chain",
     "source_ids": [
       "sr-contract-directory",
-      "sr-etherscan-chainlist"
+      "sr-etherscan-chainlist",
+      "sr-publisher-read-interface"
     ],
-    "rpc_chain_id_independently_checked": false
+    "rpc_chain_id_independently_checked": true
   },
   "scope": "Current four-group official Robinhood directory with per-record Etherscan evidence; not a census of all deployments.",
   "explorer_policy": {
@@ -22,10 +23,10 @@
   "shared_evidence_limits": {
     "applies_to": "Every record; read with selected records",
     "source_correspondence": "Etherscan publication labels are recorded per entity. Independent exact source/bytecode correspondence is not established.",
-    "current_ownership_and_privileges": "not-independently-verified",
+    "current_ownership_and_privileges": "The snapshot helper can observe selected owner getters using the publisher ABI; complete privilege structure and future settings are not established.",
     "proxy_and_implementation_relationships": "not-established",
     "audit_to_deployment_correspondence": "not-established",
-    "current_activation_and_market_state": "not-independently-established",
+    "current_activation_and_market_state": "Use an on-demand snapshot for current observations; no live state is fixed by this identity catalog.",
     "infrastructure": "Shared infrastructure is not project-authored merely because listed; the pool manager is not a unique canonical pool.",
     "actions": "Research identity and navigation only; no wallet, signing or transaction path."
   },
@@ -45,7 +46,7 @@
           "sr-contract-directory"
         ],
         "locator": "Core / $STANDARD",
-        "retrieved_at": "2026-09-14T23:17:07.273Z"
+        "retrieved_at": "2026-09-15T18:29:31.059Z"
       },
       "deployment_evidence": {
         "status": "explorer-reported-contract",
@@ -78,7 +79,7 @@
           "sr-contract-directory"
         ],
         "locator": "Core / Charter NFT",
-        "retrieved_at": "2026-09-14T23:17:07.273Z"
+        "retrieved_at": "2026-09-15T18:29:31.059Z"
       },
       "deployment_evidence": {
         "status": "explorer-reported-contract",
@@ -111,7 +112,7 @@
           "sr-contract-directory"
         ],
         "locator": "Core / Central Bank",
-        "retrieved_at": "2026-09-14T23:17:07.273Z"
+        "retrieved_at": "2026-09-15T18:29:31.059Z"
       },
       "deployment_evidence": {
         "status": "explorer-reported-contract",
@@ -144,7 +145,7 @@
           "sr-contract-directory"
         ],
         "locator": "Core / Trading Hook",
-        "retrieved_at": "2026-09-14T23:17:07.273Z"
+        "retrieved_at": "2026-09-15T18:29:31.059Z"
       },
       "deployment_evidence": {
         "status": "explorer-reported-contract",
@@ -177,7 +178,7 @@
           "sr-contract-directory"
         ],
         "locator": "Auctions / Founding Sale",
-        "retrieved_at": "2026-09-14T23:17:07.279Z"
+        "retrieved_at": "2026-09-15T18:29:31.066Z"
       },
       "deployment_evidence": {
         "status": "explorer-reported-contract",
@@ -210,7 +211,7 @@
           "sr-contract-directory"
         ],
         "locator": "Auctions / Charter Auction",
-        "retrieved_at": "2026-09-14T23:17:07.279Z"
+        "retrieved_at": "2026-09-15T18:29:31.066Z"
       },
       "deployment_evidence": {
         "status": "explorer-reported-contract",
@@ -243,7 +244,7 @@
           "sr-contract-directory"
         ],
         "locator": "Auctions / Expansion License Auction",
-        "retrieved_at": "2026-09-14T23:17:07.279Z"
+        "retrieved_at": "2026-09-15T18:29:31.066Z"
       },
       "deployment_evidence": {
         "status": "explorer-reported-contract",
@@ -276,7 +277,7 @@
           "sr-contract-directory"
         ],
         "locator": "Treasury / Expansion Vault",
-        "retrieved_at": "2026-09-14T23:17:07.286Z"
+        "retrieved_at": "2026-09-15T18:29:31.071Z"
       },
       "deployment_evidence": {
         "status": "explorer-reported-contract",
@@ -309,7 +310,7 @@
           "sr-contract-directory"
         ],
         "locator": "Treasury / Contraction Vault",
-        "retrieved_at": "2026-09-14T23:17:07.286Z"
+        "retrieved_at": "2026-09-15T18:29:31.071Z"
       },
       "deployment_evidence": {
         "status": "explorer-reported-contract",
@@ -342,7 +343,7 @@
           "sr-contract-directory"
         ],
         "locator": "Treasury / Liquidity Manager",
-        "retrieved_at": "2026-09-14T23:17:07.286Z"
+        "retrieved_at": "2026-09-15T18:29:31.071Z"
       },
       "deployment_evidence": {
         "status": "explorer-reported-contract",
@@ -375,7 +376,7 @@
           "sr-contract-directory"
         ],
         "locator": "Treasury / Fee Splitter",
-        "retrieved_at": "2026-09-14T23:17:07.286Z"
+        "retrieved_at": "2026-09-15T18:29:31.071Z"
       },
       "deployment_evidence": {
         "status": "explorer-reported-contract",
@@ -408,7 +409,7 @@
           "sr-contract-directory"
         ],
         "locator": "Infrastructure / Address Registry",
-        "retrieved_at": "2026-09-14T23:17:07.292Z"
+        "retrieved_at": "2026-09-15T18:29:31.074Z"
       },
       "deployment_evidence": {
         "status": "explorer-reported-contract",
@@ -441,7 +442,7 @@
           "sr-contract-directory"
         ],
         "locator": "Infrastructure / Uniswap v4 Pool Manager",
-        "retrieved_at": "2026-09-14T23:17:07.292Z"
+        "retrieved_at": "2026-09-15T18:29:31.074Z"
       },
       "deployment_evidence": {
         "status": "explorer-reported-contract",
@@ -474,7 +475,7 @@
           "sr-contract-directory"
         ],
         "locator": "Infrastructure / Multicall",
-        "retrieved_at": "2026-09-14T23:17:07.292Z"
+        "retrieved_at": "2026-09-15T18:29:31.074Z"
       },
       "deployment_evidence": {
         "status": "explorer-reported-contract",
@@ -493,5 +494,21 @@
         "match_reference_url": "https://sepolia.arbiscan.io/address/0x8a6cc5ceb86e8a5b9d40337a5f7808992bb72d2d#code"
       }
     }
-  ]
+  ],
+  "publisher_read_interface": {
+    "path": "assets/interfaces/robinhood-reads.json",
+    "source_ids": [
+      "sr-publisher-read-interface"
+    ],
+    "scope": "Selected scalar view/pure reads with fixed bindings; not independent source verification."
+  },
+  "market": {
+    "chain_id": 4663,
+    "pool_id": "0xc73f3cd3fb68288e63f008e08ef69caa0437224e420963c6aeb4526178e87ad9",
+    "kind": "Uniswap v4 pool ID, not a separate contract address",
+    "source_ids": [
+      "sr-contract-directory"
+    ],
+    "observed_at": "2026-09-15T18:26:50.104Z"
+  }
 }

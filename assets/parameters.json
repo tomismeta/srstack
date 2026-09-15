@@ -1,13 +1,11 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-14T23:17:04.545Z",
+  "reviewed_at": "2026-09-15T18:07:19.421Z",
   "scope": "Current Whitepaper v1.0 publisher design, not verified deployment",
   "notes": [
-    "Values are current publisher design statements from sr-whitepaper-v1, not authenticated deployed configuration. Source-evidence dates identify the reviewed capture.",
-    "Unestablished tax and auction decay settings remain null; verified implementation is required.",
-    "Formula strings document source claims, not verified contract algorithms. Original issuance budget is not a measured remaining balance. Launch settings and owner bounds are not current on-chain readings or calculator defaults.",
-    "Illustrative diagrams and rendered zero counters are not economic settings or authenticated live measurements.",
-    "Hypothetical—not contract-verified or a forecast."
+    "Values are current publisher design references, not live configuration.",
+    "Live snapshot observations are separate from approved future assumptions; remaining budget and supply have different accounting bases.",
+    "Unknown execution details stay unknown. The published launch schedule does not fix future tax or transaction outcomes."
   ],
   "lookup": "Find the parameter ID in groups.record_ids, then read that exact package-root-relative path. This index contains no alternate parameter values.",
   "groups": [
@@ -30,14 +28,12 @@
         "founding-public-transaction-limit",
         "founding-proceeds-escrow",
         "founding-accrual-start",
-        "founding-floor-bid",
-        "founding-pol-remainder-share",
-        "founding-contraction-remainder-share",
-        "founding-expansion-remainder-share",
         "founding-launch-price",
         "founding-whitelist-window-control",
         "canonical-pool-lp-fee",
-        "canonical-pool-tick-spacing"
+        "canonical-pool-tick-spacing",
+        "launch-tax-half-life",
+        "launch-tax-duration"
       ]
     },
     {
@@ -93,7 +89,8 @@
         "vault-execution-enablement",
         "expansion-reserve-purchase-policy",
         "reserve-redemption-policy",
-        "pol-withdrawal-policy"
+        "pol-withdrawal-policy",
+        "outside-liquidity-tax-policy"
       ]
     },
     {

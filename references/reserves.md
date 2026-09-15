@@ -4,9 +4,8 @@ Publisher accounting, not observed holdings or deployed restrictions. Current so
 
 ## Founding funding is not the ongoing fee split
 
-Founding proceeds escrow until finalization. The owner sets launch price; finalization launches the pool and starts the tax clock and epoch-one emissions in one described atomic transaction. The genesis token allocation is single-sided above launch price with no upper price ceiling. The first 25 ETH of accepted proceeds forms a floor bid below that price; the remaining proceeds split 60% to a protocol-held POL pairing reserve, 20% to contraction and 20% to expansion. There is no founding team share. Canonical records: `genesis-liquidity-vault-split`, `genesis-protocol-proceeds-share`, `genesis-team-proceeds-share`. [sr-whitepaper-v1: currency, charters, reserves, parameters]
+Founding proceeds escrow until finalization and fund liquidity and protocol vaults, with no team share. The current publication does not specify the exact split. Genesis token liquidity is described in the currency section; do not substitute ongoing fee-allocation percentages for founding receipts. [sr-whitepaper-v1: currency, charters]
 
-Allocation components: `founding-floor-bid`, `founding-pol-remainder-share`, `founding-contraction-remainder-share`, `founding-expansion-remainder-share`. The remainder percentages must not be applied to gross receipts.
 
 The founding allocation is separate from steady-state trading/charter-auction receipts. Do not use ongoing fee percentages for founding proceeds. [sr-whitepaper-v1: reserves]
 
@@ -14,7 +13,9 @@ The founding allocation is separate from steady-state trading/charter-auction re
 
 Current net flow selects the active vault: expansion when positive, contraction otherwise. Shares are `ongoing-active-vault-share`, `ongoing-pol-share`, `ongoing-team-share`. Of the POL allocation, `pol-swap-share` is swapped to STANDARD, paired with remaining ETH and added as permanent liquidity. §12 allows bounded owner changes to fee splits. [sr-whitepaper-v1: policy, reserves, immutables]
 
-The whitepaper publishes steady buy/sell taxes; launch rates and the executable tax curve are not established from current source and require verified implementation. The canonical pool's LP fee and tick spacing are separate from protocol taxes. The token companion says taxes apply **on top of** the LP fee; precise computation order and fee base remain unverified. The protocol position's fees earned in STANDARD are burned (`standard-trading-fee-burn-share`). [sr-whitepaper-v1: currency, reserves, parameters; sr-token-page-v1]
+The current launch schedule is published in `launch-trading-tax-curve`: opening taxes decay to the steady buy/sell floors. Read current tax getters for a snapshot rather than treating launch values as current fees. The canonical pool's LP fee is separate; transaction-specific fee bases remain model assumptions. Protocol-position STANDARD fees are burned. [sr-whitepaper-v1: currency, reserves, parameters]
+
+Outside liquidity opens after the launch schedule reaches its floors. The publisher says withdrawn ETH principal is taxed at the sell rate and STANDARD principal at the buy rate; accrued LP fees are untaxed. See `outside-liquidity-tax-policy`. This is a description, not an executable liquidity action. [sr-whitepaper-v1: reserves]
 
 ## Reserve assets and ownership
 

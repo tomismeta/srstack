@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "scope": "Current Whitepaper v1.0 publisher design, not verified deployment",
-  "reviewed_at": "2026-09-14T23:17:04.545Z",
+  "reviewed_at": "2026-09-15T18:07:19.421Z",
   "records": [
     {"id":"hard-cap","value":1000000000,"unit":"STANDARD","status":"documented-visible","source_ids":["sr-whitepaper-v1"],"locator":"§3 The currency; §15 Launch parameters","limits":["Original 1B ceiling; permanent burns and ledger removals reduce the mintable ceiling under equation 3.2."]},
     {"id":"token-decimals","value":18,"unit":"decimal places","status":"documented-visible","source_ids":["sr-whitepaper-v1"],"locator":"§3 The currency; §15 Launch parameters","limits":[]},

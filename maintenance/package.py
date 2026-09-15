@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT
 MANIFEST = "release-manifest.json"
 VERSION = "0.1.0"
-SCRIPT_FILES = {"scripts/scenario.py"}
+SCRIPT_FILES = {"scripts/scenario.py", "scripts/snapshot.py"}
 TOP_FILES = {"SKILL.md", "README.md", "LICENSE", MANIFEST}
 REPOSITORY_DIRS = {"maintenance", ".github", ".git", "dist"}
 CACHE_DIRS = {"__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache"}
@@ -211,7 +211,7 @@ def verify_content(files):
 def make_manifest(files):
     return {
         "schema_version": 1, "name": "srstack", "version": VERSION,
-        "scope": "Runtime knowledge and bundled planner; excludes manifest, repository maintenance, CI, Git metadata, and build/cache artifacts",
+        "scope": "Runtime knowledge, bounded reader and scenario planner; excludes manifest, repository maintenance, CI, Git metadata, and build/cache artifacts",
         "digest_convention": "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest",
         **fingerprints(files),
     }

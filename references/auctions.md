@@ -4,7 +4,7 @@ Publisher design: [v1 sources](../assets/sources/website-v1.json), `sr-whitepape
 
 ## Availability, payments and capacity
 
-The license auction stays dormant through founding distribution. The current owner activates it once with a published opening price and a fresh `auction-duration` first day. Additional charter supply starts at `initial-daily-charter-count` and remains policy-controlled (`charter-count-policy`). The current companion page displayed both auctions as not enabled; this is dated presentation, not an independently verified permission/state read. [sr-whitepaper-v1: branches, auctions; sr-charters-page-v1]
+The license auction remains dormant until owner activation, then starts a fresh `auction-duration` first day. Additional charter supply starts at `initial-daily-charter-count` and remains policy-controlled (`charter-count-policy`). Current application observations show licenses sold out and daily charter sales not enabled. Use the `auctions` snapshot for a fresh status rather than treating a price-function output as buyable inventory. [sr-whitepaper-v1: branches, auctions; sr-charters-page-v1; sr-publisher-read-interface]
 
 When enabled, ongoing purchases execute immediately at the current price, first come first served, with no bids, escrow or refunds. Unsold daily capacity does not roll over; unpurchased charters are never minted. The **founding sale does escrow proceeds** until finalization, so §8's no-escrow description must not be generalized to it. [sr-whitepaper-v1: charters, auctions]
 

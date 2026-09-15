@@ -21,11 +21,11 @@ An **optional**, not necessarily configured, guardian can pause auctions and vau
 
 ## Published facts and remaining limits
 
-The current whitepaper has sixteen sections, including Immutables. Policy bounds/recurrence, exit pressure/fee formula, license floor, founding split and owner controls are documented in the [parameter catalog](../assets/parameters.json), with source-only limits.
+The current whitepaper has sixteen sections. Policy bounds, withdrawal-fee envelope, license-floor reference, founding terms and owner controls are in the [parameter catalog](../assets/parameters.json). Exact founding allocation is not specified by the current document.
 
-**Launch tax rates/curve and ongoing auction price curve: Not established from current source; verified implementation required.** Leave disputed values unknown; do not produce executable rates or quotes from them.
+The launch tax schedule is published, and selected current settings can be read through the publisher ABI. Future taxes, exact auction execution and transaction-specific amounts remain assumptions unless separately established. Do not turn an unavailable auction into a zero-cost quote.
 
-The deployment directory and protocol conditions are publisher evidence, not source-code/ABI verification. Authenticated implementation, permissions, audit correspondence, reserve custody and live balances remain distinct evidence requirements. [Contracts](contracts.md) and [inspection](inspection.md) retain those boundaries. [sr-contract-directory; sr-protocol-conditions]
+The directory identifies the targets; the fixed reader supports block-scoped observations with explicit bindings and decoding. Source equivalence, complete permissions, audit correspondence and reserve custody are separate questions. Mention only the limitation material to the answer; details remain in [contracts](contracts.md) and [inspection](inspection.md). [sr-contract-directory; sr-publisher-read-interface]
 
 ## What economics alone cannot establish
 

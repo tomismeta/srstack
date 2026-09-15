@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-14T23:20:36.997Z",
+  "reviewed_at": "2026-09-15T18:27:00.404Z",
   "scope": "Current primary documentation only",
   "records": [
     {
@@ -8,7 +8,7 @@
       "url": "https://www.standardreserve.xyz/whitepaper/",
       "publisher": "The Standard Reserve",
       "published_at": null,
-      "retrieved_at": "2026-09-14T23:17:04.545Z",
+      "retrieved_at": "2026-09-15T18:07:19.421Z",
       "revision_label": "Whitepaper v1.0",
       "review_depth": "All16 rendered sections, tables and available equation annotations",
       "claim_stage": "current publisher design statements, not implementation verification",
@@ -78,10 +78,10 @@
           "url": "https://www.standardreserve.xyz/whitepaper/#disclaimer"
         }
       ],
-      "summary": "Current documented currency accounting, launch references, policy bounds, charter and auction mechanics, withdrawal envelope, reserves and owner/guardian controls. Exact supported settings are in the parameter catalog.",
+      "summary": "Current publisher documentation for supply accounting, launch settings, epoch policy, charter operations, withdrawals, outside liquidity and controls.",
       "limits": [
-        "Applied launch-tax and daily auction-decay rules are not established from the current source; verified implementation required.",
-        "Publisher design does not establish current deployed values, implementation safeguards, activation or audited safety."
+        "Publisher documentation is not independently verified source code.",
+        "Use current observations for changeable settings; ongoing auction execution details remain unestablished."
       ]
     },
     {
@@ -89,13 +89,13 @@
       "url": "https://www.standardreserve.xyz/app/token/",
       "publisher": "The Standard Reserve official website",
       "published_at": null,
-      "retrieved_at": "2026-09-14T23:20:36.342Z",
+      "retrieved_at": "2026-09-15T18:27:00.244Z",
       "review_depth": "Rendered topic text and current availability panel",
       "claim_stage": "publisher explanation and dated frontend observation",
       "locators": [
         "About STANDARD; supply, burns and holding"
       ],
-      "summary": "Explains genesis liquidity and issuance budget, permanent removals and the distinction between holding tokens and earning through branches. The captured panel reports the canonical pool not launched.",
+      "summary": "Current token supply/burn/holding explanation. Dynamic panel was still loading in this capture; no zero or absent-state conclusion is drawn.",
       "limits": [
         "Frontend observations are time-bounded, not independent RPC verification, executable quotes or guaranteed current state."
       ]
@@ -105,13 +105,13 @@
       "url": "https://www.standardreserve.xyz/app/protocol/charters/",
       "publisher": "The Standard Reserve official website",
       "published_at": null,
-      "retrieved_at": "2026-09-14T23:20:36.997Z",
+      "retrieved_at": "2026-09-15T18:27:00.404Z",
       "review_depth": "Rendered topic text and current availability panel",
       "claim_stage": "publisher explanation and dated frontend observation",
       "locators": [
         "Charters & Auctions; availability, earning, expansion, withdrawal"
       ],
-      "summary": "Explains charter/branch limits, expansion, proportional retirement, full exit burning the charter and activity duties. The captured panel reports daily charter/license auctions not enabled.",
+      "summary": "Current charter and auction explanation. The capture reports daily charter sales not enabled and expansion licenses sold out, not inactive or free.",
       "limits": [
         "Frontend observations are time-bounded, not independent RPC verification, executable quotes or guaranteed current state."
       ]

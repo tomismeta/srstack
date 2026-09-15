@@ -14,7 +14,7 @@ Offline answers stop at source retrieval/review boundaries. Current claims need 
 
 1. Establish network and identifier from publisher evidence suited to the role, then explorer/chain relationships. Names, tickers, logos, searches and unsolicited addresses are leads. Missing packaged identity does not prove no deployment.
 2. Call `eth_chainId` and `eth_getBlockByNumber`; retain chain ID, block number/hash/time. Pin state to that block. Use supported hash selectors or recheck hashes when reorganizations matter; never assume finality.
-3. Check `eth_getCode` there. Presence proves neither role, activation, ownership nor safety. Authenticate ABI/version and implementation; resolve proxies through evidence, not guessed slots/selectors/events/interfaces.
+3. Check `eth_getCode` there. Presence proves neither role, activation, ownership nor safety. Use either evidenced source correspondence or the reviewed publisher-authenticated ABI read path in [inspection](inspection.md), with fixed targets, explicit read-only mutability/types/scales, strict decoding and matching required bindings. Publisher ABI reads do not establish source equivalence. No borrowed cross-chain ABI, guessed slots/interfaces or selector-only authentication.
 4. Discover resources through authenticated registries, factories, ownership, enumeration or decoded events. Re-read survivors; include relevant creations, closures, migrations and transfers, not just indexed records. Authenticate discovered relationships; current ownership differs from interval ownership. Discoveries belong in the answer, not rewritten catalogs.
 
 Ambiguous chain, role, ABI or generation stops the affected conclusion. Report the missing link; do not probe guessed identities/interfaces.
@@ -51,7 +51,7 @@ For LP/strategy earnings, discover positions/ownership throughout the interval; 
 
 Separate gross fees, costs, net receipts, uncollected entitlements, allocations and actual distributions. [Reserves](reserves.md) and [charters](charters.md) explain policy; genesis and ongoing routing differ and neither proves execution. Authenticate recipient, eligible base, interval and units before recipient-flow reconciliation.
 
-Investigate residuals from common raw inputs; call a discrepancy rounding only after demonstrating its bound. Observational accounting is not scenario planning. Both planner modes require the visible first warning; no-conflict checks establish only partial agreement with packaged statements. Never present scenarios as observations.
+Investigate residuals from common raw inputs; call a discrepancy rounding only after demonstrating its bound. Observational accounting is not scenario planning. Label calculated scenarios as estimates; keep observed facts distinct without a mandatory opening warning. No-conflict scenario checks establish only partial agreement with packaged statements.
 
 ## 5. Interpret, stop and report
 
@@ -59,4 +59,4 @@ Align entity/generation, definitions, anchors, coverage and methodology before c
 
 Stop affected conclusions for unauthenticated identity/ABI, missing history, stale/incomparable prices, malformed results, exhausted bounds, incomplete enumeration, conflicting anchors or arithmetic anomalies. Report supported partial coverage and unavailable conclusions; no credentials, paid accounts, broader permissions, unbounded indexing or simulation to bridge gaps.
 
-Report **answer; scope/units; snapshot/chain anchors; original source URLs/IDs and locators; raw inputs or reproducible derivation; coverage/conflicts; unresolved conclusion**. Failure is not zero; narrow success is not a security audit or proof of launch, solvency or complete history.
+Answer first with the requested fact or specific gap. Default to at most one short relevant note and one or two source links/time anchors when needed; for the fixed reader use “RPC snapshot; publisher ABI.” Keep raw inputs, hashes, exact locators, full provenance/classifications, derivations and exhaustive coverage traces internally or for requested detail. Surface material conflicts and unknowns, not a boilerplate limitations list. Failure is not zero; narrow success is not a security audit or proof of launch, solvency or complete history.

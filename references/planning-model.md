@@ -1,14 +1,14 @@
 # Planning model and result detail
 
-Model `"1"`, schema `1`. Return to [planning workflow](planning.md) for execution and its mandatory visible warning; [inputs](planning-inputs.md) defines the computational bounds. Arithmetic uses 50-digit Decimal precision, not exact EVM arithmetic.
+Model `"1"`, schema `1`. Return to [planning workflow](planning.md) for answer-first execution guidance; [inputs](planning-inputs.md) defines computational bounds. Arithmetic uses 50-digit Decimal precision, not exact EVM arithmetic.
 
 ## Published mechanics versus fixed proxies
 
-The current whitepaper publishes the unscaled **700,000 STANDARD/day launch base**, an owner-only downward base-rate ratchet, the multiplier epoch policy (0.2–1.25, launch 1, launch epoch 3 days), and a quadratic withdrawal-fee curve driven by system-wide trailing-seven-day withdrawals and remaining bank balances. These are publisher statements, not verified source-code/ABI correspondence or live configuration.
+The current whitepaper publishes the unscaled **700,000 STANDARD/day launch base**, an owner-only downward base-rate ratchet, the multiplier epoch policy (0.2–1.25, launch 1, launch epoch 3 days), and a quadratic withdrawal-fee curve driven by system-wide trailing-seven-day withdrawals and remaining bank balances. It also describes the launch tax opening at 90% on both sides, with the excess above 2% buy/3% sell halving every four minutes and reaching those floors at one hour. These are publisher statements, not verified source-code correspondence or a fresh configuration reading.
 
 Model `"1"` uses explicit fixed base issuance, multiplier, license cost and resolution-fee inputs. It does not execute dynamic policy, auction mechanics or withdrawal settlement. No economic defaults are introduced; holding a launch value constant is itself a future assumption. The reviewed [partial conformance checks](planning-conformance.md) enforce the documented base-rate ceiling, multiplier bounds and resolution-fee envelope, not a live rate, dynamic path or particular withdrawal fee.
 
-Applied launch tax and auction mechanics: **Not established from current source; verified implementation required.** Applied dynamic multiplier transitions also require verified implementation. Source formulas remain evidence strings, not runnable algorithms.
+The current publisher materials describe launch tax, auction and multiplier mechanics; the fixed model does not execute them. Publisher-ABI RPC reads may establish selected current settings at a block, without verified source/bytecode correspondence. Such readings do not establish future transitions or transaction feasibility. Source formulas remain evidence strings, not runnable algorithms.
 
 ## Model order and accounting
 
@@ -50,7 +50,7 @@ Otherwise it is `null`, including partial/no exit. It is a terminal-price thresh
 
 ## Output selection
 
-Top level: `schema_version: 1`, `model_version: "1"`, `detail`, `mode`, `classification: "hypothetical"`, `warning`, normalized `assumptions`, `conformance`, `limitations`, and `scenarios`. Economic decimals are normalized decimal strings, counts are integers; the engine does not authenticate provenance. Every scenario retains `id`, `name`, `warning`, `final_token_price_eth`, and three `results`; every strategy retains the exact warning too. JSON warnings never replace the first visible warning line.
+Top level: `schema_version: 1`, `model_version: "1"`, `detail`, `mode`, `classification: "hypothetical"`, `warning`, normalized `assumptions`, `conformance`, `limitations`, and `scenarios`. Economic decimals are normalized decimal strings, counts are integers; the engine does not authenticate provenance. Every scenario retains `id`, `name`, `warning`, `final_token_price_eth`, and three `results`; every strategy retains the warning too. These machine fields do not require repeated visible warning lines or a JSON dump in chat.
 
 `detail: "summary"` is the default. Normalized inputs appear once in root `assumptions`; [compact conformance](planning-conformance.md) shares canonical evidence by parameter ID. Each strategy retains exactly:
 
@@ -70,4 +70,4 @@ Credit accounting is `initial_credits + credits_accrued - credits_spent = credit
 
 ## Reporting
 
-Start with the exact workflow warning. State whether the packaged engine ran; separate publisher claims, observations with provenance, future assumptions and calculated hypothetical outputs. Report explicit mode, checked scope/conflicts and unresolved semantics alongside comparisons, not just a cap match. Keep cash-versus-retained accounting visible. A documented blocked run has no numerical strategy results. These are counterfactual strategies, not investment recommendations; do not assign probabilities or select a winner. No financial action, source refresh, persistence or monitoring is implied.
+Answer the comparison first, labelled **Estimate**. State whether the packaged engine ran and the selected mode; show material conflicts, unknowns and approved cost exclusions briefly. Keep cash-versus-retained accounting visible. Retain source/observation/future-assumption distinctions internally, with at most one short relevant note and one or two source links/time anchors when needed. Full conformance, raw hashes, classifications, history and long limitations are on request. A blocked run has no numerical strategy results. These are counterfactual comparisons, not recommendations or forecasts; do not assign probabilities or select an investment winner. No financial action, refresh, persistence or monitoring is implied.

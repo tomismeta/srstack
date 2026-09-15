@@ -1,6 +1,6 @@
 # Planning conformance and evidence
 
-Return to [planning workflow](planning.md) for execution and the required visible first warning. Checks are partial publisher-statement comparisons, never contract or position verification.
+Return to [planning workflow](planning.md) for answer-first execution guidance. Checks are partial publisher-statement comparisons, never contract or position verification.
 
 ## Mode choice and checked-rule scope
 
@@ -8,7 +8,7 @@ Use these three safeguards together:
 
 1. **Documented-rules mode:** require `mode: "documented"` for a comparison intended to stay within the supported packaged statements. Known conflicts block calculation before any numerical strategy result. Passing these partial checks does not establish protocol feasibility.
 2. **Explicit stress mode:** departures require the user's explicit `mode: "stress"`. Known conflicts remain prominently reported, but calculation may proceed within the same computational bounds. Never silently switch modes, alter conflicting inputs, or suggest stress removes missing-input requirements.
-3. **Assumption/conformance report:** accompany every computed comparison with its fresh report, conflicts, unresolved semantics, provenance, and model limitations. On a documented conflict, show the blocked report instead of numerical results. No mode, report category, or package hash certifies a contract or actual position.
+3. **Assumption/conformance report:** retain the fresh machine report for every computed comparison. Show the mode and material conflicts, unknowns or exclusions concisely; detailed provenance, classifications and model limitations are on request. On a documented conflict, explain the blocker instead of presenting numerical results. No mode, report category or package hash certifies a contract or actual position.
 
 
 Schema 1 requires an explicit mode. Both modes load and validate the same fixed canonical data; package-data failure blocks both with no unconstrained fallback.
@@ -29,10 +29,10 @@ Each active bound retains its canonical value, unit, status, source IDs and loca
 Source publication and executable applicability are separate:
 
 - `base_daily_issuance` (`base-issuance`): the whitepaper documents **700,000 STANDARD/day unscaled at launch**, with an owner-decreasable rate that cannot be raised back. This supports an upper-envelope check, not authentication of the current rate. The engine multiplies the supplied base by the supplied multiplier once. Holding either constant over the future horizon is still an explicit assumption; neither is auto-filled or authenticated as current.
-- Scenario `multiplier` (`multiplier-update-rule`): the whitepaper publishes the epoch rule, 0.2–1.25 bounds, launch multiplier 1, and launch epoch length 3 days. A fixed scenario multiplier is not execution of that dynamic policy, even inside the bounds. Applied dynamic transitions require verified implementation.
-- Scenario `resolution_fee_pct` (`resolution-fee-formula`): the source publishes the quadratic withdrawal curve and system-wide trailing-seven-day pressure basis. The documented 2%–60% envelope is checked, but an in-range fixed fee remains a proxy; no authenticated pressure observations, commit timing or settlement ordering are supplied by this model.
-- `license_cost_tokens` (`license-floor-formula`): the published floor is not a fixed executable auction quote. Applied auction mechanics: **Not established from current source; verified implementation required.**
-- `sale_fee_pct` (`trading-fee`) and scenario `sale_tax_pct` (`launch-trading-tax-curve`): steady-state directional rates are published. Applied launch tax: **Not established from current source; verified implementation required.** A separate fee haircut must not silently double-count a source-described trading tax. Timing, basis, composition and executable application remain unchecked.
+- Scenario `multiplier` (`multiplier-update-rule`): the whitepaper publishes the epoch rule, 0.2–1.25 bounds, launch multiplier 1, and launch epoch length 3 days. A fixed scenario multiplier is not execution of that dynamic policy, even inside the bounds. A publisher-ABI getter can observe the current multiplier, not authenticate a future path.
+- Scenario `resolution_fee_pct` (`resolution-fee-formula`): the source publishes the quadratic withdrawal curve and system-wide trailing-seven-day pressure basis. The documented 2%–60% envelope is checked, but an in-range fixed fee remains a proxy. A zero-amount RPC preview does not establish the modeled withdrawal amount's fee, commit timing or settlement ordering.
+- `license_cost_tokens` (`license-floor-formula`): published auction mechanics and publisher-ABI price/state observations can inform an approved assumption. The model does not reproduce auction execution, inventory, timing or future prices; an unavailable auction has no purchasable quote.
+- `sale_fee_pct` (`trading-fee`) and scenario `sale_tax_pct` (`launch-trading-tax-curve`): published directional rates and current publisher-ABI tax readings are distinct from a future fixed tax assumption. A separate fee haircut must not silently double-count a source-described trading tax. Timing, basis, composition and executable application remain unchecked by the model.
 - Credits funding remains unresolved payment feasibility, not a verified way to buy licenses. `entry_cost_eth` remains an unresolved acquisition-context assumption: `whitelist-liquidity-fee` is context for a specific mint route, not a universal entry price or an enforced generic cost.
 
 These unresolved classifications identify **future assumptions, unknown mechanics or unverified model application**, not missing user inputs.
@@ -67,10 +67,10 @@ Each constraint/conflict includes its canonical documented value, unit, source s
 | `unresolved` | The user supplied a value, but relevant source semantics, model application, or feasibility remain unresolved, including the fee, policy, funding, and entry-context cases above. It does not mean the user's value is missing or null. |
 | `inconsistent` | A known checked-rule conflict; this classification takes precedence over all others. Documented mode blocks; explicit stress mode reports and permits the conflict within computational bounds. |
 
-Show unresolved/proxy assumptions alongside cap matches rather than calling the whole input “source-backed.” In particular, checking a multiplier against a published range does not resolve its future policy behavior. Conformance is partial even when there are no known conflicts.
+Do not call the whole input “source-backed” because some caps match. Surface material proxy assumptions or conflicts briefly; retain the exhaustive classification table internally or for requested detail. A multiplier range check does not resolve future policy behavior, and conformance remains partial even without known conflicts.
 
 ## Blocked and malformed requests
 
-A documented conflict exits `3` (`ConformanceError`, `error.type: "documented_rule_conflict"`), with `warning`, selected `detail`, normalized `assumptions` and the selected-detail blocked `conformance` on stderr. There is no stdout and no numerical strategy result. Show conflicts and unresolved semantics without silently changing inputs or switching mode.
+A documented conflict exits `3` (`ConformanceError`, `error.type: "documented_rule_conflict"`), with `warning`, selected `detail`, normalized `assumptions` and the selected-detail blocked `conformance` on stderr. There is no stdout and no numerical strategy result. Explain the relevant conflict concisely without silently changing inputs or switching mode; the full blocked report is available on request.
 
 Malformed input exits `2` (`InputError`, `invalid_input`); malformed fixed references exit `4` (`PackageDataError`, `package_data_error`) in either mode. Errors carry warning and JSON on stderr, never fallback numbers. `simulate(config)` uses the same schema/detail and raises corresponding errors. Neither an error nor missing output is a zero-valued scenario.

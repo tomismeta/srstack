@@ -27,6 +27,6 @@ These are the publisher's incentive arguments, not guaranteed rational behavior,
 
 ## Presentation is not state
 
-The token page displayed the canonical pool as not launched; the charter page displayed ongoing auctions as not enabled. These are time-bounded presentation, not authenticated state. The deployment directory and protocol conditions are available through [contracts](contracts.md); publication of addresses or conditions does not establish code/ABI correspondence. [sr-token-page-v1; sr-charters-page-v1; sr-contract-directory; sr-protocol-conditions]
+The application is live. Use the `protocol` snapshot for current issuance, supply and tax readings, and `auctions` for availability. These use the publisher's fixed ABI with block and binding checks; they do not assert source-code equivalence. Keep the default answer focused on the requested values. [sr-protocol-conditions; sr-publisher-read-interface]
 
 See [documents](documents.md) for all sixteen current sections and [risks](risks.md) for remaining evidence gaps.

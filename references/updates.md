@@ -1,15 +1,11 @@
-# Current source guidance
+# Current updates
 
-Use current publisher terms with the retrieval dates and limits in [website sources](../assets/sources/website-v1.json). Publication is not observed activation, verified implementation or a security assessment.
+For the current recap, use [latest summary evidence](../assets/sources/live-interface.json), especially `sr-latest-summary`, `sr-recap-trading`, `sr-recap-bootstrapping` and `sr-recap-licenses`.
 
-| Question | Current guidance |
-|---|---|
-| Founding entry, price terms, escrow and finalization | [Launch mint](launch-mint.md), [genesis](genesis.md) |
-| Pool launch, taxes and activation | [Launch trading](launch-trading.md) |
-| Branch issuance, monetary policy and supply accounting | [Protocol](protocol.md), [policy](protocol-policy.md) |
-| Daily charter/license availability and pricing | [Auctions](auctions.md) |
-| Owner powers, unknown executable rules or audit limits | [Risks](risks.md) |
-| Deployment identity, explorer evidence and current condition observations | [Contracts](contracts.md) |
-| Reviewed source scope and all sixteen whitepaper sections | [Documents](documents.md) |
+The [official September 15 recap](https://x.com/standard_rsv/status/2099915418010046574) reports a sold-out founding launch, broad charter ownership, token-holder growth, liquidity and vault bootstrapping. Attribute recap numbers to the team; they are not live counters. Keep the answer short and link the post rather than printing a provenance table.
 
-Exact values and unresolved fields live in the [parameter catalog](../assets/parameters.json); the [source index](../assets/sources.json) resolves record paths. An accessible app or a documented launch sequence does not prove launch. Fresh status requires scoped evidence under the [research workflow](research-workflow.md), not an inferred event date.
+The team says **12-hour auctions are being considered**. That is not an implemented duration. Use `scripts/snapshot.py` with the `auctions` view to read the current auction-day length, availability and prices. Sold-out closing prices and current price-function outputs are not interchangeable purchase quotes.
+
+For current issuance, taxes and supply, use the `protocol` snapshot. For a selected public charter, use the `charter` view with its ID. The helper reads a fixed publisher ABI at one block; it does not execute trades or reproduce the entire implementation.
+
+Use [documents](documents.md) for current written rules, [contracts](contracts.md) for identities, and [planning](planning.md) to turn selected observations into approved assumptions. No automatic monitoring or source updates.
