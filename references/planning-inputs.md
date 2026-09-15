@@ -19,7 +19,7 @@ The root must be an object with every field below, except optional `detail` and 
 | `daily_license_limit` | integer, 0–100 | Maximum licenses bought per day. |
 | `base_daily_issuance` | decimal, 0–1e12 | Hypothetical global daily issuance before the scenario multiplier. |
 | `remaining_issuance_budget` | decimal, 0–1e15 | Gross global issuance budget remaining at day 1. |
-| `initial_token_price_eth` | decimal, 0–1000 | Day-1 ETH per token; hypothetical, not an executable quote. |
+| `initial_token_price_eth` | decimal, 0–1000 | Day-1 ETH per STANDARD; approved hypothetical input, optionally based on a current indicative quote, not executable. |
 
 ### Required costs, funding, and exits
 
@@ -64,9 +64,18 @@ For sensitivity analysis, specify one scenario per cell, or up to nine cells in 
 
 The complete [fictional example](../assets/examples/planning.json) is for explicit example/tutorial requests only. It selects schema 1, documented mode and summary detail; none of its numbers is a default, recommendation, live value or parameter authority.
 
+## Price choice and unit mapping
+
+When a projection's price choice is missing, offer **current, hypothetical, or both** before fetching a quote. A current-price choice authorizes the needed bounded read under existing host permissions; do not ask again. Supplied prices win. Complete offline inputs and fictional examples do not fetch. Use the same [price helper](planning-execution.md#price-helper) as current-price answers and gross valuations, outside `scenario.py`; the engine stays offline.
+
+- Map a valid `values.standard_eth.value` (`ETH/STANDARD`) to a proposed `initial_token_price_eth`, only with approval as a day-1 assumption. `values.standard_usd.value` is `USD/STANDARD`, never an ETH input.
+- Retain any user-supplied USD price in USD. Conversion requires an explicit ETH/USD assumption, or approval to use the contemporaneously retrieved relation between valid USD and ETH quotes from the same response. State its provider, token/pool scope, retrieval time and unknown price-observation time; it is a provider-implied relation, not an independently verified general ETH/USD feed. With `R` in USD/ETH, a supplied USD/STANDARD price maps to `price_usd / R` ETH/STANDARD. No implicit 1 ETH or stablecoin=USD assumption.
+- Current and hypothetical starting prices require separate approved runs because `initial_token_price_eth` is a root field. Keep other approved assumptions comparable; never replace the supplied hypothetical price. Each run still requires explicit `price_growth_pct`, including approval of zero for a price held constant, and full economic approval.
+- Failed or missing denominations remain unavailable, not zero or cached prices. A USD-only result cannot fill an ETH input without the approved conversion above. No quote establishes future growth, liquidity, acquisition cost or net exit proceeds.
+
 ## Current protocol inputs
 
-Prepare a partial assumption sheet from fresh reads, not a stored launch preset. Use `protocol` and `auctions`; use `charter` only when the user supplies a public charter ID. Read the result's status and material errors before proposing values.
+Prepare a partial assumption sheet only from the fresh observations the user has requested, not a stored launch preset. Use relevant `protocol`/`auctions` fields; use `charter` only for a supplied public charter ID. Ask for current/hypothetical/both before an unspecified projection price fetch; use `price.py` only for a chosen current-price input. Read each result's status and material errors before proposing values; do not replace supplied inputs.
 
 | Proposed input | Fresh source and approval boundary |
 |---|---|
@@ -74,6 +83,7 @@ Prepare a partial assumption sheet from fresh reads, not a stored launch preset.
 | Position | Use the selected charter's observed branches and pending balance, or the user's explicit hypothetical position. Do not infer ownership or balances. |
 | Network and budget | Use same-block branch counts and the counter-based budget difference with their stated meanings. Do not substitute original supply or launch totals. |
 | License cost | Only an available auction price can inform a current purchase assumption. Sold-out, paused or unstarted means unavailable—not a last-sale quote or free license. |
+| Token price | After the user's price choice, propose `price.py`'s valid `standard_eth` as day-1 ETH/STANDARD, not `standard_usd`. Approve future price behavior separately; supplied hypothetical prices remain intact. |
 | Taxes, fees and gas | Current taxes are observations, not future guarantees. LP fee, slippage and gas remain distinct inputs. Any unsupported amount requires the user's explicit assumption. |
 | Strategy and limits | Use documented bounds as constraints and ask for the user's budget, target, cadence, horizon and endpoint. Constraints do not prove current inventory or affordability. |
 
@@ -83,7 +93,7 @@ If live access fails, state the missing input and ask whether the user wants a c
 
 Use only when the user requests contract-informed planning or provides relevant observations. Read the selected [Robinhood identity records](../assets/entities/robinhood.json) with their shared limits and `sr-protocol-conditions` in [deployment sources](../assets/sources/deployments.json). An ordinary scenario does not require loading these resources or fetching live data.
 
-The packaged `scripts/snapshot.py` offers bounded public reads of fixed Robinhood targets using the publisher-authenticated interface in `assets/interfaces/robinhood-reads.json` (`sr-publisher-read-interface`). This is a **publisher ABI**, not verified source/bytecode correspondence. Use the integrity, chain, code, binding, decoding and common-block checks in [inspection](inspection.md) and [execution](planning-execution.md); do not borrow cross-chain ABIs or treat a selector match as proof. Otherwise keep website values attributed and dated. No automatic refresh, persistence or extra parameters injected into the engine.
+The packaged `scripts/snapshot.py` offers bounded public reads of fixed Robinhood targets using the publisher-authenticated interface in `assets/interfaces/robinhood-reads.json` (`sr-publisher-read-interface`). This is a **publisher ABI**, not verified source/bytecode correspondence. Use the integrity, chain, code, binding, decoding and common-block checks in [inspection](inspection.md) and [execution](planning-execution.md); do not borrow cross-chain ABIs or treat a selector match as proof. The separate `scripts/price.py` supplies provider-reported canonical-pool quotes when chosen; its API retrieval time is not the snapshot block or a known quote-observation time. No atomic state/price claim, unrequested refresh, persistence or extra parameters injected into the engine.
 
 | Planning need | Relevant evidence and mapping boundary |
 |---|---|
@@ -92,7 +102,7 @@ The packaged `scripts/snapshot.py` offers bounded public reads of fixed Robinhoo
 | Base issuance and multiplier | `base_issuance_per_day` is the unscaled base → proposed `base_daily_issuance`; `multiplier` → proposed scenario multiplier. Multiply once. The frontend's policy-scaled rate and `stream_rate_per_second` (which includes recycling) are not substitutes. Emissions status and owner-configured values are observations, not guaranteed future issuance. |
 | Remaining issuance budget | `remaining_gross_budget` is the counter-based difference `ISSUANCE_BUDGET() - cumulativeIssued()` using the publisher's mapping. Require successful compatible readings and a nonnegative result; do not claim it includes every pending/unsettled accrual. It may be proposed as an initial budget estimate with approval. `permanent_removed` is `HARD_CAP() - maxSupply()`, not remaining issuance; supply and pending balances are different quantities. |
 | Entry and license cost | `auctions` view supplies daily auction states, inventory, price, floor and last sale observations; founding entry is a separate route outside this reader. A `currentPrice()` value can keep decaying after sellout: it is not a purchasable quote when inactive, paused, sold out or status is unknown. The last sale is historical, not a new quote. Never replace existing acquisition cost with a current auction or whitelist price. |
-| Token price, sale fees and tax | `buy_tax_percent` uses `currentTaxBps(true)` and `sell_tax_percent` uses `false`, with basis points divided by 100 for percent. A current sell tax may inform an approved future `sale_tax_pct`, not the separate LP-fee assumption. `pool_initialized` is not a token-price or liquidity guarantee; this reader supplies no token market quote. |
+| Token price, sale fees and tax | Chosen current-price inputs come from `price.py`, with the unit/approval boundary above; `snapshot.py` supplies no token market quote and `pool_initialized` is no price or liquidity guarantee. Snapshot `buy_tax_percent` uses `currentTaxBps(true)` and `sell_tax_percent` uses `false`, with basis points divided by 100 for percent. A current sell tax may inform an approved future `sale_tax_pct`, not the separate LP-fee assumption. |
 | Withdrawal fee | `zero_amount_withdrawal_fee_percent` is a zero-amount preview, not an amount-specific exit quote or a fixed future resolution fee. The published curve and envelope remain context; user approval is required for any scenario proxy. Missing pressure inputs, timing or availability are not zero. |
 | Gas | Addresses do not supply transaction gas usage or network fee assumptions. Use the guided workflow's approved estimates, sensitivity or explicitly labelled exclusions; no state-changing simulation or wallet connection. |
 

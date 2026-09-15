@@ -2,9 +2,9 @@
 name: srstack
 description: Standard Reserve research, planning, and public inspection.
 license: MIT
-compatibility: Python 3.10+ for fixed helpers; network access for live public RPC and web research. Packaged research and scenario calculations work offline.
+compatibility: Python 3.10+ for fixed helpers; network access for live public RPC, indicative prices and web research. Packaged research and scenario calculations work offline.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # srstack
@@ -25,7 +25,7 @@ For only `srstack`, `Use srstack` or a host equivalent, print this menu without 
 
 - **research** — Source-grounded explanations and evidence gaps.
 - **plan** — Guided hypothetical comparison; approve assumptions in plain language, then run the permitted local planner.
-- **inspect** — On-demand public protocol, auction or charter snapshot; no wallet or monitoring.
+- **inspect** — On-demand public protocol, auction or charter snapshot, current STANDARD price or gross accrued-balance value; no wallet or monitoring.
 
 Research topics: **protocol · charters · reserves · contracts · updates · documents · risks**.
 
@@ -40,7 +40,7 @@ Changing facts—balances, prices, rates, supply, inventory, ownership, activati
 | Intent | First resource |
 |---|---|
 | Plan, what-if, economics, sensitivity | [planning](references/planning.md) |
-| Current/latest state, price, availability, public position | [inspection](references/inspection.md) |
+| Inspect price, current STANDARD price/value, charter worth, current/latest state or availability | [inspection](references/inspection.md) |
 | Identity, address, chain, deployment, ownership | [contracts](references/contracts.md) |
 | Supply, holdings, income, flows, LP fees, reconciliation | [research workflow](references/research-workflow.md) |
 | Setup or host loading | [installation](references/installation.md) |
@@ -51,8 +51,10 @@ Generic research: choose the relevant topic; use documents for source discovery.
 
 Use current evidence and preserve its units and scope. The package is current-only, not a historical-claims archive. Distinguish documented facts, RPC observations, website-reported values and approved assumptions; use brief labels, not a wall of caveats. Missing or failed reads are unknown, never zero. Source details are expandable on request.
 
+Current price and gross-value questions use the same fixed `scripts/price.py` reader; a current-value request already authorizes its needed fresh price read under existing host permissions. For charter worth, ask only for a missing public charter ID, read its fresh `charter_pending`, then pass that amount to the price helper. This is gross accrued ledger value, not wallet tokens, net proceeds, charter resale value or earning capacity. For projections, offer **current prices, hypothetical prices, or both** if the price choice is unspecified; do not fetch before that choice, overwrite supplied prices or fetch for complete offline/fictional inputs. Choosing current prices needs no redundant read-permission question, but future price behavior and the full economics still need explicit approval.
+
 For Robinhood Chain (4663), use `https://robin.etherscan.io/` for contract navigation and new explorer checks. Read each record's current source-publication status: bytecode, ABI availability, Similar Match and exact verification are different. Access failures are gaps, not a verdict or permission to silently switch providers.
 
 ## Action boundary
 
-Read [safety](references/safety.md) before external retrieval or execution. Use the fixed `scripts/snapshot.py` for its supported public reads and `scripts/scenario.py` for approved calculations. Publisher-supplied read interfaces require fixed targets, declared view/pure methods, decoding/binding checks and block context; they do not imply verified source code. No wallets, credentials, signatures, executable transaction/authorization payloads, state changes or state-changing simulations—even delegated or agent-owned. No downloaded code execution, guessed addresses/ABIs, arbitrary reader endpoints/selectors, installed-record rewriting or background monitoring.
+Read [safety](references/safety.md) before external retrieval or execution. Use the fixed `scripts/snapshot.py` for supported public state reads, `scripts/price.py` for the canonical-pool indicative price and optional gross amount valuation, and offline `scripts/scenario.py` for approved projections. Publisher-supplied read interfaces require fixed targets, declared view/pure methods, decoding/binding checks and block context; they do not imply verified source code. Provider-reported prices have API retrieval time, not independently assured quote freshness or a chain block. No wallets, credentials, signatures, executable transaction/authorization payloads, state changes or state-changing simulations—even delegated or agent-owned. No downloaded code execution, guessed addresses/ABIs, arbitrary reader endpoints/selectors, installed-record rewriting, stored observations/personal holdings or background monitoring.

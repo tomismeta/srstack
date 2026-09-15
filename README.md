@@ -4,7 +4,7 @@
 
 srstack explains documented protocol mechanics, reads current public state and compares expansion strategies using assumptions you approve. It is one independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product, trading bot or wallet toolkit.
 
-**Version 0.1.0 · planner schema/model 1.** Use the [releases page](https://github.com/tomismeta/srstack/releases) for installable packages and separate audit evidence. Identify installed revisions by exact reviewed commit.
+**0.2.0 candidate · planner schema/model 1.** This README describes the candidate, including shared market pricing and gross valuation. Export an exact reviewed commit to try it; published versions and their separate audit evidence remain on the [releases page](https://github.com/tomismeta/srstack/releases). No 0.2.0 release is published yet.
 
 ## What you can ask
 
@@ -16,14 +16,15 @@ srstack explains documented protocol mechanics, reads current public state and c
 | “Which assumptions depart from the documentation?” | Documented-rule conflicts and unresolved semantics |
 | “Are expansion licenses available at a usable price?” | Fresh auction status and inventory; no purchasable quote when unavailable |
 | “Show the branches and pending balance of this public charter.” | A charter-ID-specific snapshot; no wallet connection or claim that you own it |
+| “What is STANDARD trading at, or what is this amount worth?” | Latest reported canonical-pool USD/ETH prices and a gross indicative valuation |
 | “Which contracts are listed, and is their source verified?” | Publisher-listed identities and explorer links; verification status requires a fresh explorer check |
 | “What has the team announced?” | Fresh official-post research where the host can retrieve it; no bundled recap |
 
 One skill, three routes:
 
 - **Research:** source-linked explanations, documented parameters and evidence gaps.
-- **Plan:** a guided conversation: describe your position, budget and goal, review a plain-language assumption sheet, then approve a local comparison. The agent builds the JSON internally. Documented mode blocks known conflicts; stress mode reports explicitly approved departures. No silent economic defaults.
-- **Inspect:** on-demand protocol, auction and public-charter snapshots through a fixed read-only RPC helper. It uses the publisher's reviewed ABI, without wallet access.
+- **Plan:** a guided conversation: describe your position, budget and goal; choose current, hypothetical or both price cases; review an assumption sheet; then approve a local comparison. Explicit prices take precedence. Documented mode blocks known conflicts; stress mode reports approved departures. No silent economic defaults.
+- **Inspect:** on-demand protocol, auction and public-charter snapshots through the fixed RPC helper, plus a separate canonical-pool price reader for current price and gross balance-value questions. No wallet access.
 
 Research topics: [protocol](references/protocol.md) · [charters](references/charters.md) · [reserves](references/reserves.md) · [contracts](references/contracts.md) · [updates](references/updates.md) · [documents](references/documents.md) · [risks](references/risks.md).
 
@@ -37,22 +38,17 @@ These are routing instructions within one skill, not separately installed comman
 | Research announcements or explorer status | Permitted public web retrieval | Relevant official pages or explorer |
 | Run approved scenarios | Trusted package, permitted Python 3.10+ execution and safe JSON input | None; the planner is offline |
 | Inspect current state | Trusted package and permitted Python 3.10+ execution | Fixed public Robinhood Chain RPC |
+| Read market price or gross balance value | Trusted package and permitted Python 3.10+ execution | Fixed public DEX Screener canonical-pool endpoint; charter balances additionally use RPC |
 
-Both helpers use only Python's standard library: no pip dependencies, wallet connector or RPC credentials. Execution also requires the filesystem protections described in [execution](references/planning-execution.md); unsupported hosts fail closed. Missing execution or retrieval capability produces an explanation, not invented results. The skill does not install dependencies or change host permissions.
+All three helpers use only Python's standard library: no pip dependencies, wallet connector or provider credentials. Execution also requires the filesystem protections described in [execution](references/planning-execution.md); unsupported hosts fail closed. Missing execution or retrieval capability produces an explanation, not invented results. The skill does not install dependencies or change host permissions.
 
 ## Quick start
 
-### Install the release package
+This candidate is available through the reviewed-commit export below. For a tagged release instead, follow that release's documentation and verify its attached runtime ZIP against `SHA256SUMS`.
 
-1. Review this skill, its [safety boundary](references/safety.md) and the release's verification scope. Download **`srstack-0.1.0.zip`** and **`SHA256SUMS`** from [srstack v0.1.0](https://github.com/tomismeta/srstack/releases/tag/v0.1.0). Verify the archive's SHA-256 against its entry in `SHA256SUMS`.
-2. Extract the single `srstack/` folder into the intended host's configured skill directory. Use a clean destination; keep customizations and review copies outside skill-discovery roots. Do not overlay an old installation.
-3. Verify the manifest-listed files plus `release-manifest.json`, confirm the loaded path and revision, then start a fresh conversation with `Use srstack`.
-
-**Install the attached runtime ZIP—not GitHub's automatic “Source code” archives or `srstack-audit-0.1.0.zip`.** The audit archive is separate maintenance evidence, not an installable skill or a smart-contract security certification. The runtime excludes repository metadata, maintenance tools, test reports and CI files.
+**Install a runtime export or attached runtime ZIP—not a full repository, GitHub's automatic “Source code” archive or an audit archive.** Audit evidence is not an installable skill or a smart-contract security certification.
 
 ### Export an exact reviewed commit
-
-For source review or pinned installations, use the export workflow below instead of copying the repository.
 
 The export machine needs Git and Python 3.10+. The installed host needs only the capabilities for the routes you use.
 
@@ -137,6 +133,8 @@ Show the proposed assumptions, then ask me only for what's still missing.
 
 The agent proposes supported fresh observations for approval, then asks for missing assumptions. Documented ceilings are constraints, not current rates or balances. Failed reads are not filled from launch defaults, recap figures or fictional examples. Holding current settings constant into the future requires approval; the scenario model does not reproduce dynamic contract execution.
 
+For projections, choose **use the latest market price**, **supply a hypothetical price**, or **compare both**. The agent asks for that choice before fetching an unspecified projection price. “Use current prices” already authorizes the lookup; holding that observation constant or applying growth into the future still requires explicit assumptions. Supplied prices take precedence, and complete offline or fictional scenarios do not trigger a price lookup.
+
 ### Runnable fictional planner demonstration
 
 ```text
@@ -184,6 +182,29 @@ printf '%s' '{"schema_version":1,"view":"protocol"}' | python3 -B -I scripts/sna
 
 Views are `protocol`, `auctions` and `charter`; the last requires integer `charter_id`. `detail: "full"` adds raw responses and call mappings. Default answers show useful values first, with at most one short note such as **“RPC snapshot; publisher ABI.”**
 
+### Current price and gross accrued-balance value
+
+```text
+Use srstack inspect price. Show STANDARD in USD and ETH.
+What is 1000 STANDARD worth at the latest reported market price?
+What is the accrued balance of public charter <public charter ID> worth now?
+```
+
+Current-value questions use the shared price reader automatically; there is no prerequisite `inspect price` step. A charter valuation reads that charter's balance, then passes the successful `charter_pending` quantity to `scripts/price.py`. This is a gross market mark of a STANDARD-denominated ledger balance—not wallet tokens, net withdrawal proceeds or a branch/NFT resale price. It does not value future earning capacity.
+
+The reader makes one fixed public request for the exact canonical ETH/STANDARD pool. It validates chain, token, quote asset and pool identity, and computes any amount valuation locally without sending the amount to the provider. No ticker search, first-pair selection, arbitrary endpoint or saved-price fallback is used.
+
+From the reviewed installed root:
+
+```sh
+printf '%s' '{"schema_version":1}' | python3 -B -I scripts/price.py
+printf '%s' '{"schema_version":1,"standard_amount":"1000"}' | python3 -B -I scripts/price.py
+```
+
+The optional amount is an unsigned decimal **string**, not a JSON number. Usable prices and gross values are decimal strings. A failed denomination remains missing; if no usable price is available, the helper fails without a fallback value.
+
+These are **provider-reported indicative prices**. The API does not supply a quote-observation timestamp: retrieval time is not quote age, and pool creation time is not price freshness. A charter block and a price retrieval are separate observations, not an atomic combined snapshot. Gross values exclude withdrawal fees, trading taxes, LP fees, slippage and gas.
+
 ## Contract coverage
 
 The [contract catalog](assets/entities/robinhood.json) contains **14 publisher-listed identities on Robinhood Chain (4663)**. The fixed [publisher read interface](assets/interfaces/robinhood-reads.json) supports selected live reads from **six**:
@@ -209,15 +230,15 @@ For evidence-assisted planning, ask: **“Use srstack plan. Read the current pro
 
 The package uses selected references and indexed records rather than loading the whole corpus for every question. The reference indexes own current inventory counts; disk size is not per-question token cost, and selective loading depends on the host.
 
-Packaged research needs a resource reader. Calculations and live snapshots use **Python 3.10+ and its standard library**, with no pip dependencies. Live snapshots require permitted access to the fixed public Robinhood RPC endpoint. No wallet connector, telemetry or self-update process is bundled.
+Packaged research needs a resource reader. Calculations and public readers use **Python 3.10+ and its standard library**, with no pip dependencies. Chain reads use the fixed Robinhood RPC; market prices use the fixed DEX Screener pool endpoint. No wallet connector, telemetry or self-update process is bundled.
 
 ## Safety and verification limits
 
 Answers lead with content. Estimates get a short label; observations get a brief source note where needed. Detailed provenance and assumptions are available on request, not repeated as small print.
 
-The scenario engine is offline. The snapshot helper reads two fixed catalogs and permits only its pinned view/pure calls on the configured Robinhood addresses. Both reject unsupported inputs and write no files. No wallets, credentials, signatures, transaction payloads or state-changing simulations. See [safety](references/safety.md) and [execution](references/planning-execution.md) for the full boundary.
+The scenario engine is offline. The snapshot helper reads two fixed catalogs and permits only its pinned view/pure calls on the configured Robinhood addresses. The price helper reads only the fixed identity catalog and makes a fixed-host canonical-pool GET; optional quantity multiplication is local. All three reject unsupported inputs and write no files. No wallets, credentials, signatures, transaction payloads or state-changing simulations. See [safety](references/safety.md) and [execution](references/planning-execution.md) for the full boundary.
 
-The reader does **not** supply a token market-price feed, liquidity-depth analysis, an amount-specific withdrawal quote or a transaction gas estimate. The planner does **not** reproduce changing policy, auction competition or contract execution; it compares explicit hypothetical inputs rather than forecasting returns. Source verification and announcements use separate fresh web research, not the RPC helper.
+The readers do **not** supply liquidity-depth analysis, an amount-specific withdrawal quote, transaction gas estimates or guaranteed sale proceeds. The planner does **not** reproduce changing policy, auction competition or contract execution; it compares explicit hypothetical inputs rather than forecasting returns. Source verification and announcements use separate fresh web research.
 
 Skill instructions do not enforce host isolation, and estimates are not guaranteed returns.
 
@@ -229,13 +250,14 @@ These commands run from the **repository root**, not the installed skill folder:
 python3 -B maintenance/package.py verify
 python3 -B maintenance/check-planner.py
 python3 -B maintenance/check-snapshot.py
+python3 -B maintenance/check-price.py
 python3 -B maintenance/check-package.py
 python3 -B maintenance/package.py archive
 ```
 
 The checks use Python's standard library and local Git; they do not call explorers, connect wallets or use model/API credentials. CI runs them on Python 3.10 and 3.14, with read-only repository permissions and commit-pinned Actions. GitHub checkout and Python provisioning require network access; the validation commands themselves are offline. CI verifies the committed manifest rather than regenerating it, and checks deterministic ZIP output. It does not upload artifacts, tag, publish releases or monitor contracts.
 
-After deliberate runtime changes, regenerate the manifest with `python3 -B maintenance/package.py build`, then run the checks above. `dist/srstack-0.1.0.zip` contains only the runtime package. Maintenance tooling and CI files are repository-only and never authorize an installed skill to execute them.
+After deliberate runtime changes, regenerate the manifest with `python3 -B maintenance/package.py build`, then run the checks above. `dist/srstack-0.2.0.zip` contains only the candidate runtime package. Maintenance tooling and CI files are repository-only and never authorize an installed skill to execute them.
 
 ## Feedback and license
 

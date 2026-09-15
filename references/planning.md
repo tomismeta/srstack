@@ -20,13 +20,17 @@ For an underspecified request, start with:
 
 Adapt these questions to the supplied context rather than repeating the checklist. Suggest documented mode for ordinary comparisons; explain that stress is an explicit choice to explore departures. Offer a 30-day/full-exit illustration only as a proposed scenario, never as a recommendation or an accepted default. No calculation is required during intake.
 
-For a current comparison, use [current protocol inputs](planning-inputs.md#current-protocol-inputs). Read the relevant live snapshot, propose only supported inputs, and ask for the remaining position, budget, horizon and market assumptions. Never substitute stored launch values when a current read fails.
+If the projection's price basis is unspecified, ask **“Use current prices, hypothetical prices, or compare both?”** before any price fetch. Reuse an explicit choice: “use current prices” authorizes the bounded read without a second permission prompt; supplied hypothetical prices win and remain unchanged. Do not fetch merely because a projection is requested, or for fully specified offline inputs or a complete fictional tutorial.
+
+For requested current protocol conditions, use [current protocol inputs](planning-inputs.md#current-protocol-inputs) and only the relevant fresh snapshot. For a chosen current-price case, use the shared `scripts/price.py` reader outside the offline engine and propose its ETH-per-STANDARD quote as the initial price. Ask for the remaining position, budget, horizon and economics; never substitute stored launch values when a current read fails. Price retrieval does not approve holding it constant or any future growth path.
 
 ### 2. Fill gaps without inventing economics
 
 After the essentials, collect the remaining assumptions in small groups. Explain unfamiliar concepts before asking for values. Distinguish user inputs, dated sourced observations, proposed hypotheses and unresolved gaps. A current observation is not a future constant or an executable quote.
 
 When the user asks to use published contracts or current protocol conditions, follow the [deployment-evidence handoff](planning-inputs.md#deployment-evidence-handoff). The fixed public snapshot reader can supply block-scoped observations using a publisher ABI without claiming verified source correspondence. This does not authorize a transaction or turn current values into future constants.
+
+Preserve the user's currency units. The planner takes ETH per STANDARD, not USD: keep a supplied USD price visible and obtain an explicit conversion assumption or approval to use a contemporaneous sourced price relation with its scope and timing limits. Never treat USD as ETH or assume 1 ETH. If comparing current and hypothetical starting prices, use separate approved invocations because the initial price is a shared root input; do not overwrite the hypothetical case. See [price mapping](planning-inputs.md#price-choice-and-unit-mapping).
 
 | Kind | Treatment |
 |---|---|
@@ -63,15 +67,15 @@ Ask: **“Approve these hypothetical assumptions, or tell me what to change.”*
 
 Build schema-1 JSON internally from the approved assumptions, with explicit mode and `assumptions_acknowledged: true`. Read the input definitions to check mappings, units and bounds. No economic defaults; mode differs from `exit_mode`. Never fill gaps from examples, calculator defaults, quotes or differently scoped publisher values.
 
-Read [safety](safety.md) and [execution](planning-execution.md). Verify the trusted installed manifest/script/three fixed parameter-file hashes, then use permitted Python 3.10+, the fixed planner and separate JSON stdin. Missing runtime, verification or safe transport means a stated gap—not installed tools, broader access or invented results. The only intended calculator is `scripts/scenario.py`; do not substitute agent arithmetic or generated model code.
+Read [safety](safety.md) and [execution](planning-execution.md). Verify the trusted installed manifest/script/three fixed parameter-file hashes, then use permitted Python 3.10+, the fixed planner and separate JSON stdin. Missing runtime, verification or safe transport means a stated gap—not installed tools, broader access or invented results. Use `scripts/scenario.py` for projections, not agent arithmetic or generated model code; `scripts/price.py` separately handles current quotes and gross current-value arithmetic, never future economics.
 
 Lead with the comparison relevant to the user's goal, labelled **Estimate**, then a small keep/selective/aggressive table. State whether execution succeeded and the selected mode; highlight material conflicts, unknowns and approved cost exclusions without dumping conformance. Documented conflicts block numerical results; explain the conflict and offer an input correction or explicitly approved stress rerun, never silently change either. Separate hypothetical cash from unvalued retained positions; no forecasts, investment recommendations, contract verification or executable quotes. Detailed assumptions, evidence and limitations remain available on request.
 
-Offer a focused next adjustment rather than another schema dump. No automatic inspection, refresh, persistence or monitoring.
+Offer a focused next adjustment rather than another schema dump. No unrequested inspection, blanket refresh, stored observations/personal holdings or monitoring.
 
 ## Complete-input fast path
 
-An already complete, explicitly acknowledged JSON request can go directly through safety/integrity verification and execution. Do not force it through a questionnaire or load schema/model/catalogs/script bodies unnecessarily. Complete approved natural-language inputs need translation, not repeated approval. Hashes identify bytes, not source authenticity or model validity.
+An already complete, explicitly acknowledged JSON request can go directly through safety/integrity verification and offline execution without a price or state fetch. Do not force it through a questionnaire or load schema/model/catalogs/script bodies unnecessarily. Complete approved natural-language inputs need translation, not repeated approval; explicit prices are not replaced by current quotes. Hashes identify bytes, not source authenticity or model validity.
 
 | Need | Load only then |
 |---|---|

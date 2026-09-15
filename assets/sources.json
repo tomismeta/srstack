@@ -3,6 +3,14 @@
   "purpose": "Source routing and reference provenance only; no stored protocol state, recap claims or superseded interpretations",
   "groups": [
     {
+      "id": "market-price",
+      "path": "assets/sources/market-price.json",
+      "record_ids": [
+        "dexscreener-api"
+      ],
+      "scope": "Public market-price API contract; no stored quotes"
+    },
+    {
       "id": "live-interface",
       "path": "assets/sources/live-interface.json",
       "record_ids": [

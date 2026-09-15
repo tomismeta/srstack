@@ -10,6 +10,8 @@ Retirement releases the retired branches' proportional share of accrued balance,
 
 The whitepaper places founding distribution before one-time license activation and defines `initial-daily-charter-count` as the initial daily charter supply. Those are lifecycle rules, not current availability. Use a fresh `auctions` snapshot for activation and inventory; unavailable reads leave the requested status unknown. [sr-whitepaper-v1: branches, auctions; sr-publisher-read-interface]
 
+For “what is my charter worth now?”, use [inspection](inspection.md)'s shared price path: ask only for a missing public charter ID, read fresh `charter_pending`, then pass that whole-charter STANDARD amount to `price.py` for same-quote gross arithmetic. No wallet scan or redundant permission prompt is needed for the requested current value. This is a gross indicative mark on accrued ledger balance, not wallet tokens, net withdrawal proceeds, charter/NFT resale value or earning capacity. Do not automatically divide by branch count; the zero-amount withdrawal-fee preview does not price withdrawal of that balance. Snapshot block and API retrieval are separate clocks, with provider price-observation time unknown.
+
 ## Follow the question
 
 - [Genesis entry](genesis.md): paid whitelist/public entry, escrow and common accrual start at finalization. [Launch mint](launch-mint.md) summarizes founding terms and scheduling gaps.

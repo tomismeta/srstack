@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "scope": "Public market-price API contract and routing; no stored quotes or balances",
+  "records": [
+    {
+      "id": "dexscreener-api",
+      "url": "https://docs.dexscreener.com/api/reference",
+      "publisher": "DEX Screener",
+      "published_at": null,
+      "retrieved_at": "2026-09-15",
+      "review_depth": "Published pairs API, identity and price-field schema, and public HTTP request requirements",
+      "claim_stage": "provider interface documentation, not verified chain state or executable trade pricing",
+      "locators": [
+        "GET /latest/dex/pairs/{chainId}/{pairId}",
+        "pairs[].chainId, pairAddress, dexId, labels, baseToken, quoteToken",
+        "pairs[].priceUsd and priceNative"
+      ],
+      "summary": "The fixed price helper requests the publisher-listed canonical ETH/STANDARD pool on Robinhood, checks exact pool and asset identities, and interprets priceUsd as USD per STANDARD and priceNative as ETH per STANDARD. The entity catalog owns the token and pool identities.",
+      "limits": [
+        "Provider-reported indicative prices, not block-scoped contract state or executable quotes.",
+        "The consumed API schema supplies no price-observation timestamp. HTTP retrieval, pool creation and image cache timestamps are not quote-observation times.",
+        "USD conversion is provider-reported; it is not independently verified ETH/USD feed data.",
+        "Gross quantity valuations exclude withdrawal fees, trading taxes, LP fees, slippage and gas. They are not charter resale values or guaranteed proceeds.",
+        "Fetch on demand; no stored-price fallback or automatic projection-price assumption."
+      ]
+    }
+  ]
+}

@@ -10,6 +10,8 @@ Follow direct relevant topic/record paths. Load [contracts](contracts.md) and [e
 
 Offline answers can explain packaged identities, interfaces and published rules, not changing state. Dynamic claims require fresh evidence: UTC retrieval, original URL/provider, source timestamp and freshness limits. Distinguish publication, claimed event, retrieval and chain observation times; a freshly retrieved page can describe an old proposal. If retrieval is unavailable, report the requested result as unavailable—never fall back to a saved observation.
 
+For current STANDARD price or gross amount/charter value, take the [inspection fast path](inspection.md#1-scope-only-the-requested-observation), not broad discovery: shared `price.py`, and only a fresh `charter` snapshot first if a charter's accrued balance is needed. Ask only for a missing public charter ID, never wallet enumeration. The current-value question authorizes the necessary price read under host permissions. This does not authorize projection inputs: when that price choice is unspecified, offer current/hypothetical/both before a price fetch; preserve supplied prices and complete offline examples.
+
 ## 2. Authenticate and discover
 
 1. Establish network and identifier from publisher evidence suited to the role, then explorer/chain relationships. Names, tickers, logos, searches and unsolicited addresses are leads. Missing packaged identity does not prove no deployment.
@@ -25,6 +27,8 @@ Choose already permitted sources by required capabilities, not directory order. 
 
 Bound interval, addresses/topics, pages, resources, batch sizes and retries to the question/provider. Only authenticated ABI `view`/`pure` reads, including every batch member. Resolve “latest” to a recorded block. Quotes need exact base/quote assets, venue/methodology, time and executable versus indicative/aggregated status.
 
+Canonical-pool STANDARD pricing uses the fixed `price.py` API request rather than chain discovery. DEX Screener reports indicative prices with a retrieval timestamp but no price-observation timestamp or independent freshness/block assurance. Keep `price_observed_at: null`; HTTP Date, pair creation and image timestamps cannot substitute. A charter RPC block and this API retrieval are different clocks, never an atomic state/price observation.
+
 Fetch finite authenticated log windows. Keep block hash, transaction hash and log index; deduplicate overlaps and handle removed/reorganized logs. Check pagination, truncation, provider limits and coverage; never skip failed windows silently. Opening balances/entitlements may require pre-interval history.
 
 Keep raw amounts, authenticated decimals, requested/observed anchors and limits; symbols do not establish scale. Failed decoding, unavailable methods/history, rate limits, empty provider responses and incomplete enumeration are not zeros. Successful empty event queries prove no matches only within demonstrated filters/coverage.
@@ -32,6 +36,8 @@ Keep raw amounts, authenticated decimals, requested/observed anchors and limits;
 ## 4. Compute with explicit units
 
 Use exact integer/rational arithmetic or documented decimal precision. Preserve raw scales; derive totals from common unrounded inputs and round for display. Conversions require explicit rates and valuation times. USD differs from stablecoin denomination; price freshness differs from state freshness.
+
+Use `price.py`'s optional `standard_amount` to compute a current gross mark from the same quote once; do not substitute model/calculator multiplication. Preserve requested USD or ETH units and report unavailable denominations rather than changing currency. Charter `charter_pending` is the whole charter's accrued STANDARD ledger balance, not wallet tokens; its mark is before withdrawal/trading costs, not net proceeds, charter resale or earning capacity. Do not automatically divide by branch count or apply a zero-amount fee preview as an amount-specific exit fee. Projection ETH/STANDARD inputs and user-supplied USD conversions require the [explicit mapping and approval](planning-inputs.md#price-choice-and-unit-mapping); no implicit USD=ETH or 1 ETH.
 
 ### Supply and holdings
 

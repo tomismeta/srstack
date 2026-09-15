@@ -101,7 +101,7 @@ class PackageChecks(unittest.TestCase):
         for action in ("build", "verify", "archive"):
             result = self.invoke(action)
             self.assertEqual(0, result.returncode, result.stderr.decode())
-        archive = self.root / "dist/srstack-0.1.0.zip"
+        archive = self.root / f"dist/srstack-{self.package.VERSION}.zip"
         first = archive.read_bytes()
         expected = dict(self.runtime)
         expected["README.md"] = (self.root / "README.md").read_bytes()
@@ -288,8 +288,8 @@ class PackageChecks(unittest.TestCase):
         with patch.object(zipfile.ZipFile, "writestr", side_effect=OSError("injected write failure")):
             with self.assertRaises(OSError):
                 self.package.create_archive(self.runtime)
-        self.assertFalse((self.root / "dist/srstack-0.1.0.zip").exists())
-        self.assertFalse((self.root / "dist/srstack-0.1.0.zip.sha256").exists())
+        self.assertFalse((self.root / f"dist/srstack-{self.package.VERSION}.zip").exists())
+        self.assertFalse((self.root / f"dist/srstack-{self.package.VERSION}.zip.sha256").exists())
         self.assertEqual([], list((self.root / "dist").glob(".srstack-archive-*")))
 
 

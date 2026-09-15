@@ -1,6 +1,6 @@
 # Host installation and capabilities
 
-For users/maintainers—not permission for an agent to install itself or change configuration. Install the complete reviewed package root containing `SKILL.md`, script, references, assets, license and manifest together. Avoid same-name stale copies. Select a trusted reviewed commit; a manifest checksum comparison establishes byte integrity, not source authenticity or model validity.
+For users/maintainers—not permission for an agent to install itself or change configuration. Install the complete reviewed package root containing `SKILL.md`, the three fixed scripts, references, assets, license and manifest together. Avoid same-name stale copies. Select a trusted reviewed commit; a manifest checksum comparison establishes byte integrity, not source authenticity or model validity.
 
 The repository also contains maintenance tools and CI configuration that are not runtime resources. Follow the [reviewed-commit export steps](../README.md#quick-start) to produce only manifest-listed content plus the manifest. Do not install the entire repository, run maintenance commands as skill actions, or start discovery before export succeeds.
 
@@ -14,7 +14,7 @@ Hermes uses `skills_list` for discovery and `skill_view` for progressive resourc
 
 Invoke `/srstack` or natural-language “Use srstack plan”. Confirm the selected description/revision in a fresh conversation. Local loading differs from Skills Hub community-install guard acceptance; do not bypass guards to claim compatibility.
 
-The new-skill authoring validator has a shorter description budget than the existing-skill loader. Keep description short and metadata version a string; no nested host metadata merely to repeat requirements. Use the Python supported by the installed Hermes release; the planner needs only standard library Python 3.10+ and the containment primitives described in [safety](safety.md).
+The new-skill authoring validator has a shorter description budget than the existing-skill loader. Keep description short and metadata version a string; no nested host metadata merely to repeat requirements. Use the Python supported by the installed Hermes release; all three helpers need only standard-library Python 3.10+ and the containment primitives described in [execution](planning-execution.md). Live state/price readers additionally require existing permitted public network access; the planner stays offline.
 
 [Official Hermes Skills System](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills/).
 
@@ -33,8 +33,8 @@ No global Python eligibility gate: offline research remains useful without execu
 Use common Agent Skills frontmatter (name, description, license, string metadata), discovery/explicit SKILL loading and relative-resource delivery without truncating required content. Recover omissions via documented host mechanisms, not invented selectors/permissions.
 
 - **Research:** packaged topic/source resources; public retrieval only where needed.
-- **Inspect:** existing permitted readers and authenticated read-only chain methods. No package-created provider/account/wallet.
-- **Plan:** trusted package, existing permitted Python and safe JSON stdin transport. Host read/hash utilities or minimal fixed launcher can check manifest/script/three fixed resource hashes and return a compact result; do not dump source bodies merely to verify integrity. Missing capability means explanation/gap, not claimed calculation output.
+- **Inspect:** trusted package, existing permitted Python/safe JSON stdin for fixed `snapshot.py` RPC and `price.py` canonical-pool API reads, or existing permitted authenticated read-only facilities for other supported research. Verify snapshot's script plus entity/interface catalogs; verify price's script plus entity catalog only. A current-value request already calls for the needed price read; no wallet or package-created provider/account.
+- **Plan:** trusted package, existing permitted Python and safe JSON stdin transport. Host read/hash utilities or minimal fixed launcher can check manifest/script/three fixed parameter-resource hashes and return a compact result; do not dump source bodies merely to verify integrity. `scenario.py` remains offline. Current prices are an optional input selected before any quote fetch; supplied hypothetical prices and fully specified offline examples remain offline. Missing capability means explanation/gap, not claimed calculation output.
 
 ClawHub is a separate distribution service: local directory/archive preparation does not establish hosted acceptance, ownership, name availability, moderation or registry clearance. Hosted publication/scanning needs separately scoped permission; never upload merely to check a local package.
 
