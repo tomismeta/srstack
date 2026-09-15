@@ -4,7 +4,7 @@
 
 srstack explains documented protocol mechanics, reads current public state and compares expansion strategies using assumptions you approve. It is one independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product, trading bot or wallet toolkit.
 
-**0.1.0 release candidate · planner schema/model 1.** Install an exact reviewed commit; a moving branch is not a pinned release.
+**Version 0.1.0 · planner schema/model 1.** Use the [releases page](https://github.com/tomismeta/srstack/releases) for installable packages and separate audit evidence. Identify installed revisions by exact reviewed commit.
 
 ## What you can ask
 
@@ -41,6 +41,18 @@ These are routing instructions within one skill, not separately installed comman
 Both helpers use only Python's standard library: no pip dependencies, wallet connector or RPC credentials. Execution also requires the filesystem protections described in [execution](references/planning-execution.md); unsupported hosts fail closed. Missing execution or retrieval capability produces an explanation, not invented results. The skill does not install dependencies or change host permissions.
 
 ## Quick start
+
+### Install the release package
+
+1. Review this skill, its [safety boundary](references/safety.md) and the release's verification scope. Download **`srstack-0.1.0.zip`** and **`SHA256SUMS`** from [srstack v0.1.0](https://github.com/tomismeta/srstack/releases/tag/v0.1.0). Verify the archive's SHA-256 against its entry in `SHA256SUMS`.
+2. Extract the single `srstack/` folder into the intended host's configured skill directory. Use a clean destination; keep customizations and review copies outside skill-discovery roots. Do not overlay an old installation.
+3. Verify the manifest-listed files plus `release-manifest.json`, confirm the loaded path and revision, then start a fresh conversation with `Use srstack`.
+
+**Install the attached runtime ZIP—not GitHub's automatic “Source code” archives or `srstack-audit-0.1.0.zip`.** The audit archive is separate maintenance evidence, not an installable skill or a smart-contract security certification. The runtime excludes repository metadata, maintenance tools, test reports and CI files.
+
+### Export an exact reviewed commit
+
+For source review or pinned installations, use the export workflow below instead of copying the repository.
 
 The export machine needs Git and Python 3.10+. The installed host needs only the capabilities for the routes you use.
 
