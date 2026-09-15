@@ -2,6 +2,7 @@
 name: srstack
 description: Standard Reserve research, planning, and public inspection.
 license: MIT
+compatibility: Python 3.10+ for fixed helpers; network access for live public RPC and web research. Packaged research and scenario calculations work offline.
 metadata:
   version: "0.1.0"
 ---

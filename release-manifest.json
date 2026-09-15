@@ -7,7 +7,7 @@
   "content_files": {
     "LICENSE": "14b82531e814378b84e97596f68a98c70becee3251b206c545d4f07d73105af3",
     "README.md": "1ec7caa9bb96cfa1c94790e020c016d22bbd9ff96d4da1da4591b527eae03138",
-    "SKILL.md": "bcebd14378cacad911b9ca174b7cedfeb02f6a77ac0b8ff5f7c7a5f1b6c5679b",
+    "SKILL.md": "650be3588734fd012543751d810bae6d4ed080012694873e75bfd9e10eec6c92",
     "assets/coverage.json": "cc2e13aa0968d05d52d08125c8c4bc9e66a4139c9f3084abd25bc73bacf95862",
     "assets/entities/robinhood.json": "d27d4800566cbe9180fb1e1f01d73af95b66004baea189de497dd138375017c6",
     "assets/entity-index.json": "b6252fdf556f2b5c2bf38f89c771e00c09036cd360f076b75325f4ae7132d4ee",
@@ -47,5 +47,5 @@
     "scripts/scenario.py": "7afec27cb24467965fcf01912340e0d135e74145c34ef709db4a940ae0bc6172",
     "scripts/snapshot.py": "3757e4c56f41716151d94f7d4fe9ecd0f678bddd78798ebc01d4cb86d32b967a"
   },
-  "content_sha256": "7831a449e62f4ffed71553401e3b5a6637f8882e294ade141d3acdf070ec0091"
+  "content_sha256": "4d6075a19f493550ef439a4838e060d2466732ec518b92ce466aa50c7aff4076"
 }
