@@ -78,9 +78,9 @@ The export machine needs Git and Python 3.10+. The installed host needs only the
 
    The destination must not already exist. Export validates the selected commit's runtime membership, per-file hashes and aggregate digest before creating it. It reads committed content, not uncommitted runtime edits, and excludes Git metadata, maintenance tools, tests, CI configuration and local build/cache artifacts. Failed exports clean up the new destination. Review the helper itself as part of the selected commit; do not run unreviewed local modifications.
 
-   For updates, preserve customizations outside the active folder and replace the old installation cleanly. Do not overlay files or leave a shadowing same-name copy. Start or refresh the host only after export succeeds. Directly copying the whole repository is not equivalent to exporting the runtime package.
+   For updates, preserve customizations outside all skill-discovery roots, then remove the old active installation before exporting into the now-absent destination. Keep the review clone outside those roots too. Do not overlay files, use `cp -a` on the repository or leave a shadowing same-name copy. Start or refresh the host only after export succeeds. A full repository may load in a host, but it is not the supported runtime installation.
 
-4. Have the host verify the installed files against `release-manifest.json`: `content_files` maps relative paths to SHA-256 hashes, and `digest_convention` specifies the aggregate `content_sha256`. Confirm the actual loaded path and revision. A matching manifest establishes byte integrity, not trust in an otherwise unreviewed package.
+4. Have the host verify the installed files against `release-manifest.json`: `content_files` maps relative paths to SHA-256 hashes, and `digest_convention` specifies the aggregate `content_sha256`. Confirm the actual loaded path and revision, and that repository-only `.git`, `maintenance`, `.github` and `dist` directories are absent. Matching listed hashes alone does not detect extra files or establish trust in an otherwise unreviewed package.
 5. Start a fresh conversation and try a packaged-knowledge question from the examples below.
 
 **Hermes installation:** use the complete-bundle instructions above. URL discovery depends on configured sources; importing raw `SKILL.md` does not necessarily import its references, assets and scripts.
@@ -142,7 +142,7 @@ For a direct engine smoke test, run **from the reviewed installed skill root**:
 python3 -B -I scripts/scenario.py < assets/examples/planning.json
 ```
 
-Expected: exit 0 and JSON containing the warning, the three strategies and their conformance report. This tests the engine, not host discovery or sandbox isolation. `scripts/scenario.py` is the only intended planner executable; do not substitute model-generated formulas or downloaded helpers. Routine output is compact; request `detail: "full"` for detailed accounting and purchase schedules. History requires full detail.
+Expected: exit 0 and JSON containing the warning, the three strategies and their conformance report. This tests the engine, not host discovery or sandbox isolation. `scripts/scenario.py` is the only intended planner executable; do not substitute model-generated formulas or downloaded helpers. CLI output is JSON and may be verbose even in summary mode; agents should summarize it for users. Request `detail: "full"` for detailed accounting and purchase schedules. History requires full detail.
 
 ### Live protocol, auction and charter reads
 
@@ -162,7 +162,7 @@ Replace `<public charter ID>` with the ID to inspect.
 | `auctions` | License and daily-charter activation, pause state, inventory, duration and available current prices |
 | `charter` | Public owner, branch count, pending balance and related issuance context |
 
-Each invocation uses one checked block. Failed fields remain missing with errors; fatal failures return no snapshot. Results are not saved or reused as a fallback. These are selected publisher-ABI reads, not a complete contract audit.
+Each invocation uses one checked block. Separate example invocations are not one atomic combined snapshot; do not combine their values as if they share a block. Failed fields remain missing with errors; fatal failures return no snapshot. Results are not saved or reused as a fallback. These are selected publisher-ABI reads, not a complete contract audit.
 
 Advanced users can request the same protocol snapshot from the reviewed installed root:
 

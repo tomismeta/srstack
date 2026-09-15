@@ -4,6 +4,8 @@ For users/maintainers—not permission for an agent to install itself or change 
 
 The repository also contains maintenance tools and CI configuration that are not runtime resources. Follow the [reviewed-commit export steps](../README.md#quick-start) to produce only manifest-listed content plus the manifest. Do not install the entire repository, run maintenance commands as skill actions, or start discovery before export succeeds.
 
+For an existing full-repository install, retain any needed local changes outside skill-discovery roots and remove the active copy before exporting into its absent destination. Keep the review clone outside those roots; do not overlay an export onto a checkout. Verify both manifest hashes and runtime membership: `.git`, `maintenance`, `.github` and `dist` must not be installed. A host loading extra repository files does not make that layout supported.
+
 ## Hermes
 
 Primary root: `~/.hermes/skills/`; named profiles may use another Hermes home. Put the package at that profile's `skills/srstack/`, or in an explicitly configured external skill directory containing `srstack/`. Do not duplicate across roots.

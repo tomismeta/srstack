@@ -211,6 +211,30 @@ class SnapshotChecks(unittest.TestCase):
         self.assertEqual(protocol["derived"]["permanent_removed"]["value"], "20")
         self.assertEqual(protocol["values"]["sell_tax_percent"]["value"], "66.67")
 
+    def test_inactive_or_unknown_emissions_omit_daily_rates(self):
+        for view in ("protocol", "charter"):
+            for started in (False, None):
+                with self.subTest(view=view, started=started):
+                    rpc = RPCFixture()
+                    if started is None:
+                        rpc.fail.add("emissions_started")
+                    else:
+                        rpc.values["emissions_started"] = started
+                    result = rpc.run(view)
+                    self.assertNotIn("global_gross_daily", result["derived"])
+                    self.assertNotIn("charter_gross_daily", result["derived"])
+                    self.assertEqual(result["values"]["stream_rate_per_second"]["value"], "1.000000000000000002")
+                    self.assertEqual(result["derived"]["remaining_gross_budget"]["value"], "70")
+                    self.assertEqual(result["status"], "partial" if started is None else "ok")
+                    if view == "charter":
+                        self.assertEqual(result["values"]["charter_branches"]["value"], 2)
+
+    def test_active_zero_stream_reports_zero_daily_rates(self):
+        self.rpc.values["stream_rate_per_second"] = 0
+        result = self.rpc.run("charter")
+        self.assertEqual(result["derived"]["global_gross_daily"]["value"], "0")
+        self.assertEqual(result["derived"]["charter_gross_daily"]["value"], "0")
+
     def test_rpc_and_decode_failures_preserve_unrelated_results(self):
         self.rpc.fail.add("epoch_number")
         self.rpc.words["stream_rate_per_second"] = "0x01"

@@ -471,7 +471,8 @@ def _derive(config, raw, values, errors):
     def available(*identifiers):
         return all(identifier in values for identifier in identifiers)
 
-    if available("stream_rate_per_second", "emissions_started"):
+    active_stream = available("stream_rate_per_second", "emissions_started") and raw["emissions_started"] is True
+    if active_stream:
         amount("global_gross_daily", raw["stream_rate_per_second"] * 86400, "STANDARD/day")
     for result, high, low in (("remaining_gross_budget", "issuance_budget", "cumulative_issued"), ("permanent_removed", "token_hard_cap", "token_max_supply")):
         if available(high, low):
@@ -485,7 +486,7 @@ def _derive(config, raw, values, errors):
             for identifier in ("charter_branches", "charter_pending"):
                 values.pop(identifier, None)
                 errors[identifier] = "valid charter owner required"
-        elif available("charter_branches", "total_branches", "stream_rate_per_second", "emissions_started"):
+        elif active_stream and available("charter_branches", "total_branches"):
             total, branches = raw["total_branches"], raw["charter_branches"]
             if total > 0 and branches <= total:
                 amount("charter_gross_daily", (raw["stream_rate_per_second"] // total) * branches * 86400, "STANDARD/day")
