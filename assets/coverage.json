@@ -269,12 +269,13 @@
     }
   ],
   "market_price": {
-    "source_ids": ["dexscreener-api"],
+    "source_ids": ["dexscreener-api", "geckoterminal-api"],
     "path": "scripts/price.py",
     "identity_catalog": "assets/entities/robinhood.json",
-    "scope": "Provider-reported canonical-pool USD and ETH prices; optional gross amount valuation",
+    "scope": "Canonical-pool prices with DEX Screener primary, labelled GeckoTerminal availability fallback, optional cross-check and single-provider gross valuation",
     "limits": [
       "Separate from block-scoped RPC snapshots; provider quote-observation time is unavailable.",
+      "Provider prices are never averaged or mixed across valuation denominations; identity, schema and access failures are not concealed by fallback.",
       "Current-price use in projections is an explicit user choice, never a silent economic default.",
       "Gross accrued-balance marks are not net withdrawal proceeds or charter market values."
     ]

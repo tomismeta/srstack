@@ -6,9 +6,10 @@
       "id": "market-price",
       "path": "assets/sources/market-price.json",
       "record_ids": [
-        "dexscreener-api"
+        "dexscreener-api",
+        "geckoterminal-api"
       ],
-      "scope": "Public market-price API contract; no stored quotes"
+      "scope": "Fixed public market-price provider contracts; no stored quotes"
     },
     {
       "id": "live-interface",

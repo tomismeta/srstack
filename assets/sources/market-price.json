@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "scope": "Public market-price API contract and routing; no stored quotes or balances",
+  "scope": "Fixed public market-price provider contracts and routing; no stored quotes or balances",
   "records": [
     {
       "id": "dexscreener-api",
@@ -22,6 +22,30 @@
         "USD conversion is provider-reported; it is not independently verified ETH/USD feed data.",
         "Gross quantity valuations exclude withdrawal fees, trading taxes, LP fees, slippage and gas. They are not charter resale values or guaranteed proceeds.",
         "Fetch on demand; no stored-price fallback or automatic projection-price assumption."
+      ]
+    },
+    {
+      "id": "geckoterminal-api",
+      "url": "https://api.geckoterminal.com/docs/v2/swagger.json",
+      "publisher": "GeckoTerminal",
+      "published_at": null,
+      "retrieved_at": "2026-09-16",
+      "review_depth": "Public v2 pool API, version header, identity relationships and price-field schema",
+      "claim_stage": "provider interface documentation, not verified chain state or executable trade pricing",
+      "locators": [
+        "GET /networks/{network}/pools/{address}",
+        "Accept: application/json;version=20230203",
+        "data.id, type, attributes.address and relationships.base_token, quote_token, dex",
+        "attributes.base_token_price_usd and base_token_price_native_currency"
+      ],
+      "summary": "The fixed helper can use the same canonical ETH/STANDARD pool through GeckoTerminal, either by explicit source choice, as a labelled availability fallback, or as a requested cross-check. The canonical native-ETH quote is identified by its zero address, not a WETH display label. USD and ETH values stay together from one provider response.",
+      "limits": [
+        "Public beta API; pin the declared version and retain provider attribution.",
+        "No quote-observation timestamp in the consumed pool interface. Retrieval, cache age, pool creation, candle and trade timestamps must not be relabelled as the pool quote's observation time.",
+        "More decimal digits do not establish greater accuracy; separate provider reads are not atomic or interchangeable.",
+        "A cross-check reports disagreement without averaging prices, mixing denominations or changing the selected valuation source.",
+        "CoinGecko onchain data belongs to the same provider family, not an independent third corroborating source.",
+        "No stored-price fallback or bypass of host/provider access restrictions."
       ]
     }
   ]

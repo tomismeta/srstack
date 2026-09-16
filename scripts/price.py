@@ -3,6 +3,9 @@
 
 Supply one JSON object on stdin: {"schema_version": 1}, optionally with
 "standard_amount": "12.5" for a gross indicative mark using the same quotes.
+Optional "source": "auto" (default), "dexscreener", or "geckoterminal";
+"cross_check": true compares the other provider without blending quotes.
+Auto uses DEX Screener, falling back to GeckoTerminal only on availability failure.
 Only --help is accepted. No wallet, endpoint, address, or file inputs.
 Python standard library only; no observations are saved.
 """
@@ -15,6 +18,7 @@ import os
 from pathlib import Path
 import re
 import socket
+import ssl
 import stat
 import sys
 import threading
@@ -23,7 +27,17 @@ from datetime import datetime, timezone
 from decimal import Decimal, localcontext
 
 
-HOST = "api.dexscreener.com"
+PROVIDERS = {
+    "dexscreener": {"label": "DEX Screener", "host": "api.dexscreener.com",
+                    "path": "/latest/dex/pairs/robinhood/", "source_id": "dexscreener-api",
+                    "market": "https://dexscreener.com/robinhood/", "accept": "application/json",
+                    "fields": ("priceUsd", "priceNative")},
+    "geckoterminal": {"label": "GeckoTerminal", "host": "api.geckoterminal.com",
+                     "path": "/api/v2/networks/robinhood/pools/", "source_id": "geckoterminal-api",
+                     "market": "https://www.geckoterminal.com/robinhood/pools/",
+                     "accept": "application/json;version=20230203",
+                     "fields": ("base_token_price_usd", "base_token_price_native_currency")},
+}
 CHAIN_ID = 4663
 ZERO_ADDRESS = "0x" + "0" * 40
 MAX_INPUT_BYTES = 4096
@@ -48,6 +62,10 @@ class PackageDataError(ValueError):
 
 class PriceError(ValueError):
     """Provider transport, identity, or usable quotes could not be established."""
+
+    def __init__(self, message, category="invalid"):
+        super().__init__(message)
+        self.category = category
 
 
 def _pairs(pairs):
@@ -119,16 +137,21 @@ def _decimal(value, fractional_digits, positive=False):
 def _validate_input(config):
     try:
         if (not isinstance(config, dict) or "schema_version" not in config
-                or config.keys() - {"schema_version", "standard_amount"}):
+                or config.keys() - {"schema_version", "standard_amount", "source", "cross_check"}):
             raise ValueError("unexpected or missing fields")
         if type(config["schema_version"]) is not int or config["schema_version"] != 1:
             raise ValueError("unsupported schema_version")
-        result = {"schema_version": 1}
+        source, cross_check = config.get("source", "auto"), config.get("cross_check", False)
+        if not isinstance(source, str) or source not in ("auto", "dexscreener", "geckoterminal"):
+            raise ValueError("unsupported source")
+        if type(cross_check) is not bool:
+            raise ValueError("cross_check must be boolean")
+        result = {"schema_version": 1, "source": source, "cross_check": cross_check}
         if "standard_amount" in config:
             result["standard_amount"] = _decimal(config["standard_amount"], 18)
         return result
     except (ValueError, TypeError):
-        raise InputError("expected schema_version 1 and optional unsigned plain decimal standard_amount (78 digits, at most 18 fractional)") from None
+        raise InputError("expected schema_version 1, optional unsigned plain decimal standard_amount (78 digits, at most 18 fractional), source auto|dexscreener|geckoterminal, and boolean cross_check") from None
 
 
 def _read_file(directory, filename):
@@ -212,17 +235,19 @@ def _load_package():
             os.close(descriptor)
 
 
-def _https_request(connection, path, deadline, monotonic):
+def _https_request(connection, source, path, deadline, monotonic):
     """Read one bounded response; never follow redirects or expose its body on error."""
     try:
         connection.connect()
         if monotonic() >= deadline:
-            raise PriceError("price request deadline exceeded before sending")
-        connection.request("GET", path, headers={"Accept": "application/json",
+            raise PriceError("price request deadline exceeded before sending", "unavailable")
+        connection.request("GET", path, headers={"Accept": PROVIDERS[source]["accept"],
                            "User-Agent": "srstack/0.1.1 (+https://github.com/tomismeta/srstack)"})
         response = connection.getresponse()
         if response.status != 200:
-            raise PriceError("price HTTP request failed; redirects are not followed")
+            category = ("access" if response.status in (401, 403) else "unavailable"
+                        if response.status in (404, 429) or 500 <= response.status <= 599 else "invalid")
+            raise PriceError("price HTTP request failed (status " + str(response.status) + "); redirects are not followed", category)
         length = response.getheader("Content-Length")
         if length is not None and (not re.fullmatch(r"[0-9]{1,10}", length) or int(length) > MAX_RESPONSE_BYTES):
             raise PriceError("invalid or oversized price response length")
@@ -230,7 +255,7 @@ def _https_request(connection, path, deadline, monotonic):
         while size <= MAX_RESPONSE_BYTES:
             remaining = deadline - monotonic()
             if remaining <= 0:
-                raise PriceError("price request deadline exceeded")
+                raise PriceError("price request deadline exceeded", "unavailable")
             if connection.sock is not None:
                 connection.sock.settimeout(min(REQUEST_TIMEOUT, remaining))
             chunk = response.read1(min(65536, MAX_RESPONSE_BYTES + 1 - size))
@@ -241,26 +266,30 @@ def _https_request(connection, path, deadline, monotonic):
         if size > MAX_RESPONSE_BYTES:
             raise PriceError("price response exceeds byte limit")
         if length is not None and size != int(length):
-            raise PriceError("incomplete price response")
+            raise PriceError("incomplete price response", "unavailable")
         return b"".join(chunks)
+    except PermissionError:
+        raise PriceError("price transport access denied", "access") from None
+    except ssl.SSLCertVerificationError:
+        raise PriceError("price transport certificate verification failed", "access") from None
     except (OSError, http.client.HTTPException):
-        raise PriceError("price transport failed") from None
+        raise PriceError("price transport failed", "unavailable") from None
     finally:
         connection.close()
 
 
-def _https(path, timeout, deadline, monotonic):
+def _https(source, path, timeout, deadline, monotonic):
     """Bound DNS, TLS, headers and body without environment proxy handling."""
     timeout = min(timeout, deadline - monotonic())
     if timeout <= 0:
-        raise PriceError("price request deadline exceeded")
-    connection = http.client.HTTPSConnection(HOST, timeout=timeout)
+        raise PriceError("price request deadline exceeded", "unavailable")
+    connection = http.client.HTTPSConnection(PROVIDERS[source]["host"], timeout=timeout)
     request_deadline = min(deadline, monotonic() + timeout)
     finished, outcome = threading.Event(), []
 
     def request():
         try:
-            outcome.append(_https_request(connection, path, request_deadline, monotonic))
+            outcome.append(_https_request(connection, source, path, request_deadline, monotonic))
         except Exception as error:
             outcome.append(error)
         finally:
@@ -277,7 +306,7 @@ def _https(path, timeout, deadline, monotonic):
             except OSError:
                 pass
         connection.close()
-        raise PriceError("price request deadline exceeded")
+        raise PriceError("price request deadline exceeded", "unavailable")
     if isinstance(outcome[0], Exception):
         if isinstance(outcome[0], PriceError):
             raise outcome[0]
@@ -286,8 +315,10 @@ def _https(path, timeout, deadline, monotonic):
 
 
 def _matching_pair(body, target):
+    if body is None or (isinstance(body, dict) and "pairs" in body and body["pairs"] in (None, [])):
+        raise PriceError("provider pair data unavailable", "unavailable")
     if not isinstance(body, dict) or not isinstance(body.get("pairs"), list):
-        raise PriceError("provider pair identity unavailable")
+        raise PriceError("provider pair schema invalid")
     matches = []
     for pair in body["pairs"]:
         if not isinstance(pair, dict):
@@ -302,8 +333,31 @@ def _matching_pair(body, target):
                 and quote["address"].lower() == ZERO_ADDRESS):
             matches.append(pair)
     if len(matches) != 1:
-        raise PriceError("provider must return exactly one matching canonical pair")
+        raise PriceError("provider must return exactly one matching canonical pair", "identity")
     return matches[0]
+
+
+def _matching_pool(body, target):
+    if body is None or (isinstance(body, dict) and "data" in body and body["data"] in (None, [])):
+        raise PriceError("provider pool data unavailable", "unavailable")
+    if not isinstance(body, dict) or not isinstance(body.get("data"), dict):
+        raise PriceError("provider pool schema invalid")
+    pool = body["data"]
+    attributes, relationships = pool.get("attributes"), pool.get("relationships")
+    if not isinstance(attributes, dict) or not isinstance(relationships, dict):
+        raise PriceError("provider pool schema invalid")
+    expected = {"base_token": "robinhood_" + target["token_address"],
+                "quote_token": "robinhood_" + ZERO_ADDRESS, "dex": "uniswap-v4-robinhood"}
+    if (pool.get("type") != "pool" or pool.get("id") != "robinhood_" + target["pool_id"]
+            or not isinstance(attributes.get("address"), str)
+            or attributes["address"].lower() != target["pool_id"]):
+        raise PriceError("provider canonical pool identity mismatch", "identity")
+    for name, identifier in expected.items():
+        relation = relationships.get(name)
+        data = relation.get("data") if isinstance(relation, dict) else None
+        if not isinstance(data, dict) or data.get("id") != identifier:
+            raise PriceError("provider canonical pool relationship mismatch", "identity")
+    return attributes
 
 
 def _multiply(amount, quote):
@@ -314,53 +368,128 @@ def _multiply(amount, quote):
     return value.rstrip("0").rstrip(".") if "." in value else value
 
 
-def price(config, transport=None, now=None, monotonic=None):
-    """Fetch once; optional gross amount uses exactly these validated quotes.
+def _evidence(source, target, hashes):
+    provider = PROVIDERS[source]
+    return {"provider": provider["label"], "source_ids": [provider["source_id"]],
+            "source_url": "https://" + provider["host"] + provider["path"] + target["pool_id"],
+            "market_url": provider["market"] + target["pool_id"],
+            "chain_id": CHAIN_ID, "pool_id": target["pool_id"],
+            "token_address": target["token_address"], "quote_token_address": ZERO_ADDRESS,
+            "price_observed_at": None, "price_observation_time_status": "not_supplied_by_provider",
+            "package_sha256": hashes}
 
-    Injectable transport(path, timeout, deadline, monotonic) returns UTF-8 bytes.
-    Clocks are callables returning Unix seconds and monotonic seconds respectively.
-    """
-    config = _validate_input(config)
-    target, hashes = _load_package()
-    now, monotonic = now or time.time, monotonic or time.monotonic
-    path = "/latest/dex/pairs/robinhood/" + target["pool_id"]
-    deadline = monotonic() + REQUEST_TIMEOUT
+
+def _observe(source, target, hashes, transport, now, monotonic, deadline):
+    request_deadline = min(deadline, monotonic() + REQUEST_TIMEOUT)
+    timeout = request_deadline - monotonic()
+    if timeout <= 0:
+        raise PriceError("price request deadline exceeded", "unavailable")
     try:
-        raw = (transport or _https)(path, REQUEST_TIMEOUT, deadline, monotonic)
-        if monotonic() >= deadline:
-            raise PriceError("price request deadline exceeded")
-        body = _json(raw, MAX_RESPONSE_BYTES)
+        raw = transport(source, PROVIDERS[source]["path"] + target["pool_id"], timeout, request_deadline, monotonic)
     except PriceError:
         raise
+    except (PermissionError, ssl.SSLCertVerificationError):
+        raise PriceError("price transport access denied", "access") from None
+    except (OSError, http.client.HTTPException):
+        raise PriceError("price transport failed", "unavailable") from None
     except Exception:
-        raise PriceError("price transport or bounded provider JSON invalid") from None
-    pair = _matching_pair(body, target)
+        raise PriceError("price transport failed") from None
+    if monotonic() >= request_deadline:
+        raise PriceError("price request deadline exceeded", "unavailable")
+    try:
+        body = _json(raw, MAX_RESPONSE_BYTES)
+    except (ValueError, TypeError, RecursionError):
+        raise PriceError("bounded provider JSON invalid") from None
+    pair = _matching_pair(body, target) if source == "dexscreener" else _matching_pool(body, target)
     values, errors = {}, {}
-    for field, identifier, unit in (("priceUsd", "standard_usd", "USD/STANDARD"),
-                                    ("priceNative", "standard_eth", "ETH/STANDARD")):
+    fields = PROVIDERS[source]["fields"]
+    for field, identifier, unit in zip(fields, ("standard_usd", "standard_eth"), ("USD/STANDARD", "ETH/STANDARD")):
         try:
             values[identifier] = {"value": _decimal(pair.get(field), 36, positive=True), "unit": unit}
         except ValueError:
             errors[identifier] = "provider denomination missing or invalid positive plain decimal string"
     if not values:
-        raise PriceError("provider has no valid canonical price denomination")
-    evidence = {"provider": "DEX Screener", "source_ids": ["dexscreener-api"],
-                "source_url": "https://" + HOST + path,
-                "market_url": "https://dexscreener.com/robinhood/" + target["pool_id"],
-                "chain_id": CHAIN_ID, "pool_id": target["pool_id"],
-                "token_address": target["token_address"], "quote_token_address": ZERO_ADDRESS,
-                "retrieved_at": datetime.fromtimestamp(now(), timezone.utc).isoformat().replace("+00:00", "Z"),
-                "price_observed_at": None, "price_observation_time_status": "not_supplied_by_provider",
-                "package_sha256": hashes}
-    result = {"schema_version": 1, "status": "partial" if errors else "ok", "values": values,
-              "errors": errors, "evidence": evidence, "note": NOTE}
+        category = "unavailable" if all(pair.get(field) is None for field in fields) else "invalid"
+        raise PriceError("provider has no valid canonical price denomination", category)
+    evidence = _evidence(source, target, hashes)
+    evidence["retrieved_at"] = datetime.fromtimestamp(now(), timezone.utc).isoformat().replace("+00:00", "Z")
+    return {"schema_version": 1, "status": "partial" if errors else "ok", "values": values,
+            "errors": errors, "evidence": evidence, "note": PROVIDERS[source]["label"] + ": " + NOTE}
+
+
+def _failure(error):
+    # Never publish exception text supplied by an injected transport or upstream body.
+    return {"unavailable": "provider temporarily unavailable or has no quotes",
+            "access": "provider access denied; permission controls are not bypassed",
+            "identity": "provider canonical market identity could not be established",
+            "invalid": "provider transport, schema, or bounded price data invalid"}.get(error.category, "provider request failed")
+
+
+def _disagreement(selected, other):
+    result = {}
+    # Prices have at most 78 digits and 36 fractional digits. This also retains
+    # tiny differences between large coefficients before rounding percentages.
+    with localcontext() as context:
+        context.prec = 240
+        for identifier in selected.keys() & other.keys():
+            primary, secondary = Decimal(selected[identifier]["value"]), Decimal(other[identifier]["value"])
+            result[identifier] = format((abs(secondary - primary) / primary * 100).quantize(Decimal("0.0001")), "f")
+    return result
+
+
+def price(config, transport=None, now=None, monotonic=None):
+    """Select one provider's quotes and gross mark; at most two bounded requests.
+
+    Injectable transport(source, path, timeout, deadline, monotonic) returns bytes.
+    Clocks return Unix seconds and monotonic seconds respectively.
+    """
+    config = _validate_input(config)
+    target, hashes = _load_package()
+    now, monotonic, transport = now or time.time, monotonic or time.monotonic, transport or _https
+    deadline = monotonic() + 2 * REQUEST_TIMEOUT
+    selected = "dexscreener" if config["source"] == "auto" else config["source"]
+    primary_failure = None
+    try:
+        result = _observe(selected, target, hashes, transport, now, monotonic, deadline)
+    except PriceError as error:
+        if config["source"] != "auto" or error.category != "unavailable":
+            raise PriceError(PROVIDERS[selected]["label"] + ": " + _failure(error), error.category) from None
+        primary_failure = error
+        selected = "geckoterminal"
+        try:
+            result = _observe(selected, target, hashes, transport, now, monotonic, deadline)
+        except PriceError as fallback_error:
+            raise PriceError("DEX Screener unavailable; GeckoTerminal fallback failed: " + _failure(fallback_error),
+                             fallback_error.category) from None
+        result["fallback"] = {"from": "DEX Screener", "to": "GeckoTerminal", "reason": _failure(error)}
+        result["errors"]["primary_source"] = _failure(error)
+        result["status"] = "partial"
+        result["note"] = "GeckoTerminal fallback after DEX Screener was unavailable. " + NOTE
     if "standard_amount" in config:
         amount = config["standard_amount"]
         valuation = {"standard_amount": amount, "basis": BASIS}
         for identifier, field, unit in (("standard_usd", "gross_usd", "USD"), ("standard_eth", "gross_eth", "ETH")):
-            if identifier in values:
-                valuation[field] = {"value": _multiply(amount, values[identifier]["value"]), "unit": unit}
+            if identifier in result["values"]:
+                valuation[field] = {"value": _multiply(amount, result["values"][identifier]["value"]), "unit": unit}
         result["valuation"] = valuation
+    if config["cross_check"]:
+        other = "geckoterminal" if selected == "dexscreener" else "dexscreener"
+        try:
+            if primary_failure is not None:
+                raise primary_failure
+            secondary = _observe(other, target, hashes, transport, now, monotonic, deadline)
+            comparison = {key: secondary[key] for key in ("status", "values", "evidence", "errors")}
+            comparison["disagreement_percent"] = _disagreement(result["values"], secondary["values"])
+        except PriceError as error:
+            comparison = {"status": "unavailable", "values": {}, "evidence": _evidence(other, target, hashes),
+                          "errors": {"request": _failure(error)}, "disagreement_percent": {}}
+        comparison["provider"] = PROVIDERS[other]["label"]
+        result["cross_check"] = comparison
+        if comparison["status"] != "ok":
+            result["status"] = "partial"
+            result["errors"]["cross_check"] = "secondary provider unavailable or incomplete; selected quotes retained"
+        result["note"] += (" Cross-check observations are not atomic or a guarantee of independent truth;"
+                           " GeckoTerminal and CoinGecko are the same provider family. No quotes are blended.")
     return result
 
 

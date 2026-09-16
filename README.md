@@ -4,7 +4,7 @@
 
 srstack explains documented protocol mechanics, reads current public state and compares expansion strategies using assumptions you approve. It is one independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product, trading bot or wallet toolkit.
 
-**0.1.1 candidate · planner schema/model 1.** This README describes the candidate, including shared market pricing and gross valuation. Export an exact reviewed commit to try it; published versions and their separate audit evidence remain on the [releases page](https://github.com/tomismeta/srstack/releases). No 0.1.1 release is published yet.
+**Version 0.1.1 · planner schema/model 1.** Shared market pricing supports a labelled availability fallback and optional provider cross-check. Use the [releases page](https://github.com/tomismeta/srstack/releases) for installable packages and separate audit evidence; identify installed revisions by exact reviewed commit.
 
 ## What you can ask
 
@@ -38,13 +38,13 @@ These are routing instructions within one skill, not separately installed comman
 | Research announcements or explorer status | Permitted public web retrieval | Relevant official pages or explorer |
 | Run approved scenarios | Trusted package, permitted Python 3.10+ execution and safe JSON input | None; the planner is offline |
 | Inspect current state | Trusted package and permitted Python 3.10+ execution | Fixed public Robinhood Chain RPC |
-| Read market price or gross balance value | Trusted package and permitted Python 3.10+ execution | Fixed public DEX Screener canonical-pool endpoint; charter balances additionally use RPC |
+| Read market price or gross balance value | Trusted package and permitted Python 3.10+ execution | Fixed public DEX Screener/GeckoTerminal pool endpoints; charter balances additionally use RPC |
 
 All three helpers use only Python's standard library: no pip dependencies, wallet connector or provider credentials. Execution also requires the filesystem protections described in [execution](references/planning-execution.md); unsupported hosts fail closed. Missing execution or retrieval capability produces an explanation, not invented results. The skill does not install dependencies or change host permissions.
 
 ## Quick start
 
-This candidate is available through the reviewed-commit export below. For a tagged release instead, follow that release's documentation and verify its attached runtime ZIP against `SHA256SUMS`.
+Download **`srstack-0.1.1.zip`** and **`SHA256SUMS`** from [srstack v0.1.1](https://github.com/tomismeta/srstack/releases/tag/v0.1.1). Verify the ZIP against its checksum, then place the complete `srstack/` folder into a clean host skill directory. Keep customizations outside discovery roots, verify the manifest and loaded revision/path, and start a fresh conversation. For source review or pinned installations, use the export workflow below.
 
 **Install a runtime export or attached runtime ZIP—not a full repository, GitHub's automatic “Source code” archive or an audit archive.** Audit evidence is not an installable skill or a smart-contract security certification.
 
@@ -188,22 +188,28 @@ Views are `protocol`, `auctions` and `charter`; the last requires integer `chart
 Use srstack inspect price. Show STANDARD in USD and ETH.
 What is 1000 STANDARD worth at the latest reported market price?
 What is the accrued balance of public charter <public charter ID> worth now?
+Use srstack inspect price. Cross-check DEX Screener against GeckoTerminal.
+Use GeckoTerminal for the current STANDARD price.
 ```
 
 Current-value questions use the shared price reader automatically; there is no prerequisite `inspect price` step. A charter valuation reads that charter's balance, then passes the successful `charter_pending` quantity to `scripts/price.py`. This is a gross market mark of a STANDARD-denominated ledger balance—not wallet tokens, net withdrawal proceeds or a branch/NFT resale price. It does not value future earning capacity.
 
-The reader makes one fixed public request for the exact canonical ETH/STANDARD pool. It validates chain, token, quote asset and pool identity, and computes any amount valuation locally without sending the amount to the provider. No ticker search, first-pair selection, arbitrary endpoint or saved-price fallback is used.
+By default, the reader queries DEX Screener for the exact canonical ETH/STANDARD pool. If that source is unavailable, it can use GeckoTerminal and explicitly label the fallback and reason. Identity/schema violations and host/provider access denials do not trigger fallback. A valid partial response stays with its provider rather than filling a missing currency from another source. Chain, token, quote asset and pool identity are checked for both providers; any amount valuation is local and never sent to them.
+
+An explicit provider choice disables automatic fallback. A requested cross-check fetches the other fixed provider and reports its separate prices, evidence and percentage differences; it does not average prices, pick the higher value or change the selected valuation source. Each invocation makes at most two requests. Ordinary price questions do not fetch both providers unnecessarily.
 
 From the reviewed installed root:
 
 ```sh
 printf '%s' '{"schema_version":1}' | python3 -B -I scripts/price.py
 printf '%s' '{"schema_version":1,"standard_amount":"1000"}' | python3 -B -I scripts/price.py
+printf '%s' '{"schema_version":1,"cross_check":true}' | python3 -B -I scripts/price.py
+printf '%s' '{"schema_version":1,"source":"geckoterminal","standard_amount":"1000"}' | python3 -B -I scripts/price.py
 ```
 
-The optional amount is an unsigned decimal **string**, not a JSON number. Usable prices and gross values are decimal strings. A failed denomination remains missing; if no usable price is available, the helper fails without a fallback value.
+`source` is `auto` (default), `dexscreener` or `geckoterminal`; `cross_check` is an optional boolean, defaulting to false. The optional amount is an unsigned decimal **string**, not a JSON number. Quotes and gross values are decimal strings. Failed fields remain missing, and a labelled fallback never becomes a cached or invented value.
 
-These are **provider-reported indicative prices**. The API does not supply a quote-observation timestamp: retrieval time is not quote age, and pool creation time is not price freshness. A charter block and a price retrieval are separate observations, not an atomic combined snapshot. Gross values exclude withdrawal fees, trading taxes, LP fees, slippage and gas.
+These are **provider-reported indicative prices**. Neither consumed pool API supplies a quote-observation timestamp: retrieval/cache age is not quote age, and pool creation time is not price freshness. Charter state, the selected price and any cross-check have separate observation boundaries, not one atomic snapshot. Gross values exclude withdrawal fees, trading taxes, LP fees, slippage and gas.
 
 ## Contract coverage
 
@@ -230,13 +236,13 @@ For evidence-assisted planning, ask: **“Use srstack plan. Read the current pro
 
 The package uses selected references and indexed records rather than loading the whole corpus for every question. The reference indexes own current inventory counts; disk size is not per-question token cost, and selective loading depends on the host.
 
-Packaged research needs a resource reader. Calculations and public readers use **Python 3.10+ and its standard library**, with no pip dependencies. Chain reads use the fixed Robinhood RPC; market prices use the fixed DEX Screener pool endpoint. No wallet connector, telemetry or self-update process is bundled.
+Packaged research needs a resource reader. Calculations and public readers use **Python 3.10+ and its standard library**, with no pip dependencies. Chain reads use the fixed Robinhood RPC; market prices use only the fixed DEX Screener/GeckoTerminal pool endpoints. No wallet connector, telemetry or self-update process is bundled.
 
 ## Safety and verification limits
 
 Answers lead with content. Estimates get a short label; observations get a brief source note where needed. Detailed provenance and assumptions are available on request, not repeated as small print.
 
-The scenario engine is offline. The snapshot helper reads two fixed catalogs and permits only its pinned view/pure calls on the configured Robinhood addresses. The price helper reads only the fixed identity catalog and makes a fixed-host canonical-pool GET; optional quantity multiplication is local. All three reject unsupported inputs and write no files. No wallets, credentials, signatures, transaction payloads or state-changing simulations. See [safety](references/safety.md) and [execution](references/planning-execution.md) for the full boundary.
+The scenario engine is offline. The snapshot helper reads two fixed catalogs and permits only its pinned view/pure calls on the configured Robinhood addresses. The price helper reads only the fixed identity catalog and makes bounded canonical-pool GETs to two allowlisted providers; optional quantity multiplication is local and uses one selected provider. All three reject unsupported inputs and write no files. No wallets, credentials, signatures, transaction payloads or state-changing simulations. See [safety](references/safety.md) and [execution](references/planning-execution.md) for the full boundary.
 
 The readers do **not** supply liquidity-depth analysis, an amount-specific withdrawal quote, transaction gas estimates or guaranteed sale proceeds. The planner does **not** reproduce changing policy, auction competition or contract execution; it compares explicit hypothetical inputs rather than forecasting returns. Source verification and announcements use separate fresh web research.
 
@@ -257,7 +263,7 @@ python3 -B maintenance/package.py archive
 
 The checks use Python's standard library and local Git; they do not call explorers, connect wallets or use model/API credentials. CI runs them on Python 3.10 and 3.14, with read-only repository permissions and commit-pinned Actions. GitHub checkout and Python provisioning require network access; the validation commands themselves are offline. CI verifies the committed manifest rather than regenerating it, and checks deterministic ZIP output. It does not upload artifacts, tag, publish releases or monitor contracts.
 
-After deliberate runtime changes, regenerate the manifest with `python3 -B maintenance/package.py build`, then run the checks above. `dist/srstack-0.1.1.zip` contains only the candidate runtime package. Maintenance tooling and CI files are repository-only and never authorize an installed skill to execute them.
+After deliberate runtime changes, regenerate the manifest with `python3 -B maintenance/package.py build`, then run the checks above. `dist/srstack-0.1.1.zip` contains only the runtime package. Maintenance tooling and CI files are repository-only and never authorize an installed skill to execute them.
 
 ## Feedback and license
 
