@@ -6,7 +6,7 @@
   "digest_convention": "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest",
   "content_files": {
     "LICENSE": "14b82531e814378b84e97596f68a98c70becee3251b206c545d4f07d73105af3",
-    "README.md": "b40d68c7a2667c677d96e287570095791a734017a99856ed5446f233b0e99696",
+    "README.md": "3da5d5036e98081037e83516e78c334428bdb01750e20c4488e7b8ed60141841",
     "SKILL.md": "33a5716775743e1aec43bb834f5bab8360b3e9571dd7c75d5b7683dbfdaf0518",
     "assets/coverage.json": "b450c4a7b99427e1a88beb45e5b16f6b87a656f038e239d366250263a151bf91",
     "assets/entities/robinhood.json": "d27d4800566cbe9180fb1e1f01d73af95b66004baea189de497dd138375017c6",
@@ -50,5 +50,5 @@
     "scripts/snapshot.py": "7ddce5b655ffa235e698827bf3d676a6a00564d2f90106688c12a92097231f50",
     "scripts/verify.py": "df47bf41248e448b0753605603d618c07c4db7cc765c3891076272ecfde4cf9b"
   },
-  "content_sha256": "b11c71e5d9d226536ed1d2335923e400aee4e73fadceb0488d3b517aa3107472"
+  "content_sha256": "7865f1057f0a1bdee2d9d2883016cdb01de9eef51ab012cf62272c45c34497c4"
 }

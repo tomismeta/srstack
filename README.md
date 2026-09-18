@@ -60,21 +60,21 @@ Use Python 3.10+ on a supported POSIX host. Stop the host/other installers while
 
 ```sh
 # Hermes default profile:
-export SKILL_PARENT="$HOME/.hermes/skills"
+SKILL_PARENT="$HOME/.hermes/skills"
 # OR OpenClaw: run this instead from the intended workspace:
-# export SKILL_PARENT="$PWD/skills"
+# SKILL_PARENT="$PWD/skills"
 ```
 
 For named profiles, use their actual configured root. Choose a backup/staging directory **outside every skill-discovery root**, on the same filesystem as `SKILL_PARENT`. Keep local customizations there; never merge them silently into the new release. The unique backup below is never overwritten. Move the shell to a stable directory before installation:
 
 ```sh
-export SRSTACK_BACKUPS="$HOME/srstack-backups"
-cd "$HOME" && python3 -B -I - <<'PY'
-import hashlib, os, re, stat, subprocess, sys, tempfile, urllib.request, zipfile
+SRSTACK_BACKUPS="$HOME/srstack-backups"
+cd "$HOME" && python3 -B -I - "${SKILL_PARENT:?Choose a skill root first}" "$SRSTACK_BACKUPS" <<'PY'
+import hashlib, re, stat, subprocess, sys, tempfile, urllib.request, zipfile
 from pathlib import Path
 
-parent = Path(os.environ["SKILL_PARENT"]).resolve()
-backups = Path(os.environ["SRSTACK_BACKUPS"]).resolve()
+parent = Path(sys.argv[1]).resolve()
+backups = Path(sys.argv[2]).resolve()
 if parent == backups or parent in backups.parents or backups in parent.parents:
     raise SystemExit("Skill and backup roots must be separate")
 parent.mkdir(parents=True, exist_ok=True)
