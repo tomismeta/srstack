@@ -12,6 +12,7 @@
 | `sr-protocol-conditions` | [Current conditions](https://www.standardreserve.xyz/app/protocol/live/): Policy & fees, Auctions, Treasury & controls; publisher rollover/accrual-stop explanation. Explanatory component text is not a live observation. | [Inspection](inspection.md), [policy](protocol-policy.md), [reserves](reserves.md) |
 | `sr-contract-directory` | [Contract directory](https://www.standardreserve.xyz/app/protocol/contracts/): identity routes and publisher-linked ABI leads for successor holdings migration and auction supply controllers, not deployment correspondence or complete authority. | [Contracts](contracts.md), [risks](risks.md) |
 | `sr-standard-source-interface`, `sr-tax-hook-source-interface` | Reviewed STANDARD/Trading Hook source and ABI provenance; token accounting/restriction and Hook schedule semantics only, not verification of separately deployed dependencies or stored live status. | [Inspection](inspection.md#supply-restrictions-and-control-context), [contracts](contracts.md) |
+| `sr-beans-auction-burn-pol-proposal` | [@0xbeans thread](https://x.com/0xbeans/status/2101024624914170176), reviewed through a public mirror: proposed auction cadence, proceeds split and incremental POL changes; not official policy, verified deployment or completed security review. | [Proposal context](updates.md#reviewed-branch-auction-burn-and-pol-proposal), [planner limits](planning-model.md) |
 
 ## Whitepaper: all sixteen sections
 

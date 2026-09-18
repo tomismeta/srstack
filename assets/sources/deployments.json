@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "reviewed_at": "2026-09-18",
-  "scope": "Publisher identity and linked-ABI provenance, chain routing and current-conditions explanation; no stored state or verification verdicts",
+  "scope": "Publisher identity and linked-ABI provenance, chain routing, current-conditions explanation and attributed developer proposals; no stored state or verification verdicts",
   "records": [
     {
       "id": "sr-contract-directory",
@@ -69,6 +69,30 @@
         "Displayed expansion/contraction balances are native ETH only; reserve-token holdings are not indexed. Fee-routing direction is provisional until settlement and uses a different window from issuance policy.",
         "Rollover/accrual-stop text is publisher evidence, not verified CentralBank behavior, a current settlement verdict or a scheduling model.",
         "Client-rendered route metadata and linked component text are not fresh rendered or RPC observations; publication chronology is not established."
+      ]
+    },
+    {
+      "id": "sr-beans-auction-burn-pol-proposal",
+      "url": "https://x.com/0xbeans/status/2101024624914170176",
+      "publisher": "0xBeans (@0xbeans), developer account; not the official project account",
+      "published_at": null,
+      "retrieved_at": "2026-09-18",
+      "review_depth": "Root post and three proposal explanations plus deployment/security-review follow-up, retrieved through the public Nitter mirror; absolute publication time and individual reply URLs were not exposed.",
+      "claim_stage": "attributed developer proposal, not implemented rules, deployed state or completed security review",
+      "locators": [
+        "https://nitter.tiekoetter.com/0xbeans/status/2101024624914170176",
+        "12h branch auctions",
+        "a more deliberate burn policy",
+        "incremental liquidity on the buy side only",
+        "contract deployment and separate security review required"
+      ],
+      "summary": "Proposes two half-allocation branch auctions per day, a 50/50 immediate-burn/incentive-vault split of branch-auction proceeds, and buy-side-only incremental POL with acquired STANDARD retained. The separate buyback-burn vault is described as unchanged.",
+      "limits": [
+        "Mirror-transcribed developer statements are not independently authenticated implementation or official policy evidence; refresh the original thread for current status.",
+        "The announced team-allocation restrictions and eventual burn of unused incentives are proposed requirements, not verified permissions or guaranteed outcomes.",
+        "The relative deployment estimate early next week is not an absolute date or evidence of completion; publication time remains unavailable.",
+        "No contract addresses, replacement bindings, authenticated incentive-vault ABI or deployed payment/accounting path are established by this thread.",
+        "Do not replace canonical parameters, halve license acquisition cost, change planner time steps, assume rewards or infer price/slippage benefits from the proposal."
       ]
     }
   ]

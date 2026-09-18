@@ -6,6 +6,8 @@ The repository also contains maintenance tools and CI configuration that are not
 
 For an existing full-repository install, retain any needed local changes outside skill-discovery roots and remove the active copy before exporting into its absent destination. Keep the review clone outside those roots; do not overlay an export onto a checkout. Verify both manifest hashes and runtime membership: `.git`, `maintenance`, `.github` and `dist` must not be installed. A host loading extra repository files does not make that layout supported.
 
+Before moving/removing an old installation or deleting a temporary checkout, change the maintainer shell/tool working directory to an existing stable directory outside that tree. Start subsequent commands there, then select the verified installed root explicitly for helper execution. If a command reports that its current directory no longer exists, restore a valid cwd; do not reinstall the host or treat it as a skill-load failure.
+
 ## Hermes
 
 Primary root: `~/.hermes/skills/`; named profiles may use another Hermes home. Put the package at that profile's `skills/srstack/`, or in an explicitly configured external skill directory containing `srstack/`. Do not duplicate across roots.
@@ -15,6 +17,8 @@ Hermes uses `skills_list` for discovery and `skill_view` for progressive resourc
 Invoke `/srstack` or natural-language “Use srstack plan”. Confirm the selected description/revision in a fresh conversation. Local loading differs from Skills Hub community-install guard acceptance; do not bypass guards to claim compatibility.
 
 The new-skill authoring validator has a shorter description budget than the existing-skill loader. Keep description short and metadata version a string; no nested host metadata merely to repeat requirements. Use the Python supported by the installed Hermes release; all three helpers need only standard-library Python 3.10+ and the containment primitives described in [execution](planning-execution.md). Live state/price readers additionally require existing permitted public network access; the planner stays offline.
+
+One-shot Hermes sessions may be unable to complete a normal tool-approval prompt. Select the [permitted stdin path](planning-execution.md#input-transport-and-host-approvals) before running a helper; for the approved bundled example, use its fixed file-redirection command. If execution still requires approval, stop and request an approval-capable session for that exact command. Do not hunt for a PTY/wrapper that avoids the check or require `--yolo`. Successful execution with approvals bypassed establishes helper behavior only, not ordinary approval-flow compatibility.
 
 [Official Hermes Skills System](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills/).
 

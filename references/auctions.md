@@ -17,6 +17,8 @@ The publisher frontend ABIs additionally name `supplyController()`, `setSupplyCo
 
 [Source: sr-whitepaper-v1: branches, auctions]
 
+**Proposal boundary:** the [reviewed @0xbeans thread](updates.md#reviewed-branch-auction-burn-and-pol-proposal) proposes 12-hour branch auctions with half the daily allocation each, and a 50/50 immediate-burn/incentive-vault proceeds split. This qualifies the full-removal description above without changing `auction-duration`, `licenses-per-day` or `license-burn-share`: those remain whitepaper reference rules, not verified current settings. It does not halve the buyer's license cost, double daily issuance or establish a changed charter-auction cadence. A duration getter cannot authenticate proceeds routing or incentive-vault controls.
+
 ## Published floor and price-curve gap
 
 §7 publishes `license-floor-formula`: P_floor = 2 × (700,000 × m / N), using the launch base, policy multiplier and total system branches. `license-floor-yield-days` captures its two-day yield interpretation. The source also permits later base-rate reductions; do not infer live floor recomputation, snapshot timing or rounding without implementation evidence. [sr-whitepaper-v1: branches equation 7.1; policy]

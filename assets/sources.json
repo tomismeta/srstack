@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "purpose": "Source routing and reference provenance only; no stored protocol state, recap claims or superseded interpretations",
+  "purpose": "Source routing and reference provenance, including explicitly attributed proposals; no stored protocol state, performance recaps or superseded interpretations",
   "groups": [
     {
       "id": "market-price",
@@ -37,9 +37,10 @@
       "record_ids": [
         "sr-contract-directory",
         "sr-etherscan-chainlist",
-        "sr-protocol-conditions"
+        "sr-protocol-conditions",
+        "sr-beans-auction-burn-pol-proposal"
       ],
-      "scope": "Publisher identity attribution, chain routing and live conditions page discovery"
+      "scope": "Publisher identity attribution, chain routing, live conditions explanation and attributed developer deployment proposals"
     }
   ],
   "lookup": "Match source ID to groups.record_ids and read the literal path.",

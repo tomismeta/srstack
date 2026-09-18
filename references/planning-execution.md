@@ -8,6 +8,14 @@ Resolve the installed root from a trusted reviewed package/commit, not a working
 
 Manifest `content_files` maps relative paths to SHA-256 strings; `content_sha256` is the aggregate digest, not a per-file lookup.
 
+## Input transport and host approvals
+
+Choose an available, permitted input path before attempting execution. Prefer a host tool's separate stdin field with the fixed helper argument array. When stdin is unavailable, use one of the permitted transports below only if the host allows it; a missing capability is different from an approval denial. Do not repeatedly try wrappers to discover which one escapes an approval check.
+
+Approval of a scenario's assumptions or a request for current data does not grant host execution permission. If the host requests approval, use its normal approval flow for the exact reviewed helper command. If an unattended/one-shot session cannot obtain approval, stop promptly and say which command is blocked; ask the user to continue in an approval-capable session. Never recommend or enable `--yolo`, disable guards, broaden allowlists, or switch to PTY, `execute_code`, `python -c`, heredocs or another wrapper to evade a denial. A missing read is unavailable, not a reason to improvise calculations or reuse an old result.
+
+For the explicitly requested bundled fictional example, prefer `python3 -B -I scripts/scenario.py < assets/examples/planning.json` from the verified installed root when the host permits file redirection. Verify that fixed fixture against the manifest too, then pass it directly instead of copying/re-serializing its JSON into an environment variable or launcher. This command still needs normal host permission; it is not a workaround for blocked execution. If redirection is unsupported (not denied), a separately permitted transport below may supply the unchanged fixture. Do not generalize the fixture path into arbitrary file inputs or write temporary input files without explicit permission.
+
 ## Scenario helper
 
 The engine reads only `assets/parameters/participation.json`, `assets/parameters/monetary.json`, and `assets/parameters/launch.json`, rooted at the real installed package via `__file__.parent.parent`. Each read is bounded to 64 KiB. Descriptor-relative `os.open`/`os.stat`, no-follow flags and regular-file checks are required; unsupported hosts produce a package-data error, not weaker containment. Python version alone does not guarantee OS compatibility. Symlinks, escapes, nonregular files, malformed/duplicate-key JSON, invalid schemas/duplicate IDs, missing required records, or invalid constraint types, units or statuses stop both modes. No caller path, rule override, directory scan or fallback source.

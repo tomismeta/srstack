@@ -17,6 +17,8 @@ The published launch rule in `launch-trading-tax-curve` describes opening taxes 
 
 Outside liquidity opens after the launch schedule reaches its floors. The publisher says withdrawn ETH principal is taxed at the sell rate and STANDARD principal at the buy rate; accrued LP fees are untaxed. See `outside-liquidity-tax-policy`. This is a description, not an executable liquidity action. [sr-whitepaper-v1: reserves]
 
+**Proposal boundary:** the [reviewed @0xbeans thread](updates.md#reviewed-branch-auction-burn-and-pol-proposal) proposes buy-side-only incremental POL instead of pairing acquired STANDARD into additional two-sided liquidity. Acquired STANDARD would remain in the POL vault, not be burned. It also proposes retaining half of branch-auction proceeds in a separate incentive vault, with team-allocation restrictions and eventual burn of unused incentives. These are proposed mechanics, not observed balances, verified custody restrictions or edits to the ongoing ETH fee split. The thread explicitly leaves the separate buyback-burn vault unchanged; do not apply the proposed 50/50 split to buybacks or exit fees.
+
 ## Reserve assets and ownership
 
 Expansion accumulates ETH and purchases tokenized gold and comparable assets. Reserves are protocol property and are not redeemable by charter holders. Sources do not authenticate reserve issuers, custody/redemption terms, balances, valuation policy or purchase venues. Reserve accumulation is neither evidence of holdings nor a fixed peg or guaranteed price floor. ExpansionVault reserve purchases remain owner-only even if the separate execution switch is opened. [sr-whitepaper-v1: reserves, immutables, disclaimer]

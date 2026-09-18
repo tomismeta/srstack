@@ -24,6 +24,8 @@ If the projection's price basis is unspecified, ask **“Use current prices, hyp
 
 For requested current protocol conditions, use [current protocol inputs](planning-inputs.md#current-protocol-inputs) and only the relevant fresh snapshot. For a chosen current-price case, use the shared `scripts/price.py` reader outside the offline engine and propose its ETH-per-STANDARD quote as the initial price. Ask for the remaining position, budget, horizon and economics; never substitute stored launch values when a current read fails. Price retrieval does not approve holding it constant or any future growth path.
 
+If the user asks to incorporate the [branch-auction/burn/POL proposal](updates.md#reviewed-branch-auction-burn-and-pol-proposal), explain the [model boundary](planning-model.md#published-mechanics-versus-fixed-proxies) before intake or calculation. It does not simulate intraday auctions, incentive rewards or POL. Do not silently halve license costs, double branch growth or assume better exit prices; offer a qualitative explanation or an explicitly approved sensitivity using supported inputs.
+
 ### 2. Fill gaps without inventing economics
 
 After the essentials, collect the remaining assumptions in small groups. Explain unfamiliar concepts before asking for values. Distinguish user inputs, dated sourced observations, proposed hypotheses and unresolved gaps. A current observation is not a future constant or an executable quote.

@@ -92,10 +92,14 @@ The export machine needs Git and Python 3.10+. The installed host needs only the
 
    For updates, preserve customizations outside all skill-discovery roots, then remove the old active installation before exporting into the now-absent destination. Keep the review clone outside those roots too. Do not overlay files, use `cp -a` on the repository or leave a shadowing same-name copy. Start or refresh the host only after export succeeds. A full repository may load in a host, but it is not the supported runtime installation.
 
+   Before removing an old installation or temporary checkout, move your shell/tool working directory outside that tree to an existing stable directory. A deleted cwd can break later host commands even when the installation is correct.
+
 4. Have the host verify the installed files against `release-manifest.json`: `content_files` maps relative paths to SHA-256 hashes, and `digest_convention` specifies the aggregate `content_sha256`. Confirm the actual loaded path and revision, and that repository-only `.git`, `maintenance`, `.github` and `dist` directories are absent. Matching listed hashes alone does not detect extra files or establish trust in an otherwise unreviewed package.
 5. Start a fresh conversation and try a packaged-knowledge question from the examples below.
 
 **Hermes installation:** use the complete-bundle instructions above. URL discovery depends on configured sources; importing raw `SKILL.md` does not necessarily import its references, assets and scripts.
+
+**Host approvals:** trusted skill files and approved scenario assumptions do not bypass execution approval. If a one-shot session cannot obtain it, continue in an approval-capable session for the exact helper command rather than trying wrappers, PTYs or `--yolo`. The bundled fixture can use the fixed file-redirection example below; it still requires normal permission. See [input transport and approvals](references/planning-execution.md#input-transport-and-host-approvals).
 
 Other harnesses can use their Agent Skills loader or explicitly read [SKILL.md](SKILL.md) and selected resources. Resource paths resolve against the loaded skill directory. See [host setup](references/installation.md); this package never installs itself or changes host permissions.
 

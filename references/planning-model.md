@@ -12,6 +12,10 @@ The current publisher materials describe launch tax, auction and multiplier mech
 
 The official current-conditions explanation states that accrual stops at epoch end until rollover (`sr-protocol-conditions`). Model `"1"` does not schedule rollover, infer settlement-pending status or simulate that pause; its daily arithmetic remains unchanged. A snapshot stream rate or daily-equivalent output is therefore not a settlement-aware forecast. Source-reviewed token/Hook flags likewise do not simulate whether an acquisition, transfer or exit can execute.
 
+A user may approve a lower effective-issuance input as a rough sensitivity, but no automatic “downtime haircut” or stress-mode switch is warranted. A scalar reduction does not reproduce the timing of missed accrual: it can change budget depletion, acquisition affordability and strategy paths differently from an actual pause. Do not shorten the whole horizon to model downtime either; that also changes price compounding and purchase opportunities. Keep the distinction between an approved proxy and settlement-aware forecasting explicit.
+
+The [reviewed @0xbeans proposal](updates.md#reviewed-branch-auction-burn-and-pol-proposal) is outside model `"1"`: two intraday auctions, incentive-vault routing/distributions and one-sided POL are not simulated. Unchanged daily branch allocation is not doubled dilution; a 50/50 proceeds split does not halve acquisition cost. Do not convert model days to 12-hour steps, add assumed incentive income, credit future burns, or reduce slippage automatically. Explain those limitations before presenting an affected projection; only explicitly approved sensitivities to existing inputs are possible, not an implementation simulation.
+
 ## Model order and accounting
 
 Each case runs three independent counterfactual strategies from the same initial branches and credits:
