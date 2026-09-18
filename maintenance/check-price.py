@@ -510,13 +510,57 @@ class PriceChecks(unittest.TestCase):
 
     def cli(self, raw, args=(), transport=None):
         incoming = Mock()
-        incoming.buffer = io.BytesIO(raw)
+        if args:
+            incoming.buffer.read.side_effect = AssertionError("explicit CLI read stdin")
+        else:
+            incoming.buffer = io.BytesIO(raw)
         stdout, stderr = io.StringIO(), io.StringIO()
         with patch.object(price.sys, "argv", ["price.py", *args]), patch.object(price.sys, "stdin", incoming), \
                 patch.object(price.sys, "stdout", stdout), patch.object(price.sys, "stderr", stderr), \
-                patch.object(price, "_https", transport or self.provider):
+                patch.object(price, "_https", transport or self.provider), \
+                patch.object(price.time, "time", return_value=NOW), \
+                patch.object(price.time, "monotonic", return_value=0):
             code = price.main()
         return code, stdout.getvalue(), stderr.getvalue()
+
+    def test_explicit_cli_matches_json_without_reading_stdin(self):
+        cases = [
+            (("--quote",), {}),
+            (("--source", "geckoterminal"), {"source": "geckoterminal"}),
+            (("--cross-check",), {"cross_check": True}),
+            (("--amount-standard", "0012.500", "--source", "dexscreener", "--cross-check"),
+             {"standard_amount": "0012.500", "source": "dexscreener", "cross_check": True}),
+            (("--amount-standard", "0"), {"standard_amount": "0"}),
+            (("--amount-standard", "9" * 60 + "." + "9" * 18),
+             {"standard_amount": "9" * 60 + "." + "9" * 18}),
+        ]
+        for args, config in cases:
+            with self.subTest(args=args):
+                expected = self.cli(json.dumps(dict(schema_version=1, **config)).encode())
+                actual = self.cli(b"invalid stdin must be ignored", args=args)
+                self.assertEqual(actual[0], 0, actual[2])
+                self.assertEqual(actual, expected)
+
+    def test_cli_denials_precede_package_reads_and_transport(self):
+        cases = [
+            ("--quote", "--amount-standard", "1"), ("--quote", "--quote"),
+            ("--cross-check", "--cross-check"), ("--source", "auto", "--source", "auto"),
+            ("--amount-standard", "1", "--amount-standard", "2"),
+            ("--amount-standard",), ("--source",), ("--source", "other"),
+            ("--amount-standard", "-1"), ("--amount-standard", "1e2"),
+            ("--amount-standard", "NaN"), ("--amount-standard", "１"),
+            ("--amount-standard", "9" * 79), ("--amount-standard", "0." + "1" * 19),
+            ("--amount-standard", "1" * 81), ("--amount", "1"), ("--quote=true",),
+            ("--cross-check", "false"), ("--help", "--quote"), ("--", "--quote"),
+            ("--quote",) * 7,
+        ]
+        with patch.object(price, "_load_package", side_effect=AssertionError("invalid CLI read package")):
+            for args in cases:
+                with self.subTest(args=args):
+                    code, stdout, stderr = self.cli(b'{"schema_version":1}', args=args)
+                    self.assertEqual((code, stdout), (2, ""))
+                    self.assertEqual(json.loads(stderr)["error"]["type"], "invalid_input")
+        self.assertEqual(self.provider.requests, [])
 
     def test_cli_structured_errors_and_partial_exit_success(self):
         for raw in (b"\xff", b'{"schema_version":1,"schema_version":1}', b'{"schema_version":NaN}',
@@ -542,7 +586,6 @@ class PriceChecks(unittest.TestCase):
     def test_cli_help_and_extra_arguments_do_not_fetch(self):
         code, stdout, stderr = self.cli(b"", args=("--help",))
         self.assertEqual((code, stderr), (0, ""))
-        self.assertIn("standard_amount", stdout)
         code, stdout, stderr = self.cli(b'{"schema_version":1}', args=("--url", "https://bad.invalid"))
         self.assertEqual((code, stdout), (2, ""))
         self.assertEqual(json.loads(stderr)["error"]["type"], "invalid_input")

@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """Read a fixed Robinhood RPC snapshot; Python standard library only.
 
-Supply JSON on stdin: {"schema_version":1,"view":"protocol"}.
+With no arguments, supply JSON on stdin: {"schema_version":1,"view":"protocol"}.
 Views: protocol, charter (requires integer charter_id), auctions.
+CLI: protocol|auctions [--detail summary|full]
+     charter --id UINT256 [--detail summary|full]
+CLI mode never reads stdin. UINT256 is 1..78 ASCII decimal digits in uint256 range.
 Optional detail: summary (default) or full (raw RPC evidence and call mapping).
+Flags must be exact, unrepeated, separate tokens; --help must stand alone.
 No wallet, signing, simulation, endpoint override, or filesystem writes.
 Owner getters are observations, not a privilege audit.
 """
@@ -48,7 +52,7 @@ CALLS_SHA256 = "e2277987bcb024693564bbbf52fa90927974b2b4ba4de2089b602a046dbd74db
 
 
 class InputError(ValueError):
-    """Invalid bounded stdin configuration."""
+    """Invalid bounded stdin or CLI configuration."""
 
 
 class PackageDataError(ValueError):
@@ -579,17 +583,44 @@ def snapshot(config, transport=None, now=None, monotonic=None):
             "values": values, "derived": derived, "errors": errors, "evidence": evidence, "note": NOTE}
 
 
+def _cli_config(arguments):
+    if len(arguments) > 5 or any(len(value) > 80 for value in arguments):
+        raise InputError("CLI accepts at most 5 arguments of at most 80 characters")
+    if not arguments or arguments[0] not in PROFILES:
+        raise InputError("expected protocol, auctions, or charter as the first argument")
+    config = {"schema_version": 1, "view": arguments[0]}
+    seen = set()
+    index = 1
+    while index < len(arguments):
+        flag = arguments[index]
+        if flag not in ("--id", "--detail") or flag in seen:
+            raise InputError("unknown or repeated CLI flag")
+        seen.add(flag)
+        if index + 1 == len(arguments):
+            raise InputError("CLI flag requires a value")
+        value = arguments[index + 1]
+        if flag == "--id":
+            if not re.fullmatch(r"[0-9]{1,78}", value):
+                raise InputError("--id requires 1..78 ASCII decimal digits")
+            config["charter_id"] = int(value)
+        else:
+            config["detail"] = value
+        index += 2
+    return config
+
+
 def main():
     if sys.argv[1:] == ["--help"]:
         sys.stdout.write(__doc__ + "\n" + NOTE + "\n")
         return 0
     try:
-        if len(sys.argv) != 1:
-            raise InputError("only --help is accepted; supply JSON on stdin")
-        try:
-            config = _json(sys.stdin.buffer.read(MAX_INPUT_BYTES + 1), MAX_INPUT_BYTES)
-        except (ValueError, RecursionError):
-            raise InputError("stdin must be bounded UTF-8 JSON without duplicate keys") from None
+        if len(sys.argv) > 1:
+            config = _cli_config(sys.argv[1:])
+        else:
+            try:
+                config = _json(sys.stdin.buffer.read(MAX_INPUT_BYTES + 1), MAX_INPUT_BYTES)
+            except (ValueError, RecursionError):
+                raise InputError("stdin must be bounded UTF-8 JSON without duplicate keys") from None
         result = snapshot(config)
     except (InputError, PackageDataError, SnapshotError) as error:
         code, kind = (2, "invalid_input") if isinstance(error, InputError) else (4, "package_data_error") if isinstance(error, PackageDataError) else (5, "snapshot_error")

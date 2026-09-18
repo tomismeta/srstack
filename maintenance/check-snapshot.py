@@ -114,6 +114,70 @@ class SnapshotChecks(unittest.TestCase):
         with self.assertRaises(ValueError):
             snapshot._json(b"[" * 13 + b"]" * 13, 4096)
 
+    def cli(self, raw=b"", args=()):
+        incoming = unittest.mock.Mock()
+        if args:
+            incoming.buffer.read.side_effect = AssertionError("explicit CLI read stdin")
+        else:
+            incoming.buffer = io.BytesIO(raw)
+        stdout, stderr = io.StringIO(), io.StringIO()
+        with patch.object(snapshot.sys, "argv", ["snapshot.py", *args]), \
+                patch.object(snapshot.sys, "stdin", incoming), \
+                patch.object(snapshot.sys, "stdout", stdout), \
+                patch.object(snapshot.sys, "stderr", stderr), \
+                patch.object(snapshot, "_https", self.rpc), \
+                patch.object(snapshot.time, "time", return_value=NOW), \
+                patch.object(snapshot.time, "monotonic", return_value=0):
+            code = snapshot.main()
+        return code, stdout.getvalue(), stderr.getvalue()
+
+    def test_cli_views_match_json_without_reading_stdin(self):
+        cases = [
+            (("protocol",), {"view": "protocol"}),
+            (("auctions", "--detail", "full"), {"view": "auctions", "detail": "full"}),
+            (("charter", "--detail", "full", "--id", "7"),
+             {"view": "charter", "detail": "full", "charter_id": 7}),
+            (("charter", "--id", "0"), {"view": "charter", "charter_id": 0}),
+            (("charter", "--id", str(snapshot.UINT256_MAX)),
+             {"view": "charter", "charter_id": snapshot.UINT256_MAX}),
+        ]
+        for args, config in cases:
+            with self.subTest(args=args):
+                self.rpc.calls = {
+                    (self.rpc.addresses[call["contract"]],
+                     snapshot._calldata(call, dict({"charter_id": 7}, **config))): call
+                    for call in self.rpc.interface["calls"]
+                }
+                expected = self.cli(json.dumps(dict(schema_version=1, **config)).encode())
+                actual = self.cli(b"invalid stdin must be ignored", args=args)
+                self.assertEqual(actual[0], 0, actual[2])
+                self.assertEqual(actual, expected)
+
+    def test_cli_denials_precede_package_reads_and_transport(self):
+        cases = [
+            ("charter",), ("protocol", "--id", "7"), ("charter", "--id", "-1"),
+            ("charter", "--id", str(1 << 256)), ("charter", "--id", "9" * 79),
+            ("charter", "--id", "1.0"), ("charter", "--id", "1e2"),
+            ("charter", "--id", "７"), ("charter", "--id", "0x7"),
+            ("charter", "--id", "+7"), ("charter", "--id", " 7"),
+            ("charter", "--id", "7", "--id", "8"),
+            ("protocol", "--detail", "full", "--detail", "summary"),
+            ("protocol", "--detail"), ("protocol", "--detail", "trace"),
+            ("protocol", "--det", "full"), ("protocol", "--detail=full"),
+            ("protocol", "--url", "https://bad.invalid"), ("--help", "protocol"),
+            ("--detail", "full", "protocol"), ("protocol", "auctions"),
+            ("protocol",) * 6, ("x" * 81,),
+        ]
+        with patch.object(snapshot, "_load_package", side_effect=AssertionError("invalid CLI read package")):
+            for args in cases:
+                with self.subTest(args=args):
+                    code, stdout, stderr = self.cli(args=args)
+                    self.assertEqual((code, stdout), (2, ""))
+                    self.assertEqual(json.loads(stderr)["error"]["type"], "invalid_input")
+            code, stdout, stderr = self.cli(args=("--help",))
+            self.assertEqual((code, stderr), (0, ""))
+        self.assertEqual(self.rpc.requests, [])
+
     def test_cli_failure_channels(self):
         for raw, code, error in ((b"{}", 2, None), (b" " * 4097, 2, None),
                                   (b'{"schema_version":1,"view":"protocol"}', 4, snapshot.PackageDataError("invalid")),

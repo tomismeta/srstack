@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 """Hypothetical, offline scenario planner; Python 3 standard library only.
 
-Usage: python3 -B -I scripts/scenario.py  (provide one JSON object on stdin)
+With no arguments: python3 -B -I scripts/scenario.py (one JSON object on stdin).
+CLI: python3 -B -I scripts/scenario.py --example
+--example never reads stdin and uses only bundled assets/examples/planning.json,
+without changing its assumptions or validation. No arbitrary file paths or
+overrides are accepted; --help must stand alone.
 Numeric inputs use JSON-number syntax, at most 80 characters, at most 30
 Decimal coefficient digits, and a Decimal exponent from -18 through 18.
 The input is limited to 65536 UTF-8 bytes and eight JSON nesting levels.
 Arithmetic uses 50 significant decimal digits, not EVM integer arithmetic.
-Only three fixed bundled parameter JSON files are read, once per simulation.
+Three fixed bundled parameter JSON files are read once per simulation; --example
+also reads the one fixed bundled fictional fixture. Unsafe bundled files fail closed.
 No network, environment, wallet, or transaction access is performed.
 """
 
@@ -351,32 +356,49 @@ def _record_schema(record):
         raise InputError("invalid parameter limits")
 
 
-def _read_parameter_file(directory, filename):
+def _read_file(directory, filename, limit):
     """Read a fixed regular file without following links, including races."""
     before = os.stat(filename, dir_fd=directory, follow_symlinks=False)
-    if not stat.S_ISREG(before.st_mode) or before.st_size > MAX_PARAMETER_BYTES:
-        raise InputError("unsafe parameter file")
+    if not stat.S_ISREG(before.st_mode) or before.st_size > limit:
+        raise InputError("unsafe bundled file")
     descriptor = os.open(
         filename, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=directory,
     )
     try:
         opened = os.fstat(descriptor)
-        if (not stat.S_ISREG(opened.st_mode) or opened.st_size > MAX_PARAMETER_BYTES
+        if (not stat.S_ISREG(opened.st_mode) or opened.st_size > limit
                 or (before.st_dev, before.st_ino) != (opened.st_dev, opened.st_ino)):
-            raise InputError("unsafe parameter file")
+            raise InputError("unsafe bundled file")
         chunks = []
         size = 0
-        while size <= MAX_PARAMETER_BYTES:
-            chunk = os.read(descriptor, MAX_PARAMETER_BYTES + 1 - size)
+        while size <= limit:
+            chunk = os.read(descriptor, limit + 1 - size)
             if not chunk:
                 break
             chunks.append(chunk)
             size += len(chunk)
-        if size > MAX_PARAMETER_BYTES:
-            raise InputError("oversized parameter file")
+        if size > limit:
+            raise InputError("oversized bundled file")
         return b"".join(chunks)
     finally:
         os.close(descriptor)
+
+
+def _directory(parent, name):
+    before = os.stat(name, dir_fd=parent, follow_symlinks=False)
+    if not stat.S_ISDIR(before.st_mode):
+        raise InputError("unsafe bundled directory")
+    descriptor = os.open(
+        name, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=parent,
+    )
+    try:
+        opened = os.fstat(descriptor)
+        if (before.st_dev, before.st_ino) != (opened.st_dev, opened.st_ino):
+            raise InputError("bundled directory changed")
+        return descriptor
+    except BaseException:
+        os.close(descriptor)
+        raise
 
 
 def _load_parameters():
@@ -391,21 +413,13 @@ def _load_parameters():
         directory = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
         descriptors.append(directory)
         for component in ("assets", "parameters"):
-            before = os.stat(component, dir_fd=directory, follow_symlinks=False)
-            if not stat.S_ISDIR(before.st_mode):
-                raise InputError("unsafe parameter directory")
-            directory = os.open(
-                component, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=directory,
-            )
+            directory = _directory(directory, component)
             descriptors.append(directory)
-            opened = os.fstat(directory)
-            if (before.st_dev, before.st_ino) != (opened.st_dev, opened.st_ino):
-                raise InputError("parameter directory changed")
         records = {}
         seen = set()
         files = []
         for filename, required in PARAMETER_IDS.items():
-            raw = _read_parameter_file(directory, filename)
+            raw = _read_file(directory, filename, MAX_PARAMETER_BYTES)
             text = raw.decode("utf-8")
             _check_depth(text)
             package = json.loads(
@@ -845,14 +859,13 @@ def _check_depth(text):
             depth -= 1
 
 
-def _load_stdin():
-    raw = sys.stdin.buffer.read(MAX_INPUT_BYTES + 1)
+def _parse_input(raw, source):
     if len(raw) > MAX_INPUT_BYTES:
-        raise InputError("stdin JSON must not exceed 65536 bytes")
+        raise InputError(source + " JSON must not exceed 65536 bytes")
     try:
         text = raw.decode("utf-8")
     except UnicodeDecodeError:
-        raise InputError("stdin must be UTF-8 JSON") from None
+        raise InputError(source + " must be UTF-8 JSON") from None
     _check_depth(text)
     try:
         return json.loads(
@@ -866,14 +879,45 @@ def _load_stdin():
         raise InputError("invalid JSON at line " + str(error.lineno) + ", column " + str(error.colno)) from None
 
 
+def _load_stdin():
+    return _parse_input(sys.stdin.buffer.read(MAX_INPUT_BYTES + 1), "stdin")
+
+
+def _load_example():
+    """Read only the fixed fictional fixture using contained, no-follow descriptors."""
+    if (not all(hasattr(os, flag) for flag in ("O_DIRECTORY", "O_NOFOLLOW", "O_NONBLOCK"))
+            or os.open not in os.supports_dir_fd or os.stat not in os.supports_dir_fd
+            or os.stat not in os.supports_follow_symlinks):
+        raise PackageDataError("host lacks required safe descriptor-relative example reads")
+    descriptors = []
+    try:
+        root = Path(__file__).resolve(strict=True).parent.parent
+        directory = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        descriptors.append(directory)
+        for component in ("assets", "examples"):
+            directory = _directory(directory, component)
+            descriptors.append(directory)
+        raw = _read_file(directory, "planning.json", MAX_INPUT_BYTES)
+        return _parse_input(raw, "bundled example")
+    except (OSError, ValueError, DecimalException, RecursionError, RuntimeError):
+        raise PackageDataError("fixed bundled example is missing, unsafe, or invalid") from None
+    finally:
+        for descriptor in reversed(descriptors):
+            os.close(descriptor)
+
+
 def main():
     if sys.argv[1:] == ["--help"]:
         sys.stdout.write(WARNING + "\n\n" + __doc__ + "\n")
         return 0
     try:
-        if len(sys.argv) != 1:
-            raise InputError("no arguments are accepted except --help; supply JSON on stdin")
-        result = simulate(_load_stdin())
+        if len(sys.argv) == 1:
+            config = _load_stdin()
+        elif sys.argv[1:] == ["--example"]:
+            config = _load_example()
+        else:
+            raise InputError("expected no arguments for JSON stdin, --example, or --help")
+        result = simulate(config)
         rendered = json.dumps(result, ensure_ascii=True, allow_nan=False, separators=(",", ":"))
     except ConformanceError as error:
         sys.stderr.write(json.dumps({

@@ -4,7 +4,7 @@
 
 srstack explains documented protocol mechanics, reads current public state and compares expansion strategies using assumptions you approve. It is one independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product, trading bot or wallet toolkit.
 
-**Version 0.1.2 · planner schema/model 1.** Adds permanent-burn decomposition and token restriction/launch inspection, with epoch-boundary guidance and qualified control-model research. Shared market pricing retains its labelled availability fallback and optional provider cross-check. Published installable packages and separate audit evidence are available on the [releases page](https://github.com/tomismeta/srstack/releases); a prior release's audit results do not cover this version.
+**Version 0.1.3 · planner schema/model 1.** Adds pinned-release installation guidance, explicit no-stdin helper commands and a compact package/smoke diagnostic. Financial models, canonical parameters and live-reader targets are unchanged. Published installable packages and separate audit evidence are available on the [releases page](https://github.com/tomismeta/srstack/releases); a prior release's audit results do not cover this version.
 
 ## What you can ask
 
@@ -44,36 +44,123 @@ These are routing instructions within one skill, not separately installed comman
 | Inspect current state | Trusted package and permitted Python 3.10+ execution | Fixed public Robinhood Chain RPC |
 | Read market price or gross balance value | Trusted package and permitted Python 3.10+ execution | Fixed public DEX Screener/GeckoTerminal pool endpoints; charter balances additionally use RPC |
 
-All three helpers use only Python's standard library: no pip dependencies, wallet connector or provider credentials. Execution also requires the filesystem protections described in [execution](references/planning-execution.md); unsupported hosts fail closed. Missing execution or retrieval capability produces an explanation, not invented results. The skill does not install dependencies or change host permissions.
+All four fixed entrypoints use only Python's standard library: no pip dependencies, wallet connector or provider credentials. Execution also requires the filesystem protections described in [execution](references/planning-execution.md); unsupported hosts fail closed. Missing execution or retrieval capability produces an explanation, not invented results. The skill does not install dependencies or change host permissions.
 
 ## Quick start
 
-Download **`srstack-0.1.2.zip`** and **`SHA256SUMS`** from [srstack v0.1.2](https://github.com/tomismeta/srstack/releases/tag/v0.1.2). Verify the ZIP against its checksum, then place the complete `srstack/` folder into a clean host skill directory. Keep customizations outside discovery roots, verify the manifest and loaded revision/path, and start a fresh conversation. For source review or pinned installations, use the export workflow below.
+Use the attached **`srstack-0.1.3.zip`** and **`SHA256SUMS`** from [srstack v0.1.3](https://github.com/tomismeta/srstack/releases/tag/v0.1.3), not a moving branch. The normal install below is separate from the reviewed-commit/isolated-review workflow.
 
 **Install a runtime export or attached runtime ZIP—not a full repository, GitHub's automatic “Source code” archive or an audit archive.** Audit evidence is not an installable skill or a smart-contract security certification.
 
-### Export an exact reviewed commit
+### Normal pinned-release install
+
+These are **user/maintainer installation commands**, not permission for an installed agent to download code, install itself or bypass host guards. Review the pinned release, [SKILL.md](SKILL.md) and [safety](references/safety.md) first. A checksum downloaded beside a ZIP detects disagreement, not a compromised publisher; trust comes from your review/pin and trusted outer ZIP checksum. Running the bundled verifier is already executing that package, so self-verification cannot bootstrap trust.
+
+Use Python 3.10+ on a supported POSIX host. Stop the host/other installers while replacing its skill. Choose **one** root explicitly:
+
+```sh
+# Hermes default profile:
+export SKILL_PARENT="$HOME/.hermes/skills"
+# OR OpenClaw: run this instead from the intended workspace:
+# export SKILL_PARENT="$PWD/skills"
+```
+
+For named profiles, use their actual configured root. Choose a backup/staging directory **outside every skill-discovery root**, on the same filesystem as `SKILL_PARENT`. Keep local customizations there; never merge them silently into the new release. The unique backup below is never overwritten. Move the shell to a stable directory before installation:
+
+```sh
+export SRSTACK_BACKUPS="$HOME/srstack-backups"
+cd "$HOME" && python3 -B -I - <<'PY'
+import hashlib, os, re, stat, subprocess, sys, tempfile, urllib.request, zipfile
+from pathlib import Path
+
+parent = Path(os.environ["SKILL_PARENT"]).resolve()
+backups = Path(os.environ["SRSTACK_BACKUPS"]).resolve()
+if parent == backups or parent in backups.parents or backups in parent.parents:
+    raise SystemExit("Skill and backup roots must be separate")
+parent.mkdir(parents=True, exist_ok=True)
+backups.mkdir(parents=True, exist_ok=True)
+if parent.stat().st_dev != backups.stat().st_dev:
+    raise SystemExit("Choose a backup directory on the skill root's filesystem")
+work = Path(tempfile.mkdtemp(prefix="srstack-0.1.3-", dir=backups))
+print("Retained staging/backup directory:", work, flush=True)
+base = "https://github.com/tomismeta/srstack/releases/download/v0.1.3/"
+archive = "srstack-0.1.3.zip"
+for name, limit in ((archive, 16 * 1024 * 1024), ("SHA256SUMS", 65536)):
+    with urllib.request.urlopen(base + name, timeout=30) as response:
+        data = response.read(limit + 1)
+    if len(data) > limit:
+        raise SystemExit("Release download exceeds bound")
+    (work / name).write_bytes(data)
+entries = re.findall(r"^([0-9a-fA-F]{64}) [ *]" + re.escape(archive) + r"$",
+                     (work / "SHA256SUMS").read_text(), re.MULTILINE)
+if len(entries) != 1 or hashlib.sha256((work / archive).read_bytes()).hexdigest() != entries[0].lower():
+    raise SystemExit("Runtime ZIP checksum missing, duplicated or mismatched")
+with zipfile.ZipFile(work / archive) as bundle:
+    members = bundle.infolist()
+    if len(members) > 1024 or sum(m.file_size for m in members) > 16 * 1024 * 1024:
+        raise SystemExit("Archive exceeds extraction bounds")
+    seen = set()
+    for m in members:
+        parts = m.filename.split("/")
+        if (m.filename in seen or len(parts) < 2 or parts[0] != "srstack"
+                or any(p in ("", ".", "..") for p in parts) or "\\" in m.filename
+                or stat.S_IFMT(m.external_attr >> 16) != stat.S_IFREG):
+            raise SystemExit("Archive contains unsafe or unexpected members")
+        seen.add(m.filename)
+    bundle.extractall(work)  # Only checked regular files under the fresh srstack/ root.
+staged, target, old = work / "srstack", parent / "srstack", work / "previous-install"
+def verify(root):
+    subprocess.run([sys.executable, "-B", "-I", str(root / "scripts/verify.py")],
+                   cwd=root, check=True, timeout=30)
+verify(staged)  # Entire membership + hashes, before touching the old installation.
+if target.is_symlink() or (target.exists() and not target.is_dir()):
+    raise SystemExit("Refusing a symlink or non-directory installation")
+moved_old = installed_new = False
+try:
+    if target.exists():
+        target.rename(old)
+        moved_old = True
+    staged.rename(target)  # Whole root; no overlay.
+    installed_new = True
+    verify(target)
+except BaseException:
+    if installed_new:
+        target.rename(work / "failed-install")
+    if moved_old:
+        old.rename(target)
+        print("Restored previous installation:", target, file=sys.stderr)
+    print("Installation failed; retained recovery files:", work, file=sys.stderr)
+    raise
+print("Installed and verified:", target)
+print("Previous installation (if any) and downloads retained:", work)
+PY
+```
+
+This checks **only the exact runtime ZIP entry** in `SHA256SUMS`; it does not require the separate audit ZIP. Unsafe archive members, extra/missing runtime files or mismatched hashes stop installation. No files are deleted. If final verification fails, the new root is retained as `failed-install` and the old root is restored; if restoration itself errors, stop and recover from the printed directory before restarting discovery. Keep that backup until you have reviewed any customizations and confirmed the actual loaded path/version in a fresh host conversation. Do not install the backup as a second discoverable skill.
+
+### Reviewed-commit export or isolated review install
 
 The export machine needs Git and Python 3.10+. The installed host needs only the capabilities for the routes you use.
 
 1. Review [SKILL.md](SKILL.md), the [safety boundary](references/safety.md) and the complete package. Select a full immutable commit SHA you trust and have reviewed, not the moving `main` branch.
-2. From your chosen working directory (the intended workspace for OpenClaw workspace installation), clone a review copy and select that revision:
+2. From a stable working directory outside skill-discovery roots, clone a review copy and select that revision:
 
    ```sh
    REVIEWED_COMMIT=REVIEWED_COMMIT_SHA
-   git clone https://github.com/tomismeta/srstack.git srstack-review &&
-   git -C srstack-review checkout --detach "$REVIEWED_COMMIT"
+   REVIEW_ROOT="$PWD/srstack-review"
+   git clone https://github.com/tomismeta/srstack.git "$REVIEW_ROOT" &&
+   git -C "$REVIEW_ROOT" checkout --detach "$REVIEWED_COMMIT"
    ```
 
    Replace `REVIEWED_COMMIT_SHA` with the full 40-character commit SHA you reviewed; it is a placeholder, not a release identifier. Stop on any error. The export command below independently checks that the selected commit matches the checkout, so a failed checkout cannot silently install the default branch.
 
-3. Choose **one** installation parent. For Hermes' default profile:
+3. Choose **one** installation parent. For an isolated review, use the test profile/workspace's skill root instead of your active root. For Hermes' default profile:
 
    ```sh
    SKILL_PARENT="$HOME/.hermes/skills"
    ```
 
-   Or, for OpenClaw in the workspace where you ran the clone:
+   Or, for OpenClaw, run this from the intended workspace:
 
    ```sh
    SKILL_PARENT="$PWD/skills"
@@ -83,25 +170,44 @@ The export machine needs Git and Python 3.10+. The installed host needs only the
 
    ```sh
    mkdir -p "$SKILL_PARENT" &&
-   python3 -B srstack-review/maintenance/package.py export \
+   python3 -B "$REVIEW_ROOT/maintenance/package.py" export \
      --commit "$REVIEWED_COMMIT" \
      --destination "$SKILL_PARENT/srstack"
    ```
 
    The destination must not already exist. Export validates the selected commit's runtime membership, per-file hashes and aggregate digest before creating it. It reads committed content, not uncommitted runtime edits, and excludes Git metadata, maintenance tools, tests, CI configuration and local build/cache artifacts. Failed exports clean up the new destination. Review the helper itself as part of the selected commit; do not run unreviewed local modifications.
 
-   For updates, preserve customizations outside all skill-discovery roots, then remove the old active installation before exporting into the now-absent destination. Keep the review clone outside those roots too. Do not overlay files, use `cp -a` on the repository or leave a shadowing same-name copy. Start or refresh the host only after export succeeds. A full repository may load in a host, but it is not the supported runtime installation.
+   For updates, first export into a fresh staging directory outside discovery roots and run its `scripts/verify.py` before touching the active installation. Preserve the entire old installation in a unique backup outside all discovery roots, then move the complete verified root into the absent destination and verify it again. Restore the backup if final verification fails. Do not overlay files, use `cp -a` on the repository or leave a shadowing same-name copy. Keep the review clone outside discovery roots; start or refresh the host only after installation succeeds.
 
    Before removing an old installation or temporary checkout, move your shell/tool working directory outside that tree to an existing stable directory. A deleted cwd can break later host commands even when the installation is correct.
 
-4. Have the host verify the installed files against `release-manifest.json`: `content_files` maps relative paths to SHA-256 hashes, and `digest_convention` specifies the aggregate `content_sha256`. Confirm the actual loaded path and revision, and that repository-only `.git`, `maintenance`, `.github` and `dist` directories are absent. Matching listed hashes alone does not detect extra files or establish trust in an otherwise unreviewed package.
+4. From the installed root, run `python3 -B -I scripts/verify.py` for complete runtime membership, per-file hashes and aggregate digest verification. Confirm the actual loaded path and revision, and that repository-only `.git`, `maintenance`, `.github` and `dist` directories are absent. A matching self-supplied manifest does not establish trust in an unreviewed package.
 5. Start a fresh conversation and try a packaged-knowledge question from the examples below.
 
 **Hermes installation:** use the complete-bundle instructions above. URL discovery depends on configured sources; importing raw `SKILL.md` does not necessarily import its references, assets and scripts.
 
-**Host approvals:** trusted skill files and approved scenario assumptions do not bypass execution approval. If a one-shot session cannot obtain it, continue in an approval-capable session for the exact helper command rather than trying wrappers, PTYs or `--yolo`. The bundled fixture can use the fixed file-redirection example below; it still requires normal permission. See [input transport and approvals](references/planning-execution.md#input-transport-and-host-approvals).
+**Host approvals:** trusted skill files and approved scenario assumptions do not bypass execution approval. If a one-shot session cannot obtain it, continue in an approval-capable session for the exact helper command rather than trying wrappers, PTYs or `--yolo`. Explicit CLI modes remove the need for stdin but still require normal permission. See [input transport and approvals](references/planning-execution.md#input-transport-and-host-approvals).
 
 Other harnesses can use their Agent Skills loader or explicitly read [SKILL.md](SKILL.md) and selected resources. Resource paths resolve against the loaded skill directory. See [host setup](references/installation.md); this package never installs itself or changes host permissions.
+
+### Quick test after installation
+
+In a fresh host conversation, `Use srstack` should show **research / plan / inspect**, with no live read. “Explain charter withdrawals using only packaged references” should work offline without Python. “Offline” means no live retrieval, not that host execution approval is waived.
+
+For live post-install checks, ask “Use srstack inspect protocol” or “Use srstack inspect charter 1” (replace `1` with your intended public ID). Expect a block-anchored snapshot, or a precise unavailable/partial result—not stored values. [Direct snapshot commands](#live-protocol-auction-and-charter-reads), [price commands](#current-price-and-gross-accrued-balance-value) and the [fictional planner](#runnable-fictional-planner-demonstration) exercise these paths without model routing; do not run live checks unless intended and permitted.
+
+From the reviewed, verified installed root, choose only the diagnostics you intend:
+
+```sh
+python3 -B -I scripts/verify.py                 # Membership and hashes only; no child/network.
+python3 -B -I scripts/verify.py --offline       # Also run the unchanged fictional planner fixture.
+python3 -B -I scripts/verify.py --price         # Explicit live indicative quote.
+python3 -B -I scripts/verify.py --charter 1 --price  # One live charter + gross balance mark.
+```
+
+Replace example ID `1` with the public charter ID you intend to read. `--charter` and `--price` may combine; `--offline` cannot combine with either live flag. A bare diagnostic never silently fetches live data. Every smoke first checks the entire manifest/membership and blocks child execution on failure. Output is compact stage status/timing, not financial results; use the helpers below for results. Exit 0 means all selected stages are `ok`; partial, failed or skipped smoke stages exit 5. See [diagnostic statuses and exits](references/planning-execution.md#package-and-smoke-diagnostic).
+
+Stage elapsed times measure local verification/helper execution, not host startup, model reasoning, discovery, tool-approval waits or answer rendering. Live network latency varies; no end-to-end runtime is promised. A successful local smoke does not certify host approvals, isolation, authenticity or financial correctness.
 
 ## Examples
 
@@ -157,10 +263,12 @@ With permitted Python execution and a trusted package, expect a concise estimate
 For a direct engine smoke test, run **from the reviewed installed skill root**:
 
 ```sh
-python3 -B -I scripts/scenario.py < assets/examples/planning.json
+python3 -B -I scripts/scenario.py --example
 ```
 
 Expected: exit 0 and JSON containing the warning, the three strategies and their conformance report. This tests the engine, not host discovery or sandbox isolation. `scripts/scenario.py` is the only intended planner executable; do not substitute model-generated formulas or downloaded helpers. CLI output is JSON and may be verbose even in summary mode; agents should summarize it for users. Request `detail: "full"` for detailed accounting and purchase schedules. History requires full detail.
+
+`--example` selects only the fixed `assets/examples/planning.json`; there is no arbitrary `--file` option. No-argument JSON stdin remains supported: `python3 -B -I scripts/scenario.py < assets/examples/planning.json`. Both use the same validator and model without a price refresh.
 
 ### Live protocol, auction and charter reads
 
@@ -186,22 +294,24 @@ Each invocation uses one checked block. Separate example invocations are not one
 Advanced users can request the same protocol snapshot from the reviewed installed root:
 
 ```sh
-printf '%s' '{"schema_version":1,"view":"protocol"}' | python3 -B -I scripts/snapshot.py
+python3 -B -I scripts/snapshot.py protocol
+python3 -B -I scripts/snapshot.py auctions --detail full
+python3 -B -I scripts/snapshot.py charter --id 1
 ```
 
-Views are `protocol`, `auctions` and `charter`; the last requires integer `charter_id`. `detail: "full"` adds raw responses and call mappings. Default answers show useful values first, with at most one short note such as **“RPC snapshot; publisher ABI.”**
+The charter command requires an unsigned uint256 ID; replace `1` with the intended public ID. `--detail full` adds raw evidence; summary is the default. No-argument JSON stdin is equally supported, for example `{"schema_version":1,"view":"charter","charter_id":1}`. Default answers show useful values first, with at most one short note such as **“RPC snapshot; publisher ABI.”**
 
 ### Current price and gross accrued-balance value
 
 ```text
 Use srstack inspect price. Show STANDARD in USD and ETH.
 What is 1000 STANDARD worth at the latest reported market price?
-What is the accrued balance of public charter <public charter ID> worth now?
+What is the accrued balance of public charter <public charter ID> worth in USD now?
 Use srstack inspect price. Cross-check DEX Screener against GeckoTerminal.
 Use GeckoTerminal for the current STANDARD price.
 ```
 
-Current-value questions use the shared price reader automatically; there is no prerequisite `inspect price` step. A charter valuation reads that charter's balance, then passes the successful `charter_pending` quantity to `scripts/price.py`. This is a gross market mark of a STANDARD-denominated ledger balance—not wallet tokens, net withdrawal proceeds or a branch/NFT resale price. It does not value future earning capacity.
+Current-value questions use the shared price reader automatically; there is no prerequisite `inspect price` step. A charter USD question needs **one charter snapshot and one price-helper invocation**, not an extra protocol snapshot or default cross-check. Pass the successful `charter_pending` quantity unchanged to `scripts/price.py --amount-standard DECIMAL`; report its `valuation.gross_usd`, or that USD is unavailable. Ask only for a missing public ID, not a wallet. This is a gross market mark of a STANDARD-denominated ledger balance—not wallet tokens, net withdrawal proceeds or a branch/NFT resale price. It does not value future earning capacity.
 
 By default, the reader queries DEX Screener for the exact canonical ETH/STANDARD pool. If that source is unavailable, it can use GeckoTerminal and explicitly label the fallback and reason. Identity/schema violations and host/provider access denials do not trigger fallback. A valid partial response stays with its provider rather than filling a missing currency from another source. Chain, token, quote asset and pool identity are checked for both providers; any amount valuation is local and never sent to them.
 
@@ -210,13 +320,15 @@ An explicit provider choice disables automatic fallback. A requested cross-check
 From the reviewed installed root:
 
 ```sh
-printf '%s' '{"schema_version":1}' | python3 -B -I scripts/price.py
-printf '%s' '{"schema_version":1,"standard_amount":"1000"}' | python3 -B -I scripts/price.py
-printf '%s' '{"schema_version":1,"cross_check":true}' | python3 -B -I scripts/price.py
-printf '%s' '{"schema_version":1,"source":"geckoterminal","standard_amount":"1000"}' | python3 -B -I scripts/price.py
+python3 -B -I scripts/price.py --quote
+python3 -B -I scripts/price.py --amount-standard 1000
+python3 -B -I scripts/price.py --quote --cross-check
+python3 -B -I scripts/price.py --source geckoterminal --amount-standard 1000
 ```
 
 `source` is `auto` (default), `dexscreener` or `geckoterminal`; `cross_check` is an optional boolean, defaulting to false. The optional amount is an unsigned decimal **string**, not a JSON number. Quotes and gross values are decimal strings. Failed fields remain missing, and a labelled fallback never becomes a cached or invented value.
+
+All three data helpers retain no-argument JSON stdin; `--help` documents both interfaces. Any non-help CLI arguments select explicit CLI mode and never read or merge stdin. Use exact separate flag/value tokens, not `--flag=value`; snapshot's view comes first. Unknown, repeated, abbreviated or conflicting options are rejected before network access. `--quote` conflicts with `--amount-standard`; use the latter alone for gross valuation. Amount arguments can appear in process listings or host logs; stdin remains available, without promising transcript privacy. CLI conveniences use the same validators/readers/model and do not relax approval or integrity checks.
 
 These are **provider-reported indicative prices**. Neither consumed pool API supplies a quote-observation timestamp: retrieval/cache age is not quote age, and pool creation time is not price freshness. Charter state, the selected price and any cross-check have separate observation boundaries, not one atomic snapshot. Gross values exclude withdrawal fees, trading taxes, LP fees, slippage and gas.
 
@@ -251,7 +363,7 @@ Packaged research needs a resource reader. Calculations and public readers use *
 
 Answers lead with content. Estimates get a short label; observations get a brief source note where needed. Detailed provenance and assumptions are available on request, not repeated as small print.
 
-The scenario engine is offline. The snapshot helper reads two fixed catalogs and permits only its pinned view/pure calls on the configured Robinhood addresses. The price helper reads only the fixed identity catalog and makes bounded canonical-pool GETs to two allowlisted providers; optional quantity multiplication is local and uses one selected provider. All three reject unsupported inputs and write no files. No wallets, credentials, signatures, transaction payloads or state-changing simulations. See [safety](references/safety.md) and [execution](references/planning-execution.md) for the full boundary.
+The scenario engine is offline. The snapshot helper reads two fixed catalogs and permits only its pinned view/pure calls on the configured Robinhood addresses. The price helper reads only the fixed identity catalog and makes bounded canonical-pool GETs to two allowlisted providers; optional quantity multiplication is local and uses one selected provider. The fourth entrypoint, `verify.py`, checks the package and invokes only explicitly selected fixed helpers with bounded execution/output; it has no network of its own. All four reject unsupported inputs and write no files. No wallets, credentials, signatures, transaction payloads or state-changing simulations. See [safety](references/safety.md) and [execution](references/planning-execution.md) for the full boundary.
 
 The readers do **not** supply liquidity-depth analysis, an amount-specific withdrawal quote, transaction gas estimates or guaranteed sale proceeds. The planner does **not** reproduce changing policy, auction competition or contract execution; it compares explicit hypothetical inputs rather than forecasting returns. Source verification and announcements use separate fresh web research.
 
@@ -266,13 +378,14 @@ python3 -B maintenance/package.py verify
 python3 -B maintenance/check-planner.py
 python3 -B maintenance/check-snapshot.py
 python3 -B maintenance/check-price.py
+python3 -B maintenance/check-verify.py
 python3 -B maintenance/check-package.py
 python3 -B maintenance/package.py archive
 ```
 
 The checks use Python's standard library and local Git; they do not call explorers, connect wallets or use model/API credentials. CI runs them on Python 3.10 and 3.14, with read-only repository permissions and commit-pinned Actions. GitHub checkout and Python provisioning require network access; the validation commands themselves are offline. CI verifies the committed manifest rather than regenerating it, and checks deterministic ZIP output. It does not upload artifacts, tag, publish releases or monitor contracts.
 
-After deliberate runtime changes, regenerate the manifest with `python3 -B maintenance/package.py build`, then run the checks above. The candidate archive `dist/srstack-0.1.2.zip` contains only the runtime package; building it does not publish a release or certify it. Maintenance tooling and CI files are repository-only and never authorize an installed skill to execute them.
+After deliberate runtime changes, regenerate the manifest with `python3 -B maintenance/package.py build`, then run the checks above. The candidate archive `dist/srstack-0.1.3.zip` contains only the runtime package; building it does not publish a release or certify it. Maintenance tooling and CI files are repository-only and never authorize an installed skill to execute them.
 
 ## Feedback and license
 

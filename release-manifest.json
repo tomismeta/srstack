@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "name": "srstack",
-  "version": "0.1.2",
-  "scope": "Runtime knowledge, fixed public readers and scenario planner; excludes manifest, repository maintenance, CI, Git metadata, and build/cache artifacts",
+  "version": "0.1.3",
+  "scope": "Runtime knowledge, fixed public readers, scenario planner and installation verifier; excludes manifest, repository maintenance, CI, Git metadata, and build/cache artifacts",
   "digest_convention": "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest",
   "content_files": {
     "LICENSE": "14b82531e814378b84e97596f68a98c70becee3251b206c545d4f07d73105af3",
-    "README.md": "af4a2b844bb575a38a8add10e39dc8228597cb9c12d25a768a0e960e65449109",
-    "SKILL.md": "d7db21b5ac709bfb8cb6a0b8a539314421f2f5c78a1f1fdc3c02396a7d3827c0",
+    "README.md": "b40d68c7a2667c677d96e287570095791a734017a99856ed5446f233b0e99696",
+    "SKILL.md": "33a5716775743e1aec43bb834f5bab8360b3e9571dd7c75d5b7683dbfdaf0518",
     "assets/coverage.json": "b450c4a7b99427e1a88beb45e5b16f6b87a656f038e239d366250263a151bf91",
     "assets/entities/robinhood.json": "d27d4800566cbe9180fb1e1f01d73af95b66004baea189de497dd138375017c6",
     "assets/entity-index.json": "b6252fdf556f2b5c2bf38f89c771e00c09036cd360f076b75325f4ae7132d4ee",
@@ -29,12 +29,12 @@
     "references/documents.md": "724816503b576fdb29b8c7edafccc2a7937ccd4b98a7cf00908268debf1d8b73",
     "references/exits.md": "78c9b3557e2b1fb08cba3ed74513e6e79eeb8d97f615d51aa84ebd09687faea0",
     "references/genesis.md": "2333d4186aec183269287ebeeb2aa6ad51c01a3b6664f0c8eb47238c5bf21b6a",
-    "references/inspection.md": "ade4a18b18251a298b329db9b2e3519cd7aec8f12adf9c52cefcfd55bef9d3b1",
-    "references/installation.md": "c14c10a9e39f6d387a5d08f4c6b418123d7c6f42ad3a16631b0ef739f3fd607c",
+    "references/inspection.md": "6234716c03b14362df7bc84393ae2f78e21d8a72d0dd8c2314bbf76ebc6e5342",
+    "references/installation.md": "4cf5e0e6b2270b28ec0d07421e335f36382e3a852a919aeb83b680f198633a5c",
     "references/launch-mint.md": "5c656467bbf6afec16b08ad31ece9330662d4c64958a361e1fe65b9be96857a8",
     "references/launch-trading.md": "9df74fa717a6f260587554facdbfe1f8b89c7545a64c4dd10d255735a7cd5a90",
     "references/planning-conformance.md": "b4ca8f71ae8a847809b72329d406963d4d89537a79e1e60e0b17dced1bb1e7d4",
-    "references/planning-execution.md": "89f3a94732f8f775629ea354235f76b86be1e43717aaf96d8fc7a67822cec8b8",
+    "references/planning-execution.md": "1e7f362356831acdb185754fb66be106e8734f22fa88dfd2f8a8c1edb8a3a95a",
     "references/planning-inputs.md": "0708ee18391987c2b728b8e3ebc255acccff43bb80ef62dccbe164bd4830b68a",
     "references/planning-model.md": "82338767b217cd602d08480ded2a7ac80da9c02a51774fe1d4d8f7bf07b722a2",
     "references/planning.md": "5b890bf9b9ea5a0180f8a21688e112cced6be294fc014026de6b3f8a8013e556",
@@ -43,11 +43,12 @@
     "references/research-workflow.md": "3a3fc315dd6a650ef51f50fd115d562f5186487454098eff398b6b73a098fc66",
     "references/reserves.md": "7d117fdbec1a89c20f0c72438628b75abe56b10082ce49926aa762e2445ce03d",
     "references/risks.md": "53c18d446b83bce250866f7fc0402ca26d0eb5a8d5ea261bab4d9e3c4d3c0528",
-    "references/safety.md": "7b90c51b05b998cee87fd272e7e8dd61431fe0b24d5cb2707c9b3d9c49db3481",
+    "references/safety.md": "0fb0c43bb4f5f5993191cd293945f65b5290a7ef4b502d1fec01b4f62fafb6b8",
     "references/updates.md": "d1a758cc48bbd38471b8a0b30521befe79d103e4901577de79524607018992b2",
-    "scripts/price.py": "91a723b1b881ea5e419e1534431eccca38c17c4f73266a39b0787cd56385d883",
-    "scripts/scenario.py": "7afec27cb24467965fcf01912340e0d135e74145c34ef709db4a940ae0bc6172",
-    "scripts/snapshot.py": "6ea74310afd9c282ebd266f833d21b71c7d09cf4af290a37c927b53995a27603"
+    "scripts/price.py": "3a677644765e3899327e2804b2c1fa8c5459f97932a30bb734a6c5b5cb1ae74a",
+    "scripts/scenario.py": "687efc5329443033e745764a6566505ae38ece4d4779343c31fe0a550235ea46",
+    "scripts/snapshot.py": "7ddce5b655ffa235e698827bf3d676a6a00564d2f90106688c12a92097231f50",
+    "scripts/verify.py": "df47bf41248e448b0753605603d618c07c4db7cc765c3891076272ecfde4cf9b"
   },
-  "content_sha256": "1fc048ef6e0b2581df7fd1e45b0bd9a1d90bcaf9264dec1406ad7c9db35b2f2b"
+  "content_sha256": "b11c71e5d9d226536ed1d2335923e400aee4e73fadceb0488d3b517aa3107472"
 }

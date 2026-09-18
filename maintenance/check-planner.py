@@ -1,6 +1,7 @@
 """Behavioral regression checks for the bundled planner; not runtime package content."""
 import hashlib
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -22,6 +23,9 @@ def copy_package(directory):
     destination.mkdir(parents=True)
     for name in PARAMETER_NAMES:
         shutil.copy2(SCRIPT.parents[1] / "assets/parameters" / name, destination / name)
+    examples = root / "assets/examples"
+    examples.mkdir()
+    shutil.copy2(SCRIPT.parents[1] / "assets/examples/planning.json", examples / "planning.json")
     return root / "scripts/scenario.py"
 
 
@@ -49,29 +53,37 @@ def inputs(**changes):
     return data
 
 
-def invoke(data=None, raw=None, script=SCRIPT, forbidden_reads=()):
+def invoke(data=None, raw=None, script=SCRIPT, forbidden_reads=(), args=()):
     payload = json.dumps(data).encode() if raw is None else raw
-    command = [sys.executable, "-B", "-I", str(script)]
-    if forbidden_reads:
+    command = [sys.executable, "-B", "-I", str(script), *args]
+    if forbidden_reads or args:
         # Python's audit event fires before open. An escaped-file read is a distinct
         # failure even if the loader would subsequently reject that file's contents.
         guard = """
 import os
+import json
 import runpy
 import sys
 from pathlib import Path
 script = sys.argv[1]
-forbidden = [Path(path).absolute() for path in sys.argv[2:]]
+arguments = json.loads(sys.argv[2])
+forbidden = [Path(path).absolute() for path in sys.argv[3:]]
 def audit(event, args):
     if event == "open" and isinstance(args[0], (str, bytes, os.PathLike)):
         path = Path(os.fsdecode(args[0])).absolute()
         if any(path == blocked or blocked in path.parents for blocked in forbidden):
             os._exit(86)
 sys.addaudithook(audit)
-sys.argv = [script]
+if arguments:
+    class NoStdin:
+        @property
+        def buffer(self):
+            raise AssertionError("explicit CLI read stdin")
+    sys.stdin = NoStdin()
+sys.argv = [script, *arguments]
 runpy.run_path(script, run_name="__main__")
 """
-        command = [sys.executable, "-B", "-I", "-c", guard, str(script),
+        command = [sys.executable, "-B", "-I", "-c", guard, str(script), json.dumps(args),
                    *(str(path) for path in forbidden_reads)]
     return subprocess.run(command, input=payload, capture_output=True, timeout=20, check=False)
 
@@ -531,6 +543,97 @@ class PlannerDetail(PlannerContract):
         self.assertEqual([day["day"] for day in history], [1, 2])
         self.assertEqual(history[-1]["branches"],
                          strategy(result, "aggressive")["branches_before_exit"])
+
+
+class PlannerExample(PlannerContract):
+    def test_example_requires_safe_descriptor_reads(self):
+        probe = (
+            "import os,runpy,sys; os.supports_dir_fd=set(); "
+            "sys.argv=[sys.argv[1],'--example']; runpy.run_path(sys.argv[0],run_name='__main__')"
+        )
+        result = subprocess.run(
+            [sys.executable, "-B", "-I", "-c", probe, str(SCRIPT)],
+            input=b"", capture_output=True, timeout=20, check=False,
+        )
+        self.assert_error(result, 4, "package_data_error")
+
+    def test_example_matches_stdin_from_any_working_directory(self):
+        fixture = SCRIPT.parents[1] / "assets/examples/planning.json"
+        expected = invoke(raw=fixture.read_bytes())
+        with tempfile.TemporaryDirectory() as directory:
+            previous = Path.cwd()
+            try:
+                os.chdir(directory)
+                actual = invoke(raw=b"invalid stdin must be ignored", args=("--example",))
+            finally:
+                os.chdir(previous)
+        self.assertEqual(actual.returncode, 0, actual.stderr.decode())
+        self.assertEqual(actual.stdout, expected.stdout)
+        self.assertEqual(actual.stderr, expected.stderr)
+
+    def test_invalid_cli_never_reads_stdin_or_fixture(self):
+        cases = [
+            ("--example", "--example"), ("--example", "--detail", "full"),
+            ("--file", "planning.json"), ("--exam",), ("--example=true",),
+            ("--help", "--example"), ("--example", "planning.json"),
+            ("x" * 65537,),
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            script = copy_package(directory)
+            (script.parents[1] / "assets/examples/planning.json").unlink()
+            for args in cases:
+                with self.subTest(args=args[:1]):
+                    self.assert_error(invoke(script=script, args=args), 2, "invalid_input")
+            result = invoke(script=script, args=("--help",))
+            self.assertEqual((result.returncode, result.stderr), (0, b""))
+
+    def test_unsafe_fixed_example_fails_closed(self):
+        for damage in ("missing", "malformed", "duplicate", "nonfinite", "depth", "utf8",
+                       "oversize", "directory", "fifo", "file_link", "examples_link", "assets_link"):
+            with self.subTest(damage=damage), tempfile.TemporaryDirectory() as directory:
+                script = copy_package(directory)
+                fixture = script.parents[1] / "assets/examples/planning.json"
+                forbidden = ()
+                if damage == "missing":
+                    fixture.unlink()
+                elif damage == "malformed":
+                    fixture.write_bytes(b'{"days":')
+                elif damage == "duplicate":
+                    fixture.write_bytes(b'{"days":1,"days":2}')
+                elif damage == "nonfinite":
+                    fixture.write_bytes(b'{"days":NaN}')
+                elif damage == "depth":
+                    fixture.write_bytes(b"[" * 9 + b"]" * 9)
+                elif damage == "utf8":
+                    fixture.write_bytes(b"\xff")
+                elif damage == "oversize":
+                    fixture.write_bytes(b" " * 65537)
+                elif damage in ("directory", "fifo"):
+                    fixture.unlink()
+                    fixture.mkdir() if damage == "directory" else os.mkfifo(fixture)
+                else:
+                    path = (fixture if damage == "file_link" else fixture.parent
+                            if damage == "examples_link" else fixture.parent.parent)
+                    outside = Path(directory) / "outside"
+                    path.rename(outside)
+                    path.symlink_to(outside, target_is_directory=damage != "file_link")
+                    forbidden = (path, outside)
+                self.assert_error(invoke(script=script, args=("--example",), forbidden_reads=forbidden),
+                                  4, "package_data_error")
+
+    def test_example_preserves_validation_and_documented_conflicts(self):
+        with tempfile.TemporaryDirectory() as directory:
+            script = copy_package(directory)
+            fixture = script.parents[1] / "assets/examples/planning.json"
+            original = json.loads(fixture.read_bytes())
+            for changes, code, kind in (({"assumptions_acknowledged": False}, 2, "invalid_input"),
+                                        ({"max_branches": 11}, 3, "documented_rule_conflict")):
+                with self.subTest(changes=changes):
+                    fixture.write_text(json.dumps(dict(original, **changes)), encoding="utf-8")
+                    actual = invoke(script=script, args=("--example",))
+                    expected = invoke(raw=fixture.read_bytes(), script=script)
+                    self.assert_error(actual, code, kind)
+                    self.assertEqual(actual.stderr, expected.stderr)
 
 
 class PlannerPackageData(PlannerContract):

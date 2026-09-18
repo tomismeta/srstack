@@ -4,7 +4,7 @@ description: Standard Reserve research, planning, and public inspection.
 license: MIT
 compatibility: Python 3.10+ for fixed helpers; network access for live public RPC, indicative prices and web research. Packaged research and scenario calculations work offline.
 metadata:
-  version: "0.1.2"
+  version: "0.1.3"
 ---
 
 # srstack
@@ -65,5 +65,7 @@ For Robinhood Chain (4663), use `https://robin.etherscan.io/` for contract navig
 ## Action boundary
 
 Read [safety](references/safety.md) before external retrieval or execution. Use the fixed `scripts/snapshot.py` for supported public state reads, `scripts/price.py` for the canonical-pool indicative price and optional gross amount valuation, and offline `scripts/scenario.py` for approved projections. Publisher-supplied read interfaces require fixed targets, declared view/pure methods, decoding/binding checks and block context; they do not imply verified source code. Provider-reported prices have API retrieval time, not independently assured quote freshness or a chain block. No wallets, credentials, signatures, executable transaction/authorization payloads, state changes or state-changing simulations—even delegated or agent-owned. No downloaded code execution, guessed addresses/ABIs, arbitrary reader endpoints/selectors, installed-record rewriting, stored observations/personal holdings or background monitoring.
+
+The fourth fixed entrypoint, `scripts/verify.py`, is a compact package diagnostic: no flags verifies only membership/hashes; `--offline` additionally runs the fictional fixture; `--charter ID` and `--price` explicitly select live helper checks. Every smoke verifies the complete package first. It does not certify authenticity, sandboxing or economic correctness. Snapshot/price CLI flags and scenario `--example` avoid stdin; no-argument JSON stdin remains supported. Follow [execution](references/planning-execution.md) for exact commands and approval boundaries.
 
 Host execution approval remains separate from user approval of assumptions or a requested public read. If approval cannot be obtained, stop promptly; do not retry through alternative wrappers/PTYs or recommend disabling guards. Use the [input and approval guidance](references/planning-execution.md#input-transport-and-host-approvals).

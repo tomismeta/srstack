@@ -30,6 +30,8 @@ For explanation-only questions, read [supply/epoch policy](protocol-policy.md), 
 
 “Cross-check the current STANDARD price” adds `"cross_check":true`; “Use GeckoTerminal for the current STANDARD price” adds `"source":"geckoterminal"`. `"source":"dexscreener"` explicitly selects DEX Screener; the default `"auto"` uses DEX Screener with the bounded availability fallback below. Do not cross-check by default or accept arbitrary provider URLs.
 
+The no-stdin equivalents are `price.py --quote`, `price.py --amount-standard DECIMAL`, and optional `--source auto|dexscreener|geckoterminal` or `--cross-check`. `--quote` and `--amount-standard` conflict; use the amount form for valuation. No flags retains JSON stdin. For a charter USD question, use one charter snapshot and one amount-valuing price invocation; report `valuation.gross_usd` only if available. A diagnostic `verify.py --charter ID --price` exercises that path but emits statuses/timings rather than the financial answer.
+
 Charter pending balances are charter-level accrued ledger quantities, not wallet token holdings. Describe the resulting mark as **gross indicative accrued-balance value** before withdrawal and trading costs, not net proceeds, charter/NFT resale value or earning capacity. Never automatically divide it by branch count. If the pending read fails, report the amount/value gap; do not value zero, an example or a stored balance. A zero-amount withdrawal-fee preview is not an amount-specific net-withdrawal calculation.
 
 ## 2. Authenticate before ABI reads
@@ -47,7 +49,7 @@ Keep attribution, source correspondence, observed owner/configuration, activatio
 
 ## 3. Read the scoped state
 
-Choose `protocol`, `charter` or `auctions` through schema-1 JSON stdin; `charter` requires integer `charter_id`. `detail` defaults to `summary`; `full` adds raw responses/call mapping. See [the exact CLI contract](planning-execution.md#snapshot-helper). Neither caller-selected addresses/selectors nor arbitrary endpoints/headers are accepted.
+Choose `protocol`, `charter` or `auctions` through schema-1 JSON stdin or explicit CLI mode: `snapshot.py protocol`, `snapshot.py auctions`, or `snapshot.py charter --id UINT256`. Stdin `charter` requires integer `charter_id`; CLI requires the unsigned public ID. `detail` / `--detail` defaults to `summary`; `full` adds raw responses/call mapping. Explicit CLI mode never reads stdin. See [the exact CLI contract](planning-execution.md#snapshot-helper). Neither caller-selected addresses/selectors nor arbitrary endpoints/headers are accepted.
 
 Use authenticated ABI `view`/`pure` `eth_call` at the identified block; wrappers and all nested/batched members must qualify. No mutating call merely because it will not broadcast; planner fields do not establish an ABI.
 

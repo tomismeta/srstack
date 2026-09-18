@@ -95,6 +95,20 @@ class PackageChecks(unittest.TestCase):
         self.assertEqual(manifest["content_sha256"], report["content_sha256"])
         self.assertEqual(self.commit, report["commit"])
 
+    def test_export_supports_installed_integrity_and_offline_smoke(self):
+        result = self.invoke("export", "--commit", self.commit, "--destination", str(self.destination))
+        self.assertEqual(0, result.returncode, result.stderr.decode())
+        result = subprocess.run(
+            [sys.executable, "-B", "-I", str(self.destination / "scripts/verify.py"), "--offline"],
+            stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=70,
+        )
+        self.assertEqual(0, result.returncode, result.stderr.decode() + result.stdout.decode())
+        report = json.loads(result.stdout)
+        self.assertEqual("ok", report["status"])
+        self.assertEqual([("integrity", "ok"), ("offline", "ok")],
+                         [(stage["name"], stage["status"]) for stage in report["stages"]])
+        self.assertEqual(self.runtime, directory_bytes(self.destination))
+
     def test_build_verify_and_deterministic_archive_exclude_repository_files(self):
         (self.root / "README.md").write_bytes(self.runtime["README.md"] + b"\nReviewed update.\n")
         self.assertNotEqual(0, self.invoke("verify").returncode)

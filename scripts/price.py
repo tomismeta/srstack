@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 """Read indicative STANDARD prices from the fixed canonical Robinhood pool.
 
-Supply one JSON object on stdin: {"schema_version": 1}, optionally with
+With no arguments, supply one JSON object on stdin: {"schema_version": 1}, optionally with
 "standard_amount": "12.5" for a gross indicative mark using the same quotes.
 Optional "source": "auto" (default), "dexscreener", or "geckoterminal";
 "cross_check": true compares the other provider without blending quotes.
 Auto uses DEX Screener, falling back to GeckoTerminal only on availability failure.
-Only --help is accepted. No wallet, endpoint, address, or file inputs.
+CLI: [--quote | --amount-standard DECIMAL] [--source auto|dexscreener|geckoterminal]
+     [--cross-check]
+Any CLI flag selects explicit CLI mode, which never reads stdin; --quote requests
+quotes without an amount. DECIMAL has at most 78 digits, at most 18 fractional,
+and no sign or exponent. Flags must be exact, unrepeated, separate tokens.
+--quote conflicts with --amount-standard; --help must stand alone.
+No wallet, endpoint, address, or file inputs.
 Python standard library only; no observations are saved.
 """
 
@@ -53,7 +59,7 @@ PLAIN_DECIMAL = re.compile(r"[0-9]+(?:\.[0-9]+)?\Z")
 
 
 class InputError(ValueError):
-    """Invalid bounded stdin configuration."""
+    """Invalid bounded stdin or CLI configuration."""
 
 
 class PackageDataError(ValueError):
@@ -242,7 +248,7 @@ def _https_request(connection, source, path, deadline, monotonic):
         if monotonic() >= deadline:
             raise PriceError("price request deadline exceeded before sending", "unavailable")
         connection.request("GET", path, headers={"Accept": PROVIDERS[source]["accept"],
-                           "User-Agent": "srstack/0.1.2 (+https://github.com/tomismeta/srstack)"})
+                           "User-Agent": "srstack/0.1.3 (+https://github.com/tomismeta/srstack)"})
         response = connection.getresponse()
         if response.status != 200:
             category = ("access" if response.status in (401, 403) else "unavailable"
@@ -493,17 +499,42 @@ def price(config, transport=None, now=None, monotonic=None):
     return result
 
 
+def _cli_config(arguments):
+    if len(arguments) > 6 or any(len(value) > 80 for value in arguments):
+        raise InputError("CLI accepts at most 6 arguments of at most 80 characters")
+    config = {"schema_version": 1}
+    seen = set()
+    index = 0
+    while index < len(arguments):
+        flag = arguments[index]
+        if flag not in ("--quote", "--amount-standard", "--source", "--cross-check") or flag in seen:
+            raise InputError("unknown or repeated CLI flag")
+        seen.add(flag)
+        index += 1
+        if flag in ("--amount-standard", "--source"):
+            if index == len(arguments):
+                raise InputError("CLI flag requires a value")
+            config["standard_amount" if flag == "--amount-standard" else "source"] = arguments[index]
+            index += 1
+        elif flag == "--cross-check":
+            config["cross_check"] = True
+    if "--quote" in seen and "--amount-standard" in seen:
+        raise InputError("--quote and --amount-standard are mutually exclusive")
+    return config
+
+
 def main():
     if sys.argv[1:] == ["--help"]:
         sys.stdout.write(__doc__ + "\n" + NOTE + "\n")
         return 0
     try:
-        if len(sys.argv) != 1:
-            raise InputError("only --help is accepted; supply JSON on stdin")
-        try:
-            config = _json(sys.stdin.buffer.read(MAX_INPUT_BYTES + 1), MAX_INPUT_BYTES)
-        except (ValueError, RecursionError):
-            raise InputError("stdin must be bounded UTF-8 JSON without duplicate keys") from None
+        if len(sys.argv) > 1:
+            config = _cli_config(sys.argv[1:])
+        else:
+            try:
+                config = _json(sys.stdin.buffer.read(MAX_INPUT_BYTES + 1), MAX_INPUT_BYTES)
+            except (ValueError, RecursionError):
+                raise InputError("stdin must be bounded UTF-8 JSON without duplicate keys") from None
         result = price(config)
     except (InputError, PackageDataError, PriceError) as error:
         code, kind = (2, "invalid_input") if isinstance(error, InputError) else (4, "package_data_error") if isinstance(error, PackageDataError) else (5, "price_error")
