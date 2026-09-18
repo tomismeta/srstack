@@ -1,26 +1,33 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-15T18:29:31.074Z",
-  "scope": "Publisher identity provenance, chain routing and live conditions page discovery; no stored state",
+  "reviewed_at": "2026-09-18",
+  "scope": "Publisher identity and linked-ABI provenance, chain routing and current-conditions explanation; no stored state or verification verdicts",
   "records": [
     {
       "id": "sr-contract-directory",
       "url": "https://www.standardreserve.xyz/app/protocol/contracts/",
       "publisher": "The Standard Reserve official website",
       "published_at": null,
-      "retrieved_at": "2026-09-15T18:29:31.074Z",
-      "review_depth": "Identity attribution across the Core, Auctions, Treasury and Infrastructure directory tabs, with canonical pool identity.",
-      "claim_stage": "publisher identity attribution, not deployment-state verification",
+      "retrieved_at": "2026-09-18",
+      "review_depth": "Identity attribution across Core, Auctions, Treasury and Infrastructure; linked directory component and app ABI entries for successor holdings migration and auction supply controllers.",
+      "claim_stage": "publisher identity/interface attribution, not deployment-state or authority verification",
       "locators": [
         "Core",
         "Auctions",
         "Treasury",
         "Infrastructure",
-        "Robinhood Chain4663"
+        "Robinhood Chain4663",
+        "https://www.standardreserve.xyz/assets/ProtocolContracts-fb8LvDwl.js",
+        "https://www.standardreserve.xyz/assets/app-cGhd1uKR.js",
+        "ContractionVault/FeeSplitter migrateToSuccessor(); ExpansionVault migrateToSuccessor(address[] assets); HoldingsMigrated",
+        "Charter and license auctions: supplyController(), setSupplyController(address), SupplyControllerSet, NotSupplyAuthority"
       ],
-      "summary": "Publisher directory for Robinhood Chain 4663 contract addresses, names, roles and canonical ETH/STANDARD v4 pool identity. Use the entity catalog for identity routing; fetch activation, ownership and execution permissions on demand.",
+      "summary": "Publisher directory for Robinhood Chain 4663 contract addresses, names, roles and canonical ETH/STANDARD v4 pool identity. Linked app ABIs provide successor-migration and supply-controller investigation leads. Use the entity catalog for identity routing; fetch activation, ownership and execution permissions on demand.",
       "limits": [
-        "No independent source/ABI correspondence, current ownership, activation or audit verification."
+        "No independent source/ABI correspondence, current ownership, activation or audit verification.",
+        "The directory component can retain the last ownership snapshot after refresh failure; a visible owner value is not automatically fresh evidence.",
+        "Publisher ABI names do not establish deployed migration/controller behavior, who may call it, asset scope or current configuration. Asset migration is not necessarily code replacement.",
+        "Linked bundle retrieval establishes publisher evidence, not its publication date, feature-introduction date or chronology of deployment."
       ]
     },
     {
@@ -44,16 +51,24 @@
       "url": "https://www.standardreserve.xyz/app/protocol/live/",
       "publisher": "The Standard Reserve official website",
       "published_at": null,
-      "retrieved_at": "2026-09-15T17:54:28.824Z",
-      "review_depth": "Policy & fees page routing and scope",
-      "claim_stage": "live publisher page discovery, not stored readings or independent RPC verification",
+      "retrieved_at": "2026-09-18",
+      "review_depth": "Publisher-linked component explanation and routing for Policy & fees, Auctions, and Treasury & controls; epoch-end accrual/rollover notices.",
+      "claim_stage": "publisher explanation and page discovery, not stored readings or independent RPC verification",
       "locators": [
-        "Policy & fees"
+        "Policy & fees",
+        "Auctions",
+        "Treasury & controls",
+        "Epoch-end help and settlement notice",
+        "https://www.standardreserve.xyz/assets/LiveProtocol-COjPuJc_.js"
       ],
-      "summary": "Publisher page for policy, issuance, branch and fee conditions. Read the page or the bounded RPC interface on demand; no displayed values or availability state are stored here.",
+      "summary": "Publisher page for policy, issuance, branches, fees, auctions, supply accounting, treasury and controls. Explanatory text says accrual stops at epoch end until rollover and settlement is required before the next epoch streams. Read changing values on demand; no current settlement, ownership or availability state is stored here.",
       "limits": [
         "Website-displayed values are publisher readings, not direct RPC evidence or amount-specific executable quotes.",
-        "Fetch a fresh block-scoped observation when supported or report unavailable; never fall back to saved state. Future settings remain assumptions."
+        "Fetch a fresh block-scoped observation when supported or report unavailable; never fall back to saved state. Future settings remain assumptions.",
+        "The page's Burned forever display means HARD_CAP minus maxSupply, including permanent token burns and retired ledger value; it is not the narrower burnedForever getter or a buyback-only measure.",
+        "Displayed expansion/contraction balances are native ETH only; reserve-token holdings are not indexed. Fee-routing direction is provisional until settlement and uses a different window from issuance policy.",
+        "Rollover/accrual-stop text is publisher evidence, not verified CentralBank behavior, a current settlement verdict or a scheduling model.",
+        "Client-rendered route metadata and linked component text are not fresh rendered or RPC observations; publication chronology is not established."
       ]
     }
   ]

@@ -19,6 +19,8 @@ The whitepaper claims no proxies or code-migration mechanism (`protocol-upgrade-
 
 An **optional**, not necessarily configured, guardian can pause auctions and vault purchases only. It cannot pause withdrawals, touch funds or change parameters; the owner can disable or permanently renounce it (`guardian-powers`). Do not infer that withdrawals cannot revert: §9 expressly retains independent settlement dependencies. [sr-whitepaper-v1: exits, immutables]
 
+The current publisher-linked ABIs expose `migrateToSuccessor` and `HoldingsMigrated` for ContractionVault, ExpansionVault and FeeSplitter, and `supplyController`/`setSupplyController` for both auctions. Asset migration is not necessarily code replacement: immutable code can coexist with successor holdings transfers or replaceable registry bindings. This qualifies the scope of the whitepaper's no-code-migration wording; it does not prove the wording false or establish those modules' deployed correspondence, migration authority, controller powers or current configuration. Keep those implementation hypotheses separate until independently evidenced. No migration or setter action is authorized. [sr-contract-directory: publisher-linked app ABI; contracts](contracts.md)
+
 ## Published facts and remaining limits
 
 The current whitepaper has sixteen sections. Policy bounds, withdrawal-fee envelope, license-floor reference, founding terms and owner controls are in the [parameter catalog](../assets/parameters.json). Exact founding allocation is not specified by the current document.

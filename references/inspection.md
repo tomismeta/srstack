@@ -10,6 +10,20 @@ Establish entity/generation, network/environment, full public target and any cha
 
 Wallet tokens differ from issuance credits; charter counts differ from branch counts. Topic-linked source records describe packaged evidence, not current chain state. Use [source index](../assets/sources.json) only to locate an unknown source ID; [parameter index](../assets/parameters.json) only to locate a documented design parameter. No example-derived identity or economics. Current requests warrant fresh bounded reads, not rewritten catalogs or automatic source refresh outside scope.
 
+### Common question paths
+
+| Requested answer | Minimal existing path | Answer fields and limit |
+|---|---|---|
+| Permanent supply removed now, split into token burns and ledger retirement | One `protocol` snapshot | `token_burned_forever`, `token_ledger_retired`, derived `permanent_removed`; cumulative cap reduction, not buybacks today |
+| Holding cap or Pool Manager gate active now | One `protocol` snapshot | `launch_holding_cap`, enabled/active flags, gate flag and `launch_schedule_active`; no transaction-success guarantee |
+| Current Hook owner and pending handoff | One `protocol` snapshot | `trading_hook_owner`, `hook_pending_owner`; zero pending address means no pending recipient, not a history of completed transfers |
+| A public charter's accrued balance plus burns/restrictions | One `charter` snapshot | `charter_pending` and the same burn/restriction fields; ask only for a missing public charter ID, not a wallet |
+| Current epoch/stream context | One `protocol` snapshot | Epoch start/end, emissions status and stream rate; do not infer settlement completion or promise uninterrupted accrual |
+
+These are routes through existing views, not new workflows or helper inputs. Use `detail: "summary"` unless raw evidence is requested. For a combined charter question covered above, do not also fetch `protocol`; return all requested supported fields from its one block anchor. Add `price.py` only when a price or monetary valuation is requested, not for STANDARD-denominated amounts.
+
+For explanation-only questions, read [supply/epoch policy](protocol-policy.md), [launch restrictions](launch-trading.md#enabled-versus-active-restrictions) or [migration/upgrade distinctions](contracts.md#source-reviewed-mechanics-versus-publisher-abi-leads), without helper execution or an unrelated source refresh. Cumulative burn getters cannot answer daily buyback attribution; use the bounded [accounting research path](research-workflow.md) or state the missing historical evidence. A current snapshot is not a substitute for that history.
+
 **Fast routes:** “inspect price” or “current STANDARD price” → `price.py` with `{"schema_version":1}`. “What is this STANDARD amount worth now?” → the same helper with `standard_amount` as an unsigned plain decimal string. “What is my charter worth?” → ask only for a missing public charter ID, never a wallet or wallet scan; read that charter's fresh `charter_pending`, then pass its normalized STANDARD amount to `price.py`. A current-price/value request already authorizes these needed fresh reads under existing host permissions; do not ask a redundant price-read permission question. Preserve requested USD/ETH units; unavailable denominations are not zero or an invitation to substitute another currency.
 
 “Cross-check the current STANDARD price” adds `"cross_check":true`; “Use GeckoTerminal for the current STANDARD price” adds `"source":"geckoterminal"`. `"source":"dexscreener"` explicitly selects DEX Screener; the default `"auto"` uses DEX Screener with the bounded availability fallback below. Do not cross-check by default or accept arbitrary provider URLs.
@@ -40,6 +54,30 @@ Bound addresses/topics, pages, resources, intervals, batches and retries. Discov
 Retain raw values, authenticated decimals, units, derivations and anchors. Unknown semantics/scales block normalized quantities. Failed reads, redactions, missing history, unsupported methods, empty provider responses and incomplete enumeration are not zero. Displayed estimates remain attributed estimates. Balance changes are not income without flow accounting.
 
 Collect only useful fields: possibly charter ID, owner/beneficiary, branches, issuance credits and evidenced lifecycle state. External branches/global budget need separately authenticated observations/accounting; do not assume planner fields exist on chain. Partial reserve holdings are not a portfolio total or solvency finding.
+
+### Supply, restrictions and control context
+
+The `protocol` and `charter` profiles include these additive observations. They retain the same block-scoped evidence and failure rules; they are not new planner inputs or permission to act.
+
+| Fields | Meaning and boundary |
+|---|---|
+| `token_burned_forever`, `token_ledger_retired` | STANDARD quantities with 18 decimals: permanent token burns and permanent ledger retirement, respectively. `permanent_removed = token_hard_cap - token_max_supply` is their combined cap reduction, not a buyback total. |
+| `launch_holding_cap` | STANDARD quantity with 18 decimals. A configured cap does not establish whether it applies now or whether a particular transfer would succeed. |
+| `launch_holding_cap_enabled`, `launch_holding_cap_active` | Separate boolean observations: administrative enablement versus the source-defined effective launch-cap condition. Do not substitute one for the other. |
+| `pool_manager_gate_enabled` | Boolean PoolManager transfer-gate setting, not a complete transferability or trading-availability verdict. |
+| `standard_registry`, `standard_pool_manager` | Observed addresses, not checked catalog bindings, additional callable roles or authorization to follow arbitrary targets. A successful read does not establish that either address matches the publisher-listed identity. |
+| `launch_schedule_active` | Hook boolean launch-schedule condition, distinct from effective tax rates and token cap enablement. |
+| `hook_pending_owner` | Proposed two-step ownership recipient; `trading_hook_owner` remains the current owner. A nonzero pending owner is not a completed handoff. |
+
+If Hook code or its required bindings are unavailable, the charter view is partial: omit the affected Hook fields, retain independently valid charter and token observations, and report the relevant gaps. Do not turn a missing Hook observation into a failed charter balance or an inferred false flag.
+
+The reviewed [`Standard.sol` source](https://sourcify.dev/server/v2/contract/4663/0x88ad8DdF1E3898412146a534538d418c6F8A9062?fields=sources,abi) defines `maxSupply = HARD_CAP - burnedForever - ledgerRetired`. `burn`/`burnFrom` reduce liquid supply and the ceiling; CentralBank-only `convertFrom` burns liquid tokens without lowering the ceiling, while CentralBank-only `retire` lowers the ceiling without moving token balances. Thus transfer-to-zero event sums are not permanent burns, and `maxSupply - totalSupply` is arithmetic ceiling headroom, not remaining issuance budget or freely mintable supply. Getter totals do not attribute removals to buybacks, LP taxes or voluntary burns. Token source mechanics do not verify the separate CentralBank's call paths, ledger obligations or settlement behavior.
+
+In that source, launch-cap activity requires enablement plus a nonzero Registry TAX_HOOK whose `launchScheduleActive()` is true. The cap check runs on transfers **from PoolManager**, checking recipient balance and specified protocol exemptions; do not infer that every LP withdrawal, router or intermediate custodian is exempt, or that every transfer is capped. Ordinary wallet transfers and mints do not enter that branch. The PoolManager gate uses Hook-authorized transient transfer budgets and is separate from the destination blocklist. Disabling it does not disable the blocklist or tax Hook. The blocklist restricts transfers **into** blocked venues, not symmetrically out of them. The reader accepts no address-blocklist input and does not enumerate blocked venues or expose transient budgets as lasting allowances.
+
+The reviewed [`TaxHook.sol` source](https://sourcify.dev/server/v2/contract/4663/0xF1eE073811B14359D850825E48d200483200eDcd?fields=sources,abi) makes the launch schedule active before pool initialization unless overridden, and inactive after its duration or permanent override. That condition gates non-POL liquidity additions; a tax-floor observation alone is not a substitute. Token restriction setters consult `CentralBank.owner()` in the reviewed token source; this does not prove complete CentralBank or Registry authority. These are source-reviewed semantics, not saved deployment-verification verdicts, current switch states or guarantees of transaction success. Re-establish requested deployment correspondence separately; a dependency bundled with these sources does not verify its own deployed module.
+
+For epoch context, retain `epoch_start`, `epoch_end`, emissions status and stream rate together. The publisher's [current-conditions explanation](https://www.standardreserve.xyz/app/protocol/live/) says accrual stops at epoch end until rollover. Passing the boundary does not establish that settlement occurred; the helper does not derive a settlement-pending verdict, execute rollover or verify CentralBank settlement implementation. A daily-equivalent stream extrapolation is not a promise of uninterrupted accrual.
 
 ## 4. Anchor any price separately
 

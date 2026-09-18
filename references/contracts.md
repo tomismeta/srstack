@@ -25,6 +25,19 @@ For planning, use the [deployment-evidence handoff](planning-inputs.md#deploymen
 
 Missing identity, ABI or relationship stops the affected conclusion. Return established fields plus the missing link, never guessed addresses/selectors/interfaces/roles. [Research workflow](research-workflow.md) supplies query bounds, anchors and stop conditions; [safety](safety.md) governs external reads.
 
+## Source-reviewed mechanics versus publisher ABI leads
+
+[Inspection](inspection.md#supply-restrictions-and-control-context) documents reviewed STANDARD/Trading Hook source semantics for cap-reduction decomposition, restriction activation and pending Hook ownership. This is not a saved verification status: fresh deployment correspondence and current state remain separate questions. Sources included as compilation dependencies do not authenticate separately deployed CentralBank, Registry, auction or vault modules.
+
+For “Do successor migrations make the protocol upgradeable?”, answer **not by themselves**. The [whitepaper §12](https://www.standardreserve.xyz/whitepaper/#immutables) claims no proxies or code-migration mechanisms; the publisher's ABI leads require a narrower distinction:
+
+- ContractionVault and FeeSplitter expose `migrateToSuccessor()` in the publisher-linked ABI; ExpansionVault exposes `migrateToSuccessor(address[] assets)`. They also name `HoldingsMigrated` events.
+- Both auction ABIs name `supplyController()`, `setSupplyController(address)`, `SupplyControllerSet` and `NotSupplyAuthority`.
+- Successor asset movement, registry replacement and component retirement are not necessarily changes to deployed code. An ABI name does not prove which assets move, who has authority, whether the published deployment implements it, or whether an auction controller acts autonomously.
+- These are publisher-interface research leads, not authenticated deployed behavior. They are outside the fixed reader and never authorize a migration or setter call.
+
+Use this packaged distinction for an explanation question; fresh implementation or current-authority claims need separate evidence. The [deployment source record](../assets/sources/deployments.json) identifies the reviewed publisher-linked bundle.
+
 ## Questions and independent dimensions
 
 Documented conceptual roles include currency, charter, issuing authority, canonical Uniswap pool/hook, expansion-license and charter auctions, fee routing, reserve/buyback vaults and protocol-owned liquidity—not asserted contract names/counts.

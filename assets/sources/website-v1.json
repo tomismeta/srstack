@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-15T18:27:00.404Z",
+  "reviewed_at": "2026-09-18",
   "scope": "Primary documentation provenance and companion-page routing; no stored application state",
   "records": [
     {
@@ -8,7 +8,7 @@
       "url": "https://www.standardreserve.xyz/whitepaper/",
       "publisher": "The Standard Reserve",
       "published_at": null,
-      "retrieved_at": "2026-09-15T18:07:19.421Z",
+      "retrieved_at": "2026-09-18",
       "revision_label": "Whitepaper v1.0",
       "review_depth": "All16 rendered sections, tables and available equation annotations",
       "claim_stage": "publisher design statements, not implementation verification or live state",
@@ -81,7 +81,10 @@
       "summary": "Publisher rule documentation for supply accounting, launch settings, epoch policy, charter operations, withdrawals, outside liquidity and controls.",
       "limits": [
         "Publisher documentation is not independently verified source code.",
-        "Fetch changeable settings and auction execution details on demand or report unavailable; source dates do not establish current state."
+        "Fetch changeable settings and auction execution details on demand or report unavailable; source dates do not establish current state.",
+        "The unchanged Whitepaper v1.0 label and retrieval date do not establish publication chronology or newly introduced mechanics.",
+        "Section 7 equation 7.1 and sections 7–8 four-hour gap-halving prose give different auction curves; the executable decay setting remains not established.",
+        "Section 12 no-code-migration wording must be scoped against publisher-linked successor holdings-migration ABIs recorded in sr-contract-directory; asset movement is not necessarily code replacement, and ABI presence is not deployed authority evidence."
       ]
     },
     {
@@ -97,7 +100,8 @@
       ],
       "summary": "Publisher explanation of STANDARD supply, burns and holding, with a live panel for related token conditions.",
       "limits": [
-        "Read changing panel values on demand or report unavailable; do not infer zero, absence or current state from documentation."
+        "Read changing panel values on demand or report unavailable; do not infer zero, absence or current state from documentation.",
+        "A later metadata-only app-shell retrieval does not refresh this record's rendered-token-page review. Follow publisher-linked components as text for explanatory provenance only; current-conditions supply context is routed by sr-protocol-conditions."
       ]
     },
     {
@@ -113,7 +117,8 @@
       ],
       "summary": "Publisher explanation of charters, auctions, earning, expansion and withdrawals, with live panels for availability and auction conditions.",
       "limits": [
-        "Read changing availability, prices and auction state on demand or report unavailable; documentation is not an executable quote."
+        "Read changing availability, prices and auction state on demand or report unavailable; documentation is not an executable quote.",
+        "Client-rendered routes may return metadata only. Publisher-linked component text can support explanatory claims without establishing freshly rendered values, deployed behavior or publication chronology."
       ]
     }
   ]

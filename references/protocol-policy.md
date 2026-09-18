@@ -21,6 +21,8 @@ The publisher calls the first quantity circulating supply, including genesis poo
 
 Canonical accounting records: `circulating-supply-formula`, `mintable-ceiling-formula`, `deposit-ledger-conversion`. Formula strings describe the source, not verified callable code.
 
+For read-only implementation context, the reviewed token source exposes `burnedForever()` and `ledgerRetired()` separately; [inspection](inspection.md#supply-restrictions-and-control-context) maps them to `token_burned_forever` and `token_ledger_retired`. Their sum is permanent cap reduction (`HARD_CAP - maxSupply`), not all buybacks. Token conversion burns remain distinct, and `maxSupply - totalSupply` is not the remaining cumulative issuance budget. The publisher conditions UI's “Burned forever” label describes the combined cap reduction; it must not be silently equated with the narrower token getter. Source-reviewed token accounting does not verify CentralBank ledger or settlement implementation.
+
 ## Flow signal and policy — §§4–5
 
 F_n = gross ETH entering through buys − gross ETH leaving through sells in epoch n. Issuance policy uses the trailing `signal-lookback` completed epochs; fee routing uses the sign of current F_n. Positive current flow means expansion; negative or zero means contraction. A current contraction-routing regime does not itself establish a negative trailing policy signal. The claim that capital-based measurement resists manipulation is an argument, not a demonstrated security result. [sr-whitepaper-v1: net-flow, policy]
@@ -28,6 +30,8 @@ F_n = gross ETH entering through buys − gross ETH leaving through sells in epo
 The documented launch base (`base-issuance`) is **700,000 STANDARD/day before the multiplier**, not an already-scaled rate. The owner may lower it for the next epoch but never raise it back. For d days, base rate r and multiplier m_n, epoch issuance is I_n = r × d × m_n. A branch's daily-equivalent share is r × m / N while total branches N and other inputs stay fixed. Accrual streams second by second; a new branch earns from opening. [sr-whitepaper-v1: policy equations 5.1–5.2, branches]
 
 `base-issuance-owner-policy` records the ratchet and effective-epoch claim. `time-to-full-issue` means opening at the full base rate, not time to exhaust the original issuance budget.
+
+The official current-conditions explanation says “Epoch settlement is pending. Accrual is stopped until rollover” and “Settlement is required before the next epoch streams.” Treat this as a publisher-stated boundary on streaming, not a report that settlement is currently pending or a verified CentralBank implementation claim. Wall-clock passage alone does not prove rollover. The fixed daily scenario model does not schedule settlement, model the pause or choose a caller. [sr-protocol-conditions: epoch-end help and settlement notice]
 
 The source publishes `multiplier-floor`, `multiplier-ceiling`, `multiplier-launch`, `epoch-length`, `rate-cut`, `rate-raise` and `multiplier-update-rule`: a negative trailing signal cuts toward the floor; a positive signal sustained for the qualifying consecutive epochs raises toward the ceiling; otherwise the multiplier holds. The rate changes are additive multiplier steps, not percentage changes. Timing/dilution illustrations (`time-to-full-issue`, `time-to-multiplier-ceiling`, `time-ceiling-to-floor`, `ceiling-to-floor-dilution-cut`) retain their source meanings and limits rather than becoming forecasts. [sr-whitepaper-v1: policy]
 

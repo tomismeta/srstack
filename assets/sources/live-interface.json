@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "scope": "Publisher read interface provenance; no stored observations",
+  "scope": "Publisher read interface and bounded STANDARD/TaxHook source provenance; no stored observations or deployment-verdict catalog",
   "records": [
     {
       "id": "sr-publisher-read-interface",
@@ -18,12 +18,71 @@
         "auction display state/closing-price mapping"
       ],
       "bundle_sha256": "b3df8d48b6877e4e526b17f9f5be8716d2651908535b1cebb95d8b24c3f97de2",
-      "summary": "Pinned publisher ABI and frontend mappings define the selected read interface for protocol, charter and auction queries using the public Robinhood RPC endpoint. Interface provenance is not evidence of current contract state or independent source/bytecode equivalence.",
+      "summary": "Pinned publisher ABI and frontend mappings establish the original 68-call read interface for protocol, charter and auction queries using the public Robinhood RPC endpoint. This publisher-bundle provenance is retained; the separate STANDARD and TaxHook source records describe the bounded reconciliation and ten additional getters. Publisher provenance alone is not evidence of current contract state or independent source/bytecode equivalence.",
       "limits": [
         "No borrowed cross-chain ABI; no downloaded code is executed by the helper.",
         "Only the selected scalar view/pure surface is included; no financial actions, raw caller endpoints or selectors.",
         "Old-block state may be unavailable from this public provider; do not silently replace a pinned read with latest.",
         "Current price-function output may continue decaying after sellout; it is not a purchasable quote without availability."
+      ]
+    },
+    {
+      "id": "sr-standard-source-interface",
+      "url": "https://sourcify.dev/server/v2/contract/4663/0x88ad8DdF1E3898412146a534538d418c6F8A9062?fields=abi,sources,compilation,signatures",
+      "publisher": "Sourcify contract verification service",
+      "published_at": null,
+      "retrieved_at": "2026-09-18T19:49:52.594537Z",
+      "review_depth": "Source, ABI and selector-signature review of all 13 selected STANDARD scalar calls, including eight additions; all five pre-existing call definitions agree on signature, state mutability, scalar output and selector.",
+      "claim_stage": "bounded source/interface review from this deployment's Sourcify exact-runtime record; not an independent recompilation or fresh runtime comparison",
+      "locators": [
+        "src/Standard.sol:Standard; Solidity 0.8.26+commit.8a97fa7a",
+        "HARD_CAP, LAUNCH_HOLDING_CAP, burnedForever, ledgerRetired, centralBank, registry, poolManager, poolManagerGateEnabled, launchHoldingCapEnabled",
+        "maxSupply, burn, burnFrom, convertFrom, retire, _retire",
+        "launchHoldingCapActive, _update, _checkHoldingCap, _holdingCapExempt",
+        "Inherited ERC20 totalSupply and decimals",
+        "ABI and signatures.function entries for the selected calls"
+      ],
+      "source_sha256": {
+        "src/Standard.sol": "4014561bde93c63d87afcb482264c487278776988402d256cd594c5cfa3b2f42"
+      },
+      "summary": "The selected STANDARD ABI is reconciled with the deployment-specific source record. Permanent cap reduction is burnedForever + ledgerRetired = HARD_CAP - maxSupply. Public burn/burnFrom reduce both token balances and the ceiling; CentralBank-only convertFrom burns balances without reducing the ceiling, while retire reduces the ceiling without moving balances. The launch holding-cap enabled flag is not the active result: active also resolves a nonzero Registry TAX_HOOK and reads its launchScheduleActive. Registry and PoolManager getters are address observations, not new callable targets.",
+      "limits": [
+        "Review is scoped to this STANDARD deployment and selected read semantics; it does not verify the other five runtime roles or separately deployed dependencies.",
+        "Sourcify record evidence is not a fresh block-scoped observation, independent local source/bytecode equivalence proof, audit or transaction-success guarantee.",
+        "The verification-record timestamp is not an established source publication, deployment or feature-introduction date.",
+        "CentralBank usage descriptions in token comments do not establish the separate CentralBank implementation or its present policy.",
+        "Permanent totals do not attribute burns to buybacks, LP taxes or voluntary holders. Transfer-to-zero events also include conversion burns.",
+        "The holding cap checks destinations on transfers from PoolManager and source-defined exemptions; neither enabled nor active establishes that a particular trade, routed transfer or liquidity removal will succeed.",
+        "The PoolManager gate is independent of the inbound blocked-venue mapping. These scalar reads do not inspect that mapping or transient transfer budgets."
+      ]
+    },
+    {
+      "id": "sr-tax-hook-source-interface",
+      "url": "https://sourcify.dev/server/v2/contract/4663/0xF1eE073811B14359D850825E48d200483200eDcd?fields=abi,sources,compilation,signatures",
+      "publisher": "Sourcify contract verification service",
+      "published_at": null,
+      "retrieved_at": "2026-09-18T19:49:52.594537Z",
+      "review_depth": "Source, ABI and selector-signature review of all 16 selected TaxHook scalar call definitions (15 unique signatures), including launchScheduleActive and pendingOwner; all 14 pre-existing definitions agree on signature, state mutability, scalar output and selector.",
+      "claim_stage": "bounded source/interface review from this deployment's Sourcify exact-runtime record; not an independent recompilation or fresh runtime comparison",
+      "locators": [
+        "src/TaxHook.sol:TaxHook; Solidity 0.8.26+commit.8a97fa7a",
+        "currentTaxBps(bool): true selects buy, false selects sell; basis points",
+        "poolInitialized, taxDecayStart, taxDecayDuration, taxHalfLife, decayStartBuyBps, decayStartSellBps, decayFloorBuyBps, decayFloorSellBps, taxOverridden",
+        "centralBank, standard and inherited owner",
+        "launchScheduleActive, beforeAddLiquidity, setTaxes",
+        "lib/openzeppelin-contracts/contracts/access/Ownable2Step.sol: pendingOwner, transferOwnership, acceptOwnership",
+        "ABI and signatures.function entries for the selected calls"
+      ],
+      "source_sha256": {
+        "src/TaxHook.sol": "903914cd32a459ce075a6ae99576ec5d5d7cd28a8ee58ca8e9a36fba88c54c12"
+      },
+      "summary": "The selected TaxHook ABI is reconciled with the deployment-specific source record. launchScheduleActive is false after a tax override, true when the decay start is zero, and otherwise true only before start plus duration; it is not inferred from displayed tax rates. The Hook uses this flag to reject non-POL liquidity additions during launch. pendingOwner is the proposed recipient of a two-step ownership transfer, not the current owner; zero represents no pending handoff.",
+      "limits": [
+        "Review is scoped to this TaxHook deployment and selected read semantics; compiled dependency sources do not verify the independently deployed Registry, CentralBank or other modules.",
+        "Sourcify record evidence is not a fresh block-scoped observation, independent local source/bytecode equivalence proof, audit or transaction-success guarantee.",
+        "The verification-record timestamp is not an established source publication, deployment or feature-introduction date.",
+        "The Hook selected here and the Hook resolved by STANDARD's Registry are not independently proved identical by these scalar snapshots; report each getter rather than synthesizing the active flag.",
+        "A pending owner is not evidence of acceptance, key control, authorization completeness or a privileged action's present executability."
       ]
     }
   ]

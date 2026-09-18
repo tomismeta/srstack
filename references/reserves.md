@@ -25,6 +25,8 @@ Genesis liquidity and subsequent POL additions are described as permanent/non-wi
 
 Authoritative ownership/authority records: `reserve-redemption-policy`, `pol-withdrawal-policy`, `expansion-reserve-purchase-policy`.
 
+The publisher-linked ABIs contain successor holdings-migration entries for both vaults and FeeSplitter. Asset movement to a successor is distinct from changing deployed code; whitepaper non-upgradeability language is not a blanket proof that holdings can never move between components. The ABI alone establishes neither deployment correspondence nor who can move what, registry replacement rules or present authority. Keep these as implementation questions, not custody assurances or migration instructions. [sr-contract-directory; contracts](contracts.md)
+
 ## Contraction execution
 
 Contraction buys STANDARD on-market and burns all purchases (`buyback-burn-share`). For vault balance V and pool reserves R, the published rule is:
@@ -40,3 +42,5 @@ Contraction-buyback/POL-pairing execution starts owner-cranked; the owner can ma
 ## Accounting boundaries
 
 Keep founding proceeds, ongoing auction receipts, LP fees, protocol taxes, accrued issuance, wallet mints, deposit conversions, ledger removals, redistribution, reserve holdings and buyback spend separate. A reserve purchase is not banker income; a deposit conversion is not a permanent burn; a documented allocation is not an observed transfer. [Contracts](contracts.md) routes identity provenance and fresh verification; [risks](risks.md) identifies evidence boundaries.
+
+The official conditions page's Treasury & controls section reports native ETH vault balances and explicitly does not index reserve-token holdings. Its fee-routing direction is provisional until settlement and uses a different window from issuance policy. Neither a partial ETH display nor the combined “Burned forever” cap-reduction label proves a complete reserve portfolio or cumulative buyback spend. [sr-protocol-conditions; inspection](inspection.md#supply-restrictions-and-control-context)

@@ -31,6 +31,7 @@ class RPCFixture:
             "total_branches": 3, "charter_branches": 2,
             "issuance_budget": 100 * WAD, "cumulative_issued": 30 * WAD,
             "token_hard_cap": 200 * WAD, "token_max_supply": 180 * WAD,
+            "token_burned_forever": 7 * WAD + 1, "token_ledger_retired": 13 * WAD - 1,
             "buy_tax_percent": 9000, "sell_tax_percent": 6667,
             "license_current_price": 5 * WAD, "license_remaining": 7,
             "license_last_sale_price": 6 * WAD, "license_last_sale_day": 4,
@@ -209,6 +210,9 @@ class SnapshotChecks(unittest.TestCase):
                 self.assertEqual(request["params"][1], "0x64")
         protocol = self.rpc.run()
         self.assertEqual(protocol["derived"]["permanent_removed"]["value"], "20")
+        self.assertEqual(protocol["values"]["token_burned_forever"]["value"], "7.000000000000000001")
+        self.assertEqual(protocol["values"]["token_ledger_retired"]["value"], "12.999999999999999999")
+        self.assertEqual(result["derived"]["permanent_removed"]["value"], "20")
         self.assertEqual(protocol["values"]["sell_tax_percent"]["value"], "66.67")
 
     def test_inactive_or_unknown_emissions_omit_daily_rates(self):
@@ -263,6 +267,25 @@ class SnapshotChecks(unittest.TestCase):
         self.assertNotIn("license_current_price", auction["values"])
         self.assertEqual(auction["derived"]["charter_auction_status"]["value"], "open")
 
+    def test_unavailable_hook_preserves_charter_accounting(self):
+        for failure in ("missing_code", "binding_mismatch"):
+            with self.subTest(failure=failure):
+                rpc = RPCFixture()
+                rpc.values["charter_pending"] = 23 * WAD
+                if failure == "missing_code":
+                    rpc.code_fail.add(rpc.addresses["taxHook"])
+                else:
+                    rpc.words["binding_taxHook_standard"] = "0x" + "0" * 64
+                result = rpc.run("charter")
+                self.assertEqual(result["status"], "partial")
+                self.assertEqual(result["values"]["charter_branches"]["value"], 2)
+                self.assertEqual(result["values"]["charter_pending"]["value"], "23")
+                self.assertEqual(result["values"]["token_burned_forever"]["value"], "7.000000000000000001")
+                self.assertEqual(result["derived"]["permanent_removed"]["value"], "20")
+                for identifier in ("trading_hook_owner", "launch_schedule_active", "hook_pending_owner"):
+                    self.assertNotIn(identifier, result["values"])
+                    self.assertIn(identifier, result["errors"])
+
     def test_missing_code_cannot_look_like_valid_zero(self):
         self.rpc.code_fail.add(self.rpc.addresses["licenseAuction"])
         result = self.rpc.run("auctions")
@@ -307,6 +330,59 @@ class SnapshotChecks(unittest.TestCase):
         for identifier in ("remaining_gross_budget", "permanent_removed"):
             self.assertNotIn(identifier, result["derived"])
             self.assertIn(identifier, result["errors"])
+
+    def test_inconsistent_burn_decomposition_preserves_observations_not_total(self):
+        for view in ("protocol", "charter"):
+            rpc = RPCFixture()
+            rpc.values["token_burned_forever"] += 1
+            result = rpc.run(view)
+            self.assertEqual(result["status"], "partial")
+            self.assertNotIn("permanent_removed", result["derived"])
+            self.assertIn("permanent_removed", result["errors"])
+            self.assertEqual(result["values"]["token_max_supply"]["value"], "180")
+            self.assertEqual(result["values"]["token_burned_forever"]["value"], "7.000000000000000002")
+            self.assertEqual(result["values"]["token_ledger_retired"]["value"], "12.999999999999999999")
+            self.assertEqual(result["derived"]["remaining_gross_budget"]["value"], "70")
+
+    def test_partial_burn_reads_do_not_redefine_permanent_removed(self):
+        self.rpc.fail.add("token_ledger_retired")
+        result = self.rpc.run()
+        self.assertEqual(result["status"], "partial")
+        self.assertIn("token_ledger_retired", result["errors"])
+        self.assertNotIn("token_ledger_retired", result["values"])
+        self.assertEqual(result["values"]["token_burned_forever"]["value"], "7.000000000000000001")
+        self.assertEqual(result["derived"]["permanent_removed"]["value"], "20")
+        self.assertNotIn("permanent_removed", result["errors"])
+        rpc = RPCFixture()
+        rpc.fail.add("token_max_supply")
+        unavailable_cap = rpc.run("charter")
+        self.assertEqual(unavailable_cap["status"], "partial")
+        self.assertIn("token_max_supply", unavailable_cap["errors"])
+        self.assertNotIn("permanent_removed", unavailable_cap["derived"])
+        self.assertEqual(unavailable_cap["values"]["token_burned_forever"]["value"], "7.000000000000000001")
+        self.assertEqual(unavailable_cap["values"]["token_ledger_retired"]["value"], "12.999999999999999999")
+
+    def test_enabled_launch_cap_can_be_inactive(self):
+        for view in ("protocol", "charter"):
+            rpc = RPCFixture()
+            rpc.values.update(launch_holding_cap_enabled=True, launch_holding_cap_active=False,
+                              launch_schedule_active=False, pool_manager_gate_enabled=False)
+            result = rpc.run(view)
+            self.assertEqual(result["status"], "ok")
+            self.assertIs(result["values"]["launch_holding_cap_enabled"]["value"], True)
+            self.assertIs(result["values"]["launch_holding_cap_active"]["value"], False)
+            self.assertIs(result["values"]["launch_schedule_active"]["value"], False)
+            self.assertIs(result["values"]["pool_manager_gate_enabled"]["value"], False)
+
+    def test_unavailable_active_cap_is_not_inferred_from_enabled_or_hook(self):
+        self.rpc.fail.add("launch_holding_cap_active")
+        result = self.rpc.run()
+        self.assertEqual(result["status"], "partial")
+        self.assertNotIn("launch_holding_cap_active", result["values"])
+        self.assertIn("launch_holding_cap_active", result["errors"])
+        self.assertIs(result["values"]["launch_holding_cap_enabled"]["value"], True)
+        self.assertIs(result["values"]["launch_schedule_active"]["value"], True)
+        self.assertEqual(result["derived"]["permanent_removed"]["value"], "20")
 
     def test_auction_quote_availability_and_closing_price(self):
         for state, fields in (("not_started", {"license_started": False, "license_current_price": 0}),

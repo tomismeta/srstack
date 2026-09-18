@@ -44,7 +44,7 @@ IDENTIFIER = re.compile(r"[a-zA-Z][a-zA-Z0-9_]{0,79}\Z")
 ZERO_ADDRESS = "0x" + "0" * 40
 # Reviewed execution metadata, not a source/bytecode equivalence assertion.
 # Changing the callable surface requires deliberate review and a new fingerprint.
-CALLS_SHA256 = "6527d38b8219406312d507e0f7ce776085b83a39ac074924785810293ba89ccb"
+CALLS_SHA256 = "e2277987bcb024693564bbbf52fa90927974b2b4ba4de2089b602a046dbd74db"
 
 
 class InputError(ValueError):
@@ -480,6 +480,11 @@ def _derive(config, raw, values, errors):
                 amount(result, raw[high] - raw[low])
             else:
                 errors[result] = "inconsistent supply or issuance bounds"
+    if available("token_hard_cap", "token_max_supply", "token_burned_forever", "token_ledger_retired"):
+        if raw["token_hard_cap"] != raw["token_max_supply"] + raw["token_burned_forever"] + raw["token_ledger_retired"]:
+            # Keep observed fields; do not substitute a sum for the existing cap difference.
+            derived.pop("permanent_removed", None)
+            errors["permanent_removed"] = "permanent burn and retirement totals do not reconcile with supply cap"
     if config["view"] == "charter":
         if not available("charter_owner") or raw["charter_owner"] == ZERO_ADDRESS:
             errors.setdefault("charter_owner", "charter ownership unavailable")

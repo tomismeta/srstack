@@ -10,6 +10,8 @@ Model `"1"` uses explicit fixed base issuance, multiplier, license cost and reso
 
 The current publisher materials describe launch tax, auction and multiplier mechanics; the fixed model does not execute them. Publisher-ABI RPC reads may establish selected current settings at a block, without verified source/bytecode correspondence. Such readings do not establish future transitions or transaction feasibility. Source formulas remain evidence strings, not runnable algorithms.
 
+The official current-conditions explanation states that accrual stops at epoch end until rollover (`sr-protocol-conditions`). Model `"1"` does not schedule rollover, infer settlement-pending status or simulate that pause; its daily arithmetic remains unchanged. A snapshot stream rate or daily-equivalent output is therefore not a settlement-aware forecast. Source-reviewed token/Hook flags likewise do not simulate whether an acquisition, transfer or exit can execute.
+
 ## Model order and accounting
 
 Each case runs three independent counterfactual strategies from the same initial branches and credits:

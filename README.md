@@ -4,7 +4,7 @@
 
 srstack explains documented protocol mechanics, reads current public state and compares expansion strategies using assumptions you approve. It is one independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product, trading bot or wallet toolkit.
 
-**Version 0.1.1 · planner schema/model 1.** Shared market pricing supports a labelled availability fallback and optional provider cross-check. Use the [releases page](https://github.com/tomismeta/srstack/releases) for installable packages and separate audit evidence; identify installed revisions by exact reviewed commit.
+**Version 0.1.2 · planner schema/model 1.** Adds permanent-burn decomposition and token restriction/launch inspection, with epoch-boundary guidance and qualified control-model research. Shared market pricing retains its labelled availability fallback and optional provider cross-check. Published installable packages and separate audit evidence are available on the [releases page](https://github.com/tomismeta/srstack/releases); a prior release's audit results do not cover this version.
 
 ## What you can ask
 
@@ -12,6 +12,8 @@ srstack explains documented protocol mechanics, reads current public state and c
 |---|---|
 | “How do charter withdrawals work?” | Branch retirement, credit release, fees and unresolved mechanics |
 | “What are the current issuance rate and buy/sell taxes?” | Fresh block-scoped protocol observations, not stored launch values |
+| “How much supply was permanently removed, and why?” | Separate liquid-token burns from retired ledger value; totals do not attribute individual burn causes |
+| “Are launch holding limits or the Pool Manager gate active?” | Fresh enabled/active flags and cap values; not a guarantee that a transaction will succeed |
 | “Compare expansion strategies using these assumptions.” | Keep/selective/aggressive calculations with explicit costs and limitations |
 | “Which assumptions depart from the documentation?” | Documented-rule conflicts and unresolved semantics |
 | “Are expansion licenses available at a usable price?” | Fresh auction status and inventory; no purchasable quote when unavailable |
@@ -25,6 +27,8 @@ One skill, three routes:
 - **Research:** source-linked explanations, documented parameters and evidence gaps.
 - **Plan:** a guided conversation: describe your position, budget and goal; choose current, hypothetical or both price cases; review an assumption sheet; then approve a local comparison. Explicit prices take precedence. Documented mode blocks known conflicts; stress mode reports approved departures. No silent economic defaults.
 - **Inspect:** on-demand protocol, auction and public-charter snapshots through the fixed RPC helper, plus a separate canonical-pool price reader for current price and gross balance-value questions. No wallet access.
+
+Common questions have [direct inspection paths](references/inspection.md#common-question-paths): a charter snapshot already includes burn and launch-restriction context, so combined questions need no duplicate protocol read. Explanation-only questions go straight to the relevant packaged rules without an RPC call or planner questionnaire. STANDARD amounts do not trigger a market-price lookup unless a monetary valuation is requested.
 
 Research topics: [protocol](references/protocol.md) · [charters](references/charters.md) · [reserves](references/reserves.md) · [contracts](references/contracts.md) · [updates](references/updates.md) · [documents](references/documents.md) · [risks](references/risks.md).
 
@@ -44,7 +48,7 @@ All three helpers use only Python's standard library: no pip dependencies, walle
 
 ## Quick start
 
-Download **`srstack-0.1.1.zip`** and **`SHA256SUMS`** from [srstack v0.1.1](https://github.com/tomismeta/srstack/releases/tag/v0.1.1). Verify the ZIP against its checksum, then place the complete `srstack/` folder into a clean host skill directory. Keep customizations outside discovery roots, verify the manifest and loaded revision/path, and start a fresh conversation. For source review or pinned installations, use the export workflow below.
+Download **`srstack-0.1.2.zip`** and **`SHA256SUMS`** from [srstack v0.1.2](https://github.com/tomismeta/srstack/releases/tag/v0.1.2). Verify the ZIP against its checksum, then place the complete `srstack/` folder into a clean host skill directory. Keep customizations outside discovery roots, verify the manifest and loaded revision/path, and start a fresh conversation. For source review or pinned installations, use the export workflow below.
 
 **Install a runtime export or attached runtime ZIP—not a full repository, GitHub's automatic “Source code” archive or an audit archive.** Audit evidence is not an installable skill or a smart-contract security certification.
 
@@ -158,6 +162,7 @@ Expected: exit 0 and JSON containing the warning, the three strategies and their
 
 ```text
 Use srstack inspect protocol. Show current issuance and buy/sell taxes.
+Use srstack inspect protocol. Split permanent supply removal into token burns and retired ledger value, and show launch restrictions.
 Use srstack inspect auctions. Are licenses available, and what price is actually usable?
 Use srstack inspect charter <public charter ID>. Show its branches and pending balance.
 ```
@@ -168,9 +173,9 @@ Replace `<public charter ID>` with the ID to inspect.
 
 | View | Selected observations |
 |---|---|
-| `protocol` | Issuance and epoch context, branch count, token supply, counter-based remaining budget, buy/sell tax and pool/emissions state |
+| `protocol` | Issuance and epoch context, branch count, supply and permanent-burn decomposition, token restriction/launch flags, counter-based remaining budget, buy/sell tax and pool/emissions state |
 | `auctions` | License and daily-charter activation, pause state, inventory, duration and available current prices |
-| `charter` | Public owner, branch count, pending balance and related issuance context |
+| `charter` | Public owner, branch count, pending balance and related issuance, supply and restriction context |
 
 Each invocation uses one checked block. Separate example invocations are not one atomic combined snapshot; do not combine their values as if they share a block. Failed fields remain missing with errors; fatal failures return no snapshot. Results are not saved or reused as a fallback. These are selected publisher-ABI reads, not a complete contract audit.
 
@@ -217,16 +222,16 @@ The [contract catalog](assets/entities/robinhood.json) contains **14 publisher-l
 
 | Contract | Questions supported by fresh reads |
 |---|---|
-| **$STANDARD** | What are total token supply, maximum supply and hard cap? `totalSupply()` is not necessarily circulating supply. |
+| **$STANDARD** | What are total supply, ceiling, permanent token burns and retired ledger value? Are launch holding limits and the Pool Manager gate enabled/active? `totalSupply()` is not necessarily circulating supply. |
 | **Central Bank** | What are the issuance rate, multiplier, stream rate, branch count and epoch? What budget remains according to the issuance counters? |
 | **Charter NFT** | Who owns public charter X? Combined with Central Bank reads, how many branches and pending credits does it have? |
-| **Trading Hook** | What are current buy/sell taxes? Is an override active? Is the pool initialized? |
+| **Trading Hook** | What are current buy/sell taxes? Is an override or launch schedule active? Is the pool initialized, and is an ownership handoff pending? |
 | **Expansion License Auction** | Is it started or paused? How much inventory remains? Is there a usable current price, and what is the auction duration? |
 | **Charter Auction** | Are daily charter sales enabled? Is inventory available, and what is the usable ETH price and auction duration? |
 
 The other eight have **identity and documented-role coverage, not fixed-helper live-read support**: Founding Sale, Expansion Vault, Contraction Vault, Liquidity Manager, Fee Splitter, Address Registry, Uniswap v4 Pool Manager and Multicall. Their addresses and explorer links are in the catalog; current holdings, permissions and implementation details require separate fresh research.
 
-**Publisher-listed addresses and publisher ABIs are not independently verified Solidity source code.** The package bundles no independently verified contract source and stores no explorer verification verdicts. Current verification status requires a fresh explorer check. Getter observations do not establish complete administrator powers, upgradeability, audit correspondence or exploit resistance. Source dates identify reference provenance, not live-state freshness.
+**Publisher-listed addresses and publisher ABIs do not establish source correspondence.** Selected STANDARD and Trading Hook interfaces and accounting/restriction semantics have additional source-review provenance; that review does not verify the other modules or establish current deployment state. The package bundles no contract source and stores no current explorer verdicts. Current verification status requires fresh retrieval. Getter observations do not establish complete administrator powers, upgradeability, audit correspondence or exploit resistance. Source dates identify reference provenance, not live-state freshness.
 
 ## Coverage and footprint
 
@@ -263,7 +268,7 @@ python3 -B maintenance/package.py archive
 
 The checks use Python's standard library and local Git; they do not call explorers, connect wallets or use model/API credentials. CI runs them on Python 3.10 and 3.14, with read-only repository permissions and commit-pinned Actions. GitHub checkout and Python provisioning require network access; the validation commands themselves are offline. CI verifies the committed manifest rather than regenerating it, and checks deterministic ZIP output. It does not upload artifacts, tag, publish releases or monitor contracts.
 
-After deliberate runtime changes, regenerate the manifest with `python3 -B maintenance/package.py build`, then run the checks above. `dist/srstack-0.1.1.zip` contains only the runtime package. Maintenance tooling and CI files are repository-only and never authorize an installed skill to execute them.
+After deliberate runtime changes, regenerate the manifest with `python3 -B maintenance/package.py build`, then run the checks above. The candidate archive `dist/srstack-0.1.2.zip` contains only the runtime package; building it does not publish a release or certify it. Maintenance tooling and CI files are repository-only and never authorize an installed skill to execute them.
 
 ## Feedback and license
 

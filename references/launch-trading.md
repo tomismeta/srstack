@@ -10,6 +10,12 @@ The published launch schedule opens at **90% buy / 90% sell**. The excess above 
 
 The canonical pool's `canonical-pool-lp-fee` and `canonical-pool-tick-spacing` are separate published settings. The token page says protocol taxes apply on top of the LP fee; that description does not establish the deployed fee basis or computation order. [sr-whitepaper-v1: parameters; sr-token-page-v1]
 
+## Enabled versus active restrictions
+
+Fresh `protocol`/`charter` observations distinguish `launch_holding_cap_enabled` from `launch_holding_cap_active`, and both from the Hook's `launch_schedule_active`. The reviewed token source requires cap enablement and an active schedule from its Registry-bound Hook; current tax rates alone do not answer either flag. `launch_holding_cap` is a STANDARD amount, not a transfer-success guarantee. The cap's from-PoolManager check, specified exemptions, separate `pool_manager_gate_enabled` setting and destination blocklist must not be collapsed into a single unrestricted/restricted label. The helper does not enumerate blocked addresses. [sr-standard-source-interface; sr-tax-hook-source-interface; inspection](inspection.md#supply-restrictions-and-control-context)
+
+The reviewed Hook source gates non-POL liquidity additions while the launch schedule is active. Source-reviewed rules are not observed current availability or proof that a particular LP addition, withdrawal, router transfer or trade will settle. Token/Hook bindings and `hook_pending_owner` provide bounded control context, not complete permissions or a completed ownership transfer. No action workflow follows from these reads.
+
 ## Activation boundary
 
 Licenses remain dormant during founding distribution, then the owner activates them once with a published opening price and a fresh first day (`license-auction-activation`). Additional daily charter supply starts at `initial-daily-charter-count`. Design rules do not establish live activation or current configuration. [sr-whitepaper-v1: branches, auctions]

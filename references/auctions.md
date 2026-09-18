@@ -10,6 +10,8 @@ When enabled, ongoing purchases execute immediately at the current price, first 
 
 `license-auction-activation` and `auction-unsold-policy` preserve the lifecycle rules; `auction-owner-controls` records the bounded tuning authority. None establishes live activation or current auction configuration.
 
+The publisher frontend ABIs additionally name `supplyController()`, `setSupplyController(address)`, `SupplyControllerSet` and `NotSupplyAuthority` for both auctions. This is an authority-review lead distinct from the whitepaper's owner description, not proof of deployed correspondence, a configured controller, its powers or autonomous supply policy. The bounded reader does not inspect that controller; do not infer complete count-setting authority from an owner getter. [sr-contract-directory: publisher-linked app ABI; contracts](contracts.md)
+
 - **License:** payment permanently removes $STANDARD value (`license-burn-share`); daily supply is `licenses-per-day`, with `licenses-per-charter-per-day` and `maximum-branches` caps. The next opening price uses `license-open-multiple` times the last sold base price, or floor if no sale occurred. The license day ends on sellout or expiry.
 - **Post-genesis charter:** ETH enters the ongoing fee engine. The charter and first branch arrive in the purchase transaction. `charter-open-multiple` applies to the previous closing sale, or floor if no sale occurred. Its floor is the admin-set `charter-reserve-price`, not the license's issuance-linked floor.
 
@@ -20,5 +22,7 @@ When enabled, ongoing purchases execute immediately at the current price, first 
 §7 publishes `license-floor-formula`: P_floor = 2 × (700,000 × m / N), using the launch base, policy multiplier and total system branches. `license-floor-yield-days` captures its two-day yield interpretation. The source also permits later base-rate reductions; do not infer live floor recomputation, snapshot timing or rounding without implementation evidence. [sr-whitepaper-v1: branches equation 7.1; policy]
 
 **Auction price curve: Not established from current source; verified implementation required.** Do not calculate purchase quotes from the source-only floor or substitute the founding-sale description. [sr-whitepaper-v1: branches, auctions]
+
+The unresolved descriptions are specific: §7 equation 7.1 prints `P(t) = P_start × (P_floor / P_start)^(t / 24h)`, while the §7 table and §8 prose describe halving the **distance to the floor** every four hours, then settling at the floor. A fixed gap half-life instead has the form `P_floor + (P_start - P_floor) × 2^(-t / 4h)` before any clamp; these are different functions. This comparison explains the evidence gap, not an executable pricing model. Keep `license-decay-setting` null/not-established; neither description overrides fresh availability checks or supplies an execution quote.
 
 The publisher's early-buy certainty versus wait-for-price tradeoff and illustrative `license-repricing-week-multiple` are explanations, not guaranteed allocation, returns or prices. Owner-adjustable floors, windows and decay settings require fresh state; [risks](risks.md) describes that authority. Design text does not establish source-code/ABI correspondence.

@@ -1,8 +1,9 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-15T18:29:31.074Z",
+  "reviewed_at": "2026-09-18",
   "scope": "Whitepaper section routing, application discovery and publisher read interface provenance; no stored protocol state or implementation audit",
   "source_index": "assets/sources.json",
+  "source_provenance": "Page source_id and source_file locate the authoritative source record and its retrieval date; page routing does not duplicate retrieval timestamps.",
   "parameter_catalog": "assets/parameters.json",
   "deployment_addition": {
     "source_ids": [
@@ -25,7 +26,6 @@
       "source_id": "sr-whitepaper-v1",
       "url": "https://www.standardreserve.xyz/whitepaper/",
       "final_url": "https://www.standardreserve.xyz/whitepaper/",
-      "retrieved_at": "2026-09-15T18:07:19.421Z",
       "review_status": "documentation-text-and-equation-annotations-reviewed",
       "topics": [
         "references/documents.md",
@@ -44,7 +44,6 @@
       "source_id": "sr-token-page-v1",
       "url": "https://www.standardreserve.xyz/app/token/",
       "final_url": "https://www.standardreserve.xyz/app/token/",
-      "retrieved_at": "2026-09-15T18:27:00.244Z",
       "review_status": "topic-explanation-reviewed",
       "topics": [
         "references/protocol-policy.md",
@@ -57,7 +56,6 @@
       "source_id": "sr-charters-page-v1",
       "url": "https://www.standardreserve.xyz/app/protocol/charters/",
       "final_url": "https://www.standardreserve.xyz/app/protocol/charters/",
-      "retrieved_at": "2026-09-15T18:27:00.404Z",
       "review_status": "topic-explanation-reviewed",
       "topics": [
         "references/charters.md",
@@ -282,16 +280,21 @@
   },
   "read_interface": {
     "source_ids": [
-      "sr-publisher-read-interface"
+      "sr-publisher-read-interface",
+      "sr-standard-source-interface",
+      "sr-tax-hook-source-interface"
     ],
     "path": "assets/interfaces/robinhood-reads.json",
+    "scope": "Bounded scalar protocol, charter and auction reads; permanent liquid-token burns versus ledger retirement, holding-cap enabled/active state, Pool Manager gate and Hook launch/ownership context",
     "profiles": [
       "protocol",
       "charter",
       "auctions"
     ],
     "limits": [
-      "Only the fixed publisher ABI surface; no financial methods or caller endpoints."
+      "Only the fixed reviewed ABI surface; no financial methods, address-scoped blocklist input or caller endpoints.",
+      "Selected STANDARD and Trading Hook source/ABI reconciliation is review provenance, not verification of every module or current state.",
+      "Burn totals do not attribute individual causes; restriction flags do not predict transaction success; epoch rollover remains an explicit evidence boundary."
     ]
   }
 }

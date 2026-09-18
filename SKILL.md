@@ -4,7 +4,7 @@ description: Standard Reserve research, planning, and public inspection.
 license: MIT
 compatibility: Python 3.10+ for fixed helpers; network access for live public RPC, indicative prices and web research. Packaged research and scenario calculations work offline.
 metadata:
-  version: "0.1.1"
+  version: "0.1.2"
 ---
 
 # srstack
@@ -39,8 +39,11 @@ Changing facts—balances, prices, rates, supply, inventory, ownership, activati
 
 | Intent | First resource |
 |---|---|
+| Explain burn versus ledger retirement/deposits, epoch rollover, or whether the planner models settlement; no requested live values | [supply and epoch policy](references/protocol-policy.md) |
+| Explain successor migration versus code upgradeability | [source-reviewed mechanics and ABI leads](references/contracts.md#source-reviewed-mechanics-versus-publisher-abi-leads) |
+| Explain cap/gate mechanics or transaction-success limits; no requested live state | [launch restrictions](references/launch-trading.md#enabled-versus-active-restrictions) |
 | Plan, what-if, economics, sensitivity | [planning](references/planning.md) |
-| Inspect price, current STANDARD price/value, charter worth, current/latest state or availability | [inspection](references/inspection.md) |
+| Current burns, holding cap, Pool Manager gate, Hook owner/pending owner, price/value, charter worth, current state or availability | [inspection](references/inspection.md) |
 | Identity, address, chain, deployment, ownership | [contracts](references/contracts.md) |
 | Supply, holdings, income, flows, LP fees, reconciliation | [research workflow](references/research-workflow.md) |
 | Setup or host loading | [installation](references/installation.md) |
@@ -48,6 +51,8 @@ Changing facts—balances, prices, rates, supply, inventory, ownership, activati
 | Current updates / documents / risks | [updates](references/updates.md) / [documents](references/documents.md) / [risks](references/risks.md) |
 
 Generic research: choose the relevant topic; use documents for source discovery. Follow direct topic links to needed records. Only when an ID's file is unknown, use [source index](assets/sources.json) or [parameter index](assets/parameters.json). Never load all groups. Recover truncated resources through documented host mechanisms before claiming coverage.
+
+Explanation-only questions use packaged rule/source context without a live refresh or planner intake. Questions requesting current numbers or flags use inspection instead. For several supported metrics in one question, use the narrowest existing snapshot view that includes them all; a charter snapshot already includes burn and launch-restriction context. Do not add a protocol snapshot or price lookup merely because those topics appear together. Preserve all trust checks; summarize only the requested fields.
 
 Use current evidence and preserve its units and scope. The package is current-only, not a historical-claims archive. Distinguish documented facts, RPC observations, website-reported values and approved assumptions; use brief labels, not a wall of caveats. Missing or failed reads are unknown, never zero. Source details are expandable on request.
 

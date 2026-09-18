@@ -4,7 +4,9 @@
   "rpc_url": "https://rpc.mainnet.chain.robinhood.com/",
   "entity_catalog": "assets/entities/robinhood.json",
   "source_ids": [
-    "sr-publisher-read-interface"
+    "sr-publisher-read-interface",
+    "sr-standard-source-interface",
+    "sr-tax-hook-source-interface"
   ],
   "contracts": {
     "centralBank": "sr-robinhood-central-bank",
@@ -247,7 +249,8 @@
       "decimals": 18,
       "unit": "STANDARD",
       "profiles": [
-        "protocol"
+        "protocol",
+        "charter"
       ],
       "selector": "0xd5abeb01"
     },
@@ -263,7 +266,8 @@
       "decimals": 18,
       "unit": "STANDARD",
       "profiles": [
-        "protocol"
+        "protocol",
+        "charter"
       ],
       "selector": "0x3a03171c"
     },
@@ -849,7 +853,8 @@
       "decimals": 0,
       "unit": "address",
       "profiles": [
-        "protocol"
+        "protocol",
+        "charter"
       ],
       "selector": "0x8da5cb5b"
     },
@@ -1132,10 +1137,183 @@
         "protocol"
       ],
       "selector": "0xdd2365c8"
+    },
+    {
+      "id": "token_burned_forever",
+      "contract": "standard",
+      "function": "burnedForever",
+      "signature": "burnedForever()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x1ac4a8b5"
+    },
+    {
+      "id": "token_ledger_retired",
+      "contract": "standard",
+      "function": "ledgerRetired",
+      "signature": "ledgerRetired()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x5741ab0d"
+    },
+    {
+      "id": "launch_holding_cap",
+      "contract": "standard",
+      "function": "LAUNCH_HOLDING_CAP",
+      "signature": "LAUNCH_HOLDING_CAP()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x361d0f10"
+    },
+    {
+      "id": "launch_holding_cap_enabled",
+      "contract": "standard",
+      "function": "launchHoldingCapEnabled",
+      "signature": "launchHoldingCapEnabled()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "bool",
+      "decimals": 0,
+      "unit": "boolean",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x7f196059"
+    },
+    {
+      "id": "launch_holding_cap_active",
+      "contract": "standard",
+      "function": "launchHoldingCapActive",
+      "signature": "launchHoldingCapActive()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "bool",
+      "decimals": 0,
+      "unit": "boolean",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x0b204113"
+    },
+    {
+      "id": "pool_manager_gate_enabled",
+      "contract": "standard",
+      "function": "poolManagerGateEnabled",
+      "signature": "poolManagerGateEnabled()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "bool",
+      "decimals": 0,
+      "unit": "boolean",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x52451a9c"
+    },
+    {
+      "id": "standard_registry",
+      "contract": "standard",
+      "function": "registry",
+      "signature": "registry()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x7b103999"
+    },
+    {
+      "id": "standard_pool_manager",
+      "contract": "standard",
+      "function": "poolManager",
+      "signature": "poolManager()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0xdc4c90d3"
+    },
+    {
+      "id": "launch_schedule_active",
+      "contract": "taxHook",
+      "function": "launchScheduleActive",
+      "signature": "launchScheduleActive()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "bool",
+      "decimals": 0,
+      "unit": "boolean",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x2bb11c41"
+    },
+    {
+      "id": "hook_pending_owner",
+      "contract": "taxHook",
+      "function": "pendingOwner",
+      "signature": "pendingOwner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0xe30c3978"
     }
   ],
   "limits": [
-    "ABI is publisher-supplied, not independently source-verified.",
+    "Publisher ABI remains the baseline for six modules; only the selected STANDARD and TaxHook interface is reconciled with source/ABI from their Sourcify exact-runtime records.",
+    "Source review is bounded provenance, not independent recompilation, a fresh runtime comparison, an audit or verification of the other four modules.",
+    "Registry and PoolManager values are address observations, not additional callable roles or independently checked target bindings.",
+    "Restriction flags, launch status and pending ownership do not predict transaction success or establish a complete privilege audit.",
     "Only the listed scalar view/pure methods are callable. No raw selector/address/RPC overrides."
   ],
   "publisher_bundle": {
