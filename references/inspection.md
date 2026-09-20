@@ -12,6 +12,7 @@ Commands below run from the trusted verified runtime root using existing permitt
 python3 -B -I scripts/snapshot.py charter --id 1
 python3 -B -I scripts/snapshot.py protocol
 python3 -B -I scripts/snapshot.py auctions
+python3 -B -I scripts/snapshot.py treasury
 python3 -B -I scripts/price.py --quote
 python3 -B -I scripts/price.py --amount-standard 123.45
 ```
@@ -26,7 +27,12 @@ python3 -B -I scripts/price.py --amount-standard 123.45
 | Holding cap / Pool Manager gate | One `protocol`: cap, enabled/active flags, gate and schedule as relevant. See [supply/restriction interpretation](#supply-restrictions-and-control-context); no transaction-success verdict. |
 | Hook owner / pending handoff | One `protocol`: `values.trading_hook_owner`, `values.hook_pending_owner`. Zero pending address means no pending recipient, not completed-transfer history. |
 | Epoch / stream | One `protocol`: epoch start/end, emissions status and stream rate together. See [epoch context](#supply-restrictions-and-control-context); no settlement or uninterrupted-accrual inference. |
-| Current auctions | One `auctions`: requested state and supported availability/price only; see [auction interpretation](#auction-interpretation). Past sales/bidders/revenue go directly to [auction history](auction-history.md), not repeated current snapshots. |
+| Current auctions | One `auctions`: supported availability/price only; see [auction interpretation](#auction-interpretation). Past sales/revenue use [auction history](auction-history.md). Only charter purchase events carry buyer addresses (full detail); license purchases have no buyer field. |
+| Auction controllers / pending ownership | One `auctions` snapshot. Report configured addresses; no inferred controller behavior, completed handoff or Second Mandate activation. |
+| Queued policy / recycling | One `protocol`. Keep explicit pending flags separate from active policy. Raw ledger counters with unestablished scale remain raw; no inferred income or accounting identity. |
+| Treasury routing / liabilities / buyback controls | One `treasury`. Current versus queued shares, team liability and configured/effective limits are separate observations, not executable quotes or holder revenue rights. |
+| A specified reserve asset's holdings | `treasury --asset ADDRESS`, only for the requested public asset. Require successful same-block vault approval; failed/false approval means no holdings/pool result. Raw token units are not normalized balances or a complete portfolio. |
+| Attributable past buybacks | `history.py buybacks` with a finite requested window; see [history](auction-history.md). Do not use aggregate token burns as a buyback total. |
 
 ### Read results, not diagnostic statuses
 
@@ -50,20 +56,20 @@ Explanation-only requests use [supply/epoch policy](protocol-policy.md), [launch
 
 ## 2. Authenticate before ABI reads
 
-The [entity index](../assets/entity-index.json) routes the publisher-listed Robinhood addresses. Explorer publication checks and the publisher frontend ABI are separate evidence: missing explorer source does not prohibit the limited read path below, and a Similar Match infrastructure ABI does not authenticate protocol modules. `sr-publisher-read-interface` records the publisher ABI's origin and limits; it is not independently verified source/bytecode correspondence.
+The [entity index](../assets/entity-index.json) routes publisher-listed Robinhood addresses. Explorer publication checks and publisher frontend ABI evidence are separate: missing explorer source does not prohibit the limited read path, and Similar Match infrastructure ABI does not authenticate protocol modules. `sr-publisher-read-interface` and `sr-extended-read-interface` record origins, denomination evidence and limits, not independent source/bytecode correspondence.
 
 1. Establish original publisher attribution, chain/environment, generation and role. Retain source URLs and times internally.
 2. Before helper execution, verify the script and fixed data hashes against the trusted installed root/manifest using [runtime preflight](execution.md#trusted-runtime-preflight).
 3. Confirm `eth_chainId`; select an explicit block and retain its number, hash, timestamp and UTC retrieval. Pin code, bindings and state to that boundary and recheck it for consistency. Do not assume finality.
 4. Require code at each selected target and an authenticated interface: either established source/bytecode correspondence or the reviewed publisher-authenticated fixed ABI. The latter requires fixed targets, explicit `view`/`pure` mutability, known argument/return types and scales, strict decoding and required module-binding getters matching expected catalog addresses. A selector in bytecode alone proves neither ABI semantics nor source equivalence. Do not borrow another chain's ABI or guess proxy slots/interfaces.
-5. Run the selected role's required binding getters even when their `profiles` lists are empty. A failed/mismatched binding suppresses that role, not an invented replacement address. Other valid roles may remain partial observations.
+5. Run required bindings and their transitive dependencies even when value `profiles` are empty. `binding_profiles` restricts a binding only where explicitly declared: bank→Registry is treasury-only. Failed/mismatched dependencies suppress affected roles, never substitute targets; independently valid roles may remain partial.
 6. Read only the requested public charter ID; owner/branch/pending results are block-scoped observations, not authentication of the user or all their positions. Missing identity, interface, scale or required relationship stops the affected conclusion.
 
 Keep attribution, source correspondence, observed owner/configuration, activation and audit coverage separate. Owner getters do not prove complete privilege structure, immutability or future settings.
 
 ## 3. Read the scoped state
 
-Choose `protocol`, `charter` or `auctions` through schema-1 JSON stdin or explicit CLI mode: `snapshot.py protocol`, `snapshot.py auctions`, or `snapshot.py charter --id UINT256`. Stdin `charter` requires integer `charter_id`; CLI requires the unsigned public ID. `detail` / `--detail` defaults to `summary`, a compact one-line JSON result. Charter summary selects only the requested facts and their dependencies; auction summary excludes last-sale getters and closing-price derivations. `full` restores the broad profile diagnostics and adds raw responses/call mapping, with indented JSON. The protocol profile retains its protocol-wide scope in either detail mode. Explicit CLI mode never reads stdin. See [the exact CLI contract](execution.md#snapshot-helper). Neither caller-selected addresses/selectors nor arbitrary endpoints/headers are accepted.
+Choose `protocol`, `charter`, `auctions` or `treasury` through schema-1 JSON stdin or explicit CLI. Charter requires its public ID; treasury alone optionally accepts `reserve_asset` / `--asset ADDRESS` as a fixed vault-call argument, never a target. `detail` / `--detail` defaults to compact `summary`; charter retains only requested facts/prerequisites, auctions omit last-sale diagnostics. `full` adds broader profile context and raw evidence. Explicit CLI never reads stdin. No arbitrary targets, selectors, endpoints or headers. See [exact input and tuple contracts](execution.md#snapshot-helper).
 
 Use authenticated ABI `view`/`pure` `eth_call` at the identified block; wrappers and all nested/batched members must qualify. No mutating call merely because it will not broadcast; economic labels do not establish an ABI.
 

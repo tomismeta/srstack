@@ -19,14 +19,15 @@ SPEC.loader.exec_module(snapshot)
 NOW = 1_789_500_000
 WAD = 10 ** 18
 HASH = "0x" + "12" * 32
+ASSET = "0x" + "a1" * 20
 
 
 class RPCFixture:
-    """Return encoded scalar results keyed by real packaged calldata."""
+    """Return encoded static results keyed by real packaged calldata."""
 
     def __init__(self):
         self.interface, self.addresses, _ = snapshot._load_package()
-        self.calls = {(self.addresses[c["contract"]], snapshot._calldata(c, {"charter_id": 7})): c for c in self.interface["calls"]}
+        self.calls = {(self.addresses[c["contract"]], snapshot._calldata(c, {"charter_id": 7, "reserve_asset": ASSET})): c for c in self.interface["calls"]}
         self.values = {
             "token_decimals": 18, "stream_rate_per_second": WAD + 2,
             "total_branches": 3, "charter_branches": 2,
@@ -75,7 +76,16 @@ class RPCFixture:
                         value = self.addresses[call["binds_to"]]
                     else:
                         value = self.values.get(identifier, "0x" + "ab" * 20 if call["output_type"] == "address" else True if call["output_type"] == "bool" else 1)
-                    result = "0x" + format(int(value, 16) if isinstance(value, str) else int(value), "064x")
+                    if call["output_type"] == "tuple":
+                        value = self.values.get(identifier, {
+                            component["name"]: ("0x" + "ab" * 20 if component["output_type"] == "address"
+                                                else True if component["output_type"] == "bool" else 1)
+                            for component in call["components"]})
+                        words = [value[component["name"]] for component in call["components"]]
+                    else:
+                        words = [value]
+                    result = "0x" + "".join(format((int(word, 16) if isinstance(word, str) else int(word)) % (1 << 256), "064x")
+                                              for word in words)
             else:
                 raise AssertionError("unexpected RPC method")
             item = {"jsonrpc": "2.0", "id": request["id"]}
@@ -86,10 +96,12 @@ class RPCFixture:
         # Reverse ordering deliberately: JSON-RPC batches are unordered.
         return json.dumps(list(reversed(response))).encode()
 
-    def run(self, view="protocol", detail="summary"):
+    def run(self, view="protocol", detail="summary", asset=None):
         config = {"schema_version": 1, "view": view, "detail": detail}
         if view == "charter":
             config["charter_id"] = 7
+        if asset is not None:
+            config["reserve_asset"] = asset
         return snapshot.snapshot(config, transport=self, now=lambda: NOW)
 
 
@@ -102,6 +114,12 @@ class SnapshotChecks(unittest.TestCase):
         bad = [None, [], dict(good, schema_version=True), dict(good, view="raw"), dict(good, detail="trace"),
                dict(good, charter_id=7), {"schema_version": 1, "view": "charter"},
                *({"schema_version": 1, "view": "charter", "charter_id": value} for value in (True, -1, 1.0, "7", 1 << 256))]
+        bad.extend(dict(schema_version=1, view="treasury", reserve_asset=value)
+                   for value in (None, 0, True, [], {}, snapshot.ZERO_ADDRESS, "0x1234",
+                                 ASSET + " ", " " + ASSET, ASSET + "/path", "0X" + ASSET[2:]))
+        bad.extend(dict(good, reserve_asset=ASSET) for good in (
+            {"schema_version": 1, "view": "protocol"}, {"schema_version": 1, "view": "auctions"},
+            {"schema_version": 1, "view": "charter", "charter_id": 7}))
         for field in ("rpc_url", "endpoint", "address", "selector", "headers", "wallet", "private_key", "cost_basis", "apr", "path", "funding"):
             bad.append(dict(good, **{field: "external-data"}))
         for config in bad:
@@ -136,6 +154,9 @@ class SnapshotChecks(unittest.TestCase):
         cases = [
             (("protocol",), {"view": "protocol"}),
             (("auctions", "--detail", "full"), {"view": "auctions", "detail": "full"}),
+            (("treasury",), {"view": "treasury"}),
+            (("treasury", "--asset", ASSET, "--detail", "full"),
+             {"view": "treasury", "reserve_asset": ASSET, "detail": "full"}),
             (("charter", "--detail", "full", "--id", "7"),
              {"view": "charter", "detail": "full", "charter_id": 7}),
             (("charter", "--id", "0"), {"view": "charter", "charter_id": 0}),
@@ -146,7 +167,7 @@ class SnapshotChecks(unittest.TestCase):
             with self.subTest(args=args):
                 self.rpc.calls = {
                     (self.rpc.addresses[call["contract"]],
-                     snapshot._calldata(call, dict({"charter_id": 7}, **config))): call
+                     snapshot._calldata(call, dict({"charter_id": 7, "reserve_asset": ASSET}, **config))): call
                     for call in self.rpc.interface["calls"]
                 }
                 expected = self.cli(json.dumps(dict(schema_version=1, **config)).encode())
@@ -168,6 +189,9 @@ class SnapshotChecks(unittest.TestCase):
             ("protocol", "--url", "https://bad.invalid"), ("--help", "protocol"),
             ("--detail", "full", "protocol"), ("protocol", "auctions"),
             ("protocol",) * 6, ("x" * 81,),
+            ("protocol", "--asset", ASSET), ("charter", "--asset", ASSET),
+            ("treasury", "--id", "7"), ("treasury", "--asset", snapshot.ZERO_ADDRESS),
+            ("treasury", "--asset", "0x1234"), ("treasury", "--asset", ASSET, "--asset", ASSET),
         ]
         with patch.object(snapshot, "_load_package", side_effect=AssertionError("invalid CLI read package")):
             for args in cases:
@@ -316,15 +340,122 @@ class SnapshotChecks(unittest.TestCase):
         self.assertEqual(result["derived"]["permanent_removed"]["value"], "20")
         self.assertIn("buy_tax_percent", result["values"])
 
-    def test_binding_failure_isolates_role(self):
+    def test_queued_policy_remains_separate_from_active_policy(self):
+        self.rpc.values.update(base_issuance_per_day=3 * WAD, epoch_days=9,
+                               queued_base_issuance_per_day={"value": 91 * WAD + 1, "pending": False},
+                               queued_epoch_days={"value": 17, "pending": True})
+        result = self.rpc.run()
+        queued = result["values"]["queued_base_issuance_per_day"]
+        self.assertEqual(queued["unit"], "queued-policy")
+        self.assertEqual(queued["value"]["value"],
+                         {"value": "91.000000000000000001", "unit": "STANDARD/day", "type": "uint256"})
+        self.assertIs(queued["value"]["pending"]["value"], False)
+        self.assertEqual(result["values"]["base_issuance_per_day"]["value"], "3")
+        self.assertEqual(result["values"]["epoch_days"]["value"], 9)
+        self.assertEqual(result["values"]["queued_epoch_days"]["value"]["value"]["value"], 17)
+        self.assertEqual(result["derived"]["global_gross_daily"]["value"], "86400.0000000000001728")
+        self.rpc.values["token_decimals"] = 6
+        unscaled = self.rpc.run()
+        self.assertNotIn("queued_base_issuance_per_day", unscaled["values"])
+        self.assertIn("queued_epoch_days", unscaled["values"])
+        self.assertNotIn("queued_epoch_days", self.rpc.run("charter")["values"])
+        self.rpc.values.update(fee_team_share_percent=2500, fee_pol_share_percent=7500,
+                               fee_queued_shares={"teamBps": 1000, "polBps": 9000, "pending": False},
+                               contraction_tick_pool_percent=200, contraction_effective_tick_pool_percent=100)
+        treasury = self.rpc.run("treasury")
+        self.assertEqual(treasury["values"]["fee_team_share_percent"], {"value": "25", "unit": "percent"})
+        self.assertEqual(treasury["values"]["fee_queued_shares"]["value"]["teamBps"],
+                         {"value": "10", "unit": "percent", "type": "uint256"})
+        self.assertIs(treasury["values"]["fee_queued_shares"]["value"]["pending"]["value"], False)
+        self.assertEqual(treasury["values"]["contraction_tick_pool_percent"]["value"], "2")
+        self.assertEqual(treasury["values"]["contraction_effective_tick_pool_percent"]["value"], "1")
+
+    def test_invalid_tuple_lengths_and_boolean_do_not_publish_queued_policy(self):
+        for word in ("0x" + "0" * 64, "0x" + "0" * 192,
+                     "0x" + format(7, "064x") + format(2, "064x")):
+            rpc = RPCFixture()
+            rpc.words["queued_epoch_days"] = word
+            result = rpc.run()
+            self.assertNotIn("queued_epoch_days", result["values"])
+            self.assertIn("queued_epoch_days", result["errors"])
+            self.assertIn("epoch_days", result["values"])
+
+    def test_static_pool_tuple_enforces_padding_and_signed_boundaries(self):
+        pool = {"currency0": snapshot.ZERO_ADDRESS, "currency1": ASSET,
+                "fee": (1 << 24) - 1, "tickSpacing": -(1 << 23),
+                "hooks": snapshot.ZERO_ADDRESS}
+        for ticks in (-(1 << 23), (1 << 23) - 1):
+            rpc = RPCFixture()
+            rpc.values["expansion_reserve_pool"] = dict(pool, tickSpacing=ticks)
+            result = rpc.run("treasury", asset=ASSET)
+            self.assertEqual(result["values"]["expansion_reserve_pool"]["value"]["tickSpacing"],
+                             {"value": ticks, "unit": "ticks", "type": "int24"})
+            self.assertEqual(result["values"]["expansion_reserve_pool"]["value"]["fee"]["value"], (1 << 24) - 1)
+        valid = [0, int(ASSET, 16), 3000, 60, 0]
+        for index, invalid in ((0, 1 << 160), (2, 1 << 24),
+                               (3, (1 << 24) - 1), (3, (1 << 256) - (1 << 23) - 1)):
+            rpc = RPCFixture()
+            words = list(valid)
+            words[index] = invalid
+            rpc.words["expansion_reserve_pool"] = "0x" + "".join(format(x, "064x") for x in words)
+            result = rpc.run("treasury", asset=ASSET)
+            self.assertNotIn("expansion_reserve_pool", result["values"])
+            self.assertIn("expansion_reserve_pool", result["errors"])
+            self.assertIn("expansion_holdings", result["values"])
+
+    def test_treasury_asset_approval_gates_reads_without_borrowing_token_scale(self):
+        self.rpc.values.update(expansion_holdings=1234567, token_decimals=6)
+        approved = self.rpc.run("treasury", asset=ASSET)
+        self.assertEqual(approved["reserve_asset"], ASSET)
+        self.assertEqual(approved["values"]["expansion_holdings"],
+                         {"value": 1234567, "unit": "reserve-token-raw-units"})
+        self.assertNotIn("token_decimals", approved["errors"])
+        self.assertTrue(all(request["params"][0]["to"] != ASSET for request in self.rpc.requests
+                            if request["method"] == "eth_call"))
+        for approval in (False, None):
+            rpc = RPCFixture()
+            if approval is None:
+                rpc.fail.add("expansion_is_reserve_asset")
+            else:
+                rpc.values["expansion_is_reserve_asset"] = approval
+            result = rpc.run("treasury", asset=ASSET)
+            self.assertNotIn("expansion_holdings", result["values"])
+            self.assertNotIn("expansion_reserve_pool", result["values"])
+            self.assertIn("fee_team_share_percent", result["values"])
+            observed = {rpc.calls[(request["params"][0]["to"], request["params"][0]["data"])]["id"]
+                        for request in rpc.requests if request["method"] == "eth_call"}
+            self.assertFalse(snapshot.ASSET_DETAILS & observed)
+        rpc = RPCFixture()
+        without_asset = rpc.run("treasury")
+        self.assertNotIn("reserve_asset", without_asset)
+        self.assertFalse(any("$reserve_asset" in rpc.calls[(request["params"][0]["to"], request["params"][0]["data"])]["args"]
+                             for request in rpc.requests if request["method"] == "eth_call"))
+
+    def test_treasury_failed_prerequisites_cannot_authenticate_dependents(self):
+        for failure in ("bank_binding", "standard_code", "registry_code"):
+            rpc = RPCFixture()
+            if failure == "bank_binding":
+                rpc.words["binding_centralBank_standard"] = "0x" + "0" * 64
+            else:
+                rpc.code_fail.add(rpc.addresses["standard" if failure == "standard_code" else "registry"])
+            result = rpc.run("treasury", asset=ASSET)
+            for identifier in ("fee_team_share_percent", "contraction_tick_pool_percent"):
+                self.assertNotIn(identifier, result["values"])
+                self.assertIn(identifier, result["errors"])
+            if failure == "registry_code":
+                self.assertNotIn("expansion_holdings", result["values"])
+            else:
+                self.assertIn("expansion_holdings", result["values"])
+
+    def test_binding_failure_rejects_transitive_dependents(self):
         self.rpc.values["central_bank_owner"] = "0x" + "cc" * 20
         self.rpc.words["binding_centralBank_standard"] = "0x" + "0" * 64
         result = self.rpc.run()
         central_ids = {call["id"] for call in self.rpc.interface["calls"] if call["contract"] == "centralBank"}
         self.assertFalse(central_ids & result["values"].keys())
         self.assertNotIn("remaining_gross_budget", result["derived"])
-        self.assertIn("token_total_supply", result["values"])
-        self.assertIn("buy_tax_percent", result["values"])
+        self.assertNotIn("token_total_supply", result["values"])
+        self.assertNotIn("buy_tax_percent", result["values"])
         self.assertEqual(result["status"], "partial")
         rpc = RPCFixture()
         rpc.fail.add("binding_licenseAuction_bank")

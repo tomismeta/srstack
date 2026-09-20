@@ -480,6 +480,6 @@
     "DayRolled may be observed in a later transaction; its block time does not by itself establish the scheduled opening or expiry. A purchase timestamp establishes execution, not opening.",
     "Historical duration, applied cap, half-life, payment semantics and configuration transitions need interval-specific evidence; current getters and whitepaper constants cannot substitute.",
     "An ABI does not prove where consideration goes, whether it is burned or distributed, or holder yield.",
-    "history.py scans these reviewed auction events within explicit finite budgets. The callable catalog robinhood-reads.json is unchanged. Historical RPC availability and coverage must be established for each request; receipt-level Central Bank corroboration remains outside the helper."
+    "history.py scans these reviewed auction events within explicit finite budgets; treasury buyback events use a separate catalog. Historical RPC availability and coverage must be established for each request; receipt-level Central Bank corroboration remains outside the helper."
   ]
 }

@@ -2,9 +2,12 @@
 """Read a fixed Robinhood RPC snapshot; Python standard library only.
 
 With no arguments, supply JSON on stdin: {"schema_version":1,"view":"protocol"}.
-Views: protocol, charter (requires integer charter_id), auctions.
+Views: protocol, charter (requires integer charter_id), auctions, treasury.
 CLI: protocol|auctions [--detail summary|full]
      charter --id UINT256 [--detail summary|full]
+     treasury [--asset ADDRESS] [--detail summary|full]
+Treasury JSON accepts optional reserve_asset: one nonzero public asset address.
+It is getter argument data only, never an eth_call target. Holdings use raw units.
 CLI mode never reads stdin. UINT256 is 1..78 ASCII decimal digits in uint256 range.
 Optional detail: summary (default) or full (raw RPC evidence and call mapping).
 Flags must be exact, unrepeated, separate tokens; --help must stand alone.
@@ -44,7 +47,7 @@ OVERALL_TIMEOUT = 40
 MAX_BLOCK_AGE = 300
 MAX_FUTURE_SECONDS = 30
 UINT256_MAX = (1 << 256) - 1
-PROFILES = {"protocol", "charter", "auctions"}
+PROFILES = {"protocol", "charter", "auctions", "treasury"}
 ADDRESS = re.compile(r"0x[0-9a-fA-F]{40}\Z")
 WORD = re.compile(r"0x[0-9a-fA-F]{64}\Z")
 QUANTITY = re.compile(r"0x(?:0|[1-9a-fA-F][0-9a-fA-F]*)\Z")
@@ -54,9 +57,13 @@ CHARTER_VALUES = frozenset(("charter_owner", "charter_branches", "charter_pendin
 CHARTER_RATE_CALLS = frozenset((
     "token_decimals", "emissions_started", "stream_rate_per_second", "total_branches"))
 CHARTER_SUMMARY_CALLS = CHARTER_VALUES | CHARTER_RATE_CALLS
+SCALAR_TYPES = frozenset(("uint256", "uint8", "uint24", "int24", "bool", "address"))
+ASSET_GETTERS = frozenset(("isReserveAsset", "holdingsOf", "reservePool"))
+ASSET_APPROVAL = "expansion_is_reserve_asset"
+ASSET_DETAILS = frozenset(("expansion_holdings", "expansion_reserve_pool"))
 # Reviewed execution metadata, not a source/bytecode equivalence assertion.
 # Changing the callable surface requires deliberate review and a new fingerprint.
-CALLS_SHA256 = "e2277987bcb024693564bbbf52fa90927974b2b4ba4de2089b602a046dbd74db"
+CALLS_SHA256 = "481f29ae134d1ef2cc6e354ee27be544cb393a0eabafde79206e0ff022297434"
 
 
 class InputError(ValueError):
@@ -139,7 +146,7 @@ def _integer(value, maximum=UINT256_MAX):
 
 def _validate_input(config):
     try:
-        _keys(config, {"schema_version", "view"}, {"detail", "charter_id"})
+        _keys(config, {"schema_version", "view"}, {"detail", "charter_id", "reserve_asset"})
         if type(config["schema_version"]) is not int or config["schema_version"] != 1:
             raise ValueError("unsupported schema_version")
         if not isinstance(config["view"], str) or config["view"] not in PROFILES:
@@ -151,9 +158,18 @@ def _validate_input(config):
                 raise ValueError("charter requires a uint256 integer charter_id")
         elif "charter_id" in config:
             raise ValueError("charter_id is only accepted for charter view")
+        if "reserve_asset" in config:
+            asset = config["reserve_asset"]
+            if config["view"] != "treasury":
+                raise ValueError("reserve_asset is only accepted for treasury view")
+            if not isinstance(asset, str) or not ADDRESS.fullmatch(asset) or asset.lower() == ZERO_ADDRESS:
+                raise ValueError("reserve_asset requires one nonzero public asset address")
     except (ValueError, TypeError) as error:
         raise InputError(str(error)) from None
-    return dict(config, detail=config.get("detail", "summary"))
+    result = dict(config, detail=config.get("detail", "summary"))
+    if "reserve_asset" in result:
+        result["reserve_asset"] = result["reserve_asset"].lower()
+    return result
 
 
 def _read_file(directory, filename):
@@ -191,9 +207,18 @@ def _directory(parent, name):
     return descriptor
 
 
+def _validate_output(field):
+    if field["output_type"] not in SCALAR_TYPES or not _integer(field["decimals"], 18):
+        raise ValueError("unsupported output")
+    if field["output_type"] in ("bool", "address", "uint8", "uint24", "int24") and field["decimals"] != 0:
+        raise ValueError("invalid scalar scaling")
+    if not isinstance(field["unit"], str) or not re.fullmatch(r"[A-Za-z/-]{1,40}", field["unit"]):
+        raise ValueError("invalid unit")
+
+
 def _validate_package(interface, catalog):
     _keys(interface, {"schema_version", "chain_id", "rpc_url", "entity_catalog", "source_ids", "contracts", "calls", "limits", "publisher_bundle"})
-    if (type(interface["schema_version"]) is not int or interface["schema_version"] != 1
+    if (type(interface["schema_version"]) is not int or interface["schema_version"] != 2
             or type(interface["chain_id"]) is not int or interface["chain_id"] != CHAIN_ID
             or interface["rpc_url"] != RPC_URL or interface["entity_catalog"] != "assets/entities/robinhood.json"):
         raise ValueError("unsupported interface metadata")
@@ -208,15 +233,15 @@ def _validate_package(interface, catalog):
             or not isinstance(bundle["retrieved_at"], str) or len(bundle["retrieved_at"]) > 40):
         raise ValueError("invalid publisher metadata")
     contracts = interface["contracts"]
-    if not isinstance(contracts, dict) or len(contracts) != 6 or not all(isinstance(k, str) and IDENTIFIER.fullmatch(k) and isinstance(v, str) for k, v in contracts.items()):
+    if not isinstance(contracts, dict) or len(contracts) != 11 or not all(isinstance(k, str) and IDENTIFIER.fullmatch(k) and isinstance(v, str) for k, v in contracts.items()):
         raise ValueError("invalid contracts")
     calls = interface["calls"]
-    if not isinstance(calls, list) or not 1 <= len(calls) <= 80:
+    if not isinstance(calls, list) or not 1 <= len(calls) <= 128:
         raise ValueError("invalid call count")
     seen = set()
     required = {"id", "contract", "function", "signature", "mutability", "input_types", "args", "output_type", "decimals", "unit", "profiles", "selector"}
     for call in calls:
-        _keys(call, required, {"binds_to"})
+        _keys(call, required, {"binds_to", "components", "binding_profiles"})
         identifier = call["id"]
         if not isinstance(identifier, str) or not IDENTIFIER.fullmatch(identifier) or identifier in seen:
             raise ValueError("invalid or duplicate call id")
@@ -231,6 +256,10 @@ def _validate_package(interface, catalog):
                 valid = type(argument) is bool
             elif kind in ("uint256", "uint8"):
                 valid = _integer(argument, 255 if kind == "uint8" else UINT256_MAX) or (kind == "uint256" and argument == "$charter_id")
+            elif kind == "address":
+                valid = (argument == "$reserve_asset" and call["contract"] == "expansionVault"
+                         and call["function"] in ASSET_GETTERS and types == ["address"]
+                         and call["profiles"] == ["treasury"])
             else:
                 valid = False
             if not valid:
@@ -239,12 +268,23 @@ def _validate_package(interface, catalog):
                 or call["signature"] != call["function"] + "(" + ",".join(types) + ")"
                 or not isinstance(call["selector"], str) or not re.fullmatch(r"0x[0-9a-f]{8}", call["selector"])):
             raise ValueError("invalid function or selector")
-        if call["output_type"] not in ("uint256", "uint8", "bool", "address") or not _integer(call["decimals"], 18):
-            raise ValueError("unsupported output")
-        if call["output_type"] in ("bool", "address", "uint8") and call["decimals"] != 0:
-            raise ValueError("invalid scalar scaling")
-        if not isinstance(call["unit"], str) or not re.fullmatch(r"[A-Za-z/-]{1,40}", call["unit"]):
-            raise ValueError("invalid unit")
+        if call["output_type"] == "tuple":
+            components = call.get("components")
+            if (call["decimals"] != 0 or call["unit"] not in ("queued-policy", "pool-key")
+                    or not isinstance(components, list) or not 2 <= len(components) <= 5):
+                raise ValueError("invalid static tuple")
+            names = set()
+            for component in components:
+                _keys(component, {"name", "output_type", "decimals", "unit"})
+                name = component["name"]
+                if not isinstance(name, str) or not IDENTIFIER.fullmatch(name) or name in names:
+                    raise ValueError("invalid tuple component name")
+                names.add(name)
+                _validate_output(component)
+        else:
+            if "components" in call:
+                raise ValueError("scalar cannot have tuple components")
+            _validate_output(call)
         profiles = call["profiles"]
         if not isinstance(profiles, list) or not all(isinstance(x, str) and x in PROFILES for x in profiles) or len(set(profiles)) != len(profiles):
             raise ValueError("invalid profiles")
@@ -253,8 +293,15 @@ def _validate_package(interface, catalog):
         if "binds_to" in call:
             if call["binds_to"] not in contracts or profiles or types or call["output_type"] != "address":
                 raise ValueError("invalid binding")
+            scoped = call.get("binding_profiles")
+            if scoped is not None and (not isinstance(scoped, list) or not scoped
+                    or not all(isinstance(x, str) and x in PROFILES for x in scoped)
+                    or len(set(scoped)) != len(scoped)):
+                raise ValueError("invalid binding profiles")
         elif not profiles:
             raise ValueError("call lacks profile")
+        if "binding_profiles" in call and "binds_to" not in call:
+            raise ValueError("binding profiles require a binding")
     fingerprint = hashlib.sha256(json.dumps({k: interface[k] for k in ("contracts", "calls")}, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
     if fingerprint != CALLS_SHA256:
         raise ValueError("unreviewed callable metadata")
@@ -523,9 +570,38 @@ def _decode(value, kind):
         if number >= 1 << 160:
             raise ValueError("invalid ABI address padding")
         return "0x" + value[-40:].lower()
-    if kind == "uint8" and number > 255:
-        raise ValueError("invalid ABI uint8")
+    if kind in ("uint8", "uint24"):
+        if number >= 1 << (8 if kind == "uint8" else 24):
+            raise ValueError("invalid unsigned ABI padding")
+    elif kind == "int24":
+        signed = number if number < 1 << 255 else number - (1 << 256)
+        if not -(1 << 23) <= signed < 1 << 23:
+            raise ValueError("invalid ABI int24 sign extension")
+        return signed
+    elif kind != "uint256":
+        raise ValueError("unsupported scalar ABI type")
     return number
+
+
+def _decode_result(value, call):
+    if call["output_type"] != "tuple":
+        return _decode(value, call["output_type"])
+    components = call["components"]
+    if (not isinstance(value, str) or len(value) != 2 + 64 * len(components)
+            or not re.fullmatch(r"0x[0-9a-fA-F]+", value)):
+        raise ValueError("invalid static tuple ABI result")
+    return {component["name"]: _decode("0x" + value[2 + index * 64:2 + (index + 1) * 64],
+                                       component["output_type"])
+            for index, component in enumerate(components)}
+
+
+def _normalized(value, call):
+    if call["output_type"] != "tuple":
+        return {"value": _scaled(value, call["decimals"]), "unit": call["unit"]}
+    return {"type": "tuple", "unit": call["unit"],
+            "value": {component["name"]: dict(_normalized(value[component["name"]], component),
+                                              type=component["output_type"])
+                      for component in call["components"]}}
 
 
 def _scaled(value, decimals):
@@ -537,10 +613,12 @@ def _scaled(value, decimals):
 
 def _calldata(call, config):
     result = call["selector"]
-    for argument in call["args"]:
+    for kind, argument in zip(call["input_types"], call["args"]):
         if argument == "$charter_id":
             argument = config["charter_id"]
-        result += format(int(argument), "064x")
+        elif argument == "$reserve_asset":
+            argument = config["reserve_asset"]
+        result += format(int(argument, 16) if kind == "address" else int(argument), "064x")
     return result
 
 
@@ -611,52 +689,82 @@ def snapshot(config, transport=None, now=None, monotonic=None):
         raise SnapshotError("RPC chain mismatch")
     number, block_hash, timestamp = _block(rpc.one("eth_getBlockByNumber", ["latest", False]), now)
     tag = hex(number)
-    selected = [call for call in interface["calls"] if config["view"] in call["profiles"]]
+    selected = [call for call in interface["calls"] if config["view"] in call["profiles"]
+                and ("$reserve_asset" not in call["args"] or "reserve_asset" in config)]
     if config["detail"] == "summary":
         if config["view"] == "charter":
             selected = [call for call in selected if call["id"] in CHARTER_SUMMARY_CALLS]
         elif config["view"] == "auctions":
             selected = [call for call in selected if "_last_sale_" not in call["id"]]
     roles = {call["contract"] for call in selected}
-    bindings = [call for call in interface["calls"] if "binds_to" in call and call["contract"] in roles]
-    code_roles = sorted(roles | {call["binds_to"] for call in bindings})
+    all_bindings = [call for call in interface["calls"] if "binds_to" in call
+                    and config["view"] in call.get("binding_profiles", PROFILES)]
+    # Expand dependencies, not all modules: compact charter retains its fixed read set.
+    while True:
+        expanded = roles | {call["binds_to"] for call in all_bindings if call["contract"] in roles}
+        if expanded == roles:
+            break
+        roles = expanded
+    bindings = [call for call in all_bindings if call["contract"] in roles]
+    code_roles = sorted(roles)
     bad_roles, errors = set(), {}
     for role, (code, error) in zip(code_roles, rpc.batch([("eth_getCode", [addresses[role], tag]) for role in code_roles])):
         if error or not isinstance(code, str) or not re.fullmatch(r"0x(?:[0-9a-fA-F]{2})+", code) or not any(x != "0" for x in code[2:]):
             bad_roles.add(role)
             errors["code_" + role] = "contract code unavailable at snapshot block"
-    for call in bindings:
-        if call["binds_to"] in bad_roles:
-            bad_roles.add(call["contract"])
-    calls = bindings + selected
-    callable_calls = [call for call in calls if call["contract"] not in bad_roles]
-    mapping = [{"id": call["id"], "contract": call["contract"], "address": addresses[call["contract"]], "signature": call["signature"], "data": _calldata(call, config)} for call in callable_calls]
-    responses = rpc.batch([("eth_call", [{"to": item["address"], "data": item["data"]}, tag]) for item in mapping])
-    raw = {}
-    for call, (result, error) in zip(callable_calls, responses):
-        try:
-            if error:
-                raise ValueError(error)
-            raw[call["id"]] = _decode(result, call["output_type"])
-        except ValueError:
-            errors[call["id"]] = "RPC field unavailable or invalid scalar ABI result"
+
+    def reject_dependents():
+        while True:
+            rejected = bad_roles | {call["contract"] for call in bindings if call["binds_to"] in bad_roles}
+            if rejected == bad_roles:
+                return
+            bad_roles.update(rejected)
+
+    mapping, raw = [], {}
+
+    def fetch(calls):
+        callable_calls = [call for call in calls if call["contract"] not in bad_roles]
+        items = [{"id": call["id"], "contract": call["contract"], "address": addresses[call["contract"]],
+                  "signature": call["signature"], "data": _calldata(call, config)} for call in callable_calls]
+        mapping.extend(items)
+        responses = rpc.batch([("eth_call", [{"to": item["address"], "data": item["data"]}, tag]) for item in items])
+        for call, (result, error) in zip(callable_calls, responses):
+            try:
+                if error:
+                    raise ValueError(error)
+                raw[call["id"]] = _decode_result(result, call)
+            except ValueError:
+                errors[call["id"]] = "RPC field unavailable or invalid ABI result"
+
+    reject_dependents()
+    fetch(bindings)
     for call in bindings:
         if raw.get(call["id"]) != addresses[call["binds_to"]]:
             bad_roles.add(call["contract"])
             errors[call["id"]] = "contract binding unavailable or does not match fixed catalog"
+    reject_dependents()
+    fetch([call for call in selected if call["id"] not in ASSET_DETAILS])
+    asset_details = [call for call in selected if call["id"] in ASSET_DETAILS]
+    if raw.get(ASSET_APPROVAL) is True and "expansionVault" not in bad_roles:
+        fetch(asset_details)
+    else:
+        for call in asset_details:
+            errors[call["id"]] = "reserve asset approval not confirmed at snapshot block"
     values = {}
     for call in selected:
         identifier = call["id"]
         if call["contract"] in bad_roles:
             errors[identifier] = "contract code or binding check failed"
         elif identifier in raw:
-            values[identifier] = {"value": _scaled(raw[identifier], call["decimals"]), "unit": call["unit"]}
-    if "token_decimals" not in values or raw["token_decimals"] != 18:
+            values[identifier] = _normalized(raw[identifier], call)
+    standard_calls = [call for call in selected
+                      if any(field["unit"].startswith("STANDARD")
+                             for field in call.get("components", [call]))]
+    if standard_calls and ("token_decimals" not in values or raw.get("token_decimals") != 18):
         errors["token_decimals"] = "STANDARD decimals must be confirmed as 18"
-        for call in selected:
-            if call["unit"].startswith("STANDARD"):
-                values.pop(call["id"], None)
-                errors[call["id"]] = "STANDARD decimals not confirmed as 18"
+        for call in standard_calls:
+            values.pop(call["id"], None)
+            errors[call["id"]] = "STANDARD decimals not confirmed as 18"
     derived = _derive(config, raw, values, errors)
     if config["view"] == "charter" and config["detail"] == "summary":
         values = {identifier: value for identifier, value in values.items() if identifier in CHARTER_VALUES}
@@ -679,6 +787,8 @@ def snapshot(config, transport=None, now=None, monotonic=None):
         result["charter_id"] = config["charter_id"]
         if "charter_pending" not in values:
             result["message"] = "Charter pending unavailable; no accrued-balance valuation."
+    if "reserve_asset" in config:
+        result["reserve_asset"] = config["reserve_asset"]
     return result
 
 
@@ -686,13 +796,13 @@ def _cli_config(arguments):
     if len(arguments) > 5 or any(len(value) > 80 for value in arguments):
         raise InputError("CLI accepts at most 5 arguments of at most 80 characters")
     if not arguments or arguments[0] not in PROFILES:
-        raise InputError("expected protocol, auctions, or charter as the first argument")
+        raise InputError("expected protocol, auctions, charter, or treasury as the first argument")
     config = {"schema_version": 1, "view": arguments[0]}
     seen = set()
     index = 1
     while index < len(arguments):
         flag = arguments[index]
-        if flag not in ("--id", "--detail") or flag in seen:
+        if flag not in ("--id", "--detail", "--asset") or flag in seen:
             raise InputError("unknown or repeated CLI flag")
         seen.add(flag)
         if index + 1 == len(arguments):
@@ -702,6 +812,8 @@ def _cli_config(arguments):
             if not re.fullmatch(r"[0-9]{1,78}", value):
                 raise InputError("--id requires 1..78 ASCII decimal digits")
             config["charter_id"] = int(value)
+        elif flag == "--asset":
+            config["reserve_asset"] = value
         else:
             config["detail"] = value
         index += 2

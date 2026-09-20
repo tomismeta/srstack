@@ -127,6 +127,19 @@ class PackageChecks(unittest.TestCase):
         self.assertEqual(0, result.returncode, result.stderr.decode())
         self.assertEqual(first, archive.read_bytes())
 
+    def test_build_rejects_paths_the_installed_verifier_cannot_accept(self):
+        for relative in ("assets/control\x7f.json", "assets/" + "deep/" * 7 + "bad.json",
+                         "assets/" + "a" * 121 + "/" + "b" * 121 + "/x.json"):
+            with self.subTest(path=relative):
+                target = self.root / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text("{}")
+                try:
+                    result = self.invoke("build")
+                    self.assertNotEqual(0, result.returncode)
+                finally:
+                    target.unlink()
+
     def test_bad_commit_cannot_create_target(self):
         for commit in (self.commit[:12], "not-a-sha", "f" * 40):
             with self.subTest(commit=commit):

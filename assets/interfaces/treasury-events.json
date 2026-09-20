@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "scope": "Publisher-authenticated Contraction Vault buyback event accounting for bounded read-only history.py scans; no protocol-wide burn substitution or saved observations.",
+  "chain_id": 4663,
+  "source_ids": [
+    "sr-extended-read-interface"
+  ],
+  "entity_catalog": "assets/entities/robinhood.json",
+  "research_recipe": "references/auction-history.md",
+  "contracts": {
+    "contractionVault": {
+      "entity_id": "sr-robinhood-contraction-vault",
+      "address": "0x796e80E8ABcedc30c700A9587F7933d3342B8946",
+      "abi_locator": "mountApp-DmwNsaDC.js literal OC",
+      "eth_spent_asset": "ETH",
+      "eth_spent_decimals": 18,
+      "tokens_burned_asset": "STANDARD",
+      "tokens_burned_decimals": 18
+    },
+    "standard": {
+      "entity_id": "sr-robinhood-standard",
+      "address": "0x88ad8DdF1E3898412146a534538d418c6F8A9062",
+      "role": "Fixed STANDARD identity, code and decimals at the anchor; not an additional log target. Callable definitions come from the reviewed robinhood-reads.json catalog."
+    }
+  },
+  "topic_convention": "topic0 = Ethereum Keccak-256 of the UTF-8 canonical signature, not NIST SHA3-256. Inputs remain in ABI declaration order; indexed inputs occupy successive topics after topic0; non-indexed inputs occupy data words.",
+  "events": [
+    {
+      "contracts": [
+        "contractionVault"
+      ],
+      "abi": {
+        "type": "event",
+        "name": "BuybackExecuted",
+        "inputs": [
+          {
+            "name": "ethSpent",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "tokensBurned",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "signature": "BuybackExecuted(uint256,uint256)",
+      "topic0": "0x8e8412cac6b961b95ef832e2bac486977bbd29eb9725f9eddd97f3380c31f649",
+      "field_semantics": {
+        "ethSpent": "Reported ETH spent, in wei (18 decimals); the publisher's Contraction Vault/pool display uses ETH18. Event accounting only, not receipt-reconciled expenditure.",
+        "tokensBurned": "Reported purchased STANDARD burned, in raw 18-decimal STANDARD units. Canonical buyback-burn-share identifies purchased STANDARD; the fixed token identity and reviewed denomination are also checked at the scan anchor. Not all protocol burns, net supply change or independently proven ERC20 movement."
+      }
+    }
+  ],
+  "limits": [
+    "Publisher-linked ABI and deployment identity are not independent source/bytecode equivalence or proof that earlier generations used identical implementation semantics.",
+    "Only BuybackExecuted is queried at the fixed Contraction Vault. Token Transfer events, cumulative token burn counters, auction consideration and reserve-asset holdings are not buyback accounting inputs.",
+    "The fixed Contraction Vault standard() binding, STANDARD code and decimals() are checked at the anchor using reviewed fixed calls. This does not establish historical implementation continuity or reconcile transfers and burns.",
+    "Exact sums cover only checked completed windows. Empty checked windows mean no matching events in those windows; failed or unscanned coverage is unknown, never an all-history zero claim.",
+    "Canonical-header and anchor rechecks are consistency checks, not finality or independent completeness proofs. Provider omissions cannot be independently excluded. No receipts, tracing, arbitrary token calls, retries, alternate endpoints or persistence."
+  ]
+}

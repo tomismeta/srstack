@@ -25,9 +25,12 @@ REPOSITORY_FILES = {".gitignore", ".git"}
 
 def runtime_path(path):
     """Reject ambiguous names before classifying runtime versus repository content."""
+    # Match the installed verifier's path bounds before building an artifact.
+    if not isinstance(path, str) or len(path.encode("utf-8")) > 255:
+        raise ValueError("Invalid package path")
     parts = path.split("/")
-    if (not path or any(part in {"", ".", ".."} for part in parts)
-            or "\\" in path or ":" in path or any(ord(c) < 32 for c in path)):
+    if (len(parts) > 8 or any(part in {"", ".", ".."} for part in parts)
+            or "\\" in path or ":" in path or any(ord(c) < 32 or ord(c) == 127 for c in path)):
         raise ValueError(f"Unsafe package path: {path!r}")
     if (parts[0] in REPOSITORY_DIRS | REPOSITORY_FILES
             or any(part in CACHE_DIRS for part in parts)

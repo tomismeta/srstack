@@ -45,23 +45,23 @@ For “Do successor migrations make the protocol upgradeable?”, answer **not b
 - ContractionVault and FeeSplitter expose `migrateToSuccessor()` in the publisher-linked ABI; ExpansionVault exposes `migrateToSuccessor(address[] assets)`. They also name `HoldingsMigrated` events.
 - Both auction ABIs name `supplyController()`, `setSupplyController(address)`, `SupplyControllerSet` and `NotSupplyAuthority`.
 - Successor asset movement, registry replacement and component retirement are not necessarily changes to deployed code. An ABI name does not prove which assets move, who has authority, whether the published deployment implements it, or whether an auction controller acts autonomously.
-- These are publisher-interface research leads, not authenticated deployed behavior. They are outside the fixed reader and never authorize a migration or setter call.
+- These are publisher interfaces, not authenticated implementation behavior. The fixed reader now observes configured auction controllers/pending ownership and selected treasury state; migration/setter calls remain forbidden.
 
 Use this packaged distinction for an explanation question; fresh implementation or current-authority claims need separate evidence. The [deployment source record](../assets/sources/deployments.json) identifies the reviewed publisher-linked bundle.
 
 ## Additional publisher-ABI research coverage
 
-The publisher-linked mount module also exposes these **existing-module research leads**, not additional fixed-reader calls or newly verified Solidity implementations. [sr-contract-directory]
+The publisher-linked mount module supplies the following **supported fixed read interfaces**, not newly source-verified Solidity implementations. Use `auctions`, `protocol` or `treasury` as scoped in [inspection](inspection.md#common-question-paths). [sr-extended-read-interface]
 
-| Module | Useful read-only ABI leads | Evidence boundary |
+| Module | Supported read-only interface | Evidence boundary |
 |---|---|---|
 | Both auctions | `supplyController()`, `pendingOwner()` | A configured address is not authenticated controller behavior or Second Mandate activation |
 | FeeSplitter | `teamShareBps()`, `polShareBps()`, `teamOwed()`, `teamWallet()`, `queuedShares()` | Current versus queued routing and accrued liability; not holder revenue rights |
 | ExpansionVault | `holdingsOf(address)`, `isReserveAsset(address)`, `reservePool(address)` | Requires independently authenticated asset identities/units; does not enumerate a complete portfolio |
 | ContractionVault | `lastTickAt()`, `tickCooldown()`, effective limits, `BuybackExecuted` | Distinguish attributable buyback events from aggregate burns; settings are not executable quotes |
-| CentralBank | Queued-policy getters, recycling counters, `ParamQueued`/`ParamApplied` | Separate pending changes from current policy; names alone do not prove accounting/timing semantics |
+| CentralBank | Queued-policy getters and recycling counters | Separate pending changes from current policy; raw streamed counters have unestablished scale; no parameter-event history scan |
 
-Prioritize auction controller/ownership and treasury routing for a future deliberately reviewed read expansion. New targets, argument types, tuples, units and module bindings need explicit authentication and decoding review; do not redirect the current helper or generate a substitute runner. The [Second Mandate](updates.md#second-mandate-liquidity-for-tokenized-stocks) supplies intended functions, not named new contracts.
+Selected reserve holdings require an explicitly requested asset and successful same-block approval; amounts remain raw token units without authenticated decimals. Flat tuples preserve component types/units and pending flags. Buyback history uses `BuybackExecuted` events, not aggregate burn counters. All new bindings, selectors and units are pinned in the reviewed catalogs; do not redirect the helper or generate a substitute runner. The [Second Mandate](updates.md#second-mandate-liquidity-for-tokenized-stocks) supplies intended functions, not named new contracts.
 
 
 ## Questions and independent dimensions

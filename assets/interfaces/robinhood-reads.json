@@ -1,12 +1,13 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "chain_id": 4663,
   "rpc_url": "https://rpc.mainnet.chain.robinhood.com/",
   "entity_catalog": "assets/entities/robinhood.json",
   "source_ids": [
     "sr-publisher-read-interface",
     "sr-standard-source-interface",
-    "sr-tax-hook-source-interface"
+    "sr-tax-hook-source-interface",
+    "sr-extended-read-interface"
   ],
   "contracts": {
     "centralBank": "sr-robinhood-central-bank",
@@ -14,7 +15,12 @@
     "charterNFT": "sr-robinhood-charter-nft",
     "taxHook": "sr-robinhood-tax-hook",
     "licenseAuction": "sr-robinhood-license-auction",
-    "charterAuction": "sr-robinhood-charter-auction"
+    "charterAuction": "sr-robinhood-charter-auction",
+    "feeSplitter": "sr-robinhood-fee-splitter",
+    "expansionVault": "sr-robinhood-expansion-vault",
+    "contractionVault": "sr-robinhood-contraction-vault",
+    "registry": "sr-robinhood-registry",
+    "poolManager": "sr-robinhood-pool-manager"
   },
   "calls": [
     {
@@ -1307,18 +1313,950 @@
         "charter"
       ],
       "selector": "0xe30c3978"
+    },
+    {
+      "id": "license_auction_supply_controller",
+      "contract": "licenseAuction",
+      "function": "supplyController",
+      "signature": "supplyController()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0xe7ba1012"
+    },
+    {
+      "id": "license_auction_pending_owner",
+      "contract": "licenseAuction",
+      "function": "pendingOwner",
+      "signature": "pendingOwner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0xe30c3978"
+    },
+    {
+      "id": "charter_auction_supply_controller",
+      "contract": "charterAuction",
+      "function": "supplyController",
+      "signature": "supplyController()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0xe7ba1012"
+    },
+    {
+      "id": "charter_auction_pending_owner",
+      "contract": "charterAuction",
+      "function": "pendingOwner",
+      "signature": "pendingOwner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0xe30c3978"
+    },
+    {
+      "id": "queued_epoch_days",
+      "contract": "centralBank",
+      "function": "queuedEpochDays",
+      "signature": "queuedEpochDays()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "tuple",
+      "decimals": 0,
+      "unit": "queued-policy",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x41b3e64b",
+      "components": [
+        {
+          "name": "value",
+          "output_type": "uint256",
+          "unit": "days",
+          "decimals": 0
+        },
+        {
+          "name": "pending",
+          "output_type": "bool",
+          "unit": "boolean",
+          "decimals": 0
+        }
+      ]
+    },
+    {
+      "id": "queued_fee_window_days",
+      "contract": "centralBank",
+      "function": "queuedFeeWindowDays",
+      "signature": "queuedFeeWindowDays()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "tuple",
+      "decimals": 0,
+      "unit": "queued-policy",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x0ca26d68",
+      "components": [
+        {
+          "name": "value",
+          "output_type": "uint256",
+          "unit": "days",
+          "decimals": 0
+        },
+        {
+          "name": "pending",
+          "output_type": "bool",
+          "unit": "boolean",
+          "decimals": 0
+        }
+      ]
+    },
+    {
+      "id": "last_accrual",
+      "contract": "centralBank",
+      "function": "lastAccrual",
+      "signature": "lastAccrual()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "unix-seconds",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x7b3baab4"
+    },
+    {
+      "id": "epochs_settled",
+      "contract": "centralBank",
+      "function": "epochsSettled",
+      "signature": "epochsSettled()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "epochs",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x8770180f"
+    },
+    {
+      "id": "central_bank_pending_owner",
+      "contract": "centralBank",
+      "function": "pendingOwner",
+      "signature": "pendingOwner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0xe30c3978"
+    },
+    {
+      "id": "fee_splitter_owner",
+      "contract": "feeSplitter",
+      "function": "owner",
+      "signature": "owner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x8da5cb5b"
+    },
+    {
+      "id": "fee_splitter_pending_owner",
+      "contract": "feeSplitter",
+      "function": "pendingOwner",
+      "signature": "pendingOwner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0xe30c3978"
+    },
+    {
+      "id": "expansion_paused",
+      "contract": "expansionVault",
+      "function": "paused",
+      "signature": "paused()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "bool",
+      "decimals": 0,
+      "unit": "boolean",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x5c975abb"
+    },
+    {
+      "id": "expansion_owner",
+      "contract": "expansionVault",
+      "function": "owner",
+      "signature": "owner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x8da5cb5b"
+    },
+    {
+      "id": "expansion_pending_owner",
+      "contract": "expansionVault",
+      "function": "pendingOwner",
+      "signature": "pendingOwner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0xe30c3978"
+    },
+    {
+      "id": "contraction_paused",
+      "contract": "contractionVault",
+      "function": "paused",
+      "signature": "paused()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "bool",
+      "decimals": 0,
+      "unit": "boolean",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x5c975abb"
+    },
+    {
+      "id": "contraction_owner",
+      "contract": "contractionVault",
+      "function": "owner",
+      "signature": "owner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x8da5cb5b"
+    },
+    {
+      "id": "contraction_pending_owner",
+      "contract": "contractionVault",
+      "function": "pendingOwner",
+      "signature": "pendingOwner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0xe30c3978"
+    },
+    {
+      "id": "fee_team_share_percent",
+      "contract": "feeSplitter",
+      "function": "teamShareBps",
+      "signature": "teamShareBps()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 2,
+      "unit": "percent",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x6980b639"
+    },
+    {
+      "id": "fee_pol_share_percent",
+      "contract": "feeSplitter",
+      "function": "polShareBps",
+      "signature": "polShareBps()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 2,
+      "unit": "percent",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0xaff4e186"
+    },
+    {
+      "id": "fee_team_wallet",
+      "contract": "feeSplitter",
+      "function": "teamWallet",
+      "signature": "teamWallet()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x59927044"
+    },
+    {
+      "id": "fee_queued_shares",
+      "contract": "feeSplitter",
+      "function": "queuedShares",
+      "signature": "queuedShares()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "tuple",
+      "decimals": 0,
+      "unit": "queued-policy",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0xd83ad00c",
+      "components": [
+        {
+          "name": "teamBps",
+          "output_type": "uint256",
+          "unit": "percent",
+          "decimals": 2
+        },
+        {
+          "name": "polBps",
+          "output_type": "uint256",
+          "unit": "percent",
+          "decimals": 2
+        },
+        {
+          "name": "pending",
+          "output_type": "bool",
+          "unit": "boolean",
+          "decimals": 0
+        }
+      ]
+    },
+    {
+      "id": "expansion_is_reserve_asset",
+      "contract": "expansionVault",
+      "function": "isReserveAsset",
+      "signature": "isReserveAsset(address)",
+      "mutability": "view",
+      "input_types": [
+        "address"
+      ],
+      "args": [
+        "$reserve_asset"
+      ],
+      "output_type": "bool",
+      "decimals": 0,
+      "unit": "boolean",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0xdd04e584"
+    },
+    {
+      "id": "expansion_holdings",
+      "contract": "expansionVault",
+      "function": "holdingsOf",
+      "signature": "holdingsOf(address)",
+      "mutability": "view",
+      "input_types": [
+        "address"
+      ],
+      "args": [
+        "$reserve_asset"
+      ],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "reserve-token-raw-units",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x03995b2d"
+    },
+    {
+      "id": "expansion_reserve_pool",
+      "contract": "expansionVault",
+      "function": "reservePool",
+      "signature": "reservePool(address)",
+      "mutability": "view",
+      "input_types": [
+        "address"
+      ],
+      "args": [
+        "$reserve_asset"
+      ],
+      "output_type": "tuple",
+      "decimals": 0,
+      "unit": "pool-key",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x27417a82",
+      "components": [
+        {
+          "name": "currency0",
+          "output_type": "address",
+          "unit": "address",
+          "decimals": 0
+        },
+        {
+          "name": "currency1",
+          "output_type": "address",
+          "unit": "address",
+          "decimals": 0
+        },
+        {
+          "name": "fee",
+          "output_type": "uint24",
+          "unit": "pool-fee-raw-units",
+          "decimals": 0
+        },
+        {
+          "name": "tickSpacing",
+          "output_type": "int24",
+          "unit": "ticks",
+          "decimals": 0
+        },
+        {
+          "name": "hooks",
+          "output_type": "address",
+          "unit": "address",
+          "decimals": 0
+        }
+      ]
+    },
+    {
+      "id": "contraction_last_tick_at",
+      "contract": "contractionVault",
+      "function": "lastTickAt",
+      "signature": "lastTickAt()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "unix-seconds",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0xb87c286b"
+    },
+    {
+      "id": "contraction_tick_cooldown",
+      "contract": "contractionVault",
+      "function": "tickCooldown",
+      "signature": "tickCooldown()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "seconds",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x32c6b220"
+    },
+    {
+      "id": "contraction_tick_pool_percent",
+      "contract": "contractionVault",
+      "function": "tickPoolPctBps",
+      "signature": "tickPoolPctBps()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 2,
+      "unit": "percent",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x5c1be830"
+    },
+    {
+      "id": "contraction_tick_vault_percent",
+      "contract": "contractionVault",
+      "function": "tickVaultPctBps",
+      "signature": "tickVaultPctBps()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 2,
+      "unit": "percent",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x58e5b67f"
+    },
+    {
+      "id": "contraction_effective_tick_pool_percent",
+      "contract": "contractionVault",
+      "function": "effectiveTickPoolPctBps",
+      "signature": "effectiveTickPoolPctBps()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 2,
+      "unit": "percent",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x09ac0cdf"
+    },
+    {
+      "id": "contraction_twap_deviation_ticks",
+      "contract": "contractionVault",
+      "function": "twapDeviationTicks",
+      "signature": "twapDeviationTicks()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint24",
+      "decimals": 0,
+      "unit": "ticks",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x73bcf7e7"
+    },
+    {
+      "id": "contraction_effective_twap_deviation_ticks",
+      "contract": "contractionVault",
+      "function": "effectiveTwapDeviationTicks",
+      "signature": "effectiveTwapDeviationTicks()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint24",
+      "decimals": 0,
+      "unit": "ticks",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x6902065c"
+    },
+    {
+      "id": "contraction_pol_manager_count",
+      "contract": "contractionVault",
+      "function": "polManagerCount",
+      "signature": "polManagerCount()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "managers",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x1cb2e16c"
+    },
+    {
+      "id": "binding_feeSplitter_centralBank",
+      "contract": "feeSplitter",
+      "function": "centralBank",
+      "signature": "centralBank()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [],
+      "selector": "0x9a4a0fb2",
+      "binds_to": "centralBank"
+    },
+    {
+      "id": "binding_feeSplitter_registry",
+      "contract": "feeSplitter",
+      "function": "registry",
+      "signature": "registry()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [],
+      "selector": "0x7b103999",
+      "binds_to": "registry"
+    },
+    {
+      "id": "binding_expansionVault_registry",
+      "contract": "expansionVault",
+      "function": "registry",
+      "signature": "registry()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [],
+      "selector": "0x7b103999",
+      "binds_to": "registry"
+    },
+    {
+      "id": "binding_expansionVault_poolManager",
+      "contract": "expansionVault",
+      "function": "poolManager",
+      "signature": "poolManager()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [],
+      "selector": "0xdc4c90d3",
+      "binds_to": "poolManager"
+    },
+    {
+      "id": "binding_contractionVault_registry",
+      "contract": "contractionVault",
+      "function": "registry",
+      "signature": "registry()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [],
+      "selector": "0x7b103999",
+      "binds_to": "registry"
+    },
+    {
+      "id": "binding_contractionVault_poolManager",
+      "contract": "contractionVault",
+      "function": "poolManager",
+      "signature": "poolManager()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [],
+      "selector": "0xdc4c90d3",
+      "binds_to": "poolManager"
+    },
+    {
+      "id": "binding_contractionVault_standard",
+      "contract": "contractionVault",
+      "function": "standard",
+      "signature": "standard()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [],
+      "selector": "0x5a3b7e42",
+      "binds_to": "standard"
+    },
+    {
+      "id": "binding_contractionVault_hook",
+      "contract": "contractionVault",
+      "function": "hook",
+      "signature": "hook()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [],
+      "selector": "0x7f5a7c7b",
+      "binds_to": "taxHook"
+    },
+    {
+      "id": "binding_centralBank_registry",
+      "contract": "centralBank",
+      "function": "registry",
+      "signature": "registry()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [],
+      "selector": "0x7b103999",
+      "binds_to": "registry",
+      "binding_profiles": [
+        "treasury"
+      ]
+    },
+    {
+      "id": "queued_base_issuance_per_day",
+      "contract": "centralBank",
+      "function": "queuedBaseIssuancePerDay",
+      "signature": "queuedBaseIssuancePerDay()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "tuple",
+      "decimals": 0,
+      "unit": "queued-policy",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0xa3cdd9d4",
+      "components": [
+        {
+          "name": "value",
+          "output_type": "uint256",
+          "unit": "STANDARD/day",
+          "decimals": 18
+        },
+        {
+          "name": "pending",
+          "output_type": "bool",
+          "unit": "boolean",
+          "decimals": 0
+        }
+      ]
+    },
+    {
+      "id": "queued_bounty_cap",
+      "contract": "centralBank",
+      "function": "queuedBountyCap",
+      "signature": "queuedBountyCap()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "tuple",
+      "decimals": 0,
+      "unit": "queued-policy",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0xd95ae60f",
+      "components": [
+        {
+          "name": "value",
+          "output_type": "uint256",
+          "unit": "STANDARD",
+          "decimals": 18
+        },
+        {
+          "name": "pending",
+          "output_type": "bool",
+          "unit": "boolean",
+          "decimals": 0
+        }
+      ]
+    },
+    {
+      "id": "cumulative_recycled",
+      "contract": "centralBank",
+      "function": "cumulativeRecycled",
+      "signature": "cumulativeRecycled()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x2c55305f"
+    },
+    {
+      "id": "recycle_buffer",
+      "contract": "centralBank",
+      "function": "recycleBuffer",
+      "signature": "recycleBuffer()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x8a71d992"
+    },
+    {
+      "id": "recycle_rate",
+      "contract": "centralBank",
+      "function": "recycleRate",
+      "signature": "recycleRate()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD/second",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0xb55795e3"
+    },
+    {
+      "id": "recycle_streamed_raw",
+      "contract": "centralBank",
+      "function": "recycleStreamed",
+      "signature": "recycleStreamed()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "raw-ledger-units",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x73a7cd78"
+    },
+    {
+      "id": "issuance_streamed_raw",
+      "contract": "centralBank",
+      "function": "issuanceStreamed",
+      "signature": "issuanceStreamed()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "raw-ledger-units",
+      "profiles": [
+        "protocol",
+        "charter"
+      ],
+      "selector": "0x2751708f"
+    },
+    {
+      "id": "fee_team_owed",
+      "contract": "feeSplitter",
+      "function": "teamOwed",
+      "signature": "teamOwed()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "ETH",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0xa51d2019"
+    },
+    {
+      "id": "contraction_pool_eth_depth",
+      "contract": "contractionVault",
+      "function": "poolEthDepth",
+      "signature": "poolEthDepth()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "ETH",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x54f50b3b"
     }
   ],
   "limits": [
-    "Publisher ABI remains the baseline for six modules; only the selected STANDARD and TaxHook interface is reconciled with source/ABI from their Sourcify exact-runtime records.",
-    "Source review is bounded provenance, not independent recompilation, a fresh runtime comparison, an audit or verification of the other four modules.",
-    "Registry and PoolManager values are address observations, not additional callable roles or independently checked target bindings.",
-    "Restriction flags, launch status and pending ownership do not predict transaction success or establish a complete privilege audit.",
-    "Only the listed scalar view/pure methods are callable. No raw selector/address/RPC overrides."
+    "Publisher ABI is the baseline; selected STANDARD and TaxHook interfaces also have Sourcify exact-runtime source provenance. Extended getters use authenticated publisher module ABI data, not downloaded code execution.",
+    "Source review is bounded provenance, not independent recompilation, a fresh runtime comparison or a contract audit.",
+    "Only listed scalar or flat fixed static tuple view/pure getters are callable. No raw selector, target or RPC overrides. Tuple component types, units and scales are explicit.",
+    "Treasury checks fixed FeeSplitter, ExpansionVault and ContractionVault relationships to Registry, CentralBank, STANDARD, TaxHook and PoolManager as applicable, including retained transitive CentralBank/CharterNFT identity prerequisites. Registry and PoolManager are code-checked identities, not arbitrary discovery roots. CentralBank registry cross-check is treasury-only to preserve compact charter calls.",
+    "Binding prerequisites are transitive. Rejected code or bindings cannot authenticate dependent values. No reserve token address is an eth_call target.",
+    "Treasury accepts one optional nonzero reserve_asset as argument data only for ExpansionVault isReserveAsset, holdingsOf and reservePool. Holdings and pool details require approval at the same checked block; no token search, reserve enumeration or ERC20 metadata calls.",
+    "Reserve holdings retain raw token units: token decimals are not authenticated. reservePool fee retains raw pool fee units, including possible flag bits; tickSpacing is signed int24 ticks. Pool-key components are observations, not new callable targets.",
+    "Queued policy tuples retain value and pending separately and never replace active getters; false pending does not activate the stored queued value.",
+    "recycleStreamed and issuanceStreamed have unestablished ledger scales and retain raw-ledger-units with no derived equations. Other recycled STANDARD denominations follow publisher interpretation and require independently checked STANDARD decimals18.",
+    "Restriction flags, authority getters, pending ownership and configured/effective tick settings do not predict transaction success or establish a complete privilege audit. POL manager count is bounded; managers are not enumerated.",
+    "Compact charter retains its existing balance/rate call set; extended CentralBank context is protocol or full charter only."
   ],
   "publisher_bundle": {
-    "url": "https://www.standardreserve.xyz/assets/app-CIqwBLws.js",
-    "sha256": "b3df8d48b6877e4e526b17f9f5be8716d2651908535b1cebb95d8b24c3f97de2",
-    "retrieved_at": "2026-09-15T17:55:28.734Z"
+    "url": "https://www.standardreserve.xyz/assets/mountApp-DmwNsaDC.js",
+    "sha256": "5e7399b7972c9336ee9a633c76aec6bb85ddd85f86f673f81efeda6079cc29bc",
+    "retrieved_at": "2026-09-20"
   }
 }

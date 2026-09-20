@@ -1,7 +1,42 @@
 {
   "schema_version": 1,
-  "scope": "Publisher read interface, auction event definitions and bounded STANDARD/TaxHook source provenance; no stored observations or deployment-verdict catalog",
+  "scope": "Publisher fixed read and event interfaces, treasury/queued-policy extensions and bounded STANDARD/TaxHook source provenance; no stored observations or deployment-verdict catalog",
   "records": [
+    {
+      "id": "sr-extended-read-interface",
+      "url": "https://www.standardreserve.xyz/app/protocol/contracts/",
+      "publisher": "The Standard Reserve official application",
+      "published_at": null,
+      "retrieved_at": "2026-09-20",
+      "review_depth": "Official HTML-linked complete mount-module text, literal ABI/deployment extraction and publisher unit formatting; no downloaded JavaScript execution.",
+      "claim_stage": "publisher-authenticated fixed interface and denomination evidence, not independent implementation/bytecode equivalence, current state or complete historical accounting",
+      "source_urls": [
+        "https://www.standardreserve.xyz/assets/mountApp-DmwNsaDC.js",
+        "https://www.standardreserve.xyz/assets/LiveProtocol-nXtF1A6z.js"
+      ],
+      "complete_asset_sha256": "5e7399b7972c9336ee9a633c76aec6bb85ddd85f86f673f81efeda6079cc29bc",
+      "complete_asset_bytes": 844282,
+      "locators": [
+        "vC deployment map, chain 4663; existing catalog identities, no new Second Mandate target",
+        "_e CentralBank; _t LicenseAuction; mr CharterAuction; LC FeeSplitter; DC ExpansionVault; OC ContractionVault",
+        "Static view/pure function arguments, scalar/flat tuple returns and explicit pending flags",
+        "ContractionVault BuybackExecuted(uint256 ethSpent,uint256 tokensBurned)",
+        "IB formats poolEthDepth with Cs; Cs appends ETH and fn uses gn(value,18)",
+        "FC combines issuanceRate/recycleRate; UC multiplies recycleRate by epoch seconds; LiveProtocol labels combined stream STANDARD including recycled fees",
+        "FeeSplitter payable receive, EthTransferFailed and ETH holdings migration; whitepaper ongoing team-share denomination is protocol ETH",
+        "Existing STANDARD denomination evidence and BuybackExecuted token quantity are separate from proof of actual transfers"
+      ],
+      "selector_provenance": "Canonical signatures follow complete publisher ABI definitions. Added selectors/event topics use Ethereum web3_sha3, with transfer(address,uint256) checked against the known a9059cbb selector; not NIST SHA3-256. Exact acquisition evidence remains outside runtime.",
+      "summary": "Extends bounded inspection to auction supply controllers/pending ownership, queued CentralBank policy/recycling observations, FeeSplitter routing/team liability, ExpansionVault approval-gated selected-asset holdings/pool metadata, ContractionVault controls and event-accounted buybacks.",
+      "limits": [
+        "Publisher ABI and configured relationships do not establish independently verified source, complete authority, settlement readiness or Second Mandate activation.",
+        "Queued values are not active settings. Basis-point fields, raw pool-fee flags and signed tick spacing have distinct units.",
+        "Reserve-asset addresses are investigation inputs until same-block vault approval succeeds. Holdings remain raw token units without independently authenticated decimals; no arbitrary token metadata calls or invented asset enumeration.",
+        "recycleStreamed and issuanceStreamed internal scaling is not established by reviewed publisher formatting; preserve raw ledger units and derive no accounting equations.",
+        "Buyback event accounting is limited to checked coverage and authenticated denomination; not independently reconciled transfers, complete burn attribution or a return forecast.",
+        "No observations, balances, historical totals or financial examples are stored in this provenance record."
+      ]
+    },
     {
       "id": "sr-auction-event-interface",
       "url": "https://www.standardreserve.xyz/app/home/",

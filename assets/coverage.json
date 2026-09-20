@@ -315,18 +315,27 @@
       "No dedicated reviewed sellout/end event or independent auction source/bytecode equivalence is established."
     ]
   },
+  "buyback_history": {
+    "source_ids": ["sr-extended-read-interface"],
+    "source_file": "assets/sources/live-interface.json",
+    "event_catalog": "assets/interfaces/treasury-events.json",
+    "reference": "references/auction-history.md",
+    "scope": "Bounded BuybackExecuted accounting after fixed STANDARD binding/decimals authentication; no stored observations, complete-history claim or transfer reconciliation"
+  },
   "read_interface": {
     "source_ids": [
+      "sr-extended-read-interface",
       "sr-publisher-read-interface",
       "sr-standard-source-interface",
       "sr-tax-hook-source-interface"
     ],
     "path": "assets/interfaces/robinhood-reads.json",
-    "scope": "Bounded scalar protocol, charter and auction reads; permanent liquid-token burns versus ledger retirement, holding-cap enabled/active state, Pool Manager gate and Hook launch/ownership context",
+    "scope": "Bounded scalar/static-tuple protocol, charter, auction and treasury reads; current/queued policy, recycling, allocation/liability and approval-gated raw reserve holdings, with transitive bindings",
     "profiles": [
       "protocol",
       "charter",
-      "auctions"
+      "auctions",
+      "treasury"
     ],
     "limits": [
       "Only the fixed reviewed ABI surface; no financial methods, address-scoped blocklist input or caller endpoints.",

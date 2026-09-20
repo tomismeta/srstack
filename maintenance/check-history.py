@@ -25,13 +25,19 @@ class RPCFixture:
     """Encode tiny invented events from reviewed ABI definitions, never observations."""
 
     def __init__(self, auction="license"):
-        self.catalog, addresses, _ = history._load_catalog(S)
+        self.catalog, interface, addresses, _ = history._load_catalog(S, auction)
         self.role = history.ROLES[auction]
         self.auction = auction
         self.address = addresses[self.role]
         self.definitions = {e["abi"]["name"]: e for e in self.catalog["events"] if self.role in e["contracts"]}
         self.logs, self.requests = [], []
         self.head = 2_000_000
+        self.chain_id, self.code = S.CHAIN_ID, "0x6000"
+        self.standard_address = addresses["standard"]
+        self.binding_address, self.standard_decimals, self.standard_code = self.standard_address, 18, "0x6000"
+        self.deny_binding = False
+        self.call_definitions = {(addresses[call["contract"]], call["selector"]): call for call in interface["calls"]
+                                 if (call["contract"], call["signature"]) in (("contractionVault", "standard()"), ("standard", "decimals()"))}
         self.headers_read = {}
         self.header_mutation = None
         self.logs_mutation = None
@@ -68,9 +74,19 @@ class RPCFixture:
             self.requests.append(request)
             method, params = request["method"], request["params"]
             if method == "eth_chainId":
-                result = hex(S.CHAIN_ID)
+                result = hex(self.chain_id)
             elif method == "eth_getCode":
-                result = "0x6000"
+                result = self.standard_code if params[0] == self.standard_address else self.code
+            elif method == "eth_call":
+                if self.auction != "buybacks":
+                    raise AssertionError("auction history cannot issue state calls")
+                if self.deny_binding:
+                    raise S.SnapshotError("RPC HTTP request failed", diagnostics=self.diagnostics)
+                if params[1] != hex(119):
+                    raise AssertionError("buyback binding must use the exact scan anchor")
+                call = self.call_definitions[(params[0]["to"], params[0]["data"])]
+                value = int(self.binding_address, 16) if call["signature"] == "standard()" else self.standard_decimals
+                result = "0x" + format(value, "064x")
             elif method == "eth_getBlockByNumber":
                 number = self.head if params[0] == "latest" else int(params[0], 16)
                 self.headers_read[number] = self.headers_read.get(number, 0) + 1
@@ -92,7 +108,8 @@ class RPCFixture:
         return json.dumps(list(reversed(response))).encode()
 
     def run(self, **options):
-        config = {"schema_version": 1, "auction": self.auction, "from_block": 100, "to_block": 119, "chunk_blocks": 10}
+        config = {"schema_version": 1, "kind" if self.auction == "buybacks" else "auction": self.auction,
+                  "from_block": 100, "to_block": 119, "chunk_blocks": 10}
         config.update(options)
         return history.history(config, transport=self, now=lambda: NOW, monotonic=lambda: self.clock)
 
@@ -101,6 +118,21 @@ class RPCFixture:
 
 
 class HistoryChecks(unittest.TestCase):
+    def test_final_anchor_denial_marks_rounds_incomplete(self):
+        fixture = RPCFixture()
+        fixture.purchase(count=2, price=9)
+        def mutation(number, count, header):
+            if number == 119 and count == 5:
+                raise S.SnapshotError("RPC HTTP request failed", diagnostics=fixture.diagnostics)
+            return header
+        fixture.header_mutation = mutation
+        report = fixture.run()
+        self.assertEqual(report["status"], "partial")
+        self.assertEqual(report["coverage"]["missing"], [])
+        self.assertEqual(report["rounds"][0]["purchase_quantity"], "2")
+        self.assertIn("requested_window_has_coverage_gaps", report["rounds"][0]["gaps"])
+        self.assertEqual(report["errors"]["final_anchor"]["diagnostics"], fixture.diagnostics)
+
     def test_quantity_weighted_multiple_license_purchases(self):
         fixture = RPCFixture()
         fixture.purchase(count=2, price=9)
@@ -341,6 +373,236 @@ class HistoryChecks(unittest.TestCase):
                 history._cli_config(list(arguments))
         config = history._cli_config(["charter", "--day", "7", "--anchor-block", "2000000", "--lookback-blocks", "1000000"])
         self.assertEqual((config["auction"], config["day"], config["anchor_block"], config["lookback_blocks"]), ("charter", 7, 2_000_000, 1_000_000))
+
+
+class BuybackChecks(unittest.TestCase):
+    def test_exact_checked_event_accounting_and_units(self):
+        fixture = RPCFixture("buybacks")
+        fixture.add("BuybackExecuted", block=112, ethSpent=2 * 10**18 + 11, tokensBurned=1)
+        fixture.add("BuybackExecuted", ethSpent=10**18 + 7, tokensBurned=(1 << 256) - 1)
+        report = fixture.run(detail="full")
+        self.assertEqual(report["status"], "ok")
+        row = report["buybacks"]
+        self.assertEqual(row["event_count"], 2)
+        self.assertEqual(row["eth_spent"], {"asset": "ETH", "decimals": 18, "total_raw": "3000000000000000018",
+                                           "total": "3.000000000000000018"})
+        self.assertEqual(row["standard_burned"], {
+            "asset": "STANDARD", "decimals": 18, "total_raw": str(1 << 256),
+            "total": "115792089237316195423570985008687907853269984665640564039457.584007913129639936"})
+        self.assertEqual(row["first_observed_buyback"]["block_number"], 102)
+        self.assertEqual(row["last_observed_buyback"]["block_number"], 112)
+        self.assertEqual(row["first_observed_buyback"]["timestamp"], NOW - fixture.head + 102)
+        self.assertTrue(row["requested_range_complete"])
+        self.assertEqual(row["basis"], "buyback_event_accounting")
+        self.assertEqual([event["event"] for event in report["evidence"]["decoded_events"]], ["BuybackExecuted"] * 2)
+        self.assertNotIn("rounds", report)
+        self.assertNotIn("auction", report)
+        self.assertNotIn("day_filter", report["coverage"])
+
+    def test_buyback_selection_rejects_auction_day_before_network(self):
+        fixture = RPCFixture("buybacks")
+        with self.assertRaises(history.InputError):
+            fixture.run(day=7)
+        self.assertEqual(fixture.requests, [])
+        for arguments in (["buybacks", "--day", "7"], ["buybacks", "--day", "0"],
+                          ["buybacks", "--address", fixture.address]):
+            with self.subTest(arguments=arguments), self.assertRaises(history.InputError):
+                history._cli_config(arguments)
+        config = history._cli_config(["buybacks", "--from-block", "100", "--to-block", "119"])
+        self.assertEqual(config["kind"], "buybacks")
+        self.assertNotIn("auction", config)
+        with self.assertRaises(history.InputError):
+            history.history({"schema_version": 1, "auction": "buybacks"}, transport=fixture)
+        with self.assertRaises(history.InputError):
+            history.history({"schema_version": 1, "kind": "buybacks", "auction": "license"}, transport=fixture)
+        self.assertEqual(fixture.requests, [])
+
+    def test_empty_scanned_range_and_unknown_are_distinct(self):
+        fixture = RPCFixture("buybacks")
+        report = fixture.run()
+        self.assertEqual(report["status"], "ok")
+        self.assertEqual(report["buybacks"]["observation_status"], "no_matches_in_scanned_windows")
+        self.assertEqual(report["buybacks"]["event_count"], 0)
+        self.assertEqual(report["buybacks"]["eth_spent"]["total_raw"], "0")
+        self.assertEqual(report["buybacks"]["standard_burned"]["total_raw"], "0")
+        self.assertIsNone(report["buybacks"]["first_observed_buyback"])
+        self.assertEqual(report["coverage"]["requested"], {"from_block": 100, "to_block": 119})
+        self.assertEqual(fixture.windows(), [(100, 109), (110, 119)])
+        fixture = RPCFixture("buybacks")
+        fixture.denied_from = 100
+        report = fixture.run()
+        self.assertEqual(report["buybacks"]["observation_status"], "unavailable")
+        self.assertIsNone(report["buybacks"]["event_count"])
+        self.assertIsNone(report["buybacks"]["eth_spent"]["total_raw"])
+        self.assertIsNone(report["buybacks"]["standard_burned"]["total"])
+        self.assertFalse(report["buybacks"]["requested_range_complete"])
+        self.assertEqual(report["coverage"]["completed"], [])
+
+    def test_chunk_saturation_and_invalid_range_preserve_only_checked_totals(self):
+        for failure in ("chunk", "saturation", "range"):
+            with self.subTest(failure=failure), patch.object(history, "MAX_WINDOW_LOGS", 2):
+                fixture = RPCFixture("buybacks")
+                fixture.add("BuybackExecuted", ethSpent=7, tokensBurned=11)
+                fixture.add("BuybackExecuted", block=112, ethSpent=99, tokensBurned=999)
+                if failure == "saturation":
+                    fixture.add("BuybackExecuted", block=113, index=1, ethSpent=99, tokensBurned=999)
+                if failure == "range":
+                    def mutation(start, end, logs):
+                        if start == 110:
+                            logs[0]["blockNumber"] = hex(end + 1)
+                        return logs
+                    fixture.logs_mutation = mutation
+                report = fixture.run(max_chunks=1 if failure == "chunk" else 2)
+                self.assertEqual(report["status"], "partial")
+                self.assertEqual(report["buybacks"]["event_count"], 1)
+                self.assertEqual(report["buybacks"]["eth_spent"]["total_raw"], "7")
+                self.assertEqual(report["buybacks"]["standard_burned"]["total_raw"], "11")
+                self.assertFalse(report["buybacks"]["requested_range_complete"])
+                self.assertEqual([(w["from_block"], w["to_block"]) for w in report["coverage"]["completed"]], [(100, 109)])
+                self.assertEqual((report["coverage"]["missing"][0]["from_block"], report["coverage"]["missing"][0]["to_block"]), (110, 119))
+                self.assertEqual(fixture.windows(), [(100, 109)] if failure == "chunk" else [(100, 109), (110, 119)])
+
+    def test_buyback_denial_stops_and_preserves_original_diagnostics(self):
+        fixture = RPCFixture("buybacks")
+        fixture.add("BuybackExecuted", ethSpent=7, tokensBurned=11)
+        fixture.denied_from = 110
+        report = fixture.run()
+        self.assertEqual(report["status"], "partial")
+        self.assertEqual(report["buybacks"]["standard_burned"]["total_raw"], "11")
+        self.assertEqual(report["errors"]["window_110"]["diagnostics"], fixture.diagnostics)
+        self.assertEqual(fixture.requests[-1]["method"], "eth_getLogs")
+        self.assertEqual(fixture.windows(), [(100, 109), (110, 119)])
+        self.assertEqual(report["coverage"]["missing"][0]["from_block"], 110)
+
+    def test_final_anchor_denial_retains_per_window_totals_without_final_claim(self):
+        fixture = RPCFixture("buybacks")
+        fixture.add("BuybackExecuted", ethSpent=7, tokensBurned=11)
+        def mutation(number, count, header):
+            if number == 119 and count == 5:
+                raise S.SnapshotError("RPC HTTP request failed", diagnostics=fixture.diagnostics)
+            return header
+        fixture.header_mutation = mutation
+        report = fixture.run()
+        self.assertEqual(report["status"], "partial")
+        self.assertEqual(report["buybacks"]["eth_spent"]["total_raw"], "7")
+        self.assertEqual(report["buybacks"]["standard_burned"]["total_raw"], "11")
+        self.assertFalse(report["buybacks"]["requested_range_complete"])
+        self.assertEqual(report["coverage"]["missing"], [])
+        self.assertEqual([(w["from_block"], w["to_block"]) for w in report["coverage"]["completed"]], [(100, 109), (110, 119)])
+        self.assertEqual(report["errors"]["final_anchor"]["diagnostics"], fixture.diagnostics)
+        self.assertEqual(fixture.requests[-1]["method"], "eth_getBlockByNumber")
+        self.assertEqual(fixture.headers_read[119], 5)
+
+    def test_removed_log_or_anchor_reorg_invalidates_buyback_accounting(self):
+        for failure in ("removed", "anchor"):
+            with self.subTest(failure=failure):
+                fixture = RPCFixture("buybacks")
+                fixture.add("BuybackExecuted", ethSpent=7, tokensBurned=11)
+                later = fixture.add("BuybackExecuted", block=112, ethSpent=99, tokensBurned=999)
+                if failure == "removed":
+                    later["removed"] = True
+                else:
+                    def mutation(number, count, header):
+                        if number == 119 and count >= 4:
+                            header["hash"] = "0x" + "ef" * 32
+                        return header
+                    fixture.header_mutation = mutation
+                report = fixture.run(detail="full")
+                self.assertEqual(report["status"], "partial")
+                self.assertIsNone(report["buybacks"]["event_count"])
+                self.assertIsNone(report["buybacks"]["standard_burned"]["total_raw"])
+                self.assertEqual(report["coverage"]["completed"], [])
+                self.assertEqual(report["evidence"]["decoded_events"], [])
+                self.assertEqual(report["coverage"]["missing"][0]["from_block"], 100)
+                self.assertEqual(report["evidence"]["final_anchor_check"], "changed")
+                self.assertEqual(report["evidence"]["invalidated_windows"][0]["from_block"], 100)
+                if failure == "removed":
+                    self.assertEqual(fixture.requests[-1]["method"], "eth_getLogs")
+
+    def test_wrong_emitter_or_auction_event_cannot_be_buybacks(self):
+        for failure in ("emitter", "auction_event"):
+            with self.subTest(failure=failure):
+                fixture = RPCFixture("buybacks")
+                event = fixture.add("BuybackExecuted", ethSpent=7, tokensBurned=11)
+                auction = RPCFixture("license")
+                if failure == "emitter":
+                    event["address"] = auction.address
+                else:
+                    event["topics"][0] = auction.definitions["LicensesPurchased"]["topic0"]
+                report = fixture.run()
+                self.assertEqual(report["status"], "partial")
+                self.assertEqual(report["coverage"]["completed"], [])
+                self.assertIsNone(report["buybacks"]["eth_spent"]["total_raw"])
+                self.assertEqual(fixture.windows(), [(100, 109)])
+                self.assertEqual(fixture.requests[-1]["method"], "eth_getLogs")
+
+    def test_buyback_chain_and_code_fail_before_logs(self):
+        for failure in ("chain", "code"):
+            with self.subTest(failure=failure):
+                fixture = RPCFixture("buybacks")
+                if failure == "chain":
+                    fixture.chain_id = 1
+                else:
+                    fixture.code = "0x0000"
+                report = fixture.run()
+                self.assertEqual(report["status"], "partial")
+                self.assertEqual(fixture.windows(), [])
+                self.assertEqual(report["coverage"]["completed"], [])
+                self.assertIsNone(report["buybacks"]["event_count"])
+                self.assertEqual(fixture.requests[-1]["method"], "eth_chainId" if failure == "chain" else "eth_getCode")
+
+    def test_anchor_token_binding_denomination_and_denial_stop_before_accounting(self):
+        for failure in ("binding", "decimals", "uint8_padding", "token_code", "denial"):
+            with self.subTest(failure=failure):
+                fixture = RPCFixture("buybacks")
+                fixture.add("BuybackExecuted", ethSpent=7, tokensBurned=11)
+                if failure == "binding":
+                    fixture.binding_address = "0x" + "34" * 20
+                elif failure == "decimals":
+                    fixture.standard_decimals = 6
+                elif failure == "uint8_padding":
+                    fixture.standard_decimals = 256 + 18
+                elif failure == "token_code":
+                    fixture.standard_code = "0x0000"
+                else:
+                    fixture.deny_binding = True
+                report = fixture.run()
+                self.assertEqual(report["status"], "partial")
+                self.assertEqual(fixture.windows(), [])
+                self.assertEqual(report["coverage"]["completed"], [])
+                self.assertIsNone(report["buybacks"]["eth_spent"]["total_raw"])
+                self.assertIsNone(report["buybacks"]["standard_burned"]["total_raw"])
+                self.assertNotIn("anchor_standard_binding", report["evidence"])
+                self.assertEqual(fixture.requests[-1]["method"], "eth_getCode" if failure == "token_code" else "eth_call")
+                if failure == "denial":
+                    self.assertEqual(report["errors"]["setup"]["diagnostics"], fixture.diagnostics)
+                if failure in ("binding", "denial"):
+                    self.assertEqual([r["params"][0]["to"] for r in fixture.requests if r["method"] == "eth_call"], [fixture.address])
+
+    def test_treasury_catalog_and_publisher_binding_fail_before_network(self):
+        original_read, original_package = S._read_file, S._load_package
+        for failure in ("topic", "identity", "publisher"):
+            with self.subTest(failure=failure):
+                fixture = RPCFixture("buybacks")
+                def changed_read(directory, filename):
+                    data, digest = original_read(directory, filename)
+                    if filename == "treasury-events.json":
+                        if failure == "topic":
+                            data["events"][0]["topic0"] = "0x" + "00" * 32
+                        elif failure == "identity":
+                            data["contracts"]["contractionVault"]["address"] = "0x" + "34" * 20
+                    return data, digest
+                def changed_package():
+                    interface, addresses, hashes = original_package()
+                    if failure == "publisher":
+                        addresses["contractionVault"] = addresses["licenseAuction"]
+                    return interface, addresses, hashes
+                with patch.object(S, "_read_file", side_effect=changed_read), patch.object(S, "_load_package", side_effect=changed_package):
+                    report = fixture.run()
+                self.assertEqual(report["status"], "partial")
+                self.assertEqual(fixture.requests, [])
+                self.assertIsNone(report["buybacks"]["standard_burned"]["total_raw"])
+                self.assertEqual(report["coverage"]["missing"][0]["from_block"], 100)
 
 
 if __name__ == "__main__":

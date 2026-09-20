@@ -8,6 +8,8 @@ srstack explains documented protocol mechanics and announcements, reads current 
 
 **Breaking changes:** the `plan` route, `scripts/scenario.py`, fictional fixture and verifier `--offline` flag are removed. Use the default `scripts/verify.py` command for offline integrity checks. Future-return and strategy questions receive qualitative research, not a replacement simulator. Install a clean runtime export; do not overlay an older installation containing removed files.
 
+**Candidate additions:** compact charter summaries, original HTTP-denial diagnostics, bounded auction/buyback history, auction controller/pending ownership, queued CentralBank policy/recycling, and treasury routing/controls with approval-gated selected-asset raw holdings. No new contract identities or claimed Second Mandate deployment.
+
 ## What you can ask
 
 | Question | What srstack provides |
@@ -18,6 +20,9 @@ srstack explains documented protocol mechanics and announcements, reads current 
 | “Are launch holding limits or the Pool Manager gate active?” | Fresh enabled/active flags and cap values; not a guarantee that a transaction will succeed |
 | “Are expansion licenses available at a usable price?” | Fresh auction status and inventory; no purchasable quote when unavailable |
 | “How did past license or charter auctions go?” | [Supported bounded history scans](references/auction-history.md), with an optional auction-day filter, quantity-weighted prices, evidenced timing and explicit coverage gaps; no stored auction results |
+| “What are the current treasury shares and team liability?” | Current/queued FeeSplitter state and vault controls, not holder yield |
+| “What does the vault hold of this public reserve asset?” | Approval-gated raw holdings/pool metadata for that asset, not portfolio enumeration |
+| “How much did buybacks spend and burn in this block window?” | Checked `BuybackExecuted` event totals with explicit coverage, not aggregate burn attribution or transfer reconciliation |
 | “Show the branches and pending balance of this public charter.” | A charter-ID-specific snapshot; no wallet connection or claim that you own it |
 | “What is STANDARD trading at, or what is this amount worth?” | Latest reported canonical-pool USD/ETH prices and a gross indicative valuation |
 | “Which contracts are listed, and is their source verified?” | Publisher-listed identities and explorer links; verification status requires a fresh explorer check |
@@ -227,6 +232,7 @@ Replace `<public charter ID>` with the ID to inspect.
 |---|---|
 | `protocol` | Issuance and epoch context, branch count, supply and permanent-burn decomposition, token restriction/launch flags, counter-based remaining budget, buy/sell tax and pool/emissions state |
 | `auctions` | License and daily-charter activation, pause state, inventory, duration and available current prices |
+| `treasury` | Current/queued fee allocation, team ETH liability, vault authority/pause, buyback controls; optional approved-asset raw holdings and pool key |
 | `charter` | Default: public owner, branches, pending and supported current-rate equivalent. Explicit `--detail full`: additional protocol context and raw evidence |
 
 Each invocation uses one checked block. Separate example invocations are not one atomic combined snapshot; do not combine their values as if they share a block. Failed fields remain missing with errors; fatal failures return no snapshot. Results are not saved or reused as a fallback. These are selected publisher-ABI reads, not a complete contract audit.
@@ -237,6 +243,7 @@ Advanced users can request the same protocol snapshot from the reviewed installe
 python3 -B -I scripts/snapshot.py protocol
 python3 -B -I scripts/snapshot.py auctions --detail full
 python3 -B -I scripts/snapshot.py charter --id 1
+python3 -B -I scripts/snapshot.py treasury
 ```
 
 The charter command requires an unsigned uint256 ID; replace `1` with the intended public ID. **Summary is compact in the helper's JSON output**, not just agent-side formatting; `--detail full` opts into raw evidence. No-argument JSON stdin is equally supported, for example `{"schema_version":1,"view":"charter","charter_id":1}`. Default answers show useful values first, with at most one short note such as **“RPC snapshot; publisher ABI.”**
@@ -251,6 +258,8 @@ python3 -B -I scripts/history.py charter --day 1 --from-block 1 --to-block 10000
 ```
 
 Choose the day and block scope for the question; the examples do not assert where a round occurred. An auction day is a filter, not a 24-hour block estimate. Report scanned coverage and partial results, not complete-all-history. A last observed purchase alone does not prove sellout. Results go to stdout and are never saved as runtime observations.
+
+For buybacks use `python3 -B -I scripts/history.py buybacks --lookback-blocks 1000000`. There is no auction-day filter. ETH spent and STANDARD burned are event-accounted within checked coverage, not reconciled transfers or complete-all-history. Treasury optionally accepts `--asset ADDRESS` only as a fixed vault-call argument; approval false/unavailable omits holdings and pool details. Token holdings and internal streamed counters with unestablished decimals remain raw units; queued policy is never substituted for current settings.
 
 ### Current price and gross accrued-balance value
 
@@ -285,7 +294,7 @@ These are **provider-reported indicative prices**. Neither consumed pool API sup
 
 ## Contract coverage
 
-The [contract catalog](assets/entities/robinhood.json) contains **14 publisher-listed identities on Robinhood Chain (4663)**. The fixed [publisher read interface](assets/interfaces/robinhood-reads.json) supports selected live reads from **six**:
+The [contract catalog](assets/entities/robinhood.json) contains **14 publisher-listed identities on Robinhood Chain (4663)**. The fixed [publisher read interface](assets/interfaces/robinhood-reads.json) supports selected live getter reads from **nine**:
 
 | Contract | Questions supported by fresh reads |
 |---|---|
@@ -295,8 +304,11 @@ The [contract catalog](assets/entities/robinhood.json) contains **14 publisher-l
 | **Trading Hook** | What are current buy/sell taxes? Is an override or launch schedule active? Is the pool initialized, and is an ownership handoff pending? |
 | **Expansion License Auction** | Is it started or paused? How much inventory remains? Is there a usable current price, and what is the auction duration? |
 | **Charter Auction** | Are daily charter sales enabled? Is inventory available, and what is the usable ETH price and auction duration? |
+| **Fee Splitter** | What are current/queued team and POL shares, team ETH liability, wallet and pending ownership? |
+| **Expansion Vault** | Is it paused, who controls it, and is the requested reserve asset approved? If approved, what are its raw holdings and pool key? |
+| **Contraction Vault** | What are the timing, configured/effective pool and TWAP limits, configured vault percentage and ETH depth? Bounded history separately accounts for `BuybackExecuted` events. |
 
-The other eight have **identity and documented-role coverage, not fixed-helper live-read support**: Founding Sale, Expansion Vault, Contraction Vault, Liquidity Manager, Fee Splitter, Address Registry, Uniswap v4 Pool Manager and Multicall. Their addresses and explorer links are in the catalog; current holdings, permissions and implementation details require separate fresh research.
+The other five have **no direct getter profile**: Founding Sale, Liquidity Manager, Address Registry, Uniswap v4 Pool Manager and Multicall. Registry and Pool Manager identities/code also participate in the treasury authentication graph. Their addresses and explorer links are cataloged; this does not establish complete holdings, permissions or implementation correspondence.
 
 **Publisher-listed addresses and publisher ABIs do not establish source correspondence.** Selected STANDARD and Trading Hook interfaces and accounting/restriction semantics have additional source-review provenance; that review does not verify the other modules or establish current deployment state. The package bundles no contract source and stores no current explorer verdicts. Current verification status requires fresh retrieval. Getter observations do not establish complete administrator powers, upgradeability, audit correspondence or exploit resistance. Source dates identify reference provenance, not live-state freshness.
 
@@ -314,7 +326,7 @@ Packaged research needs a resource reader. Calculations and public readers use *
 
 Answers lead with content. Estimates get a short label; observations get a brief source note where needed. Detailed provenance and assumptions are available on request, not repeated as small print.
 
-The snapshot helper reads two fixed catalogs and permits only its pinned view/pure calls on configured Robinhood addresses. The price helper reads only the fixed identity catalog and makes bounded canonical-pool GETs to two allowlisted providers; optional quantity multiplication is local and uses one selected provider. The history helper scans only the fixed license/charter auction events through the fixed RPC, with finite range, request, log, byte and time bounds. The fourth entrypoint, `verify.py`, checks the package and invokes only explicitly selected fixed data helpers with bounded execution/output; it has no network of its own. All four reject unsupported inputs and write no files. No wallets, credentials, signatures, transaction payloads or state-changing simulations. See [safety](references/safety.md) and [execution](references/execution.md) for the full boundary.
+The snapshot helper reads two fixed catalogs and permits only pinned view/pure calls on configured Robinhood targets, with selected-asset addresses allowed only as vault-call arguments. The price helper reads the fixed identity catalog and makes bounded canonical-pool GETs to two allowlisted providers; quantity multiplication is local. History scans fixed auction/buyback events through the fixed RPC with finite range, request, log, byte and time bounds. `verify.py` checks package integrity and explicitly selected helpers with bounded execution/output; it has no network of its own. All four reject unsupported inputs and write no files. No wallets, credentials, signatures, transaction payloads or state-changing simulations. See [safety](references/safety.md) and [execution](references/execution.md).
 
 The readers do **not** supply liquidity-depth analysis, an amount-specific withdrawal quote, transaction gas estimates or guaranteed sale proceeds. No strategy, future-return or settlement simulator is bundled. Source verification and latest announcements use separate fresh web research.
 
@@ -328,6 +340,7 @@ These commands run from the **repository root**, not the installed skill folder:
 python3 -B maintenance/package.py verify
 python3 -B maintenance/check-snapshot.py
 python3 -B maintenance/check-price.py
+python3 -B maintenance/check-history.py
 python3 -B maintenance/check-verify.py
 python3 -B maintenance/check-package.py
 python3 -B maintenance/package.py archive

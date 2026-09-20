@@ -15,12 +15,13 @@
       "id": "live-interface",
       "path": "assets/sources/live-interface.json",
       "record_ids": [
+        "sr-extended-read-interface",
         "sr-auction-event-interface",
         "sr-publisher-read-interface",
         "sr-standard-source-interface",
         "sr-tax-hook-source-interface"
       ],
-      "scope": "Publisher read interface, auction event provenance and selected STANDARD/Trading Hook source review"
+      "scope": "Publisher fixed read/event interfaces, treasury/queued-policy extensions and selected STANDARD/Trading Hook source review"
     },
     {
       "id": "website-v1",

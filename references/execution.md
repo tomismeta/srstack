@@ -2,13 +2,14 @@
 
 Technical contracts for four fixed entrypoints. Routine state/price reads need **Trusted runtime preflight**, **Input transport and host approvals**, then only the relevant helper section. History uses [its bounded contract](auction-history.md); package diagnostics use **Package and smoke diagnostic**. [Inspection common paths](inspection.md#common-question-paths) supplies answer extraction; do not preload whole guides. [Safety](safety.md) governs external retrieval/execution.
 
-All use permitted standard-library Python 3.10+: `snapshot.py` for current public state, `price.py` for canonical-pool prices/gross amount valuation, `history.py` for bounded auction-event research, and `verify.py` for integrity and explicitly selected live diagnostics. Snapshot and price support JSON stdin and fixed CLI forms; history and verification use their documented CLI. None accepts arbitrary code, paths, endpoints, selectors, addresses, headers or wallet inputs. Reads do not unlock financial actions or simulations.
+All use permitted standard-library Python 3.10+: `snapshot.py` for current public state, `price.py` for canonical-pool prices/gross amount valuation, `history.py` for bounded auction/buyback-event research, and `verify.py` for integrity and explicitly selected live diagnostics. Snapshot and price support JSON stdin and fixed CLI forms; history and verification use their documented CLI. None accepts arbitrary code, paths, endpoints, selectors, target addresses, headers or wallet inputs. Treasury alone accepts a public reserve-asset address as an argument to fixed vault calls, never an RPC target. Reads do not unlock financial actions or simulations.
 
 ## Trusted runtime preflight
 
 Resolve the installed root from a trusted reviewed package/commit, not a working-directory lookalike or website. Before execution, compare the script and its fixed dependencies with trusted `release-manifest.json` data using existing host read/hash utilities or minimal fixed launcher glue. Snapshot uses `assets/entities/robinhood.json` and `assets/interfaces/robinhood-reads.json`; price uses the entity catalog only. History also loads the reviewed sibling `snapshot.py` for bounded RPC transport and uses `assets/interfaces/auction-events.json` with the fixed entity catalog. Verify these dependencies too. Paths must remain inside the trusted root and are never caller-selected. A self-supplied matching manifest alone establishes neither trust nor source authenticity. Failed/unavailable verification stops execution. Keep hashes/resource bodies out of chat unless requested; a trusted host performing equivalent verification satisfies this preflight.
 
 Manifest `content_files` maps relative paths to SHA-256 strings; `content_sha256` is the aggregate digest, not a per-file lookup.
+For buybacks, also verify `assets/interfaces/treasury-events.json`; the shared snapshot callable catalog supplies the fixed token binding/decimals checks. Interface metadata uses schema 2; helper input/output remains schema 1.
 
 ## Input transport and host approvals
 
@@ -27,10 +28,13 @@ Use the fixed argument array `python3 -B -I scripts/snapshot.py` from the verifi
 ```sh
 python3 -B -I scripts/snapshot.py protocol
 python3 -B -I scripts/snapshot.py auctions
+python3 -B -I scripts/snapshot.py treasury
 python3 -B -I scripts/snapshot.py charter --id 1 --detail summary
 ```
 
 `--detail summary|full` is optional for every view; summary is the default. `--id UINT256` is required only for `charter`, rejected for other views, and accepts 1–78 ASCII decimal digits with a value through `2^256 - 1` (leading zeroes allowed). Replace example ID `1` with the intended public ID. The same safe transport and approval rules apply; no input-controlled script or arbitrary command is allowed.
+
+`--asset ADDRESS` is optional only for `treasury`: a nonzero 20-byte hexadecimal public asset address. It is passed only to fixed ExpansionVault getters. Same-block `isReserveAsset()` approval must succeed before holdings/pool reads; false or unavailable approval omits those details. No token metadata queries, asset discovery or POL-manager enumeration.
 
 Input is a JSON object bounded to 4,096 bytes:
 
@@ -39,21 +43,26 @@ Input is a JSON object bounded to 4,096 bytes:
 ```
 
 - `schema_version`: integer `1`.
-- `view`: `protocol`, `charter` or `auctions`; selects a fixed call profile, not an arbitrary query.
+- `view`: `protocol`, `charter`, `auctions` or `treasury`; selects a fixed call profile, not an arbitrary query.
 - `charter_id`: integer from `0` through `2^256 - 1`, required only for `charter` and rejected for other views; no wallet address or private position data.
+- `reserve_asset`: optional public asset address, treasury only, with the same rules as `--asset`.
 - `detail`: optional `summary` (default) or `full`. Other keys or invalid values are rejected.
 
 `protocol` covers issuance, supply/permanent-cap reduction, fees, launch-cap/gate and pool/emissions state. Default `charter` is scoped to the requested ID, owner, branches, pending and supported current-rate equivalent—not protocol/burn/Hook fields. Default `auctions` excludes last-sale getters and derived closing prices; they cannot stand in for historical round accounting. `--detail full` opts into broader profile observations and evidence, with explicit nonhistorical labels for last-sale/closing getters. [Inspection](inspection.md#common-question-paths) documents extraction. Necessary code, binding, decimals and rate prerequisites still run; a smaller result is not a relaxed trust check.
 
-The reader validates the two fixed catalog files as bounded, contained package data, never evaluates them as code and accepts no file or RPC override. It checks Robinhood chain ID 4663, anchors reads to one block, checks code and required bindings, and strictly decodes only listed scalar `view`/`pure` calls. It requires a block no more than 300 seconds old or 30 seconds in the future; requests have a 10-second timeout and the overall read a 40-second deadline. A failed or mismatched binding suppresses the affected role's values. Code/selector presence and matching bindings support this limited publisher-ABI read path, not source equivalence or full implementation verification.
+The reader validates the two fixed catalog files as bounded, contained package data, never evaluates them as code and accepts no file or RPC override. It checks Robinhood chain ID 4663, anchors reads to one block, checks code and transitive required bindings, and strictly decodes listed scalar or flat static-tuple `view`/`pure` calls, including canonical uint24 padding and int24 sign extension. It requires a block no more than 300 seconds old or 30 seconds in the future; requests have a 10-second timeout and the overall read a 40-second deadline. Failed dependencies suppress affected roles before selected value reads. The CentralBank→Registry cross-check is treasury-scoped; compact charter retains its existing prerequisites. These checks are not source equivalence or implementation verification.
+
+Existing CentralBank↔CharterNFT identity prerequisites remain required wherever the selected role depends on CentralBank, including auction/treasury closures. A failed NFT relationship therefore suppresses bank-dependent observations even without a charter query; independently authenticated ExpansionVault observations can remain. This conservative authentication requirement is not an extra financial output or permission to enumerate charters.
 
 The callable fingerprint pins the reviewed signature/selector pairs; it detects metadata changes, not selector correctness. Signatures are tied to the publisher ABI definitions. Neither the reader nor the offline checks independently recomputes Ethereum function selectors with Keccak-256. Reviewing each signature/selector pair is a maintainer responsibility before changing the interface and its fingerprint; a matching fingerprint is not an independent selector verification.
 
 Successful JSON has `schema_version`, `status` (`ok` or `partial`), `view`, `values`, `derived`, `errors`, `evidence` and `note: "RPC snapshot; publisher ABI."`. `values` and `derived` map IDs to `{value, unit}`. Scaled quantities are exact decimal strings; counts are integers, booleans are booleans and addresses are strings. Missing/failed data is never zero. Shared `evidence` contains `chain_id`, `block_number`, `block_hash`, `block_timestamp`, `retrieved_at`, `interface_source_ids` and `package_sha256`. Full detail adds `rpc_url`, `call_mapping`, `rpc_exchanges` and `publisher_bundle`; neither detail level makes the ABI source-verified.
 
+Tuple observations add `type: "tuple"` and use `value` as a map of ABI component names to `{value, unit, type}`. `queuedShares.pending` stays explicit; queued values never replace active policy. Reserve holdings use raw token units, pool fee preserves raw flag-bearing units, and tick spacing is signed ticks. `recycle_streamed_raw`/`issuance_streamed_raw` retain raw ledger units because their scaling is unestablished; do not derive ledger equations. Other recycling quantities use separately documented publisher STANDARD denominations. Treasury includes configured vault percentage, configured/effective pool percentage and TWAP limits; no effective vault-percentage getter exists in the reviewed ABI.
+
 Derived IDs are profile-scoped: protocol/full context can expose `global_gross_daily`, `remaining_gross_budget` and `permanent_removed`; charter summary exposes only supported `charter_gross_daily`; auctions expose availability statuses. Daily equivalents require successfully observed active emissions and rate prerequisites; inactive or unknown emissions omit them, while a confirmed active zero rate remains zero. They extrapolate the current stream including recycling, not guaranteed future accrual. Current auction prices are omitted when inactive, paused, sold out or unknown. Full-detail last-sale/closing getters are explicitly `not_historical`: even a matching current sold-out day establishes neither a round's average nor its complete sales history.
 
-`permanent_removed` retains `HARD_CAP() - maxSupply()`; the separate `token_burned_forever` and `token_ledger_retired` observations decompose that cap reduction, not buyback causes or remaining issuance budget. Flags are booleans and `standard_registry`/`standard_pool_manager` are observed address strings, not new inputs or checked catalog bindings. The reader retains six fixed role mappings and the 80-call catalog ceiling (78 reviewed calls); it adds no blocklist-address argument, arbitrary role, settlement action or general RPC surface. Publisher-described epoch-end accrual stops until rollover remain outside daily extrapolation.
+`permanent_removed` retains `HARD_CAP() - maxSupply()`; the separate `token_burned_forever` and `token_ledger_retired` observations decompose that cap reduction, not buyback causes or remaining issuance budget. Flags are booleans and `standard_registry`/`standard_pool_manager` are observed address strings, not new inputs or checked catalog bindings. The reader has eleven fixed role mappings and 128 reviewed calls, retaining a 65,536-byte catalog limit; it adds no blocklist-address argument, arbitrary target, settlement action or general RPC surface. Publisher-described epoch-end accrual stops until rollover remain outside daily extrapolation.
 
 Exit `0`: valid complete or partial JSON on stdout; inspect `status` and per-ID `errors`. Exit `2`: invalid input; `4`: invalid package data; `5`: fatal transport, chain or snapshot failure. Fatal errors are JSON on stderr with no fallback snapshot. The helper writes no files, loads no credentials and performs no financial actions, simulations or monitoring.
 
