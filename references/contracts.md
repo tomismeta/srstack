@@ -25,6 +25,17 @@ For public observations, use [inspection](inspection.md), including its [units a
 
 Missing identity, ABI or relationship stops the affected conclusion. Return established fields plus the missing link, never guessed addresses/selectors/interfaces/roles. [Research workflow](research-workflow.md) supplies query bounds, anchors and stop conditions; [safety](safety.md) governs external reads.
 
+## Recover a stale frontend source link
+
+A hashed asset URL is a source locator, not a permanent API. If it is missing, start at the current official application page—not guessed filenames or cached code. A publisher entry bundle may import its ABI from a separate asset.
+
+1. Read the official page HTML as text and identify its explicit script/module references. Resolve relative URLs against the referring URL.
+2. Read the referenced entry asset as text. Follow only explicit static imports, re-exports or literal dynamic-import paths needed to locate the relevant ABI and deployment binding. Do not evaluate expressions, execute downloaded JavaScript, run a browser-console snippet or import the module into a local runtime.
+3. Keep discovery finite: at most three import hops, eight assets, 4 MiB per asset and 8 MiB total. Stay on the publisher origin unless the official page explicitly authenticates another asset origin. Stop at access denial, exhausted bounds, unreadable content or an unresolved computed import; report the missing evidence rather than bypassing restrictions.
+4. Retain the original page, import chain, exact asset URLs, retrieval time and content hashes. Match the selected ABI to the full deployment address, chain and role; separate test-network and production bindings. Literal ABI text is publisher interface evidence, not verified source/bytecode correspondence or proof of current deployment.
+
+Use recovered evidence only for the requested research. Never rewrite installed catalogs or redirect a fixed helper to a discovered address. A changed callable interface requires a separately reviewed package update. For historical purchase/round events, follow [auction history](auction-history.md); the current snapshot helper does not retrieve logs.
+
 ## Source-reviewed mechanics versus publisher ABI leads
 
 [Inspection](inspection.md#supply-restrictions-and-control-context) documents reviewed STANDARD/Trading Hook source semantics for cap-reduction decomposition, restriction activation and pending Hook ownership. This is not a saved verification status: fresh deployment correspondence and current state remain separate questions. Sources included as compilation dependencies do not authenticate separately deployed CentralBank, Registry, auction or vault modules.

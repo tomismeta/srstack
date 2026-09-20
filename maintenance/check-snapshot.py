@@ -375,6 +375,9 @@ class SnapshotChecks(unittest.TestCase):
             rpc = RPCFixture()
             if change == "owner_error":
                 rpc.fail.add("charter_owner")
+                # ownerOf reverts for a nonexistent token while mapping getters
+                # can still return incidental zeros for that same token ID.
+                rpc.values.update(charter_branches=0, charter_pending=0)
             elif change == "zero_owner":
                 rpc.values["charter_owner"] = snapshot.ZERO_ADDRESS
             elif change == "zero_total":
@@ -386,7 +389,20 @@ class SnapshotChecks(unittest.TestCase):
             self.assertIn("global_gross_daily", result["derived"])
             self.assertEqual(result["status"], "partial")
             if change in ("owner_error", "zero_owner"):
-                self.assertNotIn("charter_pending", result["values"])
+                for identifier in ("charter_branches", "charter_pending"):
+                    self.assertNotIn(identifier, result["values"])
+                    self.assertIn(identifier, result["errors"])
+
+    def test_failed_pending_omits_balance_without_erasing_charter_rate(self):
+        self.rpc.fail.add("charter_pending")
+        result = self.rpc.run("charter")
+        self.assertEqual(result["status"], "partial")
+        self.assertNotIn("charter_pending", result["values"])
+        self.assertIn("charter_pending", result["errors"])
+        self.assertEqual(result["values"]["charter_branches"]["value"], 2)
+        self.assertEqual(result["derived"]["charter_gross_daily"]["value"],
+                         snapshot._scaled(((WAD + 2) // 3) * 2 * 86400, 18))
+        self.assertEqual(result["derived"]["remaining_gross_budget"]["value"], "70")
 
     def test_negative_supply_differences_are_not_clamped(self):
         self.rpc.values.update(cumulative_issued=101 * WAD, token_max_supply=201 * WAD)

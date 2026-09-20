@@ -2,6 +2,8 @@
 
 Publisher design: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§6–8,12. Exact settings: [participation parameters](../assets/parameters/participation.json). These daily post-genesis mechanics are not the [founding sale](launch-mint.md).
 
+For “how did each auction go?”, historical quantities, paid prices or sellout timing, use [bounded auction-history research](auction-history.md), not the current auction snapshot or these design rules.
+
 ## Availability, payments and capacity
 
 The published lifecycle keeps the license auction dormant until owner activation, then starts a fresh `auction-duration` first day. Additional charter supply starts at `initial-daily-charter-count` and remains policy-controlled (`charter-count-policy`). Use a fresh `auctions` snapshot for activation, configured duration and inventory; do not infer them from these reference rules or treat a price-function output as buyable inventory. If the read is unavailable, current availability is unknown. [sr-whitepaper-v1: branches, auctions; sr-publisher-read-interface]

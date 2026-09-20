@@ -2,6 +2,8 @@
 
 For live status, identity and observational accounting. Design explanations need only the topic and cited records; [inspection](inspection.md) defines public state, price and gross-value observations. Apply [safety](safety.md) before external requests. Procedures use existing host tools, not invented APIs.
 
+For per-round auction purchases, quantities, weighted prices or sellout timing, go directly to [auction-history research](auction-history.md) and its reviewed event catalog; the current auction helper is not a historical reader.
+
 ## 1. Define scope and evidence
 
 Identify entity/generation, network, metric, denomination, owner/beneficiary, interval and historical/current scope. Derive available inputs from evidence; ask only for missing user-dependent definitions. Total is not circulating supply; treasury value is not spendable income; policy allocation is not payment.
@@ -10,7 +12,7 @@ Follow direct relevant topic/record paths. Load [contracts](contracts.md) and [e
 
 Offline answers can explain packaged identities, interfaces and published rules, not changing state. Dynamic claims require fresh evidence: UTC retrieval, original URL/provider, source timestamp and freshness limits. Distinguish publication, claimed event, retrieval and chain observation times; a freshly retrieved page can describe an old proposal. If retrieval is unavailable, report the requested result as unavailable—never fall back to a saved observation.
 
-For current STANDARD price or gross amount/charter value, take the [inspection fast path](inspection.md#1-scope-only-the-requested-observation), not broad discovery: `price.py`, and only a fresh `charter` snapshot first if a charter's accrued balance is needed. Ask only for a missing public charter ID, never wallet enumeration. The current-value question authorizes the necessary price read under host permissions, not forecasts or an unrelated refresh.
+For current STANDARD price or gross amount/charter value, take the [inspection fast path](inspection.md#common-question-paths), not broad discovery: `price.py`, and only a fresh `charter` snapshot first if a charter's accrued balance is needed. Ask only for a missing public charter ID, never wallet enumeration. The current-value question authorizes the necessary price read under host permissions, not forecasts or an unrelated refresh.
 
 ## 2. Authenticate and discover
 

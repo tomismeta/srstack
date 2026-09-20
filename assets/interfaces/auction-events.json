@@ -1,0 +1,485 @@
+{
+  "schema_version": 1,
+  "scope": "Research-only publisher-authenticated event definitions and deployment identity; no callable methods, helper profiles, saved observations or financial runner.",
+  "chain_id": 4663,
+  "source_ids": [
+    "sr-auction-event-interface"
+  ],
+  "entity_catalog": "assets/entities/robinhood.json",
+  "research_recipe": "references/auction-history.md",
+  "contracts": {
+    "licenseAuction": {
+      "entity_id": "sr-robinhood-license-auction",
+      "address": "0xA45CE49303EEd5846F841BFd4bAC6aE8C805EC05",
+      "abi_locator": "mountApp-DmwNsaDC.js literal _t",
+      "consideration_asset": "STANDARD",
+      "consideration_decimals": 18
+    },
+    "charterAuction": {
+      "entity_id": "sr-robinhood-charter-auction",
+      "address": "0x65B4f85b4A64424F6bA0fFe0C535100bc6888892",
+      "abi_locator": "mountApp-DmwNsaDC.js literal mr",
+      "consideration_asset": "ETH",
+      "consideration_decimals": 18
+    },
+    "centralBank": {
+      "entity_id": "sr-robinhood-central-bank",
+      "address": "0x5977B25419f9c0dDcB2F89fE204955622f4F57ea",
+      "abi_locator": "mountApp-DmwNsaDC.js literal _e; BranchesOpened only",
+      "role": "Receipt-level corroboration of license ledger cost, not another auction target"
+    }
+  },
+  "topic_convention": "topic0 = Ethereum Keccak-256 of the UTF-8 canonical signature, not NIST SHA3-256. Inputs remain in ABI declaration order; indexed inputs occupy successive topics after topic0; non-indexed inputs occupy data words.",
+  "events": [
+    {
+      "contracts": [
+        "licenseAuction",
+        "charterAuction"
+      ],
+      "abi": {
+        "type": "event",
+        "name": "AuctionStarted",
+        "inputs": [
+          {
+            "name": "day",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "startPrice",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "signature": "AuctionStarted(uint256,uint256)",
+      "topic0": "0xf8910119ddbef5440c54532457dfe8250a10ed39e583292818f44724b9e1344c",
+      "field_semantics": {
+        "day": "Contract round identifier, not a UTC calendar day or a duration.",
+        "startPrice": "Raw price per unit; ETH wei for charterAuction, 18-decimal STANDARD for licenseAuction. No opening timestamp is emitted."
+      }
+    },
+    {
+      "contracts": [
+        "charterAuction"
+      ],
+      "abi": {
+        "type": "event",
+        "name": "CharterPurchased",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "buyer",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "day",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "price",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "signature": "CharterPurchased(uint256,address,uint256,uint256)",
+      "topic0": "0x1c54748c22f6bf384e0cf9a6a4dfbc630c9ac343ba8a88a5769508bd2da18e50",
+      "field_semantics": {
+        "charterId": "Identifier of one purchased charter.",
+        "buyer": "Reported buyer address.",
+        "day": "Contract round identifier.",
+        "price": "Reported executed price for this one charter in ETH wei (18 decimals); not automatically transaction value, which can contain a maximum payment/refund."
+      }
+    },
+    {
+      "contracts": [
+        "charterAuction"
+      ],
+      "abi": {
+        "type": "event",
+        "name": "ChartersPerDaySet",
+        "inputs": [
+          {
+            "name": "count",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "signature": "ChartersPerDaySet(uint256)",
+      "topic0": "0xd167d4300749433637c8f34275bc6ed626442d364ccf305e5e78ea908a5b4a59",
+      "field_semantics": {
+        "count": "Configured integer charter supply; event has no round ID/effective-from timestamp. Do not replace a historical DayRolled.cap with it without implementation evidence."
+      }
+    },
+    {
+      "contracts": [
+        "licenseAuction",
+        "charterAuction"
+      ],
+      "abi": {
+        "type": "event",
+        "name": "DayRolled",
+        "inputs": [
+          {
+            "name": "day",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "startPrice",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "floorPrice",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "cap",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "signature": "DayRolled(uint256,uint256,uint256,uint256)",
+      "topic0": "0xfe150722db0c02a69373b1d32f7d153b415b253b5bce66b95e7b1f5d9ce65c3f",
+      "field_semantics": {
+        "day": "Contract round identifier.",
+        "startPrice": "Raw opening-price parameter per unit; not the first executed purchase price.",
+        "floorPrice": "Raw floor-price parameter per unit.",
+        "cap": "Integer round capacity; charters or licenses according to emitting contract. No duration, half-life, opening timestamp or closing timestamp is emitted."
+      }
+    },
+    {
+      "contracts": [
+        "licenseAuction",
+        "charterAuction"
+      ],
+      "abi": {
+        "type": "event",
+        "name": "DecayHalfLifeSet",
+        "inputs": [
+          {
+            "name": "halfLife",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "signature": "DecayHalfLifeSet(uint256)",
+      "topic0": "0x3491d4ab69d4f73c3d81521a7c13c6f4299f2216ed9b9cc044949888cf5824f2",
+      "field_semantics": {
+        "halfLife": "Configured decay parameter; establish units and effective round from implementation/historical state before using numerically."
+      }
+    },
+    {
+      "contracts": [
+        "licenseAuction"
+      ],
+      "abi": {
+        "type": "event",
+        "name": "FloorPaybackDaysSet",
+        "inputs": [
+          {
+            "name": "dayCount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "signature": "FloorPaybackDaysSet(uint256)",
+      "topic0": "0x691f93bd194840bb74533b5aed16bbd924ff2bc0ec442c57dd485756bca7f809",
+      "field_semantics": {
+        "dayCount": "Configured floor-payback parameter; not the auction-round duration or proof of its effective round."
+      }
+    },
+    {
+      "contracts": [
+        "licenseAuction",
+        "charterAuction"
+      ],
+      "abi": {
+        "type": "event",
+        "name": "GuardianPaused",
+        "inputs": [
+          {
+            "name": "guardian",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "signature": "GuardianPaused(address)",
+      "topic0": "0xd5354f32595d4786b7a234166bc1e34f4ee58f9e9d534b0fc5abd8e122f25fd5",
+      "field_semantics": {
+        "guardian": "Reported pausing address; block inclusion is an observation, not the start of a new auction round."
+      }
+    },
+    {
+      "contracts": [
+        "licenseAuction",
+        "charterAuction"
+      ],
+      "abi": {
+        "type": "event",
+        "name": "GuardianUnpaused",
+        "inputs": [],
+        "anonymous": false
+      },
+      "signature": "GuardianUnpaused()",
+      "topic0": "0x984d636c2614e303400b04f078fb33065fa357cbc6859737a5e4528627f4fa18",
+      "field_semantics": {}
+    },
+    {
+      "contracts": [
+        "licenseAuction"
+      ],
+      "abi": {
+        "type": "event",
+        "name": "LicensesPerDaySet",
+        "inputs": [
+          {
+            "name": "count",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "signature": "LicensesPerDaySet(uint256)",
+      "topic0": "0xffd007b9d15a275ab5c27e6639f90191a9e16b633d8452c70b199dd4366dc6b7",
+      "field_semantics": {
+        "count": "Configured integer license supply; event has no round ID/effective-from timestamp. Do not replace a historical DayRolled.cap with it without implementation evidence."
+      }
+    },
+    {
+      "contracts": [
+        "licenseAuction"
+      ],
+      "abi": {
+        "type": "event",
+        "name": "LicensesPurchased",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "day",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "count",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "unitPrice",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "signature": "LicensesPurchased(uint256,uint256,uint256,uint256)",
+      "topic0": "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+      "field_semantics": {
+        "charterId": "Beneficiary charter identifier, not a buyer wallet.",
+        "day": "Contract round identifier.",
+        "count": "Integer licenses purchased.",
+        "unitPrice": "Reported executed price per license in raw 18-decimal STANDARD. Event-accounted consideration is count * unitPrice; corroborate actual ledger cost using matched BranchesOpened receipt evidence. This is not an ERC20 transfer amount or proof of burn routing."
+      }
+    },
+    {
+      "contracts": [
+        "licenseAuction",
+        "charterAuction"
+      ],
+      "abi": {
+        "type": "event",
+        "name": "OwnershipTransferStarted",
+        "inputs": [
+          {
+            "name": "previousOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "newOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "signature": "OwnershipTransferStarted(address,address)",
+      "topic0": "0x38d16b8cac22d99fc7c124b9cd0de2d3fa1faef420bfe791d8c362d765e22700",
+      "field_semantics": {
+        "previousOwner": "Previous owner address.",
+        "newOwner": "Proposed recipient; does not prove acceptance."
+      }
+    },
+    {
+      "contracts": [
+        "licenseAuction",
+        "charterAuction"
+      ],
+      "abi": {
+        "type": "event",
+        "name": "OwnershipTransferred",
+        "inputs": [
+          {
+            "name": "previousOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "newOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "signature": "OwnershipTransferred(address,address)",
+      "topic0": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+      "field_semantics": {
+        "previousOwner": "Previous owner address.",
+        "newOwner": "Reported successor owner; not proof of the complete authority structure."
+      }
+    },
+    {
+      "contracts": [
+        "charterAuction"
+      ],
+      "abi": {
+        "type": "event",
+        "name": "ReservePriceSet",
+        "inputs": [
+          {
+            "name": "price",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "signature": "ReservePriceSet(uint256)",
+      "topic0": "0xe4515db87ec3838c9a257222c26dda14c6bf63f5d49ad14460bf6558e6463085",
+      "field_semantics": {
+        "price": "Configured raw ETH-wei charter reserve price; not evidence of the floor applied to an earlier round."
+      }
+    },
+    {
+      "contracts": [
+        "licenseAuction",
+        "charterAuction"
+      ],
+      "abi": {
+        "type": "event",
+        "name": "SupplyControllerSet",
+        "inputs": [
+          {
+            "name": "controller",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "signature": "SupplyControllerSet(address)",
+      "topic0": "0x915d8b94cdcbf4fa1b4c768b15f63b99aee21096b9d04fe1938f45833036106d",
+      "field_semantics": {
+        "controller": "Reported supply-controller address; event does not establish permissions, cap effective timing or autonomous policy."
+      }
+    },
+    {
+      "contracts": [
+        "centralBank"
+      ],
+      "abi": {
+        "type": "event",
+        "name": "BranchesOpened",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "count",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "cost",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "signature": "BranchesOpened(uint256,uint256,uint256)",
+      "topic0": "0xfca0d4c142a1e3085d891c92cde8193ccd316ff4ba9bb3f6b439136681115856",
+      "field_semantics": {
+        "charterId": "Beneficiary charter identifier.",
+        "count": "Reported branches opened; match exact receipt ordering, charterId and count to the license purchase.",
+        "cost": "Reported total raw 18-decimal STANDARD ledger consideration. This supporting event has no round ID and is not itself an auction purchase; never sum it again alongside matched purchase consideration."
+      }
+    }
+  ],
+  "limits": [
+    "Publisher-linked literal ABI and identity are not independent source/bytecode verification or proof that all deployed generations share these events.",
+    "No reviewed AuctionEnded, SoldOut or timestamp-bearing round event exists in these two literal auction ABIs. Missing definitions are not invented.",
+    "DayRolled may be observed in a later transaction; its block time does not by itself establish the scheduled opening or expiry. A purchase timestamp establishes execution, not opening.",
+    "Historical duration, applied cap, half-life, payment semantics and configuration transitions need interval-specific evidence; current getters and whitepaper constants cannot substitute.",
+    "An ABI does not prove where consideration goes, whether it is burned or distributed, or holder yield.",
+    "The helper callable catalog robinhood-reads.json is intentionally unchanged. Historical RPC availability and coverage must be established for each request."
+  ]
+}

@@ -1,7 +1,50 @@
 {
   "schema_version": 1,
-  "scope": "Publisher read interface and bounded STANDARD/TaxHook source provenance; no stored observations or deployment-verdict catalog",
+  "scope": "Publisher read interface, research-only auction event definitions and bounded STANDARD/TaxHook source provenance; no stored observations or deployment-verdict catalog",
   "records": [
+    {
+      "id": "sr-auction-event-interface",
+      "url": "https://www.standardreserve.xyz/app/home/",
+      "publisher": "The Standard Reserve official application",
+      "published_at": null,
+      "retrieved_at": "2026-09-20",
+      "review_depth": "Current official HTML and literal linked module text; complete literal license and charter auction event ABIs, deployment identity mapping, supporting CentralBank BranchesOpened event and displayed denominations. No downloaded JavaScript was executed.",
+      "claim_stage": "publisher-authenticated event/interface provenance, corroborated by bounded public log/receipt retrieval; not independent auction source/bytecode verification or stored history",
+      "locators": [
+        "Official HTML script src /assets/app-BzDBLzVV.js and /assets/mountApp-DmwNsaDC.js",
+        "app-BzDBLzVV.js: literal import from ./mountApp-DmwNsaDC.js",
+        "mountApp-DmwNsaDC.js: tC chain 4663; vC deployment-address object; ABI literals _t (LicenseAuction), mr (CharterAuction), _e (CentralBank)",
+        "mountApp-DmwNsaDC.js: __vite__mapDeps literal assets/AuctionStatus-Dwu7leUK.js",
+        "AuctionStatus-Dwu7leUK.js: charterAuction ETH versus licenseAuction STANDARD display binding",
+        "AuctionStarted; DayRolled; LicensesPurchased; CharterPurchased; configuration, pause and authority events",
+        "CentralBank BranchesOpened: charterId, count, cost; supporting receipt accounting only"
+      ],
+      "source_urls": [
+        "https://www.standardreserve.xyz/assets/app-BzDBLzVV.js",
+        "https://www.standardreserve.xyz/assets/mountApp-DmwNsaDC.js",
+        "https://www.standardreserve.xyz/assets/AuctionStatus-Dwu7leUK.js"
+      ],
+      "literal_sha256": {
+        "mountApp-DmwNsaDC.js:_t": "450722c7dedeebf97aad2af8a53d86990a5fd03e900dab950b924f9b982ed4b4",
+        "mountApp-DmwNsaDC.js:mr": "e342b41397f04aef441422e8a6d634114d0f82d1532914ffedcab5eb65b5225f",
+        "mountApp-DmwNsaDC.js:_e": "8ddcb419c0bbbfd02a03ae08548e67be7fe27ef74fc9bf755d614eda755a8a5b",
+        "mountApp-DmwNsaDC.js:vC": "a04b44d074668e9a8077af4e1a224a8152d1f4217a5620bbbd29942a7d826689"
+      },
+      "hash_convention": "SHA-256 of exact UTF-8 literal text: opening [ through matching ] for ABI arrays, or opening { through matching } for vC; excludes variable name, equals sign, separators and added newline. These are complete excerpt hashes, not a full bundle hash.",
+      "topic_provenance": "Canonical signatures are derived from the authenticated ABI input types. topic0 is Ethereum Keccak-256, obtained through public web3_sha3; purchase/roll/supporting-cost topics were corroborated in original public RPC receipts. NIST SHA3-256 is not interchangeable.",
+      "event_catalog": "assets/interfaces/auction-events.json",
+      "summary": "The publisher binds the two auction roles to the packaged Robinhood identities and supplies purchase, activation, roll and configuration event definitions. LicensesPurchased carries charterId, day, count and unitPrice; CharterPurchased carries charterId, buyer, day and price. DayRolled carries day, startPrice, floorPrice and cap, but no timestamp, duration or end reason. Supporting BranchesOpened records total reported STANDARD ledger cost. The catalog enables bounded on-demand research without changing the helper callable surface.",
+      "limits": [
+        "The older app-CIqwBLws.js returned 404 during this review; its historical read-interface provenance remains separate and unchanged.",
+        "Source-reader output truncated the large mount module outside the complete reviewed literals. No full-bundle size, SHA-256 or complete application-call-graph claim is made; linked source recovery stays bounded.",
+        "The event ABI has no reviewed dedicated AuctionEnded or SoldOut event. Event inclusion time is not automatically scheduled round opening or expiry.",
+        "No complete implementation proof establishes lazy-roll timing, effective configuration changes or historical auction duration. Historical state unavailable from a provider must not be replaced with latest.",
+        "Publisher identity and ABI do not independently verify deployed bytecode, every past generation, payment routing, authority completeness or economic outcomes.",
+        "Bounded source-review log and receipt evidence is retained outside package runtime resources; no auction rounds, prices, totals, timing recap or performance table is stored here.",
+        "Source retrieval and review dates are not source publication, contract deployment or protocol-state freshness timestamps.",
+        "This research-only event catalog adds no helper calls, wallet actions, indexer or numerical runner."
+      ]
+    },
     {
       "id": "sr-publisher-read-interface",
       "url": "https://www.standardreserve.xyz/assets/app-CIqwBLws.js",

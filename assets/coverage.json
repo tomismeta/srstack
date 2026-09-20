@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "reviewed_at": "2026-09-20",
-  "scope": "Whitepaper section routing, official strategic direction, application discovery and publisher read interface provenance; no stored protocol state or implementation audit",
+  "scope": "Whitepaper section routing, official strategic direction, application discovery, publisher read interface and research-only auction event provenance; no stored protocol state or implementation audit",
   "source_index": "assets/sources.json",
   "source_provenance": "Page source_id and source_file locate the authoritative source record and its retrieval date; page routing does not duplicate retrieval timestamps.",
   "parameter_catalog": "assets/parameters.json",
@@ -298,6 +298,21 @@
       "Provider prices are never averaged or mixed across valuation denominations; identity, schema and access failures are not concealed by fallback.",
       "Indicative current prices do not establish future prices.",
       "Gross accrued-balance marks are not net withdrawal proceeds or charter market values."
+    ]
+  },
+  "auction_history": {
+    "source_ids": [
+      "sr-auction-event-interface"
+    ],
+    "source_file": "assets/sources/live-interface.json",
+    "event_catalog": "assets/interfaces/auction-events.json",
+    "reference": "references/auction-history.md",
+    "scope": "Bounded on-demand purchase and round reconstruction with publisher-authenticated event definitions, historical anchors, quantity-weighted consideration and explicit coverage gaps",
+    "limits": [
+      "Research only: no helper callable additions, history runner, saved auction observations or performance recap.",
+      "Round IDs do not establish duration; roll inclusion time does not establish scheduled opening. Historical caps and settings cannot be replaced with present values.",
+      "Purchase-event accounting is distinct from independently reconciled payments; incomplete logs, archive failure and empty responses are not complete zero history.",
+      "No dedicated reviewed sellout/end event or independent auction source/bytecode equivalence is established."
     ]
   },
   "read_interface": {

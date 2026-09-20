@@ -17,6 +17,7 @@ srstack explains documented protocol mechanics and announcements, reads current 
 | “How much supply was permanently removed, and why?” | Separate liquid-token burns from retired ledger value; totals do not attribute individual burn causes |
 | “Are launch holding limits or the Pool Manager gate active?” | Fresh enabled/active flags and cap values; not a guarantee that a transaction will succeed |
 | “Are expansion licenses available at a usable price?” | Fresh auction status and inventory; no purchasable quote when unavailable |
+| “How did past license or charter auctions go?” | [On-demand bounded event research](references/auction-history.md), with quantity-weighted prices, evidenced round timing and explicit coverage gaps; no stored auction results |
 | “Show the branches and pending balance of this public charter.” | A charter-ID-specific snapshot; no wallet connection or claim that you own it |
 | “What is STANDARD trading at, or what is this amount worth?” | Latest reported canonical-pool USD/ETH prices and a gross indicative valuation |
 | “Which contracts are listed, and is their source verified?” | Publisher-listed identities and explorer links; verification status requires a fresh explorer check |
@@ -45,143 +46,105 @@ These are routing instructions within one skill, not separately installed comman
 
 All three fixed entrypoints use only Python's standard library: no pip dependencies, wallet connector or provider credentials. Execution also requires the filesystem protections described in [execution](references/execution.md); unsupported hosts fail closed. Missing execution or retrieval capability produces an explanation, not invented results. The skill does not install dependencies or change host permissions.
 
-## Quick start
+## Install the 0.2.0 candidate
 
-For the published release, use the attached **`srstack-0.1.3.zip`** and **`SHA256SUMS`** from [srstack v0.1.3](https://github.com/tomismeta/srstack/releases/tag/v0.1.3), not a moving branch. The pinned installation below installs **0.1.3**, not this **0.2.0 candidate**. For dogfooding, use a complete candidate runtime ZIP or local runtime export in an isolated host profile; never install the full repository.
+This is one **research/inspect candidate**, not a published 0.2.0 release. Package version `0.2.0` identifies the interface; the **full source commit** resolved below identifies the exact candidate you review and install. The branch can move, so record that commit outside the runtime package. Older release instructions are not the installation path for this candidate.
 
-**Install a runtime export or attached runtime ZIP—not a full repository, GitHub's automatic “Source code” archive or an audit archive.** Audit evidence is not an installable skill or a smart-contract security certification.
+These are **user/maintainer commands**, not permission for an installed agent to download code, install itself or bypass host guards. Use Git and Python 3.10+ on a supported POSIX host. Review the selected commit, including `maintenance/package.py`, [SKILL.md](SKILL.md), the runtime scripts and [safety](references/safety.md), **before executing package code**. The bundled verifier checks integrity, not publisher authenticity; running it is already executing the package.
 
-### Normal pinned-release install
+### 1. Select paths and pin the named branch
 
-These are **user/maintainer installation commands**, not permission for an installed agent to download code, install itself or bypass host guards. Review the pinned release, [SKILL.md](SKILL.md) and [safety](references/safety.md) first. A checksum downloaded beside a ZIP detects disagreement, not a compromised publisher; trust comes from your review/pin and trusted outer ZIP checksum. Running the bundled verifier is already executing that package, so self-verification cannot bootstrap trust.
+Stop the intended host and other installers. In one shell, select its **actual configured skill root** and an existing stable working directory outside it. Use absolute paths. Hermes' default is `$HOME/.hermes/skills`; OpenClaw commonly uses the intended workspace's `skills` directory. Named profiles may differ. For dogfooding, prefer an isolated profile/workspace.
 
-Use Python 3.10+ on a supported POSIX host. Stop the host/other installers while replacing its skill. Choose **one** root explicitly:
+Set `SRSTACK_BACKUPS` outside **every** skill-discovery root, on the same filesystem as `SKILL_PARENT`. It will retain the review clone, staging and any previous installation. Do not use another discovered skill directory as a backup, or leave a shadowing same-name installation in another root. Keep customizations for review; do not merge them into the candidate.
 
 ```sh
-# Hermes default profile:
+# Select these paths for your host before continuing:
 SKILL_PARENT="$HOME/.hermes/skills"
-# OR OpenClaw: run this instead from the intended workspace:
-# SKILL_PARENT="$PWD/skills"
+SRSTACK_BACKUPS="$HOME/srstack-backups"
+
+cd "$HOME" &&
+mkdir -p "$SKILL_PARENT" "$SRSTACK_BACKUPS" &&
+WORK="$(mktemp -d "$SRSTACK_BACKUPS/srstack-candidate.XXXXXXXX")" &&
+REVIEW_ROOT="$WORK/source" &&
+git clone --single-branch --branch feature/v0.2.0 \
+  https://github.com/tomismeta/srstack.git "$REVIEW_ROOT" &&
+git -C "$REVIEW_ROOT" fetch origin feature/v0.2.0 &&
+REVIEWED_COMMIT="$(git -C "$REVIEW_ROOT" rev-parse --verify 'FETCH_HEAD^{commit}')" &&
+git -C "$REVIEW_ROOT" checkout --detach "$REVIEWED_COMMIT" &&
+printf '%s\n' "$REVIEWED_COMMIT" > "$WORK/reviewed-commit.txt" &&
+printf 'Review source: %s\nFull source commit: %s\nRecovery directory: %s\n' \
+  "$REVIEW_ROOT" "$REVIEWED_COMMIT" "$WORK"
 ```
 
-For named profiles, use their actual configured root. Choose a backup/staging directory **outside every skill-discovery root**, on the same filesystem as `SKILL_PARENT`. Keep local customizations there; never merge them silently into the new release. The unique backup below is never overwritten. Move the shell to a stable directory before installation:
+Stop on any error. Review this detached revision before the next step; do not fetch again and silently change the pin. The clone is the **repository**, not an installable runtime. It contains maintenance tools and tests that must not enter the host's discovered skill. Do not run unreviewed local modifications to the exporter.
+
+### 2. Export the reviewed runtime
+
+Continue in the same shell, only after review and any required execution approval:
 
 ```sh
-SRSTACK_BACKUPS="$HOME/srstack-backups"
-cd "$HOME" && python3 -B -I - "${SKILL_PARENT:?Choose a skill root first}" "$SRSTACK_BACKUPS" <<'PY'
-import hashlib, re, stat, subprocess, sys, tempfile, urllib.request, zipfile
+python3 -B -I "${REVIEW_ROOT:?Complete the review checkout first}/maintenance/package.py" export \
+  --commit "${REVIEWED_COMMIT:?Resolve and review the full commit first}" \
+  --destination "${WORK:?Select the recovery directory first}/staged-runtime"
+```
+
+`staged-runtime` must **not exist**; its parent already exists. The exporter checks that the full commit equals checkout `HEAD`, reads committed bytes rather than working-tree runtime edits, and verifies runtime membership, hashes and aggregate digest before creating the export. It excludes `.git`, `maintenance`, tests, `.github`, `dist` and caches. A failed export must be resolved before proceeding.
+
+### 3. Clean-replace, verify and retain rollback
+
+The following small replacement step verifies staging before touching the old installation, then moves whole directories—never overlays files. Keep the host stopped until it succeeds. It checks separation from the selected root; you must also ensure the recovery directory is outside any **other** configured discovery root. Run from the stable directory selected above, not from the installation being moved.
+
+```sh
+python3 -B -I - "${SKILL_PARENT:?Select the actual host root}" "${WORK:?Export first}" <<'PY'
+import subprocess
+import sys
 from pathlib import Path
 
-parent = Path(sys.argv[1]).resolve()
-backups = Path(sys.argv[2]).resolve()
-if parent == backups or parent in backups.parents or backups in parent.parents:
-    raise SystemExit("Skill and backup roots must be separate")
-parent.mkdir(parents=True, exist_ok=True)
-backups.mkdir(parents=True, exist_ok=True)
-if parent.stat().st_dev != backups.stat().st_dev:
-    raise SystemExit("Choose a backup directory on the skill root's filesystem")
-work = Path(tempfile.mkdtemp(prefix="srstack-0.1.3-", dir=backups))
-print("Retained staging/backup directory:", work, flush=True)
-base = "https://github.com/tomismeta/srstack/releases/download/v0.1.3/"
-archive = "srstack-0.1.3.zip"
-for name, limit in ((archive, 16 * 1024 * 1024), ("SHA256SUMS", 65536)):
-    with urllib.request.urlopen(base + name, timeout=30) as response:
-        data = response.read(limit + 1)
-    if len(data) > limit:
-        raise SystemExit("Release download exceeds bound")
-    (work / name).write_bytes(data)
-entries = re.findall(r"^([0-9a-fA-F]{64}) [ *]" + re.escape(archive) + r"$",
-                     (work / "SHA256SUMS").read_text(), re.MULTILINE)
-if len(entries) != 1 or hashlib.sha256((work / archive).read_bytes()).hexdigest() != entries[0].lower():
-    raise SystemExit("Runtime ZIP checksum missing, duplicated or mismatched")
-with zipfile.ZipFile(work / archive) as bundle:
-    members = bundle.infolist()
-    if len(members) > 1024 or sum(m.file_size for m in members) > 16 * 1024 * 1024:
-        raise SystemExit("Archive exceeds extraction bounds")
-    seen = set()
-    for m in members:
-        parts = m.filename.split("/")
-        if (m.filename in seen or len(parts) < 2 or parts[0] != "srstack"
-                or any(p in ("", ".", "..") for p in parts) or "\\" in m.filename
-                or stat.S_IFMT(m.external_attr >> 16) != stat.S_IFREG):
-            raise SystemExit("Archive contains unsafe or unexpected members")
-        seen.add(m.filename)
-    bundle.extractall(work)  # Only checked regular files under the fresh srstack/ root.
-staged, target, old = work / "srstack", parent / "srstack", work / "previous-install"
+parent = Path(sys.argv[1]).resolve(strict=True)
+work = Path(sys.argv[2]).resolve(strict=True)
+if parent == work or parent in work.parents or work in parent.parents:
+    raise SystemExit("Skill and recovery directories must be separate")
+if parent.stat().st_dev != work.stat().st_dev:
+    raise SystemExit("Recovery directory must be on the skill root's filesystem")
+staged, target, old = work / "staged-runtime", parent / "srstack", work / "previous-install"
+failed = work / "failed-install"
+if old.exists() or old.is_symlink() or failed.exists() or failed.is_symlink():
+    raise SystemExit("Recovery paths already exist; do not overwrite a previous attempt")
+if target.is_symlink() or (target.exists() and not target.is_dir()):
+    raise SystemExit("Refusing a symlink or non-directory installation")
+if staged.is_symlink() or not staged.is_dir():
+    raise SystemExit("Expected a complete staged runtime directory")
+
 def verify(root):
     subprocess.run([sys.executable, "-B", "-I", str(root / "scripts/verify.py")],
                    cwd=root, check=True, timeout=30)
-verify(staged)  # Entire membership + hashes, before touching the old installation.
-if target.is_symlink() or (target.exists() and not target.is_dir()):
-    raise SystemExit("Refusing a symlink or non-directory installation")
+
+print("Recovery directory:", work, flush=True)
+verify(staged)
 moved_old = installed_new = False
 try:
     if target.exists():
         target.rename(old)
         moved_old = True
-    staged.rename(target)  # Whole root; no overlay.
+    staged.rename(target)
     installed_new = True
     verify(target)
 except BaseException:
     if installed_new:
-        target.rename(work / "failed-install")
+        target.rename(failed)
     if moved_old:
         old.rename(target)
         print("Restored previous installation:", target, file=sys.stderr)
-    print("Installation failed; retained recovery files:", work, file=sys.stderr)
     raise
 print("Installed and verified:", target)
-print("Previous installation (if any) and downloads retained:", work)
+print("Keep recovery files and full source pin:", work)
 PY
 ```
 
-This checks **only the exact runtime ZIP entry** in `SHA256SUMS`; it does not require the separate audit ZIP. Unsafe archive members, extra/missing runtime files or mismatched hashes stop installation. No files are deleted. If final verification fails, the new root is retained as `failed-install` and the old root is restored; if restoration itself errors, stop and recover from the printed directory before restarting discovery. Keep that backup until you have reviewed any customizations and confirmed the actual loaded path/version in a fresh host conversation. Do not install the backup as a second discoverable skill.
+No files are deleted. On final verification failure, the new root is retained as `failed-install` and the previous root is restored (or the destination is left absent for a first install). If restoration itself fails, keep the host stopped and recover from the printed directory. Whole-root replacement removes obsolete scenario/fixture files from the active runtime without deleting your backup. Keep it until the loaded path and candidate behavior are confirmed; never discover it as a second skill. A process interruption or filesystem failure may require manual recovery from those same directories.
 
-### Reviewed-commit export or isolated review install
-
-The export machine needs Git and Python 3.10+. The installed host needs only the capabilities for the routes you use.
-
-1. Review [SKILL.md](SKILL.md), the [safety boundary](references/safety.md) and the complete package. Select a full immutable commit SHA you trust and have reviewed, not the moving `main` branch.
-2. From a stable working directory outside skill-discovery roots, clone a review copy and select that revision:
-
-   ```sh
-   REVIEWED_COMMIT=REVIEWED_COMMIT_SHA
-   REVIEW_ROOT="$PWD/srstack-review"
-   git clone https://github.com/tomismeta/srstack.git "$REVIEW_ROOT" &&
-   git -C "$REVIEW_ROOT" checkout --detach "$REVIEWED_COMMIT"
-   ```
-
-   Replace `REVIEWED_COMMIT_SHA` with the full 40-character commit SHA you reviewed; it is a placeholder, not a release identifier. Stop on any error. The export command below independently checks that the selected commit matches the checkout, so a failed checkout cannot silently install the default branch.
-
-3. Choose **one** installation parent. For an isolated review, use the test profile/workspace's skill root instead of your active root. For Hermes' default profile:
-
-   ```sh
-   SKILL_PARENT="$HOME/.hermes/skills"
-   ```
-
-   Or, for OpenClaw, run this from the intended workspace:
-
-   ```sh
-   SKILL_PARENT="$PWD/skills"
-   ```
-
-   Named profiles and managed installations may use different roots; use the intended host's configured location. Export the reviewed commit's manifest-listed runtime files into a new skill folder:
-
-   ```sh
-   mkdir -p "$SKILL_PARENT" &&
-   python3 -B "$REVIEW_ROOT/maintenance/package.py" export \
-     --commit "$REVIEWED_COMMIT" \
-     --destination "$SKILL_PARENT/srstack"
-   ```
-
-   The destination must not already exist. Export validates the selected commit's runtime membership, per-file hashes and aggregate digest before creating it. It reads committed content, not uncommitted runtime edits, and excludes Git metadata, maintenance tools, tests, CI configuration and local build/cache artifacts. Failed exports clean up the new destination. Review the helper itself as part of the selected commit; do not run unreviewed local modifications.
-
-   For updates, first export into a fresh staging directory outside discovery roots and run its `scripts/verify.py` before touching the active installation. Preserve the entire old installation in a unique backup outside all discovery roots, then move the complete verified root into the absent destination and verify it again. Restore the backup if final verification fails. Do not overlay files, use `cp -a` on the repository or leave a shadowing same-name copy. Keep the review clone outside discovery roots; start or refresh the host only after installation succeeds.
-
-   Before removing an old installation or temporary checkout, move your shell/tool working directory outside that tree to an existing stable directory. A deleted cwd can break later host commands even when the installation is correct.
-
-4. From the installed root, run `python3 -B -I scripts/verify.py` for complete runtime membership, per-file hashes and aggregate digest verification. Confirm the actual loaded path and revision, and that repository-only `.git`, `maintenance`, `.github` and `dist` directories are absent. A matching self-supplied manifest does not establish trust in an unreviewed package.
-5. Start a fresh conversation and try a packaged-knowledge question from the examples below.
+Start or refresh the host only after success, and confirm the actual loaded path is `SKILL_PARENT/srstack`, package version is `0.2.0`, and the source pin is the full commit in `WORK/reviewed-commit.txt`. The commit is intentionally recorded outside the hashed runtime docs; package version alone cannot identify a candidate revision.
 
 **Hermes installation:** use the complete-bundle instructions above. URL discovery depends on configured sources; importing raw `SKILL.md` does not necessarily import its references, assets and scripts.
 
@@ -191,19 +154,25 @@ Other harnesses can use their Agent Skills loader or explicitly read [SKILL.md](
 
 ### Quick test after installation
 
-In a fresh host conversation, `Use srstack` should show **research / inspect**, with no live read. “Explain charter withdrawals using only packaged references” should work offline without Python. “Offline” means no live retrieval, not that host execution approval is waived.
+In a fresh host conversation, `Use srstack` should show **research / inspect**, with no live read or planner. “Explain charter withdrawals using only packaged references” should work offline without Python. Ask the [Second Mandate questions](#second-mandate-research): sample positions must not become holdings, reserve fee reinvestment must not become holder yield, and manifesto intent must not become deployed functionality. Future-return questions should receive qualitative research, not scenario execution.
 
-For live post-install checks, ask “Use srstack inspect protocol” or “Use srstack inspect charter 1” (replace `1` with your intended public ID). Expect a block-anchored snapshot, or a precise unavailable/partial result—not stored values. [Direct snapshot commands](#live-protocol-auction-and-charter-reads) and [price commands](#current-price-and-gross-accrued-balance-value) exercise these paths without model routing; do not run live checks unless intended and permitted.
-
-From the reviewed, verified installed root, choose only the diagnostics you intend:
+From the reviewed, verified **installed root**, the default diagnostic is offline integrity verification. There is no `--offline` flag:
 
 ```sh
-python3 -B -I scripts/verify.py                 # Membership and hashes only; no child/network.
-python3 -B -I scripts/verify.py --price         # Explicit live indicative quote.
-python3 -B -I scripts/verify.py --charter 1 --price  # One live charter + gross balance mark.
+cd "${SKILL_PARENT:?Select the installed host root}/srstack" &&
+python3 -B -I scripts/verify.py
 ```
 
-Replace example ID `1` with the public charter ID you intend to read. `--charter` and `--price` may combine. A bare diagnostic never silently fetches live data. Every smoke first checks the entire manifest/membership and blocks child execution on failure. Output is compact stage status/timing, not financial results; use the helpers below for results. Exit 0 means all selected stages are `ok`; partial, failed or skipped smoke stages exit 5. See [diagnostic statuses and exits](references/execution.md#package-and-smoke-diagnostic).
+Only if live access is intended and permitted, select a diagnostic:
+
+```sh
+python3 -B -I scripts/verify.py --price
+python3 -B -I scripts/verify.py --charter 1 --price
+```
+
+Replace example ID `1` with the intended public charter ID. These diagnostics report **stage status and timing, not a price or monetary valuation**. They verify the entire package before running selected helpers; bare verification starts no child and makes no network request. Exit 0 means all selected stages are `ok`; partial, failed or skipped live stages exit 5. See [diagnostic statuses and exits](references/execution.md#package-and-smoke-diagnostic).
+
+For actual live results, ask “Use srstack inspect protocol” or “Use srstack inspect charter 1”: expect a fresh block-scoped snapshot or a precise unavailable/partial result. For a charter's gross USD value, use its successful snapshot's `charter_pending` quantity unchanged with `scripts/price.py --amount-standard DECIMAL`, not the verifier's status. The [snapshot commands](#live-protocol-auction-and-charter-reads) and [price commands](#current-price-and-gross-accrued-balance-value) below exercise the real output paths. Offline operation never waives host execution approval.
 
 Stage elapsed times measure local verification/helper execution, not host startup, model reasoning, discovery, tool-approval waits or answer rendering. Live network latency varies; no end-to-end runtime is promised. A successful local smoke does not certify host approvals, isolation, authenticity or financial correctness.
 
@@ -292,7 +261,7 @@ python3 -B -I scripts/price.py --source geckoterminal --amount-standard 1000
 
 `source` is `auto` (default), `dexscreener` or `geckoterminal`; `cross_check` is an optional boolean, defaulting to false. The optional amount is an unsigned decimal **string**, not a JSON number. Quotes and gross values are decimal strings. Failed fields remain missing, and a labelled fallback never becomes a cached or invented value.
 
-Both data helpers retain no-argument JSON stdin; `--help` documents both interfaces. Any non-help CLI arguments select explicit CLI mode and never read or merge stdin. Use exact separate flag/value tokens, not `--flag=value`; snapshot's view comes first. Unknown, repeated, abbreviated or conflicting options are rejected before network access. `--quote` conflicts with `--amount-standard`; use the latter alone for gross valuation. Amount arguments can appear in process listings or host logs; stdin remains available, without promising transcript privacy. CLI conveniences use the same validators/readers and do not relax approval or integrity checks.
+Both data helpers also accept no-argument JSON stdin; `--help` and the [execution contract](references/execution.md) describe strict input handling. CLI mode does not read stdin or relax approval/integrity checks. Use `--amount-standard` alone for a valuation, not together with `--quote`. Amounts in CLI arguments may appear in process listings or host logs; stdin does not promise transcript privacy.
 
 These are **provider-reported indicative prices**. Neither consumed pool API supplies a quote-observation timestamp: retrieval/cache age is not quote age, and pool creation time is not price freshness. Charter state, the selected price and any cross-check have separate observation boundaries, not one atomic snapshot. Gross values exclude withdrawal fees, trading taxes, LP fees, slippage and gas.
 
