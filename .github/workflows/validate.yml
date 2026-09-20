@@ -31,6 +31,8 @@ jobs:
         run: python3 -B maintenance/check-snapshot.py
       - name: Check market price and gross valuation behavior
         run: python3 -B maintenance/check-price.py
+      - name: Check bounded auction history behavior
+        run: python3 -B maintenance/check-history.py
       - name: Check installed verification and fixed smoke orchestration
         run: python3 -B maintenance/check-verify.py
       - name: Check packaging and reviewed-commit export

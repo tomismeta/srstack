@@ -23,7 +23,7 @@ from pathlib import Path
 
 VERSION = "0.2.0"
 MANIFEST = "release-manifest.json"
-SCRIPTS = {"scripts/snapshot.py", "scripts/price.py", "scripts/verify.py"}
+SCRIPTS = {"scripts/snapshot.py", "scripts/price.py", "scripts/history.py", "scripts/verify.py"}
 REQUIRED = {"README.md", "SKILL.md", "LICENSE"} | SCRIPTS
 DIGEST_CONVENTION = "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest"
 NOTE = "Integrity, not authenticity or sandbox certification; review/pin the release and outer ZIP checksum."
@@ -297,6 +297,36 @@ def _error_message(value):
     return "".join(character for character in value[:MAX_ERROR_MESSAGE] if character.isprintable())
 
 
+def _http_diagnostics(value):
+    """Keep bounded original-response evidence, never arbitrary child metadata."""
+    if (not isinstance(value, dict) or type(value.get("http_status")) is not int
+            or not 100 <= value["http_status"] <= 599
+            or value.get("endpoint") != "https://rpc.mainnet.chain.robinhood.com/"):
+        return None
+    safe_headers = {"content-type", "server", "date", "via", "cf-ray", "retry-after",
+                    "x-request-id", "x-correlation-id", "request-id", "x-amzn-requestid"}
+    headers, size = {}, 0
+    if isinstance(value.get("headers"), dict):
+        for name, text in value["headers"].items():
+            if name not in safe_headers or not isinstance(text, str):
+                continue
+            text = "".join(c for c in text[:256] if c.isprintable()).encode("utf-8")[:256].decode("utf-8", "ignore")
+            size += len(name) + len(text.encode("utf-8"))
+            if size <= 2048:
+                headers[name] = text
+    excerpt = value.get("response_excerpt")
+    if not isinstance(excerpt, str):
+        excerpt = ""
+    clean = "".join(c for c in excerpt[:2048] if c.isprintable()).encode("utf-8")[:2048].decode("utf-8", "ignore")
+    read_error = value.get("read_error")
+    return {"endpoint": value["endpoint"], "http_status": value["http_status"],
+            "headers": headers, "response_excerpt": clean,
+            "excerpt_bytes": len(clean.encode("utf-8")),
+            "truncated": value.get("truncated") is not False or clean != excerpt,
+            "read_error": _error_message(read_error) if isinstance(read_error, str) else None,
+            "untrusted_response": True, "cause": "unconfirmed"}
+
+
 def _partial_errors(errors):
     details = {}
     for key, message in errors.items():
@@ -322,6 +352,9 @@ def _stage(root, name, script, arguments, scope):
                     and re.fullmatch(r"[a-z_]{1,64}", error["type"])
                     and isinstance(error.get("message"), str) and error["message"]):
                 stage["helper_error"] = {"type": error["type"], "message": _error_message(error["message"])}
+                diagnostics = _http_diagnostics(error.get("diagnostics"))
+                if diagnostics is not None:
+                    stage["helper_error"]["diagnostics"] = diagnostics
             else:
                 stage["helper_error"] = {"type": "unstructured_error",
                                          "message": "helper exited without a valid structured error"}

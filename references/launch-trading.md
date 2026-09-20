@@ -20,6 +20,6 @@ The reviewed Hook source gates non-POL liquidity additions while the launch sche
 
 Licenses remain dormant during founding distribution, then the owner activates them once with a published opening price and a fresh first day (`license-auction-activation`). Additional daily charter supply starts at `initial-daily-charter-count`. Design rules do not establish live activation or current configuration. [sr-whitepaper-v1: branches, auctions]
 
-Read a fresh `auctions` snapshot when availability matters. A decaying price-function value after sellout is not a purchasable quote; use last-sale/closing price labels separately. No fresh status means availability is unknown. [sr-publisher-read-interface]
+Read a fresh `auctions` snapshot when availability matters. A decaying price-function value after sellout is not a purchasable quote. Summary omits last-sale/closing getters; full detail marks them `not_historical`, not round averages. Use [history](auction-history.md) for past purchases. No fresh status means availability is unknown. [sr-publisher-read-interface]
 
 [Launch mint](launch-mint.md) covers founding terms; [reserves](reserves.md) separates founding proceeds, ongoing revenue, LP fees and protocol taxes. [Contracts](contracts.md) routes deployment evidence; [risks](risks.md) records remaining gaps.

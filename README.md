@@ -17,7 +17,7 @@ srstack explains documented protocol mechanics and announcements, reads current 
 | “How much supply was permanently removed, and why?” | Separate liquid-token burns from retired ledger value; totals do not attribute individual burn causes |
 | “Are launch holding limits or the Pool Manager gate active?” | Fresh enabled/active flags and cap values; not a guarantee that a transaction will succeed |
 | “Are expansion licenses available at a usable price?” | Fresh auction status and inventory; no purchasable quote when unavailable |
-| “How did past license or charter auctions go?” | [On-demand bounded event research](references/auction-history.md), with quantity-weighted prices, evidenced round timing and explicit coverage gaps; no stored auction results |
+| “How did past license or charter auctions go?” | [Supported bounded history scans](references/auction-history.md), with an optional auction-day filter, quantity-weighted prices, evidenced timing and explicit coverage gaps; no stored auction results |
 | “Show the branches and pending balance of this public charter.” | A charter-ID-specific snapshot; no wallet connection or claim that you own it |
 | “What is STANDARD trading at, or what is this amount worth?” | Latest reported canonical-pool USD/ETH prices and a gross indicative valuation |
 | “Which contracts are listed, and is their source verified?” | Publisher-listed identities and explorer links; verification status requires a fresh explorer check |
@@ -27,9 +27,9 @@ srstack explains documented protocol mechanics and announcements, reads current 
 One skill, two routes:
 
 - **Research:** source-linked explanations, documented parameters and evidence gaps.
-- **Inspect:** on-demand protocol, auction and public-charter snapshots through the fixed RPC helper, plus a separate canonical-pool price reader for current price and gross balance-value questions. No wallet access.
+- **Inspect:** on-demand protocol, auction and public-charter snapshots, bounded auction history through a fixed RPC scanner, and a separate canonical-pool price reader for current price and gross balance-value questions. No wallet access.
 
-Common questions have [direct inspection paths](references/inspection.md#common-question-paths): a charter snapshot already includes burn and launch-restriction context, so combined questions need no duplicate protocol read. Explanation-only questions go straight to relevant packaged sources without an RPC call or financial questionnaire. STANDARD amounts do not trigger a market-price lookup unless a monetary valuation is requested.
+Common questions have [direct inspection paths](references/inspection.md#common-question-paths). Default charter JSON contains only charter facts and its supported rate equivalent; explicitly select `--detail full` when combined charter, burn or launch-restriction context is requested at one block. Explanation-only questions go straight to packaged sources without an RPC call or financial questionnaire. STANDARD amounts do not trigger a price lookup unless monetary valuation is requested.
 
 Research topics: [protocol](references/protocol.md) · [charters](references/charters.md) · [reserves](references/reserves.md) · [contracts](references/contracts.md) · [updates](references/updates.md) · [documents](references/documents.md) · [risks](references/risks.md).
 
@@ -42,19 +42,20 @@ These are routing instructions within one skill, not separately installed comman
 | Explain packaged rules | Read the skill and its selected resources | None |
 | Research announcements or explorer status | Permitted public web retrieval | Relevant official pages or explorer |
 | Inspect current state | Trusted package and permitted Python 3.10+ execution | Fixed public Robinhood Chain RPC |
+| Inspect auction history | Trusted package and permitted Python 3.10+ execution; bounded block scope | Fixed public Robinhood Chain RPC |
 | Read market price or gross balance value | Trusted package and permitted Python 3.10+ execution | Fixed public DEX Screener/GeckoTerminal pool endpoints; charter balances additionally use RPC |
 
-All three fixed entrypoints use only Python's standard library: no pip dependencies, wallet connector or provider credentials. Execution also requires the filesystem protections described in [execution](references/execution.md); unsupported hosts fail closed. Missing execution or retrieval capability produces an explanation, not invented results. The skill does not install dependencies or change host permissions.
+All four fixed entrypoints—`snapshot.py`, `price.py`, `history.py` and `verify.py`—use only Python's standard library: no pip dependencies, wallet connector or provider credentials. Execution also requires the filesystem protections described in [execution](references/execution.md); unsupported hosts fail closed. Missing execution or retrieval capability produces an explanation, not invented results. The skill does not install dependencies or change host permissions.
 
 ## Install the 0.2.0 candidate
 
-This is one **research/inspect candidate**, not a published 0.2.0 release. Package version `0.2.0` identifies the interface; the **full source commit** resolved below identifies the exact candidate you review and install. The branch can move, so record that commit outside the runtime package. Older release instructions are not the installation path for this candidate.
+This is one **research/inspect candidate**, not a published 0.2.0 release. Package version `0.2.0` identifies the interface, not a revision pin; the **full source commit SHA** resolved below identifies the exact candidate you review and install. The branch can move. Installation prints the full reviewed SHA after success and retains it outside the hashed runtime; never embed the package's own commit in hashed files. Older release instructions are not the installation path for this candidate.
 
 These are **user/maintainer commands**, not permission for an installed agent to download code, install itself or bypass host guards. Use Git and Python 3.10+ on a supported POSIX host. Review the selected commit, including `maintenance/package.py`, [SKILL.md](SKILL.md), the runtime scripts and [safety](references/safety.md), **before executing package code**. The bundled verifier checks integrity, not publisher authenticity; running it is already executing the package.
 
 ### 1. Select paths and pin the named branch
 
-Stop the intended host and other installers. In one shell, select its **actual configured skill root** and an existing stable working directory outside it. Use absolute paths. Hermes' default is `$HOME/.hermes/skills`; OpenClaw commonly uses the intended workspace's `skills` directory. Named profiles may differ. For dogfooding, prefer an isolated profile/workspace.
+Installing while Telegram/Hermes or another host is running is supported; a running host is not installation failure. Stop other installers and coordinate a pause in srstack invocations for replacement and final verification. Stopping the host, if convenient, is only an optional precaution. In one shell, select its **actual configured skill root** and an existing stable working directory outside it. Use absolute paths. Hermes' default is `$HOME/.hermes/skills`; OpenClaw commonly uses the intended workspace's `skills` directory. Named profiles may differ. For dogfooding, prefer an isolated profile/workspace.
 
 Set `SRSTACK_BACKUPS` outside **every** skill-discovery root, on the same filesystem as `SKILL_PARENT`. It will retain the review clone, staging and any previous installation. Do not use another discovered skill directory as a backup, or leave a shadowing same-name installation in another root. Keep customizations for review; do not merge them into the candidate.
 
@@ -93,7 +94,7 @@ python3 -B -I "${REVIEW_ROOT:?Complete the review checkout first}/maintenance/pa
 
 ### 3. Clean-replace, verify and retain rollback
 
-The following small replacement step verifies staging before touching the old installation, then moves whole directories—never overlays files. Keep the host stopped until it succeeds. It checks separation from the selected root; you must also ensure the recovery directory is outside any **other** configured discovery root. Run from the stable directory selected above, not from the installation being moved.
+The following small replacement step verifies staging before touching the old installation, then moves whole directories—never overlays files. **Pause srstack invocations across the two directory moves and final verification.** Each rename is a whole-root move, but the pair is not atomic: the target is briefly absent between them. The host may remain running. The script checks separation from the selected root; you must also ensure the recovery directory is outside any **other** configured discovery root. Run from the stable directory selected above, not from the installation being moved.
 
 ```sh
 python3 -B -I - "${SKILL_PARENT:?Select the actual host root}" "${WORK:?Export first}" <<'PY'
@@ -115,6 +116,9 @@ if target.is_symlink() or (target.exists() and not target.is_dir()):
     raise SystemExit("Refusing a symlink or non-directory installation")
 if staged.is_symlink() or not staged.is_dir():
     raise SystemExit("Expected a complete staged runtime directory")
+reviewed_commit = (work / "reviewed-commit.txt").read_text(encoding="ascii").strip()
+if len(reviewed_commit) != 40 or any(c not in "0123456789abcdef" for c in reviewed_commit):
+    raise SystemExit("Expected the full reviewed commit SHA in the external recovery record")
 
 def verify(root):
     subprocess.run([sys.executable, "-B", "-I", str(root / "scripts/verify.py")],
@@ -138,13 +142,14 @@ except BaseException:
         print("Restored previous installation:", target, file=sys.stderr)
     raise
 print("Installed and verified:", target)
+print("Full reviewed commit SHA:", reviewed_commit)
 print("Keep recovery files and full source pin:", work)
 PY
 ```
 
-No files are deleted. On final verification failure, the new root is retained as `failed-install` and the previous root is restored (or the destination is left absent for a first install). If restoration itself fails, keep the host stopped and recover from the printed directory. Whole-root replacement removes obsolete scenario/fixture files from the active runtime without deleting your backup. Keep it until the loaded path and candidate behavior are confirmed; never discover it as a second skill. A process interruption or filesystem failure may require manual recovery from those same directories.
+No files are deleted. On final verification failure, the new root is retained as `failed-install` and the previous root is restored (or the destination is left absent for a first install). If restoration itself fails, keep srstack invocations paused and recover from the printed directory; never use a missing or inconsistent skill root. Telegram/Hermes need not shut down. Whole-root replacement removes obsolete scenario/fixture files from the active runtime without deleting your backup. Keep it until the loaded path and candidate behavior are confirmed; never discover it as a second skill. A process interruption or filesystem failure may require manual recovery from those same directories before srstack use resumes.
 
-Start or refresh the host only after success, and confirm the actual loaded path is `SKILL_PARENT/srstack`, package version is `0.2.0`, and the source pin is the full commit in `WORK/reviewed-commit.txt`. The commit is intentionally recorded outside the hashed runtime docs; package version alone cannot identify a candidate revision.
+After success, refresh skill discovery if needed and confirm the loaded path is `SKILL_PARENT/srstack`, package version is `0.2.0`, and the printed full SHA matches `WORK/reviewed-commit.txt`. Resume srstack invocations only against the verified root. **Existing chats retain their loaded context:** start a fresh `/new` in each Telegram/Hermes chat that will use the revision (or the host's equivalent new conversation). Installing in one chat cannot restart or refresh the other chats. Restarting the host is optional, not an acceptance criterion; package version alone cannot identify a candidate revision.
 
 **Hermes installation:** use the complete-bundle instructions above. URL discovery depends on configured sources; importing raw `SKILL.md` does not necessarily import its references, assets and scripts.
 
@@ -175,6 +180,8 @@ Replace example ID `1` with the intended public charter ID. These diagnostics re
 For actual live results, ask “Use srstack inspect protocol” or “Use srstack inspect charter 1”: expect a fresh block-scoped snapshot or a precise unavailable/partial result. For a charter's gross USD value, use its successful snapshot's `charter_pending` quantity unchanged with `scripts/price.py --amount-standard DECIMAL`, not the verifier's status. The [snapshot commands](#live-protocol-auction-and-charter-reads) and [price commands](#current-price-and-gross-accrued-balance-value) below exercise the real output paths. Offline operation never waives host execution approval.
 
 Stage elapsed times measure local verification/helper execution, not host startup, model reasoning, discovery, tool-approval waits or answer rendering. Live network latency varies; no end-to-end runtime is promised. A successful local smoke does not certify host approvals, isolation, authenticity or financial correctness.
+
+A live HTTP 401/403 identifies denial of that original request at its endpoint, not global chain/provider unavailability or failed installation. Preserve the helper's bounded original-response diagnostics when useful; do not retry or route around denial. Offline package verification and permitted packaged/source research may continue, but cannot replace the missing live evidence.
 
 ## Examples
 
@@ -220,7 +227,7 @@ Replace `<public charter ID>` with the ID to inspect.
 |---|---|
 | `protocol` | Issuance and epoch context, branch count, supply and permanent-burn decomposition, token restriction/launch flags, counter-based remaining budget, buy/sell tax and pool/emissions state |
 | `auctions` | License and daily-charter activation, pause state, inventory, duration and available current prices |
-| `charter` | Public owner, branch count, pending balance and related issuance, supply and restriction context |
+| `charter` | Default: public owner, branches, pending and supported current-rate equivalent. Explicit `--detail full`: additional protocol context and raw evidence |
 
 Each invocation uses one checked block. Separate example invocations are not one atomic combined snapshot; do not combine their values as if they share a block. Failed fields remain missing with errors; fatal failures return no snapshot. Results are not saved or reused as a fallback. These are selected publisher-ABI reads, not a complete contract audit.
 
@@ -232,7 +239,18 @@ python3 -B -I scripts/snapshot.py auctions --detail full
 python3 -B -I scripts/snapshot.py charter --id 1
 ```
 
-The charter command requires an unsigned uint256 ID; replace `1` with the intended public ID. `--detail full` adds raw evidence; summary is the default. No-argument JSON stdin is equally supported, for example `{"schema_version":1,"view":"charter","charter_id":1}`. Default answers show useful values first, with at most one short note such as **“RPC snapshot; publisher ABI.”**
+The charter command requires an unsigned uint256 ID; replace `1` with the intended public ID. **Summary is compact in the helper's JSON output**, not just agent-side formatting; `--detail full` opts into raw evidence. No-argument JSON stdin is equally supported, for example `{"schema_version":1,"view":"charter","charter_id":1}`. Default answers show useful values first, with at most one short note such as **“RPC snapshot; publisher ABI.”**
+
+### Bounded auction history
+
+Use the supported `history.py` helper for license or charter event history rather than constructing an ad hoc RPC script. Select `license` or `charter`, optionally filter by `--day N`, and choose either an anchored lookback (`--anchor-block B --lookback-blocks N`, with the anchor defaulting to a fresh head) or an explicit `--from-block A --to-block B` range. `--chunk-blocks N` and `--max-chunks N` bound scanning; defaults, hard limits and evidence semantics live in the [auction-history contract](references/auction-history.md).
+
+```sh
+python3 -B -I scripts/history.py license --lookback-blocks 1000000
+python3 -B -I scripts/history.py charter --day 1 --from-block 1 --to-block 1000000
+```
+
+Choose the day and block scope for the question; the examples do not assert where a round occurred. An auction day is a filter, not a 24-hour block estimate. Report scanned coverage and partial results, not complete-all-history. A last observed purchase alone does not prove sellout. Results go to stdout and are never saved as runtime observations.
 
 ### Current price and gross accrued-balance value
 
@@ -261,7 +279,7 @@ python3 -B -I scripts/price.py --source geckoterminal --amount-standard 1000
 
 `source` is `auto` (default), `dexscreener` or `geckoterminal`; `cross_check` is an optional boolean, defaulting to false. The optional amount is an unsigned decimal **string**, not a JSON number. Quotes and gross values are decimal strings. Failed fields remain missing, and a labelled fallback never becomes a cached or invented value.
 
-Both data helpers also accept no-argument JSON stdin; `--help` and the [execution contract](references/execution.md) describe strict input handling. CLI mode does not read stdin or relax approval/integrity checks. Use `--amount-standard` alone for a valuation, not together with `--quote`. Amounts in CLI arguments may appear in process listings or host logs; stdin does not promise transcript privacy.
+The snapshot and price helpers also accept no-argument JSON stdin; `--help` and the [execution contract](references/execution.md) describe strict input handling. CLI mode does not read stdin or relax approval/integrity checks. Use `--amount-standard` alone for a valuation, not together with `--quote`. Amounts in CLI arguments may appear in process listings or host logs; stdin does not promise transcript privacy.
 
 These are **provider-reported indicative prices**. Neither consumed pool API supplies a quote-observation timestamp: retrieval/cache age is not quote age, and pool creation time is not price freshness. Charter state, the selected price and any cross-check have separate observation boundaries, not one atomic snapshot. Gross values exclude withdrawal fees, trading taxes, LP fees, slippage and gas.
 
@@ -296,7 +314,7 @@ Packaged research needs a resource reader. Calculations and public readers use *
 
 Answers lead with content. Estimates get a short label; observations get a brief source note where needed. Detailed provenance and assumptions are available on request, not repeated as small print.
 
-The snapshot helper reads two fixed catalogs and permits only its pinned view/pure calls on configured Robinhood addresses. The price helper reads only the fixed identity catalog and makes bounded canonical-pool GETs to two allowlisted providers; optional quantity multiplication is local and uses one selected provider. The third entrypoint, `verify.py`, checks the package and invokes only explicitly selected fixed data helpers with bounded execution/output; it has no network of its own. All three reject unsupported inputs and write no files. No wallets, credentials, signatures, transaction payloads or state-changing simulations. See [safety](references/safety.md) and [execution](references/execution.md) for the full boundary.
+The snapshot helper reads two fixed catalogs and permits only its pinned view/pure calls on configured Robinhood addresses. The price helper reads only the fixed identity catalog and makes bounded canonical-pool GETs to two allowlisted providers; optional quantity multiplication is local and uses one selected provider. The history helper scans only the fixed license/charter auction events through the fixed RPC, with finite range, request, log, byte and time bounds. The fourth entrypoint, `verify.py`, checks the package and invokes only explicitly selected fixed data helpers with bounded execution/output; it has no network of its own. All four reject unsupported inputs and write no files. No wallets, credentials, signatures, transaction payloads or state-changing simulations. See [safety](references/safety.md) and [execution](references/execution.md) for the full boundary.
 
 The readers do **not** supply liquidity-depth analysis, an amount-specific withdrawal quote, transaction gas estimates or guaranteed sale proceeds. No strategy, future-return or settlement simulator is bundled. Source verification and latest announcements use separate fresh web research.
 

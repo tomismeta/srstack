@@ -252,6 +252,28 @@ class VerifyChecks(unittest.TestCase):
                 self.assertEqual({"type": kind, "message": reason}, stage["helper_error"])
                 self.assertNotIn("financial payload", json.dumps(report))
 
+    def test_http_diagnostics_exclude_unsafe_headers_and_bound_untrusted_body(self):
+        payload = {"error": {"type": "snapshot_error", "message": "endpoint denied this request",
+                            "diagnostics": {
+                                "endpoint": "https://rpc.mainnet.chain.robinhood.com/",
+                                "http_status": 403, "headers": {
+                                    "server": "test-edge", "set-cookie": "private-cookie",
+                                    "authorization": "private-token", "x-request-id": "request-123"},
+                                "response_excerpt": "\x1b" + "denied " * 1000,
+                                "truncated": False, "read_error": None,
+                                "unexpected": "private-metadata"}}}
+        self.helper("snapshot.py", "import json, sys\nsys.stderr.write(json.dumps(" + repr(payload) + "))\nraise SystemExit(5)\n")
+        report, code = self.verify.run({"--charter": "1", "--price": True})
+        self.assertEqual(5, code)
+        self.assertEqual("skipped", report["stages"][-1]["status"])
+        diagnostics = report["stages"][1]["helper_error"]["diagnostics"]
+        self.assertEqual(403, diagnostics["http_status"])
+        self.assertTrue(diagnostics["truncated"])
+        self.assertTrue(diagnostics["untrusted_response"])
+        self.assertLessEqual(len(diagnostics["response_excerpt"].encode("utf-8")), 2048)
+        self.assertTrue(diagnostics["response_excerpt"].isprintable())
+        self.assertNotIn("private-", json.dumps(report))
+
     def test_unstructured_and_oversized_error_details_are_not_dumped(self):
         self.helper("price.py", "import sys\nsys.stderr.write('raw stderr must not escape')\nraise SystemExit(5)\n")
         report, code = self.verify.run({"--price": True})

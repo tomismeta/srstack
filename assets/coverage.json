@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "reviewed_at": "2026-09-20",
-  "scope": "Whitepaper section routing, official strategic direction, application discovery, publisher read interface and research-only auction event provenance; no stored protocol state or implementation audit",
+  "scope": "Whitepaper section routing, official strategic direction, application discovery, publisher read interface and auction event provenance for bounded on-demand readers; no stored protocol state or implementation audit",
   "source_index": "assets/sources.json",
   "source_provenance": "Page source_id and source_file locate the authoritative source record and its retrieval date; page routing does not duplicate retrieval timestamps.",
   "parameter_catalog": "assets/parameters.json",
@@ -309,7 +309,7 @@
     "reference": "references/auction-history.md",
     "scope": "Bounded on-demand purchase and round reconstruction with publisher-authenticated event definitions, historical anchors, quantity-weighted consideration and explicit coverage gaps",
     "limits": [
-      "Research only: no helper callable additions, history runner, saved auction observations or performance recap.",
+      "The fixed history helper reads authenticated events on demand with hard coverage budgets; no saved auction observations, performance recap or expanded eth_call surface.",
       "Round IDs do not establish duration; roll inclusion time does not establish scheduled opening. Historical caps and settings cannot be replaced with present values.",
       "Purchase-event accounting is distinct from independently reconciled payments; incomplete logs, archive failure and empty responses are not complete zero history.",
       "No dedicated reviewed sellout/end event or independent auction source/bytecode equivalence is established."

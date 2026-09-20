@@ -49,6 +49,21 @@ For “Do successor migrations make the protocol upgradeable?”, answer **not b
 
 Use this packaged distinction for an explanation question; fresh implementation or current-authority claims need separate evidence. The [deployment source record](../assets/sources/deployments.json) identifies the reviewed publisher-linked bundle.
 
+## Additional publisher-ABI research coverage
+
+The publisher-linked mount module also exposes these **existing-module research leads**, not additional fixed-reader calls or newly verified Solidity implementations. [sr-contract-directory]
+
+| Module | Useful read-only ABI leads | Evidence boundary |
+|---|---|---|
+| Both auctions | `supplyController()`, `pendingOwner()` | A configured address is not authenticated controller behavior or Second Mandate activation |
+| FeeSplitter | `teamShareBps()`, `polShareBps()`, `teamOwed()`, `teamWallet()`, `queuedShares()` | Current versus queued routing and accrued liability; not holder revenue rights |
+| ExpansionVault | `holdingsOf(address)`, `isReserveAsset(address)`, `reservePool(address)` | Requires independently authenticated asset identities/units; does not enumerate a complete portfolio |
+| ContractionVault | `lastTickAt()`, `tickCooldown()`, effective limits, `BuybackExecuted` | Distinguish attributable buyback events from aggregate burns; settings are not executable quotes |
+| CentralBank | Queued-policy getters, recycling counters, `ParamQueued`/`ParamApplied` | Separate pending changes from current policy; names alone do not prove accounting/timing semantics |
+
+Prioritize auction controller/ownership and treasury routing for a future deliberately reviewed read expansion. New targets, argument types, tuples, units and module bindings need explicit authentication and decoding review; do not redirect the current helper or generate a substitute runner. The [Second Mandate](updates.md#second-mandate-liquidity-for-tokenized-stocks) supplies intended functions, not named new contracts.
+
+
 ## Questions and independent dimensions
 
 Documented conceptual roles include currency, charter, issuing authority, canonical Uniswap pool/hook, expansion-license and charter auctions, fee routing, reserve/buyback vaults and protocol-owned liquidity—not asserted contract names/counts.

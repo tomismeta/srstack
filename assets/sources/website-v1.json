@@ -147,21 +147,23 @@
       "publisher": "The Standard Reserve official website",
       "published_at": null,
       "retrieved_at": "2026-09-20",
-      "review_depth": "Full browser-rendered manifesto text, including dated Mind the Gap rationale and explicitly labelled RESERVE POSITIONS (SAMPLE) illustration",
+      "review_depth": "Full browser-rendered manifesto review, followed by current official HTML and literal mount/component source-text review; includes dated rationale, explicitly sampled positions and fixed-value reserve display. No downloaded JavaScript executed.",
       "claim_stage": "publisher strategic direction with dated rationale and sample illustrations, not implemented mechanics or live-state evidence",
       "locators": [
-        "First mandate: sovereign asset and monetary policy",
         "Second mandate: open, transparent liquidity engine for tokenized stocks, not another stock issuer",
         "Mind the Gap; publisher's dated liquidity and price-dislocation examples",
         "Create or approve markets, seed liquidity, coordinate external capital and return trading fees to the Reserve",
-        "RESERVE POSITIONS (SAMPLE)"
+        "RESERVE POSITIONS (SAMPLE)",
+        "https://www.standardreserve.xyz/assets/mountApp-DmwNsaDC.js",
+        "https://www.standardreserve.xyz/assets/ManifestoPage-DJdXDzGD.js",
+        "Reserve levels as of today: fixed component constants, not a live read"
       ],
-      "summary": "The manifesto distinguishes the first mandate's sovereign asset and monetary policy from a second mandate to build an open, transparent liquidity engine for tokenized stocks, rather than another stock issuer. It proposes creating or approving markets, seeding liquidity, coordinating external capital and returning trading fees to the Reserve to fund more markets. Dated market examples motivate the strategy; reserve-position panels are explicitly samples.",
+      "summary": "Against the project's documented monetary-policy context, the manifesto proposes an open, transparent liquidity engine for tokenized stocks rather than another stock issuer: create or approve markets, seed liquidity, coordinate external capital and return trading fees to the Reserve to fund more markets. Dated market examples motivate the strategy; position panels are explicit samples. No named Second Mandate contract or address is supplied.",
       "limits": [
         "The manifesto announces direction; the whitepaper remains the documented mechanics source. Neither source alone verifies implementation.",
         "Mind the Gap attributes September 17 SPY, NVDA and MSFT USDG-side balances and an August 30 HIMS squeeze relative to the prior Friday stock close to the publisher's rationale; these are not independently verified or current observations.",
         "RESERVE POSITIONS (SAMPLE), including funded markets, pool shares, an APY boost, returned fees, an AAPL funding request and ETH returned, is illustrative, not evidence of actual deployments, returns, funding availability or a yield offer.",
-        "Dynamic reserve values described as 'as of today' are not stored; fetch current evidence on demand or report unavailable.",
+        "The reviewed component calculates its 'as of today' reserve graphic from fixed module constants; fresh page retrieval does not make these live or block-scoped observations. No displayed figures are stored here.",
         "No contract addresses, ABI, enforceable fee-distribution mechanism or token/charter revenue entitlement is established by this manifesto.",
         "The Second Mandate is not established as equivalent to the earlier @0xbeans branch-auction, burn and POL proposal.",
         "Browser review and retrieval date do not establish publication chronology or a current-state guarantee."

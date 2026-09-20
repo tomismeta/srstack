@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-18",
+  "reviewed_at": "2026-09-20",
   "scope": "Publisher identity and linked-ABI provenance, chain routing, current-conditions explanation and attributed developer proposals; no stored state or verification verdicts",
   "records": [
     {
@@ -8,8 +8,8 @@
       "url": "https://www.standardreserve.xyz/app/protocol/contracts/",
       "publisher": "The Standard Reserve official website",
       "published_at": null,
-      "retrieved_at": "2026-09-18",
-      "review_depth": "Identity attribution across Core, Auctions, Treasury and Infrastructure; linked directory component and app ABI entries for successor holdings migration and auction supply controllers.",
+      "retrieved_at": "2026-09-20",
+      "review_depth": "Prior directory/app ABI review plus current official HTML-linked mount-module text: full Robinhood deployment map and existing auction, treasury and CentralBank read-only ABI leads. No downloaded JavaScript executed.",
       "claim_stage": "publisher identity/interface attribution, not deployment-state or authority verification",
       "locators": [
         "Core",
@@ -19,10 +19,13 @@
         "Robinhood Chain4663",
         "https://www.standardreserve.xyz/assets/ProtocolContracts-fb8LvDwl.js",
         "https://www.standardreserve.xyz/assets/app-cGhd1uKR.js",
+        "https://www.standardreserve.xyz/assets/mountApp-DmwNsaDC.js",
+        "Literal ./deployments/4663.json mapping and vC contracts object",
+        "Auction supplyController/pendingOwner; FeeSplitter scalar routing/queuedShares; ExpansionVault holdingsOf/isReserveAsset/reservePool; ContractionVault buyback limits/events; CentralBank queued policy/recycling counters",
         "ContractionVault/FeeSplitter migrateToSuccessor(); ExpansionVault migrateToSuccessor(address[] assets); HoldingsMigrated",
         "Charter and license auctions: supplyController(), setSupplyController(address), SupplyControllerSet, NotSupplyAuthority"
       ],
-      "summary": "Publisher directory for Robinhood Chain 4663 contract addresses, names, roles and canonical ETH/STANDARD v4 pool identity. Linked app ABIs provide successor-migration and supply-controller investigation leads. Use the entity catalog for identity routing; fetch activation, ownership and execution permissions on demand.",
+      "summary": "Publisher directory and current linked module bind Robinhood Chain 4663 protocol and infrastructure identities. Auction-controller/ownership, treasury routing/holdings and queued-policy ABI definitions provide further research leads beyond the fixed reader. Use the entity catalog for identity routing; fetch code, activation, authority and state on demand.",
       "limits": [
         "No independent source/ABI correspondence, current ownership, activation or audit verification.",
         "The directory component can retain the last ownership snapshot after refresh failure; a visible owner value is not automatically fresh evidence.",

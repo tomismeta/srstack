@@ -20,7 +20,7 @@
         "sr-standard-source-interface",
         "sr-tax-hook-source-interface"
       ],
-      "scope": "Publisher read interface, research-only auction event provenance and selected STANDARD/Trading Hook source review"
+      "scope": "Publisher read interface, auction event provenance and selected STANDARD/Trading Hook source review"
     },
     {
       "id": "website-v1",

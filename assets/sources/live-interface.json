@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "scope": "Publisher read interface, research-only auction event definitions and bounded STANDARD/TaxHook source provenance; no stored observations or deployment-verdict catalog",
+  "scope": "Publisher read interface, auction event definitions and bounded STANDARD/TaxHook source provenance; no stored observations or deployment-verdict catalog",
   "records": [
     {
       "id": "sr-auction-event-interface",
@@ -42,7 +42,7 @@
         "Publisher identity and ABI do not independently verify deployed bytecode, every past generation, payment routing, authority completeness or economic outcomes.",
         "Bounded source-review log and receipt evidence is retained outside package runtime resources; no auction rounds, prices, totals, timing recap or performance table is stored here.",
         "Source retrieval and review dates are not source publication, contract deployment or protocol-state freshness timestamps.",
-        "This research-only event catalog adds no helper calls, wallet actions, indexer or numerical runner."
+        "The event catalog supports the fixed bounded read-only history helper; it adds no wallet actions, expanded eth_call surface, indexer or stored observations."
       ]
     },
     {

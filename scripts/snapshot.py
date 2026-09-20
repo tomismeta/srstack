@@ -25,6 +25,7 @@ import sys
 import threading
 import time
 from datetime import datetime, timezone
+import unicodedata
 
 
 RPC_URL = "https://rpc.mainnet.chain.robinhood.com/"
@@ -34,6 +35,9 @@ NOTE = "RPC snapshot; publisher ABI."
 MAX_INPUT_BYTES = 4096
 MAX_FILE_BYTES = 65536
 MAX_RESPONSE_BYTES = 1048576
+MAX_DIAGNOSTIC_BYTES = 2048
+DIAGNOSTIC_HEADERS = ("content-type", "server", "date", "via", "cf-ray", "retry-after",
+                      "x-request-id", "x-correlation-id", "request-id", "x-amzn-requestid")
 BATCH_SIZE = 20
 REQUEST_TIMEOUT = 10
 OVERALL_TIMEOUT = 40
@@ -46,6 +50,10 @@ WORD = re.compile(r"0x[0-9a-fA-F]{64}\Z")
 QUANTITY = re.compile(r"0x(?:0|[1-9a-fA-F][0-9a-fA-F]*)\Z")
 IDENTIFIER = re.compile(r"[a-zA-Z][a-zA-Z0-9_]{0,79}\Z")
 ZERO_ADDRESS = "0x" + "0" * 40
+CHARTER_VALUES = frozenset(("charter_owner", "charter_branches", "charter_pending"))
+CHARTER_RATE_CALLS = frozenset((
+    "token_decimals", "emissions_started", "stream_rate_per_second", "total_branches"))
+CHARTER_SUMMARY_CALLS = CHARTER_VALUES | CHARTER_RATE_CALLS
 # Reviewed execution metadata, not a source/bytecode equivalence assertion.
 # Changing the callable surface requires deliberate review and a new fingerprint.
 CALLS_SHA256 = "e2277987bcb024693564bbbf52fa90927974b2b4ba4de2089b602a046dbd74db"
@@ -61,6 +69,10 @@ class PackageDataError(ValueError):
 
 class SnapshotError(ValueError):
     """Transport, chain, or snapshot integrity could not be established."""
+
+    def __init__(self, message, diagnostics=None):
+        super().__init__(message)
+        self.diagnostics = diagnostics
 
 
 def _pairs(pairs):
@@ -291,7 +303,68 @@ def _load_package():
             os.close(descriptor)
 
 
-def _https_request(connection, payload, deadline, monotonic):
+def _diagnostic_text(text, limit):
+    """Bound untrusted response text; never expose common credential material."""
+    text = re.sub(r"\x1b(?:\[[0-?]*[ -/]*[@-~]|\][^\x07\x1b]*(?:\x07|\x1b\\))", "", text)
+    text = "".join(character for character in text if not unicodedata.category(character).startswith("C"))
+    text = re.sub(r"(?i)\b(?:bearer|basic)\s+[^\s\"'<>;,]+", "[REDACTED]", text)
+    text = re.sub(
+        r"""(?i)\b(?:authorization|cookie|set-cookie|(?:access[_-]?|refresh[_-]?)?token|api[_-]?key|password|secret|private[_-]?key)\b["']?\s*[:=]\s*(?:"[^"]*(?:"|$)|'[^']*(?:'|$)|[^\s<>,;]+)""",
+        "[REDACTED]", text)
+    text = re.sub(r"\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]*)?", "[REDACTED]", text)
+    text = re.sub(r"\b(?:0x)?[0-9a-fA-F]{64}\b", "[REDACTED]", text)
+    return text.encode("utf-8")[:limit].decode("utf-8", errors="ignore")
+
+
+def _http_failure(response, connection, deadline, monotonic, failure):
+    diagnostics = {"http_status": response.status, "endpoint": RPC_URL, "headers": {},
+                   "response_excerpt": "", "excerpt_bytes": 0, "truncated": True,
+                   "read_error": None, "untrusted_response": True, "cause": "unconfirmed"}
+    message = ("endpoint denied this request" if response.status in (401, 403)
+               else "RPC HTTP request failed; redirects are not followed")
+    error = SnapshotError(message, diagnostics)
+    # Publish status before reading diagnostic headers/body, so the outer hard
+    # deadline can still report the original response if its body stalls.
+    if failure is not None:
+        failure.append(error)
+    chunks, size = [], 0
+    try:
+        header_bytes = 0
+        for name in DIAGNOSTIC_HEADERS:
+            value = response.getheader(name)
+            remaining_header = MAX_DIAGNOSTIC_BYTES - header_bytes - len(name)
+            if remaining_header <= 0:
+                break
+            if value is not None:
+                value = _diagnostic_text(value, min(256, remaining_header))
+                diagnostics["headers"][name] = value
+                header_bytes += len(name) + len(value.encode("utf-8"))
+        length = response.getheader("Content-Length")
+        expected = int(length) if length is not None and len(length) <= 20 and length.isascii() and length.isdecimal() else None
+        while size <= MAX_DIAGNOSTIC_BYTES:
+            remaining = deadline - monotonic()
+            if remaining <= 0:
+                diagnostics["read_error"] = "request deadline exceeded"
+                break
+            if connection.sock is not None:
+                connection.sock.settimeout(min(REQUEST_TIMEOUT, remaining))
+            chunk = response.read1(MAX_DIAGNOSTIC_BYTES + 1 - size)
+            if not chunk:
+                diagnostics["truncated"] = expected is not None and size < expected
+                if diagnostics["truncated"]:
+                    diagnostics["read_error"] = "response body unavailable or incomplete"
+                break
+            chunks.append(chunk)
+            size += len(chunk)
+            excerpt = _diagnostic_text(b"".join(chunks)[:MAX_DIAGNOSTIC_BYTES].decode("utf-8", errors="replace"),
+                                       MAX_DIAGNOSTIC_BYTES)
+            diagnostics.update(response_excerpt=excerpt, excerpt_bytes=len(excerpt.encode("utf-8")))
+    except (OSError, http.client.HTTPException):
+        diagnostics["read_error"] = "response body unavailable or incomplete"
+    raise error
+
+
+def _https_request(connection, payload, deadline, monotonic, failure=None):
     """Read one bounded HTTP response on a direct HTTPS connection."""
     try:
         connection.connect()
@@ -300,7 +373,7 @@ def _https_request(connection, payload, deadline, monotonic):
         connection.request("POST", "/", body=payload, headers={"Content-Type": "application/json", "Accept": "application/json"})
         response = connection.getresponse()
         if response.status != 200:
-            raise SnapshotError("RPC HTTP request failed; redirects are not followed")
+            _http_failure(response, connection, deadline, monotonic, failure)
         length = response.getheader("Content-Length")
         if length is not None and (not length.isdecimal() or int(length) > MAX_RESPONSE_BYTES):
             raise SnapshotError("RPC response exceeds byte limit")
@@ -335,11 +408,11 @@ def _https(payload, timeout, deadline, monotonic):
     connection = http.client.HTTPSConnection(RPC_HOST, timeout=timeout)
     request_deadline = min(deadline, monotonic() + timeout)
     finished = threading.Event()
-    outcome = []
+    outcome, failure = [], []
 
     def request():
         try:
-            outcome.append(_https_request(connection, payload, request_deadline, monotonic))
+            outcome.append(_https_request(connection, payload, request_deadline, monotonic, failure))
         except Exception as error:
             outcome.append(error)
         finally:
@@ -356,6 +429,11 @@ def _https(payload, timeout, deadline, monotonic):
             except OSError:
                 pass
         connection.close()
+        if failure:
+            diagnostics = dict(failure[0].diagnostics)
+            diagnostics["headers"] = dict(diagnostics["headers"])
+            diagnostics.update(truncated=True, read_error="request deadline exceeded")
+            raise SnapshotError(str(failure[0]), diagnostics)
         raise SnapshotError("RPC request deadline exceeded")
     if isinstance(outcome[0], Exception):
         if isinstance(outcome[0], SnapshotError):
@@ -476,7 +554,7 @@ def _derive(config, raw, values, errors):
         return all(identifier in values for identifier in identifiers)
 
     active_stream = available("stream_rate_per_second", "emissions_started") and raw["emissions_started"] is True
-    if active_stream:
+    if active_stream and not (config["view"] == "charter" and config["detail"] == "summary"):
         amount("global_gross_daily", raw["stream_rate_per_second"] * 86400, "STANDARD/day")
     for result, high, low in (("remaining_gross_budget", "issuance_budget", "cumulative_issued"), ("permanent_removed", "token_hard_cap", "token_max_supply")):
         if available(high, low):
@@ -492,6 +570,7 @@ def _derive(config, raw, values, errors):
     if config["view"] == "charter":
         if not available("charter_owner") or raw["charter_owner"] == ZERO_ADDRESS:
             errors.setdefault("charter_owner", "charter ownership unavailable")
+            values.pop("charter_owner", None)
             for identifier in ("charter_branches", "charter_pending"):
                 values.pop(identifier, None)
                 errors[identifier] = "valid charter owner required"
@@ -512,9 +591,13 @@ def _derive(config, raw, values, errors):
             if status != "open":
                 # Raw getter results remain inspectable in full RPC evidence only.
                 values.pop(price, None)
-            if status == "sold_out" and available(prefix + "_last_sale_price", prefix + "_last_sale_day", prefix + "_current_day"):
-                if raw[prefix + "_last_sale_day"] == raw[prefix + "_current_day"]:
-                    derived[prefix + "_closing_price"] = dict(values[prefix + "_last_sale_price"])
+            if config["detail"] == "full":
+                for identifier in (prefix + "_last_sale_price", prefix + "_last_sale_day"):
+                    if identifier in values:
+                        values[identifier]["not_historical"] = True
+                if status == "sold_out" and available(prefix + "_last_sale_price", prefix + "_last_sale_day", prefix + "_current_day"):
+                    if raw[prefix + "_last_sale_day"] == raw[prefix + "_current_day"]:
+                        derived[prefix + "_closing_price"] = dict(values[prefix + "_last_sale_price"])
     return derived
 
 
@@ -529,6 +612,11 @@ def snapshot(config, transport=None, now=None, monotonic=None):
     number, block_hash, timestamp = _block(rpc.one("eth_getBlockByNumber", ["latest", False]), now)
     tag = hex(number)
     selected = [call for call in interface["calls"] if config["view"] in call["profiles"]]
+    if config["detail"] == "summary":
+        if config["view"] == "charter":
+            selected = [call for call in selected if call["id"] in CHARTER_SUMMARY_CALLS]
+        elif config["view"] == "auctions":
+            selected = [call for call in selected if "_last_sale_" not in call["id"]]
     roles = {call["contract"] for call in selected}
     bindings = [call for call in interface["calls"] if "binds_to" in call and call["contract"] in roles]
     code_roles = sorted(roles | {call["binds_to"] for call in bindings})
@@ -570,6 +658,12 @@ def snapshot(config, transport=None, now=None, monotonic=None):
                 values.pop(call["id"], None)
                 errors[call["id"]] = "STANDARD decimals not confirmed as 18"
     derived = _derive(config, raw, values, errors)
+    if config["view"] == "charter" and config["detail"] == "summary":
+        values = {identifier: value for identifier, value in values.items() if identifier in CHARTER_VALUES}
+        if "charter_owner" in values and not CHARTER_RATE_CALLS.isdisjoint(errors) and "charter_gross_daily" not in derived:
+            errors["charter_gross_daily"] = "Current-rate equivalent unavailable; rate or scale prerequisites failed"
+        errors = {identifier: message for identifier, message in errors.items()
+                  if identifier in CHARTER_VALUES or identifier == "charter_gross_daily"}
     final_number, final_hash, final_timestamp = _block(rpc.one("eth_getBlockByNumber", [tag, False]), now)
     if (final_number, final_hash, final_timestamp) != (number, block_hash, timestamp):
         raise SnapshotError("snapshot block changed during read")
@@ -579,8 +673,13 @@ def snapshot(config, transport=None, now=None, monotonic=None):
     if config["detail"] == "full":
         evidence.update({"rpc_url": RPC_URL, "call_mapping": mapping, "rpc_exchanges": rpc.exchanges,
                          "publisher_bundle": interface["publisher_bundle"]})
-    return {"schema_version": 1, "status": "partial" if errors else "ok", "view": config["view"],
-            "values": values, "derived": derived, "errors": errors, "evidence": evidence, "note": NOTE}
+    result = {"schema_version": 1, "status": "partial" if errors else "ok", "view": config["view"],
+              "values": values, "derived": derived, "errors": errors, "evidence": evidence, "note": NOTE}
+    if config["view"] == "charter":
+        result["charter_id"] = config["charter_id"]
+        if "charter_pending" not in values:
+            result["message"] = "Charter pending unavailable; no accrued-balance valuation."
+    return result
 
 
 def _cli_config(arguments):
@@ -624,9 +723,13 @@ def main():
         result = snapshot(config)
     except (InputError, PackageDataError, SnapshotError) as error:
         code, kind = (2, "invalid_input") if isinstance(error, InputError) else (4, "package_data_error") if isinstance(error, PackageDataError) else (5, "snapshot_error")
-        sys.stderr.write(json.dumps({"schema_version": 1, "error": {"type": kind, "message": str(error)}, "note": NOTE}) + "\n")
+        failure = {"type": kind, "message": str(error)}
+        if isinstance(error, SnapshotError) and error.diagnostics is not None:
+            failure["diagnostics"] = error.diagnostics
+        sys.stderr.write(json.dumps({"schema_version": 1, "error": failure, "note": NOTE}) + "\n")
         return code
-    sys.stdout.write(json.dumps(result, ensure_ascii=True, allow_nan=False, indent=2) + "\n")
+    formatting = {"indent": 2} if config.get("detail", "summary") == "full" else {"separators": (",", ":")}
+    sys.stdout.write(json.dumps(result, ensure_ascii=True, allow_nan=False, **formatting) + "\n")
     return 0
 
 

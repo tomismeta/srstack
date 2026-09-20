@@ -2,7 +2,7 @@
 
 For live status, identity and observational accounting. Design explanations need only the topic and cited records; [inspection](inspection.md) defines public state, price and gross-value observations. Apply [safety](safety.md) before external requests. Procedures use existing host tools, not invented APIs.
 
-For per-round auction purchases, quantities, weighted prices or sellout timing, go directly to [auction-history research](auction-history.md) and its reviewed event catalog; the current auction helper is not a historical reader.
+For per-round auction purchases, quantities, weighted prices or sellout timing, go directly to the [bounded history helper and evidence rules](auction-history.md). `snapshot.py auctions` remains current-state inspection, not a historical reader.
 
 ## 1. Define scope and evidence
 
