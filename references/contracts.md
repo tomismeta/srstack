@@ -12,7 +12,7 @@ Use **[Robinhood Etherscan](https://robin.etherscan.io/)** and each catalog entr
 
 The directory also lists a pool manager and Multicall as shared infrastructure. Neither is project-authored merely because listed; a pool manager is not a unique canonical-pool address. Do not import Arbitrum or local-test records from the frontend bundle into this Robinhood group.
 
-For planning, use the [deployment-evidence handoff](planning-inputs.md#deployment-evidence-handoff). The fixed snapshot reader can inform a partial assumption sheet; an address alone supplies neither ABI semantics, economic defaults, gas estimates nor authorization for financial actions.
+For public observations, use [inspection](inspection.md), including its [units and financial interpretation](inspection.md#units-and-financial-interpretation). An address alone supplies neither ABI semantics, economic defaults, gas estimates nor authorization for financial actions.
 
 ## Authenticate the requested role
 

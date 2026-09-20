@@ -85,23 +85,13 @@ class VerifyChecks(unittest.TestCase):
         self.assertEqual(before, {path.relative_to(self.root).as_posix(): path.read_bytes()
                                   for path in self.root.rglob("*") if path.is_file()})
 
-    def test_real_fixed_offline_example_succeeds_without_financial_output(self):
-        result = self.invoke("--offline")
-        self.assertEqual(0, result.returncode, result.stderr.decode() + result.stdout.decode())
-        report = json.loads(result.stdout)
-        self.assertEqual([("integrity", "ok"), ("offline", "ok")],
-                         [(stage["name"], stage["status"]) for stage in report["stages"]])
-        self.assertNotIn("scenarios", report)
-        self.assertNotIn("assumptions", report["stages"][1])
-        self.assertFalse(any(self.root.rglob("__pycache__")))
-
     def test_tampered_unrelated_reference_prevents_live_helpers(self):
         reference = next((self.root / "references").glob("*.md"))
         reference.write_bytes(reference.read_bytes() + b"\ntampered\n")
         self.assert_integrity_failure()
 
     def test_missing_member_prevents_smoke(self):
-        (self.root / "assets/examples/planning.json").unlink()
+        (self.root / "assets/sources.json").unlink()
         self.assert_integrity_failure()
 
     def test_unexpected_repository_file_and_empty_directory_are_rejected(self):
@@ -134,7 +124,7 @@ class VerifyChecks(unittest.TestCase):
         target = self.root / "README.md"
         target.unlink()
         os.mkfifo(target)
-        result = self.invoke("--offline")
+        result = self.invoke()
         self.assertEqual(4, result.returncode)
         self.assertEqual("failed", json.loads(result.stdout)["stages"][0]["status"])
 
@@ -160,10 +150,10 @@ class VerifyChecks(unittest.TestCase):
         for content in (b'{"key":1,"key":2}', b"[" * 33 + b"0" + b"]" * 33, b'{"n":NaN}',
                         b'{"n":' + b"9" * 81 + b"}"):
             with self.subTest(content=content[:30]):
-                (self.root / "assets/examples/planning.json").write_bytes(content)
+                (self.root / "assets/sources.json").write_bytes(content)
                 self.refresh_manifest()
                 self.assert_integrity_failure()
-        (self.root / "assets/examples/planning.json").write_bytes(self.files["assets/examples/planning.json"])
+        (self.root / "assets/sources.json").write_bytes(self.files["assets/sources.json"])
         self.refresh_manifest()
         content = json.dumps(self.manifest)
         (self.root / "release-manifest.json").write_text(content[:-1] + ',"name":"srstack"}')
@@ -198,8 +188,8 @@ class VerifyChecks(unittest.TestCase):
             self.assert_integrity_failure()
         self.assertTrue(replaced)
 
-    def test_invalid_and_mixed_offline_live_flags_fail_before_integrity(self):
-        cases = [("--offline", "--price"), ("--charter", "1", "--offline"), ("--off",),
+    def test_removed_offline_and_invalid_flags_fail_before_integrity(self):
+        cases = [("--offline",), ("--offline", "--price"), ("--charter", "1", "--offline"), ("--off",),
                  ("--price", "--price"), ("--charter=1",), ("--root", str(self.root)),
                  ("--charter", "-1"), ("--charter", str(1 << 256)), ("--charter",), ("--help", "--price")]
         for arguments in cases:
@@ -290,22 +280,6 @@ class VerifyChecks(unittest.TestCase):
         self.assertTrue(all(message.startswith("unavailable") and len(message) <= 240
                             for message in stage["helper_errors"].values()))
         self.assertNotIn("financial payload", json.dumps(report))
-
-    def test_offline_demo_requires_each_strategy_once(self):
-        for strategies, expected in ((["keep", "selective", "aggressive"], 0),
-                                     (["keep", "selective"], 5),
-                                     (["keep", "keep", "aggressive"], 5),
-                                     (["keep", "selective", "unknown"], 5)):
-            with self.subTest(strategies=strategies):
-                self.helper_result("scenario.py", {
-                    "schema_version": 1, "classification": "hypothetical",
-                    "conformance": {"status": "within_checked_rules"},
-                    "scenarios": [{"results": [{"strategy": strategy} for strategy in strategies]}],
-                })
-                report, code = self.verify.run({"--offline": True})
-                self.assertEqual(expected, code)
-                self.assertEqual("ok" if expected == 0 else "failed", report["stages"][-1]["status"])
-
 
     def test_child_timeout_and_combined_output_limit_are_failures(self):
         cases = [("import time\ntime.sleep(5)\n", "CHILD_TIMEOUT", 0.1),

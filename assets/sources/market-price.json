@@ -21,7 +21,7 @@
         "The consumed API schema supplies no price-observation timestamp. HTTP retrieval, pool creation and image cache timestamps are not quote-observation times.",
         "USD conversion is provider-reported; it is not independently verified ETH/USD feed data.",
         "Gross quantity valuations exclude withdrawal fees, trading taxes, LP fees, slippage and gas. They are not charter resale values or guaranteed proceeds.",
-        "Fetch on demand; no stored-price fallback or automatic projection-price assumption."
+        "Fetch on demand; no stored-price fallback. Current indicative prices do not establish future prices."
       ]
     },
     {

@@ -25,12 +25,14 @@ The current publisher-linked ABIs expose `migrateToSuccessor` and `HoldingsMigra
 
 The current whitepaper has sixteen sections. Policy bounds, withdrawal-fee envelope, license-floor reference, founding terms and owner controls are in the [parameter catalog](../assets/parameters.json). Exact founding allocation is not specified by the current document.
 
-The launch tax schedule is a published reference rule; read current settings freshly through the publisher ABI. If reads are unavailable, current settings remain unknown—not launch defaults. Future taxes, exact auction execution and transaction-specific amounts remain assumptions unless separately established. Do not turn an unavailable auction into a zero-cost quote.
+The launch tax schedule is a published reference rule; read current settings freshly through the publisher ABI. If reads are unavailable, current settings remain unknown—not launch defaults. These observations do not establish future taxes, exact auction execution or transaction-specific amounts. Do not turn an unavailable auction into a zero-cost quote.
 
 The directory identifies the targets; the fixed reader supports block-scoped observations with explicit bindings and decoding. Source equivalence, complete permissions, audit correspondence and reserve custody are separate questions. Mention only the limitation material to the answer; details remain in [contracts](contracts.md) and [inspection](inspection.md). [sr-contract-directory; sr-publisher-read-interface]
 
+The official [Second Mandate](updates.md#second-mandate-liquidity-for-tokenized-stocks) is strategy evidence, not authenticated deployment or custody evidence. Its sample reserve positions and yield/return figures establish neither funded markets nor realized returns; the fee-reinvestment thesis establishes no token/charter revenue entitlement or enforceable distribution. Market operation, external-capital terms and tokenized-stock issuer/custody arrangements require separate evidence before assessing implementation or exposure. [sr-second-mandate-announcement; sr-second-mandate-manifesto]
+
 ## What economics alone cannot establish
 
-Burning, retirement, redistribution, permanent liquidity and buybacks are not promises of returns, realizable exit prices, solvency, continuous settlement or manipulation resistance. Published recurrence is not a future multiplier forecast. Numerical scenario output remains **Hypothetical—not contract-verified or a forecast.**
+Burning, retirement, redistribution, permanent liquidity and buybacks are not promises of returns, realizable exit prices, solvency, continuous settlement or manipulation resistance. Published recurrence is not a future multiplier forecast. This package supports research and inspection, not forecasts, strategy comparisons, settlement simulations or liquidity-return simulations.
 
 Use [policy](protocol-policy.md), [auctions](auctions.md), [exits](exits.md), [reserves](reserves.md) and the [parameter catalog](../assets/parameters.json) for topic-specific facts. Do not classify missing evidence as a vulnerability or call this public-source review an audit.

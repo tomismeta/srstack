@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "purpose": "Source routing and reference provenance, including explicitly attributed proposals; no stored protocol state, performance recaps or superseded interpretations",
+  "purpose": "Source routing and reference provenance, including explicitly attributed proposals and official strategic direction; no stored protocol state, performance recaps or superseded interpretations",
   "groups": [
     {
       "id": "market-price",
@@ -27,9 +27,11 @@
       "record_ids": [
         "sr-whitepaper-v1",
         "sr-token-page-v1",
-        "sr-charters-page-v1"
+        "sr-charters-page-v1",
+        "sr-second-mandate-announcement",
+        "sr-second-mandate-manifesto"
       ],
-      "scope": "Current primary whitepaper and companion pages"
+      "scope": "Primary whitepaper, companion pages and official Second Mandate strategy; dated rationale and sample illustrations are not current state or implementation evidence"
     },
     {
       "id": "deployments",

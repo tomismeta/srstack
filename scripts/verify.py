@@ -1,9 +1,7 @@
 """Verify this installed srstack runtime; optionally exercise fixed helpers.
 
-Usage: python3 -B scripts/verify.py [--offline | --charter UINT256 [--price] | --price]
-No flags: offline manifest membership and hash verification only, no helper runs.
---offline: run only assets/examples/planning.json through scenario.py --example.
---offline cannot combine with live --charter or --price requests.
+Usage: python3 -B scripts/verify.py [--charter UINT256 [--price] | --price]
+No flags: manifest membership and hash verification only, no helper runs or network.
 --charter: request one live charter snapshot. --price: request a live quote, or
 mark the successful charter's accrued STANDARD balance when used together.
 All selected smoke stages follow whole-install integrity verification. No stdin,
@@ -23,9 +21,9 @@ import time
 from pathlib import Path
 
 
-VERSION = "0.1.3"
+VERSION = "0.2.0"
 MANIFEST = "release-manifest.json"
-SCRIPTS = {"scripts/scenario.py", "scripts/snapshot.py", "scripts/price.py", "scripts/verify.py"}
+SCRIPTS = {"scripts/snapshot.py", "scripts/price.py", "scripts/verify.py"}
 REQUIRED = {"README.md", "SKILL.md", "LICENSE"} | SCRIPTS
 DIGEST_CONVENTION = "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest"
 NOTE = "Integrity, not authenticity or sandbox certification; review/pin the release and outer ZIP checksum."
@@ -232,7 +230,7 @@ def _arguments(arguments):
     index = 0
     while index < len(arguments):
         flag = arguments[index]
-        if flag not in {"--offline", "--charter", "--price"} or flag in options:
+        if flag not in {"--charter", "--price"} or flag in options:
             raise ValueError("unknown, repeated or conflicting option; use --help")
         if flag == "--charter":
             index += 1
@@ -245,8 +243,6 @@ def _arguments(arguments):
         else:
             options[flag] = True
         index += 1
-    if "--offline" in options and len(options) != 1:
-        raise ValueError("--offline cannot combine with live --charter or --price")
     return options
 
 
@@ -331,22 +327,6 @@ def _stage(root, name, script, arguments, scope):
                                          "message": "helper exited without a valid structured error"}
         elif not isinstance(result, dict) or type(result.get("schema_version")) is not int or result["schema_version"] != 1:
             stage["error"] = "invalid_helper_result"
-        elif name == "offline":
-            if (result.get("classification") == "hypothetical"
-                    and isinstance(result.get("conformance"), dict)
-                    and result["conformance"].get("status") == "within_checked_rules"
-                    and isinstance(result.get("scenarios"), list) and result["scenarios"]
-                    and all(
-                        isinstance(scenario, dict) and isinstance(scenario.get("results"), list)
-                        and len(scenario["results"]) == 3
-                        and all(isinstance(item, dict) and isinstance(item.get("strategy"), str)
-                                for item in scenario["results"])
-                        and {item["strategy"] for item in scenario["results"]} == {"keep", "selective", "aggressive"}
-                        for scenario in result["scenarios"]
-                    )):
-                stage["status"] = "ok"
-            else:
-                stage["error"] = "invalid_helper_result"
         elif (result.get("status") in ("ok", "partial")
               and isinstance(result.get("values"), dict) and isinstance(result.get("errors"), dict)
               and (name != "charter" or result.get("view") == "charter")):
@@ -371,7 +351,7 @@ def _stage(root, name, script, arguments, scope):
 def run(options):
     stages = []
     report = {"schema_version": 1, "status": "failed", "stages": stages, "note": NOTE}
-    selected = [("offline", "fictional_bundled_example"), ("charter", "live_charter_snapshot"),
+    selected = [("charter", "live_charter_snapshot"),
                 ("price", "gross_charter_balance_valuation" if "--charter" in options else "live_quote")]
     started = time.monotonic()
     integrity = {"name": "integrity", "status": "failed", "scope": "installed_runtime_membership_and_hashes"}
@@ -393,9 +373,7 @@ def run(options):
     for name, scope in selected:
         if "--" + name not in options:
             continue
-        if name == "offline":
-            script, arguments = "scenario.py", ["--example"]
-        elif name == "charter":
+        if name == "charter":
             script, arguments = "snapshot.py", ["charter", "--id", options["--charter"], "--detail", "summary"]
         else:
             script, arguments = "price.py", ["--quote"]

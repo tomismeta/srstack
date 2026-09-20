@@ -27,8 +27,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Verify committed runtime manifest
         run: python3 -B maintenance/package.py verify
-      - name: Check planner behavior
-        run: python3 -B maintenance/check-planner.py
       - name: Check read-only snapshot behavior
         run: python3 -B maintenance/check-snapshot.py
       - name: Check market price and gross valuation behavior

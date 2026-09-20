@@ -12,7 +12,9 @@
 | `sr-protocol-conditions` | [Current conditions](https://www.standardreserve.xyz/app/protocol/live/): Policy & fees, Auctions, Treasury & controls; publisher rollover/accrual-stop explanation. Explanatory component text is not a live observation. | [Inspection](inspection.md), [policy](protocol-policy.md), [reserves](reserves.md) |
 | `sr-contract-directory` | [Contract directory](https://www.standardreserve.xyz/app/protocol/contracts/): identity routes and publisher-linked ABI leads for successor holdings migration and auction supply controllers, not deployment correspondence or complete authority. | [Contracts](contracts.md), [risks](risks.md) |
 | `sr-standard-source-interface`, `sr-tax-hook-source-interface` | Reviewed STANDARD/Trading Hook source and ABI provenance; token accounting/restriction and Hook schedule semantics only, not verification of separately deployed dependencies or stored live status. | [Inspection](inspection.md#supply-restrictions-and-control-context), [contracts](contracts.md) |
-| `sr-beans-auction-burn-pol-proposal` | [@0xbeans thread](https://x.com/0xbeans/status/2101024624914170176), reviewed through a public mirror: proposed auction cadence, proceeds split and incremental POL changes; not official policy, verified deployment or completed security review. | [Proposal context](updates.md#reviewed-branch-auction-burn-and-pol-proposal), [planner limits](planning-model.md) |
+| `sr-beans-auction-burn-pol-proposal` | [@0xbeans thread](https://x.com/0xbeans/status/2101024624914170176), reviewed through a public mirror: proposed auction cadence, proceeds split and incremental POL changes; not official policy, verified deployment or completed security review. | [Proposal context](updates.md#reviewed-branch-auction-burn-and-pol-proposal), [risks](risks.md) |
+| `sr-second-mandate-announcement` | [Official announcement](https://x.com/standard_rsv/status/2101701096834306340), reviewed through a public mirror: a second mandate to drive liquidity flows, powered by STANDARD; relative timestamp is not an absolute publication time. | [Second Mandate](updates.md#second-mandate-liquidity-for-tokenized-stocks) |
+| `sr-second-mandate-manifesto` | [Manifesto](https://www.standardreserve.xyz/app/manifesto/), rendered page reviewed in full on 2026-09-20: announced tokenized-stock liquidity strategy, not another stock issuer or deployed-state evidence. Dated market examples and the explicitly sample reserve-position panel are not current observations or returns. | [Second Mandate](updates.md#second-mandate-liquidity-for-tokenized-stocks), [reserves](reserves.md), [risks](risks.md) |
 
 ## Whitepaper: all sixteen sections
 
@@ -37,7 +39,7 @@ All locators below belong to `sr-whitepaper-v1` in [current website sources](../
 | 15 `#parameters` | [Parameters](../assets/parameters.json): documented settings; [trading](launch-trading.md): LP fee and tax gap |
 | 16 `#disclaimer` | [Risks](risks.md): experimental/non-bank scope and non-redeemable protocol reserves |
 
-The published launch tax schedule is a reference rule, not the current tax rate. Use fresh getters for observations and keep future rates as assumptions. Exact auction execution and transaction-specific amounts remain outside the fixed scenario model.
+The published launch tax schedule is a reference rule, not the current tax rate. Use fresh getters for observations; neither current rates nor published rules establish future taxes, exact auction execution or transaction-specific proceeds. Research and inspection do not simulate those outcomes.
 
 ## Deployment evidence and fresh research
 

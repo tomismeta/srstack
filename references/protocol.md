@@ -8,6 +8,8 @@ STANDARD describes an ERC-20 currency, an ETH ↔ $STANDARD hooked Uniswap v4 po
 
 Trading generates fees and pool-flow measurements; issuance credits branch balances pro rata; expansion licenses permanently remove ledger value; retiring branches releases accrued value through withdrawal minting. Token deposits instead convert wallet tokens into re-mintable ledger value. Post-genesis charter auction ETH enters the ongoing fee engine; founding proceeds have a separate allocation and escrow/finalization sequence. [sr-whitepaper-v1: entities, currency, charters, reserves]
 
+The official [Second Mandate](updates.md#second-mandate-liquidity-for-tokenized-stocks) adds an announced direction: an open liquidity engine for tokenized stocks, not another stock issuer. Creating or approving markets, seeding liquidity and recycling trading fees into the Reserve is a stated strategy, not a replacement for the documented monetary mechanics below or evidence of their implementation. [sr-second-mandate-announcement; sr-second-mandate-manifesto]
+
 ## Read only the needed mechanics
 
 - [Supply and policy](protocol-policy.md): supply identities, deposit conversions, flow signals, published multiplier recurrence and source-only limits; [monetary parameters](../assets/parameters/monetary.json).

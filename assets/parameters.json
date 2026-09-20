@@ -4,7 +4,7 @@
   "scope": "Current Whitepaper v1.0 publisher design, not verified deployment",
   "notes": [
     "Values are current publisher design references, not live configuration.",
-    "Live snapshot observations are separate from approved future assumptions; remaining budget and supply have different accounting bases.",
+    "Live snapshot observations are separate from documented design settings; remaining budget and supply have different accounting bases.",
     "Unknown execution details stay unknown. The published launch schedule does not fix future tax or transaction outcomes."
   ],
   "lookup": "Find the parameter ID in groups.record_ids, then read that exact package-root-relative path. This index contains no alternate parameter values.",

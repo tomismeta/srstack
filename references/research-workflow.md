@@ -1,6 +1,6 @@
 # Read-only research workflow
 
-For live status, identity and observational accounting. Design explanations need only the topic and cited records; [inspection](inspection.md) defines a public snapshot and [planning](planning.md) hypothetical comparisons. Apply [safety](safety.md) before external requests. Procedures use existing host tools, not invented APIs.
+For live status, identity and observational accounting. Design explanations need only the topic and cited records; [inspection](inspection.md) defines public state, price and gross-value observations. Apply [safety](safety.md) before external requests. Procedures use existing host tools, not invented APIs.
 
 ## 1. Define scope and evidence
 
@@ -10,7 +10,7 @@ Follow direct relevant topic/record paths. Load [contracts](contracts.md) and [e
 
 Offline answers can explain packaged identities, interfaces and published rules, not changing state. Dynamic claims require fresh evidence: UTC retrieval, original URL/provider, source timestamp and freshness limits. Distinguish publication, claimed event, retrieval and chain observation times; a freshly retrieved page can describe an old proposal. If retrieval is unavailable, report the requested result as unavailable—never fall back to a saved observation.
 
-For current STANDARD price or gross amount/charter value, take the [inspection fast path](inspection.md#1-scope-only-the-requested-observation), not broad discovery: shared `price.py`, and only a fresh `charter` snapshot first if a charter's accrued balance is needed. Ask only for a missing public charter ID, never wallet enumeration. The current-value question authorizes the necessary price read under host permissions. This does not authorize projection inputs: when that price choice is unspecified, offer current/hypothetical/both before a price fetch; preserve supplied prices and complete offline examples.
+For current STANDARD price or gross amount/charter value, take the [inspection fast path](inspection.md#1-scope-only-the-requested-observation), not broad discovery: `price.py`, and only a fresh `charter` snapshot first if a charter's accrued balance is needed. Ask only for a missing public charter ID, never wallet enumeration. The current-value question authorizes the necessary price read under host permissions, not forecasts or an unrelated refresh.
 
 ## 2. Authenticate and discover
 
@@ -37,7 +37,7 @@ Keep raw amounts, authenticated decimals, requested/observed anchors and limits;
 
 Use exact integer/rational arithmetic or documented decimal precision. Preserve raw scales; derive totals from common unrounded inputs and round for display. Conversions require explicit rates and valuation times. USD differs from stablecoin denomination; price freshness differs from state freshness.
 
-Use `price.py`'s optional `standard_amount` to compute a current gross mark from the same quote once; do not substitute model/calculator multiplication. Preserve requested USD or ETH units and report unavailable denominations rather than changing currency. Charter `charter_pending` is the whole charter's accrued STANDARD ledger balance, not wallet tokens; its mark is before withdrawal/trading costs, not net proceeds, charter resale or earning capacity. Do not automatically divide by branch count or apply a zero-amount fee preview as an amount-specific exit fee. Projection ETH/STANDARD inputs and user-supplied USD conversions require the [explicit mapping and approval](planning-inputs.md#price-choice-and-unit-mapping); no implicit USD=ETH or 1 ETH.
+Use `price.py`'s optional `standard_amount` to compute a current gross mark from the same quote once; do not substitute ad hoc calculator multiplication. Preserve requested USD or ETH units and report unavailable denominations rather than changing currency. Charter `charter_pending` is the whole charter's accrued STANDARD ledger balance, not wallet tokens; its mark is before withdrawal/trading costs, not net proceeds, charter resale or earning capacity. Do not automatically divide by branch count or apply a zero-amount fee preview as an amount-specific exit fee. See [units and financial interpretation](inspection.md#units-and-financial-interpretation); no implicit USD=ETH or 1 ETH conversion.
 
 ### Supply and holdings
 
@@ -57,7 +57,7 @@ For LP/strategy earnings, discover positions/ownership throughout the interval; 
 
 Separate gross fees, costs, net receipts, uncollected entitlements, allocations and actual distributions. [Reserves](reserves.md) and [charters](charters.md) explain policy; genesis and ongoing routing differ and neither proves execution. Authenticate recipient, eligible base, interval and units before recipient-flow reconciliation.
 
-Investigate residuals from common raw inputs; call a discrepancy rounding only after demonstrating its bound. Observational accounting is not scenario planning. Label calculated scenarios as estimates; keep observed facts distinct without a mandatory opening warning. No-conflict scenario checks establish only partial agreement with packaged statements.
+Investigate residuals from common raw inputs; call a discrepancy rounding only after demonstrating its bound. Observational accounting supports evidenced historical/current facts, not forecasts or numerical strategy comparisons. Keep attributed estimates distinct from observations without a mandatory opening warning.
 
 ## 5. Interpret, stop and report
 

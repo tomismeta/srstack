@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-18",
-  "scope": "Whitepaper section routing, application discovery and publisher read interface provenance; no stored protocol state or implementation audit",
+  "reviewed_at": "2026-09-20",
+  "scope": "Whitepaper section routing, official strategic direction, application discovery and publisher read interface provenance; no stored protocol state or implementation audit",
   "source_index": "assets/sources.json",
   "source_provenance": "Page source_id and source_file locate the authoritative source record and its retrieval date; page routing does not duplicate retrieval timestamps.",
   "parameter_catalog": "assets/parameters.json",
@@ -19,7 +19,8 @@
   "limits": [
     "Publisher documentation and ABI are not independently verified source code.",
     "Live values come from bounded block-scoped reads; current observations are not future guarantees.",
-    "Read changing application panels and official updates on demand or report unavailable; no stored observations or recap fallback."
+    "Read changing application panels and official updates on demand or report unavailable; no stored observations or recap fallback.",
+    "The Second Mandate is announced strategy, not a replacement for documented whitepaper mechanics or proof of implementation. Its dated rationale and sample reserve positions are neither current observations nor financial offers or entitlements."
   ],
   "pages": [
     {
@@ -62,6 +63,27 @@
         "references/auctions.md",
         "references/exits.md",
         "references/launch-trading.md"
+      ],
+      "source_file": "assets/sources/website-v1.json"
+    },
+    {
+      "source_id": "sr-second-mandate-announcement",
+      "url": "https://x.com/standard_rsv/status/2101701096834306340",
+      "review_status": "official-announcement-text-reviewed-via-public-mirror",
+      "topics": [
+        "references/updates.md#second-mandate-liquidity-for-tokenized-stocks"
+      ],
+      "source_file": "assets/sources/website-v1.json"
+    },
+    {
+      "source_id": "sr-second-mandate-manifesto",
+      "url": "https://www.standardreserve.xyz/app/manifesto/",
+      "final_url": "https://www.standardreserve.xyz/app/manifesto/",
+      "review_status": "full-browser-rendered-strategy-text-and-sample-illustrations-reviewed",
+      "topics": [
+        "references/updates.md#second-mandate-liquidity-for-tokenized-stocks",
+        "references/protocol.md",
+        "references/reserves.md"
       ],
       "source_file": "assets/sources/website-v1.json"
     }
@@ -274,7 +296,7 @@
     "limits": [
       "Separate from block-scoped RPC snapshots; provider quote-observation time is unavailable.",
       "Provider prices are never averaged or mixed across valuation denominations; identity, schema and access failures are not concealed by fallback.",
-      "Current-price use in projections is an explicit user choice, never a silent economic default.",
+      "Indicative current prices do not establish future prices.",
       "Gross accrued-balance marks are not net withdrawal proceeds or charter market values."
     ]
   },

@@ -48,7 +48,7 @@ class PackageChecks(unittest.TestCase):
         self.script.parent.mkdir()
         shutil.copyfile(SCRIPT, self.script)
         for name in ("maintenance/private.json", ".github/workflows/validate.yml", ".gitignore",
-                     "dist/old.zip", "scripts/__pycache__/scenario.pyc", ".DS_Store"):
+                     "dist/old.zip", "scripts/__pycache__/snapshot.pyc", ".DS_Store"):
             target = self.root / name
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text("repository-only\n")
@@ -95,17 +95,17 @@ class PackageChecks(unittest.TestCase):
         self.assertEqual(manifest["content_sha256"], report["content_sha256"])
         self.assertEqual(self.commit, report["commit"])
 
-    def test_export_supports_installed_integrity_and_offline_smoke(self):
+    def test_export_supports_default_installed_integrity(self):
         result = self.invoke("export", "--commit", self.commit, "--destination", str(self.destination))
         self.assertEqual(0, result.returncode, result.stderr.decode())
         result = subprocess.run(
-            [sys.executable, "-B", "-I", str(self.destination / "scripts/verify.py"), "--offline"],
+            [sys.executable, "-B", "-I", str(self.destination / "scripts/verify.py")],
             stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=70,
         )
         self.assertEqual(0, result.returncode, result.stderr.decode() + result.stdout.decode())
         report = json.loads(result.stdout)
         self.assertEqual("ok", report["status"])
-        self.assertEqual([("integrity", "ok"), ("offline", "ok")],
+        self.assertEqual([("integrity", "ok")],
                          [(stage["name"], stage["status"]) for stage in report["stages"]])
         self.assertEqual(self.runtime, directory_bytes(self.destination))
 

@@ -13,7 +13,7 @@ The founding allocation is separate from steady-state trading/charter-auction re
 
 Current net flow selects the active vault: expansion when positive, contraction otherwise. Shares are `ongoing-active-vault-share`, `ongoing-pol-share`, `ongoing-team-share`. Of the POL allocation, `pol-swap-share` is swapped to STANDARD, paired with remaining ETH and added as permanent liquidity. §12 allows bounded owner changes to fee splits. [sr-whitepaper-v1: policy, reserves, immutables]
 
-The published launch rule in `launch-trading-tax-curve` describes opening taxes decaying to the steady buy/sell floors. Read fresh tax getters rather than treating launch values as current fees; unavailable reads leave current fees unknown. The canonical pool's LP fee is separate; transaction-specific fee bases remain model assumptions. Protocol-position STANDARD fees are burned under the published design. [sr-whitepaper-v1: currency, reserves, parameters]
+The published launch rule in `launch-trading-tax-curve` describes opening taxes decaying to the steady buy/sell floors. Read fresh tax getters rather than treating launch values as current fees; unavailable reads leave current fees unknown. The canonical pool's LP fee is separate; transaction-specific fee bases and computation order require separate evidence. Protocol-position STANDARD fees are burned under the published design. [sr-whitepaper-v1: currency, reserves, parameters]
 
 Outside liquidity opens after the launch schedule reaches its floors. The publisher says withdrawn ETH principal is taxed at the sell rate and STANDARD principal at the buy rate; accrued LP fees are untaxed. See `outside-liquidity-tax-policy`. This is a description, not an executable liquidity action. [sr-whitepaper-v1: reserves]
 
@@ -28,6 +28,8 @@ Genesis liquidity and subsequent POL additions are described as permanent/non-wi
 Authoritative ownership/authority records: `reserve-redemption-policy`, `pol-withdrawal-policy`, `expansion-reserve-purchase-policy`.
 
 The publisher-linked ABIs contain successor holdings-migration entries for both vaults and FeeSplitter. Asset movement to a successor is distinct from changing deployed code; whitepaper non-upgradeability language is not a blanket proof that holdings can never move between components. The ABI alone establishes neither deployment correspondence nor who can move what, registry replacement rules or present authority. Keep these as implementation questions, not custody assurances or migration instructions. [sr-contract-directory; contracts](contracts.md)
+
+The [Second Mandate](updates.md#second-mandate-liquidity-for-tokenized-stocks) proposes seeding tokenized-stock markets, coordinating external capital and returning trading fees to the Reserve for further markets. It does not establish a new ongoing ETH split, deployed reserve positions or holder revenue rights. The manifesto's reserve-position panel is explicitly sample content, not portfolio or return evidence; its dynamic reserve display requires fresh retrieval. Keep this announced strategy separate from both whitepaper reserve accounting and the developer POL proposal above. [sr-second-mandate-manifesto]
 
 ## Contraction execution
 
