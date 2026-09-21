@@ -21,7 +21,7 @@ import time
 from pathlib import Path
 
 
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 MANIFEST = "release-manifest.json"
 SCRIPTS = {"scripts/snapshot.py", "scripts/price.py", "scripts/history.py", "scripts/verify.py"}
 REQUIRED = {"README.md", "SKILL.md", "LICENSE"} | SCRIPTS

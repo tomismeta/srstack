@@ -4,11 +4,11 @@
 
 srstack explains documented protocol mechanics and announcements, reads current public state and reports indicative prices and gross balance values. It is one independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product, trading bot or wallet toolkit.
 
-**Version 0.2.0 · research and inspect.** Retires the pre-release strategy simulator and its assumption-intake workflow. Includes the Second Mandate's tokenized-stock liquidity vision, intended market funding and fee flows, and explicit boundaries between announced strategy, sample positions and deployed mechanics. Canonical protocol facts and live-reader targets are preserved. This branch is a dogfood candidate, not a published release; prior release audit results do not cover these bytes.
+**Version 0.2.1 · research and inspect.** Fixes overly restrictive inspection guidance: catalogs are starting points, not allowlists; supplemental public reads, public-address discovery, independent public sources and evidenced local arithmetic are permitted. Read-only operation, provenance and host/access-control boundaries remain. Package version is not proof of publication; check the [release page](https://github.com/tomismeta/srstack/releases) for published artifacts and their exact source commit.
 
-**Breaking changes:** the `plan` route, `scripts/scenario.py`, fictional fixture and verifier `--offline` flag are removed. Use the default `scripts/verify.py` command for offline integrity checks. Future-return and strategy questions receive qualitative research, not a replacement simulator. Install a clean runtime export; do not overlay an older installation containing removed files.
+**Inherited from 0.2.0:** the `plan` route, `scripts/scenario.py`, fictional fixture and verifier `--offline` flag were removed. Use the default `scripts/verify.py` command for offline integrity checks. Future-return and strategy questions receive qualitative research, not a replacement simulator. Install a clean runtime export; do not overlay an older installation containing removed files.
 
-**Candidate additions:** compact charter summaries, original HTTP-denial diagnostics, bounded auction/buyback history, auction controller/pending ownership, queued CentralBank policy/recycling, and treasury routing/controls with approval-gated selected-asset raw holdings. No new contract identities or claimed Second Mandate deployment.
+**Read coverage retained:** compact charter summaries, original HTTP-denial diagnostics, bounded auction/buyback history, auction controller/pending ownership, queued CentralBank policy/recycling, and treasury routing/controls with approval-gated selected-asset raw holdings. No new cataloged contract identities or claimed Second Mandate deployment. Prior release audit results do not cover edited bytes.
 
 ## What you can ask
 
@@ -52,17 +52,17 @@ These are routing instructions within one skill, not separately installed comman
 
 All four fixed entrypoints—`snapshot.py`, `price.py`, `history.py` and `verify.py`—use only Python's standard library: no pip dependencies, wallet connector or provider credentials. Execution also requires the filesystem protections described in [execution](references/execution.md); unsupported hosts fail closed. Missing execution or retrieval capability produces an explanation, not invented results. The skill does not install dependencies or change host permissions.
 
-## Install the 0.2.0 candidate
+## Install a reviewed release
 
-This is one **research/inspect candidate**, not a published 0.2.0 release. Package version `0.2.0` identifies the interface, not a revision pin; the **full source commit SHA** resolved below identifies the exact candidate you review and install. The branch can move. Installation prints the full reviewed SHA after success and retains it outside the hashed runtime; never embed the package's own commit in hashed files. Older release instructions are not the installation path for this candidate.
+Package version `0.2.1` is not a revision pin; the **full source commit SHA** resolved below identifies the exact revision you review and install. The release-tag commands below require `v0.2.1` to have been published; they must fail rather than fall back to another tag or a moving branch if it is absent. For pre-release review, use an explicitly selected reviewed commit and the same export/verification procedure. Installation prints the full reviewed SHA after success and retains it outside the hashed runtime; never embed the package's own commit in hashed files.
 
 These are **user/maintainer commands**, not permission for an installed agent to download code, install itself or bypass host guards. Use Git and Python 3.10+ on a supported POSIX host. Review the selected commit, including `maintenance/package.py`, [SKILL.md](SKILL.md), the runtime scripts and [safety](references/safety.md), **before executing package code**. The bundled verifier checks integrity, not publisher authenticity; running it is already executing the package.
 
-### 1. Select paths and pin the named branch
+### 1. Select paths and pin the release tag
 
 Installing while Telegram/Hermes or another host is running is supported; a running host is not installation failure. Stop other installers and coordinate a pause in srstack invocations for replacement and final verification. Stopping the host, if convenient, is only an optional precaution. In one shell, select its **actual configured skill root** and an existing stable working directory outside it. Use absolute paths. Hermes' default is `$HOME/.hermes/skills`; OpenClaw commonly uses the intended workspace's `skills` directory. Named profiles may differ. For dogfooding, prefer an isolated profile/workspace.
 
-Set `SRSTACK_BACKUPS` outside **every** skill-discovery root, on the same filesystem as `SKILL_PARENT`. It will retain the review clone, staging and any previous installation. Do not use another discovered skill directory as a backup, or leave a shadowing same-name installation in another root. Keep customizations for review; do not merge them into the candidate.
+Set `SRSTACK_BACKUPS` outside **every** skill-discovery root, on the same filesystem as `SKILL_PARENT`. It will retain the review clone, staging and any previous installation. Do not use another discovered skill directory as a backup, or leave a shadowing same-name installation in another root. Keep customizations for review; do not merge them into the reviewed runtime.
 
 ```sh
 # Select these paths for your host before continuing:
@@ -71,11 +71,11 @@ SRSTACK_BACKUPS="$HOME/srstack-backups"
 
 cd "$HOME" &&
 mkdir -p "$SKILL_PARENT" "$SRSTACK_BACKUPS" &&
-WORK="$(mktemp -d "$SRSTACK_BACKUPS/srstack-candidate.XXXXXXXX")" &&
+WORK="$(mktemp -d "$SRSTACK_BACKUPS/srstack-release.XXXXXXXX")" &&
 REVIEW_ROOT="$WORK/source" &&
-git clone --single-branch --branch feature/v0.2.0 \
+git clone --single-branch --branch v0.2.1 \
   https://github.com/tomismeta/srstack.git "$REVIEW_ROOT" &&
-git -C "$REVIEW_ROOT" fetch origin feature/v0.2.0 &&
+git -C "$REVIEW_ROOT" fetch origin refs/tags/v0.2.1 &&
 REVIEWED_COMMIT="$(git -C "$REVIEW_ROOT" rev-parse --verify 'FETCH_HEAD^{commit}')" &&
 git -C "$REVIEW_ROOT" checkout --detach "$REVIEWED_COMMIT" &&
 printf '%s\n' "$REVIEWED_COMMIT" > "$WORK/reviewed-commit.txt" &&
@@ -154,7 +154,7 @@ PY
 
 No files are deleted. On final verification failure, the new root is retained as `failed-install` and the previous root is restored (or the destination is left absent for a first install). If restoration itself fails, keep srstack invocations paused and recover from the printed directory; never use a missing or inconsistent skill root. Telegram/Hermes need not shut down. Whole-root replacement removes obsolete scenario/fixture files from the active runtime without deleting your backup. Keep it until the loaded path and candidate behavior are confirmed; never discover it as a second skill. A process interruption or filesystem failure may require manual recovery from those same directories before srstack use resumes.
 
-After success, refresh skill discovery if needed and confirm the loaded path is `SKILL_PARENT/srstack`, package version is `0.2.0`, and the printed full SHA matches `WORK/reviewed-commit.txt`. Resume srstack invocations only against the verified root. **Existing chats retain their loaded context:** start a fresh `/new` in each Telegram/Hermes chat that will use the revision (or the host's equivalent new conversation). Installing in one chat cannot restart or refresh the other chats. Restarting the host is optional, not an acceptance criterion; package version alone cannot identify a candidate revision.
+After success, refresh skill discovery if needed and confirm the loaded path is `SKILL_PARENT/srstack`, package version is `0.2.1`, and the printed full SHA matches `WORK/reviewed-commit.txt`. Resume srstack invocations only against the verified root. **Existing chats retain their loaded context:** start a fresh `/new` in each Telegram/Hermes chat that will use the revision (or the host's equivalent new conversation). Installing in one chat cannot restart or refresh the other chats. Restarting the host is optional, not an acceptance criterion; package version alone cannot identify the exact installed revision.
 
 **Hermes installation:** use the complete-bundle instructions above. URL discovery depends on configured sources; importing raw `SKILL.md` does not necessarily import its references, assets and scripts.
 
@@ -186,7 +186,7 @@ For actual live results, ask “Use srstack inspect protocol” or “Use srstac
 
 Stage elapsed times measure local verification/helper execution, not host startup, model reasoning, discovery, tool-approval waits or answer rendering. Live network latency varies; no end-to-end runtime is promised. A successful local smoke does not certify host approvals, isolation, authenticity or financial correctness.
 
-A live HTTP 401/403 identifies denial of that original request at its endpoint, not global chain/provider unavailability or failed installation. Preserve the helper's bounded original-response diagnostics when useful; do not retry or route around denial. Offline package verification and permitted packaged/source research may continue, but cannot replace the missing live evidence.
+A live HTTP 401/403 identifies denial of that original request at its endpoint, not global chain/provider unavailability or failed installation. Preserve the helper's bounded original-response diagnostics. Do not evade that endpoint's access controls or a host denial. Independent public RPCs, explorers or APIs may supply fresh evidence under their own access rules; identify the new source and re-establish chain, block, interface and coverage as relevant. This is separate research, not an automatic helper fallback or proof that the original request succeeded. See [safety](references/safety.md#public-retrieval-and-calls).
 
 ## Examples
 
@@ -250,7 +250,7 @@ The charter command requires an unsigned uint256 ID; replace `1` with the intend
 
 ### Bounded auction history
 
-Use the supported `history.py` helper for license or charter event history rather than constructing an ad hoc RPC script. Select `license` or `charter`, optionally filter by `--day N`, and choose either an anchored lookback (`--anchor-block B --lookback-blocks N`, with the anchor defaulting to a fresh head) or an explicit `--from-block A --to-block B` range. `--chunk-blocks N` and `--max-chunks N` bound scanning; defaults, hard limits and evidence semantics live in the [auction-history contract](references/auction-history.md).
+Prefer the supported `history.py` helper for license or charter event history when it covers the question; supplemental read-only RPC tools or locally authored request code are also permitted. For the helper, select `license` or `charter`, optionally filter by `--day N`, and choose either an anchored lookback (`--anchor-block B --lookback-blocks N`, with the anchor defaulting to a fresh head) or an explicit `--from-block A --to-block B` range. `--chunk-blocks N` and `--max-chunks N` bound scanning; defaults, hard limits and evidence semantics live in the [auction-history contract](references/auction-history.md). Supplemental scans must likewise bound resources and establish coverage.
 
 ```sh
 python3 -B -I scripts/history.py license --lookback-blocks 1000000
@@ -276,6 +276,8 @@ Current-value questions use the shared price reader automatically; there is no p
 By default, the reader queries DEX Screener for the exact canonical ETH/STANDARD pool. If that source is unavailable, it can use GeckoTerminal and explicitly label the fallback and reason. Identity/schema violations and host/provider access denials do not trigger fallback. A valid partial response stays with its provider rather than filling a missing currency from another source. Chain, token, quote asset and pool identity are checked for both providers; any amount valuation is local and never sent to them.
 
 An explicit provider choice disables automatic fallback. A requested cross-check fetches the other fixed provider and reports its separate prices, evidence and percentage differences; it does not average prices, pick the higher value or change the selected valuation source. Each invocation makes at most two requests. Ordinary price questions do not fetch both providers unnecessarily.
+
+These provider and arithmetic rules describe the bundled helper, not the limits of public research. Other relevant public sources, market discovery and local calculations from evidenced quantities/prices are permitted. Public address balances, ownership, charters and transaction/event histories can also be inspected without wallet connections or proof of user ownership. Keep supplemental provenance, timing, units, formulas and coverage explicit; see [supplemental reads](references/inspection.md#supplemental-public-reads).
 
 From the reviewed installed root:
 
@@ -310,6 +312,8 @@ The [contract catalog](assets/entities/robinhood.json) contains **14 publisher-l
 
 The other five have **no direct getter profile**: Founding Sale, Liquidity Manager, Address Registry, Uniswap v4 Pool Manager and Multicall. Registry and Pool Manager identities/code also participate in the treasury authentication graph. Their addresses and explorer links are cataloged; this does not establish complete holdings, permissions or implementation correspondence.
 
+**The catalogs describe bundled coverage, not an inspection allowlist.** Any relevant public contract, source, ABI, getter, event or historical state may also be inspected, including uncataloged addresses and methods. Prefer the fixed helpers where they fit; otherwise use [supplemental public reads](references/inspection.md#supplemental-public-reads) through existing host-permitted tools with authenticated interfaces, bounded requests and explicit block/provenance evidence. No catalog edit or package update is needed for those reads. Read-only operation and host/provider restrictions still apply.
+
 **Publisher-listed addresses and publisher ABIs do not establish source correspondence.** Selected STANDARD and Trading Hook interfaces and accounting/restriction semantics have additional source-review provenance; that review does not verify the other modules or establish current deployment state. The package bundles no contract source and stores no current explorer verdicts. Current verification status requires fresh retrieval. Getter observations do not establish complete administrator powers, upgradeability, audit correspondence or exploit resistance. Source dates identify reference provenance, not live-state freshness.
 
 ## Coverage and footprint
@@ -320,13 +324,13 @@ For current protocol questions, request only the relevant [inspection](reference
 
 The package uses selected references and indexed records rather than loading the whole corpus for every question. The reference indexes own current inventory counts; disk size is not per-question token cost, and selective loading depends on the host.
 
-Packaged research needs a resource reader. Calculations and public readers use **Python 3.10+ and its standard library**, with no pip dependencies. Chain reads use the fixed Robinhood RPC; market prices use only the fixed DEX Screener/GeckoTerminal pool endpoints. No wallet connector, telemetry or self-update process is bundled.
+Packaged research needs a resource reader. Bundled calculations and public readers use **Python 3.10+ and its standard library**, with no pip dependencies. Bundled chain reads use the fixed Robinhood RPC; the price helper uses only the fixed DEX Screener/GeckoTerminal pool endpoints. Supplemental public research can use other existing host-permitted read tools without modifying those helpers. No wallet connector, telemetry or self-update process is bundled.
 
 ## Safety and verification limits
 
 Answers lead with content. Estimates get a short label; observations get a brief source note where needed. Detailed provenance and assumptions are available on request, not repeated as small print.
 
-The snapshot helper reads two fixed catalogs and permits only pinned view/pure calls on configured Robinhood targets, with selected-asset addresses allowed only as vault-call arguments. The price helper reads the fixed identity catalog and makes bounded canonical-pool GETs to two allowlisted providers; quantity multiplication is local. History scans fixed auction/buyback events through the fixed RPC with finite range, request, log, byte and time bounds. `verify.py` checks package integrity and explicitly selected helpers with bounded execution/output; it has no network of its own. All four reject unsupported inputs and write no files. No wallets, credentials, signatures, transaction payloads or state-changing simulations. See [safety](references/safety.md) and [execution](references/execution.md).
+The snapshot helper reads two fixed catalogs and permits only pinned view/pure calls on configured Robinhood targets, with selected-asset addresses allowed only as vault-call arguments. The price helper reads the fixed identity catalog and makes bounded canonical-pool GETs to two allowlisted providers; quantity multiplication is local. History scans fixed auction/buyback events through the fixed RPC with finite range, request, log, byte and time bounds. `verify.py` checks package integrity and explicitly selected helpers with bounded execution/output; it has no network of its own. All four reject unsupported inputs and write no files. No wallet connections/control, credentials, signatures, transaction payloads or state-changing simulations; public address inspection remains permitted. See [safety](references/safety.md) and [execution](references/execution.md).
 
 The readers do **not** supply liquidity-depth analysis, an amount-specific withdrawal quote, transaction gas estimates or guaranteed sale proceeds. No strategy, future-return or settlement simulator is bundled. Source verification and latest announcements use separate fresh web research.
 
@@ -348,7 +352,7 @@ python3 -B maintenance/package.py archive
 
 The checks use Python's standard library and local Git; they do not call explorers, connect wallets or use model/API credentials. CI runs them on Python 3.10 and 3.14, with read-only repository permissions and commit-pinned Actions. GitHub checkout and Python provisioning require network access; the validation commands themselves are offline. CI verifies the committed manifest rather than regenerating it, and checks deterministic ZIP output. It does not upload artifacts, tag, publish releases or monitor contracts.
 
-After deliberate runtime changes, regenerate the manifest with `python3 -B maintenance/package.py build`, then run the checks above. The candidate archive `dist/srstack-0.2.0.zip` contains only the runtime package; building it does not publish a release or certify it. Maintenance tooling and CI files are repository-only and never authorize an installed skill to execute them.
+After deliberate runtime changes, regenerate the manifest with `python3 -B maintenance/package.py build`, then run the checks above. The archive `dist/srstack-0.2.1.zip` contains only the runtime package; building it does not publish a release or certify it. Maintenance tooling and CI files are repository-only and never authorize an installed skill to execute them.
 
 ## Feedback and license
 

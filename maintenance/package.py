@@ -15,7 +15,7 @@ from pathlib import Path, PurePosixPath
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT
 MANIFEST = "release-manifest.json"
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 SCRIPT_FILES = {"scripts/snapshot.py", "scripts/price.py", "scripts/history.py", "scripts/verify.py"}
 TOP_FILES = {"SKILL.md", "README.md", "LICENSE", MANIFEST}
 REPOSITORY_DIRS = {"maintenance", ".github", ".git", "dist"}
