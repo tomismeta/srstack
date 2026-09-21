@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "scope": "Publisher-authenticated event definitions and deployment identity for the supported bounded read-only history.py helper; no callable-method expansion, saved observations, recap or planner.",
+  "scope": "Publisher-authenticated event definitions and deployment identity for the supported bounded read-only history.py helper; this catalog does not expand helper methods, persist observations or provide a planner. Requested analysis and artifacts may use these definitions outside the fixed helper.",
   "chain_id": 4663,
   "source_ids": [
     "sr-auction-event-interface"

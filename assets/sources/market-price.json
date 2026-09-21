@@ -21,7 +21,7 @@
         "The consumed API schema supplies no price-observation timestamp. HTTP retrieval, pool creation and image cache timestamps are not quote-observation times.",
         "USD conversion is provider-reported; it is not independently verified ETH/USD feed data.",
         "Gross quantity valuations exclude withdrawal fees, trading taxes, LP fees, slippage and gas. They are not charter resale values or guaranteed proceeds.",
-        "Fetch on demand; no stored-price fallback. Current indicative prices do not establish future prices."
+        "The fixed helper fetches on demand without a stored-price fallback. Requested historical reuse or caches must retain source and as-of context; current indicative prices do not establish future prices."
       ]
     },
     {
@@ -43,9 +43,9 @@
         "Public beta API; pin the declared version and retain provider attribution.",
         "No quote-observation timestamp in the consumed pool interface. Retrieval, cache age, pool creation, candle and trade timestamps must not be relabelled as the pool quote's observation time.",
         "More decimal digits do not establish greater accuracy; separate provider reads are not atomic or interchangeable.",
-        "A cross-check reports disagreement without averaging prices, mixing denominations or changing the selected valuation source.",
+        "The fixed helper cross-check reports disagreement without averaging prices, mixing denominations or changing the selected valuation source. Requested supplemental comparisons or derived models must identify their inputs and method.",
         "CoinGecko onchain data belongs to the same provider family, not an independent third corroborating source.",
-        "No stored-price fallback or bypass of host/provider access restrictions."
+        "The fixed helper has no stored-price fallback. Supplemental provider selection and requested historical reuse remain subject to host/provider access rules; never bypass an access restriction or label an old quote as current."
       ]
     }
   ]

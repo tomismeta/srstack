@@ -41,7 +41,7 @@
     "No Arbitrum or local-test bundle addresses are promoted to this deployment.",
     "Shared infrastructure is not project-authored, and a pool manager is not the canonical pool.",
     "Publisher attribution is not source verification, ABI authentication, activation or audited safety.",
-    "Do not persist changing balances or infer live values from this identity index."
+    "This identity index contains no changing balances or live values. Keep requested observations or caches outside the installed runtime, with their provenance and as-of time; do not infer live values from this index."
   ],
   "workflow": "references/contracts.md"
 }

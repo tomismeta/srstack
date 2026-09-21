@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "purpose": "Source routing and reference provenance, including explicitly attributed proposals and official strategic direction; no stored protocol state, performance recaps or superseded interpretations",
+  "purpose": "Source routing and reference provenance, including explicitly attributed proposals and official strategic direction; this index stores no protocol state, performance recaps or superseded interpretations",
   "groups": [
     {
       "id": "market-price",
@@ -49,8 +49,8 @@
   ],
   "lookup": "Match source ID to groups.record_ids and read the literal path.",
   "rules": [
-    "Source and retrieval dates identify reference origin, not the freshness of protocol state. Read dynamic values and updates on demand or report unavailable; never fall back to stored observations.",
+    "Source and retrieval dates identify reference origin, not the freshness of protocol state. Read dynamic values and updates on demand for current claims or report unavailable; retained observations may be reused with their historical as-of time and provenance, not relabelled as current.",
     "Use original source URLs and record scope. Exact canonical parameters live in assets/parameters.json.",
-    "Unavailable or unresolved implementation details remain not-established; never select a value merely to fill a gap."
+    "Unavailable or unresolved implementation details remain not-established. Requested hypothetical scenarios may use explicit user assumptions or estimates, kept separate from facts; never invent evidence to fill a gap."
   ]
 }

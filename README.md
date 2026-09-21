@@ -1,12 +1,12 @@
 # srstack
 
-**Standard Reserve research and live read-only inspection for AI agents.**
+**Standard Reserve expertise, analysis and user-directed workflows for AI agents.**
 
-srstack explains documented protocol mechanics and announcements, reads current public state and reports indicative prices and gross balance values. It is one independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product, trading bot or wallet toolkit.
+srstack explains protocol mechanics, investigates current and historical state, models scenarios and helps with requested research workflows. It is one independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product. It does not sign wallet messages/transactions or submit transactions, directly or through delegated tools.
 
-**Version 0.2.1 · research and inspect.** Fixes overly restrictive inspection guidance: catalogs are starting points, not allowlists; supplemental public reads, public-address discovery, independent public sources and evidenced local arithmetic are permitted. Read-only operation, provenance and host/access-control boundaries remain. Package version is not proof of publication; check the [release page](https://github.com/tomismeta/srstack/releases) for published artifacts and their exact source commit.
+**Version 0.2.2 · dogfood candidate on `feature/v0.2.2`.** Removes skill-imposed limits on requested modelling, forecasting, strategy comparisons, private-data analysis, authenticated research, exports, monitoring and nonbroadcast simulation. Bundled catalogs and helpers describe convenient implementations, not a capability allowlist. Normal host permissions, evidence integrity and credential protection remain. The `v0.2.2` tag is not yet published; use the full reviewed candidate commit below, not the version or moving branch alone.
 
-**Inherited from 0.2.0:** the `plan` route, `scripts/scenario.py`, fictional fixture and verifier `--offline` flag were removed. Use the default `scripts/verify.py` command for offline integrity checks. Future-return and strategy questions receive qualitative research, not a replacement simulator. Install a clean runtime export; do not overlay an older installation containing removed files.
+**Helper continuity:** the retired `scripts/scenario.py` and fictional fixture are not restored. Requested models and workflows may use existing host tools or inspectable locally authored code; “no bundled simulator” is not a reason to refuse analysis. The verifier has no `--offline` flag: its default is offline integrity verification. Install a clean runtime export rather than overlaying old files.
 
 **Read coverage retained:** compact charter summaries, original HTTP-denial diagnostics, bounded auction/buyback history, auction controller/pending ownership, queued CentralBank policy/recycling, and treasury routing/controls with approval-gated selected-asset raw holdings. No new cataloged contract identities or claimed Second Mandate deployment. Prior release audit results do not cover edited bytes.
 
@@ -29,10 +29,12 @@ srstack explains documented protocol mechanics and announcements, reads current 
 | “What has the team announced?” | Fresh official-post research where the host can retrieve it; no bundled recap |
 | “What does the Second Mandate mean, and are its market positions real?” | Source-linked manifesto explanation; sample illustrations are not observed positions, revenue or yield offers |
 
-One skill, two routes:
+One skill, useful starting routes:
 
 - **Research:** source-linked explanations, documented parameters and evidence gaps.
-- **Inspect:** on-demand protocol, auction and public-charter snapshots, bounded auction history through a fixed RPC scanner, and a separate canonical-pool price reader for current price and gross balance-value questions. No wallet access.
+- **Inspect:** on-demand protocol, auction and public-charter snapshots, bounded auction history, prices and supplemental evidence. No wallet signing or transaction submission.
+- **Analyse:** conditional accrual/time-to-target estimates, auction/fee models, forecasts, comparisons and plans with explicit inputs and assumptions.
+- **Workflows:** requested reports, local/private-data analysis, exports, caches, monitoring, authenticated research and nonbroadcast simulations using host-permitted capabilities. These examples are not an exhaustive list.
 
 Common questions have [direct inspection paths](references/inspection.md#common-question-paths). Default charter JSON contains only charter facts and its supported rate equivalent; explicitly select `--detail full` when combined charter, burn or launch-restriction context is requested at one block. Explanation-only questions go straight to packaged sources without an RPC call or financial questionnaire. STANDARD amounts do not trigger a price lookup unless monetary valuation is requested.
 
@@ -50,15 +52,15 @@ These are routing instructions within one skill, not separately installed comman
 | Inspect auction history | Trusted package and permitted Python 3.10+ execution; bounded block scope | Fixed public Robinhood Chain RPC |
 | Read market price or gross balance value | Trusted package and permitted Python 3.10+ execution | Fixed public DEX Screener/GeckoTerminal pool endpoints; charter balances additionally use RPC |
 
-All four fixed entrypoints—`snapshot.py`, `price.py`, `history.py` and `verify.py`—use only Python's standard library: no pip dependencies, wallet connector or provider credentials. Execution also requires the filesystem protections described in [execution](references/execution.md); unsupported hosts fail closed. Missing execution or retrieval capability produces an explanation, not invented results. The skill does not install dependencies or change host permissions.
+All four fixed entrypoints—`snapshot.py`, `price.py`, `history.py` and `verify.py`—use only Python's standard library: no pip dependencies, wallet connector or provider credentials. They require the filesystem protections described in [execution](references/execution.md); unsupported hosts fail closed for those helpers. Other host-permitted tools may provide the requested capability. Dependency installation and reviewed maintenance require the ordinary approval flow, not permission bypass; missing capability means identify the prerequisite, not invent results.
 
 ## Install a reviewed release
 
-Package version `0.2.1` is not a revision pin; the **full source commit SHA** resolved below identifies the exact revision you review and install. The release-tag commands below require `v0.2.1` to have been published; they must fail rather than fall back to another tag or a moving branch if it is absent. For pre-release review, use an explicitly selected reviewed commit and the same export/verification procedure. Installation prints the full reviewed SHA after success and retains it outside the hashed runtime; never embed the package's own commit in hashed files.
+Package version `0.2.2` is not a revision pin; the **full source commit SHA** resolved below identifies the exact candidate you review and install. These dogfood commands select `feature/v0.2.2`; the `v0.2.2` release tag is not yet available. Compare the resolved SHA with the full commit supplied in the dogfood handoff. Installation prints that SHA and retains it outside the hashed runtime; never embed the package's own commit in hashed files.
 
-These are **user/maintainer commands**, not permission for an installed agent to download code, install itself or bypass host guards. Use Git and Python 3.10+ on a supported POSIX host. Review the selected commit, including `maintenance/package.py`, [SKILL.md](SKILL.md), the runtime scripts and [safety](references/safety.md), **before executing package code**. The bundled verifier checks integrity, not publisher authenticity; running it is already executing the package.
+These are deliberate maintenance commands for a user or an agent explicitly asked to install/update the skill, subject to normal host approval—not authorization for unsolicited self-updates or guard bypass. Use Git and Python 3.10+ on a supported POSIX host. Review the selected commit, including `maintenance/package.py`, [SKILL.md](SKILL.md), the runtime scripts and [safety](references/safety.md), **before executing package code**. The bundled verifier checks integrity, not publisher authenticity; running it is already executing the package.
 
-### 1. Select paths and pin the release tag
+### 1. Select paths and pin the candidate commit
 
 Installing while Telegram/Hermes or another host is running is supported; a running host is not installation failure. Stop other installers and coordinate a pause in srstack invocations for replacement and final verification. Stopping the host, if convenient, is only an optional precaution. In one shell, select its **actual configured skill root** and an existing stable working directory outside it. Use absolute paths. Hermes' default is `$HOME/.hermes/skills`; OpenClaw commonly uses the intended workspace's `skills` directory. Named profiles may differ. For dogfooding, prefer an isolated profile/workspace.
 
@@ -73,9 +75,9 @@ cd "$HOME" &&
 mkdir -p "$SKILL_PARENT" "$SRSTACK_BACKUPS" &&
 WORK="$(mktemp -d "$SRSTACK_BACKUPS/srstack-release.XXXXXXXX")" &&
 REVIEW_ROOT="$WORK/source" &&
-git clone --single-branch --branch v0.2.1 \
+git clone --single-branch --branch feature/v0.2.2 \
   https://github.com/tomismeta/srstack.git "$REVIEW_ROOT" &&
-git -C "$REVIEW_ROOT" fetch origin refs/tags/v0.2.1 &&
+git -C "$REVIEW_ROOT" fetch origin refs/heads/feature/v0.2.2 &&
 REVIEWED_COMMIT="$(git -C "$REVIEW_ROOT" rev-parse --verify 'FETCH_HEAD^{commit}')" &&
 git -C "$REVIEW_ROOT" checkout --detach "$REVIEWED_COMMIT" &&
 printf '%s\n' "$REVIEWED_COMMIT" > "$WORK/reviewed-commit.txt" &&
@@ -154,17 +156,17 @@ PY
 
 No files are deleted. On final verification failure, the new root is retained as `failed-install` and the previous root is restored (or the destination is left absent for a first install). If restoration itself fails, keep srstack invocations paused and recover from the printed directory; never use a missing or inconsistent skill root. Telegram/Hermes need not shut down. Whole-root replacement removes obsolete scenario/fixture files from the active runtime without deleting your backup. Keep it until the loaded path and reviewed runtime behavior are confirmed; never discover it as a second skill. A process interruption or filesystem failure may require manual recovery from those same directories before srstack use resumes.
 
-After success, refresh skill discovery if needed and confirm the loaded path is `SKILL_PARENT/srstack`, package version is `0.2.1`, and the printed full SHA matches `WORK/reviewed-commit.txt`. Resume srstack invocations only against the verified root. **Existing chats retain their loaded context:** start a fresh `/new` in each Telegram/Hermes chat that will use the revision (or the host's equivalent new conversation). Installing in one chat cannot restart or refresh the other chats. Restarting the host is optional, not an acceptance criterion; package version alone cannot identify the exact installed revision.
+After success, refresh skill discovery if needed and confirm the loaded path is `SKILL_PARENT/srstack`, package version is `0.2.2`, and the printed full SHA matches `WORK/reviewed-commit.txt`. Resume srstack invocations only against the verified root. **Existing chats retain their loaded context:** start a fresh `/new` in each Telegram/Hermes chat that will use the revision (or the host's equivalent new conversation). Installing in one chat cannot restart or refresh the other chats. Restarting the host is optional, not an acceptance criterion; package version alone cannot identify the exact installed revision.
 
 **Hermes installation:** use the complete-bundle instructions above. URL discovery depends on configured sources; importing raw `SKILL.md` does not necessarily import its references, assets and scripts.
 
 **Host approvals:** trusted skill files and requested public reads do not bypass execution approval. If a one-shot session cannot obtain it, continue in an approval-capable session for the exact helper command rather than trying wrappers, PTYs or `--yolo`. Explicit CLI modes remove the need for stdin but still require normal permission. See [input transport and approvals](references/execution.md#input-transport-and-host-approvals).
 
-Other harnesses can use their Agent Skills loader or explicitly read [SKILL.md](SKILL.md) and selected resources. Resource paths resolve against the loaded skill directory. See [host setup](references/installation.md); this package never installs itself or changes host permissions.
+Other harnesses can use their Agent Skills loader or explicitly read [SKILL.md](SKILL.md) and selected resources. Resource paths resolve against the loaded skill directory. See [host setup](references/installation.md). Installation and configuration changes require an explicit maintenance request and normal host approval; the skill does not initiate them itself.
 
 ### Quick test after installation
 
-In a fresh host conversation, `Use srstack` should show **research / inspect**, with no live read or planner. “Explain charter withdrawals using only packaged references” should work offline without Python. Ask the [Second Mandate questions](#second-mandate-research): sample positions must not become holdings, reserve fee reinvestment must not become holder yield, and manifesto intent must not become deployed functionality. Future-return questions should receive qualitative research, not scenario execution.
+In a fresh host conversation, `Use srstack` should show **research / inspect / analyse / workflows**, without unsolicited reads. Packaged explanations should work offline without Python. Ask: “Assume 3,384 STANDARD pending, a fixed 15,179 target and 500 STANDARD/day net accrual: how long to the target?” Expect the 11,795 gap and a conditional 23.59-day estimate, not a forecasting refusal or a claim about actual future rates. Ask the [Second Mandate questions](#second-mandate-research): samples must not become holdings, reserve fees must not become holder entitlements, and proposals must not become deployed facts. Requested hypothetical models remain allowed. Signing/submitting must be declined without invoking a wallet.
 
 From the reviewed, verified **installed root**, the default diagnostic is offline integrity verification. There is no `--offline` flag:
 
@@ -196,7 +198,7 @@ A live HTTP 401/403 identifies denial of that original request at its endpoint, 
 Use srstack.
 ```
 
-Expected: the research/inspect menu, without fetching live data.
+Expected: the research/inspect/analyse/workflows menu, without fetching live data.
 
 ```text
 Use srstack to explain charter withdrawals.
@@ -213,7 +215,7 @@ Are the manifesto's market positions actual holdings or sample illustrations?
 Does the announced fee reinvestment establish revenue rights for charter holders?
 ```
 
-Expected: distinguish announced liquidity strategy from deployed mechanics, identify the explicitly sample panel and explain that reserve-level fee reinvestment does not establish holder revenue entitlements. Requests for future returns get a qualitative explanation of mechanics, risks and missing evidence—not projected cash flows.
+Expected: distinguish announced strategy from deployed mechanics, identify sample positions, and explain that reserve-level fee reinvestment does not establish holder entitlements. If asked to model future returns or proposal effects, use labelled assumptions and formulas rather than treating samples as actual holdings or declining numerical analysis.
 
 ### Live protocol, auction and charter reads
 
@@ -277,7 +279,7 @@ By default, the reader queries DEX Screener for the exact canonical ETH/STANDARD
 
 An explicit provider choice disables automatic fallback. A requested cross-check fetches the other fixed provider and reports its separate prices, evidence and percentage differences; it does not average prices, pick the higher value or change the selected valuation source. Each invocation makes at most two requests. Ordinary price questions do not fetch both providers unnecessarily.
 
-These provider and arithmetic rules describe the bundled helper, not the limits of public research. Other relevant public sources, market discovery and local calculations from evidenced quantities/prices are permitted. Public address balances, ownership, charters and transaction/event histories can also be inspected without wallet connections or proof of user ownership. Keep supplemental provenance, timing, units, formulas and coverage explicit; see [supplemental reads](references/inspection.md#supplemental-public-reads).
+These provider and arithmetic rules describe the bundled helper, not the limits of research. Other sources, market discovery, currencies, cross-source statistics, conditional calculations and user-supplied inputs are permitted with explicit identities, units, times, formulas and assumptions. Public addresses can be inspected without proof of ownership. Private files, authenticated sessions and outputs follow the user's scope and host permissions; see [safety](references/safety.md) and [supplemental reads](references/inspection.md#supplemental-public-reads).
 
 From the reviewed installed root:
 
@@ -312,7 +314,7 @@ The [contract catalog](assets/entities/robinhood.json) contains **14 publisher-l
 
 The other five have **no direct getter profile**: Founding Sale, Liquidity Manager, Address Registry, Uniswap v4 Pool Manager and Multicall. Registry and Pool Manager identities/code also participate in the treasury authentication graph. Their addresses and explorer links are cataloged; this does not establish complete holdings, permissions or implementation correspondence.
 
-**The catalogs describe bundled coverage, not an inspection allowlist.** Any relevant public contract, source, ABI, getter, event or historical state may also be inspected, including uncataloged addresses and methods. Prefer the fixed helpers where they fit; otherwise use [supplemental public reads](references/inspection.md#supplemental-public-reads) through existing host-permitted tools with authenticated interfaces, bounded requests and explicit block/provenance evidence. No catalog edit or package update is needed for those reads. Read-only operation and host/provider restrictions still apply.
+**The catalogs describe bundled coverage, not an inspection allowlist.** Research relevant contracts, networks, sources, interfaces, historical state and events beyond bundled coverage. Prefer fixed helpers where they fit; otherwise use [supplemental tools](references/inspection.md#supplemental-public-reads) or inspectable locally authored code under normal host permissions. Independently authenticate observations and label simulation/assumption boundaries. No catalog edit is needed just to investigate. No wallet signing or transaction submission is permitted.
 
 **Publisher-listed addresses and publisher ABIs do not establish source correspondence.** Selected STANDARD and Trading Hook interfaces and accounting/restriction semantics have additional source-review provenance; that review does not verify the other modules or establish current deployment state. The package bundles no contract source and stores no current explorer verdicts. Current verification status requires fresh retrieval. Getter observations do not establish complete administrator powers, upgradeability, audit correspondence or exploit resistance. Source dates identify reference provenance, not live-state freshness.
 
@@ -324,15 +326,15 @@ For current protocol questions, request only the relevant [inspection](reference
 
 The package uses selected references and indexed records rather than loading the whole corpus for every question. The reference indexes own current inventory counts; disk size is not per-question token cost, and selective loading depends on the host.
 
-Packaged research needs a resource reader. Bundled calculations and public readers use **Python 3.10+ and its standard library**, with no pip dependencies. Bundled chain reads use the fixed Robinhood RPC; the price helper uses only the fixed DEX Screener/GeckoTerminal pool endpoints. Supplemental public research can use other existing host-permitted read tools without modifying those helpers. No wallet connector, telemetry or self-update process is bundled.
+Packaged research needs a resource reader. Bundled readers use **Python 3.10+ and its standard library**, fixed RPC/provider paths and supported filesystem primitives. Other host-permitted tools, reviewed dependencies and custom code can support additional requested workflows without modifying these helpers. No wallet signer, telemetry, scheduler or self-update process is bundled; host capabilities must actually exist before claiming an operation was performed.
 
 ## Safety and verification limits
 
 Answers lead with content. Estimates get a short label; observations get a brief source note where needed. Detailed provenance and assumptions are available on request, not repeated as small print.
 
-The snapshot helper reads two fixed catalogs and permits only pinned view/pure calls on configured Robinhood targets, with selected-asset addresses allowed only as vault-call arguments. The price helper reads the fixed identity catalog and makes bounded canonical-pool GETs to two allowlisted providers; quantity multiplication is local. History scans fixed auction/buyback events through the fixed RPC with finite range, request, log, byte and time bounds. `verify.py` checks package integrity and explicitly selected helpers with bounded execution/output; it has no network of its own. All four reject unsupported inputs and write no files. No wallet connections/control, credentials, signatures, transaction payloads or state-changing simulations; public address inspection remains permitted. See [safety](references/safety.md) and [execution](references/execution.md).
+The four bundled helpers retain their fixed input schemas, identities, decoding, finite budgets and integrity checks; they write no files and make no financial transactions. Their partial results and errors remain honest, not silently repaired. Supplemental analysis, user-authorized artifacts/monitoring, authenticated research, unsigned preparation and nonbroadcast simulations are permitted through appropriate tools. Do not sign wallet messages/transactions, invoke signing prompts or submit/broadcast transactions, including through delegated tools. Host permissions, access controls and secret protection remain binding. See [safety](references/safety.md) and [execution](references/execution.md).
 
-The readers do **not** supply liquidity-depth analysis, an amount-specific withdrawal quote, transaction gas estimates or guaranteed sale proceeds. No strategy, future-return or settlement simulator is bundled. Source verification and latest announcements use separate fresh web research.
+The readers do **not themselves** implement liquidity-depth analysis, amount-specific withdrawal quotes, gas estimation or strategy/settlement models. Use appropriate supplemental tools or explicit calculations for those requests, preserving evidence and assumptions. No result is guaranteed sale proceeds. A helper's missing feature is not a skill-wide prohibition.
 
 Skill instructions do not enforce host isolation, and estimates are not guaranteed returns.
 
@@ -352,7 +354,7 @@ python3 -B maintenance/package.py archive
 
 The checks use Python's standard library and local Git; they do not call explorers, connect wallets or use model/API credentials. CI runs them on Python 3.10 and 3.14, with read-only repository permissions and commit-pinned Actions. GitHub checkout and Python provisioning require network access; the validation commands themselves are offline. CI verifies the committed manifest rather than regenerating it, and checks deterministic ZIP output. It does not upload artifacts, tag, publish releases or monitor contracts.
 
-After deliberate runtime changes, regenerate the manifest with `python3 -B maintenance/package.py build`, then run the checks above. The archive `dist/srstack-0.2.1.zip` contains only the runtime package; building it does not publish a release or certify it. Maintenance tooling and CI files are repository-only and never authorize an installed skill to execute them.
+After deliberate runtime changes, regenerate the manifest with `python3 -B maintenance/package.py build`, then run the checks above. The archive `dist/srstack-0.2.2.zip` contains only the runtime package; building it does not publish a release or certify it. Maintenance tooling and CI files are repository-only; their execution requires a deliberate maintenance request, trusted code and normal host permissions.
 
 ## Feedback and license
 

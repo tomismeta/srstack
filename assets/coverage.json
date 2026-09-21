@@ -19,7 +19,7 @@
   "limits": [
     "Publisher documentation and ABI are not independently verified source code.",
     "Live values come from bounded block-scoped reads; current observations are not future guarantees.",
-    "Read changing application panels and official updates on demand or report unavailable; no stored observations or recap fallback.",
+    "Read changing application panels and official updates on demand for current claims or report unavailable; retained observations may support dated historical analysis, not an unlabelled current-state fallback.",
     "The Second Mandate is announced strategy, not a replacement for documented whitepaper mechanics or proof of implementation. Its dated rationale and sample reserve positions are neither current observations nor financial offers or entitlements."
   ],
   "pages": [
@@ -295,7 +295,7 @@
     "scope": "Canonical-pool prices with DEX Screener primary, labelled GeckoTerminal availability fallback, optional cross-check and single-provider gross valuation",
     "limits": [
       "Separate from block-scoped RPC snapshots; provider quote-observation time is unavailable.",
-      "Provider prices are never averaged or mixed across valuation denominations; identity, schema and access failures are not concealed by fallback.",
+      "The fixed price helper does not average provider prices or mix valuation denominations; identity, schema and access failures are not concealed by fallback. Requested supplemental provider comparisons or models must identify sources and methods.",
       "Indicative current prices do not establish future prices.",
       "Gross accrued-balance marks are not net withdrawal proceeds or charter market values."
     ]
@@ -309,7 +309,7 @@
     "reference": "references/auction-history.md",
     "scope": "Bounded on-demand purchase and round reconstruction with publisher-authenticated event definitions, historical anchors, quantity-weighted consideration and explicit coverage gaps",
     "limits": [
-      "The fixed history helper reads authenticated events on demand with hard coverage budgets; no saved auction observations, performance recap or expanded eth_call surface.",
+      "The fixed history helper reads authenticated events on demand with hard coverage budgets; it does not persist observations, generate performance recaps or expand its eth_call surface. These helper limits do not prohibit requested historical analysis or host-authorized artifacts.",
       "Round IDs do not establish duration; roll inclusion time does not establish scheduled opening. Historical caps and settings cannot be replaced with present values.",
       "Purchase-event accounting is distinct from independently reconciled payments; incomplete logs, archive failure and empty responses are not complete zero history.",
       "No dedicated reviewed sellout/end event or independent auction source/bytecode equivalence is established."
@@ -338,7 +338,7 @@
       "treasury"
     ],
     "limits": [
-      "Only the fixed reviewed ABI surface; no financial methods, address-scoped blocklist input or caller endpoints.",
+      "The fixed snapshot helper exposes only the reviewed ABI surface, without transaction methods, address-scoped blocklist input or caller endpoints. This is not an allowlist for host-authorized supplemental research or nonbroadcast simulation.",
       "Selected STANDARD and Trading Hook source/ABI reconciliation is review provenance, not verification of every module or current state.",
       "Burn totals do not attribute individual causes; restriction flags do not predict transaction success; epoch rollover remains an explicit evidence boundary."
     ]

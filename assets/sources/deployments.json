@@ -67,7 +67,7 @@
       "summary": "Publisher page for policy, issuance, branches, fees, auctions, supply accounting, treasury and controls. Explanatory text says accrual stops at epoch end until rollover and settlement is required before the next epoch streams. Read changing values on demand; no current settlement, ownership or availability state is stored here.",
       "limits": [
         "Website-displayed values are publisher readings, not direct RPC evidence or amount-specific executable quotes.",
-        "Fetch a fresh block-scoped observation when supported or report unavailable; never fall back to saved state. Future settings remain assumptions.",
+        "Fetch a fresh block-scoped observation for a current claim when supported or report unavailable; saved state may support labelled historical analysis, not a current-state fallback. Future settings remain assumptions.",
         "The page's Burned forever display means HARD_CAP minus maxSupply, including permanent token burns and retired ledger value; it is not the narrower burnedForever getter or a buyback-only measure.",
         "Displayed expansion/contraction balances are native ETH only; reserve-token holdings are not indexed. Fee-routing direction is provisional until settlement and uses a different window from issuance policy.",
         "Rollover/accrual-stop text is publisher evidence, not verified CentralBank behavior, a current settlement verdict or a scheduling model.",
@@ -95,7 +95,7 @@
         "The announced team-allocation restrictions and eventual burn of unused incentives are proposed requirements, not verified permissions or guaranteed outcomes.",
         "The relative deployment estimate early next week is not an absolute date or evidence of completion; publication time remains unavailable.",
         "No contract addresses, replacement bindings, authenticated incentive-vault ABI or deployed payment/accounting path are established by this thread.",
-        "Do not replace canonical parameters, halve license acquisition cost, assume rewards or infer price/slippage benefits from the proposal."
+        "Do not replace canonical parameters or treat proposed cost reductions, rewards or price/slippage benefits as established. Requested conditional modelling may use the proposal as an explicit, unverified assumption."
       ]
     }
   ]

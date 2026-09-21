@@ -61,6 +61,6 @@
     "Only BuybackExecuted is queried at the fixed Contraction Vault. Token Transfer events, cumulative token burn counters, auction consideration and reserve-asset holdings are not buyback accounting inputs.",
     "The fixed Contraction Vault standard() binding, STANDARD code and decimals() are checked at the anchor using reviewed fixed calls. This does not establish historical implementation continuity or reconcile transfers and burns.",
     "Exact sums cover only checked completed windows. Empty checked windows mean no matching events in those windows; failed or unscanned coverage is unknown, never an all-history zero claim.",
-    "Canonical-header and anchor rechecks are consistency checks, not finality or independent completeness proofs. Provider omissions cannot be independently excluded. No receipts, tracing, arbitrary token calls, retries, alternate endpoints or persistence."
+    "Canonical-header and anchor rechecks are consistency checks, not finality or independent completeness proofs. Provider omissions cannot be independently excluded. The fixed helper provides no receipts, tracing, arbitrary token calls, retries, alternate endpoints or persistence; host-authorized supplemental research and requested artifacts are separate."
   ]
 }

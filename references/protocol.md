@@ -12,7 +12,7 @@ The official [Second Mandate](updates.md#second-mandate-liquidity-for-tokenized-
 
 ## Read only the needed mechanics
 
-- [Supply and policy](protocol-policy.md): supply identities, deposit conversions, flow signals, published multiplier recurrence and source-only limits; [monetary parameters](../assets/parameters/monetary.json).
+- [Supply and policy](protocol-policy.md): supply identities, deposit conversions, flow signals, published multiplier recurrence and conditional models; [monetary parameters](../assets/parameters/monetary.json).
 - [Charters](charters.md): branches, founding entry, auctions, exits and dormancy; [participation parameters](../assets/parameters/participation.json).
 - [Reserves](reserves.md): separate founding/ongoing allocations, ownership and buybacks; [reserve parameters](../assets/parameters/reserves.json).
 - [Launch trading](launch-trading.md): finalization, tax gaps and activation; [launch parameters](../assets/parameters/launch.json).
@@ -29,6 +29,6 @@ These are the publisher's incentive arguments, not guaranteed rational behavior,
 
 ## Presentation is not state
 
-Use a fresh `protocol` snapshot for current issuance, supply and tax readings, and `auctions` for availability. These use the publisher's fixed ABI with block and binding checks; they do not assert source-code equivalence. If fresh reads are unavailable, report the requested values as unknown rather than using saved state or launch defaults. Keep the answer focused on the requested values. [sr-protocol-conditions; sr-publisher-read-interface]
+Use a fresh `protocol` snapshot for current issuance, supply and tax readings, and `auctions` for availability. These use the publisher's fixed ABI with block and binding checks; they do not assert source-code equivalence. If fresh reads are unavailable, report current values as unknown rather than using saved state or launch defaults as current. Historical observations and launch rules remain usable as attributed context or explicit scenario inputs under [modeling boundaries](risks.md#what-economics-alone-cannot-establish). Keep the answer focused on the request. [sr-protocol-conditions; sr-publisher-read-interface]
 
 See [documents](documents.md) for all sixteen current sections and [risks](risks.md) for remaining evidence gaps.

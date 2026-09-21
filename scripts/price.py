@@ -248,7 +248,7 @@ def _https_request(connection, source, path, deadline, monotonic):
         if monotonic() >= deadline:
             raise PriceError("price request deadline exceeded before sending", "unavailable")
         connection.request("GET", path, headers={"Accept": PROVIDERS[source]["accept"],
-                           "User-Agent": "srstack/0.2.1 (+https://github.com/tomismeta/srstack)"})
+                           "User-Agent": "srstack/0.2.2 (+https://github.com/tomismeta/srstack)"})
         response = connection.getresponse()
         if response.status != 200:
             category = ("access" if response.status in (401, 403) else "unavailable"

@@ -17,7 +17,7 @@
     "source_ids": [
       "sr-etherscan-chainlist"
     ],
-    "verification_access": "Follow each record explorer_url for an on-demand publication check or report unavailable. Do not store explorer verdicts. No contract write interface is enabled."
+    "verification_access": "Follow each record explorer_url for a publication check or report unavailable. This catalog stores no explorer verdicts or contract write interface; requested evidence artifacts belong outside the installed runtime with their provenance and as-of time."
   },
   "shared_evidence_limits": {
     "applies_to": "Every record; read with selected records",
@@ -27,7 +27,7 @@
     "audit_to_deployment_correspondence": "Require fresh evidence; not established by identity attribution.",
     "current_activation_and_market_state": "Use an on-demand snapshot or report unavailable; no live state or fallback observation is stored in this identity catalog.",
     "infrastructure": "Shared infrastructure is not project-authored merely because listed; the pool manager is not a unique canonical pool.",
-    "actions": "Research identity and navigation only; no wallet, signing or transaction path."
+    "actions": "This catalog supplies research identity and navigation, not operational authorization. Host-authorized supplemental research, unsigned preparation and nonbroadcast simulation are allowed; no wallet signing, signature requests or transaction submission/broadcast, including delegation."
   },
   "records": [
     {

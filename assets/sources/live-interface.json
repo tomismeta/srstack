@@ -31,8 +31,8 @@
       "limits": [
         "Publisher ABI and configured relationships do not establish independently verified source, complete authority, settlement readiness or Second Mandate activation.",
         "Queued values are not active settings. Basis-point fields, raw pool-fee flags and signed tick spacing have distinct units.",
-        "Reserve-asset addresses are investigation inputs until same-block vault approval succeeds. Holdings remain raw token units without independently authenticated decimals; no arbitrary token metadata calls or invented asset enumeration.",
-        "recycleStreamed and issuanceStreamed internal scaling is not established by reviewed publisher formatting; preserve raw ledger units and derive no accounting equations.",
+        "Reserve-asset addresses are investigation inputs until same-block vault approval succeeds in the fixed treasury helper. Holdings remain raw token units without independently authenticated decimals; this helper does not perform arbitrary token metadata calls or asset enumeration. Supplemental metadata research is allowed, but asset identities and scales cannot be invented.",
+        "recycleStreamed and issuanceStreamed internal scaling is not established by reviewed publisher formatting; preserve raw ledger units in factual reporting. Any requested hypothetical accounting model must label assumed scales, or obtain independent evidence for a factual conversion.",
         "Buyback event accounting is limited to checked coverage and authenticated denomination; not independently reconciled transfers, complete burn attribution or a return forecast.",
         "No observations, balances, historical totals or financial examples are stored in this provenance record."
       ]
@@ -77,7 +77,7 @@
         "Publisher identity and ABI do not independently verify deployed bytecode, every past generation, payment routing, authority completeness or economic outcomes.",
         "Bounded source-review log and receipt evidence is retained outside package runtime resources; no auction rounds, prices, totals, timing recap or performance table is stored here.",
         "Source retrieval and review dates are not source publication, contract deployment or protocol-state freshness timestamps.",
-        "The event catalog supports the fixed bounded read-only history helper; it adds no wallet actions, expanded eth_call surface, indexer or stored observations."
+        "The event catalog supports the fixed bounded read-only history helper; it adds no signing/submission actions, expanded helper eth_call surface, indexer or persistence. These capability limits do not prohibit host-authorized supplemental research, conditional analysis or requested external artifacts."
       ]
     },
     {
@@ -99,7 +99,7 @@
       "summary": "Pinned publisher ABI and frontend mappings establish the original 68-call read interface for protocol, charter and auction queries using the public Robinhood RPC endpoint. This publisher-bundle provenance is retained; the separate STANDARD and TaxHook source records describe the bounded reconciliation and ten additional getters. Publisher provenance alone is not evidence of current contract state or independent source/bytecode equivalence.",
       "limits": [
         "No borrowed cross-chain ABI; no downloaded code is executed by the helper.",
-        "Only the selected scalar view/pure surface is included; no financial actions, raw caller endpoints or selectors.",
+        "Only the selected scalar view/pure surface is included in this historical helper interface; it supplies no transaction actions, raw caller endpoints or selectors. Supplemental research is not confined to that helper surface.",
         "Old-block state may be unavailable from this public provider; do not silently replace a pinned read with latest.",
         "Current price-function output may continue decaying after sellout; it is not a purchasable quote without availability."
       ]

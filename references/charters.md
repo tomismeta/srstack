@@ -12,6 +12,8 @@ The whitepaper places founding distribution before one-time license activation a
 
 For “what is my charter worth now?”, prefer [inspection](inspection.md)'s shared price path: use the public charter ID, read fresh `charter_pending`, then pass that whole-charter STANDARD amount to `price.py` for same-quote gross arithmetic. A known charter ID needs no unrelated address scan or redundant permission prompt. If the request instead supplies a public address, bounded public ownership/event discovery is allowed to identify relevant charters; no wallet connection or proof of user ownership is required. Supplemental price reads and evidenced local arithmetic are also permitted. This is a gross indicative mark on accrued ledger balance, not wallet tokens, net withdrawal proceeds, charter/NFT resale value or earning capacity. Do not automatically divide by branch count; the zero-amount withdrawal-fee preview does not price withdrawal of that balance. Snapshot block and API retrieval are separate clocks, with the bundled providers' price-observation time unknown.
 
+For requested earning projections, time-to-target or branch/exit strategy comparisons, use the [policy formulas](protocol-policy.md) and [exit rules](exits.md) with explicit assumptions for changing branch counts, rates, settlement and fees. These estimates are distinct from the gross mark above and do not require verified implementation unless presented as deployed behavior; follow [modeling boundaries](risks.md#what-economics-alone-cannot-establish).
+
 ## Follow the question
 
 - [Genesis entry](genesis.md): paid whitelist/public entry, escrow and common accrual start at finalization. [Launch mint](launch-mint.md) summarizes founding terms and scheduling gaps.
