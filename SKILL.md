@@ -1,6 +1,6 @@
 ---
 name: srstack
-description: Standard Reserve research, inspection, modelling and user-directed workflows without wallet signing, signature requests or transaction submission/broadcast.
+description: Standard Reserve; no signing, sign prompts or tx submission.
 license: MIT
 metadata:
   version: "0.2.2"
