@@ -6,7 +6,7 @@
   "digest_convention": "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest",
   "content_files": {
     "LICENSE": "14b82531e814378b84e97596f68a98c70becee3251b206c545d4f07d73105af3",
-    "README.md": "2f3ce8f58bb71d330afb01605ae0bd1cd44f67229f120cb23451c87e262f739e",
+    "README.md": "fc75987ac3ff9631cd29ee4fbe911dff033c409f7666e345bea8bbfb2ba714b6",
     "SKILL.md": "961ca22aa94aa632d764233e52b535d244ba134e83ccb0da9eb511a950524b9a",
     "assets/coverage.json": "1957d710cab1ba5a18751ea887e666dc5d4e941a33c81e973dba6207e14fe621",
     "assets/entities/robinhood.json": "c127943b0ae57b8387460d223284ee578fa65f81e1bf969fb8e1bf9520a02aad",
@@ -33,7 +33,7 @@
     "references/exits.md": "39077f3f41b6e94d12b2540ab5cf8919499d25a4edd07007b872e8dbd10df2ce",
     "references/genesis.md": "a1b56bf05b4cc32a877b72e95fc7d79453cb4c828fe7127407dadaee1a8b24b0",
     "references/inspection.md": "092e685270bee6c802f89706cd3de54a9f3881b6f565c9fb8970a82f97ea5487",
-    "references/installation.md": "2166ba66473a6cafd4a1900b9e089635b3cfd3d4b4d866717289223239668072",
+    "references/installation.md": "6a96dc43a4fec283418ccbdef0c22e1ec114e5f99ce470df56c73dbfa2e24e63",
     "references/launch-mint.md": "b86c9d051eb4d8d26f016cfe9ea6ea72bbc81ce0a303f76f524e2942143b77e3",
     "references/launch-trading.md": "90c74a4aa3c5ca69d47822eb2955031b1eea1de6894c9955dfb74982325401d5",
     "references/protocol-policy.md": "ddce2539c7f9e02fd4f65267d92a5d2a1f074b08aa9c7c097cd9d06a8aba3e94",
@@ -48,5 +48,5 @@
     "scripts/snapshot.py": "980b4c3e7ebd6dbe4beba5d2e8d2e414b16476acbf82055ccc73cb56391c81b1",
     "scripts/verify.py": "f53cba39a075690a6384001448ddaabfd9f664f3d0233bc190926372230953d0"
   },
-  "content_sha256": "f314285b56b50fd0ec6f5ff2b3d3da9193b197a5ed13897cad9e88f10014bbe5"
+  "content_sha256": "71c6a0683f7993e86e0bbad510423b3b112ec1621873bad817a7fef49aaadc9a"
 }

@@ -4,7 +4,7 @@
 
 srstack explains protocol mechanics, investigates current and historical state, models scenarios and helps with requested research workflows. It is one independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product. It does not sign wallet messages/transactions or submit transactions, directly or through delegated tools.
 
-**Version 0.2.2 · dogfood candidate on `feature/v0.2.2`.** Removes skill-imposed limits on requested modelling, forecasting, strategy comparisons, private-data analysis, authenticated research, exports, monitoring and nonbroadcast simulation. Bundled catalogs and helpers describe convenient implementations, not a capability allowlist. Normal host permissions, evidence integrity and credential protection remain. The `v0.2.2` tag is not yet published; use the full reviewed candidate commit below, not the version or moving branch alone.
+**Version 0.2.2.** Removes skill-imposed limits on requested modelling, forecasting, strategy comparisons, private-data analysis, authenticated research, exports, monitoring and nonbroadcast simulation. Bundled catalogs and helpers describe convenient implementations, not a capability allowlist. Normal host permissions, evidence integrity and credential protection remain. Select the `v0.2.2` release tag and review its full commit, not the version or a moving branch alone.
 
 **Helper continuity:** the retired `scripts/scenario.py` and fictional fixture are not restored. Requested models and workflows may use existing host tools or inspectable locally authored code; “no bundled simulator” is not a reason to refuse analysis. The verifier has no `--offline` flag: its default is offline integrity verification. Install a clean runtime export rather than overlaying old files.
 
@@ -56,11 +56,11 @@ All four fixed entrypoints—`snapshot.py`, `price.py`, `history.py` and `verify
 
 ## Install a reviewed release
 
-Package version `0.2.2` is not a revision pin; the **full source commit SHA** resolved below identifies the exact candidate you review and install. These dogfood commands select `feature/v0.2.2`; the `v0.2.2` release tag is not yet available. Compare the resolved SHA with the full commit supplied in the dogfood handoff. Installation prints that SHA and retains it outside the hashed runtime; never embed the package's own commit in hashed files.
+Package version `0.2.2` is not a revision pin; the **full source commit SHA** resolved below identifies the exact revision you review and install. These commands select the `v0.2.2` release tag. Compare the resolved SHA with the full commit in the release notes. Installation prints that SHA and retains it outside the hashed runtime; never embed the package's own commit in hashed files.
 
 These are deliberate maintenance commands for a user or an agent explicitly asked to install/update the skill, subject to normal host approval—not authorization for unsolicited self-updates or guard bypass. Use Git and Python 3.10+ on a supported POSIX host. Review the selected commit, including `maintenance/package.py`, [SKILL.md](SKILL.md), the runtime scripts and [safety](references/safety.md), **before executing package code**. The bundled verifier checks integrity, not publisher authenticity; running it is already executing the package.
 
-### 1. Select paths and pin the candidate commit
+### 1. Select paths and pin the release commit
 
 Installing while Telegram/Hermes or another host is running is supported; a running host is not installation failure. Stop other installers and coordinate a pause in srstack invocations for replacement and final verification. Stopping the host, if convenient, is only an optional precaution. In one shell, select its **actual configured skill root** and an existing stable working directory outside it. Use absolute paths. Hermes' default is `$HOME/.hermes/skills`; OpenClaw commonly uses the intended workspace's `skills` directory. Named profiles may differ. For dogfooding, prefer an isolated profile/workspace.
 
@@ -75,9 +75,9 @@ cd "$HOME" &&
 mkdir -p "$SKILL_PARENT" "$SRSTACK_BACKUPS" &&
 WORK="$(mktemp -d "$SRSTACK_BACKUPS/srstack-release.XXXXXXXX")" &&
 REVIEW_ROOT="$WORK/source" &&
-git clone --single-branch --branch feature/v0.2.2 \
+git clone --single-branch --branch v0.2.2 \
   https://github.com/tomismeta/srstack.git "$REVIEW_ROOT" &&
-git -C "$REVIEW_ROOT" fetch origin refs/heads/feature/v0.2.2 &&
+git -C "$REVIEW_ROOT" fetch origin refs/tags/v0.2.2 &&
 REVIEWED_COMMIT="$(git -C "$REVIEW_ROOT" rev-parse --verify 'FETCH_HEAD^{commit}')" &&
 git -C "$REVIEW_ROOT" checkout --detach "$REVIEWED_COMMIT" &&
 printf '%s\n' "$REVIEWED_COMMIT" > "$WORK/reviewed-commit.txt" &&
