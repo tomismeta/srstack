@@ -1,4 +1,3 @@
-<a id="read-only-research-workflow"></a>
 # Research and analysis workflow
 
 For live status, identity, observational accounting and requested conditional analysis. Design explanations need only the topic and cited records; [inspection](inspection.md) defines state, price and gross-value observations. Apply [safety](safety.md) to tools, user-consented private inputs, unsigned preparation and nonbroadcast simulation. Use real host capabilities and normal approvals, not invented APIs; do not sign, request signatures or submit/broadcast transactions.

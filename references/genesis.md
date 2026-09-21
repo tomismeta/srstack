@@ -8,7 +8,7 @@ The whitelist mint charges `whitelist-liquidity-fee`, with `whitelist-wallet-lim
 
 Exact combined-wallet and public-transaction limits are `founding-wallet-limit` and `founding-public-transaction-limit`; they are distinct from the whitelist claim limit.
 
-Wallet eligibility and live sale availability are not established by the design document. Requested mint explanations, unsigned preparation and nonbroadcast simulation follow [execution](execution.md); do not request wallet signatures, sign or submit a mint.
+Wallet eligibility and live sale availability are not established by the design document. Requested mint explanations, unsigned preparation and nonbroadcast simulation follow [safety](safety.md); do not request wallet signatures, sign or submit a mint.
 
 ## Escrow and finalization
 

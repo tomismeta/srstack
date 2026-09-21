@@ -40,7 +40,7 @@ Common questions have [direct inspection paths](references/inspection.md#common-
 
 Research topics: [protocol](references/protocol.md) · [charters](references/charters.md) · [reserves](references/reserves.md) · [contracts](references/contracts.md) · [updates](references/updates.md) · [documents](references/documents.md) · [risks](references/risks.md).
 
-These are routing instructions within one skill, not separately installed commands. `Use srstack` returns the two-route menu. `/srstack` works where the host registers an installed skill command; other command syntax varies by host.
+These are routing instructions within one skill, not separately installed commands. `Use srstack` returns the research / inspect / analyse / workflows menu. `/srstack` works where the host registers an installed skill command; other command syntax varies by host.
 
 ## Requirements
 

@@ -8,6 +8,8 @@ For “how did each auction go?”, historical quantities, paid prices or sellou
 
 The published lifecycle keeps the license auction dormant until owner activation, then starts a fresh `auction-duration` first day. Additional charter supply starts at `initial-daily-charter-count` and remains policy-controlled (`charter-count-policy`). Use a fresh `auctions` snapshot for activation, configured duration and inventory; do not infer them from these reference rules or treat a price-function output as buyable inventory. If the read is unavailable, current availability is unknown. [sr-whitepaper-v1: branches, auctions; sr-publisher-read-interface]
 
+For a requested time-to-buy model, use the observed auction duration or an explicitly assumed duration and price curve, labelled as such. Missing current availability prevents a live purchase claim, not conditional arithmetic.
+
 When enabled, ongoing purchases execute immediately at the current price, first come first served, with no bids, escrow or refunds. Unsold daily capacity does not roll over; unpurchased charters are never minted. The **founding sale does escrow proceeds** until finalization, so §8's no-escrow description must not be generalized to it. [sr-whitepaper-v1: charters, auctions]
 
 `license-auction-activation` and `auction-unsold-policy` preserve the lifecycle rules; `auction-owner-controls` records the bounded tuning authority. None establishes live activation or current auction configuration.

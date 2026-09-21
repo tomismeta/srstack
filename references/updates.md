@@ -6,7 +6,7 @@ For current auction-day length, availability and usable prices, use `scripts/sna
 
 For current issuance, taxes, supply decomposition and restriction flags, use the `protocol` snapshot. For a selected public charter, use the `charter` view with its ID. Distinguish enabled from active restrictions and permanent token burns from ledger retirement; totals do not identify the cause of each removal. The helper reads a fixed publisher ABI at one block; it does not execute trades or reproduce the entire implementation.
 
-Use [documents](documents.md) for published rules, [contracts](contracts.md) for identities, and [inspection](inspection.md) to interpret freshly requested observations. Unavailable state remains unknown. User-requested monitoring, schedules and external evidence caches follow [execution](execution.md); do not start unsolicited background activity or silently update installed sources during research.
+Use [documents](documents.md) for published rules, [contracts](contracts.md) for identities, and [inspection](inspection.md) to interpret freshly requested observations. Unavailable state remains unknown. User-requested monitoring, schedules and external evidence caches follow [safety](safety.md); do not start unsolicited background activity or silently update installed sources during research.
 
 ## Second Mandate: liquidity for tokenized stocks
 

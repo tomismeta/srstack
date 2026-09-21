@@ -14,4 +14,4 @@ Exact scheduled clock times and the public opening price are **not established f
 
 For sale availability or finalization, obtain fresh authenticated state through [inspection](inspection.md), using the fixed reader where it covers the question or other host-authorized evidence paths; use [updates](updates.md) for official announcements. If the relevant state cannot be read, report it as unknown. Founding terms alone are not a live offer. [sr-protocol-conditions; sr-publisher-read-interface]
 
-[Trading](launch-trading.md) covers taxes and pool settings; [contracts](contracts.md) routes deployment identity and implementation limits. Requested mint how-to, unsigned preparation and nonbroadcast simulation follow [execution](execution.md); do not request wallet signatures, sign or submit a mint.
+[Trading](launch-trading.md) covers taxes and pool settings; [contracts](contracts.md) routes deployment identity and implementation limits. Requested mint how-to, unsigned preparation and nonbroadcast simulation follow [safety](safety.md); do not request wallet signatures, sign or submit a mint.
