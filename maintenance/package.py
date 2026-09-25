@@ -15,7 +15,7 @@ from pathlib import Path, PurePosixPath
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT
 MANIFEST = "release-manifest.json"
-VERSION = "0.2.2"
+VERSION = "0.3.0"
 SCRIPT_FILES = {"scripts/snapshot.py", "scripts/price.py", "scripts/history.py", "scripts/verify.py"}
 TOP_FILES = {"SKILL.md", "README.md", "LICENSE", MANIFEST}
 REPOSITORY_DIRS = {"maintenance", ".github", ".git", "dist"}
@@ -188,13 +188,27 @@ def verify_content(files):
                 raise ValueError(f"Invalid entity identity: {record['id']}")
             if record["chain_id"] != 4663 or record["explorer_url"] != f"https://robin.etherscan.io/address/{address}#code":
                 raise ValueError(f"Wrong-chain/nonpreferred explorer: {record['id']}")
-            if record["attribution"]["status"] != "publisher-listed" or not record["attribution"]["source_ids"]:
-                raise ValueError(f"Missing publisher attribution: {record['id']}")
+            attribution = record["attribution"]
+            status = attribution["status"]
+            directory_status = record.get("directory_status")
+            allowed_directory_status = {
+                "publisher-listed": {"current-publisher-entry", "historical-generation"},
+                "relationship-observed": {"dependency-not-directory-entry"},
+            }
+            if (status not in allowed_directory_status or not attribution["source_ids"]
+                    or directory_status not in allowed_directory_status[status]):
+                raise ValueError(f"Missing or inconsistent entity attribution: {record['id']}")
         entities.extend(group_records)
     identities = {(record["chain_id"], record["address"].lower()) for record in entities}
     if len(identities) != len(entities) or len({record["id"] for record in entities}) != len(entities):
         raise ValueError("Duplicate entity identity or record ID")
-    if entity_index["publisher_attributed_records"] != len(entities):
+    counts = {
+        "publisher_attributed_records": sum(record["attribution"]["status"] == "publisher-listed" for record in entities),
+        "relationship_attributed_records": sum(record["attribution"]["status"] == "relationship-observed" for record in entities),
+        "inventory_records": len(entities),
+        "current_directory_records": sum(record["directory_status"] == "current-publisher-entry" for record in entities),
+    }
+    if any(type(entity_index.get(key)) is not int or entity_index[key] != count for key, count in counts.items()):
         raise ValueError("Entity attribution count mismatch")
     return {"files": len(files), "sources": len(source_ids), "parameters": len(records),
             "entities": len(entities),

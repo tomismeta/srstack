@@ -1,14 +1,17 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-20",
-  "scope": "Whitepaper section routing, official strategic direction, application discovery, publisher read interface and auction event provenance for bounded on-demand readers; no stored protocol state or implementation audit",
+  "reviewed_at": "2026-09-25",
+  "scope": "Whitepaper and v1.1 source routing, dated staking/check-in frontend provenance, identity/cutover evidence and on-demand snapshot/history interfaces; no saved live state.",
   "source_index": "assets/sources.json",
   "source_provenance": "Page source_id and source_file locate the authoritative source record and its retrieval date; page routing does not duplicate retrieval timestamps.",
   "parameter_catalog": "assets/parameters.json",
   "deployment_addition": {
     "source_ids": [
       "sr-contract-directory",
-      "sr-protocol-conditions"
+      "sr-protocol-conditions",
+      "sr-protocol-v1-1-announcement",
+      "sr-v1-1-deployment-evidence",
+      "sr-protocol-control-dependencies"
     ],
     "source_file": "assets/sources/deployments.json",
     "entity_index": "assets/entity-index.json",
@@ -20,13 +23,14 @@
     "Publisher documentation and ABI are not independently verified source code.",
     "Live values come from bounded block-scoped reads; current observations are not future guarantees.",
     "Read changing application panels and official updates on demand for current claims or report unavailable; retained observations may support dated historical analysis, not an unlabelled current-state fallback.",
-    "The Second Mandate is announced strategy, not a replacement for documented whitepaper mechanics or proof of implementation. Its dated rationale and sample reserve positions are neither current observations nor financial offers or entitlements."
+    "The Second Mandate is announced strategy, not a replacement for documented whitepaper mechanics or proof of implementation. Its dated rationale and sample reserve positions are neither current observations nor financial offers or entitlements.",
+    "Published v1.1 rules are not current settings. Security review is publisher-reported, not independently authenticated audit coverage; deployed arithmetic/rounding, payment-path correspondence and new treasury-module privileges remain unverified."
   ],
   "pages": [
     {
       "source_id": "sr-whitepaper-v1",
       "url": "https://www.standardreserve.xyz/whitepaper/",
-      "final_url": "https://www.standardreserve.xyz/whitepaper/",
+      "final_url": "https://www.standardreserve.xyz/app/protocol/whitepaper/",
       "review_status": "documentation-text-and-equation-annotations-reviewed",
       "topics": [
         "references/documents.md",
@@ -43,8 +47,8 @@
     },
     {
       "source_id": "sr-token-page-v1",
-      "url": "https://www.standardreserve.xyz/app/token/",
-      "final_url": "https://www.standardreserve.xyz/app/token/",
+      "url": "https://www.standardreserve.xyz/app/protocol/live/",
+      "final_url": "https://www.standardreserve.xyz/app/protocol/live/",
       "review_status": "topic-explanation-reviewed",
       "topics": [
         "references/protocol-policy.md",
@@ -84,6 +88,109 @@
         "references/updates.md#second-mandate-liquidity-for-tokenized-stocks",
         "references/protocol.md",
         "references/reserves.md"
+      ],
+      "source_file": "assets/sources/website-v1.json"
+    },
+    {
+      "source_id": "sr-protocol-v1-1-announcement",
+      "url": "https://x.com/standard_rsv/status/2102194858538815645",
+      "final_url": "https://x.com/standard_rsv/status/2102194858538815645",
+      "review_status": "official announced v1.1 policy and reported security review, not a perpetual live-state or audit guarantee",
+      "topics": [
+        "references/updates.md",
+        "references/contracts.md",
+        "references/auctions.md",
+        "references/reserves.md",
+        "references/risks.md"
+      ],
+      "source_file": "assets/sources/deployments.json"
+    },
+    {
+      "source_id": "sr-v1-1-deployment-evidence",
+      "url": "https://www.standardreserve.xyz/assets/mountApp-BqtUxqir.js",
+      "final_url": "https://www.standardreserve.xyz/assets/mountApp-BqtUxqir.js",
+      "review_status": "publisher identity plus historical deployment/cutover evidence, not complete Solidity/ABI verification or stored runtime state",
+      "topics": [
+        "references/updates.md",
+        "references/contracts.md",
+        "references/auctions.md",
+        "references/reserves.md",
+        "references/risks.md"
+      ],
+      "source_file": "assets/sources/deployments.json"
+    },
+    {
+      "source_id": "sr-protocol-control-dependencies",
+      "url": "https://robinhoodchain.blockscout.com/api/v2/transactions/0x7f60ac022bef065a67d96957783863388b66e696c97b89ed84e3f61f94059b3b/logs",
+      "final_url": "https://robinhoodchain.blockscout.com/api/v2/transactions/0x7f60ac022bef065a67d96957783863388b66e696c97b89ed84e3f61f94059b3b/logs",
+      "review_status": "historical administrative dependency relationships requiring fresh verification",
+      "topics": [
+        "references/updates.md",
+        "references/contracts.md",
+        "references/auctions.md",
+        "references/reserves.md",
+        "references/risks.md"
+      ],
+      "source_file": "assets/sources/deployments.json"
+    },
+    {
+      "source_id": "sr-v1-1-read-interface",
+      "url": "https://www.standardreserve.xyz/assets/mountApp-BqtUxqir.js",
+      "final_url": "https://www.standardreserve.xyz/assets/mountApp-BqtUxqir.js",
+      "review_status": "publisher-authenticated selected read/event interface, not independent Solidity/source-bytecode proof",
+      "topics": [
+        "references/updates.md",
+        "references/contracts.md",
+        "references/auctions.md",
+        "references/reserves.md",
+        "references/risks.md"
+      ],
+      "source_file": "assets/sources/live-interface.json"
+    },
+    {
+      "source_id": "sr-pol-buyback-event-interface",
+      "url": "https://robinhoodchain.blockscout.com/api/v2/transactions/0xd38d8cad716e65f66babb64f6406d81dab3158cc481401be6dd1f0a8ff7eadae/logs",
+      "final_url": "https://robinhoodchain.blockscout.com/api/v2/transactions/0xd38d8cad716e65f66babb64f6406d81dab3158cc481401be6dd1f0a8ff7eadae/logs",
+      "review_status": "authenticated event-only accounting surface; token identity/decimals and movement not inferred from event alone",
+      "topics": [
+        "references/updates.md",
+        "references/contracts.md",
+        "references/auctions.md",
+        "references/reserves.md",
+        "references/risks.md"
+      ],
+      "source_file": "assets/sources/live-interface.json"
+    },
+    {
+      "source_id": "sr-staking-preview",
+      "url": "https://www.standardreserve.xyz/app/staking/about/",
+      "final_url": "https://www.standardreserve.xyz/app/staking/about/",
+      "review_status": "publisher explanation and explicitly illustrative component preview; not rendered interaction, authenticated deployment or current availability",
+      "topics": [
+        "references/updates.md",
+        "references/documents.md"
+      ],
+      "source_file": "assets/sources/website-v1.json"
+    },
+    {
+      "source_id": "sr-owner-check-in-frontend",
+      "url": "https://www.standardreserve.xyz/app/",
+      "final_url": "https://www.standardreserve.xyz/assets/mountApp-DIJs6ehM.js",
+      "review_status": "dated source-text evidence of check-in UI and action; wallet flow not exercised",
+      "topics": [
+        "references/updates.md",
+        "references/exits.md"
+      ],
+      "source_file": "assets/sources/website-v1.json"
+    },
+    {
+      "source_id": "sr-sbill-announcement",
+      "url": "https://x.com/standard_rsv/status/2102877169852747865",
+      "final_url": "https://nitter.tiekoetter.com/standard_rsv/status/2102877169852747865",
+      "review_status": "official post through public mirror; forthcoming audit claim, not audit completion or deployment proof",
+      "topics": [
+        "references/updates.md",
+        "references/documents.md"
       ],
       "source_file": "assets/sources/website-v1.json"
     }
@@ -289,7 +396,10 @@
     }
   ],
   "market_price": {
-    "source_ids": ["dexscreener-api", "geckoterminal-api"],
+    "source_ids": [
+      "dexscreener-api",
+      "geckoterminal-api"
+    ],
     "path": "scripts/price.py",
     "identity_catalog": "assets/entities/robinhood.json",
     "scope": "Canonical-pool prices with DEX Screener primary, labelled GeckoTerminal availability fallback, optional cross-check and single-provider gross valuation",
@@ -302,35 +412,41 @@
   },
   "auction_history": {
     "source_ids": [
-      "sr-auction-event-interface"
+      "sr-auction-event-interface",
+      "sr-v1-1-deployment-evidence",
+      "sr-v1-1-read-interface"
     ],
     "source_file": "assets/sources/live-interface.json",
     "event_catalog": "assets/interfaces/auction-events.json",
     "reference": "references/auction-history.md",
-    "scope": "Bounded on-demand purchase and round reconstruction with publisher-authenticated event definitions, historical anchors, quantity-weighted consideration and explicit coverage gaps",
+    "scope": "Bounded legacy and v1.1 license history plus charter history, preserving chain/address/generation/round identity; not the current auction-status path",
     "limits": [
       "The fixed history helper reads authenticated events on demand with hard coverage budgets; it does not persist observations, generate performance recaps or expand its eth_call surface. These helper limits do not prohibit requested historical analysis or host-authorized artifacts.",
       "Round IDs do not establish duration; roll inclusion time does not establish scheduled opening. Historical caps and settings cannot be replaced with present values.",
       "Purchase-event accounting is distinct from independently reconciled payments; incomplete logs, archive failure and empty responses are not complete zero history.",
-      "No dedicated reviewed sellout/end event or independent auction source/bytecode equivalence is established."
+      "No dedicated reviewed sellout/end event or independent auction source/bytecode equivalence is established.",
+      "Do not merge reused round IDs across license generations or drop legacy history. Current availability uses direct getters, never rediscovery, reindexing or log reconstruction."
     ]
   },
   "buyback_history": {
-    "source_ids": ["sr-extended-read-interface"],
+    "source_ids": [
+      "sr-extended-read-interface"
+    ],
     "source_file": "assets/sources/live-interface.json",
     "event_catalog": "assets/interfaces/treasury-events.json",
     "reference": "references/auction-history.md",
-    "scope": "Bounded BuybackExecuted accounting after fixed STANDARD binding/decimals authentication; no stored observations, complete-history claim or transfer reconciliation"
+    "scope": "Contraction Vault BuybackExecuted(uint256,uint256) burn accounting only, with fixed STANDARD binding/decimals authentication; no complete-history or transfer-reconciliation claim"
   },
   "read_interface": {
     "source_ids": [
       "sr-extended-read-interface",
       "sr-publisher-read-interface",
       "sr-standard-source-interface",
-      "sr-tax-hook-source-interface"
+      "sr-tax-hook-source-interface",
+      "sr-v1-1-read-interface"
     ],
     "path": "assets/interfaces/robinhood-reads.json",
-    "scope": "Bounded scalar/static-tuple protocol, charter, auction and treasury reads; current/queued policy, recycling, allocation/liability and approval-gated raw reserve holdings, with transitive bindings",
+    "scope": "Pinned current-v1.1 auction getters; separate round/cap window and lazy-roll context; protocol/charter/treasury reads with fixed STANDARD.balanceOf(incentivesVault) and generic owners, not guessed new treasury methods",
     "profiles": [
       "protocol",
       "charter",
@@ -338,9 +454,27 @@
       "treasury"
     ],
     "limits": [
-      "The fixed snapshot helper exposes only the reviewed ABI surface, without transaction methods, address-scoped blocklist input or caller endpoints. This is not an allowlist for host-authorized supplemental research or nonbroadcast simulation.",
+      "The fixed snapshot helper exposes only the reviewed ABI surface, without transaction methods or address-scoped blocklist input. RPC endpoint selection uses host-managed environment settings, not caller ABI inputs. This is not an allowlist for host-authorized supplemental research or nonbroadcast simulation.",
       "Selected STANDARD and Trading Hook source/ABI reconciliation is review provenance, not verification of every module or current state.",
-      "Burn totals do not attribute individual causes; restriction flags do not predict transaction success; epoch rollover remains an explicit evidence boundary."
+      "Burn totals do not attribute individual causes; restriction flags do not predict transaction success; epoch rollover remains an explicit evidence boundary.",
+      "Current auction status uses snapshot.py auctions directly with packaged identities/ABI; no rediscovery, reindexing or history scan. Legacy license role authenticates history only.",
+      "soldToday/remainingToday and stored currentDay may lag lazy rollover; no human24h sales recap or historical closing price is inferred. Exact cap-window math remains source-unverified.",
+      "Treasury STANDARD.balanceOf(incentivesVault) is a token balance read, not a new vault ABI, asset census, distribution entitlement or complete privileged-control review."
     ]
+  },
+  "rpc_guidance": {
+    "source_ids": ["sr-robinhood-rpc-guidance"],
+    "source_file": "assets/sources/deployments.json",
+    "reference": "references/execution.md#rpc-provider-guidance",
+    "scope": "Official Alchemy production recommendation, not a provider restriction; rate-limited public default and archive requirement. RPC precedence: SRSTACK_RPC_URL > ALCHEMY_API_KEY > official public default; optional host-managed secrets, HTTP/HTTPS custom endpoints (HTTPS preferred for credentials), credential-redacted outputs, no silent failover or installed live state."
+  },
+  "pol_buyback_history": {
+    "source_ids": [
+      "sr-pol-buyback-event-interface"
+    ],
+    "source_file": "assets/sources/live-interface.json",
+    "event_catalog": "assets/interfaces/treasury-events.json",
+    "reference": "references/auction-history.md",
+    "scope": "history.py pol-buybacks: separate POL Buyback BuybackExecuted(uint256,uint256,address) event accounting; tokensOut raw and destination, not authenticated token identity/decimals, burns or wallet flows"
   }
 }

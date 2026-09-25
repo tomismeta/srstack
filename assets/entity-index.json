@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "reviewed_on": "2026-09-14",
-  "scope": "Publisher-attributed Robinhood deployment identity directory; not a chain census or stored verification result",
-  "publisher_attributed_records": 14,
+  "reviewed_on": "2026-09-22",
+  "scope": "Robinhood identity inventory: 16 current publisher-directory entries, one historical license-auction generation and three evidence-backed administrative/shared dependencies; not a chain census or stored live state.",
+  "publisher_attributed_records": 17,
   "groups": [
     {
       "id": "robinhood",
@@ -22,14 +22,22 @@
         "sr-robinhood-fee-splitter",
         "sr-robinhood-registry",
         "sr-robinhood-pool-manager",
-        "sr-robinhood-multicall3"
+        "sr-robinhood-multicall3",
+        "sr-robinhood-license-auction-v1-1",
+        "sr-robinhood-pol-buyback",
+        "sr-robinhood-incentives-vault",
+        "sr-robinhood-admin-safe",
+        "sr-robinhood-safe-implementation",
+        "sr-robinhood-safe-multisend"
       ],
-      "scope": "12 protocol modules and2 shared infrastructure entries from all4 official directory tabs"
+      "scope": "16 current publisher-directory entries (14 protocol modules and 2 shared infrastructure entries), one historical license generation and 3 administrative/shared dependencies"
     }
   ],
   "source_ids": [
     "sr-contract-directory",
-    "sr-etherscan-chainlist"
+    "sr-etherscan-chainlist",
+    "sr-v1-1-deployment-evidence",
+    "sr-protocol-control-dependencies"
   ],
   "identity_key": [
     "chain_id",
@@ -41,7 +49,13 @@
     "No Arbitrum or local-test bundle addresses are promoted to this deployment.",
     "Shared infrastructure is not project-authored, and a pool manager is not the canonical pool.",
     "Publisher attribution is not source verification, ABI authentication, activation or audited safety.",
-    "This identity index contains no changing balances or live values. Keep requested observations or caches outside the installed runtime, with their provenance and as-of time; do not infer live values from this index."
+    "This identity index contains no changing balances or live values. Keep requested observations or caches outside the installed runtime, with their provenance and as-of time; do not infer live values from this index.",
+    "Current publisher-directory membership is identity attribution, not a saved live activation/ownership observation. Historical control relationships must be refreshed for current use."
   ],
-  "workflow": "references/contracts.md"
+  "workflow": "references/contracts.md",
+  "inventory_records": 20,
+  "historical_generation_records": 1,
+  "control_dependency_records": 3,
+  "relationship_attributed_records": 3,
+  "current_directory_records": 16
 }

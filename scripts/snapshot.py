@@ -11,10 +11,12 @@ It is getter argument data only, never an eth_call target. Holdings use raw unit
 CLI mode never reads stdin. UINT256 is 1..78 ASCII decimal digits in uint256 range.
 Optional detail: summary (default) or full (raw RPC evidence and call mapping).
 Flags must be exact, unrepeated, separate tokens; --help must stand alone.
-No wallet, signing, simulation, endpoint override, or filesystem writes.
+RPC: SRSTACK_RPC_URL, otherwise ALCHEMY_API_KEY, otherwise free public RPC.
+No wallet, signing, simulation, or filesystem writes.
 Owner getters are observations, not a privilege audit.
 """
 
+import base64
 import hashlib
 import http.client
 import json
@@ -29,10 +31,10 @@ import threading
 import time
 from datetime import datetime, timezone
 import unicodedata
+from urllib.parse import parse_qsl, quote, unquote, urlsplit
 
 
 RPC_URL = "https://rpc.mainnet.chain.robinhood.com/"
-RPC_HOST = "rpc.mainnet.chain.robinhood.com"
 CHAIN_ID = 4663
 NOTE = "RPC snapshot; publisher ABI."
 MAX_INPUT_BYTES = 4096
@@ -61,9 +63,10 @@ SCALAR_TYPES = frozenset(("uint256", "uint8", "uint24", "int24", "bool", "addres
 ASSET_GETTERS = frozenset(("isReserveAsset", "holdingsOf", "reservePool"))
 ASSET_APPROVAL = "expansion_is_reserve_asset"
 ASSET_DETAILS = frozenset(("expansion_holdings", "expansion_reserve_pool"))
+INCENTIVES_BALANCE = "incentives_vault_standard_balance"
 # Reviewed execution metadata, not a source/bytecode equivalence assertion.
 # Changing the callable surface requires deliberate review and a new fingerprint.
-CALLS_SHA256 = "481f29ae134d1ef2cc6e354ee27be544cb393a0eabafde79206e0ff022297434"
+CALLS_SHA256 = "b2a5e38537e62df62f0a54d2c95a71eaf8cad8cfaf4308c85758811ed989323b"
 
 
 class InputError(ValueError):
@@ -80,6 +83,71 @@ class SnapshotError(ValueError):
     def __init__(self, message, diagnostics=None):
         super().__init__(message)
         self.diagnostics = diagnostics
+
+
+def _rpc_endpoint():
+    """Select user infrastructure without exposing URL credentials in evidence."""
+    key = os.environ.get("ALCHEMY_API_KEY", "")
+    url = os.environ.get("SRSTACK_RPC_URL") or (
+        "https://robinhood-mainnet.g.alchemy.com/v2/" + quote(key, safe="") if key else RPC_URL)
+    try:
+        parsed = urlsplit(url)
+        if (parsed.scheme not in ("http", "https") or not parsed.hostname
+                or parsed.fragment or any(character.isspace() or ord(character) < 32 or ord(character) == 127 for character in url)):
+            raise ValueError
+        port = parsed.port
+    except ValueError:
+        raise SnapshotError("invalid SRSTACK_RPC_URL; use an HTTP or HTTPS RPC URL") from None
+    path = parsed.path or "/"
+    target = path + ("?" + parsed.query if parsed.query else "")
+    host = parsed.hostname
+    authority = ("[" + host + "]") if ":" in host else host
+    if port is not None:
+        authority += ":" + str(port)
+    label = RPC_URL if url == RPC_URL else parsed.scheme + "://" + authority + "/[REDACTED]"
+    headers = {"Content-Type": "application/json", "Accept": "application/json"}
+    secrets = {key, url if url != RPC_URL else ""}
+    if url != RPC_URL:
+        secrets.update(part for part in parsed.path.split("/") if part)
+        secrets.update(value for _, value in parse_qsl(parsed.query, keep_blank_values=False))
+        secrets.update(part.partition("=")[2] for part in parsed.query.split("&") if "=" in part)
+    if parsed.username is not None:
+        user, password = unquote(parsed.username), unquote(parsed.password or "")
+        authorization = base64.b64encode((user + ":" + password).encode()).decode()
+        headers["Authorization"] = "Basic " + authorization
+        secrets.update((user, password, authorization))
+    secrets.update(unquote(value) for value in tuple(secrets))
+    secrets.update(quote(value, safe="") for value in tuple(secrets))
+    secrets.update(json.dumps(value, ensure_ascii=True)[1:-1] for value in tuple(secrets))
+    return {"scheme": parsed.scheme, "host": host, "port": port, "target": target,
+            "headers": headers, "label": label, "secrets": tuple(sorted(secrets - {""}, key=len, reverse=True))}
+
+
+def _redact_rpc(value, *, truncated=False):
+    secrets = _rpc_endpoint()["secrets"]
+    if not secrets:
+        return value
+    pattern = re.compile("|".join(re.escape(secret) for secret in secrets))
+
+    def redact(item):
+        if isinstance(item, str):
+            cutoff = len(item)
+            if truncated:
+                # A bounded header/body may end partway through an echoed key.
+                for secret in secrets:
+                    for length in range(min(len(secret) - 1, len(item)), 0, -1):
+                        if item.endswith(secret[:length]):
+                            cutoff = min(cutoff, len(item) - length)
+                            break
+            clean = pattern.sub("[REDACTED]", item[:cutoff])
+            return clean + ("[REDACTED]" if cutoff < len(item) else "")
+        if isinstance(item, list):
+            return [redact(child) for child in item]
+        if isinstance(item, dict):
+            return {redact(key): redact(child) for key, child in item.items()}
+        return item
+
+    return redact(value)
 
 
 def _pairs(pairs):
@@ -233,10 +301,10 @@ def _validate_package(interface, catalog):
             or not isinstance(bundle["retrieved_at"], str) or len(bundle["retrieved_at"]) > 40):
         raise ValueError("invalid publisher metadata")
     contracts = interface["contracts"]
-    if not isinstance(contracts, dict) or len(contracts) != 11 or not all(isinstance(k, str) and IDENTIFIER.fullmatch(k) and isinstance(v, str) for k, v in contracts.items()):
+    if not isinstance(contracts, dict) or len(contracts) != 14 or not all(isinstance(k, str) and IDENTIFIER.fullmatch(k) and isinstance(v, str) for k, v in contracts.items()):
         raise ValueError("invalid contracts")
     calls = interface["calls"]
-    if not isinstance(calls, list) or not 1 <= len(calls) <= 128:
+    if not isinstance(calls, list) or not 1 <= len(calls) <= 144:
         raise ValueError("invalid call count")
     seen = set()
     required = {"id", "contract", "function", "signature", "mutability", "input_types", "args", "output_type", "decimals", "unit", "profiles", "selector"}
@@ -257,9 +325,12 @@ def _validate_package(interface, catalog):
             elif kind in ("uint256", "uint8"):
                 valid = _integer(argument, 255 if kind == "uint8" else UINT256_MAX) or (kind == "uint256" and argument == "$charter_id")
             elif kind == "address":
-                valid = (argument == "$reserve_asset" and call["contract"] == "expansionVault"
-                         and call["function"] in ASSET_GETTERS and types == ["address"]
-                         and call["profiles"] == ["treasury"])
+                valid = types == ["address"] and call["profiles"] == ["treasury"] and (
+                    (argument == "$reserve_asset" and call["contract"] == "expansionVault"
+                     and call["function"] in ASSET_GETTERS)
+                    or (identifier == INCENTIVES_BALANCE and call["contract"] == "standard"
+                        and call["function"] == "balanceOf" and isinstance(argument, str)
+                        and ADDRESS.fullmatch(argument)))
             else:
                 valid = False
             if not valid:
@@ -320,6 +391,9 @@ def _validate_package(interface, catalog):
         addresses.add(record["address"].lower())
     if not set(contracts.values()) <= entities.keys():
         raise ValueError("missing contract entity")
+    if any(call["args"][0].lower() != entities[contracts["incentivesVault"]]
+           for call in calls if call["id"] == INCENTIVES_BALANCE):
+        raise ValueError("incentives balance argument does not match fixed catalog")
     return {role: entities[identifier] for role, identifier in contracts.items()}
 
 
@@ -352,6 +426,7 @@ def _load_package():
 
 def _diagnostic_text(text, limit):
     """Bound untrusted response text; never expose common credential material."""
+    text = _redact_rpc(text, truncated=True)
     text = re.sub(r"\x1b(?:\[[0-?]*[ -/]*[@-~]|\][^\x07\x1b]*(?:\x07|\x1b\\))", "", text)
     text = "".join(character for character in text if not unicodedata.category(character).startswith("C"))
     text = re.sub(r"(?i)\b(?:bearer|basic)\s+[^\s\"'<>;,]+", "[REDACTED]", text)
@@ -364,7 +439,7 @@ def _diagnostic_text(text, limit):
 
 
 def _http_failure(response, connection, deadline, monotonic, failure):
-    diagnostics = {"http_status": response.status, "endpoint": RPC_URL, "headers": {},
+    diagnostics = {"http_status": response.status, "endpoint": _rpc_endpoint()["label"], "headers": {},
                    "response_excerpt": "", "excerpt_bytes": 0, "truncated": True,
                    "read_error": None, "untrusted_response": True, "cause": "unconfirmed"}
     message = ("endpoint denied this request" if response.status in (401, 403)
@@ -411,13 +486,14 @@ def _http_failure(response, connection, deadline, monotonic, failure):
     raise error
 
 
-def _https_request(connection, payload, deadline, monotonic, failure=None):
-    """Read one bounded HTTP response on a direct HTTPS connection."""
+def _https_request(connection, payload, deadline, monotonic, failure=None, endpoint=None):
+    """Read one bounded HTTP response on the selected direct connection."""
+    endpoint = endpoint or _rpc_endpoint()
     try:
         connection.connect()
         if monotonic() >= deadline:
             raise SnapshotError("RPC request deadline exceeded before sending")
-        connection.request("POST", "/", body=payload, headers={"Content-Type": "application/json", "Accept": "application/json"})
+        connection.request("POST", endpoint["target"], body=payload, headers=endpoint["headers"])
         response = connection.getresponse()
         if response.status != 200:
             _http_failure(response, connection, deadline, monotonic, failure)
@@ -452,14 +528,16 @@ def _https(payload, timeout, deadline, monotonic):
     timeout = min(timeout, deadline - monotonic())
     if timeout <= 0:
         raise SnapshotError("snapshot deadline exceeded")
-    connection = http.client.HTTPSConnection(RPC_HOST, timeout=timeout)
+    endpoint = _rpc_endpoint()
+    connection_type = http.client.HTTPSConnection if endpoint["scheme"] == "https" else http.client.HTTPConnection
+    connection = connection_type(endpoint["host"], port=endpoint["port"], timeout=timeout)
     request_deadline = min(deadline, monotonic() + timeout)
     finished = threading.Event()
     outcome, failure = [], []
 
     def request():
         try:
-            outcome.append(_https_request(connection, payload, request_deadline, monotonic, failure))
+            outcome.append(_https_request(connection, payload, request_deadline, monotonic, failure, endpoint))
         except Exception as error:
             outcome.append(error)
         finally:
@@ -527,7 +605,7 @@ class _RPC:
                     item = by_id.get(request["id"])
                     results.append((item["result"], None) if item is not None and "result" in item else (None, "RPC field unavailable"))
                 if self.full:
-                    self.exchanges.append({"requests": batch, "responses": response})
+                    self.exchanges.append({"requests": batch, "responses": _redact_rpc(response)})
             except (OSError, ValueError, TypeError, RecursionError) as error:
                 if isinstance(error, SnapshotError):
                     raise
@@ -622,7 +700,7 @@ def _calldata(call, config):
     return result
 
 
-def _derive(config, raw, values, errors):
+def _derive(config, raw, values, errors, timestamp):
     derived = {}
 
     def amount(identifier, value, unit="STANDARD"):
@@ -661,20 +739,55 @@ def _derive(config, raw, values, errors):
     if config["view"] == "auctions":
         for prefix in ("license", "charter_auction"):
             started, paused, remaining = (prefix + suffix for suffix in ("_started", "_paused", "_remaining"))
+            is_license = prefix == "license"
+            current = prefix + ("_current_round" if is_license else "_current_day")
+            last = prefix + ("_last_sale_round" if is_license else "_last_sale_day")
+            period = prefix + ("_round_seconds" if is_license else "_day_seconds")
+            anchor = "license_auction_anchor" if is_license else "charter_auction_anchor"
+            context_id = prefix + "_round_context"
+            context = "unknown"
+            if available(started):
+                if not raw[started]:
+                    context = "not_started"
+                elif available(current, period, anchor):
+                    if raw[period] == 0 or raw[anchor] == 0 or raw[anchor] > timestamp:
+                        errors[context_id] = "positive period and nonzero anchor at or before the snapshot block required"
+                    else:
+                        elapsed = (timestamp - raw[anchor]) // raw[period]
+                        derived[prefix + "_elapsed_round"] = {"value": str(elapsed), "unit": "auction-round"}
+                        stored = raw[current]
+                        context = "aligned" if stored == elapsed else "rollover_pending" if stored < elapsed else "stored_ahead"
+                        derived[prefix + "_stored_round_stale"] = {"value": stored != elapsed, "unit": "boolean"}
+                        derived[prefix + "_rollover_pending"] = {"value": stored < elapsed, "unit": "boolean"}
+                        if stored > elapsed:
+                            errors[context_id] = "stored round exceeds elapsed round at the snapshot block"
+            derived[context_id] = {"value": context, "unit": "status"}
             status = "unknown"
             if available(started, paused, remaining):
                 status = "not_started" if not raw[started] else "paused" if raw[paused] else "sold_out" if raw[remaining] == 0 else "open"
-                derived[prefix + "_status"] = {"value": status, "unit": "status"}
+                derived[prefix + "_status"] = {"value": status, "unit": "status",
+                                               "basis": "contract_availability_getters", "round_context": context}
             price = prefix + "_current_price"
             if status != "open":
                 # Raw getter results remain inspectable in full RPC evidence only.
                 values.pop(price, None)
+            # Availability getters may already use the elapsed round while stored
+            # counters lag. Keep the live price observation, never an old closing recap.
+            for identifier in (current, prefix + "_sold", prefix + ("_round_cap" if is_license else "_day_cap"),
+                               prefix + ("_round_floor" if is_license else "_day_floor")):
+                if identifier in values:
+                    values[identifier]["round_context"] = context
+            for identifier in (remaining, price):
+                if identifier in values:
+                    values[identifier]["basis"] = "contract_availability_getter"
+                    values[identifier]["round_context"] = context
             if config["detail"] == "full":
-                for identifier in (prefix + "_last_sale_price", prefix + "_last_sale_day"):
+                for identifier in (prefix + "_last_sale_price", last):
                     if identifier in values:
                         values[identifier]["not_historical"] = True
-                if status == "sold_out" and available(prefix + "_last_sale_price", prefix + "_last_sale_day", prefix + "_current_day"):
-                    if raw[prefix + "_last_sale_day"] == raw[prefix + "_current_day"]:
+                        values[identifier]["round_context"] = context
+                if context == "aligned" and status == "sold_out" and available(prefix + "_last_sale_price", last, current):
+                    if raw[last] == raw[current]:
                         derived[prefix + "_closing_price"] = dict(values[prefix + "_last_sale_price"])
     return derived
 
@@ -723,7 +836,8 @@ def snapshot(config, transport=None, now=None, monotonic=None):
     mapping, raw = [], {}
 
     def fetch(calls):
-        callable_calls = [call for call in calls if call["contract"] not in bad_roles]
+        callable_calls = [call for call in calls if call["contract"] not in bad_roles
+                          and not (call["id"] == INCENTIVES_BALANCE and "incentivesVault" in bad_roles)]
         items = [{"id": call["id"], "contract": call["contract"], "address": addresses[call["contract"]],
                   "signature": call["signature"], "data": _calldata(call, config)} for call in callable_calls]
         mapping.extend(items)
@@ -753,7 +867,7 @@ def snapshot(config, transport=None, now=None, monotonic=None):
     values = {}
     for call in selected:
         identifier = call["id"]
-        if call["contract"] in bad_roles:
+        if call["contract"] in bad_roles or (identifier == INCENTIVES_BALANCE and "incentivesVault" in bad_roles):
             errors[identifier] = "contract code or binding check failed"
         elif identifier in raw:
             values[identifier] = _normalized(raw[identifier], call)
@@ -765,7 +879,7 @@ def snapshot(config, transport=None, now=None, monotonic=None):
         for call in standard_calls:
             values.pop(call["id"], None)
             errors[call["id"]] = "STANDARD decimals not confirmed as 18"
-    derived = _derive(config, raw, values, errors)
+    derived = _derive(config, raw, values, errors, timestamp)
     if config["view"] == "charter" and config["detail"] == "summary":
         values = {identifier: value for identifier, value in values.items() if identifier in CHARTER_VALUES}
         if "charter_owner" in values and not CHARTER_RATE_CALLS.isdisjoint(errors) and "charter_gross_daily" not in derived:
@@ -777,9 +891,10 @@ def snapshot(config, transport=None, now=None, monotonic=None):
         raise SnapshotError("snapshot block changed during read")
     evidence = {"chain_id": CHAIN_ID, "block_number": number, "block_hash": block_hash, "block_timestamp": timestamp,
                 "retrieved_at": datetime.fromtimestamp(now(), timezone.utc).isoformat().replace("+00:00", "Z"),
-                "interface_source_ids": interface["source_ids"], "package_sha256": hashes}
+                "interface_source_ids": interface["source_ids"], "package_sha256": hashes,
+                "rpc_url": _rpc_endpoint()["label"]}
     if config["detail"] == "full":
-        evidence.update({"rpc_url": RPC_URL, "call_mapping": mapping, "rpc_exchanges": rpc.exchanges,
+        evidence.update({"call_mapping": mapping, "rpc_exchanges": rpc.exchanges,
                          "publisher_bundle": interface["publisher_bundle"]})
     result = {"schema_version": 1, "status": "partial" if errors else "ok", "view": config["view"],
               "values": values, "derived": derived, "errors": errors, "evidence": evidence, "note": NOTE}

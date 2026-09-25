@@ -5,7 +5,8 @@ No flags: manifest membership and hash verification only, no helper runs or netw
 --charter: request one live charter snapshot. --price: request a live quote, or
 mark the successful charter's accrued STANDARD balance when used together.
 All selected smoke stages follow whole-install integrity verification. No stdin,
-root/path/command overrides or credentials. Full repository installs are rejected.
+root/path/command overrides. RPC credentials come from the host environment.
+Full repository installs are rejected.
 Integrity is not authenticity: review/pin the release and outer ZIP checksum first.
 """
 import hashlib
@@ -21,7 +22,7 @@ import time
 from pathlib import Path
 
 
-VERSION = "0.2.2"
+VERSION = "0.3.0"
 MANIFEST = "release-manifest.json"
 SCRIPTS = {"scripts/snapshot.py", "scripts/price.py", "scripts/history.py", "scripts/verify.py"}
 REQUIRED = {"README.md", "SKILL.md", "LICENSE"} | SCRIPTS
@@ -248,9 +249,11 @@ def _arguments(arguments):
 
 def _child(root, name, arguments):
     command = [sys.executable, "-B", "-I", str(root / "scripts" / name), *arguments]
+    environment = {"LC_ALL": "C"}
+    environment.update((name, os.environ[name]) for name in ("SRSTACK_RPC_URL", "ALCHEMY_API_KEY") if name in os.environ)
     process = subprocess.Popen(command, shell=False, stdin=subprocess.DEVNULL,
                                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                               cwd=root, env={"LC_ALL": "C"})
+                               cwd=root, env=environment)
     output = bytearray()
     errors = bytearray()
     size = 0
@@ -301,7 +304,9 @@ def _http_diagnostics(value):
     """Keep bounded original-response evidence, never arbitrary child metadata."""
     if (not isinstance(value, dict) or type(value.get("http_status")) is not int
             or not 100 <= value["http_status"] <= 599
-            or value.get("endpoint") != "https://rpc.mainnet.chain.robinhood.com/"):
+            or not isinstance(value.get("endpoint"), str)
+            or len(value["endpoint"]) > 2048
+            or not re.fullmatch(r"https?://[^/?#@\s]+/(?:\[REDACTED\])?", value["endpoint"])):
         return None
     safe_headers = {"content-type", "server", "date", "via", "cf-ray", "retry-after",
                     "x-request-id", "x-correlation-id", "request-id", "x-amzn-requestid"}

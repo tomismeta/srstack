@@ -26,12 +26,14 @@ class RPCFixture:
 
     def __init__(self, auction="license"):
         self.catalog, interface, addresses, _ = history._load_catalog(S, auction)
-        self.role = history.ROLES[auction]
+        self.role = "licenseAuctionLegacy" if auction == "license" else history.ROLES[auction]
         self.auction = auction
         self.address = addresses[self.role]
+        self.addresses = addresses
         self.definitions = {e["abi"]["name"]: e for e in self.catalog["events"] if self.role in e["contracts"]}
         self.logs, self.requests = [], []
-        self.head = 2_000_000
+        self.start_block = self.catalog["contracts"][self.role].get("deployment_block", 0) + 100
+        self.head = self.start_block + 1_999_900
         self.chain_id, self.code = S.CHAIN_ID, "0x6000"
         self.standard_address = addresses["standard"]
         self.binding_address, self.standard_decimals, self.standard_code = self.standard_address, 18, "0x6000"
@@ -48,7 +50,8 @@ class RPCFixture:
                             "response_excerpt": "fixture access denial", "excerpt_bytes": 21, "truncated": False,
                             "read_error": None, "untrusted_response": True, "cause": "unconfirmed"}
 
-    def add(self, name, block=102, index=0, **fields):
+    def add(self, name, block=None, index=0, **fields):
+        block = self.start_block + 2 if block is None else block
         definition = self.definitions[name]
         topics, words = [definition["topic0"]], []
         for item in definition["abi"]["inputs"]:
@@ -76,7 +79,10 @@ class RPCFixture:
             if method == "eth_chainId":
                 result = hex(self.chain_id)
             elif method == "eth_getCode":
-                result = self.standard_code if params[0] == self.standard_address else self.code
+                if self.auction == "license" and params[0] == self.addresses["licenseAuction"] and int(params[1], 16) < self.catalog["contracts"]["licenseAuction"]["deployment_block"]:
+                    result = "0x"
+                else:
+                    result = self.standard_code if params[0] == self.standard_address else self.code
             elif method == "eth_call":
                 if self.auction != "buybacks":
                     raise AssertionError("auction history cannot issue state calls")
@@ -108,8 +114,8 @@ class RPCFixture:
         return json.dumps(list(reversed(response))).encode()
 
     def run(self, **options):
-        config = {"schema_version": 1, "kind" if self.auction == "buybacks" else "auction": self.auction,
-                  "from_block": 100, "to_block": 119, "chunk_blocks": 10}
+        config = {"schema_version": 1, "kind" if self.auction in history.BUYBACK_KINDS else "auction": self.auction,
+                  "from_block": self.start_block, "to_block": self.start_block + 19, "chunk_blocks": 10}
         config.update(options)
         return history.history(config, transport=self, now=lambda: NOW, monotonic=lambda: self.clock)
 
@@ -374,6 +380,131 @@ class HistoryChecks(unittest.TestCase):
         config = history._cli_config(["charter", "--day", "7", "--anchor-block", "2000000", "--lookback-blocks", "1000000"])
         self.assertEqual((config["auction"], config["day"], config["anchor_block"], config["lookback_blocks"]), ("charter", 7, 2_000_000, 1_000_000))
 
+    def test_nonstring_selection_is_input_error_before_network(self):
+        fixture = RPCFixture()
+        for key in ("kind", "auction"):
+            for value in ([], {}, None, 1):
+                with self.subTest(field=key, value=value), self.assertRaises(history.InputError):
+                    history.history({"schema_version": 1, key: value}, transport=fixture)
+        self.assertEqual(fixture.requests, [])
+
+    def test_cross_cutover_round_collision_preserves_both_emitters(self):
+        fixture = RPCFixture()
+        cutover = fixture.catalog["contracts"]["licenseAuction"]["registry_cutover"]["block_number"]
+        fixture.head = cutover + 10
+        fixture.purchase(day=0, count=2, price=3, block=cutover - 1)
+        replacement = fixture.purchase(day=0, count=3, price=5, block=cutover)
+        replacement["address"] = fixture.addresses["licenseAuction"]
+        fixture.purchase(day=0, count=5, price=7, block=cutover + 1)
+        report = fixture.run(from_block=cutover - 2, to_block=cutover + 2, max_chunks=1, detail="full")
+        self.assertEqual(report["status"], "ok")
+        rows = {row["address"]: row for row in report["rounds"]}
+        self.assertEqual(set(rows), {fixture.address, replacement["address"]})
+        self.assertEqual(rows[fixture.address]["day"], rows[replacement["address"]]["day"])
+        self.assertEqual(rows[fixture.address]["purchase_quantity"], "7")
+        self.assertEqual(rows[fixture.address]["consideration"]["total_raw"], "41")
+        self.assertEqual(rows[replacement["address"]]["purchase_quantity"], "3")
+        self.assertEqual(rows[replacement["address"]]["entity_id"], "sr-robinhood-license-auction-v1-1")
+        self.assertEqual([event["address"] for event in report["evidence"]["decoded_events"]],
+                         [fixture.address, replacement["address"], fixture.address])
+        self.assertEqual(report["coverage"]["completed"][0]["emitter_addresses"], [fixture.address, replacement["address"]])
+        self.assertEqual(report["coverage"]["missing"], [])
+        self.assertEqual(fixture.windows(), [(cutover - 2, cutover + 2)])
+
+    def test_deployment_boundary_and_predeployment_anchor(self):
+        fixture = RPCFixture()
+        deployment = fixture.catalog["contracts"]["licenseAuction"]["deployment_block"]
+        fixture.head = deployment + 10
+        fixture.purchase(day=0, count=2, block=deployment - 1)
+        replacement = fixture.purchase(day=0, count=3, block=deployment)
+        replacement["address"] = fixture.addresses["licenseAuction"]
+        report = fixture.run(from_block=deployment - 1, to_block=deployment + 1)
+        self.assertEqual(report["status"], "ok")
+        self.assertEqual(fixture.windows(), [(deployment - 1, deployment - 1), (deployment, deployment + 1)])
+        self.assertEqual([window["emitter_addresses"] for window in report["coverage"]["completed"]],
+                         [[fixture.address], [fixture.address, replacement["address"]]])
+        self.assertEqual({row["address"]: row["purchase_quantity"] for row in report["rounds"]},
+                         {fixture.address: "2", replacement["address"]: "3"})
+        fixture.requests.clear()
+        report = fixture.run(from_block=deployment - 1, to_block=deployment - 1)
+        self.assertEqual(report["status"], "ok")
+        self.assertEqual([row["address"] for row in report["rounds"]], [fixture.address])
+        self.assertEqual([r["params"][0] for r in fixture.requests if r["method"] == "eth_getCode"], [fixture.address])
+        self.assertEqual(report["coverage"]["missing"], [])
+
+    def test_current_license_selection_reaches_replacement(self):
+        fixture = RPCFixture()
+        fixture.head = fixture.catalog["contracts"]["licenseAuction"]["registry_cutover"]["block_number"] + 100
+        event = fixture.purchase(day=0, count=4, block=fixture.head - 1)
+        event["address"] = fixture.addresses["licenseAuction"]
+        report = history.history({"schema_version": 1, "auction": "license", "lookback_blocks": 10},
+                                 transport=fixture, now=lambda: NOW, monotonic=lambda: 0)
+        self.assertEqual(report["status"], "ok")
+        self.assertEqual((report["rounds"][0]["address"], report["rounds"][0]["purchase_quantity"]), (event["address"], "4"))
+        self.assertEqual(fixture.windows(), [(fixture.head - 9, fixture.head)])
+
+    def test_generation_boundary_chunk_budget_and_atomic_multi_emitter_failure(self):
+        fixture = RPCFixture()
+        deployment = fixture.catalog["contracts"]["licenseAuction"]["deployment_block"]
+        fixture.head = deployment + 10
+        fixture.purchase(day=0, count=2, block=deployment - 1)
+        replacement = fixture.purchase(day=0, count=3, block=deployment)
+        replacement["address"] = fixture.addresses["licenseAuction"]
+        report = fixture.run(from_block=deployment - 1, to_block=deployment + 1, max_chunks=1)
+        self.assertEqual(report["status"], "partial")
+        self.assertEqual([(row["address"], row["purchase_quantity"]) for row in report["rounds"]], [(fixture.address, "2")])
+        self.assertEqual(report["coverage"]["missing"][0]["from_block"], deployment)
+        fixture.requests.clear()
+        replacement["removed"] = True
+        report = fixture.run(from_block=deployment - 1, to_block=deployment + 1, detail="full")
+        self.assertEqual(report["status"], "partial")
+        self.assertEqual(report["coverage"]["completed"], [])
+        self.assertEqual(report["evidence"]["decoded_events"], [])
+        self.assertEqual(report["rounds"], [])
+        self.assertEqual(report["coverage"]["missing"][0]["from_block"], deployment - 1)
+        self.assertEqual(report["evidence"]["invalidated_windows"][0]["emitter_addresses"], [fixture.address])
+
+    def test_two_emitters_share_round_and_log_budgets(self):
+        for budget_name, limit in (("MAX_ROUNDS", 1), ("MAX_LOGS", 1)):
+            with self.subTest(budget=budget_name), patch.object(history, budget_name, limit):
+                fixture = RPCFixture()
+                deployment = fixture.catalog["contracts"]["licenseAuction"]["deployment_block"]
+                fixture.head = deployment + 10
+                fixture.purchase(day=0, block=deployment)
+                replacement = fixture.purchase(day=0, block=deployment + 1)
+                replacement["address"] = fixture.addresses["licenseAuction"]
+                report = fixture.run(from_block=deployment, to_block=deployment + 1)
+                self.assertEqual(report["status"], "partial")
+                self.assertEqual(report["rounds"], [])
+                self.assertEqual(report["coverage"]["completed"], [])
+                self.assertEqual(report["coverage"]["missing"][0]["from_block"], deployment)
+                self.assertEqual(fixture.windows(), [(deployment, deployment + 1)])
+
+    def test_duplicate_position_across_emitters_is_not_two_rounds(self):
+        fixture = RPCFixture()
+        deployment = fixture.catalog["contracts"]["licenseAuction"]["deployment_block"]
+        fixture.head = deployment + 10
+        fixture.purchase(day=0, block=deployment)
+        replacement = fixture.purchase(day=0, block=deployment)
+        replacement["address"] = fixture.addresses["licenseAuction"]
+        report = fixture.run(from_block=deployment, to_block=deployment + 1)
+        self.assertEqual(report["status"], "partial")
+        self.assertEqual(report["rounds"], [])
+        self.assertEqual(report["coverage"]["completed"], [])
+
+    def test_generation_boundary_tampering_fails_before_network(self):
+        original = S._read_file
+        def changed(directory, filename):
+            data, digest = original(directory, filename)
+            if filename == "auction-events.json":
+                data["contracts"]["licenseAuction"]["deployment_block"] -= 1
+            return data, digest
+        fixture = RPCFixture()
+        with patch.object(S, "_read_file", side_effect=changed):
+            report = fixture.run()
+        self.assertEqual(report["status"], "partial")
+        self.assertEqual(fixture.requests, [])
+
 
 class BuybackChecks(unittest.TestCase):
     def test_exact_checked_event_accounting_and_units(self):
@@ -603,6 +734,143 @@ class BuybackChecks(unittest.TestCase):
                 self.assertEqual(fixture.requests, [])
                 self.assertIsNone(report["buybacks"]["standard_burned"]["total_raw"])
                 self.assertEqual(report["coverage"]["missing"][0]["from_block"], 100)
+
+
+class POLBuybackChecks(unittest.TestCase):
+    def test_raw_output_and_destinations_never_become_burned_standard(self):
+        fixture = RPCFixture("pol-buybacks")
+        first, second = "0x" + "12" * 20, "0x" + "34" * 20
+        fixture.add("BuybackExecuted", ethIn=10**18 + 1, tokensOut=11, destination=first)
+        fixture.add("BuybackExecuted", block=fixture.start_block + 12, ethIn=2, tokensOut=(1 << 256) - 1, destination=second)
+        fixture.standard_decimals = 6
+        fixture.deny_binding = True
+        report = fixture.run(detail="full")
+        self.assertEqual(report["status"], "ok")
+        row = report["pol_buybacks"]
+        self.assertEqual(row["eth_in"], {"asset": "ETH", "decimals": 18, "total_raw": "1000000000000000003", "total": "1.000000000000000003"})
+        self.assertEqual(row["tokens_out"]["total_raw"], str((1 << 256) + 10))
+        self.assertIsNone(row["tokens_out"]["asset"])
+        self.assertIsNone(row["tokens_out"]["decimals"])
+        self.assertIsNone(row["tokens_out"]["total"])
+        self.assertEqual(row["reported_destinations"], [
+            {"destination": first, "event_count": 1, "tokens_out_raw": "11"},
+            {"destination": second, "event_count": 1, "tokens_out_raw": str((1 << 256) - 1)}])
+        self.assertEqual([event["fields"]["destination"] for event in report["evidence"]["decoded_events"]], [first, second])
+        self.assertNotIn("standard_burned", row)
+        self.assertNotIn("buybacks", report)
+        self.assertNotIn("anchor_standard_binding", report["evidence"])
+        self.assertEqual([r for r in fixture.requests if r["method"] == "eth_call"], [])
+
+    def test_pol_topic_and_indexed_destination_are_not_contraction_burn_layout(self):
+        contraction = RPCFixture("buybacks")
+        for failure in ("topic", "padding", "missing_destination", "wrong_emitter"):
+            with self.subTest(failure=failure):
+                fixture = RPCFixture("pol-buybacks")
+                event = fixture.add("BuybackExecuted", ethIn=7, tokensOut=11, destination="0x" + "12" * 20)
+                if failure == "topic":
+                    event["topics"][0] = contraction.definitions["BuybackExecuted"]["topic0"]
+                elif failure == "padding":
+                    event["topics"][1] = "0x01" + event["topics"][1][4:]
+                elif failure == "missing_destination":
+                    event["topics"].pop()
+                else:
+                    event["address"] = contraction.address
+                report = fixture.run()
+                self.assertEqual(report["status"], "partial")
+                self.assertIsNone(report["pol_buybacks"]["tokens_out"]["total_raw"])
+                self.assertIsNone(report["pol_buybacks"]["reported_destinations"])
+                self.assertEqual(report["coverage"]["completed"], [])
+                self.assertEqual(fixture.requests[-1]["method"], "eth_getLogs")
+
+    def test_partial_and_reorg_accounting_preserve_only_checked_pol_windows(self):
+        for failure in ("denial", "removed"):
+            with self.subTest(failure=failure):
+                fixture = RPCFixture("pol-buybacks")
+                fixture.add("BuybackExecuted", ethIn=7, tokensOut=11, destination="0x" + "12" * 20)
+                later = fixture.add("BuybackExecuted", block=fixture.start_block + 12, ethIn=99, tokensOut=999, destination="0x" + "34" * 20)
+                if failure == "denial":
+                    fixture.denied_from = fixture.start_block + 10
+                else:
+                    later["removed"] = True
+                report = fixture.run()
+                self.assertEqual(report["status"], "partial")
+                self.assertEqual(report["pol_buybacks"]["tokens_out"]["total_raw"], "11" if failure == "denial" else None)
+                self.assertFalse(report["pol_buybacks"]["requested_range_complete"])
+                self.assertEqual(report["coverage"]["missing"][0]["from_block"], fixture.start_block + (10 if failure == "denial" else 0))
+                self.assertEqual(fixture.requests[-1]["method"], "eth_getLogs")
+                if failure == "denial":
+                    self.assertEqual(report["errors"]["window_" + str(fixture.start_block + 10)]["diagnostics"], fixture.diagnostics)
+                else:
+                    self.assertEqual(report["coverage"]["completed"], [])
+
+    def test_pol_empty_scan_is_not_unavailable_and_rejects_denomination_flags(self):
+        fixture = RPCFixture("pol-buybacks")
+        report = fixture.run()
+        self.assertEqual(report["pol_buybacks"]["observation_status"], "no_matches_in_scanned_windows")
+        self.assertEqual(report["pol_buybacks"]["tokens_out"]["total_raw"], "0")
+        self.assertEqual(report["pol_buybacks"]["reported_destinations"], [])
+        fixture.requests.clear()
+        for arguments in (["pol-buybacks", "--day", "0"], ["pol-buybacks", "--asset", "STANDARD"], ["pol-buybacks", "--decimals", "18"]):
+            with self.subTest(arguments=arguments), self.assertRaises(history.InputError):
+                history._cli_config(arguments)
+        with self.assertRaises(history.InputError):
+            fixture.run(asset="STANDARD")
+        with self.assertRaises(history.InputError):
+            history.history({"schema_version": 1, "auction": "pol-buybacks"}, transport=fixture)
+        self.assertEqual(fixture.requests, [])
+
+    def test_deployment_spanning_scan_never_queries_empty_address_filter(self):
+        fixture = RPCFixture("pol-buybacks")
+        deployment = fixture.catalog["contracts"]["polBuyback"]["deployment_block"]
+        fixture.add("BuybackExecuted", block=deployment, ethIn=7, tokensOut=11, destination="0x" + "12" * 20)
+        report = fixture.run(from_block=deployment - 2, to_block=deployment + 2)
+        self.assertEqual(report["status"], "ok")
+        self.assertEqual(fixture.windows(), [(deployment, deployment + 2)])
+        self.assertEqual(report["pol_buybacks"]["tokens_out"]["total_raw"], "11")
+        self.assertEqual([(row["from_block"], row["to_block"], row["scan_status"], row["emitter_addresses"])
+                          for row in report["coverage"]["completed"]],
+                         [(deployment - 2, deployment - 1, "no_deployed_emitters", []),
+                          (deployment, deployment + 2, "logs_checked", [fixture.address])])
+        self.assertEqual(report["coverage"]["missing"], [])
+        self.assertEqual(report["evidence"]["final_anchor_check"], "matched")
+        self.assertGreaterEqual(fixture.headers_read[deployment - 2], 2)
+        self.assertGreaterEqual(fixture.headers_read[deployment - 1], 2)
+        self.assertEqual([r["params"][0]["address"] for r in fixture.requests if r["method"] == "eth_getLogs"], [fixture.address])
+
+    def test_entire_predeployment_range_checks_headers_without_code_or_logs(self):
+        fixture = RPCFixture("pol-buybacks")
+        deployment = fixture.catalog["contracts"]["polBuyback"]["deployment_block"]
+        fixture.code = "0x"
+        report = fixture.run(from_block=deployment - 2, to_block=deployment - 1)
+        self.assertEqual(report["status"], "ok")
+        self.assertEqual([r for r in fixture.requests if r["method"] in ("eth_getCode", "eth_getLogs", "eth_call")], [])
+        self.assertEqual(report["coverage"]["completed"][0]["scan_status"], "no_deployed_emitters")
+        self.assertEqual(report["coverage"]["completed"][0]["emitter_addresses"], [])
+        self.assertEqual(report["coverage"]["missing"], [])
+        self.assertEqual(report["pol_buybacks"]["observation_status"], "no_deployed_emitters")
+        self.assertEqual(report["pol_buybacks"]["tokens_out"]["total_raw"], "0")
+        self.assertTrue(report["pol_buybacks"]["requested_range_complete"])
+        self.assertEqual(report["evidence"]["final_anchor_check"], "matched")
+        self.assertGreaterEqual(fixture.headers_read[deployment - 2], 2)
+        self.assertGreaterEqual(fixture.headers_read[deployment - 1], 3)
+
+    def test_predeployment_checked_window_still_obeys_chunk_budget_and_reorg(self):
+        for failure in ("chunk", "reorg"):
+            with self.subTest(failure=failure):
+                fixture = RPCFixture("pol-buybacks")
+                deployment = fixture.catalog["contracts"]["polBuyback"]["deployment_block"]
+                if failure == "reorg":
+                    def mutate(number, count, header):
+                        if number == deployment - 1 and count == 2:
+                            header["hash"] = "0x" + "ef" * 32
+                        return header
+                    fixture.header_mutation = mutate
+                report = fixture.run(from_block=deployment - 2, to_block=deployment + 2, max_chunks=1)
+                self.assertEqual(report["status"], "partial")
+                self.assertEqual(fixture.windows(), [])
+                self.assertFalse(report["pol_buybacks"]["requested_range_complete"])
+                self.assertEqual(report["coverage"]["missing"][0]["from_block"], deployment if failure == "chunk" else deployment - 2)
+                self.assertEqual(report["pol_buybacks"]["tokens_out"]["total_raw"], "0" if failure == "chunk" else None)
 
 
 if __name__ == "__main__":

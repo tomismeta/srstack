@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Offline behavioral checks for the bounded snapshot reader (no live RPC)."""
 
+import base64
+import contextlib
 import copy
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import importlib.util
 import io
 import json
@@ -11,6 +14,7 @@ import tempfile
 import threading
 import unittest
 from unittest.mock import patch
+from urllib.parse import quote, urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent
 SPEC = importlib.util.spec_from_file_location("sr_snapshot", ROOT / "scripts/snapshot.py")
@@ -36,8 +40,15 @@ class RPCFixture:
             "token_burned_forever": 7 * WAD + 1, "token_ledger_retired": 13 * WAD - 1,
             "buy_tax_percent": 9000, "sell_tax_percent": 6667,
             "license_current_price": 5 * WAD, "license_remaining": 7,
-            "license_last_sale_price": 6 * WAD, "license_last_sale_day": 4,
-            "license_current_day": 4, "license_paused": False,
+            "license_last_sale_price": 6 * WAD, "license_last_sale_round": 4,
+            "license_current_round": 4, "license_paused": False,
+            "license_auction_anchor": NOW - 2 - 4 * 43200, "license_round_seconds": 43200,
+            "license_cap_window_seconds": 86400, "license_cap_window_index": 2,
+            "license_max_per_charter_per_window": 3, "license_licenses_per_round": 50,
+            "license_decay_half_life_seconds": 7200, "license_round_half_life_seconds": 7200,
+            "license_round_cap": 50, "license_sold": 43,
+            "charter_auction_current_day": 4, "charter_auction_day_seconds": 86400,
+            "charter_auction_anchor": NOW - 2 - 4 * 86400,
             "charter_auction_paused": False, "charter_auction_remaining": 3,
         }
         self.fail = set()
@@ -105,8 +116,41 @@ class RPCFixture:
         return snapshot.snapshot(config, transport=self, now=lambda: NOW)
 
 
+@contextlib.contextmanager
+def rpc_server(respond):
+    requests = []
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_POST(self):
+            payload = self.rfile.read(int(self.headers["Content-Length"]))
+            requests.append((self.path, json.loads(payload), dict(self.headers)))
+            status, headers, body = respond(payload)
+            self.send_response(status)
+            for name, value in headers.items():
+                self.send_header(name, value)
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
+        def log_message(self, *args):
+            pass
+
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    try:
+        yield "http://127.0.0.1:" + str(server.server_port), requests
+    finally:
+        server.shutdown()
+        server.server_close()
+        thread.join()
+
+
 class SnapshotChecks(unittest.TestCase):
     def setUp(self):
+        environment = patch.dict(os.environ, {}, clear=True)
+        environment.start()
+        self.addCleanup(environment.stop)
         self.rpc = RPCFixture()
 
     def test_input_denials_precede_transport(self):
@@ -409,7 +453,7 @@ class SnapshotChecks(unittest.TestCase):
         self.assertEqual(approved["reserve_asset"], ASSET)
         self.assertEqual(approved["values"]["expansion_holdings"],
                          {"value": 1234567, "unit": "reserve-token-raw-units"})
-        self.assertNotIn("token_decimals", approved["errors"])
+        self.assertNotIn("incentives_vault_standard_balance", approved["values"])
         self.assertTrue(all(request["params"][0]["to"] != ASSET for request in self.rpc.requests
                             if request["method"] == "eth_call"))
         for approval in (False, None):
@@ -615,12 +659,79 @@ class SnapshotChecks(unittest.TestCase):
                     self.assertNotIn("license_closing_price", result["derived"])
                 if detail == "summary":
                     self.assertFalse(any("_last_sale_" in identifier for identifier in result["values"]))
-        self.rpc.values.update(license_remaining=0, license_last_sale_day=3)
+        self.rpc.values.update(license_remaining=0, license_last_sale_round=3)
         self.assertNotIn("license_closing_price", self.rpc.run("auctions", "full")["derived"])
         rpc = RPCFixture()
         rpc.fail.add("license_paused")
         self.assertNotIn("license_current_price", rpc.run("auctions")["values"])
         self.assertEqual(RPCFixture().run("auctions")["values"]["license_current_price"]["value"], "5")
+
+    def test_elapsed_round_uses_live_period_not_cap_window(self):
+        result = self.rpc.run("auctions")
+        self.assertEqual(result["derived"]["license_elapsed_round"]["value"], "4")
+        self.assertEqual(result["derived"]["license_round_context"]["value"], "aligned")
+        self.assertIs(result["derived"]["license_stored_round_stale"]["value"], False)
+        self.rpc.values.update(license_round_seconds=21600, license_cap_window_seconds=172800)
+        changed = self.rpc.run("auctions")
+        self.assertEqual(changed["derived"]["license_elapsed_round"]["value"], "8")
+        self.rpc.fail.add("license_round_seconds")
+        unavailable = self.rpc.run("auctions")
+        self.assertNotIn("license_elapsed_round", unavailable["derived"])
+        self.assertEqual(unavailable["derived"]["license_round_context"]["value"], "unknown")
+
+    def test_lazy_rollover_retains_availability_without_false_round_recap(self):
+        for prefix, period, current, last, anchor in (
+                ("license", 43200, "license_current_round", "license_last_sale_round", "license_auction_anchor"),
+                ("charter_auction", 86400, "charter_auction_current_day", "charter_auction_last_sale_day", "charter_auction_anchor")):
+            for elapsed_seconds, expected in ((period - 1, "aligned"), (period, "rollover_pending")):
+                rpc = RPCFixture()
+                rpc.values.update({current: 0, last: 0, anchor: NOW - 2 - elapsed_seconds})
+                result = rpc.run("auctions", "full")
+                self.assertEqual(result["derived"][prefix + "_round_context"]["value"], expected)
+                self.assertIn(prefix + "_current_price", result["values"])
+                self.assertEqual(result["values"][prefix + "_sold"]["round_context"], expected)
+                rpc.values[prefix + "_remaining"] = 0
+                sold_out = rpc.run("auctions", "full")
+                self.assertNotIn(prefix + "_current_price", sold_out["values"])
+                self.assertEqual(prefix + "_closing_price" in sold_out["derived"], expected == "aligned")
+            rpc = RPCFixture()
+            rpc.values.update({current: 6})
+            ahead = rpc.run("auctions", "full")
+            self.assertEqual(ahead["derived"][prefix + "_round_context"]["value"], "stored_ahead")
+            self.assertIs(ahead["derived"][prefix + "_rollover_pending"]["value"], False)
+            self.assertIn(prefix + "_round_context", ahead["errors"])
+            self.assertNotIn(prefix + "_closing_price", ahead["derived"])
+
+    def test_invalid_round_context_does_not_invent_elapsed_round(self):
+        for fields in ({"license_started": False}, {"license_round_seconds": 0},
+                       {"license_auction_anchor": 0}, {"license_auction_anchor": NOW + 1}):
+            rpc = RPCFixture()
+            rpc.values.update(fields)
+            result = rpc.run("auctions", "full")
+            self.assertNotIn("license_elapsed_round", result["derived"])
+            self.assertNotIn("license_rollover_pending", result["derived"])
+            self.assertNotIn("license_closing_price", result["derived"])
+
+    def test_incentives_balance_is_live_retained_standard_with_dependencies(self):
+        balance = "incentives_vault_standard_balance"
+        self.rpc.values[balance] = 8 * WAD + 1
+        first = self.rpc.run("treasury")
+        self.assertEqual(first["values"][balance], {"value": "8.000000000000000001", "unit": "STANDARD"})
+        self.rpc.values[balance] = 9 * WAD
+        self.assertEqual(self.rpc.run("treasury")["values"][balance]["value"], "9")
+        for failure in ("vault_code", "decimals", "bank_binding", "balance_rpc"):
+            rpc = RPCFixture()
+            if failure == "vault_code":
+                rpc.code_fail.add(rpc.addresses["incentivesVault"])
+            elif failure == "decimals":
+                rpc.values["token_decimals"] = 6
+            elif failure == "bank_binding":
+                rpc.fail.add("binding_standard_centralBank")
+            else:
+                rpc.fail.add(balance)
+            failed = rpc.run("treasury")
+            self.assertNotIn(balance, failed["values"])
+            self.assertIn(balance, failed["errors"])
 
     def test_compact_charter_preserves_exact_balance_without_protocol_reads(self):
         self.rpc.values["charter_pending"] = 23 * WAD + 123
@@ -724,6 +835,132 @@ class SnapshotChecks(unittest.TestCase):
         with self.assertRaises(ValueError):
             snapshot._json(b'{"extra":' + b"9" * 100 + b"}", 4096)
 
+    def test_custom_http_endpoint_overrides_alchemy_and_redacts_full_evidence(self):
+        path_secret, query_secret, key = "private-route-token", "private/query+token?value=secret", "unused-alchemy-token"
+        target = "/" + path_secret + "/rpc?access=" + quote(query_secret, safe="")
+        user, password = "endpoint-reader", "endpoint-password"
+        authorization = base64.b64encode((user + ":" + password).encode()).decode()
+        echoes = [path_secret, query_secret, quote(query_secret, safe=""), key, user, password, authorization]
+        self.rpc.mutate_response = lambda rows: [
+            dict(row, provider_note="provider echo " + " ".join(echoes)) for row in rows]
+
+        def respond(payload):
+            return 200, {"Content-Type": "application/json"}, self.rpc(payload, 10, 40, lambda: 0)
+
+        with rpc_server(respond) as (origin, requests), \
+                patch.dict(os.environ, {"SRSTACK_RPC_URL": origin.replace("://", "://" + user + ":" + password + "@") + target,
+                                        "ALCHEMY_API_KEY": key}, clear=True), \
+                patch.object(snapshot.http.client, "HTTPSConnection", side_effect=AssertionError("must use explicit HTTP endpoint")):
+            result = snapshot.snapshot({"schema_version": 1, "view": "protocol", "detail": "full"}, now=lambda: NOW)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["values"]["sell_tax_percent"]["value"], "66.67")
+        self.assertEqual({path for path, _, _ in requests}, {target})
+        self.assertEqual({headers.get("Authorization") for _, _, headers in requests}, {"Basic " + authorization})
+        endpoint = urlsplit(result["evidence"]["rpc_url"])
+        self.assertEqual(endpoint.netloc, urlsplit(origin).netloc)
+        self.assertEqual(endpoint.query, "")
+        self.assertIsNone(endpoint.username)
+        self.assertIsNone(endpoint.password)
+        reported = json.dumps(result)
+        self.assertIn("provider echo", reported)
+        for secret in echoes:
+            self.assertNotIn(secret, reported)
+
+    def test_http_failure_redacts_provider_echoed_endpoint_credentials(self):
+        path_secret, query_secret, key = "denied-route-token", 'denied"query\\token+value', "denied-alchemy-token"
+        target = "/" + path_secret + "?access=" + quote(query_secret, safe="")
+        user, password = "denied-reader", "denied-password"
+        authorization = base64.b64encode((user + ":" + password).encode()).decode()
+        secrets = (path_secret, query_secret, quote(query_secret, safe=""), key, user, password, authorization)
+        body = json.dumps({"notice": "denied provider echo " + " ".join(secrets)}).encode()
+        with rpc_server(lambda payload: (403, {"X-Request-Id": key}, body)) as (origin, requests), \
+                patch.dict(os.environ, {"SRSTACK_RPC_URL": origin.replace("://", "://" + user + ":" + password + "@") + target,
+                                        "ALCHEMY_API_KEY": key}, clear=True), \
+                patch.object(snapshot.http.client, "HTTPSConnection", side_effect=AssertionError("must not fail over")):
+            with self.assertRaises(snapshot.SnapshotError) as caught:
+                snapshot.snapshot({"schema_version": 1, "view": "protocol"})
+        diagnostics = caught.exception.diagnostics
+        self.assertEqual(diagnostics["http_status"], 403)
+        self.assertIn("denied provider echo", diagnostics["response_excerpt"])
+        self.assertEqual([path for path, _, _ in requests], [target])
+        self.assertEqual(requests[0][2].get("Authorization"), "Basic " + authorization)
+        reported = json.dumps(diagnostics) + str(caught.exception)
+        for secret in secrets:
+            self.assertNotIn(secret, reported)
+            self.assertNotIn(secret, diagnostics["response_excerpt"])
+            self.assertNotIn(json.dumps(secret)[1:-1], diagnostics["response_excerpt"])
+        endpoint = urlsplit(diagnostics["endpoint"])
+        self.assertEqual(endpoint.netloc, urlsplit(origin).netloc)
+        self.assertEqual(endpoint.query, "")
+        self.assertIsNone(endpoint.username)
+        self.assertIsNone(endpoint.password)
+
+    def test_http_diagnostic_boundary_never_exposes_credential_prefix(self):
+        key = "boundary-credential-prefix-that-must-not-escape"
+        visible_prefix = key[:20]
+        body = b"." * (snapshot.MAX_DIAGNOSTIC_BYTES - len(visible_prefix)) + key.encode() + b" denied"
+        with rpc_server(lambda payload: (403, {}, body)) as (origin, requests), \
+                patch.dict(os.environ, {"SRSTACK_RPC_URL": origin + "/rpc?access=" + key}, clear=True), \
+                patch.object(snapshot.http.client, "HTTPSConnection", side_effect=AssertionError("must not fail over")):
+            with self.assertRaises(snapshot.SnapshotError) as caught:
+                snapshot.snapshot({"schema_version": 1, "view": "protocol"})
+        diagnostics = caught.exception.diagnostics
+        self.assertEqual(diagnostics["http_status"], 403)
+        self.assertTrue(diagnostics["truncated"])
+        self.assertLessEqual(len(diagnostics["response_excerpt"].encode()), snapshot.MAX_DIAGNOSTIC_BYTES)
+        self.assertNotIn(visible_prefix, json.dumps(diagnostics))
+        self.assertEqual([path for path, _, _ in requests], ["/rpc?access=" + key])
+
+    def test_malformed_custom_endpoint_returns_secret_free_cli_error(self):
+        secret = "malformed-endpoint-credential"
+        endpoints = ("ftp://example.invalid/" + secret,
+                     "http://example.invalid:bad-port/" + secret,
+                     "http://[invalid/" + secret,
+                     "http://example.invalid/" + secret + "\n")
+        for endpoint in endpoints:
+            stdout, stderr = io.StringIO(), io.StringIO()
+            with self.subTest(endpoint=endpoint), \
+                    patch.dict(os.environ, {"SRSTACK_RPC_URL": endpoint, "ALCHEMY_API_KEY": secret}, clear=True), \
+                    patch.object(snapshot.sys, "argv", ["snapshot.py", "protocol"]), \
+                    patch.object(snapshot.sys, "stdout", stdout), \
+                    patch.object(snapshot.sys, "stderr", stderr), \
+                    patch.object(snapshot.http.client, "HTTPConnection", side_effect=AssertionError("must reject before transport")), \
+                    patch.object(snapshot.http.client, "HTTPSConnection", side_effect=AssertionError("must not fail over")):
+                code = snapshot.main()
+            self.assertEqual(code, 5)
+            self.assertEqual(stdout.getvalue(), "")
+            self.assertEqual(json.loads(stderr.getvalue())["error"]["type"], "snapshot_error")
+            self.assertNotIn(secret, stderr.getvalue())
+
+    def test_alchemy_key_selects_encoded_https_path_without_disclosing_key(self):
+        key = "dummy/key+with?reserved&percent%hash#equals="
+        encoded_key = quote(key, safe="")
+        self.rpc.mutate_response = lambda rows: [
+            dict(row, provider_note="provider echo " + key + " " + encoded_key) for row in rows]
+        connection = unittest.mock.Mock()
+        connection.sock = None
+        response = connection.getresponse.return_value
+        response.status = 200
+
+        def request(method, target, body, headers):
+            payload = self.rpc(body, 10, 40, lambda: 0)
+            response.getheader.side_effect = lambda name: str(len(payload)) if name.lower() == "content-length" else None
+            response.read1.side_effect = io.BytesIO(payload).read
+
+        connection.request.side_effect = request
+        with patch.dict(os.environ, {"ALCHEMY_API_KEY": key}, clear=True), \
+                patch.object(snapshot.http.client, "HTTPSConnection", return_value=connection) as factory:
+            result = snapshot.snapshot({"schema_version": 1, "view": "protocol", "detail": "full"}, now=lambda: NOW)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["values"]["sell_tax_percent"]["value"], "66.67")
+        self.assertEqual({call.args[0] for call in factory.call_args_list}, {"robinhood-mainnet.g.alchemy.com"})
+        self.assertEqual({call.args[:2] for call in connection.request.call_args_list},
+                         {("POST", "/v2/" + encoded_key)})
+        reported = json.dumps(result)
+        self.assertIn("provider echo", reported)
+        self.assertNotIn(key, reported)
+        self.assertNotIn(encoded_key, reported)
+
     def test_expired_connection_does_not_send_request(self):
         connection = unittest.mock.Mock()
         with self.assertRaises(snapshot.SnapshotError):
@@ -736,10 +973,9 @@ class SnapshotChecks(unittest.TestCase):
         connection.getresponse.return_value.status = 302
         connection.getresponse.return_value.getheader.return_value = None
         connection.getresponse.return_value.read1.return_value = b""
-        with patch.object(snapshot.http.client, "HTTPSConnection", return_value=connection) as factory:
+        with patch.object(snapshot.http.client, "HTTPSConnection", return_value=connection):
             with self.assertRaises(snapshot.SnapshotError):
                 snapshot._https(b"[]", 10, 40, lambda: 0)
-        self.assertEqual(factory.call_args.args, (snapshot.RPC_HOST,))
         self.assertEqual(connection.request.call_count, 1)
         self.assertEqual(connection.request.call_args.args[:2], ("POST", "/"))
         connection.close.assert_called_once()

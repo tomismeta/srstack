@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-15T18:29:31.074Z",
+  "reviewed_at": "2026-09-22",
   "chain": {
     "id": 4663,
     "name": "Robinhood Chain",
@@ -10,7 +10,7 @@
       "sr-publisher-read-interface"
     ]
   },
-  "scope": "Publisher-attributed four-group Robinhood deployment identity directory; not a chain census or stored explorer verification.",
+  "scope": "Robinhood identity inventory: 16 current publisher-directory entries, one historical license-auction generation and three evidence-backed administrative/shared dependencies; not a chain census or stored live state.",
   "explorer_policy": {
     "preferred_family": "Etherscan",
     "base_url": "https://robin.etherscan.io",
@@ -23,7 +23,7 @@
     "applies_to": "Every record; read with selected records",
     "source_correspondence": "Check publication and exact source/bytecode correspondence on demand or report unavailable; publisher identity attribution does not establish either.",
     "current_ownership_and_privileges": "Use on-demand reads for selected owner getters and fresh evidence for the privilege structure; no current ownership or privilege observations are stored here.",
-    "proxy_and_implementation_relationships": "Require fresh evidence; not established by identity attribution.",
+    "proxy_and_implementation_relationships": "Historical dependency provenance identifies research targets only. Refresh ownership, implementation, Safe signers/threshold/modules/guards and privilege evidence for current claims; an administrative SafeProxy does not establish proxy-upgradeable monetary modules.",
     "audit_to_deployment_correspondence": "Require fresh evidence; not established by identity attribution.",
     "current_activation_and_market_state": "Use an on-demand snapshot or report unavailable; no live state or fallback observation is stored in this identity catalog.",
     "infrastructure": "Shared infrastructure is not project-authored merely because listed; the pool manager is not a unique canonical pool.",
@@ -46,7 +46,8 @@
         ],
         "locator": "Core / $STANDARD",
         "retrieved_at": "2026-09-15T18:29:31.059Z"
-      }
+      },
+      "directory_status": "current-publisher-entry"
     },
     {
       "id": "sr-robinhood-charter-nft",
@@ -64,7 +65,8 @@
         ],
         "locator": "Core / Charter NFT",
         "retrieved_at": "2026-09-15T18:29:31.059Z"
-      }
+      },
+      "directory_status": "current-publisher-entry"
     },
     {
       "id": "sr-robinhood-central-bank",
@@ -82,14 +84,15 @@
         ],
         "locator": "Core / Central Bank",
         "retrieved_at": "2026-09-15T18:29:31.059Z"
-      }
+      },
+      "directory_status": "current-publisher-entry"
     },
     {
       "id": "sr-robinhood-tax-hook",
       "chain_id": 4663,
       "address": "0xF1eE073811B14359D850825E48d200483200eDcd",
       "name": "Trading Hook",
-      "role": "The canonical pool\u2019s flow signal and trading taxes.",
+      "role": "The canonical pool’s flow signal and trading taxes.",
       "group": "core",
       "scope": "protocol-module",
       "explorer_url": "https://robin.etherscan.io/address/0xF1eE073811B14359D850825E48d200483200eDcd#code",
@@ -100,7 +103,8 @@
         ],
         "locator": "Core / Trading Hook",
         "retrieved_at": "2026-09-15T18:29:31.059Z"
-      }
+      },
+      "directory_status": "current-publisher-entry"
     },
     {
       "id": "sr-robinhood-genesis-minter",
@@ -118,7 +122,8 @@
         ],
         "locator": "Auctions / Founding Sale",
         "retrieved_at": "2026-09-15T18:29:31.066Z"
-      }
+      },
+      "directory_status": "current-publisher-entry"
     },
     {
       "id": "sr-robinhood-charter-auction",
@@ -136,25 +141,29 @@
         ],
         "locator": "Auctions / Charter Auction",
         "retrieved_at": "2026-09-15T18:29:31.066Z"
-      }
+      },
+      "directory_status": "current-publisher-entry"
     },
     {
       "id": "sr-robinhood-license-auction",
       "chain_id": 4663,
       "address": "0xA45CE49303EEd5846F841BFd4bAC6aE8C805EC05",
-      "name": "Expansion License Auction",
-      "role": "Additional branches, paid for with $STANDARD.",
+      "name": "Expansion License Auction (legacy)",
+      "role": "Historical license-auction generation only; retained for address-qualified history, not current auction reads.",
       "group": "auctions",
       "scope": "protocol-module",
       "explorer_url": "https://robin.etherscan.io/address/0xA45CE49303EEd5846F841BFd4bAC6aE8C805EC05#code",
       "attribution": {
         "status": "publisher-listed",
         "source_ids": [
-          "sr-contract-directory"
+          "sr-contract-directory",
+          "sr-v1-1-deployment-evidence"
         ],
-        "locator": "Auctions / Expansion License Auction",
+        "locator": "Base licenseAuction mapping; superseded by peripheryV11.licenseAuction for current reads",
         "retrieved_at": "2026-09-15T18:29:31.066Z"
-      }
+      },
+      "directory_status": "historical-generation",
+      "successor_entity_id": "sr-robinhood-license-auction-v1-1"
     },
     {
       "id": "sr-robinhood-expansion-vault",
@@ -172,7 +181,8 @@
         ],
         "locator": "Treasury / Expansion Vault",
         "retrieved_at": "2026-09-15T18:29:31.071Z"
-      }
+      },
+      "directory_status": "current-publisher-entry"
     },
     {
       "id": "sr-robinhood-contraction-vault",
@@ -190,32 +200,35 @@
         ],
         "locator": "Treasury / Contraction Vault",
         "retrieved_at": "2026-09-15T18:29:31.071Z"
-      }
+      },
+      "directory_status": "current-publisher-entry"
     },
     {
       "id": "sr-robinhood-pol-manager",
       "chain_id": 4663,
       "address": "0x242F3e67BEf43470C2434d95E7D618E19f87c8f8",
-      "name": "Liquidity Manager",
-      "role": "Initial and ongoing protocol-owned liquidity.",
+      "name": "Genesis Liquidity Manager",
+      "role": "Custody and fee collection for permanent genesis liquidity positions; frontend polManager identity, not a claim about the current Registry POL_MANAGER recipient.",
       "group": "treasury",
       "scope": "protocol-module",
       "explorer_url": "https://robin.etherscan.io/address/0x242F3e67BEf43470C2434d95E7D618E19f87c8f8#code",
       "attribution": {
         "status": "publisher-listed",
         "source_ids": [
-          "sr-contract-directory"
+          "sr-contract-directory",
+          "sr-v1-1-deployment-evidence"
         ],
-        "locator": "Treasury / Liquidity Manager",
-        "retrieved_at": "2026-09-15T18:29:31.071Z"
-      }
+        "locator": "Treasury / Genesis Liquidity Manager; retained frontend polManager mapping",
+        "retrieved_at": "2026-09-22"
+      },
+      "directory_status": "current-publisher-entry"
     },
     {
       "id": "sr-robinhood-fee-splitter",
       "chain_id": 4663,
       "address": "0xaa12DEda4aC19233A315777b17ff6ff5029D01b2",
       "name": "Fee Splitter",
-      "role": "Routes revenue to vaults, permanent liquidity, etc.",
+      "role": "Routes revenue to the active vault, the POL recipient, and the team; current recipients and shares require live reads.",
       "group": "treasury",
       "scope": "protocol-module",
       "explorer_url": "https://robin.etherscan.io/address/0xaa12DEda4aC19233A315777b17ff6ff5029D01b2#code",
@@ -226,7 +239,8 @@
         ],
         "locator": "Treasury / Fee Splitter",
         "retrieved_at": "2026-09-15T18:29:31.071Z"
-      }
+      },
+      "directory_status": "current-publisher-entry"
     },
     {
       "id": "sr-robinhood-registry",
@@ -244,7 +258,8 @@
         ],
         "locator": "Infrastructure / Address Registry",
         "retrieved_at": "2026-09-15T18:29:31.074Z"
-      }
+      },
+      "directory_status": "current-publisher-entry"
     },
     {
       "id": "sr-robinhood-pool-manager",
@@ -262,7 +277,8 @@
         ],
         "locator": "Infrastructure / Uniswap v4 Pool Manager",
         "retrieved_at": "2026-09-15T18:29:31.074Z"
-      }
+      },
+      "directory_status": "current-publisher-entry"
     },
     {
       "id": "sr-robinhood-multicall3",
@@ -280,13 +296,134 @@
         ],
         "locator": "Infrastructure / Multicall",
         "retrieved_at": "2026-09-15T18:29:31.074Z"
+      },
+      "directory_status": "current-publisher-entry"
+    },
+    {
+      "id": "sr-robinhood-license-auction-v1-1",
+      "chain_id": 4663,
+      "address": "0x44731EFf9da8fDD30003AA7C0B324368B3DfFE5e",
+      "name": "Expansion License Auction v1.1",
+      "role": "Publisher current expansion-license target; separate auction round and charter cap-window interfaces. Availability and settings are read live.",
+      "group": "auctions",
+      "scope": "protocol-module",
+      "explorer_url": "https://robin.etherscan.io/address/0x44731EFf9da8fDD30003AA7C0B324368B3DfFE5e#code",
+      "directory_status": "current-publisher-entry",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-contract-directory",
+          "sr-v1-1-deployment-evidence",
+          "sr-v1-1-read-interface"
+        ],
+        "locator": "Auctions / Expansion License Auction; peripheryV11.licenseAuction",
+        "retrieved_at": "2026-09-22"
+      },
+      "predecessor_entity_id": "sr-robinhood-license-auction"
+    },
+    {
+      "id": "sr-robinhood-pol-buyback",
+      "chain_id": 4663,
+      "address": "0x50e4C444f71dF2Db8593c6c8ba4d493De618E147",
+      "name": "POL Buyback",
+      "role": "Publisher role: uses POL revenue share to buy STANDARD for the Incentives Vault; retained tokens are distinct from Contraction Vault burns.",
+      "group": "treasury",
+      "scope": "protocol-module",
+      "explorer_url": "https://robin.etherscan.io/address/0x50e4C444f71dF2Db8593c6c8ba4d493De618E147#code",
+      "directory_status": "current-publisher-entry",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-contract-directory",
+          "sr-v1-1-deployment-evidence"
+        ],
+        "locator": "Treasury / POL Buyback; peripheryV11.polBuyback",
+        "retrieved_at": "2026-09-22"
+      }
+    },
+    {
+      "id": "sr-robinhood-incentives-vault",
+      "chain_id": 4663,
+      "address": "0x9481404d30C296e57C93f05A49934A901719bbA9",
+      "name": "Incentives Vault",
+      "role": "Publisher role: holds bought-back STANDARD for future distribution; retained tokens are not burned or holder entitlements. Balance and controls require fresh evidence.",
+      "group": "treasury",
+      "scope": "protocol-module",
+      "explorer_url": "https://robin.etherscan.io/address/0x9481404d30C296e57C93f05A49934A901719bbA9#code",
+      "directory_status": "current-publisher-entry",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-contract-directory",
+          "sr-v1-1-deployment-evidence"
+        ],
+        "locator": "Treasury / Incentives Vault; peripheryV11.incentivesVault",
+        "retrieved_at": "2026-09-22"
+      }
+    },
+    {
+      "id": "sr-robinhood-admin-safe",
+      "chain_id": 4663,
+      "address": "0x5c19F925E1e0D54E34681A6CB70d55c90b12A68c",
+      "name": "Administrative SafeProxy",
+      "role": "Recipient identified in historical ownership-transfer evidence and executor of cutover; not a stored current-owner claim. Refresh module owners and Safe configuration.",
+      "group": "control-dependencies",
+      "scope": "administrative-dependency",
+      "explorer_url": "https://robin.etherscan.io/address/0x5c19F925E1e0D54E34681A6CB70d55c90b12A68c#code",
+      "directory_status": "dependency-not-directory-entry",
+      "attribution": {
+        "status": "relationship-observed",
+        "source_ids": [
+          "sr-protocol-control-dependencies"
+        ],
+        "locator": "Historical ownership acceptance and cutover transactions; explorer SafeProxy identity",
+        "retrieved_at": "2026-09-22"
+      }
+    },
+    {
+      "id": "sr-robinhood-safe-implementation",
+      "chain_id": 4663,
+      "address": "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+      "name": "SafeL2 implementation dependency",
+      "role": "Implementation attributed to the administrative SafeProxy in review evidence; refresh the Safe relationship and source correspondence before current claims.",
+      "group": "control-dependencies",
+      "scope": "shared-infrastructure",
+      "explorer_url": "https://robin.etherscan.io/address/0x29fcB43b46531BcA003ddC8FCB67FFE91900C762#code",
+      "directory_status": "dependency-not-directory-entry",
+      "attribution": {
+        "status": "relationship-observed",
+        "source_ids": [
+          "sr-protocol-control-dependencies"
+        ],
+        "locator": "SafeProxy implementation attribution and masterCopy corroboration",
+        "retrieved_at": "2026-09-22"
+      }
+    },
+    {
+      "id": "sr-robinhood-safe-multisend",
+      "chain_id": 4663,
+      "address": "0x9641d764fc13c8B624c04430C7356C1C7C8102e2",
+      "name": "Safe MultiSend dependency",
+      "role": "Batch target in the historical Safe cutover transaction; shared administrative execution dependency, not a monetary module or permanent authority assertion.",
+      "group": "control-dependencies",
+      "scope": "shared-infrastructure",
+      "explorer_url": "https://robin.etherscan.io/address/0x9641d764fc13c8B624c04430C7356C1C7C8102e2#code",
+      "directory_status": "dependency-not-directory-entry",
+      "attribution": {
+        "status": "relationship-observed",
+        "source_ids": [
+          "sr-protocol-control-dependencies"
+        ],
+        "locator": "Cutover Safe execTransaction delegatecall batch target",
+        "retrieved_at": "2026-09-22"
       }
     }
   ],
   "publisher_read_interface": {
     "path": "assets/interfaces/robinhood-reads.json",
     "source_ids": [
-      "sr-publisher-read-interface"
+      "sr-publisher-read-interface",
+      "sr-v1-1-read-interface"
     ],
     "scope": "Selected scalar view/pure reads with fixed bindings; not independent source verification."
   },

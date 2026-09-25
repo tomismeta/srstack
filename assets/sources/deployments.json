@@ -1,37 +1,33 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-20",
-  "scope": "Publisher identity and linked-ABI provenance, chain routing, current-conditions explanation and attributed developer proposals; no stored state or verification verdicts",
+  "reviewed_at": "2026-09-25",
+  "scope": "Publisher v1.1 announcements and deployment identity provenance, historical cutover/control relationships and chain routing; no saved live status, settings, prices, balances or ownership.",
   "records": [
     {
       "id": "sr-contract-directory",
-      "url": "https://www.standardreserve.xyz/app/protocol/contracts/",
+      "url": "https://www.standardreserve.xyz/app/protocol/live/#contracts",
       "publisher": "The Standard Reserve official website",
       "published_at": null,
-      "retrieved_at": "2026-09-20",
-      "review_depth": "Prior directory/app ABI review plus current official HTML-linked mount-module text: full Robinhood deployment map and existing auction, treasury and CentralBank read-only ABI leads. No downloaded JavaScript executed.",
+      "retrieved_at": "2026-09-25",
+      "review_depth": "September22 complete mount mapping and directory review retained; September25 full directory-component review confirms route/groups, not a complete current address/ABI-map comparison. complete_asset_sha256 identifies the historical September22 mount below.",
       "claim_stage": "publisher identity/interface attribution, not deployment-state or authority verification",
       "locators": [
-        "Core",
-        "Auctions",
-        "Treasury",
-        "Infrastructure",
-        "Robinhood Chain4663",
-        "https://www.standardreserve.xyz/assets/ProtocolContracts-fb8LvDwl.js",
-        "https://www.standardreserve.xyz/assets/app-cGhd1uKR.js",
-        "https://www.standardreserve.xyz/assets/mountApp-DmwNsaDC.js",
-        "Literal ./deployments/4663.json mapping and vC contracts object",
-        "Auction supplyController/pendingOwner; FeeSplitter scalar routing/queuedShares; ExpansionVault holdingsOf/isReserveAsset/reservePool; ContractionVault buyback limits/events; CentralBank queued policy/recycling counters",
-        "ContractionVault/FeeSplitter migrateToSuccessor(); ExpansionVault migrateToSuccessor(address[] assets); HoldingsMigrated",
-        "Charter and license auctions: supplyController(), setSupplyController(address), SupplyControllerSet, NotSupplyAuthority"
+        "https://www.standardreserve.xyz/assets/LiveProtocol-BTvCIoe8.js",
+        "https://www.standardreserve.xyz/assets/mountApp-BqtUxqir.js",
+        "Core:4; Auctions:3; Treasury:6; Infrastructure:3; total16 current entries",
+        "Base contracts object plus peripheryV11 replacement licenseAuction and additions polBuyback/incentivesVault",
+        "Treasury polManager remains the original address, labelled Genesis Liquidity Manager",
+        "Generic owner/pendingOwner directory controls; license v1.1 getter adaptation"
       ],
-      "summary": "Publisher directory and current linked module bind Robinhood Chain 4663 protocol and infrastructure identities. Auction-controller/ownership, treasury routing/holdings and queued-policy ABI definitions provide further research leads beyond the fixed reader. Use the entity catalog for identity routing; fetch code, activation, authority and state on demand.",
+      "summary": "Current publisher directory contains16 identities: the license-auction replacement and two treasury additions yield14 protocol modules plus2 shared infrastructure entries. The separate legacy auction and three administrative dependencies in the skill inventory are not current directory entries. Current module settings and ownership must be read live.",
       "limits": [
         "No independent source/ABI correspondence, current ownership, activation or audit verification.",
+        "September25 current mount retrieval was truncated and direct retrieval denied; the complete current address/ABI mapping was not reconciled. Do not treat a stable directory count as proof every address is unchanged.",
         "The directory component can retain the last ownership snapshot after refresh failure; a visible owner value is not automatically fresh evidence.",
         "Publisher ABI names do not establish deployed migration/controller behavior, who may call it, asset scope or current configuration. Asset migration is not necessarily code replacement.",
         "Linked bundle retrieval establishes publisher evidence, not its publication date, feature-introduction date or chronology of deployment."
-      ]
+      ],
+      "complete_asset_sha256": "d27a000d06008e547268a2a6f12fcef1115800ebb9d9eacaa761e1e866310488"
     },
     {
       "id": "sr-etherscan-chainlist",
@@ -54,15 +50,15 @@
       "url": "https://www.standardreserve.xyz/app/protocol/live/",
       "publisher": "The Standard Reserve official website",
       "published_at": null,
-      "retrieved_at": "2026-09-18",
-      "review_depth": "Publisher-linked component explanation and routing for Policy & fees, Auctions, and Treasury & controls; epoch-end accrual/rollover notices.",
+      "retrieved_at": "2026-09-25",
+      "review_depth": "Full publisher-linked LiveProtocol component source-text review: Token & policy, Auctions, Treasury & controls and Contracts; epoch-end notices. No rendered live-state observation.",
       "claim_stage": "publisher explanation and page discovery, not stored readings or independent RPC verification",
       "locators": [
-        "Policy & fees",
+        "Token & policy",
         "Auctions",
         "Treasury & controls",
         "Epoch-end help and settlement notice",
-        "https://www.standardreserve.xyz/assets/LiveProtocol-COjPuJc_.js"
+        "https://www.standardreserve.xyz/assets/LiveProtocol-BTvCIoe8.js"
       ],
       "summary": "Publisher page for policy, issuance, branches, fees, auctions, supply accounting, treasury and controls. Explanatory text says accrual stops at epoch end until rollover and settlement is required before the next epoch streams. Read changing values on demand; no current settlement, ownership or availability state is stored here.",
       "limits": [
@@ -81,7 +77,7 @@
       "published_at": null,
       "retrieved_at": "2026-09-18",
       "review_depth": "Root post and three proposal explanations plus deployment/security-review follow-up, retrieved through the public Nitter mirror; absolute publication time and individual reply URLs were not exposed.",
-      "claim_stage": "attributed developer proposal, not implemented rules, deployed state or completed security review",
+      "claim_stage": "historical developer proposal; official v1.1 announcement supersedes proposal status only for its confirmed changes",
       "locators": [
         "https://nitter.tiekoetter.com/0xbeans/status/2101024624914170176",
         "12h branch auctions",
@@ -89,13 +85,106 @@
         "incremental liquidity on the buy side only",
         "contract deployment and separate security review required"
       ],
-      "summary": "Proposes two half-allocation branch auctions per day, a 50/50 immediate-burn/incentive-vault split of branch-auction proceeds, and buy-side-only incremental POL with acquired STANDARD retained. The separate buyback-burn vault is described as unchanged.",
+      "summary": "Earlier proposal context. The official v1.1 announcement confirms12h license rounds, faster half-life and bid-side-only POL sending acquired tokens to the Incentives Vault. This proposal alone remains the source of the unconfirmed50/50 branch-proceeds split, team-allocation restrictions and eventual unused-incentive burns; none is current verified policy.",
       "limits": [
         "Mirror-transcribed developer statements are not independently authenticated implementation or official policy evidence; refresh the original thread for current status.",
         "The announced team-allocation restrictions and eventual burn of unused incentives are proposed requirements, not verified permissions or guaranteed outcomes.",
         "The relative deployment estimate early next week is not an absolute date or evidence of completion; publication time remains unavailable.",
         "No contract addresses, replacement bindings, authenticated incentive-vault ABI or deployed payment/accounting path are established by this thread.",
-        "Do not replace canonical parameters or treat proposed cost reductions, rewards or price/slippage benefits as established. Requested conditional modelling may use the proposal as an explicit, unverified assumption."
+        "Do not promote unconfirmed proposal elements to canonical current mechanics. The official announcement supersedes cadence/POL proposal status but does not confirm a50/50 license-proceeds split or enforceable incentive restrictions."
+      ]
+    },
+    {
+      "id": "sr-protocol-v1-1-announcement",
+      "url": "https://x.com/standard_rsv/status/2102194858538815645",
+      "publisher": "The Standard Reserve official account (@standard_rsv)",
+      "published_at": null,
+      "retrieved_at": "2026-09-22",
+      "review_depth": "Official root post and check-in reply through public Nitter mirror; no audit report independently reviewed.",
+      "claim_stage": "official announced v1.1 policy and reported security review, not a perpetual live-state or audit guarantee",
+      "locators": [
+        "https://nitter.tiekoetter.com/standard_rsv/status/2102194858538815645",
+        "Root items1–3",
+        "https://x.com/standard_rsv/status/2102200074810036373"
+      ],
+      "summary": "Announces two12h license auctions of50 branches, unchanged3 per24h per charter,2h auction half-life, and bid-side-only POL buying tokens for a new protocol-owned incentives vault. Reports all changes underwent security review. A separate official reply says a free website check-in button will surface soon.",
+      "limits": [
+        "The root says go live today; deployment, cutover and operation have separate address-specific provenance. Current settings/availability require live reads.",
+        "The2h half-life is the license-auction v1.1 context; no automatic charter duration/half-life change is inferred. Exact price-function and cap-window alignment/reset math are not source-verified.",
+        "No50/50 auction burn/incentive split, incentive distribution entitlement, team restriction or eventual burn is confirmed. Acquired POL tokens are sent to the Incentives Vault, not retained in the original POLManager.",
+        "Security review is publisher-reported. Reviewer, report, scope, code revision and deployment coverage were not independently established.",
+        "The future website button is separate from the existing documented zero protocol-charge check-in; network gas is not claimed free."
+      ],
+      "published_time_evidence": "Mirror exposes Sep22,2026 00:34 UTC for root and00:55 UTC for reply; retrieval date is separate"
+    },
+    {
+      "id": "sr-v1-1-deployment-evidence",
+      "url": "https://www.standardreserve.xyz/assets/mountApp-BqtUxqir.js",
+      "publisher": "Official application mapping; Robinhood Blockscout creation/log records and public RPC receipt corroboration",
+      "published_at": null,
+      "retrieved_at": "2026-09-22",
+      "review_depth": "Complete mount-module text and bounded independent creation, registry cutover and successful receipt evidence; no downloaded code execution.",
+      "claim_stage": "publisher identity plus historical deployment/cutover evidence, not complete Solidity/ABI verification or stored runtime state",
+      "locators": [
+        "https://www.standardreserve.xyz/assets/mountApp-BqtUxqir.js",
+        "https://www.standardreserve.xyz/assets/LiveProtocol-CVYDVZyE.js",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0x7257aa2a6c94af0a41ef683c7883e4068795ce191f19b801039b6f9a01fc7ff4",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0x171c236c4cc364b6d6036eebcf70a5c14f072e62ce2009845874ec5229c878d5",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0x2ebc8302916ad8f6b312e88ca0ec72cd178f4ac03b6723525756b97f7d27c4d9",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0xde518b479895afbf63979c84be3822d4d98be767baf695c84ecf58b849ca0f98/logs",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0x7f60ac022bef065a67d96957783863388b66e696c97b89ed84e3f61f94059b3b/logs",
+        "https://robin.etherscan.io/tx/0xd38d8cad716e65f66babb64f6406d81dab3158cc481401be6dd1f0a8ff7eadae"
+      ],
+      "summary": "peripheryV11 replaces the license target and adds POL Buyback/Incentives Vault; pinned publisher contracts commit2f227a6269effe6ed512d95e0b08313dde901be9. Registry LICENSE_AUCTION cutover and auction start are corroborated at69222157 (timestamp1790036371). Historical Registry POL_MANAGER AddressSet points to the new buyback, while frontend polManager retains the Genesis Liquidity Manager identity.",
+      "limits": [
+        "Creation: license and incentives vault at69178086; POL Buyback at69178088. These are historical provenance, not availability guarantees.",
+        "Registry events establish historical routing changes, not the perpetual current registry binding or every fee transfer. Cutover metadata belongs to license activation, not universal module activation.",
+        "Direct Robinhood Etherscan source retrieval was unavailable; alternate explorer returned bytecode without complete new-module source/ABI. This does not prove absence of verification elsewhere.",
+        "Exact source-established payment/burn split, permissions, cap reset math and audit correspondence remain unverified. Individual receipts are not generalized accounting guarantees.",
+        "Private review RPC observations and balances are not installed; runtime current fields must be fetched on each request."
+      ],
+      "complete_asset_sha256": "d27a000d06008e547268a2a6f12fcef1115800ebb9d9eacaa761e1e866310488"
+    },
+    {
+      "id": "sr-protocol-control-dependencies",
+      "url": "https://robinhoodchain.blockscout.com/api/v2/transactions/0x7f60ac022bef065a67d96957783863388b66e696c97b89ed84e3f61f94059b3b/logs",
+      "publisher": "Public transaction/explorer relationship evidence with RPC receipt/masterCopy corroboration",
+      "published_at": null,
+      "retrieved_at": "2026-09-22",
+      "review_depth": "Historical ownership acceptance, SafeProxy implementation attribution and cutover batch target; no Safe configuration audit.",
+      "claim_stage": "historical administrative dependency relationships requiring fresh verification",
+      "locators": [
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0x7f60ac022bef065a67d96957783863388b66e696c97b89ed84e3f61f94059b3b/logs",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0xde518b479895afbf63979c84be3822d4d98be767baf695c84ecf58b849ca0f98",
+        "https://robin.etherscan.io/address/0x5c19F925E1e0D54E34681A6CB70d55c90b12A68c#code",
+        "https://robin.etherscan.io/address/0x29fcB43b46531BcA003ddC8FCB67FFE91900C762#code",
+        "https://robin.etherscan.io/address/0x9641d764fc13c8B624c04430C7356C1C7C8102e2#code"
+      ],
+      "summary": "Ownership-transfer evidence identifies the administrative SafeProxy; explorer/masterCopy evidence identifies a SafeL2 implementation and cutover execTransaction identifies the MultiSend target. Catalog records retain those identities for control research, not frozen current ownership or authority.",
+      "limits": [
+        "No stored live owner, pending owner, Safe signers, threshold, modules, guards or implementation configuration. Refresh relationships before current claims.",
+        "The SafeProxy is an administrative dependency; this does not make every monetary module proxy-upgradeable or establish all privileged paths.",
+        "Dependency records are not publisher-directory entries, independently verified full interfaces, security guarantees or complete audit coverage."
+      ]
+    }
+    ,{
+      "id": "sr-robinhood-rpc-guidance",
+      "url": "https://docs.robinhood.com/chain/connecting/",
+      "publisher": "Robinhood Chain official documentation",
+      "published_at": null,
+      "retrieved_at": "2026-09-22",
+      "review_depth": "Network configuration, Developer Endpoints, historical/archive guidance and Public Endpoints sections.",
+      "claim_stage": "documented provider recommendation, not measured uptime, SLA or stored RPC health",
+      "locators": [
+        "https://docs.robinhood.com/chain/connecting/#developer-endpoints",
+        "https://docs.robinhood.com/chain/connecting/#public-endpoints"
+      ],
+      "summary": "Official documentation recommends Alchemy for Robinhood Chain infrastructure: https://robinhood-mainnet.g.alchemy.com/v2/{API_KEY}. The public https://rpc.mainnet.chain.robinhood.com endpoint is rate-limited and not recommended for production. Historical reads and indexing require an archive endpoint.",
+      "limits": [
+        "This is provider guidance, not an independently measured reliability comparison or guarantee that a selected plan supplies every historical method.",
+        "Bundled RPC helpers select SRSTACK_RPC_URL > ALCHEMY_API_KEY > the official public default. Optional Alchemy keys or custom HTTP/HTTPS endpoints, including path/query and Basic authentication, use host-managed environment secrets; HTTPS is preferred for credentials. Provider recommendations do not restrict endpoint selection, and there is no silent failover.",
+        "Keep credentials in approved host facilities, not prompts, command lines, output artifacts or installed skill files; endpoint evidence and diagnostics redact credentials. Do not bypass provider access controls or substitute saved observations for failed live reads.",
+        "No live RPC health snapshot or fallback state is stored."
       ]
     }
   ]

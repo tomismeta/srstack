@@ -11,6 +11,7 @@ import time
 import unittest
 from pathlib import Path
 from unittest.mock import patch
+from urllib.parse import urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,6 +27,9 @@ def load_module(path, name):
 
 class VerifyChecks(unittest.TestCase):
     def setUp(self):
+        environment = patch.dict(os.environ, {}, clear=True)
+        environment.start()
+        self.addCleanup(environment.stop)
         temporary = tempfile.TemporaryDirectory(prefix="srstack-verify-check-")
         self.addCleanup(temporary.cleanup)
         self.work = Path(temporary.name).resolve()
@@ -198,6 +202,54 @@ class VerifyChecks(unittest.TestCase):
                     contextlib.redirect_stderr(io.StringIO()) as error:
                 self.assertEqual(2, self.verify.main())
                 self.assertEqual("invalid_input", json.loads(error.getvalue())["error"]["type"])
+
+    def test_actual_charter_child_uses_custom_endpoint_before_alchemy(self):
+        fixture = load_module(ROOT / "maintenance/check-snapshot.py", "verify_rpc_fixture")
+        rpc = fixture.RPCFixture()
+        rpc.timestamp = int(time.time()) - 2
+        target = "/verify-private-route/rpc?access=verify-private-query"
+
+        def respond(payload):
+            return 200, {"Content-Type": "application/json"}, rpc(payload, 10, 40, lambda: 0)
+
+        with fixture.rpc_server(respond) as (origin, requests), \
+                patch.dict(os.environ, {"SRSTACK_RPC_URL": origin + target,
+                                        "ALCHEMY_API_KEY": "verify-unused-alchemy-key"}, clear=True):
+            result = self.invoke("--charter", "7")
+        self.assertEqual(result.returncode, 0, result.stdout.decode() + result.stderr.decode())
+        self.assertEqual(result.stderr, b"")
+        report = json.loads(result.stdout)
+        self.assertEqual(report["status"], "ok")
+        self.assertEqual([(stage["name"], stage["status"]) for stage in report["stages"]],
+                         [("integrity", "ok"), ("charter", "ok")])
+        self.assertEqual({path for path, _, _ in requests}, {target})
+        methods = {item["method"] for _, batch, _ in requests for item in batch}
+        self.assertTrue({"eth_chainId", "eth_getBlockByNumber", "eth_getCode", "eth_call"} <= methods)
+        for secret in ("verify-private-route", "verify-private-query", "verify-unused-alchemy-key"):
+            self.assertNotIn(secret, result.stdout.decode() + result.stderr.decode())
+
+    def test_actual_charter_child_preserves_custom_http_denial_without_credentials(self):
+        fixture = load_module(ROOT / "maintenance/check-snapshot.py", "verify_rpc_denial_fixture")
+        route, query, key = "verify-denied-route", "verify-denied-query", "verify-denied-alchemy-key"
+        target = "/" + route + "?access=" + query
+        body = ("provider denied original request " + " ".join((route, query, key))).encode()
+        with fixture.rpc_server(lambda payload: (403, {"X-Request-Id": key}, body)) as (origin, requests), \
+                patch.dict(os.environ, {"SRSTACK_RPC_URL": origin + target, "ALCHEMY_API_KEY": key}, clear=True):
+            result = self.invoke("--charter", "7", "--price")
+        self.assertEqual(result.returncode, 5, result.stdout.decode() + result.stderr.decode())
+        report = json.loads(result.stdout)
+        self.assertEqual([stage["status"] for stage in report["stages"]], ["ok", "failed", "skipped"])
+        error = report["stages"][1]["helper_error"]
+        self.assertEqual(error["type"], "snapshot_error")
+        diagnostics = error["diagnostics"]
+        self.assertEqual(diagnostics["http_status"], 403)
+        self.assertIn("provider denied original request", diagnostics["response_excerpt"])
+        endpoint = urlsplit(diagnostics["endpoint"])
+        self.assertEqual(endpoint.netloc, urlsplit(origin).netloc)
+        self.assertEqual(endpoint.query, "")
+        self.assertEqual([path for path, _, _ in requests], [target])
+        for secret in (route, query, key):
+            self.assertNotIn(secret, result.stdout.decode() + result.stderr.decode())
 
     def test_partial_charter_never_becomes_success_or_runs_price(self):
         self.helper_result("snapshot.py", {"schema_version": 1, "status": "partial", "view": "charter",

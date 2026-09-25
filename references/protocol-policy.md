@@ -8,8 +8,8 @@ Canonical settings: `hard-cap`, `token-decimals`, `genesis-liquidity`, `issuance
 
 Issuance first credits internal ledger balances; actual tokens are minted on withdrawal. Permanent value removals differ from conversions:
 
-- License payments and the burned halves of resolution/revocation fees remove ledger value that is never minted.
-- Open-market buybacks and the protocol position's token-side fees permanently burn wallet/pool tokens.
+- The current whitepaper retains 100% license-payment burning and describes the burned halves of resolution/revocation fees as permanent ledger removals. `license-burn-share` is a published rule, not a verified deployed proceeds split.
+- Contraction Vault buybacks and protocol-position token-side fees burn wallet/pool tokens under the whitepaper design. POL Buyback acquisitions are separate: both current §11 and the official v1.1 policy send acquired tokens to the Incentives Vault unburned.
 - Deposits destroy tokens but credit the ledger one-for-one; that value remains re-mintable on withdrawal. A deposit conversion is not a permanent economic burn.
 
 With G = `genesis-liquidity`, H = `hard-cap`, M(t) cumulative withdrawal mints, B(t) permanent token burns, C(t) deposit conversions and R(t) permanent ledger removals, the published identities are:
@@ -23,7 +23,7 @@ Canonical accounting records: `circulating-supply-formula`, `mintable-ceiling-fo
 
 For read-only implementation context, the reviewed token source exposes `burnedForever()` and `ledgerRetired()` separately; [inspection](inspection.md#supply-restrictions-and-control-context) maps them to `token_burned_forever` and `token_ledger_retired`. Their sum is permanent cap reduction (`HARD_CAP - maxSupply`), not all buybacks. Token conversion burns remain distinct, and `maxSupply - totalSupply` is not the remaining cumulative issuance budget. The publisher conditions UI's “Burned forever” label describes the combined cap reduction; it must not be silently equated with the narrower token getter. Source-reviewed token accounting does not verify CentralBank ledger or settlement implementation.
 
-The [reviewed developer proposal](updates.md#reviewed-branch-auction-burn-and-pol-proposal) would retain half of branch-auction proceeds for incentives rather than remove all proceeds immediately. This qualifies the license-removal description above; it is not verified deployed accounting. Retained incentive tokens and STANDARD retained by proposed POL changes are not permanent burns merely because a vault holds them. Keep observed burn counters separate from proposed routing, eventual unused-token burns and claims about future supply; do not rewrite the source identities or canonical removal shares from an announcement.
+The [official v1.1 announcement](updates.md#protocol-v11-announced-changes) confirms bid-side POL sending acquired tokens to the Incentives Vault, not burning them. It does **not** confirm the earlier proposed 50/50 branch-payment burn/incentive split. Retained vault balances, potential future distributions and eventual-burn proposals are not permanent removals. Keep current token/ledger burn counters separate from receipt-attributed causes: `history.py buybacks` covers Contraction Vault burn events, while `history.py pol-buybacks` reports raw acquired `tokensOut` and destination without inferring token identity, decimals or wallet flows. No announcement rewrites the supply identities or proves a complete deployed ledger settlement algorithm.
 
 ## Flow signal and policy — §§4–5
 

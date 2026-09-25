@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-15T18:07:19.421Z",
-  "scope": "Current Whitepaper v1.0 publisher design, not verified deployment",
+  "reviewed_at": "2026-09-25",
+  "scope": "Current whitepaper and v1.1 published reference rules and scoped launch settings; never live configuration.",
   "notes": [
-    "Values are current publisher design references, not live configuration.",
+    "Announcement/reference values are not saved RPC settings or a current-state fallback. Read each record scope/source; current dynamic values must be fetched live.",
     "Live snapshot observations are separate from documented design settings; remaining budget and supply have different accounting bases.",
     "Unknown execution details stay unknown. The published launch schedule does not fix future tax or transaction outcomes."
   ],
@@ -78,7 +78,6 @@
         "ongoing-active-vault-share",
         "ongoing-pol-share",
         "ongoing-team-share",
-        "pol-swap-share",
         "buyback-tick",
         "buyback-vault-fraction",
         "buyback-pool-fraction",
@@ -90,7 +89,8 @@
         "expansion-reserve-purchase-policy",
         "reserve-redemption-policy",
         "pol-withdrawal-policy",
-        "outside-liquidity-tax-policy"
+        "outside-liquidity-tax-policy",
+        "pol-routing-policy"
       ]
     },
     {
@@ -118,7 +118,6 @@
         "dormancy-fee-redistribution-share",
         "check-in-protocol-cost",
         "license-floor-yield-days",
-        "license-repricing-week-multiple",
         "license-floor-formula",
         "license-decay-setting",
         "exit-pressure-denominator-floor",
@@ -137,7 +136,7 @@
         "charter-reserve-price",
         "charter-count-policy",
         "transfer-enablement",
-        "licenses-per-day-owner-ceiling",
+        "licenses-per-round-owner-ceiling",
         "charters-per-day-owner-ceiling",
         "auction-owner-controls",
         "license-auction-activation",
@@ -145,7 +144,11 @@
         "withdrawal-retirement-rule",
         "withdrawal-availability",
         "dormancy-clock-reset-actions",
-        "dormancy-transfer-grace"
+        "dormancy-transfer-grace",
+        "license-auction-duration",
+        "licenses-per-round",
+        "license-cap-window",
+        "license-decay-half-life"
       ]
     }
   ]

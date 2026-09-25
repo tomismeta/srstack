@@ -4,11 +4,13 @@
 
 srstack explains protocol mechanics, investigates current and historical state, models scenarios and helps with requested research workflows. It is one independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product. It does not sign wallet messages/transactions or submit transactions, directly or through delegated tools.
 
-**Version 0.2.2.** Removes skill-imposed limits on requested modelling, forecasting, strategy comparisons, private-data analysis, authenticated research, exports, monitoring and nonbroadcast simulation. Bundled catalogs and helpers describe convenient implementations, not a capability allowlist. Normal host permissions, evidence integrity and credential protection remain. Select the `v0.2.2` release tag and review its full commit, not the version or a moving branch alone.
+**Agent-agnostic, including Muse.** Muse can use the same complete skill bundle as other Agent Skills hosts—no Muse-specific adapter or behavior. Research guidance requires access to the packaged resources; live helpers additionally depend on the host's Python, filesystem, network access and permissions.
+
+**Version 0.3.0 — unreleased.** Adds protocol v1.1 coverage, direct branch/auction inspection, generation-aware auction and POL history, and user-selected RPC providers. Models, authenticated research, private-data analysis, exports, monitoring and nonbroadcast simulation remain supported through host capabilities; the helpers are conveniences, not a capability allowlist. This working tree has not been tagged or published.
 
 **Helper continuity:** the retired `scripts/scenario.py` and fictional fixture are not restored. Requested models and workflows may use existing host tools or inspectable locally authored code; “no bundled simulator” is not a reason to refuse analysis. The verifier has no `--offline` flag: its default is offline integrity verification. Install a clean runtime export rather than overlaying old files.
 
-**Read coverage retained:** compact charter summaries, original HTTP-denial diagnostics, bounded auction/buyback history, auction controller/pending ownership, queued CentralBank policy/recycling, and treasury routing/controls with approval-gated selected-asset raw holdings. No new cataloged contract identities or claimed Second Mandate deployment. Prior release audit results do not cover edited bytes.
+**Protocol coverage:** v1.1 license deployment/interface, separate auction periods and charter-cap windows, POL Buyback, Incentives Vault and administrative dependencies. Current state is read live; POL acquisitions are not ContractionVault burns. S-Bill documentation and frontend evidence do not establish a live staking deployment. Prior release audits do not cover these edited bytes.
 
 ## What you can ask
 
@@ -18,12 +20,13 @@ srstack explains protocol mechanics, investigates current and historical state, 
 | “What are the current issuance rate and buy/sell taxes?” | Fresh block-scoped protocol observations, not stored launch values |
 | “How much supply was permanently removed, and why?” | Separate liquid-token burns from retired ledger value; totals do not attribute individual burn causes |
 | “Are launch holding limits or the Pool Manager gate active?” | Fresh enabled/active flags and cap values; not a guarantee that a transaction will succeed |
-| “Are expansion licenses available at a usable price?” | Fresh auction status and inventory; no purchasable quote when unavailable |
-| “How did past license or charter auctions go?” | [Supported bounded history scans](references/auction-history.md), with an optional auction-day filter, quantity-weighted prices, evidenced timing and explicit coverage gaps; no stored auction results |
+| “What’s the current branch auction status?” | One fresh `snapshot.py auctions` read using the cataloged current license deployment: getter-reported status, remaining branches and price with [round context and interpretation limits](references/auctions.md#current-branch-auction-status-getters-first); no contract rediscovery or history indexing |
+| “How did past license or charter auctions go?” | [Supported bounded history scans](references/auction-history.md), with an optional round filter, deployment-specific license rounds, quantity-weighted prices and explicit coverage gaps; no stored auction results |
 | “What are the current treasury shares and team liability?” | Current/queued FeeSplitter state and vault controls, not holder yield |
 | “What does the vault hold of this public reserve asset?” | Approval-gated raw holdings/pool metadata for that asset, not portfolio enumeration |
-| “How much did buybacks spend and burn in this block window?” | Checked `BuybackExecuted` event totals with explicit coverage, not aggregate burn attribution or transfer reconciliation |
-| “Show the branches and pending balance of this public charter.” | A charter-ID-specific snapshot; no wallet connection or claim that you own it |
+| “How much did buybacks spend and burn in this block window?” | ContractionVault `BuybackExecuted` event totals within checked coverage; POL buybacks have a separate mode reporting raw token output and destination, not burns |
+| “How are my branches doing?” | Public charter ID → branch count, accrued STANDARD and current-rate daily equivalent in one compact read. A supplied public address can be used for scoped charter discovery; no wallet connection. |
+| “How are my S-Bills doing?” | Use supplied public position details or a user-consented export. Authenticate the actual position-read surface before live claims; preview samples and marketing rates are never reported as the user's holdings. |
 | “What is STANDARD trading at, or what is this amount worth?” | Latest reported canonical-pool USD/ETH prices and a gross indicative valuation |
 | “Which contracts are listed, and is their source verified?” | Publisher-listed identities and explorer links; verification status requires a fresh explorer check |
 | “What has the team announced?” | Fresh official-post research where the host can retrieve it; no bundled recap |
@@ -38,6 +41,8 @@ One skill, useful starting routes:
 
 Common questions have [direct inspection paths](references/inspection.md#common-question-paths). Default charter JSON contains only charter facts and its supported rate equivalent; explicitly select `--detail full` when combined charter, burn or launch-restriction context is requested at one block. Explanation-only questions go straight to packaged sources without an RPC call or financial questionnaire. STANDARD amounts do not trigger a price lookup unless monetary valuation is requested.
 
+The installed skill stores identities, reviewed interfaces and source provenance—not snapshots of current auction status, prices, balances or ownership. Each current-state question performs live reads. Historical cutover metadata identifies which deployed contracts to inspect; it is not a saved current-state answer.
+
 Research topics: [protocol](references/protocol.md) · [charters](references/charters.md) · [reserves](references/reserves.md) · [contracts](references/contracts.md) · [updates](references/updates.md) · [documents](references/documents.md) · [risks](references/risks.md).
 
 These are routing instructions within one skill, not separately installed commands. `Use srstack` returns the research / inspect / analyse / workflows menu. `/srstack` works where the host registers an installed skill command; other command syntax varies by host.
@@ -48,15 +53,25 @@ These are routing instructions within one skill, not separately installed comman
 |---|---|---|
 | Explain packaged rules | Read the skill and its selected resources | None |
 | Research announcements or explorer status | Permitted public web retrieval | Relevant official pages or explorer |
-| Inspect current state | Trusted package and permitted Python 3.10+ execution | Fixed public Robinhood Chain RPC |
-| Inspect auction history | Trusted package and permitted Python 3.10+ execution; bounded block scope | Fixed public Robinhood Chain RPC |
+| Inspect current state | Trusted package and permitted Python 3.10+ execution | Selected Robinhood Chain RPC; official public endpoint by default |
+| Inspect auction history | Trusted package and permitted Python 3.10+ execution; bounded block scope | Selected Robinhood Chain RPC with the required historical coverage |
 | Read market price or gross balance value | Trusted package and permitted Python 3.10+ execution | Fixed public DEX Screener/GeckoTerminal pool endpoints; charter balances additionally use RPC |
 
-All four fixed entrypoints—`snapshot.py`, `price.py`, `history.py` and `verify.py`—use only Python's standard library: no pip dependencies, wallet connector or provider credentials. They require the filesystem protections described in [execution](references/execution.md); unsupported hosts fail closed for those helpers. Other host-permitted tools may provide the requested capability. Dependency installation and reviewed maintenance require the ordinary approval flow, not permission bypass; missing capability means identify the prerequisite, not invent results.
+All four fixed entrypoints—`snapshot.py`, `price.py`, `history.py` and `verify.py`—use only Python's standard library: no pip dependencies or wallet connector. RPC credentials are optional and supplied through host-managed environment secrets. They require the filesystem protections described in [execution](references/execution.md); unsupported hosts fail closed for those helpers. Other host-permitted tools may provide the requested capability. Dependency installation and reviewed maintenance require the ordinary approval flow, not permission bypass; missing capability means identify the prerequisite, not invent results.
+
+### RPC reliability
+
+For production, monitoring or reliability-sensitive research, follow [Robinhood's official recommendation](https://docs.robinhood.com/chain/connecting/): use a provider-managed **Alchemy mainnet endpoint**, with archive access for historical state/indexing. This is an attributed infrastructure recommendation, not a measured “most reliable” ranking or an uptime guarantee. Confirm plan limits, batch/log support and historical coverage for the actual workload.
+
+The RPC helpers select `SRSTACK_RPC_URL` first, otherwise use `ALCHEMY_API_KEY` with `https://robinhood-mainnet.g.alchemy.com/v2/{API_KEY}`, otherwise use the credential-free default `https://rpc.mainnet.chain.robinhood.com/`. Supply either optional setting through host-managed environment/secrets, not CLI arguments or installed files. A custom endpoint supports HTTP or HTTPS, path/query components and URL Basic authentication; prefer HTTPS whenever credentials are involved. `verify.py` forwards both environment settings to its live child helpers. The helpers redact endpoint credentials from output and do not silently fail over. Robinhood labels the default public service rate-limited and **not recommended for production**; it is the zero-configuration path for occasional reads, not a provider restriction or the production reliability recommendation.
+
+Keep provider keys in host-managed secrets, never installed skill files, prompts, command-line URLs or reported evidence. Check chain ID 4663 and a fresh head; keep dependent reads at one block and verify the block hash. Historical `eth_getLogs` availability does not imply historical `eth_call` state is retained. If a provider fails or denies access, report that result; do not silently merge providers, reuse stored state or bypass access controls.
+
+Explorer links default to **[Robinhood Etherscan](https://robin.etherscan.io/)** for addresses, transactions and blocks. Alternate explorer URLs are retained only as provenance for evidence retrieved there, not as the default navigation destination.
 
 ## Install a reviewed release
 
-Package version `0.2.2` is not a revision pin; the **full source commit SHA** resolved below identifies the exact revision you review and install. These commands select the `v0.2.2` release tag. Compare the resolved SHA with the full commit in the release notes. Installation prints that SHA and retains it outside the hashed runtime; never embed the package's own commit in hashed files.
+Package version `0.3.0` is not a revision pin; the **full source commit SHA** identifies the exact revision reviewed and installed. The commands below target `v0.3.0` **once that release is published**; an absent tag fails rather than selecting another revision. Compare the resolved SHA with the release notes. Installation retains that SHA outside the hashed runtime; never embed the package's own commit in hashed files.
 
 These are deliberate maintenance commands for a user or an agent explicitly asked to install/update the skill, subject to normal host approval—not authorization for unsolicited self-updates or guard bypass. Use Git and Python 3.10+ on a supported POSIX host. Review the selected commit, including `maintenance/package.py`, [SKILL.md](SKILL.md), the runtime scripts and [safety](references/safety.md), **before executing package code**. The bundled verifier checks integrity, not publisher authenticity; running it is already executing the package.
 
@@ -75,9 +90,9 @@ cd "$HOME" &&
 mkdir -p "$SKILL_PARENT" "$SRSTACK_BACKUPS" &&
 WORK="$(mktemp -d "$SRSTACK_BACKUPS/srstack-release.XXXXXXXX")" &&
 REVIEW_ROOT="$WORK/source" &&
-git clone --single-branch --branch v0.2.2 \
+git clone --single-branch --branch v0.3.0 \
   https://github.com/tomismeta/srstack.git "$REVIEW_ROOT" &&
-git -C "$REVIEW_ROOT" fetch origin refs/tags/v0.2.2 &&
+git -C "$REVIEW_ROOT" fetch origin refs/tags/v0.3.0 &&
 REVIEWED_COMMIT="$(git -C "$REVIEW_ROOT" rev-parse --verify 'FETCH_HEAD^{commit}')" &&
 git -C "$REVIEW_ROOT" checkout --detach "$REVIEWED_COMMIT" &&
 printf '%s\n' "$REVIEWED_COMMIT" > "$WORK/reviewed-commit.txt" &&
@@ -156,9 +171,11 @@ PY
 
 No files are deleted. On final verification failure, the new root is retained as `failed-install` and the previous root is restored (or the destination is left absent for a first install). If restoration itself fails, keep srstack invocations paused and recover from the printed directory; never use a missing or inconsistent skill root. Telegram/Hermes need not shut down. Whole-root replacement removes obsolete scenario/fixture files from the active runtime without deleting your backup. Keep it until the loaded path and reviewed runtime behavior are confirmed; never discover it as a second skill. A process interruption or filesystem failure may require manual recovery from those same directories before srstack use resumes.
 
-After success, refresh skill discovery if needed and confirm the loaded path is `SKILL_PARENT/srstack`, package version is `0.2.2`, and the printed full SHA matches `WORK/reviewed-commit.txt`. Resume srstack invocations only against the verified root. **Existing chats retain their loaded context:** start a fresh `/new` in each Telegram/Hermes chat that will use the revision (or the host's equivalent new conversation). Installing in one chat cannot restart or refresh the other chats. Restarting the host is optional, not an acceptance criterion; package version alone cannot identify the exact installed revision.
+After success, refresh skill discovery if needed and confirm the loaded path is `SKILL_PARENT/srstack`, package version is `0.3.0`, and the printed full SHA matches `WORK/reviewed-commit.txt`. Resume srstack invocations only against the verified root. **Existing chats retain their loaded context:** start a fresh `/new` in each Telegram/Hermes chat that will use the revision (or the host's equivalent new conversation). Installing in one chat cannot restart or refresh the other chats. Restarting the host is optional, not an acceptance criterion; package version alone cannot identify the exact installed revision.
 
 **Hermes installation:** use the complete-bundle instructions above. URL discovery depends on configured sources; importing raw `SKILL.md` does not necessarily import its references, assets and scripts.
+
+**Muse compatibility:** a user-reported `0.2.2` installation passed package-integrity verification and supported a read-only skill audit. End-to-end network-helper execution was not verified in that sandbox because of its transport constraints; this is not a claim that every helper works there or that `0.3.0` has been tested in Muse. Install the complete bundle through the host's supported skill-loading workflow, not `SKILL.md` alone. Host-permitted alternative research tools remain available under the same evidence and no-signing/no-submission boundaries.
 
 **Host approvals:** trusted skill files and requested public reads do not bypass execution approval. If a one-shot session cannot obtain it, continue in an approval-capable session for the exact helper command rather than trying wrappers, PTYs or `--yolo`. Explicit CLI modes remove the need for stdin but still require normal permission. See [input transport and approvals](references/execution.md#input-transport-and-host-approvals).
 
@@ -223,18 +240,25 @@ Expected: distinguish announced strategy from deployed mechanics, identify sampl
 Use srstack inspect protocol. Show current issuance and buy/sell taxes.
 Use srstack inspect protocol. Split permanent supply removal into token burns and retired ledger value, and show launch restrictions.
 Use srstack inspect auctions. Are licenses available, and what price is actually usable?
+What's the current branch auction status?
 Use srstack inspect charter <public charter ID>. Show its branches and pending balance.
 ```
 
 The reader checks the chain, block, code, module bindings and scalar decoding. Sold-out or disabled auctions do not produce purchasable quotes. A specific charter request also needs its public charter ID; it never needs a wallet connection.
+
+“Branch auction” means the expansion-license auction. Its routine status path is `python3 -B -I scripts/snapshot.py auctions`: the reader already knows the reviewed deployment and getters. It does not crawl the website, rediscover contracts, scan past events or build an index. Read the current state once and answer with the availability path's status, reported remaining branches, current STANDARD price only when open, and observation time. A failed live read is unavailable, never an invitation to reuse a static snapshot.
+
+Lazy rollover matters: compare the stored contract round with the elapsed round derived from the same block's timestamp, live anchor and live period. The v1.1 license period comes from `auctionPeriod()`; the charter period comes from `AUCTION_DAY()`. Neither is the separate license `capWindow()`. When rollover is pending, say “the availability path reports X branches available; stored counters belong to an earlier round,” not “X sold / Y remaining today.” Historical buyer/revenue reconstruction belongs to the history scanner, not these counters.
+
+If challenged, inspect `started`, `paused`, `currentPrice`, `dayFloorPrice`, `dayCap`, `remainingToday`, `soldToday`, `lastSalePrice`, `lastSaleDay`, `currentDay`, `auctionAnchor` and the deployment's period getter at one block before scanning events. `snapshot.py auctions --detail full` supplies these supported direct reads and their round context; full output is evidence from that invocation, not an installed static snapshot.
 
 Replace `<public charter ID>` with the ID to inspect.
 
 | View | Selected observations |
 |---|---|
 | `protocol` | Issuance and epoch context, branch count, supply and permanent-burn decomposition, token restriction/launch flags, counter-based remaining budget, buy/sell tax and pool/emissions state |
-| `auctions` | License and daily-charter activation, pause state, inventory, duration and available current prices |
-| `treasury` | Current/queued fee allocation, team ETH liability, vault authority/pause, buyback controls; optional approved-asset raw holdings and pool key |
+| `auctions` | Current license and daily-charter activation, pause state, reported inventory and current prices; stored versus elapsed rounds, pending rollover, license auction period, separate charter-cap window and decay setting |
+| `treasury` | Current/queued fee allocation, team ETH liability, vault authority/pause, contraction-buyback controls, POL/incentives ownership and the vault's live STANDARD balance; optional approved-asset raw holdings and pool key |
 | `charter` | Default: public owner, branches, pending and supported current-rate equivalent. Explicit `--detail full`: additional protocol context and raw evidence |
 
 Each invocation uses one checked block. Separate example invocations are not one atomic combined snapshot; do not combine their values as if they share a block. Failed fields remain missing with errors; fatal failures return no snapshot. Results are not saved or reused as a fallback. These are selected publisher-ABI reads, not a complete contract audit.
@@ -243,7 +267,7 @@ Advanced users can request the same protocol snapshot from the reviewed installe
 
 ```sh
 python3 -B -I scripts/snapshot.py protocol
-python3 -B -I scripts/snapshot.py auctions --detail full
+python3 -B -I scripts/snapshot.py auctions
 python3 -B -I scripts/snapshot.py charter --id 1
 python3 -B -I scripts/snapshot.py treasury
 ```
@@ -259,9 +283,11 @@ python3 -B -I scripts/history.py license --lookback-blocks 1000000
 python3 -B -I scripts/history.py charter --day 1 --from-block 1 --to-block 1000000
 ```
 
-Choose the day and block scope for the question; the examples do not assert where a round occurred. An auction day is a filter, not a 24-hour block estimate. Report scanned coverage and partial results, not complete-all-history. A last observed purchase alone does not prove sellout. Results go to stdout and are never saved as runtime observations.
+Choose the day and block scope for the question; the examples do not assert where a round occurred. An auction day is a filter, not a 24-hour block estimate. License history keeps legacy and v1.1 emitting addresses separate, even where round identifiers repeat; a window spanning deployment can include both. Report scanned coverage and partial results, not complete-all-history. A last observed purchase alone does not prove sellout. Results go to stdout and are never saved as runtime observations.
 
-For buybacks use `python3 -B -I scripts/history.py buybacks --lookback-blocks 1000000`. There is no auction-day filter. ETH spent and STANDARD burned are event-accounted within checked coverage, not reconciled transfers or complete-all-history. Treasury optionally accepts `--asset ADDRESS` only as a fixed vault-call argument; approval false/unavailable omits holdings and pool details. Token holdings and internal streamed counters with unestablished decimals remain raw units; queued policy is never substituted for current settings.
+For contraction buybacks use `python3 -B -I scripts/history.py buybacks --lookback-blocks 1000000`. For POL acquisitions use `python3 -B -I scripts/history.py pol-buybacks --lookback-blocks 1000000`. Neither accepts an auction-day filter. The first reports event-accounted ETH spent and STANDARD burned; the second reports event-accounted ETH input, raw token output and destination, without claiming token burns or an authenticated token denomination. Neither is receipt-reconciled asset movement or complete-all-history.
+
+Treasury optionally accepts `--asset ADDRESS` only as a fixed vault-call argument; approval false/unavailable omits holdings and pool details. Reserve-token holdings and internal streamed counters with unestablished decimals remain raw units; queued policy is never substituted for current settings. The incentives vault's separately authenticated STANDARD balance is retained tokens, not burned supply.
 
 ### Current price and gross accrued-balance value
 
@@ -326,7 +352,7 @@ For current protocol questions, request only the relevant [inspection](reference
 
 The package uses selected references and indexed records rather than loading the whole corpus for every question. The reference indexes own current inventory counts; disk size is not per-question token cost, and selective loading depends on the host.
 
-Packaged research needs a resource reader. Bundled readers use **Python 3.10+ and its standard library**, fixed RPC/provider paths and supported filesystem primitives. Other host-permitted tools, reviewed dependencies and custom code can support additional requested workflows without modifying these helpers. No wallet signer, telemetry, scheduler or self-update process is bundled; host capabilities must actually exist before claiming an operation was performed.
+Packaged research needs a resource reader. Bundled readers use **Python 3.10+ and its standard library**, environment-selected RPC endpoints, fixed price-provider paths and supported filesystem primitives. Other host-permitted tools, reviewed dependencies and custom code can support additional requested workflows without modifying these helpers. No wallet signer, telemetry, scheduler or self-update process is bundled; host capabilities must actually exist before claiming an operation was performed.
 
 ## Safety and verification limits
 
@@ -354,7 +380,7 @@ python3 -B maintenance/package.py archive
 
 The checks use Python's standard library and local Git; they do not call explorers, connect wallets or use model/API credentials. CI runs them on Python 3.10 and 3.14, with read-only repository permissions and commit-pinned Actions. GitHub checkout and Python provisioning require network access; the validation commands themselves are offline. CI verifies the committed manifest rather than regenerating it, and checks deterministic ZIP output. It does not upload artifacts, tag, publish releases or monitor contracts.
 
-After deliberate runtime changes, regenerate the manifest with `python3 -B maintenance/package.py build`, then run the checks above. The archive `dist/srstack-0.2.2.zip` contains only the runtime package; building it does not publish a release or certify it. Maintenance tooling and CI files are repository-only; their execution requires a deliberate maintenance request, trusted code and normal host permissions.
+After deliberate runtime changes, regenerate the manifest with `python3 -B maintenance/package.py build`, then run the checks above. The archive `dist/srstack-0.3.0.zip` contains only the runtime package; building it does not publish a release or certify it. Maintenance tooling and CI files are repository-only; their execution requires a deliberate maintenance request, trusted code and normal host permissions.
 
 ## Feedback and license
 

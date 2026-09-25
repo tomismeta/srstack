@@ -1,17 +1,38 @@
 {
   "schema_version": 1,
-  "scope": "Publisher-authenticated event definitions and deployment identity for the supported bounded read-only history.py helper; this catalog does not expand helper methods, persist observations or provide a planner. Requested analysis and artifacts may use these definitions outside the fixed helper.",
+  "scope": "Authenticated auction event interfaces and fixed historical generation identities for bounded live read-only history.py requests; no saved current settings or observations. License scans retain both legacy and v1.1 emitters and never infer legacy inactivity from registry cutover.",
   "chain_id": 4663,
   "source_ids": [
-    "sr-auction-event-interface"
+    "sr-auction-event-interface",
+    "sr-v1-1-read-interface",
+    "sr-v1-1-deployment-evidence"
   ],
   "entity_catalog": "assets/entities/robinhood.json",
   "research_recipe": "references/auction-history.md",
   "contracts": {
-    "licenseAuction": {
+    "licenseAuctionLegacy": {
       "entity_id": "sr-robinhood-license-auction",
       "address": "0xA45CE49303EEd5846F841BFd4bAC6aE8C805EC05",
       "abi_locator": "mountApp-DmwNsaDC.js literal _t",
+      "generation": "legacy",
+      "consideration_asset": "STANDARD",
+      "consideration_decimals": 18
+    },
+    "licenseAuction": {
+      "entity_id": "sr-robinhood-license-auction-v1-1",
+      "address": "0x44731EFf9da8fDD30003AA7C0B324368B3DfFE5e",
+      "abi_locator": "mountApp-BqtUxqir.js literal Lc events retained by ej adaptation; removed and added error entries are not events",
+      "generation": "v1.1",
+      "deployment_block": 69178086,
+      "deployment_transaction": "0x7257aa2a6c94af0a41ef683c7883e4068795ce191f19b801039b6f9a01fc7ff4",
+      "registry_cutover": {
+        "block_number": 69222157,
+        "timestamp": 1790036371,
+        "block_hash": "0x9a50b5e9156e8fba4cce7e2898e5aabee480f34ec74e23ceab7bb446e62e81b3",
+        "transaction_hash": "0xde518b479895afbf63979c84be3822d4d98be767baf695c84ecf58b849ca0f98",
+        "source_id": "sr-v1-1-deployment-evidence",
+        "scope": "Observed AuctionStarted and registry LICENSE_AUCTION replacement in one successful transaction; not proof of legacy emission cessation, current state or no subsequent registry changes."
+      },
       "consideration_asset": "STANDARD",
       "consideration_decimals": 18
     },
@@ -34,6 +55,7 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionLegacy",
         "charterAuction"
       ],
       "abi": {
@@ -132,6 +154,7 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionLegacy",
         "charterAuction"
       ],
       "abi": {
@@ -177,6 +200,7 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionLegacy",
         "charterAuction"
       ],
       "abi": {
@@ -200,7 +224,8 @@
     },
     {
       "contracts": [
-        "licenseAuction"
+        "licenseAuction",
+        "licenseAuctionLegacy"
       ],
       "abi": {
         "type": "event",
@@ -224,6 +249,7 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionLegacy",
         "charterAuction"
       ],
       "abi": {
@@ -248,6 +274,7 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionLegacy",
         "charterAuction"
       ],
       "abi": {
@@ -262,7 +289,8 @@
     },
     {
       "contracts": [
-        "licenseAuction"
+        "licenseAuction",
+        "licenseAuctionLegacy"
       ],
       "abi": {
         "type": "event",
@@ -285,7 +313,8 @@
     },
     {
       "contracts": [
-        "licenseAuction"
+        "licenseAuction",
+        "licenseAuctionLegacy"
       ],
       "abi": {
         "type": "event",
@@ -330,6 +359,7 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionLegacy",
         "charterAuction"
       ],
       "abi": {
@@ -361,6 +391,7 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionLegacy",
         "charterAuction"
       ],
       "abi": {
@@ -415,6 +446,7 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionLegacy",
         "charterAuction"
       ],
       "abi": {
@@ -475,10 +507,12 @@
     }
   ],
   "limits": [
-    "Publisher-linked literal ABI and identity are not independent source/bytecode verification or proof that all deployed generations share these events.",
-    "No reviewed AuctionEnded, SoldOut or timestamp-bearing round event exists in these two literal auction ABIs. Missing definitions are not invented.",
+    "Publisher-linked auction ABIs and v1.1 adaptation authenticate retained events, not independent source/bytecode equivalence or universal routing. Removed error interfaces are not events.",
+    "No reviewed AuctionEnded, SoldOut or timestamp-bearing round event exists in these auction interfaces. Missing definitions are not invented.",
     "DayRolled may be observed in a later transaction; its block time does not by itself establish the scheduled opening or expiry. A purchase timestamp establishes execution, not opening.",
     "Historical duration, applied cap, half-life, payment semantics and configuration transitions need interval-specific evidence; current getters and whitepaper constants cannot substitute.",
+    "License day identifiers may restart across deployments; grouping must include the exact emitting address. The helper scans legacy over the full requested interval and v1.1 from its creation block, including the pre-cutover initialization interval. Registry cutover is provenance, not an emission cutoff.",
+    "The v1.1 12-hour round and separate 24-hour charter cap window must not be conflated. Retained licensesPerDay and LicensesPerDaySet names describe round supply; source-level exact window math and payment split remain unverified. Current status requires live snapshot.py auctions reads, not this historical catalog.",
     "An ABI does not prove where consideration goes, whether it is burned or distributed, or holder yield.",
     "history.py scans these reviewed auction events within explicit finite budgets; treasury buyback events use a separate catalog. Historical RPC availability and coverage must be established for each request; receipt-level Central Bank corroboration remains outside the helper."
   ]

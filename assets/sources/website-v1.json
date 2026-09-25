@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-20",
+  "reviewed_at": "2026-09-25",
   "scope": "Primary documentation, official strategy announcements and companion-page routing; no stored application state",
   "records": [
     {
       "id": "sr-whitepaper-v1",
-      "url": "https://www.standardreserve.xyz/whitepaper/",
+      "url": "https://www.standardreserve.xyz/app/protocol/whitepaper/",
       "publisher": "The Standard Reserve",
       "published_at": null,
-      "retrieved_at": "2026-09-18",
+      "retrieved_at": "2026-09-25",
       "revision_label": "Whitepaper v1.0",
-      "review_depth": "All16 rendered sections, tables and available equation annotations",
+      "review_depth": "Sixteen-section coverage with September25 source-text and published-equation reconciliation; no downloaded code executed or deployed implementation reproduced.",
       "claim_stage": "publisher design statements, not implementation verification or live state",
       "locators": [
         {
@@ -83,25 +83,27 @@
         "Publisher documentation is not independently verified source code.",
         "Fetch changeable settings and auction execution details on demand or report unavailable; source dates do not establish current state.",
         "The unchanged Whitepaper v1.0 label and retrieval date do not establish publication chronology or newly introduced mechanics.",
-        "Section 7 equation 7.1 and sections 7–8 four-hour gap-halving prose give different auction curves; the executable decay setting remains not established.",
+        "The September25 text documents the license two-hour gap-to-floor curve and activation-anchored24h cap window; the earlier equation/prose conflict is not retained as a current documentation gap. Deployed rounding, clamping and boundary behavior still require authenticated implementation evidence.",
+        "Section15 retains launch shorthand100 licenses/day and a POL-liquidity label; specific sections7–8 define50/12h and an anchored24h cap, while section11 directs the15% ongoing POL share to buybacks retained in IncentivesVault. Do not apply stale summary wording over the specific updated rules.",
         "Section 12 no-code-migration wording must be scoped against publisher-linked successor holdings-migration ABIs recorded in sr-contract-directory; asset movement is not necessarily code replacement, and ABI presence is not deployed authority evidence."
       ]
     },
     {
       "id": "sr-token-page-v1",
-      "url": "https://www.standardreserve.xyz/app/token/",
+      "url": "https://www.standardreserve.xyz/app/protocol/live/",
       "publisher": "The Standard Reserve official website",
       "published_at": null,
-      "retrieved_at": "2026-09-15T18:27:00.244Z",
-      "review_depth": "Token topic explanation and page routing",
+      "retrieved_at": "2026-09-25",
+      "review_depth": "Earlier token-page explanation plus fresh full LiveProtocol component source-text review; Token & policy is the current navigation route, not a rendered live observation.",
       "claim_stage": "publisher explanation, not stored frontend observations",
       "locators": [
-        "About STANDARD; supply, burns and holding"
+        "About STANDARD; supply, burns and holding",
+        "https://www.standardreserve.xyz/assets/LiveProtocol-BTvCIoe8.js"
       ],
       "summary": "Publisher explanation of STANDARD supply, burns and holding, with a live panel for related token conditions.",
       "limits": [
         "Read changing panel values on demand or report unavailable; do not infer zero, absence or current state from documentation.",
-        "A later metadata-only app-shell retrieval does not refresh this record's rendered-token-page review. Follow publisher-linked components as text for explanatory provenance only; current-conditions supply context is routed by sr-protocol-conditions."
+        "Legacy /app/token/ retrieval returned app-shell metadata only. The component supplies explanatory provenance, not refreshed live values; current observations use on-demand RPC."
       ]
     },
     {
@@ -109,11 +111,12 @@
       "url": "https://www.standardreserve.xyz/app/protocol/charters/",
       "publisher": "The Standard Reserve official website",
       "published_at": null,
-      "retrieved_at": "2026-09-15T18:27:00.404Z",
-      "review_depth": "Charter and auction topic explanation and page routing",
+      "retrieved_at": "2026-09-25",
+      "review_depth": "Fresh complete linked ChartersGuide component source-text review; charter, earnings, retirement and dormancy explanations, not rendered live values.",
       "claim_stage": "publisher explanation, not stored frontend observations",
       "locators": [
-        "Charters & Auctions; availability, earning, expansion, withdrawal"
+        "Charters & Auctions; availability, earning, expansion, withdrawal",
+        "https://www.standardreserve.xyz/assets/ChartersGuide-BqZlICRf.js"
       ],
       "summary": "Publisher explanation of charters, auctions, earning, expansion and withdrawals, with live panels for availability and auction conditions.",
       "limits": [
@@ -146,8 +149,8 @@
       "url": "https://www.standardreserve.xyz/app/manifesto/",
       "publisher": "The Standard Reserve official website",
       "published_at": null,
-      "retrieved_at": "2026-09-20",
-      "review_depth": "Full browser-rendered manifesto review, followed by current official HTML and literal mount/component source-text review; includes dated rationale, explicitly sampled positions and fixed-value reserve display. No downloaded JavaScript executed.",
+      "retrieved_at": "2026-09-25",
+      "review_depth": "September20 browser-rendered review retained; September25 complete linked ManifestoPage source-text review reconfirms strategic explanation and sample/fixed-value displays. No downloaded JavaScript executed.",
       "claim_stage": "publisher strategic direction with dated rationale and sample illustrations, not implemented mechanics or live-state evidence",
       "locators": [
         "Second mandate: open, transparent liquidity engine for tokenized stocks, not another stock issuer",
@@ -156,6 +159,7 @@
         "RESERVE POSITIONS (SAMPLE)",
         "https://www.standardreserve.xyz/assets/mountApp-DmwNsaDC.js",
         "https://www.standardreserve.xyz/assets/ManifestoPage-DJdXDzGD.js",
+        "https://www.standardreserve.xyz/assets/ManifestoPage-BSA5q4aB.js",
         "Reserve levels as of today: fixed component constants, not a live read"
       ],
       "summary": "Against the project's documented monetary-policy context, the manifesto proposes an open, transparent liquidity engine for tokenized stocks rather than another stock issuer: create or approve markets, seed liquidity, coordinate external capital and return trading fees to the Reserve to fund more markets. Dated market examples motivate the strategy; position panels are explicit samples. No named Second Mandate contract or address is supplied.",
@@ -167,6 +171,69 @@
         "No contract addresses, ABI, enforceable fee-distribution mechanism or token/charter revenue entitlement is established by this manifesto.",
         "The Second Mandate is not established as equivalent to the earlier @0xbeans branch-auction, burn and POL proposal.",
         "Browser review and retrieval date do not establish publication chronology or a current-state guarantee."
+      ]
+    },
+    {
+      "id": "sr-staking-preview",
+      "url": "https://www.standardreserve.xyz/app/staking/about/",
+      "publisher": "The Standard Reserve official website",
+      "published_at": null,
+      "retrieved_at": "2026-09-25",
+      "review_depth": "Official HTML and linked component source-text review; no downloaded JavaScript executed and no rendered wallet flow exercised.",
+      "claim_stage": "publisher product description and explicitly illustrative preview, not authenticated deployed mechanics",
+      "locators": [
+        "https://www.standardreserve.xyz/app/staking/",
+        "https://www.standardreserve.xyz/assets/StakingAbout-DZivBSE9.js",
+        "https://www.standardreserve.xyz/assets/StakePage-XbGMSTbi.js"
+      ],
+      "summary": "Publisher describes S-Bills as STANDARD deposits earning premiums funded by Reserve buybacks, with a zero-dilution claim. The reviewed StakePage labels deposits Coming soon and its fixed sample stage aria-hidden and inert; StakingAbout includes simulated example-rate data and contradictory accepting-deposits versus Coming Soon copy.",
+      "limits": [
+        "Retrieval date is not publication or launch time; introduction after the September22 review is not established.",
+        "Sample balances, rates, bills and histories are not live observations, earned returns, a yield quote or holdings. No sample amounts are installed.",
+        "Conflicting marketing availability labels and simulated example rates do not authenticate a live position service. Do not choose the more optimistic label as deployment evidence.",
+        "No staking address, authenticated ABI, enforceable premium, custody or withdrawal terms, deployment correspondence or audit coverage is established by this review.",
+        "Refresh official sources and deployment evidence for current availability. The historical preview label is not a saved current-status answer."
+      ]
+    },
+    {
+      "id": "sr-owner-check-in-frontend",
+      "url": "https://www.standardreserve.xyz/app/",
+      "publisher": "The Standard Reserve official website",
+      "published_at": null,
+      "retrieved_at": "2026-09-25",
+      "review_depth": "Linked published frontend bundle source-text review; no rendered browser interaction or wallet transaction exercised.",
+      "claim_stage": "dated frontend implementation provenance, not a new deployment or current transaction-success claim",
+      "locators": [
+        "https://www.standardreserve.xyz/assets/mountApp-DIJs6ehM.js",
+        "Check in now UI and checkIn transaction action",
+        "Bundle SHA-256: 25628eb3e631998036dd42f3d43697c2ef04c1f1094b237dd0b7e00199d8edb6"
+      ],
+      "summary": "The reviewed publisher bundle includes an owner check-in action and retains the known v1.1 license, POL Buyback and Incentives Vault identities. This advances evidence beyond the earlier announcement of a forthcoming button, without proving when the action was introduced.",
+      "limits": [
+        "Changed bundle identity does not establish an exact semantic diff or publication date; the previous asset was unavailable during this review.",
+        "Source-text presence does not prove a currently rendered, enabled or successful wallet flow, nor zero network gas.",
+        "Check-in transaction guidance remains informational; no signing or submission is performed by the skill.",
+        "Refresh the frontend for current UI questions; do not replace the separately reviewed callable interface or add an invented contract from this UI evidence."
+      ]
+    },
+    {
+      "id": "sr-sbill-announcement",
+      "url": "https://x.com/standard_rsv/status/2102877169852747865",
+      "publisher": "The Standard Reserve official account (@standard_rsv)",
+      "published_at": null,
+      "retrieved_at": "2026-09-25",
+      "review_depth": "Original official post text retrieved through public Nitter mirror; no audit report independently retrieved.",
+      "claim_stage": "official product and forthcoming-audit announcement, not completed audit or live deployment proof",
+      "locators": [
+        "https://nitter.tiekoetter.com/standard_rsv/status/2102877169852747865",
+        "https://www.standardreserve.xyz/app/staking/about/"
+      ],
+      "published_time_evidence": "Mirror labels the post Sep23; full absolute publication time not independently established.",
+      "summary": "Announces S-Bills as non-dilutive variable-APR staking and states: Contracts are going into security audits this week.",
+      "limits": [
+        "This statement concerns planned audit activity at publication, not current audit completion, findings, remediation or deployment correspondence.",
+        "Earlier protocol-launch audits and v1.1 security-review claims do not establish S-Bill audit coverage.",
+        "No authenticated position interface or new deployed address is supplied by the retrieved announcement. Newer developer timeline coverage remains unavailable."
       ]
     }
   ]

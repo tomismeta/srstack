@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Finite, read-only auction and buyback event accounting; standard library only.
 
-Run with python3 -B -I. The reviewed sibling snapshot module supplies the fixed
-HTTPS transport, strict JSON-RPC parser and descriptor-safe catalog readers.
-No downloaded code, alternate RPC, receipts, unpinned getters or saved results.
+Run with python3 -B -I. The reviewed sibling snapshot module supplies the
+configurable RPC transport, strict JSON-RPC parser and descriptor-safe catalog readers.
+No downloaded code, receipts, unpinned getters or saved results.
 """
 
 import hashlib
@@ -19,8 +19,8 @@ from datetime import datetime, timezone
 from fractions import Fraction
 
 
-EVENTS_SHA256 = "85b3e8f73e30ab71e071ca1438608c698bff33b172409cc120eef8748ddb7d88"
-TREASURY_EVENTS_SHA256 = "ae60466832a55f01242ea5c275cd27d5c22baa8b95aff36f11309b954cdbbdfb"
+EVENTS_SHA256 = "d4aa58d40dbcc4fa87dfccf24b8255a6137c66f78a158b5902b0d89ad506ed47"
+TREASURY_EVENTS_SHA256 = "edf5274602de69369b37d3e83634c2591d0b75c57a52c243c11737cd23f9f74b"
 MAX_BLOCKS = 5_000_000
 DEFAULT_LOOKBACK = 1_000_000
 MAX_CHUNK_BLOCKS = 10_000
@@ -37,7 +37,8 @@ MIN_REQUEST_INTERVAL = 0.5
 MAX_SCRIPT_BYTES = 1024 * 1024
 MAX_BLOCK_NUMBER = (1 << 64) - 1
 UINT256_MAX = (1 << 256) - 1
-ROLES = {"license": "licenseAuction", "charter": "charterAuction", "buybacks": "contractionVault"}
+ROLES = {"license": "licenseAuction", "charter": "charterAuction", "buybacks": "contractionVault", "pol-buybacks": "polBuyback"}
+BUYBACK_KINDS = ("buybacks", "pol-buybacks")
 _SNAPSHOT = None
 
 
@@ -102,16 +103,16 @@ def _load_snapshot():
 
 
 def _validate_input(config):
-    required = {"schema_version", "kind"} if isinstance(config, dict) and config.get("kind") == "buybacks" else {"schema_version", "auction"}
+    required = {"schema_version", "kind"} if isinstance(config, dict) and config.get("kind") in BUYBACK_KINDS else {"schema_version", "auction"}
     optional = {"day", "anchor_block", "lookback_blocks", "from_block", "to_block", "chunk_blocks", "max_chunks", "detail"}
     if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - optional:
         raise InputError("unexpected or missing fields")
     kind = config.get("kind", config.get("auction"))
     if (type(config["schema_version"]) is not int or config["schema_version"] != 1
             or not isinstance(kind, str) or kind not in ROLES
-            or ("auction" in config and kind == "buybacks")):
-        raise InputError("expected schema_version 1 and license/charter auction or buybacks kind")
-    if kind == "buybacks" and "day" in config:
+            or ("auction" in config and kind in BUYBACK_KINDS)):
+        raise InputError("expected schema_version 1 and license/charter auction or buybacks/pol-buybacks kind")
+    if kind in BUYBACK_KINDS and "day" in config:
         raise InputError("day is only supported for license or charter auctions")
     value = dict(config)
     value.setdefault("detail", "summary")
@@ -138,7 +139,7 @@ def _validate_input(config):
 
 def _load_catalog(s, kind):
     descriptors = []
-    buybacks = kind == "buybacks"
+    buybacks = kind in BUYBACK_KINDS
     filename = "treasury-events.json" if buybacks else "auction-events.json"
     try:
         interface, addresses, hashes = s._load_package()
@@ -154,7 +155,8 @@ def _load_catalog(s, kind):
                 or type(catalog["chain_id"]) is not int or catalog["chain_id"] != s.CHAIN_ID
                 or catalog["entity_catalog"] != "assets/entities/robinhood.json"
                 or catalog["research_recipe"] != "references/auction-history.md"
-                or catalog["source_ids"] != (["sr-extended-read-interface"] if buybacks else ["sr-auction-event-interface"])):
+                or catalog["source_ids"] != (["sr-extended-read-interface", "sr-pol-buyback-event-interface", "sr-v1-1-deployment-evidence"] if buybacks
+                                              else ["sr-auction-event-interface", "sr-v1-1-read-interface", "sr-v1-1-deployment-evidence"])):
             raise ValueError("invalid event metadata")
         fingerprint = hashlib.sha256(json.dumps({k: catalog[k] for k in ("contracts", "events")}, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
         if fingerprint != (TREASURY_EVENTS_SHA256 if buybacks else EVENTS_SHA256):
@@ -166,13 +168,14 @@ def _load_catalog(s, kind):
         for event in catalog["events"]:
             abi = event["abi"]
             if (abi["type"] != "event" or abi["anonymous"] is not False or not s.WORD.fullmatch(event["topic0"])
-                    or event["topic0"] in topics or abi["name"] in names
+                    or event["topic0"] in topics or any((role, abi["name"]) in names for role in event["contracts"])
+                    or not event["contracts"] or any(role not in catalog["contracts"] for role in event["contracts"])
                     or event["signature"] != abi["name"] + "(" + ",".join(i["type"] for i in abi["inputs"]) + ")"
                     or sum(i["indexed"] is True for i in abi["inputs"]) > 3
                     or any(i["type"] not in ("uint256", "address") or type(i["indexed"]) is not bool for i in abi["inputs"])):
                 raise ValueError("invalid reviewed event ABI")
             topics.add(event["topic0"])
-            names.add(abi["name"])
+            names.update((role, abi["name"]) for role in event["contracts"])
         hashes["assets/interfaces/" + filename] = digest
         return catalog, interface, addresses, hashes
     except (OSError, ValueError, TypeError, KeyError, RecursionError, RuntimeError):
@@ -246,12 +249,16 @@ def _headers(s, rpc, numbers, now):
     return result
 
 
-def _decode_log(s, value, definitions, address, start, end):
+def _decode_log(s, value, emitters, start, end):
     required = {"address", "blockNumber", "blockHash", "transactionHash", "transactionIndex", "logIndex", "topics", "data", "removed"}
     if not isinstance(value, dict) or not required <= value.keys():
         raise HistoryError("log fields are missing")
-    if not isinstance(value["address"], str) or not s.ADDRESS.fullmatch(value["address"]) or value["address"].lower() != address:
-        raise HistoryError("log emitter differs from selected fixed contract")
+    if not isinstance(value["address"], str) or not s.ADDRESS.fullmatch(value["address"]):
+        raise HistoryError("invalid log emitter")
+    address = value["address"].lower()
+    emitter = emitters.get(address)
+    if emitter is None:
+        raise HistoryError("log emitter differs from selected fixed contracts")
     number = s._quantity(value["blockNumber"])
     tx_index, index = s._quantity(value["transactionIndex"]), s._quantity(value["logIndex"])
     if not start <= number <= end or max(tx_index, index) > MAX_BLOCK_NUMBER or type(value["removed"]) is not bool:
@@ -262,7 +269,7 @@ def _decode_log(s, value, definitions, address, start, end):
     topics = value["topics"]
     if not isinstance(topics, list) or not 1 <= len(topics) <= 4 or any(not isinstance(t, str) or not s.WORD.fullmatch(t) for t in topics):
         raise HistoryError("invalid log topics")
-    event = definitions.get(topics[0].lower())
+    event = emitter["definitions"].get(topics[0].lower())
     if event is None:
         raise HistoryError("unexpected event topic for selected contract")
     inputs = event["abi"]["inputs"]
@@ -283,13 +290,19 @@ def _decode_log(s, value, definitions, address, start, end):
         fields[item["name"]] = s._decode(word, item["type"])
     if event["abi"]["name"] == "LicensesPurchased" and fields["count"] == 0:
         raise HistoryError("purchase quantity is zero")
-    return {"event": event["abi"]["name"], "fields": fields, "block_number": number,
+    return {"address": address, "contract_role": emitter["role"], "entity_id": emitter["entity_id"],
+            "event": event["abi"]["name"], "fields": fields, "block_number": number,
             "block_hash": value["blockHash"].lower(), "transaction_hash": value["transactionHash"].lower(),
             "transaction_index": tx_index, "log_index": index, "removed": value["removed"]}
 
 
-def _window(s, rpc, budget, definitions, address, start, end, anchor, now):
-    raw = rpc.one("eth_getLogs", [{"address": address, "fromBlock": hex(start), "toBlock": hex(end), "topics": [list(definitions)]}])
+def _window(s, rpc, budget, emitters, start, end, anchor, now):
+    addresses = list(emitters)
+    topics = list(dict.fromkeys(topic for emitter in emitters.values() for topic in emitter["definitions"]))
+    # A catalog-authenticated pre-deployment window still receives header and
+    # anchor checks, but must never become an unfiltered all-contract log query.
+    raw = rpc.one("eth_getLogs", [{"address": addresses[0] if len(addresses) == 1 else addresses,
+                                  "fromBlock": hex(start), "toBlock": hex(end), "topics": [topics]}]) if addresses else []
     if not isinstance(raw, list):
         raise HistoryError("log result is not an array")
     budget.logs += len(raw)
@@ -299,7 +312,7 @@ def _window(s, rpc, budget, definitions, address, start, end, anchor, now):
         for value in raw:
             if isinstance(value, dict) and value.get("removed") is True:
                 try:
-                    _decode_log(s, value, definitions, address, start, end)
+                    _decode_log(s, value, emitters, start, end)
                 except (ValueError, TypeError, KeyError):
                     continue
                 raise ReorgError("removed log excluded; affected coverage is incomplete")
@@ -307,7 +320,7 @@ def _window(s, rpc, budget, definitions, address, start, end, anchor, now):
     events, positions, transactions, by_hash = [], set(), {}, {}
     for value in raw:
         budget.check()
-        event = _decode_log(s, value, definitions, address, start, end)
+        event = _decode_log(s, value, emitters, start, end)
         if event["removed"]:
             raise ReorgError("removed log excluded; affected coverage is incomplete")
         position = event["block_number"], event["log_index"]
@@ -352,9 +365,9 @@ def _rounds(s, events, auction, day, gaps):
         fields = event["fields"]
         if "day" not in fields or (day is not None and fields["day"] != day):
             continue
-        groups.setdefault(fields["day"], []).append(event)
+        groups.setdefault((event["address"], fields["day"]), []).append(event)
     result = []
-    for identifier, observed in sorted(groups.items()):
+    for (address, identifier), observed in sorted(groups.items()):
         purchases = [e for e in observed if e["event"] in ("LicensesPurchased", "CharterPurchased")]
         rolls = [e for e in observed if e["event"] == "DayRolled"]
         starts = [e for e in observed if e["event"] == "AuctionStarted"]
@@ -369,7 +382,8 @@ def _rounds(s, events, auction, day, gaps):
             missing.append("conflicting_observed_round_caps")
         if gaps:
             missing.append("requested_window_has_coverage_gaps")
-        result.append({"day": str(identifier), "purchase_event_count": len(purchases), "purchase_quantity": str(quantity),
+        result.append({"address": address, "contract_role": observed[0]["contract_role"], "entity_id": observed[0]["entity_id"],
+                       "day": str(identifier), "purchase_event_count": len(purchases), "purchase_quantity": str(quantity),
                        "quantity_unit": "licenses" if auction == "license" else "charters",
                        "consideration": {"basis": "purchase_event_accounting", "asset": "STANDARD" if auction == "license" else "ETH", "decimals": 18,
                                          "total_raw": str(total), "total": s._scaled(total, 18),
@@ -424,6 +438,31 @@ def _buybacks(s, events, completed, gaps):
             "requested_range_complete": available and not gaps}
 
 
+def _pol_buybacks(s, events, completed, gaps):
+    available = bool(completed)
+    eth_in = sum(event["fields"]["ethIn"] for event in events) if available else None
+    tokens_out = sum(event["fields"]["tokensOut"] for event in events) if available else None
+    destinations = {}
+    for event in events:
+        row = destinations.setdefault(event["fields"]["destination"], {"event_count": 0, "tokens_out": 0})
+        row["event_count"] += 1
+        row["tokens_out"] += event["fields"]["tokensOut"]
+    return {"basis": "pol_buyback_event_accounting",
+            "scope": "event-reported ETH input, raw token output and destination only; not burns, authenticated token denomination or independently reconciled wallet flows",
+            "observation_status": ("unavailable" if not available else "observed_events" if events else
+                                   "no_matches_in_scanned_windows" if any(window["emitter_addresses"] for window in completed) else "no_deployed_emitters"),
+            "event_count": len(events) if available else None,
+            "eth_in": {"asset": "ETH", "decimals": 18, "total_raw": None if eth_in is None else str(eth_in),
+                       "total": None if eth_in is None else s._scaled(eth_in, 18)},
+            "tokens_out": {"asset": None, "decimals": None, "total_raw": None if tokens_out is None else str(tokens_out),
+                           "total": None, "denomination_status": "unestablished; raw event field only"},
+            "reported_destinations": [{"destination": destination, "event_count": row["event_count"],
+                                       "tokens_out_raw": str(row["tokens_out"])} for destination, row in sorted(destinations.items())] if available else None,
+            "first_observed_buyback": _observation(events[0]) if events else None,
+            "last_observed_buyback": _observation(events[-1]) if events else None,
+            "requested_range_complete": available and not gaps}
+
+
 def _error(error):
     result = {"message": "".join(c for c in str(error)[:240] if c.isprintable())}
     diagnostics = getattr(error, "diagnostics", None)
@@ -436,7 +475,6 @@ def history(config, transport=None, now=None, monotonic=None):
     """Return observed event accounting and finite coverage, never persist."""
     config = _validate_input(config)
     kind = config.get("kind", config.get("auction"))
-    buybacks = kind == "buybacks"
     now, monotonic = now or time.time, monotonic or time.monotonic
     completed, errors, events = [], {}, []
     start, end = config.get("from_block"), config.get("to_block", config.get("anchor_block"))
@@ -444,18 +482,26 @@ def history(config, transport=None, now=None, monotonic=None):
         start = max(0, end - config["lookback_blocks"] + 1)
     cursor, anchor, budget, s = start, None, None, None
     evidence = {"chain_id": 4663, "accounting": ("BuybackExecuted ethSpent and tokensBurned; event accounting, not proof of actual ERC20 movement or protocol-wide burns"
-                                               if buybacks else "purchase events; receipts and payment flows not independently reconciled"),
+                                               if kind == "buybacks" else "BuybackExecuted ethIn, raw tokensOut and reported destination; no established token denomination, burns or wallet flows"
+                                               if kind == "pol-buybacks" else "purchase events; receipts and payment flows not independently reconciled"),
                 "reorg_policy": "canonical-number headers and fixed anchor rechecked before each committed window; observed reorg invalidates all windows; no finality claim"}
     stage = "setup"
     invalidated = False
     try:
         s = _load_snapshot()
         catalog, interface, addresses, hashes = _load_catalog(s, kind)
-        role = ROLES[kind]
-        address = addresses[role]
-        definitions = {e["topic0"]: e for e in catalog["events"] if role in e["contracts"]}
-        evidence.update({"rpc_url": s.RPC_URL, "contraction_vault_address" if buybacks else "auction_address": address,
-                         "source_ids": catalog["source_ids"], "package_sha256": hashes})
+        roles = ("licenseAuctionLegacy", "licenseAuction") if kind == "license" else (ROLES[kind],)
+        emitters = {addresses[role]: {"role": role, "entity_id": catalog["contracts"][role]["entity_id"],
+                                     "deployment_block": catalog["contracts"][role].get("deployment_block", 0),
+                                     "definitions": {e["topic0"]: e for e in catalog["events"] if role in e["contracts"]}}
+                    for role in roles}
+        evidence.update({"rpc_url": s._rpc_endpoint()["label"], "source_ids": catalog["source_ids"], "package_sha256": hashes})
+        evidence["deployment_boundaries"] = {address: emitter["deployment_block"] for address, emitter in emitters.items()
+                                             if emitter["deployment_block"]}
+        if kind == "license":
+            evidence["license_generations"] = {role: catalog["contracts"][role] for role in roles}
+        else:
+            evidence[{"charter": "auction_address", "buybacks": "contraction_vault_address", "pol-buybacks": "pol_buyback_address"}[kind]] = addresses[ROLES[kind]]
         budget = _Budget(s, transport or s._https, monotonic, pace=transport is None)
         rpc = s._RPC(budget, monotonic, False)
         rpc.deadline = budget.deadline
@@ -470,11 +516,16 @@ def history(config, transport=None, now=None, monotonic=None):
             start = max(0, end - config["lookback_blocks"] + 1)
         cursor = start
         evidence["anchor"] = anchor
-        code = rpc.one("eth_getCode", [address, hex(end)])
-        if not isinstance(code, str) or not re.fullmatch(r"0x(?:[0-9a-fA-F]{2})+", code) or not any(c != "0" for c in code[2:]):
-            raise HistoryError("selected contract code unavailable at anchor")
-        evidence["anchor_code_sha256"] = hashlib.sha256(bytes.fromhex(code[2:])).hexdigest()
-        if buybacks:
+        evidence["scan_emitters"] = [{"address": address, "contract_role": emitter["role"], "entity_id": emitter["entity_id"],
+                                      "from_block": max(start, emitter["deployment_block"]), "to_block": end}
+                                     for address, emitter in emitters.items() if emitter["deployment_block"] <= end]
+        evidence["anchor_contracts"] = []
+        for target in evidence["scan_emitters"]:
+            code = rpc.one("eth_getCode", [target["address"], hex(end)])
+            if not isinstance(code, str) or not re.fullmatch(r"0x(?:[0-9a-fA-F]{2})+", code) or not any(c != "0" for c in code[2:]):
+                raise HistoryError("selected contract code unavailable at anchor")
+            evidence["anchor_contracts"].append({"address": target["address"], "code_sha256": hashlib.sha256(bytes.fromhex(code[2:])).hexdigest()})
+        if kind == "buybacks":
             evidence["anchor_standard_binding"] = _buyback_binding(s, rpc, interface, addresses, end)
         seen_days = set()
         seen_transactions, seen_block_hashes = {}, {anchor["hash"]: anchor["number"]}
@@ -485,7 +536,13 @@ def history(config, transport=None, now=None, monotonic=None):
             if len(completed) >= config["max_chunks"]:
                 raise HistoryError("history chunk budget exhausted")
             stop = min(end, cursor + config["chunk_blocks"] - 1)
-            observed, headers = _window(s, rpc, budget, definitions, address, cursor, stop, anchor, now)
+            # Split at deployment, not cutover: include initialization and never
+            # infer that the legacy address stopped emitting at registry change.
+            for emitter in emitters.values():
+                if cursor < emitter["deployment_block"] <= stop:
+                    stop = emitter["deployment_block"] - 1
+            selected = {address: emitter for address, emitter in emitters.items() if emitter["deployment_block"] <= cursor}
+            observed, headers = _window(s, rpc, budget, selected, cursor, stop, anchor, now)
             for event in observed:
                 position = event["block_number"], event["transaction_index"]
                 if seen_transactions.setdefault(event["transaction_hash"], position) != position:
@@ -496,13 +553,15 @@ def history(config, transport=None, now=None, monotonic=None):
             if previous_timestamp is not None and previous_timestamp > headers[cursor]["timestamp"]:
                 raise ReorgError("block timestamps conflict across windows")
             previous_timestamp = headers[stop]["timestamp"]
-            days = {e["fields"]["day"] for e in observed if "day" in e["fields"] and ("day" not in config or e["fields"]["day"] == config["day"])}
+            days = {(e["address"], e["fields"]["day"]) for e in observed if "day" in e["fields"] and ("day" not in config or e["fields"]["day"] == config["day"])}
             if len(seen_days | days) > MAX_ROUNDS:
                 raise HistoryError("history observed-round budget exhausted")
             seen_days.update(days)
             events.extend(observed)
             digest = hashlib.sha256(json.dumps(list(headers.values()), sort_keys=True, separators=(",", ":")).encode()).hexdigest()
-            completed.append({"from_block": cursor, "to_block": stop, "matched_events": len(observed), "checked_headers_sha256": digest})
+            completed.append({"from_block": cursor, "to_block": stop, "emitter_addresses": list(selected),
+                              "scan_status": "logs_checked" if selected else "no_deployed_emitters",
+                              "matched_events": len(observed), "checked_headers_sha256": digest})
             cursor = stop + 1
         stage = "final_anchor"
         final = _header(s, rpc.one("eth_getBlockByNumber", [hex(end), False]), end, now)
@@ -536,10 +595,14 @@ def history(config, transport=None, now=None, monotonic=None):
     result = {"schema_version": 1, "status": "partial" if errors or missing else "ok",
               "coverage": {"selection": config, "requested": {"from_block": start, "to_block": end}, "completed": completed, "missing": missing,
                            "scope": ("selected ContractionVault BuybackExecuted events over checked scanned windows, not all-history absence or protocol-wide burns; silent provider omissions cannot be independently excluded"
-                                     if buybacks else "selected-address catalog topics over scanned windows, not complete rounds; silent provider omissions cannot be independently excluded")},
+                                     if kind == "buybacks" else "selected POL Buyback raw event accounting, not burned-token accounting or proven wallet flows; silent provider omissions cannot be independently excluded"
+                                     if kind == "pol-buybacks" else "catalog emitters over checked windows: legacy license throughout the requested interval and v1.1 from deployment, with no emission cutoff at registry cutover; not complete rounds or independently proven provider completeness"
+                                     if kind == "license" else "selected-address catalog topics over scanned windows, not complete rounds; silent provider omissions cannot be independently excluded")},
               "errors": errors, "evidence": evidence}
-    if buybacks:
+    if kind == "buybacks":
         result.update({"kind": kind, "buybacks": _buybacks(s, events, completed, bool(errors or missing))})
+    elif kind == "pol-buybacks":
+        result.update({"kind": kind, "pol_buybacks": _pol_buybacks(s, events, completed, bool(errors or missing))})
     else:
         result.update({"auction": kind, "rounds": _rounds(s, events, kind, config.get("day"), bool(errors or missing)) if s is not None else []})
         result["coverage"]["day_filter"] = str(config["day"]) if "day" in config else None
@@ -548,8 +611,8 @@ def history(config, transport=None, now=None, monotonic=None):
 
 def _cli_config(arguments):
     if not arguments or len(arguments) > 17 or any(len(a) > 80 for a in arguments) or arguments[0] not in ROLES:
-        raise InputError("expected license, charter or buybacks and at most eight bounded flag/value pairs")
-    config = {"schema_version": 1, "kind" if arguments[0] == "buybacks" else "auction": arguments[0]}
+        raise InputError("expected license, charter, buybacks or pol-buybacks and at most eight bounded flag/value pairs")
+    config = {"schema_version": 1, "kind" if arguments[0] in BUYBACK_KINDS else "auction": arguments[0]}
     flags = {"--day", "--anchor-block", "--lookback-blocks", "--from-block", "--to-block", "--chunk-blocks", "--max-chunks", "--detail"}
     for index in range(1, len(arguments), 2):
         flag = arguments[index]
@@ -569,8 +632,8 @@ def main():
     if sys.argv[1:] == ["--help"]:
         print("usage: history.py license|charter [--day N] [--anchor-block B] [--lookback-blocks N]\n"
               "       history.py license|charter [--day N] --from-block A --to-block B\n"
-              "       history.py buybacks [--anchor-block B] [--lookback-blocks N]\n"
-              "       history.py buybacks --from-block A --to-block B\n"
+              "       history.py buybacks|pol-buybacks [--anchor-block B] [--lookback-blocks N]\n"
+              "       history.py buybacks|pol-buybacks --from-block A --to-block B\n"
               "       any form: [--chunk-blocks N] [--max-chunks N] [--detail summary|full]\n"
               "Defaults: fresh head, 1000000-block lookback, 10000-block chunks, 100 chunks.\n"
               "Day is auction-only: an emitted round ID, not UTC or 24 hours. JSON stdout only; no saved results.")

@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "scope": "Publisher-authenticated Contraction Vault buyback event accounting for bounded read-only history.py scans; no protocol-wide burn substitution or saved observations.",
+  "scope": "Separate bounded live event accounting for Contraction Vault reported burns and POL Buyback reported raw token output/destination; fixed identities and interface provenance only, not saved current observations or a complete POL Buyback ABI.",
   "chain_id": 4663,
   "source_ids": [
-    "sr-extended-read-interface"
+    "sr-extended-read-interface",
+    "sr-pol-buyback-event-interface",
+    "sr-v1-1-deployment-evidence"
   ],
   "entity_catalog": "assets/entities/robinhood.json",
   "research_recipe": "references/auction-history.md",
@@ -16,6 +18,18 @@
       "eth_spent_decimals": 18,
       "tokens_burned_asset": "STANDARD",
       "tokens_burned_decimals": 18
+    },
+    "polBuyback": {
+      "entity_id": "sr-robinhood-pol-buyback",
+      "address": "0x50e4C444f71dF2Db8593c6c8ba4d493De618E147",
+      "abi_locator": "Explorer-decoded BuybackExecuted(uint256 ethIn,uint256 tokensOut,address indexed destination), corroborated by raw successful receipt; not an authenticated complete callable ABI",
+      "deployment_block": 69178088,
+      "deployment_transaction": "0x2ebc8302916ad8f6b312e88ca0ec72cd178f4ac03b6723525756b97f7d27c4d9",
+      "deployment_source_id": "sr-v1-1-deployment-evidence",
+      "eth_in_asset": "ETH",
+      "eth_in_decimals": 18,
+      "tokens_out_asset": null,
+      "tokens_out_decimals": null
     },
     "standard": {
       "entity_id": "sr-robinhood-standard",
@@ -54,13 +68,51 @@
         "ethSpent": "Reported ETH spent, in wei (18 decimals); the publisher's Contraction Vault/pool display uses ETH18. Event accounting only, not receipt-reconciled expenditure.",
         "tokensBurned": "Reported purchased STANDARD burned, in raw 18-decimal STANDARD units. Canonical buyback-burn-share identifies purchased STANDARD; the fixed token identity and reviewed denomination are also checked at the scan anchor. Not all protocol burns, net supply change or independently proven ERC20 movement."
       }
+    },
+    {
+      "contracts": [
+        "polBuyback"
+      ],
+      "abi": {
+        "type": "event",
+        "name": "BuybackExecuted",
+        "inputs": [
+          {
+            "name": "ethIn",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "tokensOut",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "destination",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "signature": "BuybackExecuted(uint256,uint256,address)",
+      "topic0": "0xb226e46e9ea13f5bbac224e6b365c82beb22fbd42694f7721db493241b3337db",
+      "field_semantics": {
+        "ethIn": "Event-reported ETH input in wei (18 decimals), not independently reconciled expenditure.",
+        "tokensOut": "Event-reported raw token output. No authenticated token-binding getter or denomination is supplied for this mode; do not label these raw units STANDARD, scale them to 18 decimals, or count them as burned.",
+        "destination": "Event-reported destination only, not independently proven token movement, burn routing, incentive distribution or a perpetual destination binding."
+      }
     }
   ],
   "limits": [
     "Publisher-linked ABI and deployment identity are not independent source/bytecode equivalence or proof that earlier generations used identical implementation semantics.",
-    "Only BuybackExecuted is queried at the fixed Contraction Vault. Token Transfer events, cumulative token burn counters, auction consideration and reserve-asset holdings are not buyback accounting inputs.",
+    "buybacks queries only Contraction Vault BuybackExecuted(uint256,uint256); pol-buybacks queries only POL Buyback BuybackExecuted(uint256,uint256,address). They have distinct topics and must never share burned-token accounting.",
     "The fixed Contraction Vault standard() binding, STANDARD code and decimals() are checked at the anchor using reviewed fixed calls. This does not establish historical implementation continuity or reconcile transfers and burns.",
+    "POL Buyback mode makes no fabricated STANDARD-binding getter call and assigns no asset identity/decimals to tokensOut. It retains raw output and each reported destination; an event alone is not a wallet-flow proof.",
     "Exact sums cover only checked completed windows. Empty checked windows mean no matching events in those windows; failed or unscanned coverage is unknown, never an all-history zero claim.",
-    "Canonical-header and anchor rechecks are consistency checks, not finality or independent completeness proofs. Provider omissions cannot be independently excluded. The fixed helper provides no receipts, tracing, arbitrary token calls, retries, alternate endpoints or persistence; host-authorized supplemental research and requested artifacts are separate."
+    "Canonical-header and anchor rechecks are consistency checks, not finality or independent completeness proofs. Provider omissions cannot be independently excluded. The fixed helper provides no receipts, tracing, arbitrary token calls, retries, automatic alternate-provider failover or persistence; RPC selection uses the shared host-managed environment configuration. Host-authorized supplemental research and requested artifacts are separate."
   ]
 }

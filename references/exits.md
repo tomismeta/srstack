@@ -22,6 +22,8 @@ Anyone may report a wallet inactive for `dormancy-period`. The bounty is `dorman
 
 Qualifying wallet-clock resets are explicitly listed: creating a charter, buying a license, depositing, withdrawing, successfully reporting another dormant charter, and zero-cost check-in (`check-in-protocol-cost`). Zero protocol charge does not mean zero network gas. Sending or receiving a charter does **not** refresh either wallet; the transferred charter carries its own timestamp and receives a full dormancy-period grace window. Do not replace these distinctions with “any interaction resets inactivity.” [sr-whitepaper-v1: dormancy]
 
+The [official v1.1 reply](https://x.com/standard_rsv/status/2102200074810036373) announced a forthcoming free website check-in button. The later dated publisher-bundle review found a “Check in now” action; this is frontend source evidence, not an exercised wallet flow or a saved current UI status. Neither establishes free network gas or adds buying/holding STANDARD to the documented clock-reset actions. [sr-protocol-v1-1-announcement; sr-owner-check-in-frontend]
+
 `dormancy-clock-reset-actions` and `dormancy-transfer-grace` preserve those separate rules. `withdrawal-retirement-rule` and `withdrawal-availability` record the withdrawal claims without supplying a verified settlement algorithm.
 
 ## Transferability — §§12–13

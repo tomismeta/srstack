@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "purpose": "Source routing and reference provenance, including explicitly attributed proposals and official strategic direction; this index stores no protocol state, performance recaps or superseded interpretations",
+  "purpose": "Canonical source routing for published rules, v1.1 changes, historical identity/cutover evidence and explicitly scoped proposals; no saved live state or competing current catalogs.",
   "groups": [
     {
       "id": "market-price",
@@ -19,9 +19,11 @@
         "sr-auction-event-interface",
         "sr-publisher-read-interface",
         "sr-standard-source-interface",
-        "sr-tax-hook-source-interface"
+        "sr-tax-hook-source-interface",
+        "sr-v1-1-read-interface",
+        "sr-pol-buyback-event-interface"
       ],
-      "scope": "Publisher fixed read/event interfaces, treasury/queued-policy extensions and selected STANDARD/Trading Hook source review"
+      "scope": "Publisher selected fixed read/event interfaces and bounded source provenance, including v1.1 license adaptation and distinct raw POL acquisition events; no stored live observations."
     },
     {
       "id": "website-v1",
@@ -31,9 +33,12 @@
         "sr-token-page-v1",
         "sr-charters-page-v1",
         "sr-second-mandate-announcement",
-        "sr-second-mandate-manifesto"
+        "sr-second-mandate-manifesto",
+        "sr-staking-preview",
+        "sr-owner-check-in-frontend",
+        "sr-sbill-announcement"
       ],
-      "scope": "Primary whitepaper, companion pages and official Second Mandate strategy; dated rationale and sample illustrations are not current state or implementation evidence"
+      "scope": "Primary whitepaper, companion pages, Second Mandate strategy and dated staking/check-in frontend provenance; sample illustrations and product descriptions are not live state or authenticated deployment evidence"
     },
     {
       "id": "deployments",
@@ -42,9 +47,13 @@
         "sr-contract-directory",
         "sr-etherscan-chainlist",
         "sr-protocol-conditions",
-        "sr-beans-auction-burn-pol-proposal"
+        "sr-beans-auction-burn-pol-proposal",
+        "sr-protocol-v1-1-announcement",
+        "sr-v1-1-deployment-evidence",
+        "sr-protocol-control-dependencies",
+        "sr-robinhood-rpc-guidance"
       ],
-      "scope": "Publisher identity attribution, chain routing, live conditions explanation and attributed developer deployment proposals"
+      "scope": "Publisher v1.1 announcements and deployment identity provenance, historical cutover/control relationships and chain routing; no saved live status, settings, prices, balances or ownership."
     }
   ],
   "lookup": "Match source ID to groups.record_ids and read the literal path.",

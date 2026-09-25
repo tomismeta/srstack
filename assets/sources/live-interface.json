@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "scope": "Publisher fixed read and event interfaces, treasury/queued-policy extensions and bounded STANDARD/TaxHook source provenance; no stored observations or deployment-verdict catalog",
+  "scope": "Publisher selected fixed read/event interfaces and bounded source provenance, including v1.1 license adaptation and distinct raw POL acquisition events; no stored live observations.",
   "records": [
     {
       "id": "sr-extended-read-interface",
@@ -68,7 +68,7 @@
       "hash_convention": "SHA-256 of exact UTF-8 literal text: opening [ through matching ] for ABI arrays, or opening { through matching } for vC; excludes variable name, equals sign, separators and added newline. These are complete excerpt hashes, not a full bundle hash.",
       "topic_provenance": "Canonical signatures are derived from the authenticated ABI input types. topic0 is Ethereum Keccak-256, obtained through public web3_sha3; purchase/roll/supporting-cost topics were corroborated in original public RPC receipts. NIST SHA3-256 is not interchangeable.",
       "event_catalog": "assets/interfaces/auction-events.json",
-      "summary": "The publisher binds the two auction roles to the packaged Robinhood identities and supplies purchase, activation, roll and configuration event definitions. LicensesPurchased carries charterId, day, count and unitPrice; CharterPurchased carries charterId, buyer, day and price. DayRolled carries day, startPrice, floorPrice and cap, but no timestamp, duration or end reason. Supporting BranchesOpened records total reported STANDARD ledger cost. The catalog enables bounded on-demand research without changing the helper callable surface.",
+      "summary": "The publisher binds the two auction roles to the packaged Robinhood identities and supplies purchase, activation, roll and configuration event definitions. LicensesPurchased carries charterId, day, count and unitPrice; CharterPurchased carries charterId, buyer, day and price. DayRolled carries day, startPrice, floorPrice and cap, but no timestamp, duration or end reason. Supporting BranchesOpened records total reported STANDARD ledger cost. The catalog enables bounded on-demand research without changing the helper callable surface. The original license binding is legacy-generation provenance. Current v1.1 identity and adapted interface come from sr-v1-1-deployment-evidence and sr-v1-1-read-interface; historical rounds remain qualified by emitting address.",
       "limits": [
         "The older app-CIqwBLws.js returned 404 during this review; its historical read-interface provenance remains separate and unchanged.",
         "Source-reader output truncated the large mount module outside the complete reviewed literals. No full-bundle size, SHA-256 or complete application-call-graph claim is made; linked source recovery stays bounded.",
@@ -99,7 +99,7 @@
       "summary": "Pinned publisher ABI and frontend mappings establish the original 68-call read interface for protocol, charter and auction queries using the public Robinhood RPC endpoint. This publisher-bundle provenance is retained; the separate STANDARD and TaxHook source records describe the bounded reconciliation and ten additional getters. Publisher provenance alone is not evidence of current contract state or independent source/bytecode equivalence.",
       "limits": [
         "No borrowed cross-chain ABI; no downloaded code is executed by the helper.",
-        "Only the selected scalar view/pure surface is included in this historical helper interface; it supplies no transaction actions, raw caller endpoints or selectors. Supplemental research is not confined to that helper surface.",
+        "Only the selected scalar view/pure surface is included in this historical helper interface; it supplies no transaction actions or raw caller selectors. Current helper RPC endpoint selection is separately configured through host-managed environment settings. Supplemental research is not confined to that helper surface.",
         "Old-block state may be unavailable from this public provider; do not silently replace a pinned read with latest.",
         "Current price-function output may continue decaying after sellout; it is not a purchasable quote without availability."
       ]
@@ -161,6 +161,53 @@
         "The verification-record timestamp is not an established source publication, deployment or feature-introduction date.",
         "The Hook selected here and the Hook resolved by STANDARD's Registry are not independently proved identical by these scalar snapshots; report each getter rather than synthesizing the active flag.",
         "A pending owner is not evidence of acceptance, key control, authorization completeness or a privileged action's present executability."
+      ]
+    },
+    {
+      "id": "sr-v1-1-read-interface",
+      "url": "https://www.standardreserve.xyz/assets/mountApp-BqtUxqir.js",
+      "publisher": "The Standard Reserve official application",
+      "published_at": null,
+      "retrieved_at": "2026-09-22",
+      "review_depth": "Complete publisher module read-only license ABI adaptation, generic directory owner/pendingOwner calls, and STANDARD.balanceOf(address); no full new treasury-module ABI inferred.",
+      "claim_stage": "publisher-authenticated selected read/event interface, not independent Solidity/source-bytecode proof",
+      "locators": [
+        "peripheryV11 mapping and active contracts override",
+        "JP removal set and ej license ABI adaptation: remove AUCTION_DAY, DECAY_HALF_LIFE_MAX, MAX_PER_CHARTER_PER_DAY, purchasedOnDay and CharterDailyCapExceeded",
+        "auctionPeriod(), capWindow(), capWindowIndex(), MAX_PER_CHARTER_PER_WINDOW(), purchasedInWindow(uint256,uint256), remainingForCharter(uint256)",
+        "purchasedInWindow and remainingForCharter are authenticated supplemental ABI scope, not bundled snapshot calls or a charter-ID auction input",
+        "Retained licensesPerDay(), currentDay(), dayAnchorTime(), soldToday(), remainingToday(), currentPrice(), quote(uint256), owner(), pendingOwner()",
+        "Publisher directory generic owner/pendingOwner interface and STANDARD balanceOf(address)"
+      ],
+      "summary": "Binds current licenseAuction to v1.1 and retains the old identity only for historical generation authentication. The new license ABI replaces day-duration/day-cap getters with round-period and cap-window getters. Treasury reads use generic owner/pendingOwner and fixed STANDARD.balanceOf(incentivesVault), not invented POL Buyback or vault methods.",
+      "limits": [
+        "licensesPerDay is a retained method name for per-round supply on the12h generation; it is not an observed24h total.",
+        "soldToday/remainingToday and stored currentDay can lag lazy rollover. Compare the live anchor and period with the pinned block timestamp; do not call these counters a human24h recap or recover current state by history scanning.",
+        "Exact source-level cap-window alignment, reset semantics, rounding and price curve remain unverified. A12h round is separate from the24h charter allowance window.",
+        "Publisher read/event interface evidence is not a complete authenticated buyback/vault ABI or proof of implementation, receipt reconciliation, incentive privileges or security.",
+        "No live getter results, balances, prices or owner settings are saved in installed assets."
+      ],
+      "complete_asset_sha256": "d27a000d06008e547268a2a6f12fcef1115800ebb9d9eacaa761e1e866310488"
+    },
+    {
+      "id": "sr-pol-buyback-event-interface",
+      "url": "https://robinhoodchain.blockscout.com/api/v2/transactions/0xd38d8cad716e65f66babb64f6406d81dab3158cc481401be6dd1f0a8ff7eadae/logs",
+      "publisher": "Robinhood Blockscout decoded log interface, corroborated with raw public RPC receipt",
+      "published_at": null,
+      "retrieved_at": "2026-09-22",
+      "review_depth": "Explorer-decoded BuybackExecuted event signature/indexing and raw emitter/topic/data receipt; bounded event evidence, not a complete contract ABI.",
+      "claim_stage": "authenticated event-only accounting surface; token identity/decimals and movement not inferred from event alone",
+      "locators": [
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0xd38d8cad716e65f66babb64f6406d81dab3158cc481401be6dd1f0a8ff7eadae/logs",
+        "https://robin.etherscan.io/tx/0xd38d8cad716e65f66babb64f6406d81dab3158cc481401be6dd1f0a8ff7eadae",
+        "Emitter sr-robinhood-pol-buyback; destination indexed, ethIn/tokensOut nonindexed"
+      ],
+      "summary": "POL Buyback emits BuybackExecuted(uint256 ethIn,uint256 tokensOut,address indexed destination). Bounded history reports ETH input, raw tokensOut and destination; do not conflate retained POL acquisitions with the distinct ContractionVault BuybackExecuted(uint256,uint256) burn accounting.",
+      "limits": [
+        "No authenticated full POL Buyback or Incentives Vault ABI; no invented standard()/token-binding getter.",
+        "tokensOut remains raw units, without asserting token identity or decimals from the event. The helper does not claim ERC20 transfers, wallet flows, burns, distributions or complete history from these logs.",
+        "Historical transfer corroboration informs deployment research only; current balance and ongoing destinations require fresh evidence.",
+        "Event signature differs from ContractionVault BuybackExecuted(uint256,uint256); never mix the two accounting modes."
       ]
     }
   ]

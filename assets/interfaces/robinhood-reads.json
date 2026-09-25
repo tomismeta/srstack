@@ -7,14 +7,18 @@
     "sr-publisher-read-interface",
     "sr-standard-source-interface",
     "sr-tax-hook-source-interface",
-    "sr-extended-read-interface"
+    "sr-extended-read-interface",
+    "sr-v1-1-read-interface"
   ],
   "contracts": {
     "centralBank": "sr-robinhood-central-bank",
     "standard": "sr-robinhood-standard",
     "charterNFT": "sr-robinhood-charter-nft",
     "taxHook": "sr-robinhood-tax-hook",
-    "licenseAuction": "sr-robinhood-license-auction",
+    "licenseAuction": "sr-robinhood-license-auction-v1-1",
+    "licenseAuctionLegacy": "sr-robinhood-license-auction",
+    "polBuyback": "sr-robinhood-pol-buyback",
+    "incentivesVault": "sr-robinhood-incentives-vault",
     "charterAuction": "sr-robinhood-charter-auction",
     "feeSplitter": "sr-robinhood-fee-splitter",
     "expansionVault": "sr-robinhood-expansion-vault",
@@ -291,7 +295,8 @@
       "profiles": [
         "protocol",
         "charter",
-        "auctions"
+        "auctions",
+        "treasury"
       ],
       "selector": "0x313ce567"
     },
@@ -464,7 +469,7 @@
       "selector": "0x5c975abb"
     },
     {
-      "id": "license_current_day",
+      "id": "license_current_round",
       "contract": "licenseAuction",
       "function": "currentDay",
       "signature": "currentDay()",
@@ -473,7 +478,7 @@
       "args": [],
       "output_type": "uint256",
       "decimals": 0,
-      "unit": "auction-day",
+      "unit": "auction-round",
       "profiles": [
         "auctions"
       ],
@@ -496,10 +501,10 @@
       "selector": "0xf08fb30f"
     },
     {
-      "id": "license_day_seconds",
+      "id": "license_round_seconds",
       "contract": "licenseAuction",
-      "function": "AUCTION_DAY",
-      "signature": "AUCTION_DAY()",
+      "function": "auctionPeriod",
+      "signature": "auctionPeriod()",
       "mutability": "view",
       "input_types": [],
       "args": [],
@@ -509,7 +514,219 @@
       "profiles": [
         "auctions"
       ],
-      "selector": "0xb2b2b29c"
+      "selector": "0x0cccfc58"
+    },
+    {
+      "id": "license_cap_window_seconds",
+      "contract": "licenseAuction",
+      "function": "capWindow",
+      "signature": "capWindow()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "seconds",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0xe5de0416"
+    },
+    {
+      "id": "license_cap_window_index",
+      "contract": "licenseAuction",
+      "function": "capWindowIndex",
+      "signature": "capWindowIndex()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "cap-window",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x030adf57"
+    },
+    {
+      "id": "license_max_per_charter_per_window",
+      "contract": "licenseAuction",
+      "function": "MAX_PER_CHARTER_PER_WINDOW",
+      "signature": "MAX_PER_CHARTER_PER_WINDOW()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "licenses/charter/cap-window",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x3a379145"
+    },
+    {
+      "id": "license_decay_half_life_seconds",
+      "contract": "licenseAuction",
+      "function": "decayHalfLife",
+      "signature": "decayHalfLife()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "seconds",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x9813048a"
+    },
+    {
+      "id": "license_round_half_life_seconds",
+      "contract": "licenseAuction",
+      "function": "dayHalfLife",
+      "signature": "dayHalfLife()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "seconds",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x7b314af7"
+    },
+    {
+      "id": "license_licenses_per_round",
+      "contract": "licenseAuction",
+      "function": "licensesPerDay",
+      "signature": "licensesPerDay()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "licenses/round",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x92453404"
+    },
+    {
+      "id": "license_round_cap",
+      "contract": "licenseAuction",
+      "function": "dayCap",
+      "signature": "dayCap()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "licenses",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0xfea8c07c"
+    },
+    {
+      "id": "charter_auction_day_cap",
+      "contract": "charterAuction",
+      "function": "dayCap",
+      "signature": "dayCap()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "items",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0xfea8c07c"
+    },
+    {
+      "id": "pol_buyback_owner",
+      "contract": "polBuyback",
+      "function": "owner",
+      "signature": "owner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x8da5cb5b"
+    },
+    {
+      "id": "pol_buyback_pending_owner",
+      "contract": "polBuyback",
+      "function": "pendingOwner",
+      "signature": "pendingOwner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0xe30c3978"
+    },
+    {
+      "id": "incentives_vault_owner",
+      "contract": "incentivesVault",
+      "function": "owner",
+      "signature": "owner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x8da5cb5b"
+    },
+    {
+      "id": "incentives_vault_pending_owner",
+      "contract": "incentivesVault",
+      "function": "pendingOwner",
+      "signature": "pendingOwner()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "address",
+      "decimals": 0,
+      "unit": "address",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0xe30c3978"
+    },
+    {
+      "id": "incentives_vault_standard_balance",
+      "contract": "standard",
+      "function": "balanceOf",
+      "signature": "balanceOf(address)",
+      "mutability": "view",
+      "input_types": [
+        "address"
+      ],
+      "args": [
+        "0x9481404d30C296e57C93f05A49934A901719bbA9"
+      ],
+      "output_type": "uint256",
+      "decimals": 18,
+      "unit": "STANDARD",
+      "profiles": [
+        "treasury"
+      ],
+      "selector": "0x70a08231"
     },
     {
       "id": "license_current_price",
@@ -537,7 +754,7 @@
       "args": [],
       "output_type": "uint256",
       "decimals": 0,
-      "unit": "items",
+      "unit": "licenses",
       "profiles": [
         "auctions"
       ],
@@ -553,14 +770,14 @@
       "args": [],
       "output_type": "uint256",
       "decimals": 0,
-      "unit": "items",
+      "unit": "licenses",
       "profiles": [
         "auctions"
       ],
       "selector": "0xa08c6922"
     },
     {
-      "id": "license_day_floor",
+      "id": "license_round_floor",
       "contract": "licenseAuction",
       "function": "dayFloorPrice",
       "signature": "dayFloorPrice()",
@@ -592,7 +809,7 @@
       "selector": "0x86f5960f"
     },
     {
-      "id": "license_last_sale_day",
+      "id": "license_last_sale_round",
       "contract": "licenseAuction",
       "function": "lastSaleDay",
       "signature": "lastSaleDay()",
@@ -601,7 +818,7 @@
       "args": [],
       "output_type": "uint256",
       "decimals": 0,
-      "unit": "auction-day",
+      "unit": "auction-round",
       "profiles": [
         "auctions"
       ],
@@ -2244,7 +2461,7 @@
   "limits": [
     "Publisher ABI is the baseline; selected STANDARD and TaxHook interfaces also have Sourcify exact-runtime source provenance. Extended getters use authenticated publisher module ABI data, not downloaded code execution.",
     "Source review is bounded provenance, not independent recompilation, a fresh runtime comparison or a contract audit.",
-    "The fixed snapshot helper calls only listed scalar or flat fixed static tuple view/pure getters, with no raw selector, target or RPC overrides. Tuple component types, units and scales are explicit. This catalog is not a global allowlist for host-authorized supplemental research or nonbroadcast simulation.",
+    "The fixed snapshot helper calls only listed scalar or flat fixed static tuple view/pure getters, with no raw selector or target overrides. RPC selection uses SRSTACK_RPC_URL, otherwise ALCHEMY_API_KEY, otherwise this catalog's official public default; credentials stay in host-managed secrets and out of outputs. Tuple component types, units and scales are explicit. This catalog is not a global allowlist for host-authorized supplemental research or nonbroadcast simulation.",
     "The fixed treasury profile checks FeeSplitter, ExpansionVault and ContractionVault relationships to Registry, CentralBank, STANDARD, TaxHook and PoolManager as applicable, including retained transitive CentralBank/CharterNFT identity prerequisites. Registry and PoolManager are code-checked identities, not discovery roots within this helper. CentralBank registry cross-check is treasury-only to preserve compact charter calls.",
     "Binding prerequisites are transitive. Rejected code or bindings cannot authenticate dependent values. No reserve token address is an eth_call target in the fixed helper.",
     "The fixed treasury profile accepts one optional nonzero reserve_asset as argument data only for ExpansionVault isReserveAsset, holdingsOf and reservePool. Holdings and pool details require approval at the same checked block; this helper provides no token search, reserve enumeration or ERC20 metadata calls. Supplemental research may authenticate selected token metadata separately.",
@@ -2252,11 +2469,15 @@
     "Queued policy tuples retain value and pending separately and never replace active getters; false pending does not activate the stored queued value.",
     "recycleStreamed and issuanceStreamed have unestablished ledger scales and the fixed helper retains raw-ledger-units without derived equations. Do not present an assumed scale as authenticated; separately labelled hypothetical models or independently evidenced supplemental conversions are allowed. Other recycled STANDARD denominations follow publisher interpretation and require independently checked STANDARD decimals18.",
     "Restriction flags, authority getters, pending ownership and configured/effective tick settings do not predict transaction success or establish a complete privilege audit. POL manager count is bounded; managers are not enumerated.",
-    "Compact charter retains its existing balance/rate call set; extended CentralBank context is protocol or full charter only."
+    "Compact charter retains its existing balance/rate call set; extended CentralBank context is protocol or full charter only.",
+    "licenseAuction is the v1.1 deployment; licenseAuctionLegacy preserves history identity only and has no snapshot calls. Retained ABI names currentDay, remainingToday, soldToday, dayCap, licensesPerDay and lastSaleDay describe auction rounds, not 24-hour days. Read auctionPeriod separately from capWindow and capWindowIndex; no exact cap-window alignment math is asserted.",
+    "The publisher v1.1 adaptation removes AUCTION_DAY, DECAY_HALF_LIFE_MAX, MAX_PER_CHARTER_PER_DAY and purchasedOnDay, adding auctionPeriod, capWindow, capWindowIndex, MAX_PER_CHARTER_PER_WINDOW, purchasedInWindow(uint256,uint256) and remainingForCharter(uint256). The bounded auctions profile reads global status and settings, not charter-specific purchase eligibility.",
+    "POLBuyback and IncentivesVault reads are limited to publisher generic owner/pendingOwner and STANDARD.balanceOf at the fixed IncentivesVault address. This is not a complete authenticated module ABI, a token burn total, a wallet-flow reconstruction or a distribution entitlement. No bought-back token binding getter is assumed.",
+    "Current settings, owners, status, prices and balances are fetched live at the pinned block on every invocation. Interface metadata contains no saved state fallback."
   ],
   "publisher_bundle": {
-    "url": "https://www.standardreserve.xyz/assets/mountApp-DmwNsaDC.js",
-    "sha256": "5e7399b7972c9336ee9a633c76aec6bb85ddd85f86f673f81efeda6079cc29bc",
-    "retrieved_at": "2026-09-20"
+    "url": "https://www.standardreserve.xyz/assets/mountApp-BqtUxqir.js",
+    "sha256": "d27a000d06008e547268a2a6f12fcef1115800ebb9d9eacaa761e1e866310488",
+    "retrieved_at": "2026-09-22"
   }
 }
