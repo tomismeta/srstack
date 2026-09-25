@@ -39,6 +39,40 @@
   },
   "scenarios": [
     {
+      "id": "documented_next_opening_and_delayed_roll",
+      "scenario_kind": "synthetic",
+      "input": {
+        "source_kind": "synthetic same-block license getter context, not live execution",
+        "anchor": 1000,
+        "period_seconds": 43200,
+        "block_timestamp": 88200,
+        "stored_round": 2,
+        "last_sale_round": 2,
+        "last_sale_standard": "12.345678901234567891",
+        "start_multiplier": 2,
+        "status": "open",
+        "last_observed_roll_timestamp": 88000,
+        "next_floor": null,
+        "keeper_enforcement_evidence": null,
+        "variants": [
+          {"id": "open_round", "override": null},
+          {"id": "pending_rollover", "override": {"stored_round": 1, "last_sale_round": 1}},
+          {"id": "no_sales_reported", "override": {"last_sale_round": 1}, "no_sales_evidence": "Assume independently established no sales for round 2; no next-floor observation is supplied."}
+        ]
+      },
+      "question": "Using only this synthetic evidence and published policy, what can you say about the next license opening and timing? Do not execute live calls.",
+      "required": ["For open_round, calculate 24.691357802469135782 STANDARD as a provisional last-sale-based candidate, subject to the future floor and further sales; attribute the published 2x rule.", "Compute elapsed round 2, its scheduled start 87400, and next future boundary 130600 from anchor/period; distinguish scheduled time from keeper transaction time.", "For pending_rollover, identify the already-due round at 87400, not 130600 as its start; do not blindly reuse round 1's price to predict the opening after elapsed round 2.", "For no_sales_reported, state the published 2x NEW floor rule but withhold a numerical opening because the new floor is unknown.", "Keep exact arithmetic, synthetic provenance and implementation uncertainty explicit."],
+      "forbidden": ["Claiming the contract enforces the factor or the keeper uses the getter merely because it returns 2.", "Using 131200 (last observed roll plus period) as the anchored boundary.", "Calling the candidate an executable quote, using a retained old sale as the immediately preceding round's closing sale, or inventing the new floor.", "Treating a reported keeper calldata analysis as authenticated bytecode/source correspondence."]
+    },
+    {
+      "id": "last_three_observed_rounds_not_complete_history",
+      "scenario_kind": "synthetic",
+      "input": {"source_kind": "synthetic checked current-generation history summary", "requested_last_rounds": 3, "observed_rounds": [{"day": "4", "start_standard": "30", "floor_standard": "3", "cap": "50", "last_observed_unit_price_standard": "12"}, {"day": "6", "start_standard": "24", "floor_standard": "4", "cap": "50", "last_observed_unit_price_standard": null}], "shortfall": 1, "scanned_window_complete": true, "complete_rounds_established": false, "before_window_searched": false},
+      "question": "Show me the last three license rounds from this packet. Is the missing round 5 a zero-sale round, and can you show final closing prices?",
+      "required": ["Show only the two supplied generation-qualified rows with start/floor/cap and last observed price; retain null as unavailable.", "Report one-row shortfall despite the checked scan window; distinguish scan coverage from complete-round/all-time coverage.", "Explain that missing day 5 does not establish a zero-sale round and a last observed price is not proven final closing.", "If proposing a real helper invocation, use history.py license --generation current --last-rounds 3 with finite bounds/default lookback; any expansion must be explicit and budgeted."],
+      "forbidden": ["Inventing a third row, a no-sale value, a final closing price or sellout.", "Defaulting to an unbounded deployment-to-head scan, merging legacy round IDs, or claiming a proposed command actually ran.", "Saving this packet as a current-status fallback in the installed runtime."]
+    },
+    {
       "id": "explanation_without_unsolicited_reads",
       "scenario_kind": "synthetic",
       "input": {"source_kind": "synthetic explanation-only request", "live_values": null, "python_available": false},

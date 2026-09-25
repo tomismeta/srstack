@@ -42,6 +42,7 @@ class RPCFixture:
             "license_current_price": 5 * WAD, "license_remaining": 7,
             "license_last_sale_price": 6 * WAD, "license_last_sale_round": 4,
             "license_current_round": 4, "license_paused": False,
+            "license_start_multiplier": 2, "license_round_floor": 4 * WAD,
             "license_auction_anchor": NOW - 2 - 4 * 43200, "license_round_seconds": 43200,
             "license_cap_window_seconds": 86400, "license_cap_window_index": 2,
             "license_max_per_charter_per_window": 3, "license_licenses_per_round": 50,
@@ -666,8 +667,6 @@ class SnapshotChecks(unittest.TestCase):
                     self.assertIs(result["values"]["license_last_sale_price"]["not_historical"], True)
                 else:
                     self.assertNotIn("license_closing_price", result["derived"])
-                if detail == "summary":
-                    self.assertFalse(any("_last_sale_" in identifier for identifier in result["values"]))
         self.rpc.values.update(license_remaining=0, license_last_sale_round=3)
         self.assertNotIn("license_closing_price", self.rpc.run("auctions", "full")["derived"])
         rpc = RPCFixture()
@@ -720,6 +719,129 @@ class SnapshotChecks(unittest.TestCase):
             self.assertNotIn("license_elapsed_round", result["derived"])
             self.assertNotIn("license_rollover_pending", result["derived"])
             self.assertNotIn("license_closing_price", result["derived"])
+            self.assertNotIn("license_schedule", result["derived"])
+
+    def test_license_opening_candidate_preserves_precision_without_inventing_next_floor(self):
+        for detail in ("summary", "full"):
+            with self.subTest(detail=detail):
+                rpc = RPCFixture()
+                rpc.values.update(license_last_sale_price=6 * WAD + 1, license_round_floor=99 * WAD)
+                result = rpc.run("auctions", detail)
+                preview = result["derived"]["license_next_opening_preview"]
+                self.assertEqual(preview["status"], "conditional")
+                self.assertEqual(preview["target_round"], "5")
+                self.assertEqual(preview["sale_basis"], "provisional_latest_sale")
+                self.assertEqual(preview["candidate"]["raw"], str(12 * WAD + 2))
+                self.assertEqual(preview["candidate"]["value"], "12.000000000000000002")
+                self.assertEqual(preview["inputs"]["license_last_sale_price"]["raw"], str(6 * WAD + 1))
+                self.assertEqual(preview["inputs"]["license_last_sale_price"]["value"], "6.000000000000000001")
+                self.assertEqual(preview["inputs"]["license_round_floor"]["value"], "99")
+                self.assertIn("next_round_floor_unavailable", preview["unknown_reasons"])
+                self.assertIn("final_closing_sale_unknown", preview["unknown_reasons"])
+                self.assertIn("latest_observed_sale_remains_final_sale_for_stored_round", preview["assumptions"])
+                rpc.values["license_remaining"] = 0
+                sold_out = rpc.run("auctions", detail)["derived"]["license_next_opening_preview"]
+                self.assertEqual(sold_out["sale_basis"], "getter_reported_sold_out_last_sale")
+                self.assertEqual(sold_out["candidate"]["raw"], str(12 * WAD + 2))
+                self.assertIn("closing_sale_finality_not_independently_verified", sold_out["unknown_reasons"])
+                self.assertNotIn("latest_observed_sale_remains_final_sale_for_stored_round", sold_out["assumptions"])
+
+    def test_license_no_sale_preview_cannot_double_old_sale_or_current_floor(self):
+        for sale_round, price, current_floor in ((3, 99 * WAD, 4 * WAD), (0, 0, 8 * WAD)):
+            with self.subTest(sale_round=sale_round):
+                rpc = RPCFixture()
+                rpc.values.update(license_sold=0, license_last_sale_round=sale_round,
+                                  license_last_sale_price=price, license_round_floor=current_floor)
+                preview = rpc.run("auctions")["derived"]["license_next_opening_preview"]
+                self.assertEqual(preview["status"], "unknown")
+                self.assertEqual(preview["sale_basis"], "getter_reported_no_sales")
+                self.assertIsNone(preview["candidate"])
+                self.assertIn("next_round_floor_unavailable", preview["unknown_reasons"])
+                self.assertIn("final_round_sales_unknown", preview["unknown_reasons"])
+
+    def test_license_stale_sale_marker_is_not_current_closing_or_no_sale_proof(self):
+        for sale_round in (3, 5):
+            with self.subTest(sale_round=sale_round):
+                rpc = RPCFixture()
+                rpc.values.update(license_last_sale_round=sale_round, license_remaining=0)
+                result = rpc.run("auctions")
+                preview = result["derived"]["license_next_opening_preview"]
+                self.assertEqual(result["derived"]["license_status"]["value"], "sold_out")
+                self.assertEqual(preview["sale_basis"], "unknown")
+                self.assertIsNone(preview["candidate"])
+                self.assertIn("last_sale_round_mismatch", preview["unknown_reasons"])
+
+    def test_license_multiplier_disagreement_or_failure_blocks_candidate(self):
+        for multiplier, comparison, reason in (
+                (3, "differs_from_published", "start_multiplier_differs_from_published_policy"),
+                (None, "unavailable", "start_multiplier_unavailable")):
+            with self.subTest(multiplier=multiplier):
+                rpc = RPCFixture()
+                if multiplier is None:
+                    rpc.fail.add("license_start_multiplier")
+                else:
+                    rpc.values["license_start_multiplier"] = multiplier
+                result = rpc.run("auctions")
+                preview = result["derived"]["license_next_opening_preview"]
+                self.assertEqual(result["derived"]["license_status"]["value"], "open")
+                self.assertEqual(preview["multiplier_comparison"], comparison)
+                self.assertEqual(preview["status"], "unknown")
+                self.assertIsNone(preview["candidate"])
+                self.assertIn(reason, preview["unknown_reasons"])
+                self.assertIn("contract_policy_enforcement_unverified", preview["unknown_reasons"])
+
+    def test_license_preview_requires_valid_sale_round_amount_and_scale(self):
+        for failure in ("license_last_sale_round", "license_last_sale_price", "license_sold",
+                        "license_paused", "license_round_seconds", "token_decimals", "zero_sale_price"):
+            with self.subTest(failure=failure):
+                rpc = RPCFixture()
+                if failure == "token_decimals":
+                    rpc.values["token_decimals"] = 6
+                elif failure == "zero_sale_price":
+                    rpc.values["license_last_sale_price"] = 0
+                else:
+                    rpc.fail.add(failure)
+                preview = rpc.run("auctions")["derived"]["license_next_opening_preview"]
+                self.assertEqual(preview["status"], "unknown")
+                self.assertIsNone(preview["candidate"])
+
+    def test_license_pending_rollover_does_not_multiply_lagging_sale(self):
+        self.rpc.values["license_auction_anchor"] -= 43200
+        result = self.rpc.run("auctions")
+        preview = result["derived"]["license_next_opening_preview"]
+        self.assertEqual(result["derived"]["license_status"]["value"], "open")
+        self.assertEqual(preview["round_context"], "rollover_pending")
+        self.assertIsNone(preview["target_round"])
+        self.assertIsNone(preview["candidate"])
+        self.assertIn("round_context_rollover_pending", preview["unknown_reasons"])
+
+    def test_auction_schedule_distinguishes_future_boundary_from_due_rollover(self):
+        for prefix, current, period_key, anchor_key, period in (
+                ("license", "license_current_round", "license_round_seconds", "license_auction_anchor", 21600),
+                ("charter_auction", "charter_auction_current_day", "charter_auction_day_seconds",
+                 "charter_auction_anchor", 86400)):
+            for age in (period - 1, period, 3 * period + 7):
+                for detail in ("summary", "full"):
+                    with self.subTest(prefix=prefix, age=age, detail=detail):
+                        rpc = RPCFixture()
+                        anchor = rpc.timestamp - age
+                        rpc.values.update({current: 0, period_key: period, anchor_key: anchor})
+                        result = rpc.run("auctions", detail)
+                        schedule = result["derived"][prefix + "_schedule"]
+                        elapsed = age // period
+                        next_boundary = anchor + (elapsed + 1) * period
+                        self.assertEqual(schedule["next_boundary_timestamp"], next_boundary)
+                        self.assertEqual(schedule["seconds_until_next_boundary"], next_boundary - rpc.timestamp)
+                        self.assertEqual(schedule["stored_round_end_timestamp"], anchor + period)
+                        self.assertEqual(schedule["pending_rounds"], str(elapsed))
+                        self.assertIsNone(schedule["keeper_execution_timestamp"])
+                        if elapsed:
+                            self.assertEqual(schedule["due_boundary_timestamp"], anchor + period)
+                            self.assertEqual(schedule["latest_due_boundary_timestamp"], anchor + elapsed * period)
+                            self.assertEqual(schedule["seconds_since_due_boundary"], age - period)
+                        else:
+                            self.assertIsNone(schedule["due_boundary_timestamp"])
+                            self.assertIsNone(schedule["seconds_since_due_boundary"])
 
     def test_incentives_balance_is_live_retained_standard_with_dependencies(self):
         balance = "incentives_vault_standard_balance"

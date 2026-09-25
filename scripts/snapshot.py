@@ -700,6 +700,85 @@ def _calldata(call, config):
     return result
 
 
+def _license_opening_preview(raw, values, context, status):
+    """A documented-policy calculation, not a next-round quote or enforcement proof."""
+    identifiers = ("license_current_round", "license_sold", "license_last_sale_round",
+                   "license_last_sale_price", "license_round_floor", "license_start_multiplier")
+    preview = {
+        "status": "unknown", "basis": "documented_policy_not_contract_enforcement",
+        "auction_status": status,
+        "policy": {
+            "multiplier": 2,
+            "with_sales": "2 * final_sale_price, subject to the next round floor; exact clamp unverified",
+            "without_sales": "2 * next_round_floor",
+            "source_urls": [
+                "https://www.standardreserve.xyz/app/protocol/whitepaper/#branches",
+                "https://www.standardreserve.xyz/app/protocol/whitepaper/#auctions",
+            ],
+        },
+        "round_context": context, "target_round": None, "sale_basis": "unknown",
+        "candidate": None,
+        "inputs": {identifier: {"raw": str(raw[identifier]), "value": values[identifier]["value"],
+                                "unit": values[identifier]["unit"]}
+                   for identifier in identifiers if identifier in values},
+        "multiplier_comparison": "unavailable",
+        "assumptions": [],
+        "unknown_reasons": ["next_round_floor_unavailable", "contract_policy_enforcement_unverified",
+                            "start_multiplier_consumption_unverified"],
+    }
+    reasons = preview["unknown_reasons"]
+    multiplier = raw["license_start_multiplier"] if "license_start_multiplier" in values else None
+    if multiplier is not None:
+        preview["multiplier_comparison"] = "matches_published" if multiplier == 2 else "differs_from_published"
+    if multiplier != 2:
+        reasons.append("start_multiplier_unavailable" if multiplier is None
+                       else "start_multiplier_differs_from_published_policy")
+    if context != "aligned":
+        reasons.append("round_context_" + context)
+        return preview
+    preview["target_round"] = str(raw["license_current_round"] + 1)
+    if status == "unknown":
+        reasons.append("auction_availability_unavailable")
+        return preview
+    if "license_sold" not in values:
+        reasons.append("sold_count_unavailable")
+        return preview
+    if raw["license_sold"] == 0:
+        # A stale lastSaleDay alone cannot establish a no-sale round. Even this
+        # aligned soldToday observation is not a log-authenticated round recap.
+        preview["sale_basis"] = "getter_reported_no_sales"
+        reasons.append("final_round_sales_unknown")
+        return preview
+    missing = [identifier for identifier in ("license_last_sale_round", "license_last_sale_price")
+               if identifier not in values]
+    if missing:
+        reasons.extend(identifier + "_unavailable" for identifier in missing)
+        return preview
+    if raw["license_last_sale_round"] != raw["license_current_round"]:
+        reasons.append("last_sale_round_mismatch")
+        return preview
+    if raw["license_last_sale_price"] == 0:
+        reasons.append("last_sale_price_not_positive")
+        return preview
+    sold_out = status == "sold_out"
+    preview["sale_basis"] = "getter_reported_sold_out_last_sale" if sold_out else "provisional_latest_sale"
+    reasons.append("closing_sale_finality_not_independently_verified" if sold_out else "final_closing_sale_unknown")
+    if multiplier != 2:
+        return preview
+    candidate = 2 * raw["license_last_sale_price"]
+    preview["status"] = "conditional"
+    preview["candidate"] = {
+        "raw": str(candidate), "value": _scaled(candidate, 18), "unit": "STANDARD",
+        "basis": "twice_last_sale_before_unknown_next_floor",
+    }
+    preview["assumptions"] = ["published_policy_applies_to_next_round"]
+    if sold_out:
+        preview["assumptions"].append("sold_out_getter_and_matching_sale_round_identify_final_sale")
+    else:
+        preview["assumptions"].append("latest_observed_sale_remains_final_sale_for_stored_round")
+    return preview
+
+
 def _derive(config, raw, values, errors, timestamp):
     derived = {}
 
@@ -759,6 +838,25 @@ def _derive(config, raw, values, errors, timestamp):
                         context = "aligned" if stored == elapsed else "rollover_pending" if stored < elapsed else "stored_ahead"
                         derived[prefix + "_stored_round_stale"] = {"value": stored != elapsed, "unit": "boolean"}
                         derived[prefix + "_rollover_pending"] = {"value": stored < elapsed, "unit": "boolean"}
+                        round_start = raw[anchor] + elapsed * raw[period]
+                        stored_end = raw[anchor] + (stored + 1) * raw[period]
+                        pending = stored < elapsed
+                        derived[prefix + "_schedule"] = {
+                            "basis": "anchor_period_block_timestamp", "round_context": context,
+                            "unit": "unix-seconds",
+                            "anchor_timestamp": raw[anchor], "period_seconds": raw[period],
+                            "block_timestamp": timestamp, "stored_round": str(stored),
+                            "elapsed_round": str(elapsed), "elapsed_round_start_timestamp": round_start,
+                            "next_boundary_timestamp": round_start + raw[period],
+                            "seconds_until_next_boundary": round_start + raw[period] - timestamp,
+                            "stored_round_end_timestamp": stored_end,
+                            "due_boundary_timestamp": stored_end if pending else None,
+                            "latest_due_boundary_timestamp": round_start if pending else None,
+                            "seconds_since_due_boundary": timestamp - stored_end if pending else None,
+                            "pending_rounds": str(elapsed - stored) if pending else "0",
+                            "keeper_execution_timestamp": None,
+                            "note": "Scheduled boundaries assume unchanged anchor and period; not keeper transaction times.",
+                        }
                         if stored > elapsed:
                             errors[context_id] = "stored round exceeds elapsed round at the snapshot block"
             derived[context_id] = {"value": context, "unit": "status"}
@@ -781,14 +879,16 @@ def _derive(config, raw, values, errors, timestamp):
                 if identifier in values:
                     values[identifier]["basis"] = "contract_availability_getter"
                     values[identifier]["round_context"] = context
-            if config["detail"] == "full":
+            if is_license or config["detail"] == "full":
                 for identifier in (prefix + "_last_sale_price", last):
                     if identifier in values:
                         values[identifier]["not_historical"] = True
                         values[identifier]["round_context"] = context
-                if context == "aligned" and status == "sold_out" and available(prefix + "_last_sale_price", last, current):
+                if config["detail"] == "full" and context == "aligned" and status == "sold_out" and available(prefix + "_last_sale_price", last, current):
                     if raw[last] == raw[current]:
                         derived[prefix + "_closing_price"] = dict(values[prefix + "_last_sale_price"])
+            if is_license:
+                derived["license_next_opening_preview"] = _license_opening_preview(raw, values, context, status)
     return derived
 
 
@@ -808,7 +908,7 @@ def snapshot(config, transport=None, now=None, monotonic=None):
         if config["view"] == "charter":
             selected = [call for call in selected if call["id"] in CHARTER_SUMMARY_CALLS]
         elif config["view"] == "auctions":
-            selected = [call for call in selected if "_last_sale_" not in call["id"]]
+            selected = [call for call in selected if not call["id"].startswith("charter_auction_last_sale_")]
     roles = {call["contract"] for call in selected}
     all_bindings = [call for call in interface["calls"] if "binds_to" in call
                     and config["view"] in call.get("binding_profiles", PROFILES)]

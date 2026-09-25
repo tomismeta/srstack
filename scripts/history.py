@@ -104,7 +104,7 @@ def _load_snapshot():
 
 def _validate_input(config):
     required = {"schema_version", "kind"} if isinstance(config, dict) and config.get("kind") in BUYBACK_KINDS else {"schema_version", "auction"}
-    optional = {"day", "anchor_block", "lookback_blocks", "from_block", "to_block", "chunk_blocks", "max_chunks", "detail"}
+    optional = {"day", "last_rounds", "generation", "anchor_block", "lookback_blocks", "from_block", "to_block", "chunk_blocks", "max_chunks", "detail"}
     if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - optional:
         raise InputError("unexpected or missing fields")
     kind = config.get("kind", config.get("auction"))
@@ -112,15 +112,19 @@ def _validate_input(config):
             or not isinstance(kind, str) or kind not in ROLES
             or ("auction" in config and kind in BUYBACK_KINDS)):
         raise InputError("expected schema_version 1 and license/charter auction or buybacks/pol-buybacks kind")
-    if kind in BUYBACK_KINDS and "day" in config:
-        raise InputError("day is only supported for license or charter auctions")
+    if kind in BUYBACK_KINDS and {"day", "last_rounds"} & config.keys():
+        raise InputError("day and last_rounds are only supported for license or charter auctions")
+    if "day" in config and "last_rounds" in config:
+        raise InputError("day and last_rounds are mutually exclusive")
+    if "generation" in config and (kind != "license" or config["generation"] not in ("all", "current", "legacy")):
+        raise InputError("generation must be all, current or legacy and is license-only")
     value = dict(config)
     value.setdefault("detail", "summary")
     value.setdefault("chunk_blocks", MAX_CHUNK_BLOCKS)
     value.setdefault("max_chunks", DEFAULT_MAX_CHUNKS)
     if value["detail"] not in ("summary", "full"):
         raise InputError("detail must be summary or full")
-    for name, maximum, minimum in (("day", UINT256_MAX, 0), ("anchor_block", MAX_BLOCK_NUMBER, 0),
+    for name, maximum, minimum in (("day", UINT256_MAX, 0), ("last_rounds", MAX_ROUNDS, 1), ("anchor_block", MAX_BLOCK_NUMBER, 0),
                                    ("from_block", MAX_BLOCK_NUMBER, 0), ("to_block", MAX_BLOCK_NUMBER, 0),
                                    ("lookback_blocks", MAX_BLOCKS, 1), ("chunk_blocks", MAX_CHUNK_BLOCKS, 1),
                                    ("max_chunks", MAX_CHUNKS, 1)):
@@ -359,6 +363,36 @@ def _observation(event):
     return {"block_number": event["block_number"], "timestamp": event["timestamp"], "transaction_hash": event["transaction_hash"]}
 
 
+def _price(s, value, auction):
+    return {"asset": "STANDARD" if auction == "license" else "ETH", "decimals": 18,
+            "raw": str(value), "scaled18": s._scaled(value, 18)}
+
+
+def _select_round_events(events, config, emitters):
+    """Filter only checked observations; never infer unseen rounds or closures."""
+    if "day" in config:
+        return [event for event in events if event["fields"].get("day") == config["day"]], None
+    if "last_rounds" not in config:
+        return events, None
+    latest = {address: {} for address in emitters}
+    for event in events:
+        if "day" in event["fields"]:
+            latest[event["address"]][event["fields"]["day"]] = (event["block_number"], event["log_index"])
+    selected, generations = set(), []
+    count = config["last_rounds"]
+    for address, emitter in emitters.items():
+        days = sorted(latest[address], key=latest[address].get, reverse=True)[:count]
+        selected.update((address, day) for day in days)
+        shortfall = max(0, count - len(days))
+        generations.append({"address": address, "contract_role": emitter["role"], "entity_id": emitter["entity_id"],
+                            "observed_rounds": len(latest[address]), "selected_rounds": len(days), "shortfall": shortfall,
+                            "status": "insufficient_observed_rounds" if shortfall else "requested_observed_rows_selected"})
+    return ([event for event in events if (event["address"], event["fields"].get("day")) in selected],
+            {"requested_per_generation": count, "ordering": "last_observed_event_position_descending",
+             "scope": "latest observed rounds within checked windows only; unseen rounds, complete rounds and closing prices not established",
+             "generations": generations})
+
+
 def _rounds(s, events, auction, day, gaps):
     groups = {}
     for event in events:
@@ -388,11 +422,14 @@ def _rounds(s, events, auction, day, gaps):
                        "consideration": {"basis": "purchase_event_accounting", "asset": "STANDARD" if auction == "license" else "ETH", "decimals": 18,
                                          "total_raw": str(total), "total": s._scaled(total, 18),
                                          "quantity_weighted_average_raw": None if average is None else {"numerator": str(average.numerator), "denominator": str(average.denominator)}},
-                       "observed_rolls": [{**_observation(e), "reported_cap": str(e["fields"]["cap"])} for e in rolls],
+                       "observed_rolls": [{**_observation(e), "reported_cap": str(e["fields"]["cap"]),
+                                           "reported_start_price": _price(s, e["fields"]["startPrice"], auction),
+                                           "reported_floor_price": _price(s, e["fields"]["floorPrice"], auction)} for e in rolls],
                        "observed_activations": [_observation(e) for e in starts],
                        "reported_round_cap": str(next(iter(caps))) if len(caps) == 1 else None,
                        "first_observed_purchase": _observation(purchases[0]) if purchases else None,
-                       "last_observed_purchase": _observation(purchases[-1]) if purchases else None,
+                       "last_observed_purchase": {**_observation(purchases[-1]),
+                                                  "unit_price": _price(s, purchases[-1]["fields"]["unitPrice" if auction == "license" else "price"], auction)} if purchases else None,
                        "scheduled_opening": None, "complete_round": False, "sellout": "not_established", "time_to_sellout": None,
                        "gaps": missing})
     return result
@@ -477,6 +514,7 @@ def history(config, transport=None, now=None, monotonic=None):
     kind = config.get("kind", config.get("auction"))
     now, monotonic = now or time.time, monotonic or time.monotonic
     completed, errors, events = [], {}, []
+    emitters = {}
     start, end = config.get("from_block"), config.get("to_block", config.get("anchor_block"))
     if start is None and end is not None:
         start = max(0, end - config["lookback_blocks"] + 1)
@@ -491,6 +529,8 @@ def history(config, transport=None, now=None, monotonic=None):
         s = _load_snapshot()
         catalog, interface, addresses, hashes = _load_catalog(s, kind)
         roles = ("licenseAuctionLegacy", "licenseAuction") if kind == "license" else (ROLES[kind],)
+        if kind == "license" and config.get("generation", "all") != "all":
+            roles = ("licenseAuction" if config["generation"] == "current" else "licenseAuctionLegacy",)
         emitters = {addresses[role]: {"role": role, "entity_id": catalog["contracts"][role]["entity_id"],
                                      "deployment_block": catalog["contracts"][role].get("deployment_block", 0),
                                      "definitions": {e["topic0"]: e for e in catalog["events"] if role in e["contracts"]}}
@@ -590,13 +630,16 @@ def history(config, transport=None, now=None, monotonic=None):
                            "minimum_live_http_interval_seconds": MIN_REQUEST_INTERVAL}
     if budget is not None:
         evidence["usage"] = {"rpc_requests": budget.requests, "http_requests": budget.http_requests, "response_bytes": budget.response_bytes, "returned_logs": budget.logs}
+    selected_events, round_selection = _select_round_events(events, config, emitters)
+    insufficient = round_selection is not None and (not round_selection["generations"] or
+                   any(row["shortfall"] for row in round_selection["generations"]))
     if config["detail"] == "full":
-        evidence["decoded_events"] = events
-    result = {"schema_version": 1, "status": "partial" if errors or missing else "ok",
+        evidence["decoded_events"] = selected_events
+    result = {"schema_version": 1, "status": "partial" if errors or missing or insufficient else "ok",
               "coverage": {"selection": config, "requested": {"from_block": start, "to_block": end}, "completed": completed, "missing": missing,
                            "scope": ("selected ContractionVault BuybackExecuted events over checked scanned windows, not all-history absence or protocol-wide burns; silent provider omissions cannot be independently excluded"
                                      if kind == "buybacks" else "selected POL Buyback raw event accounting, not burned-token accounting or proven wallet flows; silent provider omissions cannot be independently excluded"
-                                     if kind == "pol-buybacks" else "catalog emitters over checked windows: legacy license throughout the requested interval and v1.1 from deployment, with no emission cutoff at registry cutover; not complete rounds or independently proven provider completeness"
+                                     if kind == "pol-buybacks" else "selected catalog license generations over checked windows: legacy has no emission cutoff at registry cutover and v1.1 begins at deployment; not complete rounds or independently proven provider completeness"
                                      if kind == "license" else "selected-address catalog topics over scanned windows, not complete rounds; silent provider omissions cannot be independently excluded")},
               "errors": errors, "evidence": evidence}
     if kind == "buybacks":
@@ -604,23 +647,30 @@ def history(config, transport=None, now=None, monotonic=None):
     elif kind == "pol-buybacks":
         result.update({"kind": kind, "pol_buybacks": _pol_buybacks(s, events, completed, bool(errors or missing))})
     else:
-        result.update({"auction": kind, "rounds": _rounds(s, events, kind, config.get("day"), bool(errors or missing)) if s is not None else []})
+        rows = _rounds(s, selected_events, kind, config.get("day"), bool(errors or missing)) if s is not None else []
+        if round_selection is not None:
+            positions = {(event["address"], str(event["fields"]["day"])): (event["block_number"], event["log_index"])
+                         for event in selected_events}
+            rows.sort(key=lambda row: (row["address"], -positions[(row["address"], row["day"])][0],
+                                       -positions[(row["address"], row["day"])][1]))
+            result["coverage"]["round_selection"] = round_selection
+        result.update({"auction": kind, "rounds": rows})
         result["coverage"]["day_filter"] = str(config["day"]) if "day" in config else None
     return result
 
 
 def _cli_config(arguments):
-    if not arguments or len(arguments) > 17 or any(len(a) > 80 for a in arguments) or arguments[0] not in ROLES:
-        raise InputError("expected license, charter, buybacks or pol-buybacks and at most eight bounded flag/value pairs")
+    if not arguments or len(arguments) > 21 or any(len(a) > 80 for a in arguments) or arguments[0] not in ROLES:
+        raise InputError("expected license, charter, buybacks or pol-buybacks and at most ten bounded flag/value pairs")
     config = {"schema_version": 1, "kind" if arguments[0] in BUYBACK_KINDS else "auction": arguments[0]}
-    flags = {"--day", "--anchor-block", "--lookback-blocks", "--from-block", "--to-block", "--chunk-blocks", "--max-chunks", "--detail"}
+    flags = {"--day", "--last-rounds", "--generation", "--anchor-block", "--lookback-blocks", "--from-block", "--to-block", "--chunk-blocks", "--max-chunks", "--detail"}
     for index in range(1, len(arguments), 2):
         flag = arguments[index]
         name = flag[2:].replace("-", "_")
         if flag not in flags or name in config or index + 1 == len(arguments):
             raise InputError("unknown, repeated or valueless history flag")
         value = arguments[index + 1]
-        if flag != "--detail":
+        if flag not in ("--detail", "--generation"):
             if not re.fullmatch(r"[0-9]{1,78}", value):
                 raise InputError(flag + " requires ASCII decimal digits")
             value = int(value)
@@ -630,13 +680,16 @@ def _cli_config(arguments):
 
 def main():
     if sys.argv[1:] == ["--help"]:
-        print("usage: history.py license|charter [--day N] [--anchor-block B] [--lookback-blocks N]\n"
-              "       history.py license|charter [--day N] --from-block A --to-block B\n"
+        print("usage: history.py license|charter [--day N | --last-rounds N] [--anchor-block B] [--lookback-blocks N]\n"
+              "       history.py license|charter [--day N | --last-rounds N] --from-block A --to-block B\n"
               "       history.py buybacks|pol-buybacks [--anchor-block B] [--lookback-blocks N]\n"
               "       history.py buybacks|pol-buybacks --from-block A --to-block B\n"
               "       any form: [--chunk-blocks N] [--max-chunks N] [--detail summary|full]\n"
+              "       license only: [--generation all|current|legacy] (default all)\n"
               "Defaults: fresh head, 1000000-block lookback, 10000-block chunks, 100 chunks.\n"
-              "Day is auction-only: an emitted round ID, not UTC or 24 hours. JSON stdout only; no saved results.")
+              "Day is auction-only: an emitted round ID, not UTC or 24 hours.\n"
+              "Last rounds: latest N observed rounds per selected generation in the bounded scan, not complete history.\n"
+              "Insufficient observed rows are partial; no unseen rounds are invented. JSON stdout only; no saved results.")
         return 0
     try:
         result = history(_cli_config(sys.argv[1:]))

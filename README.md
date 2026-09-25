@@ -6,7 +6,7 @@ srstack explains protocol mechanics, investigates current and historical state, 
 
 **Agent-agnostic, including Muse.** Muse can use the same complete skill bundle as other Agent Skills hosts—no Muse-specific adapter or behavior. Research guidance requires access to the packaged resources; live helpers additionally depend on the host's Python, filesystem, network access and permissions.
 
-**Version 0.3.0 — unreleased.** Adds protocol v1.1 coverage, direct branch/auction inspection, generation-aware auction and POL history, and user-selected RPC providers. Models, authenticated research, private-data analysis, exports, monitoring and nonbroadcast simulation remain supported through host capabilities; the helpers are conveniences, not a capability allowlist. This working tree has not been tagged or published.
+**Version 0.3.0 — unreleased.** Adds protocol v1.1 coverage, direct branch/auction inspection, documented-policy next-opening estimates and anchored timing, bounded last-N auction rounds with recorded prices, generation-aware auction and POL history, and user-selected RPC providers. Models, authenticated research, private-data analysis, exports, monitoring and nonbroadcast simulation remain supported through host capabilities; the helpers are conveniences, not a capability allowlist. This working tree has not been tagged or published.
 
 **Helper continuity:** the retired `scripts/scenario.py` and fictional fixture are not restored. Requested models and workflows may use existing host tools or inspectable locally authored code; “no bundled simulator” is not a reason to refuse analysis. The verifier has no `--offline` flag: its default is offline integrity verification. Install a clean runtime export rather than overlaying old files.
 
@@ -21,7 +21,8 @@ srstack explains protocol mechanics, investigates current and historical state, 
 | “How much supply was permanently removed, and why?” | Separate liquid-token burns from retired ledger value; totals do not attribute individual burn causes |
 | “Are launch holding limits or the Pool Manager gate active?” | Fresh enabled/active flags and cap values; not a guarantee that a transaction will succeed |
 | “What’s the current branch auction status?” | One fresh `snapshot.py auctions` read using the cataloged current license deployment: getter-reported status, remaining branches and price with [round context and interpretation limits](references/auctions.md#current-branch-auction-status-getters-first); no contract rediscovery or history indexing |
-| “How did past license or charter auctions go?” | [Supported bounded history scans](references/auction-history.md), with an optional round filter, deployment-specific license rounds, quantity-weighted prices and explicit coverage gaps; no stored auction results |
+| “What will the next license round open at, and when?” | [Documented-policy estimate and derived schedule](references/auctions.md#next-license-opening-documented-policy-estimate) from the same fresh auction snapshot; provisional last-sale inputs, future-floor uncertainty and pending rollover are explicit, not a keeper guarantee |
+| “Show me the last 3 license rounds.” / “How did past auctions go?” | [Bounded history scans](references/auction-history.md#question-to-window): `history.py license --generation current --last-rounds 3`, recorded start/floor/cap and last observed purchase price; deployment-specific rows and explicit coverage gaps, never stored auction results |
 | “What are the current treasury shares and team liability?” | Current/queued FeeSplitter state and vault controls, not holder yield |
 | “What does the vault hold of this public reserve asset?” | Approval-gated raw holdings/pool metadata for that asset, not portfolio enumeration |
 | “How much did buybacks spend and burn in this block window?” | ContractionVault `BuybackExecuted` event totals within checked coverage; POL buybacks have a separate mode reporting raw token output and destination, not burns |
@@ -241,6 +242,8 @@ Use srstack inspect protocol. Show current issuance and buy/sell taxes.
 Use srstack inspect protocol. Split permanent supply removal into token burns and retired ledger value, and show launch restrictions.
 Use srstack inspect auctions. Are licenses available, and what price is actually usable?
 What's the current branch auction status?
+What will the next license round open at under the published policy, and when is its next scheduled boundary?
+Show me the last 3 license rounds, including coverage limits and whether the latest round may still be in progress.
 Use srstack inspect charter <public charter ID>. Show its branches and pending balance.
 ```
 
@@ -257,7 +260,7 @@ Replace `<public charter ID>` with the ID to inspect.
 | View | Selected observations |
 |---|---|
 | `protocol` | Issuance and epoch context, branch count, supply and permanent-burn decomposition, token restriction/launch flags, counter-based remaining budget, buy/sell tax and pool/emissions state |
-| `auctions` | Current license and daily-charter activation, pause state, reported inventory and current prices; stored versus elapsed rounds, pending rollover, license auction period, separate charter-cap window and decay setting |
+| `auctions` | Current license and daily-charter activation, pause state, reported inventory and current prices; stored versus elapsed rounds, pending rollover, license documented-policy opening preview, derived schedules, separate charter-cap window and decay setting |
 | `treasury` | Current/queued fee allocation, team ETH liability, vault authority/pause, contraction-buyback controls, POL/incentives ownership and the vault's live STANDARD balance; optional approved-asset raw holdings and pool key |
 | `charter` | Default: public owner, branches, pending and supported current-rate equivalent. Explicit `--detail full`: additional protocol context and raw evidence |
 
@@ -280,6 +283,7 @@ Prefer the supported `history.py` helper for license or charter event history wh
 
 ```sh
 python3 -B -I scripts/history.py license --lookback-blocks 1000000
+python3 -B -I scripts/history.py license --generation current --last-rounds 3
 python3 -B -I scripts/history.py charter --day 1 --from-block 1 --to-block 1000000
 ```
 
