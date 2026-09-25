@@ -733,7 +733,7 @@ def _derive(config, raw, values, errors, timestamp):
         elif active_stream and available("charter_branches", "total_branches"):
             total, branches = raw["total_branches"], raw["charter_branches"]
             if total > 0 and branches <= total:
-                amount("charter_gross_daily", (raw["stream_rate_per_second"] // total) * branches * 86400, "STANDARD/day")
+                amount("charter_gross_daily", (raw["stream_rate_per_second"] * branches * 86400) // total, "STANDARD/day")
             else:
                 errors["charter_gross_daily"] = "positive total branches and consistent charter branches required"
     if config["view"] == "auctions":

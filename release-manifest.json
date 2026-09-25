@@ -6,13 +6,13 @@
   "digest_convention": "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest",
   "content_files": {
     "LICENSE": "14b82531e814378b84e97596f68a98c70becee3251b206c545d4f07d73105af3",
-    "README.md": "7e9707e1983b3defc2108eeed9e98c5ff1a6b5e9edf00ff759e5ab4a6029829a",
+    "README.md": "c42f509d5ac49da98b1bd7ab88cc3ed0b6acd741d044d35bdd5604379173bb42",
     "SKILL.md": "f0e6ebbfb49335c0069106d401f798bb8acc93ca70bd044ffae0ca8b473e1570",
     "assets/coverage.json": "db87ea2d57f4c73b28cfe2461135e9d66793f8269df3ea283c1690c288c9ea23",
     "assets/entities/robinhood.json": "c71c1abff0b2d5d9f061bcf916c240aa9a116df921d039021dd7d840bdad132c",
     "assets/entity-index.json": "b32e27f1517871ad433cf52c29e9e5e7271f887c0eb23acb5c5d606d67e5bff3",
     "assets/interfaces/auction-events.json": "3a7ab1ed5252603ed9d6aeae2e4fb9c85528c86d6cae424e68d3e854e0c9c971",
-    "assets/interfaces/robinhood-reads.json": "da9dae037dea2869eea5cb2559499d70ae478b1cf4b4f32d63a090421b470b45",
+    "assets/interfaces/robinhood-reads.json": "3cf14f6f3566f6e24c311047e5fc7c475261117557228b3322438575cce194c2",
     "assets/interfaces/treasury-events.json": "09f0773529489523e988c85548c19108785d86d689b6f60fb4986aecad2c51d2",
     "assets/parameters.json": "35c4757174e1686c4cc9349d98ee155df5988e2522419c5ce01c089b1dcfbf58",
     "assets/parameters/launch.json": "8d53020e002d783e2885ea2b9e219330690cbcb6d3261988804707957c912cbf",
@@ -29,7 +29,7 @@
     "references/charters.md": "03f32497cd947f0f5b0f3df439a18bb36acbb8ada117bac87db1e7010e203f06",
     "references/contracts.md": "89a940d4dcc709e207b92c6efd4799bf1b46d28bb96688665ea61281e270e1e2",
     "references/documents.md": "3cb2c120950b4a30c35bb1df442f005633b2cb65ea5ad6cb902cd051d057e098",
-    "references/execution.md": "d772a59799614e5279e14f485aedc211a049f1f06588bc64ab134d19b91744f4",
+    "references/execution.md": "e77a9c36c0f3871f563031576aa20a2154428d4b3859ef481fe673a3d14b2a4a",
     "references/exits.md": "4fc852fbe64b29af50135fd0364930b5e908c2245334eb52d19119fe0922a745",
     "references/genesis.md": "a1b56bf05b4cc32a877b72e95fc7d79453cb4c828fe7127407dadaee1a8b24b0",
     "references/inspection.md": "0e3f3fa46092caee720a1ef2fdf5ec5a5ff4a0dcfa0019892e6916577098e9e5",
@@ -45,8 +45,8 @@
     "references/updates.md": "fcc9a46d33a2d98c80495de7a5995f9fc8e00097950b4d8f1ebb2ba3614d1948",
     "scripts/history.py": "34f803673f44b5609cc1bf20b8044353c1af305f29b09c355fc4ef3030f33a84",
     "scripts/price.py": "0e27aff15b8c30251811579d69840f94ea6f9c0c4cea500e3886600521559ae9",
-    "scripts/snapshot.py": "56570658de639829fc04931e8ce9268573a88e4532768ac34a50b6ced568ff96",
+    "scripts/snapshot.py": "29dc78a3c8cfa7400106942822f6a2f9accca0bcd225f6180d0065761b68f26f",
     "scripts/verify.py": "77ea12eb10c62f57dc2637d2f1de1f872ae1d110b06327f490b15b9e73d760cc"
   },
-  "content_sha256": "54bcd50977469acc644edd5a01bab069f234c1928b4aae47dd0bc5eca1d99021"
+  "content_sha256": "d616e2e14463e33bde84a47813cdcaae172aff90fbc6b57dced5266dd7742cfe"
 }

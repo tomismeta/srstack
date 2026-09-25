@@ -328,13 +328,10 @@ class SnapshotChecks(unittest.TestCase):
             self.rpc.run()
         self.assertEqual([r["method"] for r in self.rpc.requests], ["eth_chainId"])
 
-    def test_single_block_and_exact_rate_arithmetic(self):
+    def test_single_block_and_supply_arithmetic(self):
         result = self.rpc.run("charter", "full")
         self.assertEqual(result["status"], "ok")
         self.assertEqual(result["derived"]["global_gross_daily"]["value"], "86400.0000000000001728")
-        # Integer division before branch multiplication matters at wei precision.
-        expected = snapshot._scaled(((WAD + 2) // 3) * 2 * 86400, 18)
-        self.assertEqual(result["derived"]["charter_gross_daily"]["value"], expected)
         self.assertEqual(result["derived"]["remaining_gross_budget"]["value"], "70")
         self.assertEqual(result["values"]["charter_branches"]["value"], 2)
         self.assertIs(result["values"]["emissions_started"]["value"], True)
@@ -347,6 +344,20 @@ class SnapshotChecks(unittest.TestCase):
         self.assertEqual(protocol["values"]["token_ledger_retired"]["value"], "12.999999999999999999")
         self.assertEqual(result["derived"]["permanent_removed"]["value"], "20")
         self.assertEqual(protocol["values"]["sell_tax_percent"]["value"], "66.67")
+
+    def test_pro_rata_daily_equivalent_rounds_only_final_amount(self):
+        for rate, total, branches, expected in (
+                (7, 3, 3, "0.0000000000006048"),
+                (1, 7, 2, "0.000000000000024685")):
+            with self.subTest(rate=rate, total=total, branches=branches):
+                rpc = RPCFixture()
+                rpc.values.update(stream_rate_per_second=rate,
+                                  total_branches=total, charter_branches=branches)
+                result = rpc.run("charter", "full")
+                daily = result["derived"]["charter_gross_daily"]
+                self.assertEqual(daily, {"value": expected, "unit": "STANDARD/day"})
+                if branches == total:
+                    self.assertEqual(daily, result["derived"]["global_gross_daily"])
 
     def test_inactive_or_unknown_emissions_omit_daily_rates(self):
         for view in ("protocol", "charter"):
@@ -576,8 +587,6 @@ class SnapshotChecks(unittest.TestCase):
         self.assertNotIn("charter_pending", result["values"])
         self.assertIn("charter_pending", result["errors"])
         self.assertEqual(result["values"]["charter_branches"]["value"], 2)
-        self.assertEqual(result["derived"]["charter_gross_daily"]["value"],
-                         snapshot._scaled(((WAD + 2) // 3) * 2 * 86400, 18))
         self.assertEqual(set(result["derived"]), {"charter_gross_daily"})
         self.assertEqual(set(result["values"]), {"charter_owner", "charter_branches"})
 
