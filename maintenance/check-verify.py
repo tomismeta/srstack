@@ -66,12 +66,17 @@ class VerifyChecks(unittest.TestCase):
     def helper_result(self, name, result):
         self.helper(name, "import json\nprint(json.dumps(" + repr(result) + "))\n")
 
-    def assert_integrity_failure(self):
+    def assert_integrity_failure(self, reason=None):
         with patch.object(self.verify.subprocess, "Popen", side_effect=AssertionError("must not execute a helper")):
             report, code = self.verify.run({"--charter": "1", "--price": True})
         self.assertEqual(4, code)
         self.assertEqual("failed", report["status"])
         self.assertEqual(["failed", "skipped", "skipped"], [stage["status"] for stage in report["stages"]])
+        self.assertEqual("invalid_or_unreadable_install", report["stages"][0]["error"])
+        if reason is not None:
+            self.assertEqual(reason, report["stages"][0]["reason"])
+        self.assertNotIn(str(self.work), json.dumps(report))
+        return report
 
     def test_default_checks_all_content_without_child_or_writes(self):
         before = {path.relative_to(self.root).as_posix(): path.read_bytes()
@@ -81,6 +86,7 @@ class VerifyChecks(unittest.TestCase):
         self.assertEqual(0, code)
         self.assertEqual("ok", report["status"])
         self.assertEqual(["integrity"], [stage["name"] for stage in report["stages"]])
+        self.assertNotIn("reason", report["stages"][0])
         self.assertEqual(self.manifest["content_sha256"], report["stages"][0]["content_sha256"])
         self.assertEqual(len(before), report["stages"][0]["files"])
         result = self.invoke()
@@ -92,11 +98,11 @@ class VerifyChecks(unittest.TestCase):
     def test_tampered_unrelated_reference_prevents_live_helpers(self):
         reference = next((self.root / "references").glob("*.md"))
         reference.write_bytes(reference.read_bytes() + b"\ntampered\n")
-        self.assert_integrity_failure()
+        self.assert_integrity_failure("content_mismatch")
 
     def test_missing_member_prevents_smoke(self):
         (self.root / "assets/sources.json").unlink()
-        self.assert_integrity_failure()
+        self.assert_integrity_failure("membership_mismatch")
 
     def test_unexpected_repository_file_and_empty_directory_are_rejected(self):
         for name, directory in (("maintenance", True), (".git", True), ("scripts/__pycache__", True),
@@ -104,7 +110,7 @@ class VerifyChecks(unittest.TestCase):
             with self.subTest(name=name):
                 target = self.root / name
                 target.mkdir() if directory else target.write_text("unexpected")
-                self.assert_integrity_failure()
+                self.assert_integrity_failure("membership_mismatch")
                 target.rmdir() if directory else target.unlink()
 
     def test_symlink_file_directory_and_manifest_are_rejected(self):
@@ -114,7 +120,7 @@ class VerifyChecks(unittest.TestCase):
                 outside = self.work / "outside"
                 target.rename(outside)
                 target.symlink_to(outside, target_is_directory=outside.is_dir())
-                self.assert_integrity_failure()
+                self.assert_integrity_failure("unsafe_entry")
                 target.unlink()
                 outside.rename(target)
 
@@ -122,7 +128,7 @@ class VerifyChecks(unittest.TestCase):
         linked = self.work / "linked"
         linked.symlink_to(self.root, target_is_directory=True)
         with patch.object(self.verify, "__file__", str(linked / "scripts/verify.py")):
-            self.assert_integrity_failure()
+            self.assert_integrity_failure("unsafe_entry")
 
     def test_fifo_never_blocks(self):
         target = self.root / "README.md"
@@ -131,6 +137,7 @@ class VerifyChecks(unittest.TestCase):
         result = self.invoke()
         self.assertEqual(4, result.returncode)
         self.assertEqual("failed", json.loads(result.stdout)["stages"][0]["status"])
+        self.assertEqual("unsafe_entry", json.loads(result.stdout)["stages"][0]["reason"])
 
     def test_manifest_traversal_absolute_unknown_and_overdeep_members_fail(self):
         for name in ("../escape.json", "/tmp/escape.json", "assets/../escape.json", "assets\\escape.json",
@@ -138,17 +145,17 @@ class VerifyChecks(unittest.TestCase):
             with self.subTest(name=name):
                 self.manifest["content_files"][name] = "0" * 64
                 self.save_manifest()
-                self.assert_integrity_failure()
+                self.assert_integrity_failure("invalid_manifest")
                 del self.manifest["content_files"][name]
 
     def test_manifest_cannot_omit_required_helper_or_change_aggregate_digest(self):
         del self.manifest["content_files"]["scripts/price.py"]
         self.save_manifest()
-        self.assert_integrity_failure()
+        self.assert_integrity_failure("invalid_manifest")
         self.refresh_manifest()
         self.manifest["content_sha256"] = "0" * 64
         self.save_manifest()
-        self.assert_integrity_failure()
+        self.assert_integrity_failure("content_mismatch")
 
     def test_duplicate_keys_and_depth_are_rejected_even_with_matching_hashes(self):
         for content in (b'{"key":1,"key":2}', b"[" * 33 + b"0" + b"]" * 33, b'{"n":NaN}',
@@ -156,22 +163,34 @@ class VerifyChecks(unittest.TestCase):
             with self.subTest(content=content[:30]):
                 (self.root / "assets/sources.json").write_bytes(content)
                 self.refresh_manifest()
-                self.assert_integrity_failure()
+                self.assert_integrity_failure("invalid_content")
         (self.root / "assets/sources.json").write_bytes(self.files["assets/sources.json"])
         self.refresh_manifest()
         content = json.dumps(self.manifest)
         (self.root / "release-manifest.json").write_text(content[:-1] + ',"name":"srstack"}')
-        self.assert_integrity_failure()
+        self.assert_integrity_failure("invalid_manifest")
 
     def test_file_manifest_total_and_membership_bounds_fail_closed(self):
         for constant, limit in (("MAX_FILE_BYTES", 1), ("MAX_MANIFEST_BYTES", 1), ("MAX_TOTAL_BYTES", 1),
                                 ("MAX_FILES", len(self.manifest["content_files"])), ("MAX_DIRECTORIES", 1)):
             with self.subTest(constant=constant), patch.object(self.verify, constant, limit):
-                self.assert_integrity_failure()
+                self.assert_integrity_failure("limit_exceeded")
 
     def test_unsupported_host_fails_before_any_child(self):
         with patch.object(self.verify.os, "supports_dir_fd", set()):
-            self.assert_integrity_failure()
+            self.assert_integrity_failure("unsupported_host")
+
+    def test_missing_manifest_has_membership_reason(self):
+        (self.root / "release-manifest.json").unlink()
+        self.assert_integrity_failure("membership_mismatch")
+
+    def test_read_failure_does_not_expose_exception_details(self):
+        private_detail = "/private/host-path?access=secret-value"
+        with patch.object(self.verify.os, "scandir", side_effect=PermissionError(private_detail)):
+            # Keep the capability gate independent of the instrumented operation.
+            with patch.object(self.verify.os, "supports_fd", {self.verify.os.scandir}):
+                report = self.assert_integrity_failure("read_failure")
+        self.assertNotIn(private_detail, json.dumps(report))
 
     def test_file_replacement_between_stat_and_open_is_rejected(self):
         original_open = self.verify.os.open
@@ -189,7 +208,7 @@ class VerifyChecks(unittest.TestCase):
         # Keep the host-capability check independent of the instrumented open.
         supported = self.verify.os.supports_dir_fd | {racing_open}
         with patch.object(self.verify.os, "open", racing_open), patch.object(self.verify.os, "supports_dir_fd", supported):
-            self.assert_integrity_failure()
+            self.assert_integrity_failure("changed_during_read")
         self.assertTrue(replaced)
 
     def test_removed_offline_and_invalid_flags_fail_before_integrity(self):

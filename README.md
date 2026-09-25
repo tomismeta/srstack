@@ -373,14 +373,19 @@ python3 -B maintenance/package.py verify
 python3 -B maintenance/check-snapshot.py
 python3 -B maintenance/check-price.py
 python3 -B maintenance/check-history.py
+python3 -B maintenance/check-interface.py
 python3 -B maintenance/check-verify.py
 python3 -B maintenance/check-package.py
 python3 -B maintenance/package.py archive
 ```
 
-The checks use Python's standard library and local Git; they do not call explorers, connect wallets or use model/API credentials. CI runs them on Python 3.10 and 3.14, with read-only repository permissions and commit-pinned Actions. GitHub checkout and Python provisioning require network access; the validation commands themselves are offline. CI verifies the committed manifest rather than regenerating it, and checks deterministic ZIP output. It does not upload artifacts, tag, publish releases or monitor contracts.
+The checks use Python's standard library and local Git; they do not call explorers, connect wallets or use model/API credentials. CI runs Linux with Python 3.10 and 3.14, plus macOS with Python 3.14, using read-only repository permissions and commit-pinned Actions. GitHub checkout and Python provisioning require network access; the validation commands themselves are offline. CI verifies the committed manifest rather than regenerating it, and checks deterministic ZIP output. It does not upload artifacts, tag, publish releases or monitor contracts.
 
 After deliberate runtime changes, regenerate the manifest with `python3 -B maintenance/package.py build`, then run the checks above. The archive `dist/srstack-0.3.0.zip` contains only the runtime package; building it does not publish a release or certify it. Maintenance tooling and CI files are repository-only; their execution requires a deliberate maintenance request, trusted code and normal host permissions.
+
+**Agent acceptance replays:** repository-only `maintenance/agent-acceptance.json` defines synthetic questions, required/forbidden outcomes and a separate run-record format. Load the candidate skill in a fresh, normally permissioned session and replay each case as supplied evidence, not live state. Record host/model, loaded revision and manifest, actual tools/actions, response and criterion-level results outside the installed runtime. Use no real wallet capabilities or credentials; do not add extra refusal instructions that predetermine the result. Report blocked and unrun cases explicitly. These specifications are not passing results: offline CI does not run a model, and a replay does not certify host isolation.
+
+**Independent interface vectors:** `check-interface.py` exercises selected literal calldata, return words and event layouts independently of the catalog-driven fixture encoders. This is targeted layout coverage, not exhaustive selector recomputation, contract-source/deployment equivalence or financial-semantic verification.
 
 ## Feedback and license
 

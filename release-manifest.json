@@ -6,7 +6,7 @@
   "digest_convention": "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest",
   "content_files": {
     "LICENSE": "14b82531e814378b84e97596f68a98c70becee3251b206c545d4f07d73105af3",
-    "README.md": "c42f509d5ac49da98b1bd7ab88cc3ed0b6acd741d044d35bdd5604379173bb42",
+    "README.md": "e54fe100fc729a871e32df68a3f062d8e146a04a10a87e68718c00426f819748",
     "SKILL.md": "f0e6ebbfb49335c0069106d401f798bb8acc93ca70bd044ffae0ca8b473e1570",
     "assets/coverage.json": "db87ea2d57f4c73b28cfe2461135e9d66793f8269df3ea283c1690c288c9ea23",
     "assets/entities/robinhood.json": "c71c1abff0b2d5d9f061bcf916c240aa9a116df921d039021dd7d840bdad132c",
@@ -29,7 +29,7 @@
     "references/charters.md": "03f32497cd947f0f5b0f3df439a18bb36acbb8ada117bac87db1e7010e203f06",
     "references/contracts.md": "89a940d4dcc709e207b92c6efd4799bf1b46d28bb96688665ea61281e270e1e2",
     "references/documents.md": "3cb2c120950b4a30c35bb1df442f005633b2cb65ea5ad6cb902cd051d057e098",
-    "references/execution.md": "e77a9c36c0f3871f563031576aa20a2154428d4b3859ef481fe673a3d14b2a4a",
+    "references/execution.md": "34187fa73afa3eaf77d6977dce9fe8ff0603d36292d1d0dee2382d47a4069d3d",
     "references/exits.md": "4fc852fbe64b29af50135fd0364930b5e908c2245334eb52d19119fe0922a745",
     "references/genesis.md": "a1b56bf05b4cc32a877b72e95fc7d79453cb4c828fe7127407dadaee1a8b24b0",
     "references/inspection.md": "0e3f3fa46092caee720a1ef2fdf5ec5a5ff4a0dcfa0019892e6916577098e9e5",
@@ -46,7 +46,7 @@
     "scripts/history.py": "34f803673f44b5609cc1bf20b8044353c1af305f29b09c355fc4ef3030f33a84",
     "scripts/price.py": "0e27aff15b8c30251811579d69840f94ea6f9c0c4cea500e3886600521559ae9",
     "scripts/snapshot.py": "29dc78a3c8cfa7400106942822f6a2f9accca0bcd225f6180d0065761b68f26f",
-    "scripts/verify.py": "77ea12eb10c62f57dc2637d2f1de1f872ae1d110b06327f490b15b9e73d760cc"
+    "scripts/verify.py": "7e2fc43e9aa901d5e8bbe2b6f39d665a0054eea800cd19e2388a584cdbe2948f"
   },
-  "content_sha256": "d616e2e14463e33bde84a47813cdcaae172aff90fbc6b57dced5266dd7742cfe"
+  "content_sha256": "2b4004171aa723178fb27c76a25225c9a7b15900d5fe73425d3e0b9d811e8c7c"
 }

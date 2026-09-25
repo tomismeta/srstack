@@ -2,7 +2,9 @@
 """Deterministic event-accounting and bounded-coverage regressions; no live RPC."""
 
 import copy
+from functools import partial
 import importlib.util
+import io
 import json
 from pathlib import Path
 import tempfile
@@ -871,6 +873,98 @@ class POLBuybackChecks(unittest.TestCase):
                 self.assertFalse(report["pol_buybacks"]["requested_range_complete"])
                 self.assertEqual(report["coverage"]["missing"][0]["from_block"], deployment if failure == "chunk" else deployment - 2)
                 self.assertEqual(report["pol_buybacks"]["tokens_out"]["total_raw"], "0" if failure == "chunk" else None)
+
+
+class HistoryMainChecks(unittest.TestCase):
+    def cli(self, fixture, arguments):
+        class NoStdin:
+            def __getattribute__(self, name):
+                raise AssertionError("history CLI must not access stdin")
+
+        stdout, stderr = io.StringIO(), io.StringIO()
+        # Inject only transport and clocks; retain actual validation, collection,
+        # event accounting and coverage decisions behind the entrypoint.
+        collect = partial(history.history, transport=fixture, now=lambda: NOW,
+                          monotonic=lambda: fixture.clock)
+        with patch.object(history.sys, "argv", ["history.py", *arguments]), \
+                patch.object(history.sys, "stdin", NoStdin()), \
+                patch.object(history.sys, "stdout", stdout), \
+                patch.object(history.sys, "stderr", stderr), \
+                patch.object(history, "history", collect):
+            code = history.main()
+        return code, stdout.getvalue(), stderr.getvalue()
+
+    def test_complete_checked_window_is_stdout_exit_zero(self):
+        fixture = RPCFixture()
+        fixture.purchase(count=2, price=9)
+        fixture.purchase(count=3, price=2, block=112)
+        code, stdout, stderr = self.cli(fixture, [
+            "license", "--from-block", "100", "--to-block", "119", "--chunk-blocks", "10"])
+        self.assertEqual((code, stderr), (0, ""))
+        report = json.loads(stdout)
+        self.assertEqual(report["status"], "ok")
+        self.assertEqual(report["coverage"]["missing"], [])
+        self.assertEqual([(w["from_block"], w["to_block"], w["scan_status"])
+                          for w in report["coverage"]["completed"]],
+                         [(100, 109, "logs_checked"), (110, 119, "logs_checked")])
+        self.assertEqual(report["evidence"]["final_anchor_check"], "matched")
+        self.assertEqual(report["rounds"][0]["purchase_quantity"], "5")
+        self.assertEqual(report["rounds"][0]["consideration"]["total_raw"], "24")
+
+    def test_retained_partial_coverage_is_stdout_exit_four(self):
+        fixture = RPCFixture()
+        fixture.purchase(count=2, price=9)
+        fixture.purchase(count=99, block=112)
+        fixture.denied_from = 110
+        code, stdout, stderr = self.cli(fixture, [
+            "license", "--from-block", "100", "--to-block", "119", "--chunk-blocks", "10"])
+        self.assertEqual((code, stderr), (4, ""))
+        report = json.loads(stdout)
+        self.assertEqual(report["status"], "partial")
+        self.assertEqual([(w["from_block"], w["to_block"]) for w in report["coverage"]["completed"]],
+                         [(100, 109)])
+        self.assertEqual([(w["from_block"], w["to_block"]) for w in report["coverage"]["missing"]],
+                         [(110, 119)])
+        self.assertEqual(report["rounds"][0]["purchase_quantity"], "2")
+        self.assertEqual(report["rounds"][0]["consideration"]["total_raw"], "18")
+        self.assertEqual(report["errors"]["window_110"]["diagnostics"], fixture.diagnostics)
+        self.assertEqual(fixture.requests[-1]["method"], "eth_getLogs")
+
+    def test_setup_unavailable_is_stdout_exit_four_without_observations(self):
+        fixture = RPCFixture()
+        fixture.chain_id = 1
+        code, stdout, stderr = self.cli(fixture, [
+            "license", "--from-block", "100", "--to-block", "119"])
+        self.assertEqual((code, stderr), (4, ""))
+        report = json.loads(stdout)
+        self.assertEqual(report["status"], "partial")
+        self.assertEqual(report["rounds"], [])
+        self.assertEqual(report["coverage"]["completed"], [])
+        self.assertEqual([(w["from_block"], w["to_block"]) for w in report["coverage"]["missing"]],
+                         [(100, 119)])
+        self.assertEqual(set(report["errors"]), {"setup"})
+        self.assertEqual([request["method"] for request in fixture.requests], ["eth_chainId"])
+
+    def test_invalid_input_is_stdout_exit_two_before_network(self):
+        for arguments in ([], ["license", "--from-block", "100", "--to-block", "90"],
+                          ["license", "--day", "7", "--day", "8"], ["--help", "license"]):
+            with self.subTest(arguments=arguments):
+                fixture = RPCFixture()
+                code, stdout, stderr = self.cli(fixture, arguments)
+                self.assertEqual((code, stderr), (2, ""))
+                report = json.loads(stdout)
+                self.assertEqual(report["status"], "error")
+                self.assertEqual(report["error"]["kind"], "input")
+                self.assertNotIn("coverage", report)
+                self.assertEqual(fixture.requests, [])
+
+    def test_help_is_plain_stdout_exit_zero_without_network(self):
+        fixture = RPCFixture()
+        code, stdout, stderr = self.cli(fixture, ["--help"])
+        self.assertEqual((code, stderr), (0, ""))
+        with self.assertRaises(json.JSONDecodeError):
+            json.loads(stdout)
+        self.assertEqual(fixture.requests, [])
 
 
 if __name__ == "__main__":

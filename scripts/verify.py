@@ -44,6 +44,14 @@ MAX_ERROR_MESSAGE = 240
 AMOUNT = re.compile(r"(?:0|[1-9][0-9]{0,59})(?:\.[0-9]{1,18})?\Z")
 
 
+class _IntegrityError(ValueError):
+    """A fixed diagnostic category, never a path or source exception message."""
+
+    def __init__(self, reason):
+        super().__init__(reason)
+        self.reason = reason
+
+
 def _pairs(pairs):
     result = {}
     for key, value in pairs:
@@ -114,29 +122,31 @@ def _identity(info):
 def _directory(parent, name):
     before = os.stat(name, dir_fd=parent, follow_symlinks=False)
     if not stat.S_ISDIR(before.st_mode):
-        raise ValueError("unsafe runtime directory")
+        raise _IntegrityError("unsafe_entry")
     descriptor = os.open(name, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=parent)
     if _identity(before) != _identity(os.fstat(descriptor)):
         os.close(descriptor)
-        raise ValueError("runtime directory changed while opening")
+        raise _IntegrityError("changed_during_read")
     return descriptor
 
 
 def _read_file(directory, name, limit):
     before = os.stat(name, dir_fd=directory, follow_symlinks=False)
-    if not stat.S_ISREG(before.st_mode) or before.st_size > limit:
-        raise ValueError("unsafe or oversized runtime file")
+    if not stat.S_ISREG(before.st_mode):
+        raise _IntegrityError("unsafe_entry")
+    if before.st_size > limit:
+        raise _IntegrityError("limit_exceeded")
     descriptor = os.open(name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=directory)
     try:
         opened = os.fstat(descriptor)
         if not stat.S_ISREG(opened.st_mode) or _identity(before) != _identity(opened):
-            raise ValueError("runtime file changed while opening")
+            raise _IntegrityError("changed_during_read")
         with os.fdopen(descriptor, "rb", closefd=False) as stream:
             content = stream.read(limit + 1)
         if (len(content) > limit or len(content) != opened.st_size
                 or _identity(opened) != _identity(os.fstat(descriptor))
                 or _identity(opened) != _identity(os.stat(name, dir_fd=directory, follow_symlinks=False))):
-            raise ValueError("runtime file changed while reading")
+            raise _IntegrityError("changed_during_read")
         return content
     finally:
         os.close(descriptor)
@@ -146,12 +156,15 @@ def verify_install():
     if (not all(hasattr(os, flag) for flag in ("O_DIRECTORY", "O_NOFOLLOW", "O_NONBLOCK"))
             or os.open not in os.supports_dir_fd or os.stat not in os.supports_dir_fd
             or os.stat not in os.supports_follow_symlinks or os.scandir not in os.supports_fd):
-        raise ValueError("host lacks safe descriptor-relative reads")
+        raise _IntegrityError("unsupported_host")
     root = Path(__file__).absolute().parent.parent
     descriptor = _directory(None, str(root))
     try:
         raw = _read_file(descriptor, MANIFEST, MAX_MANIFEST_BYTES)
-        manifest = _json(raw, MAX_MANIFEST_BYTES)
+        try:
+            manifest = _json(raw, MAX_MANIFEST_BYTES)
+        except (ValueError, RecursionError):
+            raise _IntegrityError("invalid_manifest") from None
         keys = {"schema_version", "name", "version", "scope", "digest_convention", "content_files", "content_sha256"}
         if (not isinstance(manifest, dict) or set(manifest) != keys
                 or type(manifest["schema_version"]) is not int or manifest["schema_version"] != 1
@@ -159,19 +172,24 @@ def verify_install():
                 or manifest["digest_convention"] != DIGEST_CONVENTION
                 or not isinstance(manifest["scope"], str) or not 1 <= len(manifest["scope"]) <= 512
                 or not isinstance(manifest["content_sha256"], str) or not HEX.fullmatch(manifest["content_sha256"])):
-            raise ValueError("unsupported manifest schema")
+            raise _IntegrityError("invalid_manifest")
         expected = manifest["content_files"]
-        if not isinstance(expected, dict) or not REQUIRED <= expected.keys() or not len(expected) < MAX_FILES:
-            raise ValueError("invalid manifest membership")
+        if not isinstance(expected, dict) or not REQUIRED <= expected.keys():
+            raise _IntegrityError("invalid_manifest")
+        if len(expected) >= MAX_FILES:
+            raise _IntegrityError("limit_exceeded")
         directories = set()
         for path, digest in expected.items():
-            _runtime_path(path)
+            try:
+                _runtime_path(path)
+            except ValueError:
+                raise _IntegrityError("invalid_manifest") from None
             if not isinstance(digest, str) or not HEX.fullmatch(digest):
-                raise ValueError("invalid manifest file digest")
+                raise _IntegrityError("invalid_manifest")
             parts = path.split("/")
             directories.update("/".join(parts[:i]) for i in range(1, len(parts)))
         if len(directories) > MAX_DIRECTORIES:
-            raise ValueError("too many runtime directories")
+            raise _IntegrityError("limit_exceeded")
         contents = {}
         seen_directories = set()
         seen_manifest = False
@@ -184,9 +202,11 @@ def verify_install():
                 for entry in entries:
                     path = prefix + entry.name
                     info = entry.stat(follow_symlinks=False)
+                    if not (stat.S_ISDIR(info.st_mode) or stat.S_ISREG(info.st_mode)):
+                        raise _IntegrityError("unsafe_entry")
                     if stat.S_ISDIR(info.st_mode):
                         if path not in directories or path in seen_directories:
-                            raise ValueError("unexpected runtime directory; install only the runtime package")
+                            raise _IntegrityError("membership_mismatch")
                         seen_directories.add(path)
                         child = _directory(directory, entry.name)
                         try:
@@ -195,32 +215,35 @@ def verify_install():
                             os.close(child)
                     elif path == MANIFEST:
                         if _read_file(directory, entry.name, MAX_MANIFEST_BYTES) != raw:
-                            raise ValueError("manifest changed during verification")
+                            raise _IntegrityError("changed_during_read")
                         seen_manifest = True
                     else:
                         if path not in expected or path in contents:
-                            raise ValueError("unexpected runtime file")
+                            raise _IntegrityError("membership_mismatch")
                         content = _read_file(directory, entry.name, MAX_FILE_BYTES)
                         total_bytes += len(content)
                         if total_bytes > MAX_TOTAL_BYTES:
-                            raise ValueError("runtime exceeds total byte limit")
+                            raise _IntegrityError("limit_exceeded")
                         if hashlib.sha256(content).hexdigest() != expected[path]:
-                            raise ValueError("runtime file hash mismatch")
+                            raise _IntegrityError("content_mismatch")
                         if path.endswith(".json"):
-                            _json(content, MAX_FILE_BYTES)
+                            try:
+                                _json(content, MAX_FILE_BYTES)
+                            except (ValueError, RecursionError):
+                                raise _IntegrityError("invalid_content") from None
                         contents[path] = content
             if _identity(before) != _identity(os.fstat(directory)):
-                raise ValueError("runtime directory changed during verification")
+                raise _IntegrityError("changed_during_read")
 
         visit(descriptor, "")
         if not seen_manifest or contents.keys() != expected.keys() or seen_directories != directories:
-            raise ValueError("missing runtime member")
+            raise _IntegrityError("membership_mismatch")
         digest = hashlib.sha256()
         for path in sorted(contents):
             digest.update(path.encode("utf-8") + b"\0")
             digest.update(contents[path])
         if digest.hexdigest() != manifest["content_sha256"]:
-            raise ValueError("runtime content digest mismatch")
+            raise _IntegrityError("content_mismatch")
         return root, {"files": len(contents) + 1, "bytes": total_bytes, "content_sha256": digest.hexdigest()}
     finally:
         os.close(descriptor)
@@ -397,8 +420,12 @@ def run(options):
     try:
         root, details = verify_install()
         integrity.update(details, status="ok")
+    except _IntegrityError as error:
+        integrity.update(error="invalid_or_unreadable_install", reason=error.reason)
+    except FileNotFoundError:
+        integrity.update(error="invalid_or_unreadable_install", reason="membership_mismatch")
     except (OSError, ValueError, RecursionError):
-        integrity["error"] = "invalid_or_unreadable_install"
+        integrity.update(error="invalid_or_unreadable_install", reason="read_failure")
     integrity["elapsed_ms"] = round((time.monotonic() - started) * 1000, 3)
     if integrity["status"] != "ok":
         for name, scope in selected:
