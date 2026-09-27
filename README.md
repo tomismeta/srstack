@@ -44,8 +44,13 @@ Suggested acceptance questions:
 - Inspect a public position using dynamically authenticated evidence; do not use a cached rate as current.
 - Ask for all historical auction generations; disclose omitted contracts, ranges or verification stages rather than substitute a current-only table.
 - Model earned-accrual buying; use the contract-derived starting pace, subtract costs and respect epoch boundaries.
+- Repeat a calculation from the same evidence, then change one assumption. Check identical numerical outcomes for identical inputs and appropriate sensitivity without refetching unchanged data.
 
 Record what the host actually read, calculated and answered. A package integrity check or synthetic calculation is not proof of live-provider access or host isolation. Repository-only acceptance cases (`maintenance/agent-acceptance.json`) are available in the source checkout, not the installed runtime.
+
+For dogfooding, judge correctness, coverage, observed RPC cost and repeatability—not tool choice or a prescribed sequence. Count RPC methods separately from batch requests and index pages when the host exposes them; unknown counts stay unknown. Keep review records outside the skill. Missing live access is a blocked live check, not a failed installation.
+
+**Deterministic results, flexible agents:** nontrivial arithmetic should use inspectable exact calculations with relevant reconciliation checks. Agents remain free to choose or write tools, investigate beyond the references and answer conditional questions without an execution facility. No required language, script, question menu, fixed call budget or permanent output artifact. Identical evidence and assumptions should reproduce identical numbers, not identical wording or tool calls.
 
 ## Safety and evidence
 
@@ -69,6 +74,8 @@ After deliberate content changes, regenerate the manifest with `python3 -B maint
 This host-native cutover removes the previous fixed snapshot, price, history and diagnostic clients and their execution catalogs. There are no compatibility commands or retired helper aliases. Existing host-native research tools replace them; any automatic discovery, checkpointing or batching must actually be supported or implemented by the host agent before being claimed.
 
 Cutover verification: 19 packaging regression tests passed; an isolated reviewed-commit export and the documented clean-replacement procedure passed external byte verification and retained the previous root. Two tool-free model exercises loaded the exported instructions and correctly handled synthetic earned-only reinvestment/epoch boundaries and incomplete cross-contract auction history. These are package and instruction-behavior checks, **not** a live RPC run, tool-enabled host replay or proof of host isolation.
+
+Calculation-readiness verification additionally exercised exact reservation-to-fill accounting, delayed activation, pauses, epoch assumptions, purchase-price sensitivity, integers above binary floating-point's exact range, and shuffled/duplicate historical executions. A separate tool-free model exercise matched the executed synthetic projection outcomes without demanding a workflow. These checks prepare the skill for real-host dogfooding; they do not establish live deployment semantics or measured production RPC efficiency.
 
 ## License
 

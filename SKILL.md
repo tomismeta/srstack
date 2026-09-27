@@ -12,6 +12,8 @@ Answer Standard Reserve questions using the host's permitted readers, RPC tools 
 
 Respond to the question, not a prescribed workflow. A bare invocation warrants a brief “What would you like to know about Standard Reserve?”, not a menu or unsolicited reads. Infer ordinary scope from context; ask only for a material choice or public identifier that cannot be established from available evidence. Do not require users to know contracts, methods or commands.
 
+References and examples are aids, not a question whitelist or execution plan. Investigate related questions beyond packaged coverage; choose, combine or write host-authorized research/calculation tools as needed. No prescribed language, helper, tool sequence or fixed call budget. Match effort to the requested depth without silently narrowing it; preserve host permissions and the safety boundary.
+
 ## Choose the smallest sufficient evidence
 
 Prefer authenticated contract reads when they directly answer the question or narrow discovery: balances, ownership, permissions, position state, accrual, supply, treasury and auction settings. Use execution events for historical purchases/flows, appropriate market sources for quotes, and original publications for documented policy. Explanation-only or fully supplied hypothetical questions need no live RPC.
@@ -40,6 +42,8 @@ Use the [source index](assets/sources.json) only to locate an unknown source rec
 “All rounds” or “across contracts” includes every relevant authenticated generation through the stated anchor, not just the current deployment or a recent lookback. Keep chain/address/round keys separate. Distinguish exhausted index pagination, receipt matches, canonical checks and unresolved scope; equal sampled state does not prove an empty interval. Opening-event price, first executed price, quantity-weighted average and last observed sale are different values. A last sale is not automatically a final close.
 
 For accrual-funded scenarios, use verified unspent earned accrual plus projected new accrual, less commitments and simulated purchases. Exclude externally funded or unattributed balances. Read the applicable accrual pace, eligible position quantity and epoch/pause/expiry conditions from the contract; authenticate scales and accounting before calculation. Do not hardcode rates or extrapolate past an established boundary without an explicit scenario. Deduct purchase cost before modeling any evidenced increase in earning capacity. Distinguish accrued, claimable and auction-spendable amounts; report gas or conversion funding separately. Future prices, inventory and unchanged conditions are assumptions unless established, not promises. Missing inputs can support a labelled formula or scenario, never invented observations.
+
+For nontrivial aggregation, affordability or projections, prefer inspectable executable calculations over mental arithmetic. Choose the method; establish exact units, effective-time ordering and accounting reconciliation before presenting a checked numerical result. Reusing the same inputs and assumptions should reproduce the same numbers without fresh RPC. If execution or evidence is unavailable, give a useful labelled formula, bound or illustration rather than inventing a checked result. See [calculation guidance](references/research-workflow.md#compute-with-explicit-units).
 
 ## Answer and safety
 

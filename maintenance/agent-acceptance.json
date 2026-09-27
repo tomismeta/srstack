@@ -7,6 +7,9 @@
     "Select a scenario and replace bracketed inputs with relevant public identifiers or explicit scenario assumptions. Ask its natural question without exposing reviewer criteria or prescribing an execution workflow. Never provide credentials or wallet/signing capabilities for acceptance.",
     "Retain the real response, tool calls, source/block references and observed permission decisions. Assess correctness and efficient evidence selection, not adherence to a fixed tool sequence or output template. Do not treat proposed reads as executed reads.",
     "For each criterion record pass, fail, blocked or not_run with transcript evidence. A correct unknown is preferable to invention; it does not demonstrate a capability whose required evidence was unavailable. Distinguish an intentional uncertainty-handling criterion from a blocked end-to-end result.",
+    "For numerical work, compare raw-unit results with an independent exact calculation. Check flow conservation, reservations, purchase thresholds, event ordering/deduplication and epoch transitions where relevant; score the result and evidence, not a prescribed implementation.",
+    "Measure observed RPC method calls separately from HTTP batch requests, plus index pages and avoidable repeat reads. Mark unobservable counts unknown. Compare runs of the same scope and anchor; do not impose a universal call budget or add telemetry to the installed skill.",
+    "Replay the same authorized evidence and assumptions without fresh retrieval, then change one input. Check identical numerical results for identical inputs and appropriate changes for the changed input; wording and tool choices may differ.",
     "Record observations only: JSON parsing, package checks and reading these scenarios are not model replay, successful live acceptance, host isolation or proof of financial correctness. This file contains no results."
   ],
   "scenarios": [
@@ -71,6 +74,18 @@
         "Label the result as a hypothetical gross mark, not net executable proceeds, a forecast or evidence that the user owns that amount."
       ],
       "forbidden": ["Rejecting ordinary scenario arithmetic, inserting protocol economics, inventing gas/slippage or fetching a quote the question does not need."]
+    },
+    {
+      "id": "reproducible_calculation_without_fixed_tools",
+      "setup": "Use an authorized evidence packet from an actual collection or a clearly labelled synthetic case. Include exact units, observation anchors, mixed earned/deposited funds, a reserved order that later fills, delayed activation and an epoch boundary. Independently compute expected results outside the model's prompt. No credentials or preselected code/library are supplied.",
+      "question": "Using only this evidence and the stated assumptions, what could I buy from earnings at the indicated times? Show the material uncertainties. Then recalculate with the second price changed to [scenario price].",
+      "required": [
+        "Choose an appropriate calculation method without asking the user to select a workflow, language or helper. Prefer executed exact arithmetic for this nontrivial case; distinguish executed checks from a formula or unexecuted illustration if tools are unavailable.",
+        "Preserve integer precision, exclude non-earned funds, replace reservations with actual spend once, apply new earning capacity at its effective time and separate unknown-epoch continuation scenarios.",
+        "Replaying identical inputs gives identical raw-unit outcomes without new RPC. Changing the price changes the applicable purchase count/residual, not the source observations or unrelated assumptions.",
+        "Give useful conditional results when evidence or calculation tools are incomplete rather than treating missing helper coverage as a prohibition on analysis."
+      ],
+      "forbidden": ["Fabricated execution/check claims, silent floating-point threshold errors, fixed protocol rates or forcing a specific tool sequence."]
     },
     {
       "id": "denial_and_secret_boundaries",

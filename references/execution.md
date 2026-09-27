@@ -1,6 +1,6 @@
 # Host-native public reads
 
-Use suitable host public-read tools, not a protocol-specific runtime. No prescribed commands, output schema or always-run read set.
+Choose suitable host public-read tools, existing clients or locally authored analysis code under normal permissions. The skill bundles no protocol client and requires no particular tool, command, output schema or always-run read set. Efficiency guidance is not a ceiling on requested deeper research.
 
 ## Trusted runtime preflight
 

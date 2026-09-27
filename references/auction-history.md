@@ -16,7 +16,7 @@ Use authenticated state when it establishes timing/configuration or narrows disc
 
 For large histories, prefer suitable transaction/event indexes with finite filters and exhausted pagination over tiny-window RPC crawling. Retain coverage, filters, cursors and terminal-page evidence; detect truncation/gaps. Index exhaustion is not independent chain completeness.
 
-Fetch relevant receipts once, decode applicable events and check canonical headers/timestamps. Keep chain/emitter/block hash/transaction hash/log index; deduplicate and exclude removed records. Authenticate historical event types/units. Reuse receipts/headers, batch calls and use bounded logs for gaps or when better suited. Declare call/page/byte/time bounds. Recheck canonicality as needed; reorgs invalidate affected observations.
+Fetch relevant receipts once, decode applicable events and check canonical headers/timestamps. Keep chain/emitter/block hash/transaction hash/log index; deduplicate and exclude removed records. Authenticate historical event types/units. Reuse receipts/headers, batch calls and use bounded logs for gaps or when better suited. Choose collection limits appropriate to the question and actual provider constraints, not a fixed skill budget; disclose any stopping boundary. Recheck canonicality as needed; reorgs invalidate affected observations.
 
 ## Coverage and stopping
 
@@ -27,6 +27,8 @@ Separate generation discovery, index scope/page exhaustion, receipt verification
 Key rounds by chain, address and emitted identity; keep denominations separate. Show opening, first sale, quantity-weighted average, last sale and quantity as relevant, with gaps. Opening is not first-sale price; last observed is not final close. No purchases gives no average.
 
 Use authenticated consideration and exact raw totals: average is `sum(consideration) / sum(quantity)`, not an average of round averages. Transaction value and maximum input may differ. Sellout/duration needs evidenced opening, effective historical capacity/changes, complete purchases and exhaustion endpoint, not today's cap or lazy-roll time. Zero-sale scheduled rows need authenticated schedule and no-sale coverage, not interpolation.
+
+For aggregation, use the [calculation guidance](research-workflow.md#compute-with-explicit-units). Order executions by block, transaction and log position, not index arrival order. Deduplicate by chain/transaction hash/log index after canonical reconciliation; conflicting duplicates are evidence gaps, not an arbitrary first-row choice. Reconcile raw quantity and consideration totals per denomination; preserve exact weighted averages until display. These checks do not turn incomplete discovery into complete history.
 
 ### Buyback event accounting
 

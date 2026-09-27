@@ -18,6 +18,12 @@ Prefer direct state when it establishes the metric or narrows discovery; events/
 
 Use exact integers/rationals or documented decimal precision; preserve raw scales and unrounded inputs. Round for display unless reproducing contract rounding. Conversions need rate/time; stablecoins are not automatically USD. Generic amount-times-price scenarios are permitted, not evidence of protocol earnings.
 
+For multi-row totals, mixed-unit conversions, reinvestment and time-boundary projections, prefer inspectable code or an exact calculator through the host. No required language, library, saved script, report schema or tool sequence. Separate source observations, user assumptions and derived values so the same inputs can be replayed without another network read. Preserve financial integers as integers or decimal strings, including through JSON; binary floating-point must not silently change quantities, thresholds or rounding.
+
+Check the relevant invariants in the chosen method: each economic flow counted once; per-asset opening balance plus flows equals closing balance; reservations replaced by actual spend rather than deducted twice; whole purchases respect spendable funds and constraints; accrual changes only at evidenced effective boundaries. Check these identities independently of the final display calculation where practical. A residual or failed check limits the affected result—do not force reconciliation or suppress the discrepancy. Useful partial observations and conditional analysis remain available.
+
+Repeatability concerns identical evidence and assumptions, not identical tool calls or wording. Fresh blocks and changed assumptions legitimately change answers. If tools cannot execute, show the formula or a clearly labelled unexecuted illustration and its limits; do not pretend a calculation ran. When a user requests reproducibility, retain inputs, assumptions, calculation and check results in an authorized external artifact; ordinary questions do not require persistence or a diagnostic dump.
+
 ### Supply and holdings
 
 Define supply/holdings categories and exclusions; avoid double-counting underlying and receipt assets. Establish ownership, liabilities and encumbrances. Gross, redeemable and net value differ; partial holdings are not a portfolio total.

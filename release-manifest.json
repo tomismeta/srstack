@@ -6,8 +6,8 @@
   "digest_convention": "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest",
   "content_files": {
     "LICENSE": "14b82531e814378b84e97596f68a98c70becee3251b206c545d4f07d73105af3",
-    "README.md": "294b8e0fa9e6e1515ee755c66d6fc1f6221228b6467c45a98cbabbbc6daae158",
-    "SKILL.md": "b47d44f6450062404cb2fe9605b1adb6b72188784c2d3ae5955d8bddc0f3ab21",
+    "README.md": "1dd32ae76f3de5a03bc7988dfd8eb1f1db904add01296adcc1af30bcdf69bfd1",
+    "SKILL.md": "eaf955165cc692ec1fa420dd2a0b42a5dd3ef59a45c0cc5213b365412e8279e1",
     "assets/parameters.json": "228f94aad819cd408ea37a16f065bcadb5f75d6b8895b6bf85dbe8463652530b",
     "assets/parameters/launch.json": "c3dbd4adb110ba8cc6e1ffc87ab04725e195a048c954ff7d0174d499e8b5ee9d",
     "assets/parameters/monetary.json": "bb161ab146e3c0f762880201376aaf06659f451439aef9104192be9fc4bac3fd",
@@ -18,12 +18,12 @@
     "assets/sources/live-interface.json": "01d1fae8ccb4c8bdd112d8ebc745bf2539c502da7ca96993973310127fd5f499",
     "assets/sources/market-price.json": "49272fc20e9758516de2a67d177562b239ef105113abb9389a712bbc67ea26ed",
     "assets/sources/website-v1.json": "7ac8ba24d0e4a5e9b7dbec56349db8517cc82b41a9e238c83ec55b0b4ec9cd83",
-    "references/auction-history.md": "9c0c805dfa9d52ca251f86ad369f072fc53e21ba483ef02bbcb92b00de7b5273",
+    "references/auction-history.md": "957be5863e83d4893be2740eb6a6f492944723ad6c41435960f4656219950e78",
     "references/auctions.md": "013a50bf820619b685bc8eebde02a539e55d1fb44869d8f9a193c07273068df0",
     "references/charters.md": "d3a3600e88fe42d5e5d245d874bfcf6cff417cdfa90a422249c876c8bc29e859",
     "references/contracts.md": "a746e0037c67beefde041c42084a703f6929e6d04d545a020ee0633ef63bbd18",
     "references/documents.md": "4ef88ee1ef3d615aff21955758564ff161f6e95da7cd612c46d1499eacba13e9",
-    "references/execution.md": "db38effdc611c47c991097077d59c92f58fa23ac8848c31fdad573bc5a60dcbb",
+    "references/execution.md": "354fcd20d33b7a9ff4a630ab2dad9f018c978cfbacf93864942061e72d650d18",
     "references/exits.md": "1c0d15e4e0df9c2aba5b9d679e26a31b224df9f17950cd0dde557059cec64e24",
     "references/genesis.md": "0577a17c49d7923143990b0ddba56881521f7370fe534980746b313eb9eba6d4",
     "references/inspection.md": "3ea553e13b5b41eac92a4c97d91e5c25b983f74a193e12bb8a24899be4a75191",
@@ -32,11 +32,11 @@
     "references/launch-trading.md": "1879abde2c2538f8be3bc9ea046f91b8214105714e9699a0d1f8ec6e81e18144",
     "references/protocol-policy.md": "dd6e4c647bb76e18601a9925b0e706de4e63e31d640644297946a302b7bde35c",
     "references/protocol.md": "8869e16104b48f429b15227f9831730339f32a28c8eb28a9c214d39eebef6e72",
-    "references/research-workflow.md": "72057a9aa5ae9fbc22e413ba2eabdc8945c605b07df7b9ec7114c63db3c18324",
+    "references/research-workflow.md": "03df76e9e9eaf28996ad21ed3c411ddb485e21e1362cd4ef1b56f036518355b3",
     "references/reserves.md": "62e3a88c2e32ac325cc52b5d635853fe7099c98cfd28332cab4e3c32c8f2c0cb",
     "references/risks.md": "7357373ec0b13886ced3d35b221bdb226ad663e8c7b018fab5b16498032c83f0",
     "references/safety.md": "755ebec236097e8c658b3510ea1fcefa93bf8dcb344b37a4e6c30445eb5d373f",
     "references/updates.md": "72cc32b7c45f65662bd110dc2dce5df268c37626a5865d0bb4317af6be791fd7"
   },
-  "content_sha256": "366057e4c2af965a36be59d4327745eab8b246a1e4fcf691e6971cf65524332e"
+  "content_sha256": "d53abfa9f546f144c393a1ead97ed41517d14734257d7759891e95b4198a8c02"
 }
