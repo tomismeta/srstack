@@ -6,7 +6,7 @@
   "digest_convention": "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest",
   "content_files": {
     "LICENSE": "14b82531e814378b84e97596f68a98c70becee3251b206c545d4f07d73105af3",
-    "README.md": "f1dd2b3c7b442d38fba412f83337cc4be8f14fd763efe733f1b72fbb648394dc",
+    "README.md": "d8e7cbb1312b8ab34992a0a683de08e50d32b03bea46552a8ae58f0f123ea64a",
     "SKILL.md": "456b85f81165c4752c55b2f54d8419850d572498003c42b3dbd978c93d0d1e55",
     "assets/entities/contracts.json": "a215b2e85b7e29b4924feadcb7247a2dbae6c660322416185c8b2dc8ea3adecb",
     "assets/examples/projection-evidence-v1.json": "e85be438240f977252c1406113458a837c7e3dce4a2e9758a33e524f36740f48",
@@ -77,5 +77,5 @@
     "scripts/calculations.py": "69cb279bd3f92e6b3a72f9790ececa2d322592d6c54827a4b852c1a6a611e585",
     "scripts/research.py": "18b3ac0070b2cbe827d7a031c74456f0b6cdab9b125121af2e15e0e27c00016f"
   },
-  "content_sha256": "288c8dcde2204336b3a15a5f79ea00e98d2c4618d4c590dfb77fde43ebaa53c5"
+  "content_sha256": "329ac0337fec7b497e7b303b6ca372fa754d8016b6ff811ae475c15f1b232c16"
 }

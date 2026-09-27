@@ -6,6 +6,14 @@ Ask about protocol mechanics, live positions, historical auctions or what earned
 
 Independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product. **Version 0.3.0.**
 
+## New in 0.3.0
+
+- **Protocol v1.1/v1.2 auction changes:** understand branch limit orders, charter-auction cadence and opening-price policy, with [announcements, interfaces and live state kept distinct](references/updates.md#protocol-v12-announced-changes).
+- **S-Bills explained:** explore buyback-funded premiums, maturity, auto-roll and early-exit mechanics. [Published product design](references/updates.md#s-bills-reviewed-product-description-and-preview) is not proof of a live deployment, available position reads or enforceable returns.
+- **Buybacks and the Incentives Vault:** follow [bid-side POL acquisitions and token destinations](references/reserves.md), distinguishing retained incentives from burns and holder entitlements.
+- **History-first auction forecasts:** use recent comparable sellouts to [estimate the next close](references/calculations.md), not merely repeat the policy opening. Keep observed closes, inventory-conditional quotes and unknown future floors separate.
+- **Deeper contract knowledge:** navigate [19 dated contract bindings](references/contracts.md), [15 reviewed interfaces with 905 ABI entries](references/interface-inventory.md) and [25 scoped research capabilities](references/capabilities.md), using the agent's own authorized tools rather than bundled protocol clients.
+
 ## What you can ask
 
 - “How are my charter's branches doing?”
@@ -14,6 +22,10 @@ Independent [Agent Skill](https://agentskills.io/specification), not an official
 - “Based only on earned accrual, what could I afford in the next auctions?”
 - “What changes if I buy more branches, and when would they affect accrual?”
 - “What does the Second Mandate say, and what is actually deployed?”
+- “What changed in the v1.1/v1.2 auctions, and how do limit orders work?”
+- “How are S-Bill premiums, maturity and early exits meant to work?”
+- “Where do POL buybacks go, and what actually gets burned?”
+- “What does recent sellout history suggest for the next auction close?”
 
 Current quantities require fresh evidence. Packaged knowledge can answer explanations offline. Unknown positions, inaccessible evidence and hypothetical inputs remain distinct; missing information is not zero.
 
@@ -38,6 +50,19 @@ The installed [optional offline research aids](references/research-tools.md) pro
 For next-round price questions, the [projection guidance](references/auctions.md) starts from the latest relevant [curated round history](references/round-datasets.md), not the policy opening. Six [offline recipes](references/calculations.md), a round-dataset schema and a separate fictional projection example distinguish empirical close forecasts, policy openings, inventory-conditional quotes, last sold and floors. Live research stays outside the installed runtime.
 
 Live support is capability-based, not a blanket host-brand promise: the host needs authorized public reads, applicable ABI/Keccak encoding/decoding and exact calculation; historical questions additionally need adequate event/index/receipt coverage. Below that baseline, dated explanations and conditional reasoning remain useful, but blocked live checks cannot be counted as successful live acceptance. No particular language, client or RPC provider is required.
+
+## Agent compatibility
+
+srstack uses the Agent Skills format rather than a host-specific client. Install the complete runtime, not only `SKILL.md`; live research and optional calculations use the host's authorized capabilities.
+
+| Agent | Recorded compatibility |
+| --- | --- |
+| **Hermes** | Native loading, resource-byte, guard and temporary-install checks passed during the 0.3.0 review. |
+| **OpenClaw** | Pinned native loader, eligibility, official validation and packaging checks passed during the 0.3.0 review. |
+| **Muse** | User-reported v0.2.2 installation and integrity checks passed. End-to-end network helper execution was unavailable in that sandbox; no v0.3.0 Muse verification is claimed. |
+| **Other Agent Skills hosts** | Use the complete runtime and verify loading, resource access and the capabilities needed for the question. Compatibility is not assumed from the format alone. |
+
+See [host installation and capabilities](references/installation.md#host-loading-and-sessions). These checks are scoped evidence, not universal live-access or safety guarantees; Muse support is recorded at its reported version rather than presented as a newly tested 0.3.0 integration.
 
 ## Install a reviewed release
 
@@ -66,7 +91,7 @@ A release candidate must be exercised in a fresh session using only its exported
 
 The acceptance suite covers direct pinned state; exact purchase-event/receipt verification; auction inventory/order/allowance interpretation; source-grounded accrual and an attributable real earned-only scenario; fixed-window/epoch boundaries; cross-generation history; evidence reuse; and correct failure classification. Include adverse cases for mixed-origin funds, precision, dynamic arrays and internally invoked purchases missed by direct-transaction discovery. A correct unknown passes uncertainty handling, not the unavailable numerical or completeness gate. The source-checkout acceptance file defines the detailed cases; these are review checks, not an intake wizard for ordinary users.
 
-For **0.3.0 only**, the owner approved a bounded release based on retained dogfooding, security/native-host checks and calculation verification without first closing every outstanding live-evidence gate. Those gaps remain disclosed, not passed: no blanket claim of certified deployed accrual/reset mechanics, attributable earned-only funding, refund/flow attribution or complete canonical history is made. ClawHub publication and hosted approval are deferred; MIT remains unchanged. The hardened release commit, exact export and CI still require verification before tagging. This exception does not weaken ordinary evidence or wallet-safety rules.
+For **0.3.0 only**, the owner approved a bounded release based on retained dogfooding, security/native-host checks and calculation verification without first closing every outstanding live-evidence gate. Those gaps remain disclosed, not passed: no blanket claim of certified deployed accrual/reset mechanics, attributable earned-only funding, refund/flow attribution or complete canonical history is made. ClawHub publication and hosted approval are deferred; MIT remains unchanged. The hardened release commit, exact export and CI were verified before [publication](https://github.com/tomismeta/srstack/releases/tag/v0.3.0). This exception does not weaken ordinary evidence or wallet-safety rules.
 
 **Deterministic results, flexible agents:** nontrivial arithmetic should use inspectable exact calculations with relevant reconciliation checks. Agents remain free to choose or write tools, investigate beyond the references and answer conditional questions without an execution facility. No required language, script, question menu, fixed call budget or permanent output artifact. Identical evidence and assumptions should reproduce identical numbers, not identical wording or tool calls.
 
