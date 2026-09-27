@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "reviewed_on": "2026-09-22",
-  "scope": "Robinhood identity inventory: 16 current publisher-directory entries, one historical license-auction generation and three evidence-backed administrative/shared dependencies; not a chain census or stored live state.",
-  "publisher_attributed_records": 17,
+  "reviewed_on": "2026-09-26",
+  "scope": "Robinhood identity inventory: 16 current publisher-directory entries, three historical auction generations and three evidence-backed administrative/shared dependencies; not a chain census or stored live state.",
+  "publisher_attributed_records": 19,
   "groups": [
     {
       "id": "robinhood",
@@ -24,19 +24,22 @@
         "sr-robinhood-pool-manager",
         "sr-robinhood-multicall3",
         "sr-robinhood-license-auction-v1-1",
+        "sr-robinhood-license-auction-v1-2",
+        "sr-robinhood-charter-auction-v1-2",
         "sr-robinhood-pol-buyback",
         "sr-robinhood-incentives-vault",
         "sr-robinhood-admin-safe",
         "sr-robinhood-safe-implementation",
         "sr-robinhood-safe-multisend"
       ],
-      "scope": "16 current publisher-directory entries (14 protocol modules and 2 shared infrastructure entries), one historical license generation and 3 administrative/shared dependencies"
+      "scope": "16 current publisher-directory entries (14 protocol modules and 2 shared infrastructure entries), three historical auction generations and 3 administrative/shared dependencies"
     }
   ],
   "source_ids": [
     "sr-contract-directory",
     "sr-etherscan-chainlist",
     "sr-v1-1-deployment-evidence",
+    "sr-v1-2-deployment-evidence",
     "sr-protocol-control-dependencies"
   ],
   "identity_key": [
@@ -53,8 +56,8 @@
     "Current publisher-directory membership is identity attribution, not a saved live activation/ownership observation. Historical control relationships must be refreshed for current use."
   ],
   "workflow": "references/contracts.md",
-  "inventory_records": 20,
-  "historical_generation_records": 1,
+  "inventory_records": 22,
+  "historical_generation_records": 3,
   "control_dependency_records": 3,
   "relationship_attributed_records": 3,
   "current_directory_records": 16

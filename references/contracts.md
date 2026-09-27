@@ -4,9 +4,9 @@ Identity research, not an execution guide. The [entity index](../assets/entity-i
 
 ## Packaged boundary
 
-The packaged [Robinhood inventory](../assets/entities/robinhood.json) contains **20 identities** on **Robinhood Chain, chain ID 4663**: **16 current publisher-directory entries** (14 protocol modules and two shared infrastructure entries), the historical legacy license auction, and three administrative/shared dependencies. Only the 16 are current directory entries; 17 identities have publisher attribution including the legacy generation, and three have observed-relationship provenance. Records contain roles and explorer links, not saved live owners, balances or activation status. [Deployment sources](../assets/sources/deployments.json) preserve the distinct attribution layers.
+The packaged [Robinhood inventory](../assets/entities/robinhood.json) contains **22 identities** on **Robinhood Chain, chain ID 4663**: **16 current publisher-directory entries** (14 protocol modules and two shared infrastructure entries), three historical auction identities (original license, v1.1 license and original charter), and three administrative/shared dependencies. Only the 16 are current directory entries; 19 identities have publisher attribution including historical generations, and three have observed-relationship provenance. Records contain roles and explorer links, not saved live owners, balances or activation status. [Deployment sources](../assets/sources/deployments.json) and `sr-v1-2-deployment-evidence` preserve the attribution layers.
 
-The fixed [read interface](../assets/interfaces/robinhood-reads.json), documented by `sr-publisher-read-interface` and `sr-v1-1-read-interface`, pins read-only metadata and target bindings. `snapshot.py auctions` already uses the current v1.1 license target; current status does not require rediscovery, reindexing or log scanning. It checks fresh state and code at its anchor, not independently reproduced source/bytecode correspondence. Legacy license identity is retained for historical generation authentication only.
+The fixed [read interface](../assets/interfaces/robinhood-reads.json), documented by `sr-publisher-read-interface` and `sr-v1-2-read-interface`, pins read-only metadata and target bindings. `snapshot.py auctions` uses the current **v1.2 license and charter targets**, each with `auctionPeriod()`; current status does not require rediscovery, reindexing or log scanning. It checks fresh state and code at its anchor, not independently reproduced source/bytecode correspondence. Historical auction identities are retained for generation-aware research, never rebound to the new addresses.
 
 Default all generated address, transaction and block explorer links to **[Robinhood Etherscan](https://robin.etherscan.io/)**: `/address/ADDRESS`, `/tx/HASH` and `/block/NUMBER`; contract-source links may append `#code`. Use each catalog entry's explorer link for source/ABI publication checks. Preserve an alternate provider's actual evidence URL when citing that source, without changing the default explorer. Match chain plus full address; Ethereum `etherscan.io` is chain 1. A similar-match label alone does not authenticate this deployment's semantics. An unavailable lookup stays unavailable, not a saved verification verdict.
 
@@ -14,11 +14,27 @@ The directory also lists a pool manager and Multicall as shared infrastructure. 
 
 For public observations, use [inspection](inspection.md), including its [units and financial interpretation](inspection.md#units-and-financial-interpretation). An address alone supplies neither ABI semantics, economic defaults, gas estimates nor authorization for financial actions.
 
+## v1.2 auction identities and order reads
+
+| Canonical catalog ID | Address | Scope |
+|---|---|---|
+| `sr-robinhood-license-auction-v1-2` | `0x7CD3c6ec047B1A21ea65AF64D7c850e6f6049015` | Current publisher license auction; orderbook views belong to this same deployment |
+| `sr-robinhood-charter-auction-v1-2` | `0x1E369e5977e1d90D9A1Ec52aC72a124346E622E4` | Current publisher charter auction with `auctionPeriod()` |
+| `sr-robinhood-charter-auction` | `0x65B4f85b4A64424F6bA0fFe0C535100bc6888892` | Original historical charter auction; old `AUCTION_DAY()` is not the current period interface |
+
+The official [mount module](https://www.standardreserve.xyz/assets/mountApp-BcWoqzfB.js) supplies complete `peripheryV12` mapping/override and auction ABI literals before the retrieved bundle's truncation boundary. It identifies contracts commit `aba72a3e0bc6125ad6e176493802f7bfeef0206f` and publisher activation **block 73474626**, timestamp **1790465135**. Independently retrieved successful explorer creations identify the license at **73428552** ([transaction](https://robinhoodchain.blockscout.com/api/v2/transactions/0x9119a87a5a28bd5ac8b891502a573fd5955daf5e6cbf41dcedfc99a8e325539b)) and charter at **73428767** ([transaction](https://robinhoodchain.blockscout.com/api/v2/transactions/0xb6eede6d1f094b6539b6973e2aa02f1fca2f76f6382ea0a1bcb9fcd4d7fa350b)). Creation is not activation; publisher activation metadata is not independently proven Registry cutover or perpetual live availability. No complete-bundle hash, source/bytecode reproduction or independently checked audit is claimed.
+
+The [supplemental order-read catalog](../assets/interfaces/v1-2-orderbook-reads.json) authenticates license-auction `bids(uint256 charterId) → (address bidder,uint256 count,uint256 maxUnitPrice)`, `fillable(uint256 charterId) → bool`, `openBidCount() → uint256` and `openBids(uint256 start,uint256 count) → uint256[]`. The snapshot's `license_open_bid_count` is a global getter count, not **“my orders.”** Use bounded same-block supplemental reads for selected charter bids or pagination, authenticate the public user's relationship separately, and retain incomplete coverage. A recorded bidder is not automatically the current charter owner; a limit price/count is not executed consideration/acquired branches; `fillable` is not a keeper-execution guarantee.
+
+For a known charter, call `bids`/`fillable` with that **charter ID**, not an invented independent bid ID. The `openBids` ABI names its returned array only `ids`; establish its identifier interpretation before joining to charter reads. Its signature alone proves neither stable pagination ordering nor FCFS priority. Keep `maxUnitPrice` raw unless denomination/scale is separately evidenced; the field name alone does not prove STANDARD18 units.
+
+This is publisher ABI and identity evidence, not verified escrow, cancellation/refund, partial-fill, keeper authority or FCFS enforcement. No separate orderbook address is invented. [V1.2 policy](updates.md#protocol-v12-announced-changes) and source records `sr-v1-2-deployment-evidence` / `sr-v1-2-read-interface` state the limits. Explanations, authenticated public reads, unsigned preparation and nonbroadcast simulation are permitted; signing, signature requests and submission are not.
+
 ## v1.1 identities and control dependencies
 
 | Canonical catalog ID | Address | Scope |
 |---|---|---|
-| `sr-robinhood-license-auction-v1-1` | `0x44731EFf9da8fDD30003AA7C0B324368B3DfFE5e` | Current publisher license target |
+| `sr-robinhood-license-auction-v1-1` | `0x44731EFf9da8fDD30003AA7C0B324368B3DfFE5e` | Historical v1.1 publisher license target, replaced by v1.2 for current snapshots |
 | `sr-robinhood-license-auction` | `0xA45CE49303EEd5846F841BFd4bAC6aE8C805EC05` | Legacy historical generation, not current snapshot target |
 | `sr-robinhood-pol-buyback` | `0x50e4C444f71dF2Db8593c6c8ba4d493De618E147` | Publisher POL Buyback, retained acquisitions |
 | `sr-robinhood-incentives-vault` | `0x9481404d30C296e57C93f05A49934A901719bbA9` | Publisher Incentives Vault, not a burn sink |
@@ -32,7 +48,7 @@ The original `sr-robinhood-pol-manager` / `0x242F3e67BEf43470C2434d95E7D618E19f8
 
 `sr-protocol-control-dependencies` identifies research targets, not perpetual ownership. Read module owners/pending owners freshly and independently check Safe implementation, signers, threshold, modules and guards before current-control claims. The **administrative SafeProxy does not prove the monetary modules themselves proxy-upgradeable**. Historical owner acceptance is not complete authority evidence, and an owner is not necessarily an auction supply controller.
 
-Direct new-module source retrieval was unavailable in the reviewed paths; alternate explorer records provided bytecode without complete Solidity/ABI. This is a scoped source-access limit, not proof that no explorer verification or audit exists. Exact license window math, payment split and new treasury-module permissions remain unverified.
+Direct v1.1 new-module source retrieval was unavailable in the reviewed paths; alternate explorer records provided bytecode without complete Solidity/ABI. V1.2 has separately authenticated publisher ABI literals and explorer creation evidence, not independent source/bytecode reproduction. These are scoped access/verification limits, not proof that no verification or audit exists elsewhere. Exact window math, settlement/payment split, keeper behavior and complete treasury permissions remain unverified.
 
 ## Authenticate the requested role
 
@@ -80,7 +96,7 @@ The publisher-linked mount module supplies the following **supported fixed read 
 | ExpansionVault | `holdingsOf(address)`, `isReserveAsset(address)`, `reservePool(address)` | Requires independently authenticated asset identities/units; does not enumerate a complete portfolio |
 | ContractionVault | `lastTickAt()`, `tickCooldown()`, effective limits, `BuybackExecuted` | Distinguish attributable buyback events from aggregate burns; settings are not executable quotes |
 | CentralBank | Queued-policy getters and recycling counters | Separate pending changes from current policy; raw streamed counters have unestablished scale; no parameter-event history scan |
-| License v1.1 | `auctionPeriod()`, `capWindow()`, `capWindowIndex()`, `MAX_PER_CHARTER_PER_WINDOW()` | Separate round/window; charter-specific allowance methods are supplemental, retained `licensesPerDay` is per round, and stored counters can lag lazy rollover |
+| Current v1.2 auctions | Both use `auctionPeriod()`; licenses retain `capWindow()`, `capWindowIndex()`, `MAX_PER_CHARTER_PER_WINDOW()` and add `openBidCount()` | Round/window/global order count are separate; selected bid/pagination views are supplemental, stored counters can lag rollover, and no wallet-order helper is implied |
 | POL Buyback / Incentives Vault | Generic `owner()`, `pendingOwner()`; fixed STANDARD `balanceOf(incentivesVault)` | Publisher-authenticated generic/token interfaces, not a complete new-module ABI or proof of distribution rights |
 
 The bundled treasury snapshot requires a selected reserve asset and successful same-block vault approval before selected-asset holdings reads; raw units are not normalized without authenticated decimals. Separately, the Incentives Vault STANDARD balance uses the fixed authenticated token `balanceOf`, not a guessed vault method. Generic owners do not establish complete privileges. `history.py buybacks` retains Contraction Vault `BuybackExecuted(uint256,uint256)` burned-token accounting; `history.py pol-buybacks` uses the distinct `BuybackExecuted(uint256,uint256,address)` with raw `tokensOut` and destination. No token-binding getter, token identity/decimals or wallet flow is invented for that event-only POL mode. Bundled targets and metadata remain pinned; supplemental research may authenticate additional holdings, methods or relationships without redirecting the helper.

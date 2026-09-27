@@ -20,7 +20,7 @@ The reviewed Hook source gates non-POL liquidity additions while the launch sche
 
 ## Activation boundary
 
-Licenses remain dormant during founding distribution, then the owner activates them once with a published opening price and a fresh first day (`license-auction-activation`). Additional daily charter supply starts at `initial-daily-charter-count`. Design rules do not establish live activation or current configuration. [sr-whitepaper-v1: branches, auctions]
+The whitepaper's founding-distribution/one-time license activation sequence is historical design; the replacement v1.1 license cutover/start has separate provenance (`license-auction-activation`). Its `initial-daily-charter-count` zero allocation is an older design reference, **not current charter policy**: [v1.2](updates.md#protocol-v12-announced-changes) announces one charter per branch period, first opening at 5.5 ETH then 3× clearing price. These are announced rules, not live activation, current configuration or executable prices. Branch limit orders add a separately authenticated orderbook path; auction availability alone does not establish keeper fills.
 
 Read a fresh `auctions` snapshot when availability matters. A decaying price-function value after sellout is not a purchasable quote. Summary includes license last-sale inputs for the conditional documented-policy preview; last-sale/closing observations carry `not_historical`, not round averages. Use [history](auction-history.md) for past purchases. No fresh status means availability is unknown. [sr-publisher-read-interface]
 

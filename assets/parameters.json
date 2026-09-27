@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-25",
-  "scope": "Current whitepaper and v1.1 published reference rules and scoped launch settings; never live configuration.",
+  "reviewed_at": "2026-09-26",
+  "scope": "Published v1.2/v1.1 rules and scoped launch settings, with superseded whitepaper design explicitly retained as historical provenance; never live configuration.",
   "notes": [
     "Announcement/reference values are not saved RPC settings or a current-state fallback. Read each record scope/source; current dynamic values must be fetched live.",
     "Live snapshot observations are separate from documented design settings; remaining budget and supply have different accounting bases.",
@@ -148,7 +148,11 @@
         "license-auction-duration",
         "licenses-per-round",
         "license-cap-window",
-        "license-decay-half-life"
+        "license-decay-half-life",
+        "charter-auction-cadence",
+        "charters-per-round",
+        "charter-initial-opening",
+        "branch-limit-order-execution"
       ]
     }
   ]

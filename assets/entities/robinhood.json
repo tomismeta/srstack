@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-22",
+  "reviewed_at": "2026-09-26",
   "chain": {
     "id": 4663,
     "name": "Robinhood Chain",
@@ -10,7 +10,7 @@
       "sr-publisher-read-interface"
     ]
   },
-  "scope": "Robinhood identity inventory: 16 current publisher-directory entries, one historical license-auction generation and three evidence-backed administrative/shared dependencies; not a chain census or stored live state.",
+  "scope": "Robinhood identity inventory: 16 current publisher-directory entries, three historical auction generations and three evidence-backed administrative/shared dependencies; not a chain census or stored live state.",
   "explorer_policy": {
     "preferred_family": "Etherscan",
     "base_url": "https://robin.etherscan.io",
@@ -129,8 +129,8 @@
       "id": "sr-robinhood-charter-auction",
       "chain_id": 4663,
       "address": "0x65B4f85b4A64424F6bA0fFe0C535100bc6888892",
-      "name": "Charter Auction",
-      "role": "Daily charter sales in ETH.",
+      "name": "Charter Auction (legacy)",
+      "role": "Historical daily charter-auction generation; retained for address-qualified history, not current auction reads.",
       "group": "auctions",
       "scope": "protocol-module",
       "explorer_url": "https://robin.etherscan.io/address/0x65B4f85b4A64424F6bA0fFe0C535100bc6888892#code",
@@ -142,7 +142,8 @@
         "locator": "Auctions / Charter Auction",
         "retrieved_at": "2026-09-15T18:29:31.066Z"
       },
-      "directory_status": "current-publisher-entry"
+      "directory_status": "historical-generation",
+      "successor_entity_id": "sr-robinhood-charter-auction-v1-2"
     },
     {
       "id": "sr-robinhood-license-auction",
@@ -303,12 +304,12 @@
       "id": "sr-robinhood-license-auction-v1-1",
       "chain_id": 4663,
       "address": "0x44731EFf9da8fDD30003AA7C0B324368B3DfFE5e",
-      "name": "Expansion License Auction v1.1",
-      "role": "Publisher current expansion-license target; separate auction round and charter cap-window interfaces. Availability and settings are read live.",
+      "name": "Expansion License Auction v1.1 (historical)",
+      "role": "Historical v1.1 license-auction generation; retained for address-qualified history, not current auction reads.",
       "group": "auctions",
       "scope": "protocol-module",
       "explorer_url": "https://robin.etherscan.io/address/0x44731EFf9da8fDD30003AA7C0B324368B3DfFE5e#code",
-      "directory_status": "current-publisher-entry",
+      "directory_status": "historical-generation",
       "attribution": {
         "status": "publisher-listed",
         "source_ids": [
@@ -319,7 +320,50 @@
         "locator": "Auctions / Expansion License Auction; peripheryV11.licenseAuction",
         "retrieved_at": "2026-09-22"
       },
-      "predecessor_entity_id": "sr-robinhood-license-auction"
+      "predecessor_entity_id": "sr-robinhood-license-auction",
+      "successor_entity_id": "sr-robinhood-license-auction-v1-2"
+    },
+    {
+      "id": "sr-robinhood-license-auction-v1-2",
+      "chain_id": 4663,
+      "address": "0x7CD3c6ec047B1A21ea65AF64D7c850e6f6049015",
+      "name": "Expansion License Auction v1.2",
+      "role": "Current publisher expansion-license target and on-contract branch limit-order book. Current availability and order state require live reads; the ABI does not prove keeper execution.",
+      "group": "auctions",
+      "scope": "protocol-module",
+      "explorer_url": "https://robin.etherscan.io/address/0x7CD3c6ec047B1A21ea65AF64D7c850e6f6049015#code",
+      "directory_status": "current-publisher-entry",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-v1-2-deployment-evidence",
+          "sr-v1-2-read-interface"
+        ],
+        "locator": "mountApp-BcWoqzfB.js LP / peripheryV12.licenseAuction, applied by zP; ABI pw selected by hw",
+        "retrieved_at": "2026-09-26"
+      },
+      "predecessor_entity_id": "sr-robinhood-license-auction-v1-1"
+    },
+    {
+      "id": "sr-robinhood-charter-auction-v1-2",
+      "chain_id": 4663,
+      "address": "0x1E369e5977e1d90D9A1Ec52aC72a124346E622E4",
+      "name": "Charter Auction v1.2",
+      "role": "Current publisher charter-auction target with auctionPeriod cadence. Current price, settings and availability require live reads.",
+      "group": "auctions",
+      "scope": "protocol-module",
+      "explorer_url": "https://robin.etherscan.io/address/0x1E369e5977e1d90D9A1Ec52aC72a124346E622E4#code",
+      "directory_status": "current-publisher-entry",
+      "attribution": {
+        "status": "publisher-listed",
+        "source_ids": [
+          "sr-v1-2-deployment-evidence",
+          "sr-v1-2-read-interface"
+        ],
+        "locator": "mountApp-BcWoqzfB.js LP / peripheryV12.charterAuction, applied by zP; ABI a_ selected by Fp",
+        "retrieved_at": "2026-09-26"
+      },
+      "predecessor_entity_id": "sr-robinhood-charter-auction"
     },
     {
       "id": "sr-robinhood-pol-buyback",
@@ -423,7 +467,8 @@
     "path": "assets/interfaces/robinhood-reads.json",
     "source_ids": [
       "sr-publisher-read-interface",
-      "sr-v1-1-read-interface"
+      "sr-v1-1-read-interface",
+      "sr-v1-2-read-interface"
     ],
     "scope": "Selected scalar view/pure reads with fixed bindings; not independent source verification."
   },

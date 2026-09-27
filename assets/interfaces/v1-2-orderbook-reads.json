@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "scope": "Authenticated publisher v1.2 orderbook read and event ABI for host-authorized supplemental read-only research; not a generic executable helper, signing interface or stored order state.",
+  "chain_id": 4663,
+  "entity_id": "sr-robinhood-license-auction-v1-2",
+  "address": "0x7CD3c6ec047B1A21ea65AF64D7c850e6f6049015",
+  "source_ids": [
+    "sr-v1-2-read-interface",
+    "sr-v1-2-deployment-evidence"
+  ],
+  "publisher_evidence": {
+    "url": "https://www.standardreserve.xyz/assets/mountApp-BcWoqzfB.js",
+    "retrieved_at": "2026-09-26",
+    "locator": "Complete pw ABI literal and LP deployment literal within retained reader prefix; zP applies v1.2 address and hw selects pw.",
+    "license_abi_literal_sha256": "d6e13394240b028717741f2185110a2f2bb746e80cf37a37c48a7a56b2b984d6",
+    "deployment_literal_sha256": "5e838c85151ce28b2fbcb99ea24e637fcdb7512efcf037c5e635adb111e05eeb",
+    "hash_scope": "UTF-8 exact complete JavaScript array/object literal including delimiters, excluding variable name and assignment; not complete asset hashes. Full reader asset was truncated and direct request denied. Literals parsed as data only; no downloaded code executed."
+  },
+  "reads": [
+    {
+      "type": "function",
+      "name": "bids",
+      "inputs": [
+        {
+          "name": "charterId",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "bidder",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "count",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "maxUnitPrice",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "fillable",
+      "inputs": [
+        {
+          "name": "charterId",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool",
+          "internalType": "bool"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "openBidCount",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "openBids",
+      "inputs": [
+        {
+          "name": "start",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "count",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "ids",
+          "type": "uint256[]",
+          "internalType": "uint256[]"
+        }
+      ],
+      "stateMutability": "view"
+    }
+  ],
+  "events": [
+    {
+      "type": "event",
+      "name": "BidCancelled",
+      "inputs": [
+        {
+          "name": "charterId",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "BidFilled",
+      "inputs": [
+        {
+          "name": "charterId",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "filler",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "count",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "unitPrice",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "BidPlaced",
+      "inputs": [
+        {
+          "name": "charterId",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "bidder",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "count",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "maxUnitPrice",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    }
+  ],
+  "interpretation": {
+    "bids": "One charterId-keyed tuple in ABI order: bidder address, count uint256, maxUnitPrice uint256. Preserve named raw fields; bidder is not independently authenticated as current charter owner, an escrow balance or a reserved allocation.",
+    "fillable": "Getter-reported boolean for one charterId at the pinned block; not a simulation result, keeper promise or future execution guarantee.",
+    "openBidCount": "Number reported by openBidCount; order-count context, not remaining licenses or successful purchases. Included in the fixed auctions snapshot as license_open_bid_count.",
+    "openBids": "Unsigned start/count arguments and dynamic uint256[] ids result. The ABI names the result ids but does not alone establish pagination order, stable cursors or FCFS priority. Validate the publisher's ID interpretation before joining results to charterId-keyed bids/fillable; a page is not a complete orderbook.",
+    "events": "Bid lifecycle evidence is supplemental only. Do not add BidFilled consideration to LicensesPurchased totals without transaction-level reconciliation; placement is not execution."
+  },
+  "limits": [
+    "Pin one chain-checked block and its hash for each bounded page and related getters. Authenticate code and bank/registry relationships before interpreting values. Set explicit page, call and response-byte limits; report partial coverage instead of unbounded enumeration.",
+    "Current STANDARD denomination requires an independently checked token decimals binding. ABI integer types alone do not authenticate scaling, funding, exact fill conditions or payment routing.",
+    "No independent source/bytecode equivalence, escrow semantics, keeper ABI/address, priority enforcement or audit-to-deployment correspondence is established.",
+    "This catalog is not consumed by snapshot.py for charter-specific orders. It adds no signing, simulation, write or submission capability; host-authorized unsigned preparation remains a separate workflow."
+  ]
+}

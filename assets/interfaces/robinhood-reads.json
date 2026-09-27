@@ -8,18 +8,22 @@
     "sr-standard-source-interface",
     "sr-tax-hook-source-interface",
     "sr-extended-read-interface",
-    "sr-v1-1-read-interface"
+    "sr-v1-1-read-interface",
+    "sr-v1-2-read-interface",
+    "sr-v1-2-deployment-evidence"
   ],
   "contracts": {
     "centralBank": "sr-robinhood-central-bank",
     "standard": "sr-robinhood-standard",
     "charterNFT": "sr-robinhood-charter-nft",
     "taxHook": "sr-robinhood-tax-hook",
-    "licenseAuction": "sr-robinhood-license-auction-v1-1",
+    "licenseAuction": "sr-robinhood-license-auction-v1-2",
+    "licenseAuctionV11": "sr-robinhood-license-auction-v1-1",
     "licenseAuctionLegacy": "sr-robinhood-license-auction",
     "polBuyback": "sr-robinhood-pol-buyback",
     "incentivesVault": "sr-robinhood-incentives-vault",
-    "charterAuction": "sr-robinhood-charter-auction",
+    "charterAuction": "sr-robinhood-charter-auction-v1-2",
+    "charterAuctionLegacy": "sr-robinhood-charter-auction",
     "feeSplitter": "sr-robinhood-fee-splitter",
     "expansionVault": "sr-robinhood-expansion-vault",
     "contractionVault": "sr-robinhood-contraction-vault",
@@ -905,10 +909,10 @@
       "selector": "0xf08fb30f"
     },
     {
-      "id": "charter_auction_day_seconds",
+      "id": "charter_auction_round_seconds",
       "contract": "charterAuction",
-      "function": "AUCTION_DAY",
-      "signature": "AUCTION_DAY()",
+      "function": "auctionPeriod",
+      "signature": "auctionPeriod()",
       "mutability": "view",
       "input_types": [],
       "args": [],
@@ -918,7 +922,7 @@
       "profiles": [
         "auctions"
       ],
-      "selector": "0xb2b2b29c"
+      "selector": "0x0cccfc58"
     },
     {
       "id": "charter_auction_current_price",
@@ -2442,6 +2446,22 @@
       "selector": "0xa51d2019"
     },
     {
+      "id": "license_open_bid_count",
+      "contract": "licenseAuction",
+      "function": "openBidCount",
+      "signature": "openBidCount()",
+      "mutability": "view",
+      "input_types": [],
+      "args": [],
+      "output_type": "uint256",
+      "decimals": 0,
+      "unit": "orders",
+      "profiles": [
+        "auctions"
+      ],
+      "selector": "0x0e337f95"
+    },
+    {
       "id": "contraction_pool_eth_depth",
       "contract": "contractionVault",
       "function": "poolEthDepth",
@@ -2460,6 +2480,7 @@
   ],
   "limits": [
     "Publisher ABI is the baseline; selected STANDARD and TaxHook interfaces also have Sourcify exact-runtime source provenance. Extended getters use authenticated publisher module ABI data, not downloaded code execution.",
+    "publisher_bundle records the complete reviewed v1.1 baseline asset, not a complete v1.2 asset hash. The v1.2 deployment and ABI literal hashes and current asset URL are recorded in source_ids sr-v1-2-deployment-evidence and sr-v1-2-read-interface; complete relevant literals occur before the reader-truncated tail.",
     "Source review is bounded provenance, not independent recompilation, a fresh runtime comparison or a contract audit.",
     "The fixed snapshot helper calls only listed scalar or flat fixed static tuple view/pure getters, with no raw selector or target overrides. RPC selection uses SRSTACK_RPC_URL, otherwise ALCHEMY_API_KEY, otherwise this catalog's official public default; credentials stay in host-managed secrets and out of outputs. Tuple component types, units and scales are explicit. This catalog is not a global allowlist for host-authorized supplemental research or nonbroadcast simulation.",
     "The fixed treasury profile checks FeeSplitter, ExpansionVault and ContractionVault relationships to Registry, CentralBank, STANDARD, TaxHook and PoolManager as applicable, including retained transitive CentralBank/CharterNFT identity prerequisites. Registry and PoolManager are code-checked identities, not discovery roots within this helper. CentralBank registry cross-check is treasury-only to preserve compact charter calls.",
@@ -2470,9 +2491,9 @@
     "recycleStreamed and issuanceStreamed have unestablished ledger scales and the fixed helper retains raw-ledger-units without derived equations. Do not present an assumed scale as authenticated; separately labelled hypothetical models or independently evidenced supplemental conversions are allowed. Other recycled STANDARD denominations follow publisher interpretation and require independently checked STANDARD decimals18.",
     "Restriction flags, authority getters, pending ownership and configured/effective tick settings do not predict transaction success or establish a complete privilege audit. POL manager count is bounded; managers are not enumerated.",
     "Compact charter retains its existing balance/rate call set; extended CentralBank context is protocol or full charter only.",
-    "licenseAuction is the v1.1 deployment; licenseAuctionLegacy preserves history identity only and has no snapshot calls. Retained ABI names currentDay, remainingToday, soldToday, dayCap, licensesPerDay and lastSaleDay describe auction rounds, not 24-hour days. Read auctionPeriod separately from capWindow and capWindowIndex; no exact cap-window alignment math is asserted.",
+    "licenseAuction and charterAuction are v1.2 deployments. licenseAuctionLegacy, licenseAuctionV11 and charterAuctionLegacy preserve history identities only and have no snapshot calls. Retained ABI names currentDay, remainingToday, soldToday, dayCap, licensesPerDay, chartersPerDay and lastSaleDay describe auction rounds, not 24-hour days. Read auctionPeriod separately from license capWindow and capWindowIndex; no exact cap-window alignment math is asserted.",
     "Interpret license_sold, license_remaining, license_round_cap, license_licenses_per_round and charter_auction_sold/remaining/day_cap with round context. See references/auctions.md#current-branch-auction-status-getters-first (relative to the skill root). Availability is getter-reported; matching round indices do not authenticate a sold + remaining = cap invariant. Exact deployed counter/rollover semantics remain unverified.",
-    "The publisher v1.1 adaptation removes AUCTION_DAY, DECAY_HALF_LIFE_MAX, MAX_PER_CHARTER_PER_DAY and purchasedOnDay, adding auctionPeriod, capWindow, capWindowIndex, MAX_PER_CHARTER_PER_WINDOW, purchasedInWindow(uint256,uint256) and remainingForCharter(uint256). The bounded auctions profile reads global status and settings, not charter-specific purchase eligibility.",
+    "The v1.2 license ABI retains the v1.1 global read surface, including auctionPeriod, capWindow, capWindowIndex and MAX_PER_CHARTER_PER_WINDOW. The v1.2 charter ABI replaces AUCTION_DAY with auctionPeriod. No hardcoded cadence substitutes for live getters. license_open_bid_count reports order count, not available licenses, reserved branches or successful fills. Charter-specific bids, fillability and paginated openBids use the supplemental interface in assets/interfaces/v1-2-orderbook-reads.json, not this bounded helper.",
     "POLBuyback and IncentivesVault reads are limited to publisher generic owner/pendingOwner and STANDARD.balanceOf at the fixed IncentivesVault address. This is not a complete authenticated module ABI, a token burn total, a wallet-flow reconstruction or a distribution entitlement. No bought-back token binding getter is assumed.",
     "Current settings, owners, status, prices and balances are fetched live at the pinned block on every invocation. Interface metadata contains no saved state fallback."
   ],

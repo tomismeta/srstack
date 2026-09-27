@@ -1,28 +1,29 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-25",
-  "scope": "Publisher v1.1 announcements and deployment identity provenance, historical cutover/control relationships and chain routing; no saved live status, settings, prices, balances or ownership.",
+  "reviewed_at": "2026-09-26",
+  "scope": "Publisher v1.2/v1.1 announcements and deployment identity provenance, historical cutover/control relationships and chain routing; no saved live status, settings, prices, balances or ownership.",
   "records": [
     {
       "id": "sr-contract-directory",
       "url": "https://www.standardreserve.xyz/app/protocol/live/#contracts",
       "publisher": "The Standard Reserve official website",
       "published_at": null,
-      "retrieved_at": "2026-09-25",
-      "review_depth": "September22 complete mount mapping and directory review retained; September25 full directory-component review confirms route/groups, not a complete current address/ABI-map comparison. complete_asset_sha256 identifies the historical September22 mount below.",
+      "retrieved_at": "2026-09-26",
+      "review_depth": "September22 complete mount/directory review retained; September25 directory-component review; September26 complete peripheryV12 mapping/override literals recovered before current bundle truncation. complete_asset_sha256 identifies only the historical September22 mount.",
       "claim_stage": "publisher identity/interface attribution, not deployment-state or authority verification",
       "locators": [
         "https://www.standardreserve.xyz/assets/LiveProtocol-BTvCIoe8.js",
         "https://www.standardreserve.xyz/assets/mountApp-BqtUxqir.js",
         "Core:4; Auctions:3; Treasury:6; Infrastructure:3; total16 current entries",
-        "Base contracts object plus peripheryV11 replacement licenseAuction and additions polBuyback/incentivesVault",
+        "Base contracts plus peripheryV11 treasury additions, then peripheryV12 replacement licenseAuction and charterAuction; see sr-v1-2-deployment-evidence",
         "Treasury polManager remains the original address, labelled Genesis Liquidity Manager",
-        "Generic owner/pendingOwner directory controls; license v1.1 getter adaptation"
+        "Generic owner/pendingOwner directory controls; historical v1.1 and current v1.2 auction interfaces",
+        "https://www.standardreserve.xyz/assets/mountApp-BcWoqzfB.js"
       ],
-      "summary": "Current publisher directory contains16 identities: the license-auction replacement and two treasury additions yield14 protocol modules plus2 shared infrastructure entries. The separate legacy auction and three administrative dependencies in the skill inventory are not current directory entries. Current module settings and ownership must be read live.",
+      "summary": "Publisher directory scope remains16 identities:14 protocol modules plus2 shared infrastructure entries, with current v1.2 auction replacements. The three historical auction identities and three administrative dependencies are not current directory entries. Current settings and ownership must be read live.",
       "limits": [
         "No independent source/ABI correspondence, current ownership, activation or audit verification.",
-        "September25 current mount retrieval was truncated and direct retrieval denied; the complete current address/ABI mapping was not reconciled. Do not treat a stable directory count as proof every address is unchanged.",
+        "Current full mount retrieval was truncated and direct retrieval denied. Complete v1.2 mapping/ABI literals before the cutoff were reconciled separately; no complete current bundle hash or whole-app audit is claimed.",
         "The directory component can retain the last ownership snapshot after refresh failure; a visible owner value is not automatically fresh evidence.",
         "Publisher ABI names do not establish deployed migration/controller behavior, who may call it, asset scope or current configuration. Asset migration is not necessarily code replacement.",
         "Linked bundle retrieval establishes publisher evidence, not its publication date, feature-introduction date or chronology of deployment."
@@ -116,6 +117,31 @@
         "The future website button is separate from the existing documented zero protocol-charge check-in; network gas is not claimed free."
       ],
       "published_time_evidence": "Mirror exposes Sep22,2026 00:34 UTC for root and00:55 UTC for reply; retrieval date is separate"
+    },
+    {
+      "id": "sr-protocol-v1-2-announcement",
+      "url": "https://x.com/standard_rsv/status/2103991044119654721",
+      "publisher": "The Standard Reserve official account (@standard_rsv)",
+      "published_at": null,
+      "retrieved_at": "2026-09-26",
+      "review_depth": "Official root post retrieved via public Nitter mirror; compared with current public whitepaper HTML and linked guide/component text.",
+      "claim_stage": "official announced v1.2 policy and publisher-reported security review, not independent implementation or current-state proof",
+      "locators": [
+        "https://nitter.tiekoetter.com/standard_rsv/status/2103991044119654721",
+        "Root item1: branch limit orders, open orderbook, FCFS best-attempt keeper execution",
+        "Root item2: one charter per branch-auction cadence, first opening5.5ETH then3xclearing",
+        "All changes have gone through a security review"
+      ],
+      "summary": "Announces desired-price bids for branch auctions in an open orderbook, with execution price FCFS best attempt by a keeper; charter auctions begin with one charter per branch-auction period, an initial5.5ETH opening and subsequent openings at3xclearing price.",
+      "published_time_evidence": "Retrieved mirror exposed relative10m, not an absolute publication time; retrieval date is separate.",
+      "limits": [
+        "FCFS best attempt is not guaranteed fill, price, execution time, reserved inventory or independently verified onchain priority enforcement.",
+        "Initial5.5ETH is an announced first opening, not a current quote, observed executed price or floor. No unsold-period fallback or exact price arithmetic is established.",
+        "Current whitepaper and guide still retain daily/24h charter, initial-zero and blanket no-bids/escrow wording. Those older design descriptions are superseded for announced v1.2 cadence/allocation and order entry, not current truths.",
+        "Funding/escrow, cancellation/refund, expiry, partial fills, keeper permissions and continued direct-purchase paths require their own authenticated implementation evidence.",
+        "Publisher security-review claim does not identify an independently reviewed report, reviewer, revision, scope, remediation or deployment correspondence; S-Bill audit/readiness is not implied.",
+        "Announcement alone supplies no contract binding, usable order read interface, deployment block or perpetual live-state guarantee."
+      ]
     },
     {
       "id": "sr-v1-1-deployment-evidence",

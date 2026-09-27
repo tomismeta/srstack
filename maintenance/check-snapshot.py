@@ -48,7 +48,7 @@ class RPCFixture:
             "license_max_per_charter_per_window": 3, "license_licenses_per_round": 50,
             "license_decay_half_life_seconds": 7200, "license_round_half_life_seconds": 7200,
             "license_round_cap": 50, "license_sold": 43,
-            "charter_auction_current_day": 4, "charter_auction_day_seconds": 86400,
+            "charter_auction_current_day": 4, "charter_auction_round_seconds": 86400,
             "charter_auction_anchor": NOW - 2 - 4 * 86400,
             "charter_auction_paused": False, "charter_auction_remaining": 3,
         }
@@ -818,7 +818,7 @@ class SnapshotChecks(unittest.TestCase):
     def test_auction_schedule_distinguishes_future_boundary_from_due_rollover(self):
         for prefix, current, period_key, anchor_key, period in (
                 ("license", "license_current_round", "license_round_seconds", "license_auction_anchor", 21600),
-                ("charter_auction", "charter_auction_current_day", "charter_auction_day_seconds",
+                ("charter_auction", "charter_auction_current_day", "charter_auction_round_seconds",
                  "charter_auction_anchor", 86400)):
             for age in (period - 1, period, 3 * period + 7):
                 for detail in ("summary", "full"):

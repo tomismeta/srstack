@@ -1,11 +1,13 @@
 {
   "schema_version": 1,
-  "scope": "Authenticated auction event interfaces and fixed historical generation identities for bounded live read-only history.py requests; no saved current settings or observations. License scans retain both legacy and v1.1 emitters and never infer legacy inactivity from registry cutover.",
+  "scope": "Authenticated auction event interfaces and fixed historical generation identities for bounded live read-only history.py requests; no saved current settings or observations. License scans retain original, v1.1 and v1.2 emitters; charter scans retain original and v1.2 emitters. Registry cutovers are not emission cutoffs.",
   "chain_id": 4663,
   "source_ids": [
     "sr-auction-event-interface",
     "sr-v1-1-read-interface",
-    "sr-v1-1-deployment-evidence"
+    "sr-v1-1-deployment-evidence",
+    "sr-v1-2-read-interface",
+    "sr-v1-2-deployment-evidence"
   ],
   "entity_catalog": "assets/entities/robinhood.json",
   "research_recipe": "references/auction-history.md",
@@ -18,7 +20,7 @@
       "consideration_asset": "STANDARD",
       "consideration_decimals": 18
     },
-    "licenseAuction": {
+    "licenseAuctionV11": {
       "entity_id": "sr-robinhood-license-auction-v1-1",
       "address": "0x44731EFf9da8fDD30003AA7C0B324368B3DfFE5e",
       "abi_locator": "mountApp-BqtUxqir.js literal Lc events retained by ej adaptation; removed and added error entries are not events",
@@ -36,10 +38,45 @@
       "consideration_asset": "STANDARD",
       "consideration_decimals": 18
     },
-    "charterAuction": {
+    "charterAuctionLegacy": {
       "entity_id": "sr-robinhood-charter-auction",
       "address": "0x65B4f85b4A64424F6bA0fFe0C535100bc6888892",
       "abi_locator": "mountApp-DmwNsaDC.js literal mr",
+      "generation": "legacy",
+      "consideration_asset": "ETH",
+      "consideration_decimals": 18
+    },
+    "licenseAuction": {
+      "entity_id": "sr-robinhood-license-auction-v1-2",
+      "address": "0x7CD3c6ec047B1A21ea65AF64D7c850e6f6049015",
+      "abi_locator": "mountApp-BcWoqzfB.js complete literal pw; retained purchase and configuration events",
+      "generation": "v1.2",
+      "deployment_block": 73428552,
+      "deployment_transaction": "0x9119a87a5a28bd5ac8b891502a573fd5955daf5e6cbf41dcedfc99a8e325539b",
+      "deployment_source_url": "https://robinhoodchain.blockscout.com/api/v2/transactions/0x9119a87a5a28bd5ac8b891502a573fd5955daf5e6cbf41dcedfc99a8e325539b",
+      "publisher_activation": {
+        "block_number": 73474626,
+        "timestamp": 1790465135,
+        "source_id": "sr-v1-2-deployment-evidence",
+        "scope": "Publisher peripheryV12 activation boundary, not creation, independently verified registry cutover, emission cutoff or current state."
+      },
+      "consideration_asset": "STANDARD",
+      "consideration_decimals": 18
+    },
+    "charterAuction": {
+      "entity_id": "sr-robinhood-charter-auction-v1-2",
+      "address": "0x1E369e5977e1d90D9A1Ec52aC72a124346E622E4",
+      "abi_locator": "mountApp-BcWoqzfB.js complete literal a_; retained purchase and configuration events",
+      "generation": "v1.2",
+      "deployment_block": 73428767,
+      "deployment_transaction": "0xb6eede6d1f094b6539b6973e2aa02f1fca2f76f6382ea0a1bcb9fcd4d7fa350b",
+      "deployment_source_url": "https://robinhoodchain.blockscout.com/api/v2/transactions/0xb6eede6d1f094b6539b6973e2aa02f1fca2f76f6382ea0a1bcb9fcd4d7fa350b",
+      "publisher_activation": {
+        "block_number": 73474626,
+        "timestamp": 1790465135,
+        "source_id": "sr-v1-2-deployment-evidence",
+        "scope": "Publisher peripheryV12 activation boundary, not creation, independently verified registry cutover, emission cutoff or current state."
+      },
       "consideration_asset": "ETH",
       "consideration_decimals": 18
     },
@@ -55,8 +92,10 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionV11",
         "licenseAuctionLegacy",
-        "charterAuction"
+        "charterAuction",
+        "charterAuctionLegacy"
       ],
       "abi": {
         "type": "event",
@@ -86,7 +125,8 @@
     },
     {
       "contracts": [
-        "charterAuction"
+        "charterAuction",
+        "charterAuctionLegacy"
       ],
       "abi": {
         "type": "event",
@@ -130,7 +170,8 @@
     },
     {
       "contracts": [
-        "charterAuction"
+        "charterAuction",
+        "charterAuctionLegacy"
       ],
       "abi": {
         "type": "event",
@@ -154,8 +195,10 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionV11",
         "licenseAuctionLegacy",
-        "charterAuction"
+        "charterAuction",
+        "charterAuctionLegacy"
       ],
       "abi": {
         "type": "event",
@@ -200,8 +243,10 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionV11",
         "licenseAuctionLegacy",
-        "charterAuction"
+        "charterAuction",
+        "charterAuctionLegacy"
       ],
       "abi": {
         "type": "event",
@@ -225,6 +270,7 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionV11",
         "licenseAuctionLegacy"
       ],
       "abi": {
@@ -249,8 +295,10 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionV11",
         "licenseAuctionLegacy",
-        "charterAuction"
+        "charterAuction",
+        "charterAuctionLegacy"
       ],
       "abi": {
         "type": "event",
@@ -274,8 +322,10 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionV11",
         "licenseAuctionLegacy",
-        "charterAuction"
+        "charterAuction",
+        "charterAuctionLegacy"
       ],
       "abi": {
         "type": "event",
@@ -290,6 +340,7 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionV11",
         "licenseAuctionLegacy"
       ],
       "abi": {
@@ -314,6 +365,7 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionV11",
         "licenseAuctionLegacy"
       ],
       "abi": {
@@ -359,8 +411,10 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionV11",
         "licenseAuctionLegacy",
-        "charterAuction"
+        "charterAuction",
+        "charterAuctionLegacy"
       ],
       "abi": {
         "type": "event",
@@ -391,8 +445,10 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionV11",
         "licenseAuctionLegacy",
-        "charterAuction"
+        "charterAuction",
+        "charterAuctionLegacy"
       ],
       "abi": {
         "type": "event",
@@ -422,7 +478,8 @@
     },
     {
       "contracts": [
-        "charterAuction"
+        "charterAuction",
+        "charterAuctionLegacy"
       ],
       "abi": {
         "type": "event",
@@ -446,8 +503,10 @@
     {
       "contracts": [
         "licenseAuction",
+        "licenseAuctionV11",
         "licenseAuctionLegacy",
-        "charterAuction"
+        "charterAuction",
+        "charterAuctionLegacy"
       ],
       "abi": {
         "type": "event",
@@ -507,13 +566,14 @@
     }
   ],
   "limits": [
-    "Publisher-linked auction ABIs and v1.1 adaptation authenticate retained events, not independent source/bytecode equivalence or universal routing. Removed error interfaces are not events.",
+    "Publisher-linked auction ABIs, v1.1 adaptation and complete v1.2 ABI literals authenticate retained events, not independent source/bytecode equivalence or universal routing. Removed error interfaces are not events.",
     "No reviewed AuctionEnded, SoldOut or timestamp-bearing round event exists in these auction interfaces. Missing definitions are not invented.",
     "DayRolled may be observed in a later transaction; its block time does not by itself establish the scheduled opening or expiry. A purchase timestamp establishes execution, not opening.",
     "Historical duration, applied cap, half-life, payment semantics and configuration transitions need interval-specific evidence; current getters and whitepaper constants cannot substitute.",
-    "License day identifiers may restart across deployments; grouping must include the exact emitting address. The helper scans legacy over the full requested interval and v1.1 from its creation block, including the pre-cutover initialization interval. Registry cutover is provenance, not an emission cutoff.",
+    "License and charter day identifiers may restart across deployments; grouping must include the exact emitting address. Original generations scan the full requested interval; v1.1 and v1.2 scans begin at independently corroborated creation blocks, including pre-activation initialization. Publisher activation and registry cutover provenance are not emission cutoffs.",
     "The v1.1 12-hour round and separate 24-hour charter cap window must not be conflated. Retained licensesPerDay and LicensesPerDaySet names describe round supply; source-level exact window math and payment split remain unverified. Current status requires live snapshot.py auctions reads, not this historical catalog.",
     "An ABI does not prove where consideration goes, whether it is burned or distributed, or holder yield.",
+    "v1.2 BidPlaced, BidCancelled and BidFilled are distinct from LicensesPurchased accounting. This helper retains authenticated purchase events and does not infer fills from bid placement, or double-count a fill and its purchase. Order lifecycle inspection is supplemental read-only research.",
     "history.py scans these reviewed auction events within explicit finite budgets; treasury buyback events use a separate catalog. Historical RPC availability and coverage must be established for each request; receipt-level Central Bank corroboration remains outside the helper."
   ]
 }

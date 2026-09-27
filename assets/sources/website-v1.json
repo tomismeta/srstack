@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-25",
+  "reviewed_at": "2026-09-26",
   "scope": "Primary documentation, official strategy announcements and companion-page routing; no stored application state",
   "records": [
     {
@@ -8,11 +8,15 @@
       "url": "https://www.standardreserve.xyz/app/protocol/whitepaper/",
       "publisher": "The Standard Reserve",
       "published_at": null,
-      "retrieved_at": "2026-09-25",
+      "retrieved_at": "2026-09-26",
       "revision_label": "Whitepaper v1.0",
-      "review_depth": "Sixteen-section coverage with September25 source-text and published-equation reconciliation; no downloaded code executed or deployed implementation reproduced.",
+      "review_depth": "Sixteen-section coverage retained; September26 fresh public HTML and linked component auction-text reconciliation against the official v1.2 announcement. No downloaded code executed or deployed implementation reproduced.",
       "claim_stage": "publisher design statements, not implementation verification or live state",
       "locators": [
+        {
+          "label": "September26 linked component; retained auction design wording",
+          "url": "https://www.standardreserve.xyz/assets/Whitepaper-zSEAYkAe.js"
+        },
         {
           "label": "Introduction",
           "url": "https://www.standardreserve.xyz/whitepaper/#introduction"
@@ -83,6 +87,7 @@
         "Publisher documentation is not independently verified source code.",
         "Fetch changeable settings and auction execution details on demand or report unavailable; source dates do not establish current state.",
         "The unchanged Whitepaper v1.0 label and retrieval date do not establish publication chronology or newly introduced mechanics.",
+        "September26 public HTML and linked Whitepaper-zSEAYkAe.js retain daily/24h charter auctions, initial-zero allocation and blanket instant purchases with no bids/escrow. Official v1.2 supersedes those descriptions for announced charter cadence/allocation and branch limit-order entry; retain the conflict, not an assertion these are current rules.",
         "The September25 text documents the license two-hour gap-to-floor curve and activation-anchored24h cap window; the earlier equation/prose conflict is not retained as a current documentation gap. Deployed rounding, clamping and boundary behavior still require authenticated implementation evidence.",
         "Section15 retains launch shorthand100 licenses/day and a POL-liquidity label; specific sections7–8 define50/12h and an anchored24h cap, while section11 directs the15% ongoing POL share to buybacks retained in IncentivesVault. Do not apply stale summary wording over the specific updated rules.",
         "Section 12 no-code-migration wording must be scoped against publisher-linked successor holdings-migration ABIs recorded in sr-contract-directory; asset movement is not necessarily code replacement, and ABI presence is not deployed authority evidence."
@@ -111,16 +116,17 @@
       "url": "https://www.standardreserve.xyz/app/protocol/charters/",
       "publisher": "The Standard Reserve official website",
       "published_at": null,
-      "retrieved_at": "2026-09-25",
+      "retrieved_at": "2026-09-26",
       "review_depth": "Fresh complete linked ChartersGuide component source-text review; charter, earnings, retirement and dormancy explanations, not rendered live values.",
       "claim_stage": "publisher explanation, not stored frontend observations",
       "locators": [
         "Charters & Auctions; availability, earning, expansion, withdrawal",
-        "https://www.standardreserve.xyz/assets/ChartersGuide-BqZlICRf.js"
+        "https://www.standardreserve.xyz/assets/ChartersGuide-a884aSWf.js"
       ],
       "summary": "Publisher explanation of charters, auctions, earning, expansion and withdrawals, with live panels for availability and auction conditions.",
       "limits": [
         "Read changing availability, prices and auction state on demand or report unavailable; documentation is not an executable quote.",
+        "September26 guide still uses daily-auction and per-day allowance shorthand. The official v1.2 announcement supersedes charter cadence/allocation descriptions; guide wording does not disprove announced limit-order support or guarantee availability.",
         "Client-rendered routes may return metadata only. Publisher-linked component text can support explanatory claims without establishing freshly rendered values, deployed behavior or publication chronology."
       ]
     },
@@ -178,13 +184,13 @@
       "url": "https://www.standardreserve.xyz/app/staking/about/",
       "publisher": "The Standard Reserve official website",
       "published_at": null,
-      "retrieved_at": "2026-09-25",
-      "review_depth": "Official HTML and linked component source-text review; no downloaded JavaScript executed and no rendered wallet flow exercised.",
+      "retrieved_at": "2026-09-26",
+      "review_depth": "September25 official HTML/explanation review retained; September26 fresh complete StakePage component source-text review. No downloaded JavaScript executed or rendered wallet flow exercised.",
       "claim_stage": "publisher product description and explicitly illustrative preview, not authenticated deployed mechanics",
       "locators": [
         "https://www.standardreserve.xyz/app/staking/",
         "https://www.standardreserve.xyz/assets/StakingAbout-DZivBSE9.js",
-        "https://www.standardreserve.xyz/assets/StakePage-XbGMSTbi.js"
+        "https://www.standardreserve.xyz/assets/StakePage-BAc2FtyQ.js"
       ],
       "summary": "Publisher describes S-Bills as STANDARD deposits earning premiums funded by Reserve buybacks, with a zero-dilution claim. The reviewed StakePage labels deposits Coming soon and its fixed sample stage aria-hidden and inert; StakingAbout includes simulated example-rate data and contradictory accepting-deposits versus Coming Soon copy.",
       "limits": [
@@ -192,6 +198,7 @@
         "Sample balances, rates, bills and histories are not live observations, earned returns, a yield quote or holdings. No sample amounts are installed.",
         "Conflicting marketing availability labels and simulated example rates do not authenticate a live position service. Do not choose the more optimistic label as deployment evidence.",
         "No staking address, authenticated ABI, enforceable premium, custody or withdrawal terms, deployment correspondence or audit coverage is established by this review.",
+        "The v1.2 auction security-review statement does not establish S-Bill launch, audited coverage or usable position reads. The freshly retrieved September26 StakePage remains a disabled/inert sample preview, not a perpetual current-status fallback.",
         "Refresh official sources and deployment evidence for current availability. The historical preview label is not a saved current-status answer."
       ]
     },

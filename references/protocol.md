@@ -1,6 +1,6 @@
 # Protocol: system and routing
 
-Publisher rules and announced v1.1 changes, not independently verified deployment or saved live state. Whitepaper design: `sr-whitepaper-v1`; specific new changes: `sr-protocol-v1-1-announcement`. Retrieval dates and provenance are in the [source index](../assets/sources.json).
+Publisher rules and announced v1.1/v1.2 changes, not independently verified implementation or saved live state. Whitepaper design: `sr-whitepaper-v1`; later scoped changes: `sr-protocol-v1-1-announcement` and `sr-protocol-v1-2-announcement`. Retrieval dates and provenance are in the [source index](../assets/sources.json).
 
 ## System and ownership — whitepaper §§1–2
 
@@ -11,6 +11,8 @@ Trading generates fees and pool-flow measurements; issuance credits branch balan
 The official [Second Mandate](updates.md#second-mandate-liquidity-for-tokenized-stocks) adds an announced direction: an open liquidity engine for tokenized stocks, not another stock issuer. Creating or approving markets, seeding liquidity and recycling trading fees into the Reserve is a stated strategy, not a replacement for the documented monetary mechanics below or evidence of their implementation. [sr-second-mandate-announcement; sr-second-mandate-manifesto]
 
 The official [v1.1 update](updates.md#protocol-v11-announced-changes) separately confirms 12-hour license rounds of 50 branches, three per charter per 24-hour cap window, a two-hour license-auction half-life, and bid-side-only POL sending acquisitions to the Incentives Vault. These are published references, not saved live settings; the earlier proposed 50/50 branch-payment split is not confirmed. The new POL Buyback and Incentives Vault do not replace Contraction Vault burn accounting or automatically change charter schedules.
+
+The later [v1.2 update](updates.md#protocol-v12-announced-changes) announces branch limit orders with FCFS best-attempt keeper execution and one charter auctioned at branch-auction cadence. The announced first charter opening is 5.5 ETH, then 3× the clearing price for later openings; these are launch/policy terms, not current prices or guaranteed fills. Current auction reads target the publisher-authenticated v1.2 replacements; earlier generations remain historical identities. Neither this auction release nor its security-review claim establishes an S-Bill launch or completed S-Bill audit.
 
 ## Read only the needed mechanics
 

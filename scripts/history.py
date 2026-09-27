@@ -19,7 +19,7 @@ from datetime import datetime, timezone
 from fractions import Fraction
 
 
-EVENTS_SHA256 = "d4aa58d40dbcc4fa87dfccf24b8255a6137c66f78a158b5902b0d89ad506ed47"
+EVENTS_SHA256 = "5419cf978e52347af5ba292534fc3a4f1d997f7993ca434f46b45164154bda7b"
 TREASURY_EVENTS_SHA256 = "edf5274602de69369b37d3e83634c2591d0b75c57a52c243c11737cd23f9f74b"
 MAX_BLOCKS = 5_000_000
 DEFAULT_LOOKBACK = 1_000_000
@@ -38,6 +38,10 @@ MAX_SCRIPT_BYTES = 1024 * 1024
 MAX_BLOCK_NUMBER = (1 << 64) - 1
 UINT256_MAX = (1 << 256) - 1
 ROLES = {"license": "licenseAuction", "charter": "charterAuction", "buybacks": "contractionVault", "pol-buybacks": "polBuyback"}
+GENERATIONS = {
+    "license": {"legacy": "licenseAuctionLegacy", "v1.1": "licenseAuctionV11", "current": "licenseAuction"},
+    "charter": {"legacy": "charterAuctionLegacy", "current": "charterAuction"},
+}
 BUYBACK_KINDS = ("buybacks", "pol-buybacks")
 _SNAPSHOT = None
 
@@ -116,8 +120,9 @@ def _validate_input(config):
         raise InputError("day and last_rounds are only supported for license or charter auctions")
     if "day" in config and "last_rounds" in config:
         raise InputError("day and last_rounds are mutually exclusive")
-    if "generation" in config and (kind != "license" or config["generation"] not in ("all", "current", "legacy")):
-        raise InputError("generation must be all, current or legacy and is license-only")
+    if "generation" in config and (kind not in GENERATIONS
+            or config["generation"] not in ("all", *GENERATIONS[kind])):
+        raise InputError("generation must be all, current or legacy for auctions, or v1.1 for license only")
     value = dict(config)
     value.setdefault("detail", "summary")
     value.setdefault("chunk_blocks", MAX_CHUNK_BLOCKS)
@@ -160,7 +165,8 @@ def _load_catalog(s, kind):
                 or catalog["entity_catalog"] != "assets/entities/robinhood.json"
                 or catalog["research_recipe"] != "references/auction-history.md"
                 or catalog["source_ids"] != (["sr-extended-read-interface", "sr-pol-buyback-event-interface", "sr-v1-1-deployment-evidence"] if buybacks
-                                              else ["sr-auction-event-interface", "sr-v1-1-read-interface", "sr-v1-1-deployment-evidence"])):
+                                              else ["sr-auction-event-interface", "sr-v1-1-read-interface", "sr-v1-1-deployment-evidence",
+                                                    "sr-v1-2-read-interface", "sr-v1-2-deployment-evidence"])):
             raise ValueError("invalid event metadata")
         fingerprint = hashlib.sha256(json.dumps({k: catalog[k] for k in ("contracts", "events")}, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
         if fingerprint != (TREASURY_EVENTS_SHA256 if buybacks else EVENTS_SHA256):
@@ -528,9 +534,9 @@ def history(config, transport=None, now=None, monotonic=None):
     try:
         s = _load_snapshot()
         catalog, interface, addresses, hashes = _load_catalog(s, kind)
-        roles = ("licenseAuctionLegacy", "licenseAuction") if kind == "license" else (ROLES[kind],)
-        if kind == "license" and config.get("generation", "all") != "all":
-            roles = ("licenseAuction" if config["generation"] == "current" else "licenseAuctionLegacy",)
+        roles = tuple(GENERATIONS[kind].values()) if kind in GENERATIONS else (ROLES[kind],)
+        if kind in GENERATIONS and config.get("generation", "all") != "all":
+            roles = (GENERATIONS[kind][config["generation"]],)
         emitters = {addresses[role]: {"role": role, "entity_id": catalog["contracts"][role]["entity_id"],
                                      "deployment_block": catalog["contracts"][role].get("deployment_block", 0),
                                      "definitions": {e["topic0"]: e for e in catalog["events"] if role in e["contracts"]}}
@@ -538,10 +544,10 @@ def history(config, transport=None, now=None, monotonic=None):
         evidence.update({"rpc_url": s._rpc_endpoint()["label"], "source_ids": catalog["source_ids"], "package_sha256": hashes})
         evidence["deployment_boundaries"] = {address: emitter["deployment_block"] for address, emitter in emitters.items()
                                              if emitter["deployment_block"]}
-        if kind == "license":
-            evidence["license_generations"] = {role: catalog["contracts"][role] for role in roles}
+        if kind in GENERATIONS:
+            evidence[kind + "_generations"] = {role: catalog["contracts"][role] for role in roles}
         else:
-            evidence[{"charter": "auction_address", "buybacks": "contraction_vault_address", "pol-buybacks": "pol_buyback_address"}[kind]] = addresses[ROLES[kind]]
+            evidence[{"buybacks": "contraction_vault_address", "pol-buybacks": "pol_buyback_address"}[kind]] = addresses[ROLES[kind]]
         budget = _Budget(s, transport or s._https, monotonic, pace=transport is None)
         rpc = s._RPC(budget, monotonic, False)
         rpc.deadline = budget.deadline
@@ -639,8 +645,7 @@ def history(config, transport=None, now=None, monotonic=None):
               "coverage": {"selection": config, "requested": {"from_block": start, "to_block": end}, "completed": completed, "missing": missing,
                            "scope": ("selected ContractionVault BuybackExecuted events over checked scanned windows, not all-history absence or protocol-wide burns; silent provider omissions cannot be independently excluded"
                                      if kind == "buybacks" else "selected POL Buyback raw event accounting, not burned-token accounting or proven wallet flows; silent provider omissions cannot be independently excluded"
-                                     if kind == "pol-buybacks" else "selected catalog license generations over checked windows: legacy has no emission cutoff at registry cutover and v1.1 begins at deployment; not complete rounds or independently proven provider completeness"
-                                     if kind == "license" else "selected-address catalog topics over scanned windows, not complete rounds; silent provider omissions cannot be independently excluded")},
+                                     if kind == "pol-buybacks" else "selected catalog auction generations over checked windows; authenticated creation boundaries are scan starts, activation is not an emission cutoff; not complete rounds or independently proven provider completeness")},
               "errors": errors, "evidence": evidence}
     if kind == "buybacks":
         result.update({"kind": kind, "buybacks": _buybacks(s, events, completed, bool(errors or missing))})
@@ -685,7 +690,7 @@ def main():
               "       history.py buybacks|pol-buybacks [--anchor-block B] [--lookback-blocks N]\n"
               "       history.py buybacks|pol-buybacks --from-block A --to-block B\n"
               "       any form: [--chunk-blocks N] [--max-chunks N] [--detail summary|full]\n"
-              "       license only: [--generation all|current|legacy] (default all)\n"
+              "       auctions: [--generation all|current|legacy] (default all); license also accepts v1.1\n"
               "Defaults: fresh head, 1000000-block lookback, 10000-block chunks, 100 chunks.\n"
               "Day is auction-only: an emitted round ID, not UTC or 24 hours.\n"
               "Last rounds: latest N observed rounds per selected generation in the bounded scan, not complete history.\n"

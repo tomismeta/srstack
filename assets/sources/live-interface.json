@@ -1,7 +1,74 @@
 {
   "schema_version": 1,
-  "scope": "Publisher selected fixed read/event interfaces and bounded source provenance, including v1.1 license adaptation and distinct raw POL acquisition events; no stored live observations.",
+  "scope": "Publisher selected fixed read/event interfaces and bounded source provenance, including v1.2 auction bindings/order views, historical v1.1 adaptation and distinct raw POL acquisition events; no stored live observations.",
   "records": [
+    {
+      "id": "sr-v1-2-deployment-evidence",
+      "url": "https://www.standardreserve.xyz/assets/mountApp-BcWoqzfB.js",
+      "publisher": "The Standard Reserve official application; independent Robinhood Blockscout creation records",
+      "published_at": null,
+      "retrieved_at": "2026-09-26",
+      "review_depth": "Complete peripheryV12 deployment literal and active override recovered before the reader's truncated bundle boundary; independent explorer creation records. No downloaded code executed.",
+      "claim_stage": "publisher identity/activation attribution plus explorer-corroborated creation, not source-bytecode correspondence or stored current state",
+      "source_urls": [
+        "https://www.standardreserve.xyz/app/staking/",
+        "https://www.standardreserve.xyz/assets/mountApp-BcWoqzfB.js",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x7CD3c6ec047B1A21ea65AF64D7c850e6f6049015",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0x9119a87a5a28bd5ac8b891502a573fd5955daf5e6cbf41dcedfc99a8e325539b",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x1E369e5977e1d90D9A1Ec52aC72a124346E622E4",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0xb6eede6d1f094b6539b6973e2aa02f1fca2f76f6382ea0a1bcb9fcd4d7fa350b"
+      ],
+      "locators": [
+        "LP peripheryV12 literal; zP active contract overrides; Robinhood chain4663",
+        "licenseAuction0x7CD3c6ec047B1A21ea65AF64D7c850e6f6049015; charterAuction0x1E369e5977e1d90D9A1Ec52aC72a124346E622E4",
+        "contractsCommit aba72a3e0bc6125ad6e176493802f7bfeef0206f",
+        "Publisher activation block73474626 timestamp1790465135, distinct from creation",
+        "Successful license creation block73428552 timestamp2026-09-26T22:08:01Z; successful charter creation block73428767 timestamp2026-09-26T22:08:23Z"
+      ],
+      "literal_sha256": {
+        "LP_peripheryV12_320_bytes": "5e838c85151ce28b2fbcb99ea24e637fcdb7512efcf037c5e635adb111e05eeb"
+      },
+      "summary": "Publisher mapping replaces both current auction targets for v1.2 while preserving original and v1.1 identities for history. Independent explorer transactions corroborate the exact created addresses and separate creation blocks; the later activation anchor is publisher metadata.",
+      "limits": [
+        "Full mount bundle retrieval was truncated and a direct request returned403; complete relevant literals were present before truncation. No complete current bundle hash or whole-app audit is claimed.",
+        "The contracts commit and publisher activation metadata do not independently prove source/bytecode correspondence, Registry cutover or every module's activation.",
+        "Explorer source verification was not established; creation evidence is not full source/ABI verification, authority coverage or an audit.",
+        "Creation and activation are historical provenance, never saved availability, owners, inventory, balances or current price.",
+        "No separate orderbook deployment is invented: the authenticated order views belong to the v1.2 license auction."
+      ]
+    },
+    {
+      "id": "sr-v1-2-read-interface",
+      "url": "https://www.standardreserve.xyz/assets/mountApp-BcWoqzfB.js",
+      "publisher": "The Standard Reserve official application",
+      "published_at": null,
+      "retrieved_at": "2026-09-26",
+      "review_depth": "Complete literal pw license ABI and a_ charter ABI plus deployment override read as text before truncated bundle boundary; selected fixed/supplemental views and retained purchase/round events.",
+      "claim_stage": "publisher-authenticated ABI/deployment binding, not independent implementation enforcement, audit or current observation",
+      "locators": [
+        "pw: current v1.2 license auction; retained round/cap-window reads and purchase/roll event layouts",
+        "a_: current v1.2 charter auction; auctionPeriod() replaces historical AUCTION_DAY()",
+        "bids(uint256 charterId) -> (address bidder,uint256 count,uint256 maxUnitPrice)",
+        "fillable(uint256 charterId) -> bool",
+        "openBidCount() -> uint256; openBids(uint256 start,uint256 count) -> uint256[]",
+        "Order views belong to the mapped license auction, not a separate orderbook address"
+      ],
+      "literal_sha256": {
+        "pw_license_abi_11625_bytes": "d6e13394240b028717741f2185110a2f2bb746e80cf37a37c48a7a56b2b984d6",
+        "a__charter_abi_7900_bytes": "308ee26f3043e56a015d934d134f9694c5c7dcdf53e33ff7bee91a4513ec6dd0"
+      },
+      "summary": "Binds current snapshots to both v1.2 auction addresses with auctionPeriod() for each; licenses retain separate cap-window semantics. Global openBidCount is a current count only when freshly read; charter-keyed bids/fillable and paginated openBids support authenticated supplemental read-only order research, not a wallet-position helper.",
+      "limits": [
+        "ABI names/types authenticate bounded decoding, not exact keeper ordering, guaranteed fill/price/time, funding/escrow, cancellation/refund, expiry, partial-fill or permission semantics.",
+        "A bidder is the recorded bid address, not automatically the charter's present owner; count and maxUnitPrice are reported order fields, not acquired branches or executed consideration.",
+        "openBidCount and openBids are global orderbook scope, not a wallet's orders. fillable is a point-in-time reported flag, not guaranteed keeper execution.",
+        "bids/fillable explicitly take charterId; use an evidenced charter ID directly. openBids names its array only ids: authenticate identifier interpretation before joining it to charter-keyed reads. The ABI alone establishes neither pagination ordering/stable cursors nor FCFS priority.",
+        "Keep maxUnitPrice in raw units until publisher denomination/scale evidence is established; its field name alone does not authenticate STANDARD18 normalization.",
+        "Purchase-history helpers do not reconstruct bids, cancellations or failed attempts. Retained event layouts are interpreted per emitting generation, not merged by round number.",
+        "The complete ABI literals were available inside a partial bundle retrieval; no full-bundle hash, source-bytecode reproduction or executed wallet flow is claimed.",
+        "No signing, signature requests or transaction submission; authenticated supplemental reads and unsigned preparation remain permitted."
+      ]
+    },
     {
       "id": "sr-extended-read-interface",
       "url": "https://www.standardreserve.xyz/app/protocol/contracts/",
@@ -179,7 +246,7 @@
         "Retained licensesPerDay(), currentDay(), dayAnchorTime(), soldToday(), remainingToday(), currentPrice(), quote(uint256), owner(), pendingOwner()",
         "Publisher directory generic owner/pendingOwner interface and STANDARD balanceOf(address)"
       ],
-      "summary": "Binds current licenseAuction to v1.1 and retains the old identity only for historical generation authentication. The new license ABI replaces day-duration/day-cap getters with round-period and cap-window getters. Treasury reads use generic owner/pendingOwner and fixed STANDARD.balanceOf(incentivesVault), not invented POL Buyback or vault methods.",
+      "summary": "Historical v1.1 license binding and adaptation, retained for generation authentication after v1.2 replaced the current target. The v1.1 ABI replaced day-duration/day-cap getters with round-period and cap-window getters. Treasury reads use generic owner/pendingOwner and fixed STANDARD.balanceOf(incentivesVault), not invented POL Buyback or vault methods.",
       "limits": [
         "licensesPerDay is a retained method name for per-round supply on the12h generation; it is not an observed24h total.",
         "soldToday/remainingToday and stored currentDay can lag lazy rollover. Compare the live anchor and period with the pinned block timestamp; do not call these counters a human24h recap or recover current state by history scanning.",

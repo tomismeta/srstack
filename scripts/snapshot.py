@@ -66,7 +66,7 @@ ASSET_DETAILS = frozenset(("expansion_holdings", "expansion_reserve_pool"))
 INCENTIVES_BALANCE = "incentives_vault_standard_balance"
 # Reviewed execution metadata, not a source/bytecode equivalence assertion.
 # Changing the callable surface requires deliberate review and a new fingerprint.
-CALLS_SHA256 = "b2a5e38537e62df62f0a54d2c95a71eaf8cad8cfaf4308c85758811ed989323b"
+CALLS_SHA256 = "6a9a06ce2b1ba1453b8a3145a7aea743f37c84624fe5a922ccde3b089832485a"
 
 
 class InputError(ValueError):
@@ -301,7 +301,7 @@ def _validate_package(interface, catalog):
             or not isinstance(bundle["retrieved_at"], str) or len(bundle["retrieved_at"]) > 40):
         raise ValueError("invalid publisher metadata")
     contracts = interface["contracts"]
-    if not isinstance(contracts, dict) or len(contracts) != 14 or not all(isinstance(k, str) and IDENTIFIER.fullmatch(k) and isinstance(v, str) for k, v in contracts.items()):
+    if not isinstance(contracts, dict) or len(contracts) != 16 or not all(isinstance(k, str) and IDENTIFIER.fullmatch(k) and isinstance(v, str) for k, v in contracts.items()):
         raise ValueError("invalid contracts")
     calls = interface["calls"]
     if not isinstance(calls, list) or not 1 <= len(calls) <= 144:
@@ -821,7 +821,7 @@ def _derive(config, raw, values, errors, timestamp):
             is_license = prefix == "license"
             current = prefix + ("_current_round" if is_license else "_current_day")
             last = prefix + ("_last_sale_round" if is_license else "_last_sale_day")
-            period = prefix + ("_round_seconds" if is_license else "_day_seconds")
+            period = prefix + "_round_seconds"
             anchor = "license_auction_anchor" if is_license else "charter_auction_anchor"
             context_id = prefix + "_round_context"
             context = "unknown"
