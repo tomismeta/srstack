@@ -2,11 +2,11 @@
 
 Install/update only when requested and under normal host approval. Repository maintenance uses Git and Python 3.10+ on a supported POSIX host. Neither is needed to load the skill; Python 3.10+ is needed only if choosing its optional standard-library calculation helpers. Review the exporter (`maintenance/package.py`), its source-only inventory validator (`maintenance/inventory.py`), runtime and [safety rules](safety.md) before executing code; integrity verification is not publisher authentication. Export/verification remain standard-library-only; optional CI schema-validation dependencies are not installation requirements.
 
-**Identity:** `0.3.0` is the unreleased development line. The full reviewed commit identifies the installed package; retain it outside the hashed runtime, never inside its own files. Installation and bug reports need the loaded path and recorded SHA. Ordinary charter/auction answers do not need revision ceremony.
+**Identity:** the reviewed release tag is `v0.3.0`. The full reviewed commit identifies the installed package; retain it outside the hashed runtime, never inside its own files. Installation and bug reports need the loaded path and recorded SHA. Ordinary charter/auction answers do not need revision ceremony.
 
 ## Reviewed installation
 
-The default below resolves the available `feature/v0.3.0` branch to a detached full commit **before review**. For a supplied pin, set `SRSTACK_COMMIT` to that full 40-hex SHA first; never replace a requested pin with the branch tip. No release tag is assumed.
+The default below resolves `refs/tags/v0.3.0` to a detached full commit **before review**. For a supplied pin, set `SRSTACK_COMMIT` to that full 40-hex SHA first; never replace a requested pin with the tag or a branch tip. Explicit tag resolution fails if the release tag is absent, even when a same-named branch exists.
 
 ### 1. Select paths and pin the commit
 
@@ -23,9 +23,9 @@ cd "$HOME" &&
 mkdir -p "$SKILL_PARENT" "$SRSTACK_BACKUPS" &&
 WORK="$(mktemp -d "$SRSTACK_BACKUPS/srstack-release.XXXXXXXX")" &&
 REVIEW_ROOT="$WORK/source" &&
-git clone --single-branch --branch feature/v0.3.0 \
+git clone --single-branch --branch v0.3.0 \
   https://github.com/tomismeta/srstack.git "$REVIEW_ROOT" &&
-REVIEWED_COMMIT="$(git -C "$REVIEW_ROOT" rev-parse --verify --end-of-options "${SRSTACK_COMMIT:-HEAD}^{commit}")" &&
+REVIEWED_COMMIT="$(git -C "$REVIEW_ROOT" rev-parse --verify --end-of-options "${SRSTACK_COMMIT:-refs/tags/v0.3.0}^{commit}")" &&
 { test -z "${SRSTACK_COMMIT:-}" || test "$SRSTACK_COMMIT" = "$REVIEWED_COMMIT"; } &&
 git -C "$REVIEW_ROOT" checkout --detach "$REVIEWED_COMMIT" &&
 printf '%s\n' "$REVIEWED_COMMIT" > "$WORK/reviewed-commit.txt" &&
@@ -119,6 +119,10 @@ To recheck installed bytes later, retain the reviewed repository outside discove
 - **Hermes:** find the actual profile root (commonly `~/.hermes/skills`). Use `skills_list`/`skill_view` and literal relative resource paths. `/srstack` or a natural question asking to use srstack invokes the selected installation. [Host docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills/).
 - **OpenClaw:** use the intended workspace's `skills/srstack/` or configured managed root; avoid shadowing duplicates. The reference/corpus files must be available to the host. [Host docs](https://docs.openclaw.ai/tools/skills).
 - **Other hosts:** load the complete Agent Skills runtime and selected relative resources, not `SKILL.md` alone. Questions use the host's permitted public-read tools; the installed optional helpers only calculate supplied inputs, without network transport. Explanation-only requests do not require network access.
+
+Use the runtime-only export for every host. Generic Hub/GitHub source-root installers may copy excluded maintenance files; URL-only resource fetching may omit runtime members. Neither is equivalent to this reviewed export. Verify exact membership and bytes after any alternative installation route before claiming it is supported.
+
+ClawHub publication is a separate distribution decision, not required for local Hermes/OpenClaw use. Its [current skill-format policy](https://docs.openclaw.ai/clawhub/skill-format#license) requires MIT-0 without per-skill license overrides; this package retains MIT. Do not silently relicense, accept publication terms or upload to obtain a hosted scan. Local scanner/parser/packaging results are not a ClawHub hosted security verdict.
 
 After replacement, refresh discovery and reload the skill in the main session if the host supports it. Existing loaded context may remain stale: report that limitation rather than claiming reload succeeded. A fresh `/new` is a host-dependent way to load the new revision, not an automatic installation step or a requirement to restart Telegram. One chat cannot refresh all other chats.
 

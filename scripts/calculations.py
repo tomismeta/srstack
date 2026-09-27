@@ -13,7 +13,7 @@ protocol equation or reproduction of deployed integer rounding.
 """
 
 from copy import deepcopy
-from decimal import Context, Decimal, ROUND_CEILING, ROUND_FLOOR, ROUND_HALF_EVEN
+from decimal import Context, Decimal, InvalidOperation, ROUND_CEILING, ROUND_FLOOR, ROUND_HALF_EVEN
 from fractions import Fraction
 import json
 import re
@@ -300,6 +300,20 @@ def estimate_workload(ranges, max_blocks_per_request, *, overlaps="reject"):
 def _rational(value, name):
     if isinstance(value, bool) or not isinstance(value, (int, str, Decimal, Fraction)):
         raise ValueError(f"{name} requires an exact integer, Fraction or finite decimal")
+    if isinstance(value, Decimal) or (isinstance(value, str) and "/" not in value):
+        # Decimal inspects a compact exponent without first expanding 10**exponent.
+        try:
+            decimal = Decimal(value)
+        except InvalidOperation as error:
+            raise ValueError(f"{name} requires a finite exact value") from error
+        if not decimal.is_finite():
+            raise ValueError(f"{name} requires a finite exact value")
+        if decimal and not Decimal("1e-1000") <= decimal.copy_abs() <= Decimal("1e1000"):
+            raise ValueError(f"{name} magnitude outside supported [1e-1000, 1e1000]")
+        if not decimal:
+            # Keep Fraction's string grammar checks, but never expand a zero's exponent.
+            value = (re.sub(r"([eE][+-]?)\d(?:_?\d)*(\s*)$", r"\g<1>0\2", value)
+                     if isinstance(value, str) else 0)
     try:
         result = Fraction(value)
     except (ValueError, OverflowError, ZeroDivisionError) as error:

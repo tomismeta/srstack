@@ -575,6 +575,31 @@ class CommandChecks(unittest.TestCase):
         self.assertEqual(result["value"], "60.1")
         self.assertEqual(Decimal(result["absolute_error_bound"]), 0)
 
+    def test_extreme_exponents_have_bounded_cli_failure_and_zero_handling(self):
+        try:
+            import resource
+        except ImportError:
+            self.skipTest("CPU-limited regression requires POSIX resource limits")
+
+        def limit_cpu():
+            resource.setrlimit(resource.RLIMIT_CPU, (1, 1))
+
+        # Bound even a regressed implementation; never attempt billion-digit powers.
+        for opening, expected_code in (("1e10000000", 2), ("1e-10000000", 2),
+                                       ("0e10000000", 0), ("0e-10000000", 0)):
+            with self.subTest(opening=opening):
+                process = subprocess.run(
+                    [sys.executable, "-I", "-B", str(SCRIPTS / "research.py"), "curve"],
+                    input=json.dumps({"opening": opening, "floor": 0, "half_life": 1,
+                                      "elapsed": 0, "precision": 16}),
+                    capture_output=True, text=True, timeout=5, preexec_fn=limit_cpu)
+                self.assertEqual(process.returncode, expected_code, process.stderr)
+                if expected_code:
+                    self.assertEqual(process.stdout, "")
+                    self.assertIn("error", json.loads(process.stderr))
+                else:
+                    self.assertEqual(Decimal(json.loads(process.stdout)["value"]), 0)
+
     def test_ambiguous_or_invalid_input_emits_no_calculation(self):
         for document in ('{"rows":[],"rows":[[1,2]]}', '{"rows":[[NaN,2]]}',
                          '{"rows":[[1.0,2]]}', '{"rows":[[true,2]]}', '[]', '{"rows":'):

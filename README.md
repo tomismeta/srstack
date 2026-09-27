@@ -4,7 +4,7 @@
 
 Ask about protocol mechanics, live positions, historical auctions or what earned accrual could buy. The agent chooses the evidence and calculations the question needs, using its existing host-authorized tools. No topic command, calculator wizard or fixed sequence is required.
 
-Independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product. **0.3.0 remains unreleased.**
+Independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product. **Version 0.3.0.**
 
 ## What you can ask
 
@@ -41,7 +41,7 @@ Live support is capability-based, not a blanket host-brand promise: the host nee
 
 ## Install a reviewed release
 
-The development branch is `feature/v0.3.0`; do not assume a `v0.3.0` release tag exists. Follow [reviewed installation](references/installation.md#reviewed-installation): resolve a full commit before review, export only its runtime files and clean-replace the old skill root. Do not overlay an older installation and leave retired scripts behind.
+The reviewed release tag is `v0.3.0`. Follow [reviewed installation](references/installation.md#reviewed-installation): resolve the tag or supplied full commit before review, export only its runtime files and clean-replace the old skill root. Do not overlay an older installation and leave retired scripts behind.
 
 Maintenance verification runs from the reviewed repository outside the installed skill. Keep the source pin and recovery record outside the hashed runtime. Host loading and session refresh are host-dependent; no forced restart or automatic update is included.
 
@@ -60,11 +60,13 @@ Record what the host actually read, calculated and answered. A package integrity
 
 For dogfooding, judge correctness, coverage, observed RPC cost and repeatability—not tool choice or a prescribed sequence. Count RPC methods separately from batch requests and index pages when the host exposes them; unknown counts stay unknown. Keep review records outside the skill. Missing live access is a blocked live check, not a failed installation.
 
-### Mandatory release acceptance
+### Release acceptance and 0.3.0 scope
 
 A release candidate must be exercised in a fresh session using only its exported runtime—not a previous install, retired catalog/helper or stale workshop prompt. Record installation/loading, authorized host capability, provider/evidence coverage, reasoning/decoding and final answer separately as pass, fail, blocked or not run.
 
-Required capabilities: direct pinned state; exact purchase-event/receipt verification; auction inventory/order/allowance interpretation; source-grounded accrual and an attributable real earned-only scenario; fixed-window/epoch boundaries; cross-generation history; evidence reuse; and correct failure classification. Include adverse cases for mixed-origin funds, precision, dynamic arrays and internally invoked purchases missed by direct-transaction discovery. A correct unknown passes uncertainty handling, not the unavailable numerical or completeness gate. The source-checkout acceptance file defines the detailed cases; these are publication checks, not an intake wizard for ordinary users.
+The acceptance suite covers direct pinned state; exact purchase-event/receipt verification; auction inventory/order/allowance interpretation; source-grounded accrual and an attributable real earned-only scenario; fixed-window/epoch boundaries; cross-generation history; evidence reuse; and correct failure classification. Include adverse cases for mixed-origin funds, precision, dynamic arrays and internally invoked purchases missed by direct-transaction discovery. A correct unknown passes uncertainty handling, not the unavailable numerical or completeness gate. The source-checkout acceptance file defines the detailed cases; these are review checks, not an intake wizard for ordinary users.
+
+For **0.3.0 only**, the owner approved a bounded release based on retained dogfooding, security/native-host checks and calculation verification without first closing every outstanding live-evidence gate. Those gaps remain disclosed, not passed: no blanket claim of certified deployed accrual/reset mechanics, attributable earned-only funding, refund/flow attribution or complete canonical history is made. ClawHub publication and hosted approval are deferred; MIT remains unchanged. The hardened release commit, exact export and CI still require verification before tagging. This exception does not weaken ordinary evidence or wallet-safety rules.
 
 **Deterministic results, flexible agents:** nontrivial arithmetic should use inspectable exact calculations with relevant reconciliation checks. Agents remain free to choose or write tools, investigate beyond the references and answer conditional questions without an execution facility. No required language, script, question menu, fixed call budget or permanent output artifact. Identical evidence and assumptions should reproduce identical numbers, not identical wording or tool calls.
 
@@ -97,6 +99,12 @@ This host-native cutover removes the previous fixed snapshot, price, history and
 
 The installed optional calculation toolkit does not restore the retired protocol clients. Specialized references own exact accounting, round dating, allowance windows, order-ID caveats and history coverage. Stale host workshop/install prompts need explicit host-maintainer cleanup outside this repository; package installation does not rewrite other skills, credentials or global instructions.
 
+### Pre-release security and portability hardening (0.3.0, unreleased)
+
+Decimal/scientific inputs now receive the existing magnitude check before rational exponent expansion. This fixes compact out-of-range inputs consuming excessive CPU before rejection; zero-valued scientific inputs retain exact zero without expanding their exponent. The optional helpers remain local calculations, not an input-size or execution sandbox. A CPU-limited CLI regression covers both exponent signs and zero handling.
+
+The entry description fits Hermes' 60-character routing budget. Host/registry installation must preserve the complete runtime-only export; a generic source-repository import is not equivalent. The package remains MIT licensed. ClawHub's current MIT-0 publication requirement needs an explicit rights/distribution decision, and local reviews are not hosted registry approval. No new runtime dependency or wallet/network authority is introduced.
+
 ### History-first projection correction (0.3.0, unreleased)
 
 Next-close forecasts now report both a trailing last-sold linear trend and a structural estimate from the policy opening times recent sellout close/open ratios, with a descriptive ±1 sample-standard-deviation band. Policy is the mechanism, not a market-close prediction. Continued sellout and comparable cohorts are explicit assumptions; the future floor remains unknown. Four price shapes and the scheduled round lifecycle remain distinct, including the `remainingToday == 0` phantom-price tripwire.
@@ -105,7 +113,7 @@ Six standard-library helpers retain exact rational fits/statistics and bounded D
 
 Review-clone checks passed all 20 package, 14 inventory and 29 existing research regressions plus 12 projection regressions, including both optional schema validations. All six documented recipes executed from a standalone 72-file runtime without changing its bytes. Packaging now distinguishes fenced code from Markdown links, so executable recipes do not create false missing-link errors. Three new source-only fresh-session gates cover next-close forecasting, sold-out current price and ambiguous price requests; passing these synthetic gates does not establish live history completeness.
 
-The reported 19-round `license-auction-history.json` was not available for migration or node-backed sample verification. No seed was invented or replaced with a differently scoped history. **0.3.0 remains on hold**, with prior live-evidence blockers unchanged. This correction adds no runtime dependency, RPC client, endpoint, token inventory, router, wallet authority or transport-policy change.
+At the initial correction review, the reported 19-round `license-auction-history.json` was unavailable; no seed was invented or substituted. Subsequent user-reported host verification migrated all 19 rounds, sample-checked 10/19 rounds with 44 archive/header checks, and checked a six-round forecasting cohort with a separate 42-check archive/header matrix. These support their stated observations, not complete interior event discovery/order; purchase-event anchor checks remain outstanding. The owner-approved bounded release scope above accepts these disclosed gaps without marking them passed. This correction adds no runtime dependency, RPC client, endpoint, token inventory, router, wallet authority or transport-policy change.
 
 ### Release-readiness acceptance (unreleased, 2026-09-27)
 
@@ -113,7 +121,7 @@ The frozen `df4174500928e724b6aa67c1337e37d5dfae3a7a` runtime was exercised thro
 
 The three failures were an unauthenticated cross-role getter probe and incomplete request-bound/checkpoint plans. The correction makes exact selected-interface authentication explicit before encoding, requires concrete question-scoped retry limits, and requires populated checkpoint values rather than a field checklist. Fresh runs of the same three natural questions against that uncommitted correction passed all 16 affected criteria; the original failures remain in external evidence. No router, fixed call budget, provider dependency, mandatory tool sequence or wallet authority was added.
 
-**Release remains on hold.** Corresponding deployed accrual/lazy-roll/reset paths, attributable earned funding, required historical state and complete canonical history/flow coverage remain unestablished. Saved-public-evidence replays reproduced exact receipt accounting and 13 observed history rows, but assisted arithmetic is not unassisted discovery or complete live acceptance. Provider/client denials, unsupported tracing and throttling are recorded separately. Results, raw observations and transcripts remain outside the installed runtime; no live values become package defaults. The focused correction does not constitute a fresh complete acceptance pass for a later release pin.
+**That review held release under the then-current all-gates policy.** Corresponding deployed accrual/lazy-roll/reset paths, attributable earned funding, required historical state and complete canonical history/flow coverage remain unestablished. Saved-public-evidence replays reproduced exact receipt accounting and 13 observed history rows, but assisted arithmetic is not unassisted discovery or complete live acceptance. Provider/client denials, unsupported tracing and throttling are recorded separately. Results, raw observations and transcripts remain outside the installed runtime; no live values become package defaults. The later owner-approved 0.3.0 scope exception changes the release decision, not those evidence statuses or the absence of a fresh complete acceptance pass for a later pin.
 
 ### Reviewed capabilities and worked evidence (unreleased)
 

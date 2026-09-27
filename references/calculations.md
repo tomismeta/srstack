@@ -29,6 +29,8 @@ Each recipe below independently loads the installed module with `runpy`, consume
 
 Raw integer inputs accept nonnegative Python integers or canonical decimal strings, never floats or booleans. Rational inputs accept integers, `Fraction`, finite `Decimal` or exact numeric strings, with existing magnitude limits `[1e-1000, 1e1000]` for nonzero values. `precision` is an explicit integer from 16 through 200. Decimal work uses an isolated context of `precision + 12` digits, not the caller's global context. Bounded outputs have `value`, `lower_bound`, `upper_bound`, `absolute_error_bound`, `precision` and `working_precision`. Numerical bounds enclose arithmetic error only; they say nothing about empirical uncertainty, source errors or deployed integer rounding.
 
+Decimal/scientific magnitudes are checked before constructing exponent-expanded rational integers; zero-valued scientific inputs do not expand their exponent. These guards prevent compact out-of-range exponent inputs from exhausting the calculator before rejection. They are not a general input-size or execution sandbox: host resource limits still apply to large supplied datasets and representations.
+
 Round identities are `(generation, lowercase contract, day)`, with duplicate identities rejected. Chronology uses scheduled start where known, otherwise first-sale timestamp, otherwise last-sale timestamp; records with no chronology are explicitly excluded. Ties sort by identity, not an invented time difference. Day IDs can reset across generations. Callers must establish economic comparability; shared labels alone do not establish equivalent markets or policy regimes.
 
 ## 1. Recent sellout close/open ratio statistics

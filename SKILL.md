@@ -1,6 +1,6 @@
 ---
 name: srstack
-description: Standard Reserve contracts, live state, history and exact research.
+description: Standard Reserve contracts, state, history and calculations.
 license: MIT
 metadata:
   version: "0.3.0"
