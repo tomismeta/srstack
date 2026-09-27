@@ -45,7 +45,9 @@ python3 -B -I "${REVIEW_ROOT:?Complete the review checkout first}/maintenance/pa
   --destination "${WORK:?Select the recovery directory first}/staged-runtime"
 ```
 
-`staged-runtime` must **not exist**; its parent already exists. The exporter checks that the full commit equals checkout `HEAD`, reads committed bytes rather than working-tree runtime edits, and verifies exact runtime membership, hashes and aggregate digest before creating the export. The runtime contains only `SKILL.md`, `README.md`, `LICENSE`, `release-manifest.json`, reference documents and the source/parameter corpus. It excludes executable helpers, deployment/interface registries, `.git`, `maintenance`, tests, `.github`, `dist` and caches. A failed export must be resolved before proceeding.
+`staged-runtime` must **not exist**; its parent already exists. The exporter checks that the full commit equals checkout `HEAD`, reads committed bytes rather than working-tree runtime edits, and verifies exact runtime membership, hashes and aggregate digest before creating the export. The runtime contains only `SKILL.md`, `README.md`, `LICENSE`, `release-manifest.json`, reference documents and the source/parameter corpus. It excludes executable helpers, protocol clients, deployment registries, exhaustive ABI catalogs, `.git`, `maintenance`, tests, `.github`, `dist` and caches. A failed export must be resolved before proceeding.
+
+The hashed references include a bounded, dated Markdown [method/event guide](interface-guide.md): question-oriented canonical signatures, argument/return/event layouts, indexed fields, evidenced units, generation applicability and source/review provenance. It is not a complete ABI, current-address router, allowlist or executable client. Its entries are leads for deployment-specific authentication, not evidence that a dated binding or mechanic still applies. Installation adds no runtime tools or dependencies.
 
 ### 3. Clean-replace, verify and retain rollback
 
@@ -120,8 +122,30 @@ After replacement, refresh discovery and reload the skill in the main session if
 
 Keep the maintainer working directory outside any tree being moved. A missing cwd requires selecting an existing directory, not reinstalling the host. If interruption or rollback fails, pause skill use and recover the complete root from the printed recovery directory.
 
+### Stale host instructions
+
+Only the host maintainer, under an explicit maintenance request, should inspect and correct obsolete workshop/installer instructions that invoke removed srstack helpers or catalogs. Review the actual configured host files and loaded revision first; do not assume installing this package updates external workshops or other chats. This procedure does not perform that cleanup. Never automatically mutate another skill, migrate its configuration or reuse its credentials. Keep any retained old srstack installation outside every discovery root and inaccessible to an isolated acceptance session.
+
+## Capability baseline
+
+Select tools by capability, not host or provider brand. Explanation-only questions need no network. Live numerical and historical release gates need the applicable rows below, under ordinary host authorization; the skill supplies none of these tools.
+
+| Capability | What must be demonstrated for the question |
+| --- | --- |
+| Public RPC/read transport | Authorized access to the relevant chain and source evidence, with block/time identity; one blocked transport does not establish that all independent public access is unavailable. |
+| ABI and Ethereum Keccak-256 | Authenticate and encode/decode the needed methods/events, including indexed fields and dynamic layouts; NIST SHA3 is not Ethereum Keccak. |
+| Exact calculation | Preserve raw integers and scales through threshold, rounding, time-window and ledger calculations; format only afterward. |
+| Index, logs and receipts | Discover the relevant records with stated finite coverage, verify successful receipts and canonical blocks, and expose omissions; receipt lookup alone is not a complete event index. |
+| Historical state, when needed | Demonstrate archive coverage for the requested state anchors; working current state or historical receipts does not prove it. |
+
+Record actual capability and provider coverage independently. A configured key or paid tier proves neither chain support nor adequate history. Missing history can block an earned-only result while basic state reads still succeed.
+
+For live acceptance, record the host's established ordinary authorized access contexts and their limits, not merely that an HTTP client or browser is installed. Supplying a tested transport capability is host setup, not an expected protocol answer; record any coordinator assistance separately from unassisted discovery. Do not probe a known-denied route or invent a browser/header workaround when a permitted path has already been established. Apply the actual denial scope under [safety](safety.md#public-retrieval-and-calls).
+
 ## Acceptance and distribution
 
-Run the [post-install checks](../README.md#quick-test-after-installation). Byte integrity, actual host loading and live public-read access are separate results. The repository-only `maintenance/agent-acceptance.json` supplies real question-driven manual scenarios, not executed results or a model replay. HTTP 401/403 means that request was denied, not that installation failed. Stop the denied operation without retrying, endpoint failover or alternate-tool bypass; credentials belong only in host-managed environment/configuration, never chat, runtime files or command arguments.
+The [post-install checks](../README.md#quick-test-after-installation) are a smoke check, not release acceptance. The repository-only `maintenance/agent-acceptance.json` defines **mandatory release gates** using natural questions in a fresh isolated session with no prior installation, catalog or stale workshop access. It prescribes evidence and outcomes, not a fixed tool sequence, language, query budget or question whitelist. Cross-generation history must pass if that capability is claimed; a correct uncertainty response does not pass a blocked numerical gate.
 
-Use [safety](safety.md) for external access, explicit unsigned-artifact preparation and host approvals. Do not use wrappers or broaden permissions to evade a denial. ClawHub/Skills Hub publication and guard acceptance are separate from a local install and require their own authorization.
+Keep external result records for each stage: package integrity, actual loaded revision/isolation, host capability, provider coverage, reasoning and end-to-end result. Mark each **pass**, **fail**, **blocked** or **not_run**, with the real transcript, exact calculation/evidence anchors and reason. Do not store results or live balances/prices as defaults in the runtime. Reading the gate file, parsing JSON or verifying bytes is not a model replay or completed live acceptance; this guide claims no host cleanup or acceptance run.
+
+Use [safety](safety.md) for failure classification, external access, explicit unsigned-artifact preparation and host approvals. A user/host authorization denial stops the action across routes; preserve provider denials and do not evade their controls. Transport failures, provider method/range/index/archive limits and evidence gaps are different outcomes, not installation failures. An independent ordinary authorized public source is not automatically a bypass for otherwise permitted research; disclose source changes, never silently fail over or retry without a finite bound. Credentials belong only in host-managed configuration. ClawHub/Skills Hub publication and guard acceptance remain separate authorized actions.

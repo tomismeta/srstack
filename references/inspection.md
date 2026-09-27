@@ -10,13 +10,13 @@ A known ID needs only relevant state/dependencies; a supplied amount needs no ba
 
 ### Branch scope and earnings
 
-For a charter, report requested branches, whole-charter accrued ledger balance and as-of time. Add pace only with established deployed calculation and inputs, not a method-name inference. Daily equivalent is not earned today or guaranteed income. See [accrual models](research-workflow.md#earned-only-projections-and-reinvestment).
+For a charter, report requested open-branch count, whole-charter pending ledger balance and as-of time. Open branches are not unsold licenses. Add pace only with established deployed calculation and inputs, not a method-name inference or frontend formula. Daily equivalent is neither interval earnings nor guaranteed income. See [accrual evidence and models](research-workflow.md#accrual-evidence).
 
-For an address, use ownership enumeration or a bounded index accounting for transfers/burns; verify candidates at the anchor. Incomplete discovery means identified positions, not all positions. Ownership is not user authentication. Historical earnings need [flow accounting](research-workflow.md#flows-principal-income-and-fees), not pending differences. S-Bills need actual position evidence, not charter balances or preview samples.
+For an address, use ownership enumeration or a bounded index accounting for transfers/burns; verify candidates at the anchor. Incomplete discovery means identified positions, not all positions. Current ownership is neither user authentication nor historical ownership/earned-origin attribution. Historical earnings need [flow accounting](research-workflow.md#flows-principal-income-and-fees), not pending differences. S-Bills need actual position evidence, not charter balances or preview samples.
 
 ### Supplemental public reads
 
-Discover runtime deployments/interfaces through publisher evidence, explorers, registries and authenticated relationships; no fixed allowlist. Packaged evidence is dated, not current configuration. Use [host tools](execution.md); keep installed resources unchanged.
+Discover runtime deployments/interfaces through publisher evidence, explorers, registries and authenticated relationships; no fixed allowlist. The dated [interface guide](interface-guide.md) supplies signatures and layouts, not current routing or implementation proof. Use [host tools](execution.md); keep installed resources unchanged.
 
 ## Authenticate before ABI reads
 
@@ -30,7 +30,9 @@ Reuse anchored observations; batch compatible reads and bound pages/calls/bytes/
 
 ### Units and financial interpretation
 
-Preserve raw scales; use [exact accounting](research-workflow.md#compute-with-explicit-units). Ledger credits, wallet tokens, branches and gas funds differ. Pending is whole-charter, not proof all funds were earned. Its mark is gross before withdrawal/trading costs, not net proceeds, resale value or earning capacity. Zero-amount previews do not establish amount-specific fees.
+Preserve raw scales; use [exact accounting](research-workflow.md#compute-with-explicit-units). Distinguish the **ledger balance** recorded or accrued to a charter, the **spendable balance** allowed for a particular action after encumbrances/gates, and the **withdrawable net amount** after retirement/fees and other applicable conditions. Wallet tokens, branch counts and gas funds are separate.
+
+Pending is whole-charter and may mix earned accrual, deposits and other credits; it proves neither earned origin nor immediate spending/withdrawal eligibility. Its market mark is gross, not net proceeds, resale value or earning capacity. Zero-amount previews do not establish amount-specific fees. Missing attribution or history does not erase observed state or prevent a labelled hypothetical or justified bound; see [earned-only models](research-workflow.md#earned-only-projections-and-reinvestment).
 
 ### Supply, restrictions and control context
 
@@ -42,11 +44,13 @@ Authenticate asset/market identity, units and methodology. Retain provider/retri
 
 ### Auction interpretation
 
-Interpret start, pause, inventory and price together; a post-sellout curve value is not purchasable. Distinguish stored rounds, elapsed schedule and effective getter logic; cadence versus cap windows; last-sale storage versus history. Lazy-roll time is not scheduled opening. Do not use stale counters as effective inventory or unchanged state as empty rounds. See [history](auction-history.md).
+Disambiguate **new-charter auctions** from **branch-license auctions** using the question's context; ask only if material ambiguity remains. Authenticate role/generation separately: charter price/payment is ETH in the reviewed interface, license unit price/payment is STANDARD ledger-denominated. Do not inherit one family's schedule, floor/multiplier, cap, inventory or payment asset from the other. Their [event layouts](interface-guide.md#auction-events) and quantities differ.
+
+Interpret start, pause, inventory and price together; a post-sellout curve value is not purchasable. Distinguish bid limit, current ask and executed price; funds-affordable, allowed, fillable and purchased are separate claims. Distinguish stored rounds, elapsed schedule and effective getter logic; round clocks, allowance windows and rolling forecast horizons; last-sale storage and history. Lazy-roll time is not scheduled opening. Do not use stale counters as effective inventory or unchanged state as empty rounds. See [history](auction-history.md) and [windowed forecasts](research-workflow.md#fixed-price-and-windowed-purchases).
 
 ## Report observations and gaps
 
-Lead with the result or gap, units, short as-of anchor and material limitations. Keep raw evidence/derivations for requested detail. Partial success is not complete history or a future guarantee.
+Lead with the result or gap, units, short as-of anchor and material limitations. Separate observed inputs, assumptions and derived results. Address every requested part or name its specific evidence gap; partial success is not complete history or a future guarantee. Missing implementation/history limits dependent claims, not useful state reads, qualified bounds or hypothetical models. Keep raw evidence/derivations for requested detail.
 
 ### Original HTTP failure evidence
 

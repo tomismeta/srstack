@@ -4,7 +4,11 @@ Choose suitable host public-read tools, existing clients or locally authored ana
 
 ## Trusted runtime preflight
 
-Use trusted installed guidance and existing host tools. Package integrity is not deployment authentication. Parse source/ABI as data; never execute downloaded code to extract interfaces. Local arithmetic/parsing may use authenticated inputs under host permissions.
+Use trusted installed guidance and existing host tools. Check the needed capabilities, not the host brand: authorized public RPC/read transport; ABI encoding/decoding and Ethereum Keccak-256 when selectors/topics are needed; exact integer/decimal calculation; and relevant index, log and receipt coverage for historical claims. Archive state is needed only for questions requiring past state, not automatically for receipt history. No particular language, bundled helper, paid plan or provider is required.
+
+Keep package integrity, the actually loaded revision, host capabilities, provider coverage, reasoning correctness and the end result separate. An intact install is not proof of deployment authentication or live access; a successful state call is not proof of history coverage or earned-fund attribution. Parse source/ABI as data; never execute downloaded code to extract interfaces. Use the dated [interface guide](interface-guide.md) as leads, authenticate the question's deployment and semantics, and calculate under ordinary host permissions.
+
+Resolve auction family from the question and context before applying its interface or economics: buying a new charter is not expanding an existing charter with branch licenses. Authenticate each family's role, generation, schedule, inventory, price, payment asset and event semantics independently; do not borrow a 12-hour period, 2×/3× rule, floor or cap from the other. Ask a focused clarification only when context cannot disambiguate.
 
 ## Input transport and host approvals
 
@@ -12,6 +16,6 @@ Pass external values as data. Apply [host approvals](safety.md#host-execution-an
 
 ## RPC provider guidance
 
-Select authorized providers by capability: current/historical state, indexes, receipts and logs differ. Check coverage and page/window limits; a paid tier proves no completeness. Credentials stay in host-managed environment/secrets facilities, never chat, files or CLI arguments.
+Select authorized providers by the question's needed capability: current/historical state, event indexes, logs, transactions and receipts differ. Record relevant chain, provider/plan, observation date and finite coverage/page/window bounds; do not promote one endpoint's limit to a universal protocol rule. A paid tier, API key or working receipt lookup proves neither a usable event index nor completeness. Credentials stay in host-managed environment/secrets facilities, never chat, runtime files or CLI arguments.
 
-Reuse pinned observations, headers and interfaces; batch compatible calls. Stop at sufficient evidence or declared bounds. No denial bypass, retry or failover to evade controls; retain original failures under [safety](safety.md#public-retrieval-and-calls).
+Reuse pinned observations, headers and interfaces; batch compatible calls when useful. Stop at sufficient evidence or declared bounds. After failure, distinguish authorization denial, provider access denial, transport failure, method/range/index/archive limitations and a remaining evidence gap under [safety](safety.md#public-retrieval-and-calls). A user/host prohibition ends that action across routes. Do not evade provider controls; an ordinary independently authorized source may still answer a permitted question. Make source changes explicit, retain the original diagnostic and set a justified finite bound before retrying or changing the retrieval plan. Do not silently fail over, probe the same known limit repeatedly or claim unobserved coverage.

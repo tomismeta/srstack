@@ -4,7 +4,7 @@ Publisher design reviewed through **2026-09-26**: [v1 sources](../assets/sources
 
 ## Earning, withdrawal and resolution fees — §9
 
-For accrued balance A and b branches before retirement, retiring k branches releases A × k/b before the resolution fee and removes that earning capacity. Tokens are minted to the wallet net of the fee. Retiring every branch burns the charter. This pro-rata relation is a source description, not an implementation rounding/settlement algorithm. [sr-whitepaper-v1: exits]
+For accrued balance A and b branches before retirement, retiring k branches releases A × k/b before the resolution fee and removes that earning capacity. Tokens are minted to the wallet net of the fee. Retiring every branch burns the charter. This pro-rata relation is a source description, not an implementation rounding/settlement algorithm. A charter's ledger amount may have mixed origins; a retirement payout is not proof that all released funds were earned. [sr-whitepaper-v1: exits]
 
 The published pressure and fee formulas use W for system-wide tokens withdrawn over `exit-lookback`, D for everything still held at the bank, and E for `exit-pressure-denominator-floor`:
 
@@ -15,6 +15,8 @@ fee = 0.02 + 0.58 × min(P / 0.10, 1)^2
 The authoritative records are `resolution-fee-formula`, `resolution-fee-floor`, `resolution-fee-ceiling` and `exit-saturation-pressure`; the quiet/elevated/heavy/bank-run examples retain their approximate source status. The denominator floor is a STANDARD amount, not a branch count. These formulas alone do not establish when the current withdrawal enters W, which balance enters D, commitment sequencing, integer rounding or exact deployed payout. Requested source-rule payout scenarios or strategy comparisons may calculate these relations with explicit assumptions, but are not implementation-verified withdrawal quotes. [sr-whitepaper-v1: exits equation 9.1; modeling boundaries](risks.md#what-economics-alone-cannot-establish)
 
 The publisher says the rate locks at commitment. The fee—not gross released balance—is split by `resolution-burn-share` and `resolution-redistribution-share`; the burned part is permanently removed from the ledger, and the other part goes to remaining bankers. It says the contract exposes no withdrawal pause or queue at any fee level, while explicitly warning that independent settlement dependencies can still make a Bank call revert. These are source claims, not a guarantee of continuous withdrawal availability. [sr-whitepaper-v1: currency, exits]
+
+Ledger, action-spendable and net-withdrawable amounts are not interchangeable. Establish the retirement amount, fee basis, rounding, reservations and applicable settlement/dependency conditions for an amount-specific withdrawal interpretation; an ABI preview or zero-amount quote alone does not establish executable payout. Keep gross released balance, net wallet tokens, gas and any later sale proceeds separate. Missing deployed semantics still permits a labelled source-rule scenario, not a fabricated net quote. See [accrual evidence](research-workflow.md#accrual-evidence), [interface leads](interface-guide.md#core-state) and [per-asset accounting](research-workflow.md#flows-principal-income-and-fees).
 
 ## Dormancy — §10
 
@@ -34,6 +36,6 @@ The dated [activity-interface review](../assets/sources/live-interface.json) ide
 
 ## Transferability — §§12–13
 
-The owner may enable initially disabled charter transfers through a one-way switch (`transfer-enablement`). Thereafter the seat moves with branches and balance intact. The publisher calls a seat sale an exit without directly selling $STANDARD; no secondary-market availability or price is established. The whitepaper describes authority, not an observed enablement transaction. An optional guardian may pause auctions and vault purchases, **not withdrawals**; see [risks](risks.md). [sr-whitepaper-v1: immutables, transfers]
+The owner may enable initially disabled charter transfers through a one-way switch (`transfer-enablement`). Thereafter the seat moves with branches and balance intact. The publisher calls a seat sale an exit without directly selling $STANDARD; no secondary-market availability or price is established. A current holder is not necessarily the person who earned the transferred ledger balance; distinguish present entitlement from interval ownership and financial attribution. The whitepaper describes authority, not an observed enablement transaction. An optional guardian may pause auctions and vault purchases, **not withdrawals**; see [risks](risks.md). [sr-whitepaper-v1: immutables, transfers]
 
 For balance or transfer status beyond this activity route, use fresh authenticated reads through [inspection](inspection.md); unobtainable fields remain unknown. Unsigned artifacts or nonbroadcast preparation require an **explicit user request**, not merely an informational how-to question; see the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).

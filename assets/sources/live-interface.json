@@ -1,7 +1,94 @@
 {
   "schema_version": 1,
-  "scope": "Dated publisher interface and deployment provenance. Addresses, method locators and excerpt hashes describe reviewed sources, not current execution bindings, bundled ABIs or runtime allowlists. No stored live observations.",
+  "scope": "Dated publisher interface and deployment provenance. Addresses, method locators and excerpt hashes describe reviewed sources, not current execution bindings, a full ABI catalog or runtime allowlists. The selected method/event guide is generation-scoped encoding evidence. No saved monetary state or runtime defaults.",
   "records": [
+    {
+      "id": "sr-question-interface-2026-09-27",
+      "url": "https://www.standardreserve.xyz/assets/mountApp-z6PyBslD.js",
+      "publisher": "The Standard Reserve official application",
+      "published_at": null,
+      "retrieved_at": "2026-09-27",
+      "review_depth": "Complete publisher-linked HTTP body parsed as data without executing downloaded JavaScript; selected core, original/v1.1/v1.2 auction, STANDARD and TaxHook layouts, explicit generation adaptations and question-relevant frontend unit/clock arithmetic.",
+      "claim_stage": "publisher-authenticated role/generation interface and display-unit evidence, not independent core/auction implementation correspondence or current routing",
+      "source_urls": [
+        "https://www.standardreserve.xyz/app/",
+        "https://www.standardreserve.xyz/assets/mountApp-z6PyBslD.js"
+      ],
+      "complete_asset_bytes": 860946,
+      "complete_asset_sha256": "8e2178e9e11adc78288afeb0a95bf1c62e7ac118ba08986b3033c2d740cdbd31",
+      "locators": [
+        "Official /app/ page links mountApp-z6PyBslD.js; complete text reviewed, not a truncated reader excerpt.",
+        "Ne CentralBank and Rn CharterNFT explicitly bound to core role calls; Vs STANDARD and As TaxHook in role-scoped reads.",
+        "VP original deployment literal, chain4663: CentralBank0x5977B25419f9c0dDcB2F89fE204955622f4F57ea; CharterNFT0x69101f92427376FA80476A997d024cf9dC3EaE39; STANDARD0x88ad8DdF1E3898412146a534538d418c6F8A9062; TaxHook0xF1eE073811B14359D850825E48d200483200eDcd.",
+        "VP historical original auctions: license0xA45CE49303EEd5846F841BFd4bAC6aE8C805EC05 with jc; charter0x65B4f85b4A64424F6bA0fFe0C535100bc6888892 with Ci.",
+        "GP historical peripheryV11: license0x44731EFf9da8fDD30003AA7C0B324368B3DfFE5e; contractsCommit2f227a6269effe6ed512d95e0b08313dde901be9. No separate v1.1 charter replacement is identified by this mapping.",
+        "m_ removal set and b_ literal v1.1 license adaptation: remove AUCTION_DAY, DECAY_HALF_LIFE_MAX, MAX_PER_CHARTER_PER_DAY, purchasedOnDay, CharterDailyCapExceeded; add auctionPeriod, capWindow, capWindowIndex, MAX_PER_CHARTER_PER_WINDOW, purchasedInWindow, remainingForCharter and new errors.",
+        "YP historical peripheryV12: license0x7CD3c6ec047B1A21ea65AF64D7c850e6f6049015 with vw; charter0x1E369e5977e1d90D9A1Ec52aC72a124346E622E4 with h_; contractsCommitaba72a3e0bc6125ad6e176493802f7bfeef0206f. Sw chooses license ABI by generation; zp chooses charter ABI by its separate v1.2 binding.",
+        "Ne charters(uint256) returns branchCount,storedPending,rewardDebt; accPerBranch,lastAccrual and epoch/stream inputs are complete ABI layouts, not an authenticated accumulator formula.",
+        "vw openBids(uint256 start,uint256 count) returns uint256[] ids; bids/fillable name charterId inputs. UM reads bids for already-known charter IDs, not an authenticated openBids page-ID mapping.",
+        "s8 -> Ct(value,18) -> Wd decimal formatting; sn labels license STANDARD versus charter ETH. Yy=Ee(license,value) displays bid.maxUnitPrice with STANDARD; Hu/Gy format the same field with18decimals. Ao labels deposit receipt.amount STANDARD. This establishes publisher display denomination/scale, not payment implementation.",
+        "re -> Ct(value,18) displays yO pendingLive as STANDARD; EO/Pf displays the fj-derived charter rate per day using86400seconds, not currentStreamRatePerSecond directly. z1 divides multiplierWad by10^18 for a displayed multiplier. These are publisher-modeled rate/display units, not independent core implementation proof.",
+        "yr uses auctionAnchor and generation-adapted period; XC computes floor((timestamp-auctionAnchor)/capWindow) and next anchor-relative allowance boundary; On splits seconds into hours/minutes/seconds and i8 converts Unix seconds to JavaScript milliseconds. These are frontend schedule interpretations, not proved Solidity resets.",
+        "g_ clips active stream by emissionsStarted, totalBranches, issuanceEnd and epochEnd; dj clips intervals; u1 applies branches*floor((issuanceRate*clippedIssuanceSeconds+recycleRate*clippedSeconds)/totalBranches); fj uses branches*floor(activeStream/totalBranches) separately; pj adds the interval estimate to anchored pending. Frontend arithmetic is not core checkpoint/rounding proof.",
+        "CharterPurchased(uint256,address,uint256,uint256) is a charter acquisition with price in publisher ETH display units; LicensesPurchased(uint256,uint256,uint256,uint256) expands an existing charter and reports count and unitPrice in publisher STANDARD ledger display units. Never merge their schedules, inventory, caps, price curves or payment assets merely because some ABI layouts match."
+      ],
+      "literal_sha256": {
+        "Ne_central_bank_abi_16000_bytes": "8ddcb419c0bbbfd02a03ae08548e67be7fe27ef74fc9bf755d614eda755a8a5b",
+        "Rn_charter_nft_abi_7379_bytes": "cbbc2a893a9cca20bcd333d3fb085c5ccb635f9e8954857833bcca3293466c53",
+        "jc_original_license_abi_8685_bytes": "450722c7dedeebf97aad2af8a53d86990a5fd03e900dab950b924f9b982ed4b4",
+        "Ci_original_charter_abi_7926_bytes": "e342b41397f04aef441422e8a6d634114d0f82d1532914ffedcab5eb65b5225f",
+        "b__v11_license_adaptation_expression_537_bytes": "865ef9e5399851fcb5ce2fcd4d453f22f82c89922cf650624891a251edfde3f2",
+        "vw_v12_license_abi_11625_bytes": "d6e13394240b028717741f2185110a2f2bb746e80cf37a37c48a7a56b2b984d6",
+        "h__v12_charter_abi_7900_bytes": "308ee26f3043e56a015d934d134f9694c5c7dcdf53e33ff7bee91a4513ec6dd0",
+        "Vs_standard_abi_8432_bytes": "627044911b1a8d3a45168249198aa6d3b85e7d38fb703d07fade92697c9f9763",
+        "As_tax_hook_abi_15901_bytes": "257a9449d5407b2ad1b664cc0415e65319db8b73912f048238105e09ef8f6456",
+        "VP_original_deployments_802_bytes": "a04b44d074668e9a8077af4e1a224a8152d1f4217a5620bbbd29942a7d826689",
+        "GP_peripheryV11_307_bytes": "cd6888961baeaae96b040a12b134591a5043bbf618f0007cee218f6c2373d8c6",
+        "YP_peripheryV12_320_bytes": "5e838c85151ce28b2fbcb99ea24e637fcdb7512efcf037c5e635adb111e05eeb"
+      },
+      "hash_convention": "SHA-256 of the complete UTF-8 HTTP body, and separately exact literal/expression delimiters through matching closers excluding assignment names/separators/newlines. The b_ adaptation expression was read as data, never executed. Complete ABI literals are source evidence, not shipped JSON ABI catalogs.",
+      "selector_provenance": "Guide selectors/topic0 derived from canonical input types with Ethereum Keccak-256 (PyCryptodome3.23.0), checked against transfer(address,uint256)=a9059cbb and the canonical Transfer topic. Not NIST SHA3-256.",
+      "summary": "The selected guide preserves84unique function signatures and31unique event signatures (32distinct field/indexing layouts because NFT/ERC20 Transfer differs). Common layouts were compared before sharing; separate charter and branch-license event tables repeat identical layouts only for family clarity. This complete fresh record supplements accurate historical partial-retrieval limits rather than retroactively replacing them.",
+      "limits": [
+        "No new core or auction source/bytecode equivalence, independent recompilation, audit, permission or successful-wallet-flow proof.",
+        "Publisher ABI and unit formatting establish encoding/display evidence, not accumulator scaling/checkpoint order, branch-effective time, Solidity rounding, mixed-origin consumption, spendability or net withdrawability.",
+        "Full current bundle coverage does not prove complete historic deployments, activation, authority or historical event coverage; generation bindings require independent authentication for the queried interval.",
+        "The fresh maxUnitPrice display scale is STANDARD18; its escrow, cancellation/refund, expiry, FCFS/keeper priority, guaranteed execution and complete order enumeration semantics remain unestablished.",
+        "No openBids ID-to-charter mapping or stable pagination order is established. A successful charter-keyed getter call with a raw page ID is not mapping proof.",
+        "Auction/allowance windows use separate inputs. Frontend clock arithmetic and shared layouts do not prove lazy-roll behavior, historical effective configuration or a shared charter/license schedule, floor, multiplier, cap or payment mode.",
+        "Exact currentStreamRatePerSecond components/units, internal accPerBranch/rewardDebt/issuanceStreamed/recycleStreamed scales, and opaque ParamApplied/ParamQueued key meanings are not guessed.",
+        "No saved live balances, prices, ownership, stream values, availability or active deployment aliases."
+      ]
+    },
+    {
+      "id": "sr-core-accrual-correspondence-2026-09-27",
+      "url": "https://rpc.mainnet.chain.robinhood.com",
+      "publisher": "Robinhood Chain public RPC; deployment metadata and public source-service locators",
+      "published_at": null,
+      "retrieved_at": "2026-09-27",
+      "review_depth": "Canonical block-hash-anchored runtime retrieval and Solidity CBOR metadata decoding; attempted matching metadata retrieval, without executing publisher JavaScript or independently establishing source correspondence.",
+      "claim_stage": "dated core runtime identity and exact source-discovery limit, not verified accrual implementation",
+      "source_urls": [
+        "https://rpc.mainnet.chain.robinhood.com",
+        "https://ipfs.io/ipfs/QmQ8BT9uHwjiyNfpfAiet9WqGtbpGx8gH6c4CkHJzwhAP8",
+        "https://dweb.link/ipfs/QmQ8BT9uHwjiyNfpfAiet9WqGtbpGx8gH6c4CkHJzwhAP8",
+        "https://robin.etherscan.io/address/0x5977B25419f9c0dDcB2F89fE204955622f4F57ea#code"
+      ],
+      "locators": [
+        "eth_chainId0x1237; historical CentralBank identity0x5977B25419f9c0dDcB2F89fE204955622f4F57ea.",
+        "eth_getCode with blockHash0xc5a97fab3df3a6a7f3528079c5cfbc5084dfe5f0aa8ddebf0762a7c86996cbad and requireCanonical:true; block73953407, Unix1790513607, 2026-09-27T12:53:27Z.",
+        "Runtime13484bytes; SHA256ffc7b060105498f573e2004aa9560f389210c18c942ef41c7a1a599edd76bcbf.",
+        "CBOR trailera26469706673582212201a85956a394888763a3f8cde77a9d1981df413886f6bdcf7eb477942af5d72c764736f6c634300081a0033; compiler marker0.8.26; metadata CIDQmQ8BT9uHwjiyNfpfAiet9WqGtbpGx8gH6c4CkHJzwhAP8.",
+        "Normal isolated browser public-read transport from publisher origin; no secret, spoofed headers, signing or submission."
+      ],
+      "summary": "The dated runtime is authenticated at an explicit canonical anchor, but source-discovery metadata requests to ipfs.io and dweb.link returned429 and the Etherscan code page returned403. A compiler marker and metadata CID are not implementation/source equivalence. ABI and frontend arithmetic therefore remain distinct from verified CentralBank accrual.",
+      "limits": [
+        "No matching metadata/source/compilation-settings reproduction or independently verified execution-path derivation was established.",
+        "Checkpoint/accumulator scaling, precise integer rounding, branch effective time, epoch transition behavior, dormancy/eligibility and spend-origin semantics remain unverified.",
+        "These provider/date-qualified source-retrieval failures do not establish a universal source or RPC outage; prior dated failures remain scoped to their own records.",
+        "The record stores only reproducible runtime/source provenance, not live monetary state or a financial projection."
+      ]
+    },
     {
       "id": "sr-charter-activity-read-interface",
       "url": "https://www.standardreserve.xyz/assets/mountApp-CAYhOFSW.js",
@@ -100,7 +187,7 @@
         "A bidder is the recorded bid address, not automatically the charter's present owner; count and maxUnitPrice are reported order fields, not acquired branches or executed consideration.",
         "openBidCount and openBids are global orderbook scope, not a wallet's orders. fillable is a point-in-time reported flag, not guaranteed keeper execution.",
         "bids/fillable explicitly take charterId; use an evidenced charter ID directly. openBids names its array only ids: authenticate identifier interpretation before joining it to charter-keyed reads. The ABI alone establishes neither pagination ordering/stable cursors nor FCFS priority.",
-        "Keep maxUnitPrice in raw units until publisher denomination/scale evidence is established; its field name alone does not authenticate STANDARD18 normalization.",
+        "At this review maxUnitPrice denomination/scale was not established. The complete2026-09-27 publisher review now establishes STANDARD18 display formatting (sr-question-interface-2026-09-27), not economic fill/escrow semantics.",
         "Purchase events do not reconstruct bids, cancellations or failed attempts. Event layouts must be authenticated per emitting generation; round numbers alone do not identify rounds.",
         "The complete ABI literals were available inside a partial bundle retrieval; no full-bundle hash, source-bytecode reproduction or executed wallet flow is claimed.",
         "No signing, signature requests or transaction submission; authenticated supplemental reads and unsigned preparation remain permitted."
@@ -279,7 +366,7 @@
         "JP removal set and ej license ABI adaptation: remove AUCTION_DAY, DECAY_HALF_LIFE_MAX, MAX_PER_CHARTER_PER_DAY, purchasedOnDay and CharterDailyCapExceeded",
         "auctionPeriod(), capWindow(), capWindowIndex(), MAX_PER_CHARTER_PER_WINDOW(), purchasedInWindow(uint256,uint256), remainingForCharter(uint256)",
         "purchasedInWindow and remainingForCharter are authenticated supplemental ABI scope, not bundled snapshot calls or a charter-ID auction input",
-        "Retained licensesPerDay(), currentDay(), dayAnchorTime(), soldToday(), remainingToday(), currentPrice(), quote(uint256), owner(), pendingOwner()",
+        "Retained licensesPerDay(), currentDay(), auctionAnchor(), soldToday(), remainingToday(), currentPrice(), quote(uint256), owner(), pendingOwner(); the earlier dayAnchorTime locator was incorrect and is absent from the complete2026-09-27 ABI review",
         "Publisher directory generic owner/pendingOwner interface and STANDARD balanceOf(address)"
       ],
       "summary": "Historical v1.1 license binding and adaptation, retained for generation authentication after v1.2 replaced the current target. The v1.1 ABI replaced day-duration/day-cap getters with round-period and cap-window getters. Treasury reads use generic owner/pendingOwner and fixed STANDARD.balanceOf(incentivesVault), not invented POL Buyback or vault methods.",

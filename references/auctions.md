@@ -4,15 +4,31 @@ Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-bou
 
 Published policy: `sr-protocol-v1-2-announcement`, earlier `sr-protocol-v1-1-announcement`, and `sr-whitepaper-v1` §§6–8, reviewed through **2026-09-26**. The whitepaper retains superseded charter and direct-purchase descriptions; [the conflict below](#protocol-v12-limit-orders-and-charter-cadence) is explicit. [Participation parameters](../assets/parameters/participation.json) hold dated reference rules, not current settings. These post-genesis auctions are not the [founding sale](launch-mint.md).
 
+## Two different auctions
+
+| Dimension | Charter auction | Branch-license auction |
+|---|---|---|
+| Acquired object | A new charter | Additional branches inside an existing charter |
+| Evidenced purchase denomination | ETH; event price is raw wei | STANDARD-denominated ledger consideration; authenticate scale and funding semantics |
+| Purchase event | `CharterPurchased(charterId, buyer, day, price)` | `LicensesPurchased(charterId, day, count, unitPrice)` |
+| Quantities | Charter purchases, identified by charter ID | Purchased branches (`count`), distinct from purchase-event count |
+| Availability and constraints | This charter-auction deployment's supply, reserve price, schedule and permissions | This license-auction deployment's inventory, quote, charter capacity, allowance windows and order semantics |
+
+Label tables, prices and scenarios by auction family and generation. Similar method names (`currentPrice`, `remainingToday`, `lastSalePrice`) do not make their units or objects interchangeable. Independently establish each family's clock, floor, price-opening rule and supply. An announced matching cadence is not proof that both historical schedules or activation anchors match. Keep ETH and STANDARD totals separate.
+
+“Buy a charter” does not mean “buy branches for my charter.” Infer the intended family from context; ask only when a remaining ambiguity changes the answer. Earned ledger credit is not ETH available for a charter purchase. Any conversion/withdrawal scenario needs its own eligibility, costs and earning-capacity effects, not a 1:1 substitution.
+
 ## Current branch-auction status: getters first
 
 Prefer authenticated contract reads for current availability, timing, price and capacity; use the host's public-read tools and [discover the current deployment/interface](contracts.md). Read only what the question needs at a common block. Unavailable or sold-out is not zero-cost, executable or guaranteed inventory. Missing state stays unknown, never an announcement default.
 
-Distinguish per-round allocation, cap, remaining inventory, per-charter purchase allowance and open orders. A historical allocation does not override live state. Auction rounds and charter cap windows can differ; a new round need not reset a charter's allowance. Authenticate token denomination before displaying prices.
+Distinguish open protocol branches (`totalBranches()`), per-round license allocation/cap, effective remaining inventory, per-charter purchase allowance and open orders. The [dated interface guide](interface-guide.md) supplies generation-qualified leads, not active targets. `openBidCount()` counts orders, not licenses; a bid may request multiple units. A historical allocation does not override live state. Authenticate denomination before displaying prices.
 
-Stored “day,” sold and remaining counters may lag lazy rollover; method names do not establish calendar semantics. Authenticate stored-versus-elapsed behavior before combining them into a recap or deriving remaining inventory as cap minus sold. Report relevant pause/start state and rollover uncertainty without inventing precedence or a deployed formula.
+Stored `currentDay`/`soldToday` can describe the last materialized round while a view reports effective availability for an elapsed round. Compare the authenticated anchor/period schedule, stored state and effective remaining/quote at the same block before saying sold-out or contradictory. Never assume `remaining = cap - stored sold` across mismatched rounds. Method names do not establish calendar or reset semantics, and apparent mismatch is not proof that getters are unreliable. Keep start/pause/rollover uncertainty visible.
 
 For past purchases or round tables, use [history](auction-history.md#question-to-window): discover every relevant generation, pin finite block/time bounds, paginate an appropriate index, and corroborate receipts/headers where needed. Reused round IDs never merge across contracts. A current round's purchases are through-observation totals, not a completed recap; logs do not replace current availability or open-order reads.
+
+For affordability, establish the charter's remaining allowance and capacity separately from inventory and the budget. A new auction round need not reset its fixed-window allowance. A next-24-hours forecast can cross a reset after prior usage; apply limits at each effective boundary rather than treating the current remaining allowance or a published per-window cap as a universal rolling-day limit. Future inventory, prices and execution remain assumptions unless established. A funds-only bound is useful but is not an executable purchase count.
 
 ## Next license opening: documented-policy estimate
 
@@ -22,7 +38,7 @@ If asked for a policy scenario, label it and expose its inputs. A latest sale fr
 
 ## Next license timing: schedule versus transaction
 
-Derive a scheduled boundary only from authenticated live timing semantics, anchor, period and the pinned block time. State the unchanged-configuration assumption and any pending rollover, pause or inactive state. A due schedule boundary is not a keeper transaction time. Recorded roll transactions may occur late; adding a historical period to the last transaction timestamp is not necessarily the next scheduled opening. Missing timing evidence stays unknown rather than becoming a hardcoded duration.
+After establishing zero-based round-index semantics, use the scheduled window `[auctionAnchor + N × auctionPeriod, auctionAnchor + (N + 1) × auctionPeriod)`. Read the applicable generation's timing interface; current v1.1/v1.2 leads include `auctionPeriod()`, not a blanket historical “reverts” rule. No hardcoded 12-hour fallback. Historical configuration changes need their applicable effect established. State unchanged-configuration assumptions and any pause/inactive/pending-roll state. A scheduled boundary is not a keeper transaction or first/last sale time; adding a period to a late roll transaction misdates the schedule.
 
 ## Protocol v1.2: limit orders and charter cadence
 
@@ -37,6 +53,8 @@ The [official v1.2 post](https://x.com/standard_rsv/status/2103991044119654721),
 The **2026-09-26 publisher-interface review** placed order views on the license auction itself, not a separate orderbook deployment. Refresh that relationship before current claims. Read only relevant orders, using authenticated pagination and a pinned scope; a global count is not a user's orders and one page is not complete coverage.
 
 Authenticate page-ID meaning before joining to charters, and ownership independently from bidder identity. The dated review did not establish limit-price denomination, identifier mapping or priority semantics. Failed reads are unknown, not no orders. [Contracts](contracts.md#v12-auction-identities-and-order-reads) and [updates](updates.md#protocol-v12-announced-changes) separate these evidence limits from announced policy.
+
+Successful `bids(id)` decoding does not establish that an enumerated raw order ID is a charter ID. Resolve that relationship independently before joining records; choose targeted reads rather than enumerate every bid for a narrow price or availability question. A buyer's maximum bid, current auction ask, floor and last executed price are different inputs. `fillable` at an anchor is not a future execution guarantee. Use hypothetical bid/floor prices only as explicit assumptions; a floor is not promised inventory or a promised fill.
 
 ## Published v1.1 license changes
 

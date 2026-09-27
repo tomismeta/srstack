@@ -8,7 +8,17 @@ Use authorized public readers, APIs, RPC, explorers and inspected local analysis
 
 Non-broadcasting calls, quotes, gas estimates, traces and isolated simulations are permitted when supported and host-authorized. Simulation is not proof of future execution or complete accounting. Do not submit transactions through a relayer, delegated agent, wallet or purported simulation service that actually changes public state.
 
-For access or approval denials, preserve the original diagnostic without secrets. A 401/403 alone does not prove its cause. State the missing capability or permission, keep supported partial results and stop the denied operation. Do not retry through another endpoint, proxy, wrapper or credential to evade it. No silent failover, approval bypass, unapproved paid resources or disabling host safeguards.
+Classify a failed request before choosing the next step; retain its original diagnostic without secrets and its actual scope. HTTP 401/403 establishes a denied request, not its cause or a universal lack of public access.
+
+- **User or host authorization denial:** stop the prohibited action. Do not route equivalent work through another endpoint, tool, credential, wrapper or agent; a public source does not override that denial.
+- **Provider access denial:** stop the denied request and do not evade that provider's controls, spoof headers, disguise traffic or borrow credentials. If the underlying research remains authorized, an independently available public source used through ordinary authorized access is not automatically a bypass. Explain the source change and authenticate its evidence; do not use it to circumvent a user/host prohibition or the denied provider's access controls.
+- **Transport failure:** a timeout, connection failure or truncated response is not proof of denied authorization, absent state or unsupported protocol behavior. Retain the failure; any retry needs a reason and a finite stopping bound.
+- **Capability or coverage limit:** unsupported methods, range/page limits, missing indexes and unavailable archive state are distinct limitations. Use a suitable authorized capability or narrow the claim, not repeated doomed requests. A provider/plan/date observation is not a protocol-wide rule.
+- **Evidence gap:** successful access can still leave identity, implementation semantics, history or fund attribution unproved. Name that gap and preserve supported results; do not relabel it as an access denial or a zero.
+
+No silent failover, unbounded retries, approval bypass, unapproved paid resources or disabling host safeguards. Missing one route does not prohibit useful authorized analysis through independent evidence.
+
+Keep access context in the classification: client, provider, method, credentials and the scope actually denied. A failed client does not automatically revoke a separate ordinary access path already established as permitted, such as a provider-supported public browser application. Do not infer permission merely because a different client succeeds. Preserve established authorized paths without forging headers/origins, disguising traffic, defeating challenges or overriding a broader prohibition; disclose any client/source transition. If the denial's scope remains unclear, retain that uncertainty rather than declaring either a universal ban or an unrestricted fallback.
 
 ## Host execution and approval
 
@@ -35,3 +45,5 @@ Keep the installed runtime immutable during research. No self-updates, unsolicit
 Distinguish dated policy, observed state, decoded events, source-authenticated mechanics and scenarios. Current claims need an identified observation time/block and relevant coverage. Different generations and units must not be merged. Unreviewed material is not reviewed evidence; successful parsing, pagination or a call is not proof of completeness or deployed semantics.
 
 Use the applicable contract-derived accrual pace and conditions for observed starting inputs. Forecasts need explicit assumptions, horizon and boundary treatment; no guarantees that a rate, auction price, inventory or eligibility persists. Separate earned from deposited funds, ledger credit from wallet tokens, gross flows from net proceeds, revenue from yield, and illustrative S-Bill records from actual positions. Missing origin attribution cannot establish an earned-only spending budget.
+
+Keep charter acquisition and branch-license expansion distinct, including their payment assets and ledger rules. STANDARD earned-credit license funding does not establish ETH charter affordability without an explicit, evidenced conversion model. Do not transfer one auction family's schedule, multiplier, floor, inventory or allowance rules to the other.
