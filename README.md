@@ -6,6 +6,8 @@ Inspect charters, auctions, orderbooks, protocol state and bounded history, or e
 
 Agent-agnostic, including Muse, Hermes and OpenClaw. Live helpers depend on permitted Python, filesystem and network access; explanations can work offline.
 
+**Contract reads first wherever they are the most direct reliable evidence**, across protocol state, charters/positions, ownership, balances, permissions, treasury, auctions and orderbooks. Use events for executions that getters do not establish, market sources for market quotes and documents for policy; explanation-only questions need no live RPC.
+
 **Version 0.3.0 — unreleased.** Includes v1.2 auctions, bounded orderbook reads, charter activity inspection, newest-first history with observed-round early stopping, conditional next-opening previews and proxy-aware RPC. No sales plus an unavailable next-round floor yields no numerical opening. S-Bill launch/position support still requires authenticated evidence.
 
 **Dogfood scope:** integrity, synthetic CLI checks, host routing and live reads are separate results. Report PASS / FAIL / BLOCKED only for exercised paths. A provider denial is not a failed install.
@@ -26,7 +28,7 @@ Current charter output also uses `charter_auction_current_round`, `charter_aucti
 | “Are launch holding limits or the Pool Manager gate active?” | Fresh enabled/active flags and cap values; not a guarantee that a transaction will succeed |
 | “What’s the current branch auction status?” | One fresh `snapshot.py auctions` read using the cataloged current license deployment: getter-reported status, remaining branches and price with [round context and interpretation limits](references/auctions.md#current-branch-auction-status-getters-first); no contract rediscovery or history indexing |
 | “What will the next license round open at, and when?” | [Conditional policy preview and derived schedule](references/auctions.md#next-license-opening-documented-policy-estimate) from the same fresh auction snapshot. No sales and an unavailable next-round floor means **unknown price**, not an estimate using today's floor. Scheduled timing is not keeper execution. |
-| “Show me the last 3 license rounds.” / “How did past auctions go?” | `history.py license --generation current --last-rounds 3`: scans newest-first, stops after a checked chunk supplies three observed rounds, and labels older scope unsearched. Earlier fragments of selected rounds may be missing; a young deployment may have fewer than three. See [coverage](references/auction-history.md#question-to-window). |
+| “Show each round's opening, first, average and last sale.” / “Last 3 rounds?” | `history.py license --generation current`: contract reads first, then targeted logs of at most 10 blocks. Returns observed opening/first/weighted-average/last prices. Add `--last-rounds 3` for newest-first early stopping, not full-round accounting. Equal-state skipped intervals remain unsearched. [Coverage](references/auction-history.md#question-to-window). |
 | “Can I bid for branches at my chosen price?” | [v1.2 limit-order guidance](references/updates.md#protocol-v12-announced-changes): FCFS best-attempt keeper execution, not guaranteed allocation. Queued orders and purchases are separate evidence. |
 | “What can you read from the orderbook?” | `snapshot.py orderbook --start 0 --count 20`: raw IDs only, **not a price/quantity/owner listing**. Optional `--charter-ids N,M` reads independently known charter bids/fillability; no automatic page-to-charter join. |
 | “Have charter auctions started, and how often?” | Announced v1.2 launch and one-charter branch-auction cadence, separated from fresh activation/inventory/price observations and the older whitepaper's daily design. The announced 5.5 ETH first opening is not a saved current price. |
@@ -181,7 +183,7 @@ The charter command requires an unsigned uint256 ID; replace `1` with the intend
 
 ### Bounded auction history
 
-Prefer the supported `history.py` helper for license or charter event history when it covers the question; supplemental read-only RPC tools or locally authored request code are also permitted. For the helper, select `license` or `charter`, optionally filter by `--day N`, and choose either an anchored lookback (`--anchor-block B --lookback-blocks N`, with the anchor defaulting to a fresh head) or an explicit `--from-block A --to-block B` range. `--chunk-blocks N` and `--max-chunks N` bound scanning; defaults, hard limits and evidence semantics live in the [auction-history contract](references/auction-history.md). Supplemental scans must likewise bound resources and establish coverage.
+Auction history now defaults to **contract-state discovery first**, using authenticated anchor getters and historical hash-pinned calls to locate candidate purchase windows before requesting logs of at most **10 blocks**. This avoids an oversized first request on ten-block-limited providers. Equal sampled state cannot prove no intervening purchases: skipped intervals stay explicitly unsearched and prices remain observed-event accounting, not complete-round averages. First executed sale and authenticated `AuctionStarted` opening prices are included separately. Use `license` or `charter`, optional `--day N`, and an anchored lookback or explicit inclusive block bounds; see the [history contract](references/auction-history.md) for limits and explicit log-only collection.
 
 ```sh
 python3 -B -I scripts/history.py license --lookback-blocks 1000000
@@ -279,6 +281,8 @@ python3 -B maintenance/package.py verify
 python3 -B maintenance/check-snapshot.py
 python3 -B maintenance/check-price.py
 python3 -B maintenance/check-history.py
+python3 -B maintenance/check-history-state.py
+python3 -B maintenance/check-history-accounting.py
 python3 -B maintenance/check-interface.py
 python3 -B maintenance/check-verify.py
 python3 -B maintenance/check-package.py

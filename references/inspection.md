@@ -8,6 +8,8 @@ Use this table directly from the trusted runtime root. Apply [safety](safety.md)
 
 Ask only for missing user-dependent scope. The charter helper needs a public charter ID; if the question instead names a public address, bounded ownership/event discovery may identify relevant charters without connecting a wallet or requiring proof of ownership. Do not add an unrelated address scan to a known-ID query. Helpers fix the network, targets and units. Prefer the narrowest helper view covering the request, default `summary`; use supplemental reads for additional public evidence and `full` for requested raw helper evidence.
 
+**Contract-read-first is skill-wide:** choose authenticated current/historical getters, registries and bounded enumeration when they directly establish the requested metric or narrow discovery. Do not reconstruct current balances, ownership, permissions, supply or treasury state from logs when a suitable read exists. Fetch events for executions/flows not established by getters, market sources for quotes and publisher documents for design. A stored value without verified interval/reset semantics is not a historical total; see [source selection](research-workflow.md#3-retrieve-finite-public-observations).
+
 Commands below run from the trusted verified runtime root using existing permitted Python. Pass flags/values as separate argument-array elements, not interpolated shell text. Replace example ID `1` and amount `123.45` with the intended public ID or exact successful amount; never execute example values for a user's valuation.
 
 ```sh

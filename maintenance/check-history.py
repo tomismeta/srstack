@@ -121,7 +121,7 @@ class RPCFixture:
 
     def run(self, **options):
         config = {"schema_version": 1, "kind" if self.auction in history.BUYBACK_KINDS else "auction": self.auction,
-                  "from_block": self.start_block, "to_block": self.start_block + 19, "chunk_blocks": 10}
+                  "from_block": self.start_block, "to_block": self.start_block + 19, "chunk_blocks": 10, "discovery": "logs"}
         config.update(options)
         return history.history(config, transport=self, now=lambda: NOW, monotonic=lambda: self.clock)
 
@@ -387,7 +387,7 @@ class HistoryChecks(unittest.TestCase):
         fixture = RPCFixture()
         fixture.purchase(day=1, block=fixture.head - history.DEFAULT_LOOKBACK)
         fixture.purchase(day=2, block=fixture.head - 1)
-        report = history.history({"schema_version": 1, "auction": "license", "generation": "legacy", "last_rounds": 2},
+        report = history.history({"schema_version": 1, "auction": "license", "generation": "legacy", "last_rounds": 2, "discovery": "logs"},
                                  transport=fixture, now=lambda: NOW, monotonic=lambda: 0)
         self.assertEqual(report["status"], "partial")
         self.assertEqual(report["coverage"]["requested"],
@@ -404,7 +404,7 @@ class HistoryChecks(unittest.TestCase):
         fixture.purchase(day=7, count=2, price=9, block=deployment)["address"] = current
         fixture.purchase(day=7, count=3, price=2, block=fixture.head)["address"] = current
         report = history.history({"schema_version": 1, "auction": "license", "generation": "current",
-                                  "last_rounds": 2, "detail": "full"},
+                                  "last_rounds": 2, "detail": "full", "discovery": "logs"},
                                  transport=fixture, now=lambda: NOW, monotonic=lambda: 0)
         self.assertEqual(report["status"], "partial")
         self.assertEqual(report["coverage"]["round_selection"]["generations"][0]["shortfall"], 1)
@@ -432,7 +432,7 @@ class HistoryChecks(unittest.TestCase):
         fixture.purchase(day=99, block=deployment)["address"] = current
         fixture.purchase(day=2, block=fixture.head)["address"] = current
         report = history.history({"schema_version": 1, "auction": "license", "generation": "current",
-                                  "last_rounds": 1, "max_chunks": 1},
+                                  "last_rounds": 1, "max_chunks": 1, "discovery": "logs"},
                                  transport=fixture, now=lambda: NOW, monotonic=lambda: 0)
         self.assertEqual(report["status"], "ok")
         self.assertEqual(report["coverage"]["stop_reason"], "last_rounds_observed")
@@ -481,14 +481,6 @@ class HistoryChecks(unittest.TestCase):
                 fixture.run(last_rounds=value)
         self.assertEqual(fixture.requests, [])
 
-    def test_empty_million_block_default_has_no_synthetic_rounds(self):
-        fixture = RPCFixture()
-        report = history.history({"schema_version": 1, "auction": "license"}, transport=fixture, now=lambda: NOW, monotonic=lambda: 0)
-        self.assertEqual(report["status"], "ok")
-        self.assertEqual(report["rounds"], [])
-        self.assertEqual(report["coverage"]["missing"], [])
-        self.assertEqual(fixture.windows(), [(1_000_001 + n * 10_000, 1_010_000 + n * 10_000) for n in range(100)])
-        self.assertEqual(report["coverage"]["requested"], {"from_block": 1_000_001, "to_block": 2_000_000})
 
     def test_day_filters_round_id_without_claiming_other_windows(self):
         fixture = RPCFixture()
@@ -754,7 +746,7 @@ class HistoryChecks(unittest.TestCase):
         fixture.head = fixture.catalog["contracts"]["licenseAuction"]["deployment_block"] + 100
         event = fixture.purchase(day=0, count=4, block=fixture.head - 1)
         event["address"] = fixture.addresses["licenseAuction"]
-        report = history.history({"schema_version": 1, "auction": "license", "lookback_blocks": 10},
+        report = history.history({"schema_version": 1, "auction": "license", "lookback_blocks": 10, "discovery": "logs"},
                                  transport=fixture, now=lambda: NOW, monotonic=lambda: 0)
         self.assertEqual(report["status"], "ok")
         self.assertEqual((report["rounds"][0]["address"], report["rounds"][0]["purchase_quantity"]), (event["address"], "4"))
@@ -1209,6 +1201,8 @@ class HistoryMainChecks(unittest.TestCase):
         # event accounting and coverage decisions behind the entrypoint.
         collect = partial(history.history, transport=fixture, now=lambda: NOW,
                           monotonic=lambda: fixture.clock)
+        if arguments != ["--help"]:
+            arguments = [*arguments, "--discovery", "logs"]
         with patch.object(history.sys, "argv", ["history.py", *arguments]), \
                 patch.object(history.sys, "stdin", NoStdin()), \
                 patch.object(history.sys, "stdout", stdout), \

@@ -2,7 +2,7 @@
 
 For live status, identity, accounting and requested conditional analysis. Design explanations need only the topic and cited records; [inspection](inspection.md) defines state/price observations. Use real host capabilities and normal approvals. Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
 
-For per-round auction purchases, quantities, weighted prices or sellout timing, go directly to the [bounded history helper and evidence rules](auction-history.md). `snapshot.py auctions` remains current-state inspection, not a historical reader.
+For per-round auction purchases and prices, use the [history helper](auction-history.md): authenticated contract state first, then targeted purchase events. `snapshot.py auctions` remains the direct current-state route; it is unnecessary to scan history for current availability.
 
 Catalogs seed research; they do not limit which public contracts or methods may be inspected. If a flow getter, event or target is absent from the snapshot catalog, follow [supplemental public reads](inspection.md#supplemental-public-reads) rather than refusing or waiting for a package update. Keep fresh evidence separate from packaged coverage. For historical flow claims, establish the getter's reset/settlement window and the claimed interval; current-plus-previous flow is not two completed epochs.
 
@@ -27,7 +27,7 @@ Ambiguous chain, role, ABI or generation stops only the conclusion depending on 
 
 ## 3. Retrieve finite public observations
 
-Choose permitted sources by required capabilities, not directory order; user-authorized host-managed authentication may be used without model access to secrets. Current state, historical logs and historical state are separate capabilities; a current call proves no archive support.
+**Prefer contract reads wherever they are the most direct reliable path, across every protocol topic.** Use authenticated getters for balances, supply, ownership, permissions, positions, treasury and auction state; use registries/enumeration to narrow discovery before events. Historical reads can narrow event windows but require authenticated reset/interval semantics before proving absence or period totals. Retrieve logs/receipts for executions that state cannot establish. Market quotes and publisher policy use their appropriate market/document sources, not gratuitous RPC. Choose permitted providers by required capabilities, not directory order; current state, historical logs and historical state are separate capabilities. No paid tier or archive support is inferred from a provider name.
 
 Bound interval, addresses/topics, pages, resources, batch sizes and retries to the question/provider. Fixed helpers accept authenticated ABI `view`/`pure` calls. Supplemental non-view calls, quoters, gas estimates, traces and forks follow [safety](safety.md#public-retrieval-and-calls); label simulated state/overrides separately. Resolve “latest” to a recorded block. Quotes need exact assets, units, venue/methodology, time and executable versus indicative/aggregated status.
 

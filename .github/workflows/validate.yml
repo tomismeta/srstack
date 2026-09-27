@@ -39,6 +39,10 @@ jobs:
         run: python3 -B maintenance/check-price.py
       - name: Check bounded auction history behavior
         run: python3 -B maintenance/check-history.py
+      - name: Check state-guided history and round prices
+        run: |
+          python3 -B maintenance/check-history-state.py
+          python3 -B maintenance/check-history-accounting.py
       - name: Check independent interface vectors
         run: python3 -B maintenance/check-interface.py
       - name: Check installed verification and fixed smoke orchestration

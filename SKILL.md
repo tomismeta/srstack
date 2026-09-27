@@ -28,6 +28,8 @@ Research topics: **protocol · charters · reserves · contracts · updates · d
 
 ## Route, then load only what is needed
 
+**Contract reads first wherever they are the most direct reliable evidence.** Apply this across protocol, charters/positions, ownership, balances, permissions, treasury, auctions and orderbook—not just history. Prefer authenticated getters and bounded enumeration over reconstruction or broad logs; use historical state to narrow event searches. Use events for executions, market sources for market quotes and documents for policy. Do not add RPC to explanation-only questions or force a getter to answer a metric it does not establish.
+
 | Intent | First resource |
 |---|---|
 | “How are my branches doing?” / charter N earnings | `python3 -B -I scripts/snapshot.py charter --id N`: report branches, accrued STANDARD and current-rate daily equivalent. No price lookup unless requested. For an address rather than an ID, use scoped ownership discovery. |
@@ -37,7 +39,7 @@ Research topics: **protocol · charters · reserves · contracts · updates · d
 | Branch limit orders / “what's on the book?” | `python3 -B -I scripts/snapshot.py orderbook --start 0 --count 20`: a bounded raw-ID page, **not a price/quantity/owner listing**. Optional `--charter-ids N,M` reads independently known charter bids/fillability. Never autojoin page IDs or promise fills. [Interpretation](references/auctions.md). |
 | Charter-auction launch or cadence | [Protocol v1.2](references/updates.md#protocol-v12-announced-changes): announced one charter at branch-auction cadence; 5.5 ETH is the announced first opening, not a current quote. Use fresh auction observations and surface any interface/schedule conflict rather than imposing the older 24-hour design. |
 | Current state, burns, cap/gate, owners, charter balance/worth or STANDARD price | [Inspection common paths](references/inspection.md#common-question-paths) |
-| Last N rounds / auction purchases or revenue | `python3 -B -I scripts/history.py license --generation current --last-rounds 3`: newest-first, observed rounds only. A young deployment may have one; missing events leave prices unknown. No cross-generation backfill. See [coverage and other history scopes](references/auction-history.md#question-to-window). |
+| Last N rounds / round-price table / auction purchases or revenue | `python3 -B -I scripts/history.py license --generation current --last-rounds 3`: contract-state discovery first, targeted logs of at most 10 blocks. For first/average/opening prices across the selected window, omit last-N early stopping. Report observed prices and unsearched scope, not complete-round averages. [History routes](references/auction-history.md#question-to-window). |
 | Treasury routing, team liability, buyback controls or a specified reserve asset | [Inspection common paths](references/inspection.md#common-question-paths): `snapshot.py treasury`, optional `--asset ADDRESS`; approval-gated raw holdings, not a portfolio |
 | Past buybacks | [Bounded history helper](references/auction-history.md): `history.py buybacks` for ContractionVault burn accounting; `history.py pol-buybacks` for POL event-reported ETH, raw token output and destination, not burns |
 | Second Mandate, manifesto, tokenized-stock liquidity vision or sample positions | [Second Mandate](references/updates.md#second-mandate-liquidity-for-tokenized-stocks) |

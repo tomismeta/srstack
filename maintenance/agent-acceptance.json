@@ -39,6 +39,14 @@
   },
   "scenarios": [
     {
+      "id": "contract_first_across_protocol_topics",
+      "scenario_kind": "synthetic",
+      "input": {"source_kind": "hypothetical source-selection exercise, no live observations", "authenticated_getters_available": ["protocol supply and gate", "charter owner and pending", "treasury approved-asset balance", "auction state", "bounded orderbook"], "historical_state_supported": true, "log_window_cap_blocks": 10, "counter_reset_semantics_verified": false},
+      "question": "Without executing anything, choose the primary evidence path for supply removed, charter balance and owner, treasury holdings, current auction inventory, historical round prices, a supplied STANDARD amount's USD mark, and a policy explanation.",
+      "required": ["Prefer authenticated contract reads for state/ownership/balances/permissions rather than reconstructing them from logs or websites.", "For auction history, use contract-state discovery first and targeted logs of at most ten blocks for executed prices; distinguish first execution from AuctionStarted opening.", "Keep equal-state skipped intervals unsearched and averages observed-only without reset/completeness evidence.", "Use the price source for the supplied-amount mark and documents for policy; do not add unrelated RPC or claim a paid key is necessary."],
+      "forbidden": ["Restricting contract-first priority to auction history.", "Treating equal sampled counters as proof of no intervening events.", "Replacing missing history with recalled prices or treating a proposed call as executed."]
+    },
+    {
       "id": "v12_getter_precedence_and_unmapped_order_page",
       "scenario_kind": "synthetic",
       "input": {

@@ -2,7 +2,7 @@
 
 Use runtime preflight and input/approval rules, then only the relevant helper contract. [Inspection](inspection.md#common-question-paths) gives answer extraction; [history](auction-history.md) defines bounded scans. Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
 
-Four stateless standard-library Python 3.10+ entrypoints: `snapshot.py` (state), `price.py` (canonical-pool quotes/gross valuation), `history.py` (events) and `verify.py` (integrity/selected diagnostics). None accepts arbitrary code, paths, selectors, RPC targets, headers or wallet inputs. Treasury's reserve-asset argument is passed to fixed vault calls, not used as a target. RPC configuration uses only the environment below. Helpers perform no financial actions or simulations; broader research and host workflows follow [safety](safety.md), not altered catalogs.
+Four stateless standard-library Python 3.10+ entrypoints: `snapshot.py` (state), `price.py` (canonical-pool quotes/gross valuation), `history.py` (contract-state-guided auction discovery and event accounting) and `verify.py` (integrity/selected diagnostics). None accepts arbitrary code, paths, selectors, RPC targets, headers or wallet inputs. Treasury's reserve-asset argument is passed to fixed vault calls, not used as a target. RPC configuration uses only the environment below. Helpers perform no financial actions or simulations; broader research and host workflows follow [safety](safety.md), not altered catalogs.
 
 ## Trusted runtime preflight
 
@@ -112,6 +112,8 @@ For last-N history and orderbook requests, recommend host-managed **Alchemy** or
 Have the host inject either optional setting through its approved environment/secrets facilities. Prefer HTTPS whenever credentials are involved; HTTP is supported but does not encrypt credentials in transit. There is no endpoint CLI flag or JSON input field. `verify.py` forwards `SRSTACK_RPC_URL` and `ALCHEMY_API_KEY` to its live child helpers. Provider recommendations are not restrictions on the selected provider, and custom selection does not relax chain 4663, deployment, interface, block or coverage checks.
 
 Keep keys and credential-bearing URLs out of prompts, command lines, outputs, artifacts and installed skill files. Helper endpoint evidence and diagnostics redact credentials; do not reveal secrets while configuring the host or reporting failures. A selected endpoint failure is reported without silent provider failover. Confirm the selected plan's historical state/log coverage rather than assuming archive access. Never install live state or endpoint-health snapshots, bypass a denial or replace failed live reads with saved state.
+
+Auction history defaults to contract-state discovery with at-most-ten-block event queries. It requires historical EIP-1898 hash-pinned `eth_call`; log access alone is insufficient. Equal-state intervals remain unsearched, not proven empty. A ten-block log limit does not prove a paid key is necessary. Explicit log-only collection is available for an evidenced narrow interval; neither strategy silently retries, downgrades to latest state or changes provider after failure.
 
 ## Price helper
 

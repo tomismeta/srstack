@@ -108,7 +108,7 @@ def _load_snapshot():
 
 def _validate_input(config):
     required = {"schema_version", "kind"} if isinstance(config, dict) and config.get("kind") in BUYBACK_KINDS else {"schema_version", "auction"}
-    optional = {"day", "last_rounds", "generation", "anchor_block", "lookback_blocks", "from_block", "to_block", "chunk_blocks", "max_chunks", "detail"}
+    optional = {"day", "last_rounds", "generation", "anchor_block", "lookback_blocks", "from_block", "to_block", "chunk_blocks", "max_chunks", "detail", "discovery"}
     if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - optional:
         raise InputError("unexpected or missing fields")
     kind = config.get("kind", config.get("auction"))
@@ -125,7 +125,12 @@ def _validate_input(config):
         raise InputError("generation must be all, current or legacy for auctions, or v1.1 for license only")
     value = dict(config)
     value.setdefault("detail", "summary")
-    value.setdefault("chunk_blocks", MAX_CHUNK_BLOCKS)
+    value.setdefault("discovery", "logs" if kind in BUYBACK_KINDS else "state")
+    if value["discovery"] not in ("logs", "state"):
+        raise InputError("discovery must be logs or state")
+    if value["discovery"] == "state" and kind in BUYBACK_KINDS:
+        raise InputError("state discovery is only supported for auctions")
+    value.setdefault("chunk_blocks", 10 if value["discovery"] == "state" else MAX_CHUNK_BLOCKS)
     value.setdefault("max_chunks", DEFAULT_MAX_CHUNKS)
     if value["detail"] not in ("summary", "full"):
         raise InputError("detail must be summary or full")
@@ -143,6 +148,8 @@ def _validate_input(config):
             raise InputError("explicit range must be ascending and at most 5000000 blocks")
     else:
         value.setdefault("lookback_blocks", DEFAULT_LOOKBACK)
+    if value["discovery"] == "state" and value["chunk_blocks"] > 10:
+        raise InputError("state discovery log windows must be at most 10 blocks")
     return value
 
 
@@ -365,6 +372,70 @@ def _window(s, rpc, budget, emitters, start, end, anchor, now):
     return events, headers
 
 
+class _StateDiscovery:
+    """Find candidate event windows; equal endpoint state is NOT absence proof."""
+
+    def __init__(self, s, rpc, budget, interface, kind, emitters, anchor, now):
+        self.s, self.rpc, self.budget = s, rpc, budget
+        self.emitters, self.anchor, self.now = emitters, anchor, now
+        names = ("started", "currentDay", "soldToday", "lastSaleDay", "lastSalePrice")
+        self.calls = [next(call for call in interface["calls"]
+                           if call["contract"] == ROLES[kind] and call["function"] == name) for name in names]
+        self.states, self.headers = {}, {}
+
+    def state(self, address, number):
+        if number < self.emitters[address]["deployment_block"]:
+            return None
+        key = address, number
+        if key not in self.states:
+            self.budget.check()
+            if number not in self.headers:
+                if len(self.headers) >= MAX_HEADERS:
+                    raise HistoryError("state discovery header budget exhausted")
+                self.headers.update(_headers(self.s, self.rpc, {number}, self.now))
+            header = self.headers[number]
+            tag = {"blockHash": header["hash"], "requireCanonical": True}
+            replies = self.rpc.batch([("eth_call", [{"to": address, "data": call["selector"]}, tag])
+                                      for call in self.calls])
+            values = []
+            for call, (value, error) in zip(self.calls, replies):
+                if error:
+                    raise HistoryError("historical state unavailable; archive and canonical block-hash eth_call support required")
+                values.append(self.s._decode(value, call["output_type"]))
+            self.states[key] = tuple(values)
+        return self.states[key]
+
+    def check(self):
+        checked = _headers(self.s, self.rpc, set(self.headers) | {self.anchor["number"]}, self.now)
+        if checked[self.anchor["number"]] != self.anchor or any(checked[n] != h for n, h in self.headers.items()):
+            raise ReorgError("anchor or historical state block changed during discovery")
+
+    def windows(self, start, end, limit, newest_first):
+        boundaries = sorted({start, end + 1} | {e["deployment_block"] for e in self.emitters.values()
+                                                if start < e["deployment_block"] <= end})
+        segments = list(zip(boundaries, boundaries[1:]))
+        if newest_first:
+            segments.reverse()
+        for first, after in segments:
+            selected = {a: e for a, e in self.emitters.items() if e["deployment_block"] <= first}
+            stack = [(first, after - 1)]
+            while stack:
+                self.budget.check()
+                lo, hi = stack.pop()
+                if not selected or hi - lo + 1 <= limit:
+                    yield lo, hi, selected, False
+                    continue
+                same = all(self.state(address, lo - 1) == self.state(address, hi) for address in selected)
+                if same:
+                    # Reset semantics are not source-verified. This is not an
+                    # empty interval or a proof of complete purchase accounting.
+                    yield lo, hi, selected, True
+                    continue
+                middle = (lo + hi) // 2
+                halves = [(lo, middle), (middle + 1, hi)]
+                stack.extend(halves if newest_first else reversed(halves))
+
+
 def _observation(event):
     return {"block_number": event["block_number"], "timestamp": event["timestamp"], "transaction_hash": event["transaction_hash"]}
 
@@ -433,9 +504,11 @@ def _rounds(s, events, auction, day, gaps):
                        "observed_rolls": [{**_observation(e), "reported_cap": str(e["fields"]["cap"]),
                                            "reported_start_price": _price(s, e["fields"]["startPrice"], auction),
                                            "reported_floor_price": _price(s, e["fields"]["floorPrice"], auction)} for e in rolls],
-                       "observed_activations": [_observation(e) for e in starts],
+                       "observed_activations": [{**_observation(e),
+                                                 "reported_start_price": _price(s, e["fields"]["startPrice"], auction)} for e in starts],
                        "reported_round_cap": str(next(iter(caps))) if len(caps) == 1 else None,
-                       "first_observed_purchase": _observation(purchases[0]) if purchases else None,
+                       "first_observed_purchase": {**_observation(purchases[0]),
+                                                   "unit_price": _price(s, purchases[0]["fields"]["unitPrice" if auction == "license" else "price"], auction)} if purchases else None,
                        "last_observed_purchase": {**_observation(purchases[-1]),
                                                   "unit_price": _price(s, purchases[-1]["fields"]["unitPrice" if auction == "license" else "price"], auction)} if purchases else None,
                        "scheduled_opening": None, "complete_round": False, "sellout": "not_established", "time_to_sellout": None,
@@ -522,7 +595,8 @@ def history(config, transport=None, now=None, monotonic=None):
     kind = config.get("kind", config.get("auction"))
     now, monotonic = now or time.time, monotonic or time.monotonic
     completed, errors, events = [], {}, []
-    emitters = {}
+    emitters, state_unsearched = {}, []
+    discovery = None
     start, end = config.get("from_block"), config.get("to_block", config.get("anchor_block"))
     if start is None and end is not None:
         start = max(0, end - config["lookback_blocks"] + 1)
@@ -582,6 +656,17 @@ def history(config, transport=None, now=None, monotonic=None):
         seen_transactions, seen_block_hashes = {}, {anchor["hash"]: anchor["number"]}
         previous_timestamp = None
         first_deployment = min(emitter["deployment_block"] for emitter in emitters.values())
+        if config["discovery"] == "state":
+            discovery = _StateDiscovery(s, rpc, budget, interface, kind, emitters, anchor, now)
+            candidates = discovery.windows(start, end, config["chunk_blocks"], newest_first)
+            evidence["state_discovery"] = {
+                "getters": [call["signature"] for call in discovery.calls],
+                "block_pinning": "EIP-1898 canonical block hash",
+                "scope": "candidate event discovery only; counter/reset semantics not source-verified; equal endpoint state is not event-absence proof"}
+            evidence["state_discovery"]["anchor_state"] = {
+                address: {call["function"]: value if isinstance(value, bool) else str(value)
+                          for call, value in zip(discovery.calls, discovery.state(address, end))}
+                for address, emitter in emitters.items() if emitter["deployment_block"] <= end}
         while start <= cursor <= end:
             # Keep explicit inclusive bounds within each query, but prioritize
             # the tip for last-N requests even when a finite budget stops us.
@@ -600,6 +685,15 @@ def history(config, transport=None, now=None, monotonic=None):
             if cursor < first_deployment:
                 first, stop = (start, cursor) if newest_first else (cursor, min(end, first_deployment - 1))
             selected = {address: emitter for address, emitter in emitters.items() if emitter["deployment_block"] <= first}
+            if discovery is not None:
+                stage = "state_discovery"
+                first, stop, selected, skipped = next(candidates)
+                if skipped:
+                    state_unsearched.append({"from_block": first, "to_block": stop,
+                                             "emitter_addresses": list(selected),
+                                             "reason": "equal_endpoint_state; intervening events not excluded"})
+                    cursor = first - 1 if newest_first else stop + 1
+                    continue
             stage = "window_" + str(first)
             budget.check()
             if selected:
@@ -639,6 +733,10 @@ def history(config, transport=None, now=None, monotonic=None):
                     and all(count >= config["last_rounds"] for count in round_counts.values())):
                 stopped_at_round_count = True
                 break
+        if discovery is not None:
+            stage = "state_discovery_final_headers"
+            discovery.check()
+            evidence["state_discovery"]["checked_state_points"] = len(discovery.states)
         stage = "final_anchor"
         final = _header(s, rpc.one("eth_getBlockByNumber", [hex(end), False]), end, now)
         if final != anchor:
@@ -649,12 +747,13 @@ def history(config, transport=None, now=None, monotonic=None):
         if isinstance(error, ReorgError):
             evidence["invalidated_windows"] = completed[:]
             completed.clear()
+            state_unsearched.clear()
             events.clear()
             cursor = end if newest_first else start
             invalidated = True
             stopped_at_round_count = False
         evidence["final_anchor_check"] = "changed" if invalidated else "unavailable; committed windows retain their own anchor checks"
-    missing, unsearched = [], []
+    missing, unsearched = [], list(state_unsearched)
     if start is None or end is None:
         missing.append({"from_block": start, "to_block": end, "reason": "anchor or requested range unavailable"})
     elif cursor is None or start <= cursor <= end:
@@ -681,12 +780,12 @@ def history(config, transport=None, now=None, monotonic=None):
                    any(row["shortfall"] for row in round_selection["generations"]))
     if config["detail"] == "full":
         evidence["decoded_events"] = selected_events
-    result = {"schema_version": 1, "status": "partial" if errors or missing or insufficient else "ok",
+    result = {"schema_version": 1, "status": "partial" if errors or missing or insufficient or state_unsearched else "ok",
               "coverage": {"selection": config, "requested": {"from_block": start, "to_block": end}, "completed": completed, "missing": missing,
                            "unsearched": unsearched,
                            "requested_range_complete": not bool(errors or missing or unsearched),
                            "stop_reason": ("error" if errors else "last_rounds_observed" if stopped_at_round_count
-                                           else "requested_range_scanned"),
+                                           else "state_candidates_scanned" if state_unsearched else "requested_range_scanned"),
                            "scan_order": "newest_first" if newest_first else "oldest_first",
                            "scope": ("selected ContractionVault BuybackExecuted events over checked scanned windows, not all-history absence or protocol-wide burns; silent provider omissions cannot be independently excluded"
                                      if kind == "buybacks" else "selected POL Buyback raw event accounting, not burned-token accounting or proven wallet flows; silent provider omissions cannot be independently excluded"
@@ -697,10 +796,12 @@ def history(config, transport=None, now=None, monotonic=None):
     elif kind == "pol-buybacks":
         result.update({"kind": kind, "pol_buybacks": _pol_buybacks(s, events, completed, bool(errors or missing))})
     else:
-        rows = _rounds(s, selected_events, kind, config.get("day"), bool(errors or missing)) if s is not None else []
-        if unsearched:
-            for row in rows:
+        rows = _rounds(s, selected_events, kind, config.get("day"), bool(errors or missing or state_unsearched)) if s is not None else []
+        for row in rows:
+            if stopped_at_round_count:
                 row["gaps"].append("earlier_selected_round_events_deliberately_unsearched")
+            if state_unsearched:
+                row["gaps"].append("state_discovery_intervals_unsearched")
         if round_selection is not None:
             positions = {(event["address"], str(event["fields"]["day"])): (event["block_number"], event["log_index"])
                          for event in selected_events}
@@ -716,14 +817,14 @@ def _cli_config(arguments):
     if not arguments or len(arguments) > 21 or any(len(a) > 80 for a in arguments) or arguments[0] not in ROLES:
         raise InputError("expected license, charter, buybacks or pol-buybacks and at most ten bounded flag/value pairs")
     config = {"schema_version": 1, "kind" if arguments[0] in BUYBACK_KINDS else "auction": arguments[0]}
-    flags = {"--day", "--last-rounds", "--generation", "--anchor-block", "--lookback-blocks", "--from-block", "--to-block", "--chunk-blocks", "--max-chunks", "--detail"}
+    flags = {"--day", "--last-rounds", "--generation", "--anchor-block", "--lookback-blocks", "--from-block", "--to-block", "--chunk-blocks", "--max-chunks", "--detail", "--discovery"}
     for index in range(1, len(arguments), 2):
         flag = arguments[index]
         name = flag[2:].replace("-", "_")
         if flag not in flags or name in config or index + 1 == len(arguments):
             raise InputError("unknown, repeated or valueless history flag")
         value = arguments[index + 1]
-        if flag not in ("--detail", "--generation"):
+        if flag not in ("--detail", "--generation", "--discovery"):
             if not re.fullmatch(r"[0-9]{1,78}", value):
                 raise InputError(flag + " requires ASCII decimal digits")
             value = int(value)
@@ -739,7 +840,9 @@ def main():
               "       history.py buybacks|pol-buybacks --from-block A --to-block B\n"
               "       any form: [--chunk-blocks N] [--max-chunks N] [--detail summary|full]\n"
               "       auctions: [--generation all|current|legacy] (default all); license also accepts v1.1\n"
-              "Defaults: fresh head, 1000000-block lookback, 10000-block chunks, 100 chunks.\n"
+              "       auctions: [--discovery logs|state]; state uses historical calls and at most 10-block logs\n"
+              "State discovery labels equal-state intervals unsearched, not empty; requires historical hash-pinned eth_call.\n"
+              "Defaults: auction state discovery (10-block logs); buyback log discovery (10000 blocks); fresh head, 1000000-block lookback, 100 chunks.\n"
               "Day is auction-only: an emitted round ID, not UTC or 24 hours.\n"
               "Last rounds: scan newest first, selecting latest N observed rounds per generation, not complete history.\n"
               "Other scans run oldest first; catalog-proven precreation prefixes do not consume log chunk slots.\n"
