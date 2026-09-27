@@ -286,17 +286,102 @@ class HistoryChecks(unittest.TestCase):
         self.assertEqual(empty["rounds"], [])
         self.assertEqual(empty["coverage"]["round_selection"]["generations"][0]["shortfall"], 3)
 
-    def test_last_rounds_preserve_scan_budget_gaps_even_with_enough_observed_rows(self):
+    def test_last_rounds_preserve_scan_budget_gaps_before_requested_count(self):
         fixture = RPCFixture()
         fixture.purchase(day=7)
         fixture.purchase(day=8, block=112)
-        report = fixture.run(generation="legacy", last_rounds=1, max_chunks=1, detail="full")
+        report = fixture.run(generation="legacy", last_rounds=2, max_chunks=1, detail="full")
         self.assertEqual(report["status"], "partial")
         self.assertEqual([row["day"] for row in report["rounds"]], ["8"])
-        self.assertEqual(report["coverage"]["round_selection"]["generations"][0]["shortfall"], 0)
+        self.assertEqual(report["coverage"]["round_selection"]["generations"][0]["shortfall"], 1)
         self.assertEqual((report["coverage"]["missing"][0]["from_block"], report["coverage"]["missing"][0]["to_block"]), (100, 109))
         self.assertIn("requested_window_has_coverage_gaps", report["rounds"][0]["gaps"])
         self.assertEqual(fixture.windows(), [(110, 119)])
+
+    def test_last_rounds_straddling_chunk_is_observation_only_and_skips_older_queries(self):
+        fixture = RPCFixture()
+        fixture.purchase(day=7, count=2, price=9, block=112)
+        fixture.purchase(day=7, count=3, price=2, block=122)
+        fixture.purchase(day=8, count=1, price=1, block=132)
+        report = fixture.run(generation="legacy", to_block=139, last_rounds=2, detail="full")
+        self.assertEqual(fixture.windows(), [(130, 139), (120, 129)])
+        self.assertEqual(report["status"], "ok")
+        self.assertEqual(report["coverage"]["missing"], [])
+        self.assertEqual([(w["from_block"], w["to_block"]) for w in report["coverage"]["unsearched"]], [(100, 119)])
+        self.assertFalse(report["coverage"]["requested_range_complete"])
+        self.assertEqual([row["day"] for row in report["rounds"]], ["8", "7"])
+        oldest = report["rounds"][1]
+        self.assertEqual((oldest["purchase_quantity"], oldest["consideration"]["total_raw"]), ("3", "6"))
+        self.assertEqual(oldest["last_observed_purchase"]["block_number"], 122)
+        self.assertEqual(oldest["last_observed_purchase"]["unit_price"]["raw"], "2")
+        self.assertFalse(oldest["complete_round"])
+        self.assertIn("earlier_selected_round_events_deliberately_unsearched", oldest["gaps"])
+        self.assertEqual([e["block_number"] for e in report["evidence"]["decoded_events"]], [122, 132])
+
+    def test_last_rounds_final_anchor_failure_keeps_distinct_unsearched_scope_or_invalidates(self):
+        for reorg in (False, True):
+            with self.subTest(reorg=reorg):
+                fixture = RPCFixture()
+                fixture.purchase(day=7, block=132)
+                def mutation(number, count, header):
+                    if number == 139 and count == 4:
+                        if reorg:
+                            return {**header, "hash": block_hash(140)}
+                        raise S.SnapshotError("RPC HTTP request failed", diagnostics=fixture.diagnostics)
+                    return header
+                fixture.header_mutation = mutation
+                report = fixture.run(generation="legacy", to_block=139, last_rounds=1)
+                self.assertEqual(fixture.windows(), [(130, 139)])
+                self.assertEqual(report["status"], "partial")
+                self.assertEqual(report["coverage"]["stop_reason"], "error")
+                self.assertFalse(report["coverage"]["requested_range_complete"])
+                if reorg:
+                    self.assertEqual(report["rounds"], [])
+                    self.assertEqual(report["coverage"]["unsearched"], [])
+                    self.assertEqual([(w["from_block"], w["to_block"]) for w in report["coverage"]["missing"]], [(100, 139)])
+                else:
+                    self.assertEqual(report["rounds"][0]["purchase_quantity"], "1")
+                    self.assertEqual(report["coverage"]["missing"], [])
+                    self.assertEqual([(w["from_block"], w["to_block"]) for w in report["coverage"]["unsearched"]], [(100, 129)])
+                    self.assertEqual(report["errors"]["final_anchor"]["diagnostics"], fixture.diagnostics)
+
+    def test_last_rounds_waits_for_each_deployed_generation(self):
+        fixture = RPCFixture()
+        deployment = fixture.catalog["contracts"]["licenseAuction"]["deployment_block"]
+        fixture.head = deployment + 39
+        roles = ("licenseAuction", "licenseAuctionLegacy", "licenseAuctionV11")
+        for role, delta in zip(roles, (32, 22, 12)):
+            fixture.purchase(day=7, count=delta, block=deployment + delta)["address"] = fixture.addresses[role]
+        report = fixture.run(from_block=deployment, to_block=fixture.head, last_rounds=1)
+        self.assertEqual(fixture.windows(), [(deployment + 30, deployment + 39),
+                                            (deployment + 20, deployment + 29),
+                                            (deployment + 10, deployment + 19)])
+        self.assertEqual(report["status"], "ok")
+        self.assertEqual({r["address"]: r["purchase_quantity"] for r in report["rounds"]},
+                         {fixture.addresses[role]: str(delta) for role, delta in zip(roles, (32, 22, 12))})
+        self.assertEqual([(w["from_block"], w["to_block"]) for w in report["coverage"]["unsearched"]],
+                         [(deployment, deployment + 9)])
+
+    def test_last_rounds_does_not_wait_for_undeployed_generations(self):
+        fixture = RPCFixture()
+        fixture.purchase(day=7, block=132)
+        report = fixture.run(to_block=139, last_rounds=1)
+        self.assertEqual(fixture.windows(), [(130, 139)])
+        self.assertEqual(report["status"], "ok")
+        self.assertEqual({r["contract_role"]: r["status"] for r in report["coverage"]["round_selection"]["generations"]},
+                         {"licenseAuction": "not_deployed_at_anchor", "licenseAuctionV11": "not_deployed_at_anchor",
+                          "licenseAuctionLegacy": "requested_observed_rows_selected"})
+
+    def test_without_last_rounds_scans_whole_window_and_combines_round_fragments(self):
+        fixture = RPCFixture()
+        fixture.purchase(day=7, count=2, price=9, block=112)
+        fixture.purchase(day=7, count=3, price=2, block=132)
+        report = fixture.run(generation="legacy", to_block=139)
+        self.assertEqual(fixture.windows(), [(100, 109), (110, 119), (120, 129), (130, 139)])
+        self.assertEqual(report["status"], "ok")
+        self.assertEqual(report["coverage"]["unsearched"], [])
+        self.assertTrue(report["coverage"]["requested_range_complete"])
+        self.assertEqual((report["rounds"][0]["purchase_quantity"], report["rounds"][0]["consideration"]["total_raw"]), ("5", "24"))
 
     def test_last_rounds_default_stays_a_finite_lookback_not_deployment_history(self):
         fixture = RPCFixture()
@@ -311,7 +396,7 @@ class HistoryChecks(unittest.TestCase):
         self.assertEqual(report["coverage"]["missing"], [])
         self.assertEqual(fixture.windows()[0][1], fixture.head)
 
-    def test_young_v12_default_lookback_preserves_tip_and_purchase_chronology(self):
+    def test_young_v12_shortfall_scans_postcreation_logs_and_preserves_chronology(self):
         fixture = RPCFixture()
         deployment = fixture.catalog["contracts"]["licenseAuction"]["deployment_block"]
         fixture.head = deployment + 15_000
@@ -319,9 +404,13 @@ class HistoryChecks(unittest.TestCase):
         fixture.purchase(day=7, count=2, price=9, block=deployment)["address"] = current
         fixture.purchase(day=7, count=3, price=2, block=fixture.head)["address"] = current
         report = history.history({"schema_version": 1, "auction": "license", "generation": "current",
-                                  "last_rounds": 1, "detail": "full"},
+                                  "last_rounds": 2, "detail": "full"},
                                  transport=fixture, now=lambda: NOW, monotonic=lambda: 0)
-        self.assertEqual(report["status"], "ok")
+        self.assertEqual(report["status"], "partial")
+        self.assertEqual(report["coverage"]["round_selection"]["generations"][0]["shortfall"], 1)
+        self.assertEqual(report["coverage"]["unsearched"], [])
+        self.assertTrue(report["coverage"]["requested_range_complete"])
+        self.assertEqual(report["coverage"]["stop_reason"], "requested_range_scanned")
         self.assertEqual(fixture.windows(), [(fixture.head - 9999, fixture.head), (deployment, fixture.head - 10_000)])
         self.assertEqual(report["coverage"]["missing"], [])
         self.assertEqual(report["coverage"]["completed"][0]["scan_status"], "no_deployed_emitters")
@@ -335,7 +424,7 @@ class HistoryChecks(unittest.TestCase):
         self.assertEqual(row["last_observed_purchase"]["unit_price"]["raw"], "2")
         self.assertEqual([event["block_number"] for event in report["evidence"]["decoded_events"]], [deployment, fixture.head])
 
-    def test_young_v12_one_chunk_keeps_tip_and_marks_older_coverage_missing(self):
+    def test_young_v12_stops_at_requested_count_and_discloses_unsearched_prefix(self):
         fixture = RPCFixture()
         deployment = fixture.catalog["contracts"]["licenseAuction"]["deployment_block"]
         fixture.head = deployment + 15_000
@@ -345,20 +434,24 @@ class HistoryChecks(unittest.TestCase):
         report = history.history({"schema_version": 1, "auction": "license", "generation": "current",
                                   "last_rounds": 1, "max_chunks": 1},
                                  transport=fixture, now=lambda: NOW, monotonic=lambda: 0)
-        self.assertEqual(report["status"], "partial")
+        self.assertEqual(report["status"], "ok")
+        self.assertEqual(report["coverage"]["stop_reason"], "last_rounds_observed")
+        self.assertFalse(report["coverage"]["requested_range_complete"])
+        self.assertEqual(report["coverage"]["missing"], [])
         self.assertEqual(fixture.windows(), [(fixture.head - 9999, fixture.head)])
         self.assertEqual([row["day"] for row in report["rounds"]], ["2"])
         self.assertEqual(report["rounds"][0]["last_observed_purchase"]["block_number"], fixture.head)
-        self.assertEqual([(row["from_block"], row["to_block"]) for row in report["coverage"]["missing"]],
+        self.assertEqual([(row["from_block"], row["to_block"]) for row in report["coverage"]["unsearched"]],
                          [(fixture.head - 999_999, fixture.head - 10_000)])
         self.assertEqual(report["coverage"]["round_selection"]["generations"][0]["shortfall"], 0)
-        self.assertIn("requested_window_has_coverage_gaps", report["rounds"][0]["gaps"])
+        self.assertIn("earlier_selected_round_events_deliberately_unsearched", report["rounds"][0]["gaps"])
+        self.assertFalse(report["rounds"][0]["complete_round"])
 
     def test_last_rounds_reverse_scan_reorg_discards_already_checked_tip(self):
         fixture = RPCFixture()
         fixture.purchase(day=7, block=112)
         fixture.purchase(day=7, block=102)["removed"] = True
-        report = fixture.run(generation="legacy", last_rounds=1, detail="full")
+        report = fixture.run(generation="legacy", last_rounds=2, detail="full")
         self.assertEqual(fixture.windows(), [(110, 119), (100, 109)])
         self.assertEqual(report["rounds"], [])
         self.assertEqual(report["evidence"]["decoded_events"], [])

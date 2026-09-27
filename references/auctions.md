@@ -1,5 +1,7 @@
 # Ongoing charter and license auctions
 
+Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
+
 Current identity/interface: `sr-v1-2-deployment-evidence` and `sr-v1-2-read-interface`, binding both current auctions and license order views. Published changes: `sr-protocol-v1-2-announcement` and the earlier `sr-protocol-v1-1-announcement`. The freshly reviewed `sr-whitepaper-v1` §§6–8 still contains superseded charter and direct-purchase descriptions; [the conflict below](#protocol-v12-limit-orders-and-charter-cadence) is explicit. Exact reference values and scopes live in [participation parameters](../assets/parameters/participation.json); none is a saved live setting. These post-genesis auctions are not the [founding sale](launch-mint.md).
 
 ## Current branch-auction status: getters first
@@ -56,7 +58,7 @@ The orderbook views belong to the **same v1.2 license-auction address**, not a s
 
 Optionally supply `--charter-ids N,M` for up to ten independently known public charter IDs. At the same block the helper reads `bids(charterId) → (bidder,count,maxUnitPrice)` and `fillable(charterId)` using the [authenticated ABI](../assets/interfaces/v1-2-orderbook-reads.json). No ID is required to read a page; absent charter IDs simply leave charter-specific detail unrequested. `maxUnitPrice` stays raw because denomination/scale is unestablished. A bidder is not automatically the current owner, quantity/limit is not acquired branches/executed cost, and `fillable` is not a fill guarantee. A page is not proof of complete enumeration, and separate invocations have separate anchors.
 
-Missing or failed reads are unknown, not no orders. Explain or prepare unsigned actions and permitted nonbroadcast simulations under [safety](safety.md); never request signatures, sign or submit placement/cancellation. [Updates](updates.md#protocol-v12-announced-changes) and [contracts](contracts.md#v12-auction-identities-and-order-reads) separate policy from implementation evidence.
+Missing or failed reads are unknown, not no orders. Prefer host-managed Alchemy or `SRSTACK_RPC_URL` for orderbook work; see [provider guidance](execution.md#rpc-provider-guidance). [Updates](updates.md#protocol-v12-announced-changes) and [contracts](contracts.md#v12-auction-identities-and-order-reads) separate policy from implementation evidence.
 
 ## Published v1.1 license changes
 

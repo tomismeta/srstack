@@ -4,7 +4,7 @@
 With no arguments, supply JSON on stdin: {"schema_version":1,"view":"protocol"}.
 Views: protocol, charter (requires integer charter_id), auctions, treasury, orderbook.
 CLI: protocol|auctions [--detail summary|full]
-     charter --id UINT256 [--detail summary|full]
+     charter --id UINT256 [--detail summary|full|activity]
      treasury [--asset ADDRESS] [--detail summary|full]
      orderbook --start UINT256 --count 1..100 [--charter-ids CSV] [--detail summary|full]
 Orderbook JSON requires start/count; optional charter_ids: at most 10 unique uint256s.
@@ -14,6 +14,8 @@ Treasury JSON accepts optional reserve_asset: one nonzero public asset address.
 It is getter argument data only, never an eth_call target. Holdings use raw units.
 CLI mode never reads stdin. UINT256 is 1..78 ASCII decimal digits in uint256 range.
 Optional detail: summary (default) or full (raw RPC evidence and call mapping).
+Activity detail is charter-only: owner, raw activity/transfer clocks and dormancy period.
+No inferred dormancy deadline, eligibility or last-check-in time.
 Flags must be exact, unrepeated, separate tokens; --help must stand alone.
 RPC: SRSTACK_RPC_URL, otherwise ALCHEMY_API_KEY, otherwise free public RPC.
 No wallet, signing, simulation, or filesystem writes.
@@ -76,6 +78,10 @@ INCENTIVES_BALANCE = "incentives_vault_standard_balance"
 # Changing the callable surface requires deliberate review and a new fingerprint.
 CALLS_SHA256 = "bb3bbf086d799a02bdcb7c99288a701ada290bcfb9c04a204aac5bbb8af697e8"
 ORDERBOOK_SHA256 = "5f959244f3e8f50c077c3e4f81e4c733a838e300c3b7b9abe281ba992875d0d4"
+ACTIVITY_SHA256 = "96f08e8fee853ecefdaf117ece3813c9059169e59ca67f3ed19b89117afcc4a2"
+RPC_CONFIGURATION_HINT = (
+    "RPC configuration: SRSTACK_RPC_URL or ALCHEMY_API_KEY via host-managed environment only. "
+    "No retry or failover was attempted.")
 
 
 class InputError(ValueError):
@@ -240,8 +246,10 @@ def _validate_input(config):
             raise ValueError("unsupported schema_version")
         if not isinstance(config["view"], str) or config["view"] not in PROFILES:
             raise ValueError("unsupported view")
-        if config.get("detail", "summary") not in ("summary", "full"):
+        if config.get("detail", "summary") not in ("summary", "full", "activity"):
             raise ValueError("unsupported detail")
+        if config.get("detail") == "activity" and config["view"] != "charter":
+            raise ValueError("activity detail is only accepted for charter view")
         if config["view"] == "charter":
             if not _integer(config.get("charter_id")):
                 raise ValueError("charter requires a uint256 integer charter_id")
@@ -431,7 +439,7 @@ def _validate_package(interface, catalog):
     return {role: entities[identifier] for role, identifier in contracts.items()}
 
 
-def _load_package(orderbook=False):
+def _load_package(orderbook=False, activity=False):
     descriptors = []
     try:
         if (not all(hasattr(os, flag) for flag in ("O_DIRECTORY", "O_NOFOLLOW", "O_NONBLOCK"))
@@ -450,6 +458,21 @@ def _load_package(orderbook=False):
             loaded.append(data)
             hashes["assets/" + folder + "/" + filename] = digest
         interface, catalog = loaded
+        if activity:
+            directory = _directory(assets, "interfaces")
+            descriptors.append(directory)
+            data, digest = _read_file(directory, "charter-activity-reads.json")
+            fingerprint = hashlib.sha256(json.dumps(data, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+            if fingerprint != ACTIVITY_SHA256:
+                raise ValueError("unreviewed charter activity interface")
+            addresses = _validate_package(interface, catalog)
+            for role, record in data["contracts"].items():
+                if (record["entity_id"] != interface["contracts"][role]
+                        or record["address"].lower() != addresses[role]):
+                    raise ValueError("activity target does not match fixed catalog")
+            interface["activity"] = data
+            hashes["assets/interfaces/charter-activity-reads.json"] = digest
+            return interface, addresses, hashes
         if orderbook:
             directory = _directory(assets, "interfaces")
             descriptors.append(directory)
@@ -539,6 +562,8 @@ def _http_failure(response, deadline, monotonic, failure):
     diagnostics = {"http_status": response.status, "endpoint": _rpc_endpoint()["label"], "headers": {},
                    "response_excerpt": "", "excerpt_bytes": 0, "truncated": True,
                    "read_error": None, "untrusted_response": True, "cause": "unconfirmed"}
+    if response.status in (401, 403):
+        diagnostics["configuration_hint"] = RPC_CONFIGURATION_HINT
     message = ("endpoint denied this request" if response.status in (401, 403)
                else "RPC HTTP request failed; redirects are not followed")
     error = SnapshotError(message, diagnostics)
@@ -808,6 +833,8 @@ def _calldata(call, config):
     for kind, argument in zip(call["input_types"], call["args"]):
         if argument == "$charter_id":
             argument = config["charter_id"]
+        elif argument == "$charter_owner":
+            argument = config["charter_owner"]
         elif argument == "$reserve_asset":
             argument = config["reserve_asset"]
         result += format(int(argument, 16) if kind == "address" else int(argument), "064x")
@@ -920,7 +947,8 @@ def _derive(config, raw, values, errors, timestamp):
         if not available("charter_owner") or raw["charter_owner"] == ZERO_ADDRESS:
             errors.setdefault("charter_owner", "charter ownership unavailable")
             values.pop("charter_owner", None)
-            for identifier in ("charter_branches", "charter_pending"):
+            dependent_values = ("owner_last_active", "charter_last_transferred") if config["detail"] == "activity" else ("charter_branches", "charter_pending")
+            for identifier in dependent_values:
                 values.pop(identifier, None)
                 errors[identifier] = "valid charter owner required"
         elif active_stream and available("charter_branches", "total_branches"):
@@ -929,6 +957,17 @@ def _derive(config, raw, values, errors, timestamp):
                 amount("charter_gross_daily", (raw["stream_rate_per_second"] * branches * 86400) // total, "STANDARD/day")
             else:
                 errors["charter_gross_daily"] = "positive total branches and consistent charter branches required"
+        if config["detail"] == "activity":
+            derived["charter_activity"] = {
+                "basis": "publisher_abi_raw_observations",
+                "owner_wallet": raw["charter_owner"] if available("charter_owner") else None,
+                "dormancy_status": "unknown", "deadline": None, "last_check_in": None,
+                "unknown_reasons": [
+                    "timestamp_and_period_units_unverified",
+                    "deployed_reset_and_transfer_grace_semantics_unverified",
+                    "lastActive_is_not_a_checkIn_specific_timestamp",
+                ],
+            }
     if config["view"] == "auctions":
         for prefix in ("license", "charter_auction"):
             started, paused, remaining = (prefix + suffix for suffix in ("_started", "_paused", "_remaining"))
@@ -1008,7 +1047,8 @@ def _derive(config, raw, values, errors, timestamp):
 def snapshot(config, transport=None, now=None, monotonic=None):
     """Read a snapshot; injectable clocks/byte transport support offline checks."""
     config = _validate_input(config)
-    interface, addresses, hashes = _load_package(orderbook=config["view"] == "orderbook")
+    interface, addresses, hashes = _load_package(orderbook=config["view"] == "orderbook",
+                                                activity=config["detail"] == "activity")
     now = now or time.time
     rpc = _RPC(transport or _https, monotonic or time.monotonic, config["detail"] == "full")
     if _quantity(rpc.one("eth_chainId", [])) != CHAIN_ID:
@@ -1019,6 +1059,8 @@ def snapshot(config, transport=None, now=None, monotonic=None):
                 and ("$reserve_asset" not in call["args"] or "reserve_asset" in config)]
     if config["view"] == "orderbook":
         selected = _orderbook_calls(interface["orderbook"], config)
+    if config["detail"] == "activity":
+        selected = [call for call in selected if call["id"] == "charter_owner"] + interface["activity"]["calls"]
     if config["detail"] == "summary":
         if config["view"] == "charter":
             selected = [call for call in selected if call["id"] in CHARTER_SUMMARY_CALLS]
@@ -1050,11 +1092,11 @@ def snapshot(config, transport=None, now=None, monotonic=None):
 
     mapping, raw = [], {}
 
-    def fetch(calls):
+    def fetch(calls, arguments=None):
         callable_calls = [call for call in calls if call["contract"] not in bad_roles
                           and not (call["id"] == INCENTIVES_BALANCE and "incentivesVault" in bad_roles)]
         items = [{"id": call["id"], "contract": call["contract"], "address": addresses[call["contract"]],
-                  "signature": call["signature"], "data": _calldata(call, config)} for call in callable_calls]
+                  "signature": call["signature"], "data": _calldata(call, arguments or config)} for call in callable_calls]
         mapping.extend(items)
         responses = rpc.batch([("eth_call", [{"to": item["address"], "data": item["data"]}, tag]) for item in items])
         for call, (result, error) in zip(callable_calls, responses):
@@ -1072,7 +1114,14 @@ def snapshot(config, transport=None, now=None, monotonic=None):
             bad_roles.add(call["contract"])
             errors[call["id"]] = "contract binding unavailable or does not match fixed catalog"
     reject_dependents()
-    fetch([call for call in selected if call["id"] not in ASSET_DETAILS])
+    owner_calls = [call for call in selected if "$charter_owner" in call["args"]]
+    fetch([call for call in selected if call["id"] not in ASSET_DETAILS and call not in owner_calls])
+    if owner_calls:
+        if "charterNFT" not in bad_roles and raw.get("charter_owner", ZERO_ADDRESS) != ZERO_ADDRESS:
+            fetch(owner_calls, dict(config, charter_owner=raw["charter_owner"]))
+        else:
+            for call in owner_calls:
+                errors[call["id"]] = "valid charter owner required"
     asset_details = [call for call in selected if call["id"] in ASSET_DETAILS]
     if raw.get(ASSET_APPROVAL) is True and "expansionVault" not in bad_roles:
         fetch(asset_details)
@@ -1108,6 +1157,9 @@ def snapshot(config, transport=None, now=None, monotonic=None):
                 "retrieved_at": datetime.fromtimestamp(now(), timezone.utc).isoformat().replace("+00:00", "Z"),
                 "interface_source_ids": interface["source_ids"], "package_sha256": hashes,
                 "rpc_url": _rpc_endpoint()["label"]}
+    if config["detail"] == "activity":
+        evidence["interface_source_ids"] = interface["source_ids"] + interface["activity"]["source_ids"]
+        evidence["activity_publisher_evidence"] = interface["activity"]["publisher_evidence"]
     if config["detail"] == "full":
         evidence.update({"call_mapping": mapping, "rpc_exchanges": rpc.exchanges,
                          "publisher_bundle": interface["publisher_bundle"]})
@@ -1115,7 +1167,7 @@ def snapshot(config, transport=None, now=None, monotonic=None):
               "values": values, "derived": derived, "errors": errors, "evidence": evidence, "note": NOTE}
     if config["view"] == "charter":
         result["charter_id"] = config["charter_id"]
-        if "charter_pending" not in values:
+        if config["detail"] != "activity" and "charter_pending" not in values:
             result["message"] = "Charter pending unavailable; no accrued-balance valuation."
     if "reserve_asset" in config:
         result["reserve_asset"] = config["reserve_asset"]

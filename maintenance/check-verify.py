@@ -332,6 +332,7 @@ class VerifyChecks(unittest.TestCase):
                                     "authorization": "private-token", "x-request-id": "request-123"},
                                 "response_excerpt": "\x1b" + "denied " * 1000,
                                 "truncated": False, "read_error": None,
+                                "configuration_hint": "Paste private-rpc-key into https://private-provider.invalid/",
                                 "unexpected": "private-metadata"}}}
         self.helper("snapshot.py", "import json, sys\nsys.stderr.write(json.dumps(" + repr(payload) + "))\nraise SystemExit(5)\n")
         report, code = self.verify.run({"--charter": "1", "--price": True})
@@ -344,6 +345,17 @@ class VerifyChecks(unittest.TestCase):
         self.assertLessEqual(len(diagnostics["response_excerpt"].encode("utf-8")), 2048)
         self.assertTrue(diagnostics["response_excerpt"].isprintable())
         self.assertNotIn("private-", json.dumps(report))
+        self.assertNotIn("configuration_hint", diagnostics)
+
+    def test_configuration_hint_is_excluded_for_non_denial_statuses(self):
+        hint = ("RPC configuration: SRSTACK_RPC_URL or ALCHEMY_API_KEY via host-managed environment only. "
+                "No retry or failover was attempted.")
+        for status in (200, 302, 429, 500, 503):
+            with self.subTest(status=status):
+                diagnostics = self.verify._http_diagnostics({
+                    "endpoint": "https://rpc.mainnet.chain.robinhood.com/",
+                    "http_status": status, "configuration_hint": hint})
+                self.assertNotIn("configuration_hint", diagnostics)
 
     def test_unstructured_and_oversized_error_details_are_not_dumped(self):
         self.helper("price.py", "import sys\nsys.stderr.write('raw stderr must not escape')\nraise SystemExit(5)\n")

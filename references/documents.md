@@ -1,5 +1,7 @@
 # Documents and reviewed coverage
 
+Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
+
 [Coverage](../assets/coverage.json) maps the reviewed whitepaper and companion pages to topic references. The [source index](../assets/sources.json) resolves provenance and review dates; [parameters](../assets/parameters.json) holds published rule definitions, reference values and limits—not current configuration. Coverage means source reading, not code inspection, execution or independent confirmation.
 
 ## Primary-source routes
@@ -21,7 +23,7 @@
 | `sr-pol-buyback-event-interface` | Explorer-decoded/raw-receipt-corroborated POL acquisition event only: raw `tokensOut` and destination, not assumed token units, burns or wallet flows. | [History](auction-history.md), [reserves](reserves.md) |
 | `sr-protocol-control-dependencies` | Historical administrative SafeProxy / SafeL2 / MultiSend relationships; current owners and Safe configuration require refresh. No inference that monetary modules are proxy-upgradeable. | [Contracts](contracts.md#v11-identities-and-control-dependencies), [risks](risks.md) |
 | `sr-robinhood-rpc-guidance` | [Official connecting guide](https://docs.robinhood.com/chain/connecting/): Alchemy recommended for production; public RPC is rate-limited, archive endpoints needed for historical reads. Recommendation, not measured uptime. | [RPC guidance](execution.md#rpc-provider-guidance) |
-| `sr-staking-preview` | [S-Bill explanation](https://www.standardreserve.xyz/app/staking/about/) and dated component preview review: intended buyback-funded premiums, not live staking, authenticated contracts or sample-derived yields. Refresh for current availability. | [S-Bill boundaries](updates.md#s-bills-reviewed-product-description-and-preview) |
+| `sr-staking-preview` | [S-Bill explanation](https://www.standardreserve.xyz/app/staking/about/) and dated component preview: intended buyback-funded premiums, not authenticated live positions, deployment or yields. A denied fresh refresh leaves availability unknown, not “not live.” | [S-Bill boundaries](updates.md#s-bills-reviewed-product-description-and-preview) |
 | `sr-owner-check-in-frontend` | Source-text review of the September25 publisher bundle: owner check-in UI/action, not an exercised wallet flow, zero-gas claim or new contract identity. | [Check-in evidence](updates.md#protocol-v11-announced-changes), [dormancy](exits.md#dormancy--10) |
 | `sr-sbill-announcement` | [Official S-Bill post](https://x.com/standard_rsv/status/2102877169852747865), displayed Sep23: non-dilutive variable-APR staking and contracts entering audits. Not audit completion or deployment proof. | [S-Bill evidence and inspection](updates.md#s-bills-reviewed-product-description-and-preview) |
 | `sr-protocol-v1-2-announcement` | [Official release post](https://x.com/standard_rsv/status/2103991044119654721): branch limit bids/open orderbook/FCFS best-attempt keeper; one charter per branch period, initial 5.5 ETH then 3× clearing. Security review is reported, not independently checked; opening is not a current quote. | [v1.2 changes](updates.md#protocol-v12-announced-changes), [auctions](auctions.md) |
@@ -61,4 +63,4 @@ Client-rendered app routes may return only HTML metadata. Follow the page's own 
 
 The current whitepaper revision label and discovery/retrieval dates do not establish publication chronology. Source-reviewed token/Hook semantics, publisher ABI leads and current observations are distinct evidence layers; none turns a companion-page review into an audit or a stored verification verdict.
 
-This coverage is not a whole-site audit. [Updates](updates.md) routes current topic questions; [research workflow](research-workflow.md) describes scoped evidence gathering, with unsigned preparation and nonbroadcast simulation governed by [safety](safety.md).
+This coverage is not a whole-site audit. [Updates](updates.md) routes topic questions; [research workflow](research-workflow.md) describes scoped evidence gathering.

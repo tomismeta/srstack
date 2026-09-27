@@ -1,5 +1,7 @@
 # Charters and branches
 
+Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
+
 Publisher design: [current sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§6–10,12–13 and `sr-charters-page-v1`. Exact ongoing settings: [participation parameters](../assets/parameters/participation.json); founding settings: [launch parameters](../assets/parameters/launch.json).
 
 ## How are my branches doing?

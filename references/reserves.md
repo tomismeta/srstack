@@ -1,5 +1,7 @@
 # Fees, reserves and defense
 
+Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
+
 Published accounting and v1.1 policy, not saved holdings or verified privileges. Sources: `sr-whitepaper-v1` §§3,6,11–12,15 and `sr-protocol-v1-1-announcement` via the [source index](../assets/sources.json). Exact reference scopes: [reserve parameters](../assets/parameters/reserves.json), [launch parameters](../assets/parameters/launch.json). Current balances, owners and routing require live reads.
 
 ## Founding funding is not the ongoing fee split
@@ -31,7 +33,7 @@ For current routing/liability and vault observations use `snapshot.py treasury`.
 
 `history.py buybacks` reports Contraction Vault `BuybackExecuted(uint256,uint256)` ETH/ STANDARD burned-token event accounting. **`history.py pol-buybacks` is separate**: POL Buyback `BuybackExecuted(uint256,uint256,address)` reports ETH input, raw `tokensOut` and destination. The POL event alone does not authenticate token identity/decimals, burn accounting or wallet movements, so no guessed token-binding getter or normalized token amount is added. Neither mode is aggregate burn history or independent receipt/transfer reconciliation. [Inspection](inspection.md#common-question-paths) and [history](auction-history.md) retain those boundaries.
 
-The publisher-linked ABIs contain successor holdings-migration entries for both vaults and FeeSplitter. Asset movement to a successor is distinct from changing deployed code; whitepaper non-upgradeability language is not a blanket proof that holdings can never move between components. The ABI alone establishes neither deployment correspondence nor who can move what, registry replacement rules or present authority. Keep these as implementation questions, not custody assurances; requested migration explanations or unsigned preparation follow [safety](safety.md), without signing or submission. [sr-contract-directory; contracts](contracts.md)
+Publisher ABIs name successor holdings-migration entries for both vaults and FeeSplitter. Asset movement is distinct from changing deployed code; whitepaper non-upgradeability is not proof that holdings cannot move between components. An ABI alone establishes neither deployment correspondence, who can move what, Registry replacement rules nor present authority. These are implementation questions, not custody assurances. [sr-contract-directory; contracts](contracts.md)
 
 The [Second Mandate](updates.md#second-mandate-liquidity-for-tokenized-stocks) proposes seeding tokenized-stock markets, coordinating external capital and returning trading fees to the Reserve for further markets. It establishes neither a new ongoing ETH split nor deployed positions or holder revenue rights. Its reserve-position panel is explicitly sample content; the separate “as of today” graphic uses fixed values in the reviewed component, not live observations. Fresh retrieval alone does not establish holdings. Keep this strategy separate from whitepaper accounting and the specific official v1.1 POL change. [sr-second-mandate-manifesto]
 

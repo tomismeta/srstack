@@ -374,7 +374,7 @@ def _price(s, value, auction):
             "raw": str(value), "scaled18": s._scaled(value, 18)}
 
 
-def _select_round_events(events, config, emitters):
+def _select_round_events(events, config, emitters, end):
     """Filter only checked observations; never infer unseen rounds or closures."""
     if "day" in config:
         return [event for event in events if event["fields"].get("day") == config["day"]], None
@@ -389,13 +389,15 @@ def _select_round_events(events, config, emitters):
     for address, emitter in emitters.items():
         days = sorted(latest[address], key=latest[address].get, reverse=True)[:count]
         selected.update((address, day) for day in days)
-        shortfall = max(0, count - len(days))
+        deployed = end is None or emitter["deployment_block"] <= end
+        shortfall = max(0, count - len(days)) if deployed else 0
         generations.append({"address": address, "contract_role": emitter["role"], "entity_id": emitter["entity_id"],
                             "observed_rounds": len(latest[address]), "selected_rounds": len(days), "shortfall": shortfall,
-                            "status": "insufficient_observed_rounds" if shortfall else "requested_observed_rows_selected"})
+                            "status": ("not_deployed_at_anchor" if not deployed else "insufficient_observed_rounds"
+                                       if shortfall else "requested_observed_rows_selected")})
     return ([event for event in events if (event["address"], event["fields"].get("day")) in selected],
             {"requested_per_generation": count, "ordering": "last_observed_event_position_descending",
-             "scope": "latest observed rounds within checked windows only; unseen rounds, complete rounds and closing prices not established",
+             "scope": "latest observed rounds within checked windows only; shortfall describes only these finite observations, not all history; unseen earlier events, complete quantities, complete rounds and closing prices not established",
              "generations": generations})
 
 
@@ -526,7 +528,7 @@ def history(config, transport=None, now=None, monotonic=None):
         start = max(0, end - config["lookback_blocks"] + 1)
     newest_first = "last_rounds" in config
     cursor, anchor, budget, s = end if newest_first else start, None, None, None
-    log_chunks = 0
+    log_chunks, stopped_at_round_count = 0, False
     evidence = {"chain_id": 4663, "accounting": ("BuybackExecuted ethSpent and tokensBurned; event accounting, not proof of actual ERC20 movement or protocol-wide burns"
                                                if kind == "buybacks" else "BuybackExecuted ethIn, raw tokensOut and reported destination; no established token denomination, burns or wallet flows"
                                                if kind == "pol-buybacks" else "purchase events; receipts and payment flows not independently reconciled"),
@@ -576,6 +578,7 @@ def history(config, transport=None, now=None, monotonic=None):
         if kind == "buybacks":
             evidence["anchor_standard_binding"] = _buyback_binding(s, rpc, interface, addresses, end)
         seen_days = set()
+        round_counts = {address: 0 for address, emitter in emitters.items() if emitter["deployment_block"] <= end}
         seen_transactions, seen_block_hashes = {}, {anchor["hash"]: anchor["number"]}
         previous_timestamp = None
         first_deployment = min(emitter["deployment_block"] for emitter in emitters.values())
@@ -620,6 +623,8 @@ def history(config, transport=None, now=None, monotonic=None):
             days = {(e["address"], e["fields"]["day"]) for e in observed if "day" in e["fields"] and ("day" not in config or e["fields"]["day"] == config["day"])}
             if len(seen_days | days) > MAX_ROUNDS:
                 raise HistoryError("history observed-round budget exhausted")
+            for address, _ in days - seen_days:
+                round_counts[address] += 1
             seen_days.update(days)
             events.extend(observed)
             digest = hashlib.sha256(json.dumps(list(headers.values()), sort_keys=True, separators=(",", ":")).encode()).hexdigest()
@@ -627,6 +632,13 @@ def history(config, transport=None, now=None, monotonic=None):
                               "scan_status": "logs_checked" if selected else "no_deployed_emitters",
                               "matched_events": len(observed), "checked_headers_sha256": digest})
             cursor = first - 1 if newest_first else stop + 1
+            # Last-N requests select observations, not complete round lifetimes.
+            # Commit the whole chunk before stopping; explicitly retain the
+            # older unsearched prefix, including possible selected-round events.
+            if (newest_first and cursor >= max(start, first_deployment) and round_counts
+                    and all(count >= config["last_rounds"] for count in round_counts.values())):
+                stopped_at_round_count = True
+                break
         stage = "final_anchor"
         final = _header(s, rpc.one("eth_getBlockByNumber", [hex(end), False]), end, now)
         if final != anchor:
@@ -640,14 +652,17 @@ def history(config, transport=None, now=None, monotonic=None):
             events.clear()
             cursor = end if newest_first else start
             invalidated = True
+            stopped_at_round_count = False
         evidence["final_anchor_check"] = "changed" if invalidated else "unavailable; committed windows retain their own anchor checks"
-    missing = []
+    missing, unsearched = [], []
     if start is None or end is None:
         missing.append({"from_block": start, "to_block": end, "reason": "anchor or requested range unavailable"})
     elif cursor is None or start <= cursor <= end:
-        missing.append({"from_block": start if newest_first or cursor is None else cursor,
-                        "to_block": end if not newest_first or cursor is None else cursor,
-                        "reason": next(reversed(errors.values()))["message"] if errors else "not scanned"})
+        remainder = {"from_block": start if newest_first or cursor is None else cursor,
+                     "to_block": end if not newest_first or cursor is None else cursor,
+                     "reason": ("last_rounds_observed; older events, including earlier fragments of selected rounds, deliberately unsearched"
+                                if stopped_at_round_count else next(reversed(errors.values()))["message"] if errors else "not scanned")}
+        (unsearched if stopped_at_round_count else missing).append(remainder)
     # Query direction must never change first/last purchase accounting or
     # overwrite a round's newest event position with an older observation.
     events.sort(key=lambda event: (event["block_number"], event["log_index"]))
@@ -661,13 +676,17 @@ def history(config, transport=None, now=None, monotonic=None):
     if budget is not None:
         evidence["usage"] = {"rpc_requests": budget.requests, "http_requests": budget.http_requests, "response_bytes": budget.response_bytes,
                              "returned_logs": budget.logs, "log_chunks": log_chunks}
-    selected_events, round_selection = _select_round_events(events, config, emitters)
+    selected_events, round_selection = _select_round_events(events, config, emitters, end)
     insufficient = round_selection is not None and (not round_selection["generations"] or
                    any(row["shortfall"] for row in round_selection["generations"]))
     if config["detail"] == "full":
         evidence["decoded_events"] = selected_events
     result = {"schema_version": 1, "status": "partial" if errors or missing or insufficient else "ok",
               "coverage": {"selection": config, "requested": {"from_block": start, "to_block": end}, "completed": completed, "missing": missing,
+                           "unsearched": unsearched,
+                           "requested_range_complete": not bool(errors or missing or unsearched),
+                           "stop_reason": ("error" if errors else "last_rounds_observed" if stopped_at_round_count
+                                           else "requested_range_scanned"),
                            "scan_order": "newest_first" if newest_first else "oldest_first",
                            "scope": ("selected ContractionVault BuybackExecuted events over checked scanned windows, not all-history absence or protocol-wide burns; silent provider omissions cannot be independently excluded"
                                      if kind == "buybacks" else "selected POL Buyback raw event accounting, not burned-token accounting or proven wallet flows; silent provider omissions cannot be independently excluded"
@@ -679,6 +698,9 @@ def history(config, transport=None, now=None, monotonic=None):
         result.update({"kind": kind, "pol_buybacks": _pol_buybacks(s, events, completed, bool(errors or missing))})
     else:
         rows = _rounds(s, selected_events, kind, config.get("day"), bool(errors or missing)) if s is not None else []
+        if unsearched:
+            for row in rows:
+                row["gaps"].append("earlier_selected_round_events_deliberately_unsearched")
         if round_selection is not None:
             positions = {(event["address"], str(event["fields"]["day"])): (event["block_number"], event["log_index"])
                          for event in selected_events}

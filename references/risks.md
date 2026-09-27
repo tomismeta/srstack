@@ -1,5 +1,7 @@
 # Risks and disclosure limits
 
+Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
+
 Documented limits, not vulnerability findings or an audit. Current publisher source: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1`.
 
 ## Publisher disclaimer — §16
@@ -19,7 +21,7 @@ The whitepaper claims no proxies or code-migration mechanism (`protocol-upgrade-
 
 An **optional**, not necessarily configured, guardian can pause auctions and vault purchases only. It cannot pause withdrawals, touch funds or change parameters; the owner can disable or permanently renounce it (`guardian-powers`). Do not infer that withdrawals cannot revert: §9 expressly retains independent settlement dependencies. [sr-whitepaper-v1: exits, immutables]
 
-The current publisher-linked ABIs expose `migrateToSuccessor` and `HoldingsMigrated` for ContractionVault, ExpansionVault and FeeSplitter, and `supplyController`/`setSupplyController` for both auctions. Asset migration is not necessarily code replacement: immutable code can coexist with successor holdings transfers or replaceable registry bindings. This qualifies the scope of the whitepaper's no-code-migration wording; it does not prove the wording false or establish those modules' deployed correspondence, migration authority, controller powers or current configuration. Keep those implementation hypotheses separate until independently evidenced. Requested explanations, unsigned preparation and nonbroadcast simulation follow [safety](safety.md); do not sign or submit migration/setter transactions. [sr-contract-directory: publisher-linked app ABI; contracts](contracts.md)
+Publisher ABIs expose `migrateToSuccessor` / `HoldingsMigrated` for both vaults and FeeSplitter, and `supplyController` / `setSupplyController` for both auctions. Immutable code can coexist with successor asset transfers or replaceable Registry bindings. This qualifies the scope of whitepaper no-code-migration wording without proving it false or establishing deployment correspondence, migration authority, controller powers or current settings. These remain separate implementation questions. [sr-contract-directory: publisher-linked app ABI; contracts](contracts.md)
 
 Historical evidence now identifies an administrative **SafeProxy**, its SafeL2 implementation and a MultiSend dependency (`sr-protocol-control-dependencies`). They are not extra publisher-directory monetary modules or frozen current owners. Refresh module ownership, implementation, signers, threshold, guards and modules for a current authority claim. A SafeProxy administrator does **not** establish that monetary modules themselves use upgradeable proxies; neither historical transfer acceptance nor an owner getter authenticates every privileged path.
 
@@ -39,6 +41,6 @@ The official [Second Mandate](updates.md#second-mandate-liquidity-for-tokenized-
 
 Burning, retirement, redistribution, permanent liquidity and buybacks are not promises of returns, realizable exit prices, solvency, continuous settlement or manipulation resistance. Requested conditional forecasts, accrual/time-to-target calculations, strategy comparisons and settlement/liquidity simulations are allowed. Separate sourced facts, user assumptions and estimates; source-rule models need not await verified implementation, but cannot establish deployed behavior, executable quotes or guaranteed outcomes. State material timing, fees, dilution and market assumptions, and label historical/sample inputs rather than presenting them as current.
 
-Mathematics, informational how-to, unsigned preparation and nonbroadcast simulation are distinct from actual execution. Apply [safety](safety.md) for workflow policy; [execution](execution.md) describes bundled helper contracts. The skill-specific operational exclusion is wallet signing, signature requests and transaction submission/broadcast, including delegation of those actions. Host permissions and access controls still apply; helper coverage is not a global limit on authorized research or modeling.
+Mathematics, informational guidance and simulations are distinct from execution. [Execution](execution.md) describes bundled helper contracts; their coverage is not a global limit on authorized research or modeling. Host permissions and access controls still apply.
 
 Use [policy](protocol-policy.md), [auctions](auctions.md), [exits](exits.md), [reserves](reserves.md) and the [parameter catalog](../assets/parameters.json) for topic-specific facts. Do not classify missing evidence as a vulnerability or call this public-source review an audit.

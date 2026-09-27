@@ -347,12 +347,18 @@ def _http_diagnostics(value):
         excerpt = ""
     clean = "".join(c for c in excerpt[:2048] if c.isprintable()).encode("utf-8")[:2048].decode("utf-8", "ignore")
     read_error = value.get("read_error")
-    return {"endpoint": value["endpoint"], "http_status": value["http_status"],
+    result = {"endpoint": value["endpoint"], "http_status": value["http_status"],
             "headers": headers, "response_excerpt": clean,
             "excerpt_bytes": len(clean.encode("utf-8")),
             "truncated": value.get("truncated") is not False or clean != excerpt,
             "read_error": _error_message(read_error) if isinstance(read_error, str) else None,
             "untrusted_response": True, "cause": "unconfirmed"}
+    hint = value.get("configuration_hint")
+    if value["http_status"] in (401, 403) and hint == (
+            "RPC configuration: SRSTACK_RPC_URL or ALCHEMY_API_KEY via host-managed environment only. "
+            "No retry or failover was attempted."):
+        result["configuration_hint"] = hint
+    return result
 
 
 def _partial_errors(errors):

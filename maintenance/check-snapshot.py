@@ -121,12 +121,26 @@ class RPCFixture:
         self.values.setdefault("license_open_bid_count", 1000)
         return config
 
+    def activity_config(self):
+        config = {"schema_version": 1, "view": "charter", "charter_id": 7, "detail": "activity"}
+        interface, _, _ = snapshot._load_package(activity=True)
+        owner = self.values.get("charter_owner", "0x" + "ab" * 20)
+        for call in interface["activity"]["calls"]:
+            data = snapshot._calldata(call, dict(config, charter_owner=owner))
+            self.calls[(self.addresses[call["contract"]], data)] = call
+        self.values.setdefault("owner_last_active", NOW - 100)
+        self.values.setdefault("charter_last_transferred", NOW - 50)
+        self.values.setdefault("dormancy_period", 2592000)
+        return config
+
     def run(self, view="protocol", detail="summary", asset=None, **orderbook):
         config = {"schema_version": 1, "view": view, "detail": detail}
         if view == "orderbook":
             config.update(self.orderbook_config(**orderbook))
         if view == "charter":
             config["charter_id"] = 7
+            if detail == "activity":
+                config.update(self.activity_config())
         if asset is not None:
             config["reserve_asset"] = asset
         return snapshot.snapshot(config, transport=self, now=lambda: NOW)
@@ -196,6 +210,10 @@ class SnapshotChecks(unittest.TestCase):
         bad.extend(dict(good, reserve_asset=ASSET) for good in (
             {"schema_version": 1, "view": "protocol"}, {"schema_version": 1, "view": "auctions"},
             {"schema_version": 1, "view": "charter", "charter_id": 7}))
+        bad.extend(dict(schema_version=1, view=view, detail="activity")
+                   for view in ("protocol", "auctions", "treasury", "orderbook"))
+        bad.append(dict(schema_version=1, view="charter", charter_id=7,
+                        detail="activity", charter_owner=ASSET))
         for field in ("rpc_url", "endpoint", "address", "selector", "headers", "wallet", "private_key", "cost_basis", "apr", "path", "funding"):
             bad.append(dict(good, **{field: "external-data"}))
         for config in bad:
@@ -431,6 +449,108 @@ class SnapshotChecks(unittest.TestCase):
                 snapshot.snapshot({"schema_version": 1, "view": "orderbook", "start": 0, "count": 2},
                                   transport=self.rpc)
         self.assertEqual(self.rpc.requests, [])
+
+    def test_activity_owner_clock_is_scoped_without_invented_deadline(self):
+        self.rpc.values["charter_owner"] = ASSET
+        result = self.rpc.run("charter", "activity")
+        self.assertEqual(result["values"]["owner_last_active"], {"value": NOW - 100, "unit": "raw"})
+        self.assertEqual(result["values"]["charter_last_transferred"], {"value": NOW - 50, "unit": "raw"})
+        activity = result["derived"]["charter_activity"]
+        self.assertEqual(activity["owner_wallet"], ASSET)
+        self.assertEqual(activity["dormancy_status"], "unknown")
+        self.assertIsNone(activity["deadline"])
+        self.assertIsNone(activity["last_check_in"])
+        calls = [row["params"] for row in self.rpc.requests if row["method"] == "eth_call"]
+        self.assertTrue(all(params[0]["to"] != ASSET for params in calls))
+        self.assertTrue(all(params[1] == "0x64" for params in calls))
+        owner_clock = [params[0] for params in calls if params[0]["data"].startswith("0xc2ec28d6")]
+        self.assertEqual(owner_clock, [{"to": self.rpc.addresses["centralBank"],
+                                       "data": "0xc2ec28d6" + ASSET[2:].zfill(64)}])
+
+    def test_activity_unknown_owner_never_becomes_zero_wallet_query(self):
+        for failure in ("missing", "zero", "bad_padding", "bank_binding", "nft_code"):
+            with self.subTest(failure=failure):
+                rpc = RPCFixture()
+                if failure == "missing":
+                    rpc.fail.add("charter_owner")
+                elif failure == "zero":
+                    rpc.values["charter_owner"] = snapshot.ZERO_ADDRESS
+                elif failure == "bad_padding":
+                    rpc.words["charter_owner"] = "0x" + format(1 << 160, "064x")
+                elif failure == "bank_binding":
+                    binding = next(call["id"] for call in rpc.interface["calls"]
+                                   if call.get("binds_to") == "charterNFT" and call["contract"] == "centralBank")
+                    rpc.words[binding] = "0x" + "0" * 64
+                else:
+                    rpc.code_fail.add(rpc.addresses["charterNFT"])
+                result = rpc.run("charter", "activity")
+                self.assertEqual(result["status"], "partial")
+                self.assertNotIn("owner_last_active", result["values"])
+                self.assertIn("owner_last_active", result["errors"])
+                self.assertFalse(any(row["params"][0]["data"].startswith("0xc2ec28d6")
+                                     for row in rpc.requests if row["method"] == "eth_call"))
+
+    def test_activity_raw_boundaries_and_strict_abi_lengths(self):
+        for raw in (0, snapshot.UINT256_MAX):
+            rpc = RPCFixture()
+            rpc.values.update(owner_last_active=raw, charter_last_transferred=raw, dormancy_period=raw)
+            result = rpc.run("charter", "activity")
+            self.assertEqual(result["values"]["owner_last_active"]["value"], raw)
+            self.assertEqual(result["derived"]["charter_activity"]["dormancy_status"], "unknown")
+            self.assertIsNone(result["derived"]["charter_activity"]["deadline"])
+        for malformed in ("0x", "0x01", "0x" + "0" * 128, "0x" + "g" * 64):
+            rpc = RPCFixture()
+            rpc.words["owner_last_active"] = malformed
+            result = rpc.run("charter", "activity")
+            self.assertNotIn("owner_last_active", result["values"])
+            self.assertIn("owner_last_active", result["errors"])
+            self.assertEqual(result["values"]["charter_last_transferred"]["value"], NOW - 50)
+
+    def test_activity_catalog_mutations_fail_before_transport(self):
+        original = snapshot._read_file
+        mutations = (
+            lambda data: data["contracts"]["centralBank"].update(address=ASSET),
+            lambda data: data["calls"][0].update(selector="0xa9059cbb"),
+            lambda data: data["calls"][0].update(args=[ASSET]),
+            lambda data: data["calls"][0].update(mutability="nonpayable"),
+            lambda data: data["abi_reads"][0]["outputs"][0].update(type="address"),
+        )
+        for mutate in mutations:
+            def changed(directory, filename):
+                data, digest = original(directory, filename)
+                if filename == "charter-activity-reads.json":
+                    mutate(data)
+                return data, digest
+            with patch.object(snapshot, "_read_file", side_effect=changed), self.assertRaises(snapshot.PackageDataError):
+                snapshot.snapshot({"schema_version": 1, "view": "charter", "charter_id": 7,
+                                   "detail": "activity"}, transport=self.rpc)
+        self.assertEqual(self.rpc.requests, [])
+
+    def test_activity_package_containment_precedes_transport(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "scripts").mkdir()
+            script = root / "scripts/snapshot.py"
+            script.touch()
+            for folder, name in (("interfaces", "robinhood-reads.json"), ("entities", "robinhood.json"),
+                                 ("interfaces", "charter-activity-reads.json")):
+                (root / "assets" / folder).mkdir(parents=True, exist_ok=True)
+                (root / "assets" / folder / name).write_bytes((ROOT / "assets" / folder / name).read_bytes())
+            target = root / "assets/interfaces/charter-activity-reads.json"
+            with patch.object(snapshot, "__file__", str(script)):
+                for unsafe in ("symlink", "oversized", "fifo"):
+                    target.unlink()
+                    if unsafe == "symlink":
+                        target.symlink_to(ROOT / "assets/interfaces/charter-activity-reads.json")
+                    elif unsafe == "oversized":
+                        target.write_bytes(b" " * (snapshot.MAX_FILE_BYTES + 1))
+                    else:
+                        os.mkfifo(target)
+                    with self.subTest(unsafe=unsafe), self.assertRaises(snapshot.PackageDataError):
+                        snapshot.snapshot({"schema_version": 1, "view": "charter", "charter_id": 7,
+                                           "detail": "activity"}, transport=self.rpc)
+            self.assertEqual(self.rpc.requests, [])
+
 
     def test_package_execution_metadata_rejected(self):
         catalog = json.loads((ROOT / "assets/entities/robinhood.json").read_bytes())
@@ -1372,6 +1492,29 @@ class SnapshotChecks(unittest.TestCase):
             self.assertIn("ignore previous instructions", data["response_excerpt"])
             self.assertEqual(body.tell(), 2049)
             self.assertEqual(opener.open.call_count, 1)
+            self.assertIn("SRSTACK_RPC_URL", data["configuration_hint"])
+            self.assertIn("ALCHEMY_API_KEY", data["configuration_hint"])
+
+    def test_configuration_hint_only_accompanies_original_authorization_denials(self):
+        secret = "private-host-credential"
+        for status in (401, 403, 429, 500, 503):
+            response = unittest.mock.Mock(status=status, headers={}, fp=None)
+            response.read1.side_effect = io.BytesIO(b"denied").read
+            opener = unittest.mock.Mock()
+            opener.open.return_value = response
+            with self.subTest(status=status), \
+                    patch.dict(os.environ, {"SRSTACK_RPC_URL": "https://operator.invalid/" + secret}), \
+                    self.assertRaises(snapshot.SnapshotError) as caught:
+                snapshot._https_request(opener, b"[]", 10, lambda: 0)
+            data = caught.exception.diagnostics
+            self.assertEqual("configuration_hint" in data, status in (401, 403))
+            self.assertNotEqual(data["endpoint"], snapshot.RPC_URL)
+            self.assertNotIn(secret, json.dumps(data))
+            self.assertEqual(opener.open.call_count, 1)
+        opener.open.side_effect = OSError("transport unavailable")
+        with self.assertRaises(snapshot.SnapshotError) as caught:
+            snapshot._https_request(opener, b"[]", 10, lambda: 0)
+        self.assertIsNone(caught.exception.diagnostics)
 
     def test_denial_body_read_failure_keeps_original_status_and_cli_diagnostics(self):
         opener = unittest.mock.Mock()

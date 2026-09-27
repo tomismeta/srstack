@@ -1,5 +1,7 @@
 # Protocol: system and routing
 
+Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
+
 Publisher rules and announced v1.1/v1.2 changes, not independently verified implementation or saved live state. Whitepaper design: `sr-whitepaper-v1`; later scoped changes: `sr-protocol-v1-1-announcement` and `sr-protocol-v1-2-announcement`. Retrieval dates and provenance are in the [source index](../assets/sources.json).
 
 ## System and ownership — whitepaper §§1–2

@@ -15,6 +15,7 @@
       "id": "live-interface",
       "path": "assets/sources/live-interface.json",
       "record_ids": [
+        "sr-charter-activity-read-interface",
         "sr-v1-2-deployment-evidence",
         "sr-v1-2-read-interface",
         "sr-extended-read-interface",

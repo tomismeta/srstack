@@ -1,5 +1,7 @@
 # Genesis entry
 
+Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
+
 Current design: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§6,11–12,15. Exact economics: [launch parameters](../assets/parameters/launch.json).
 
 ## Paid founding distribution
@@ -8,7 +10,7 @@ The whitelist mint charges `whitelist-liquidity-fee`, with `whitelist-wallet-lim
 
 Exact combined-wallet and public-transaction limits are `founding-wallet-limit` and `founding-public-transaction-limit`; they are distinct from the whitelist claim limit.
 
-Wallet eligibility and live sale availability are not established by the design document. Requested mint explanations, unsigned preparation and nonbroadcast simulation follow [safety](safety.md); do not request wallet signatures, sign or submit a mint.
+Wallet eligibility and live sale availability are not established by the design document.
 
 ## Escrow and finalization
 

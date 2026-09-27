@@ -1,55 +1,125 @@
 # Host installation and capabilities
 
-For users/maintainers and explicitly requested, host-authorized maintenance—not permission for an agent to install itself or change configuration on its own initiative. Package version **0.3.0** is not proof of publication or a revision pin: installation prints the **full reviewed commit SHA**, retained outside the hashed runtime; never embed the package's own commit in hashed files. The complete runtime contains `SKILL.md`, exactly four scripts (`snapshot.py`, `price.py`, `history.py`, `verify.py`), references, assets, license and manifest. A manifest comparison establishes byte integrity, not authenticity or economic validity.
+Install/update only when requested and under normal host approval. Use Git and Python 3.10+ on a supported POSIX host. Review the exporter, runtime and [safety rules](safety.md) before executing package code; integrity verification is not publisher authentication.
 
-Use the [reviewed installation workflow](../README.md#install-a-reviewed-release) once `v0.3.0` is published: fetch that release tag, resolve and review its full commit against the release notes, then use that exact checkout's `maintenance/package.py export` with the full pin and an absent staging destination. An absent requested tag must fail, not silently select an older release or branch. Review the exporter and runtime before executing them; a bundled self-verifier cannot bootstrap trust. The repository, GitHub's automatic source archive and audit evidence are not installable runtimes.
+**Identity:** `0.3.0` is the unreleased development line. The full reviewed commit identifies the installed package; retain it outside the hashed runtime, never inside its own files. Installation and bug reports need the loaded path and recorded SHA. Ordinary charter/auction answers do not need revision ceremony.
 
-Select the actual host/profile root. Keep the review clone, staging and unique backups outside **every** discovery root, with recovery files on the installation's filesystem. The documented replacement verifies staging, preserves the entire old root and customizations, moves the complete new root into the absent destination, and verifies again before use resumes. It restores the previous root if final verification fails. Never overlay, silently merge customizations or retain a shadowing same-name copy. The runtime excludes `.git`, `maintenance`, tests, `.github` and `dist`. Installed runtime files remain immutable during ordinary research; deliberate reviewed maintenance is a separate, explicitly requested workflow using host-native installation/update tools or the reviewed exporter within actual approvals. No self-initiated installation/update, blanket approval or permission bypass is implied. Keep the full commit record outside the hashed runtime and confirm the actual loaded path/version in a fresh conversation.
+## Reviewed installation
 
-**A running Telegram/Hermes host is supported, not an installation failure.** Pause srstack invocations during the two whole-directory moves and final verification; the pair of moves is not atomic and the target is briefly absent. Coordinate other installers. Stopping the host is an optional precaution, not an acceptance criterion. On interruption or failed rollback, keep srstack use paused until a complete verified root is restored; do not use a missing or inconsistent root, and do not require Telegram shutdown.
+The default below resolves the available `feature/v0.3.0` branch to a detached full commit **before review**. For a supplied pin, set `SRSTACK_COMMIT` to that full 40-hex SHA first; never replace a requested pin with the branch tip. No release tag is assumed.
 
-Existing chats retain loaded context after disk replacement. Start a fresh `/new` in **each** Telegram/Hermes chat that will use the revision, or the host's equivalent new conversation, and refresh discovery if needed. The installing chat cannot restart or refresh other chats. Confirm the selected root, `0.3.0` version and externally retained full SHA rather than treating an old chat's loaded metadata as a failed install.
+### 1. Select paths and pin the commit
 
-Before moving/removing an old installation or deleting a temporary checkout, change the maintainer shell/tool working directory to an existing stable directory outside that tree. Start subsequent commands there, then select the verified installed root explicitly for helper execution. If a command reports that its current directory no longer exists, restore a valid cwd; do not reinstall the host or treat it as a skill-load failure.
+Select the actual configured skill root and a stable working directory outside it. The host may remain running; coordinate other installers and pause srstack invocations during replacement. Use absolute paths. An isolated profile/workspace is useful for dogfooding, not required.
 
-## Hermes
+Set `SRSTACK_BACKUPS` outside **every** skill-discovery root, on the same filesystem as `SKILL_PARENT`. It will retain the review clone, staging and any previous installation. Do not use another discovered skill directory as a backup, or leave a shadowing same-name installation in another root. Keep customizations for review; do not merge them into the reviewed runtime.
 
-Primary root: `~/.hermes/skills/`; named profiles may use another Hermes home. Put the package at that profile's `skills/srstack/`, or in an explicitly configured external skill directory containing `srstack/`. Do not duplicate across roots.
+```sh
+# Select these paths for your host before continuing:
+SKILL_PARENT="$HOME/.hermes/skills"
+SRSTACK_BACKUPS="$HOME/srstack-backups"
 
-Hermes uses `skills_list` for discovery and `skill_view` for progressive resources. Request literal paths relative to the returned skill directory, such as `references/inspection.md`; use native resource loading rather than assuming a general filesystem reader is necessary. Resolve execution paths against the same loaded directory, not unrelated working directories.
+cd "$HOME" &&
+mkdir -p "$SKILL_PARENT" "$SRSTACK_BACKUPS" &&
+WORK="$(mktemp -d "$SRSTACK_BACKUPS/srstack-release.XXXXXXXX")" &&
+REVIEW_ROOT="$WORK/source" &&
+git clone --single-branch --branch feature/v0.3.0 \
+  https://github.com/tomismeta/srstack.git "$REVIEW_ROOT" &&
+REVIEWED_COMMIT="$(git -C "$REVIEW_ROOT" rev-parse --verify --end-of-options "${SRSTACK_COMMIT:-HEAD}^{commit}")" &&
+{ test -z "${SRSTACK_COMMIT:-}" || test "$SRSTACK_COMMIT" = "$REVIEWED_COMMIT"; } &&
+git -C "$REVIEW_ROOT" checkout --detach "$REVIEWED_COMMIT" &&
+printf '%s\n' "$REVIEWED_COMMIT" > "$WORK/reviewed-commit.txt" &&
+printf 'Review source: %s\nFull source commit: %s\nRecovery directory: %s\n' \
+  "$REVIEW_ROOT" "$REVIEWED_COMMIT" "$WORK"
+```
 
-Invoke `/srstack` or natural-language “Use srstack inspect”. Confirm the selected path and `0.3.0` package version in a fresh conversation against the retained full source pin. Local loading differs from Skills Hub community-install guard acceptance; do not bypass guards to claim compatibility.
+Stop on any error. Review this detached revision before the next step; do not fetch again and silently change the pin. The clone is the **repository**, not an installable runtime. It contains maintenance tools and tests that must not enter the host's discovered skill. Do not run unreviewed local modifications to the exporter.
 
-Use the Python supported by the installed Hermes release; all four entrypoints need only standard-library Python 3.10+ and the containment primitives described in [execution](execution.md). Live state, history and price readers additionally require existing permitted public network access; default package verification stays offline.
+### 2. Export the reviewed runtime
 
-One-shot Hermes sessions may be unable to complete a normal tool-approval prompt. Select a [permitted CLI or stdin path](execution.md#input-transport-and-host-approvals) before running a helper; `verify.py` requires no stdin and performs integrity-only verification by default. If execution still requires approval, stop and request an approval-capable session for that exact command. Do not hunt for a PTY/wrapper that avoids the check or require `--yolo`. Successful execution with approvals bypassed establishes helper behavior only, not ordinary approval-flow compatibility.
+Continue in the same shell, only after review and any required execution approval:
 
-[Official Hermes Skills System](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills/).
+```sh
+python3 -B -I "${REVIEW_ROOT:?Complete the review checkout first}/maintenance/package.py" export \
+  --commit "${REVIEWED_COMMIT:?Resolve and review the full commit first}" \
+  --destination "${WORK:?Select the recovery directory first}/staged-runtime"
+```
 
-## OpenClaw
+`staged-runtime` must **not exist**; its parent already exists. The exporter checks that the full commit equals checkout `HEAD`, reads committed bytes rather than working-tree runtime edits, and verifies runtime membership, hashes and aggregate digest before creating the export. It excludes `.git`, `maintenance`, tests, `.github`, `dist` and caches. A failed export must be resolved before proceeding.
 
-Place the complete package at `<workspace>/skills/srstack/` or the managed skills directory for the intended state/profile. Skill-root precedence can shadow a package; use a fresh session or explicitly refresh the selected revision.
+### 3. Clean-replace, verify and retain rollback
 
-The catalog points to `SKILL.md`; resources resolve against its directory. Invoke natural-language “Use srstack” or the installed host/channel's explicit reference/command; slash and `$` syntax vary. In sandbox/node setups, resources and Python must exist in the actual execution environment, not just the main host.
+The following small replacement step verifies staging before touching the old installation, then moves whole directories—never overlays files. **Pause srstack invocations across the two directory moves and final verification.** Each rename is a whole-root move, but the pair is not atomic: the target is briefly absent between them. The host may remain running. The script checks separation from the selected root; you must also ensure the recovery directory is outside any **other** configured discovery root. Run from the stable directory selected above, not from the installation being moved.
 
-No global Python eligibility gate: offline research remains useful without execution. No installer declaration, secret/environment requirement or tool-dispatch command is supplied.
+```sh
+python3 -B -I - "${SKILL_PARENT:?Select the actual host root}" "${WORK:?Export first}" <<'PY'
+import subprocess
+import sys
+from pathlib import Path
 
-[Official OpenClaw Skills](https://docs.openclaw.ai/tools/skills).
+parent = Path(sys.argv[1]).resolve(strict=True)
+work = Path(sys.argv[2]).resolve(strict=True)
+if parent == work or parent in work.parents or work in parent.parents:
+    raise SystemExit("Skill and recovery directories must be separate")
+if parent.stat().st_dev != work.stat().st_dev:
+    raise SystemExit("Recovery directory must be on the skill root's filesystem")
+staged, target, old = work / "staged-runtime", parent / "srstack", work / "previous-install"
+failed = work / "failed-install"
+if old.exists() or old.is_symlink() or failed.exists() or failed.is_symlink():
+    raise SystemExit("Recovery paths already exist; do not overwrite a previous attempt")
+if target.is_symlink() or (target.exists() and not target.is_dir()):
+    raise SystemExit("Refusing a symlink or non-directory installation")
+if staged.is_symlink() or not staged.is_dir():
+    raise SystemExit("Expected a complete staged runtime directory")
+reviewed_commit = (work / "reviewed-commit.txt").read_text(encoding="ascii").strip()
+if len(reviewed_commit) != 40 or any(c not in "0123456789abcdef" for c in reviewed_commit):
+    raise SystemExit("Expected the full reviewed commit SHA in the external recovery record")
 
-## Other harnesses and distribution
+def verify(root):
+    subprocess.run([sys.executable, "-B", "-I", str(root / "scripts/verify.py")],
+                   cwd=root, check=True, timeout=30)
 
-Use common Agent Skills frontmatter (name, description, license, string metadata), discovery/explicit SKILL loading and relative-resource delivery without truncating required content. Recover omissions via documented host mechanisms, not invented selectors/permissions.
+print("Recovery directory:", work, flush=True)
+verify(staged)
+moved_old = installed_new = False
+try:
+    if target.exists():
+        target.rename(old)
+        moved_old = True
+    staged.rename(target)
+    installed_new = True
+    verify(target)
+except BaseException:
+    if installed_new:
+        target.rename(failed)
+    if moved_old:
+        old.rename(target)
+        print("Restored previous installation:", target, file=sys.stderr)
+    raise
+print("Installed and verified:", target)
+print("Full reviewed commit SHA:", reviewed_commit)
+print("Keep recovery files and full source pin:", work)
+PY
+```
 
-- **Research and conditional analysis:** packaged topic/source resources, public evidence and user-consented private/local inputs. Requested forecasts, accrual and time-to-target estimates or strategy comparisons distinguish sourced facts, user assumptions and model estimates; unavailable facts cannot be fabricated. Host-authorized authenticated tools/browser sessions may be used without exposing credentials. Requested outputs and caches belong outside the installed runtime and must respect consent, provenance and destination permissions.
-- **Inspect:** trusted package, permitted Python execution and the fixed [snapshot/price helper interfaces](execution.md), plus the supported [auction-history helper](auction-history.md). Snapshot summary JSON is helper-enforced compact output; request full detail only when needed. `history.py license|charter` supports an optional day filter and an anchored lookback or explicit block range; use the history reference for finite limits and coverage semantics, never infer complete history or sellout from an incomplete scan. A current-value request authorizes the necessary research within existing host permissions, not wallet signing, signature requests or transaction submission/broadcast, including delegation. For a charter value, read its pending STANDARD balance and pass the successful quantity unchanged to `price.py --amount-standard DECIMAL`; diagnostic status is not monetary output.
-- **Supplemental inspect and preparation:** host-permitted readers/RPC tools, authenticated sessions or inspectable locally authored code may research relevant uncataloged contracts, providers and metadata, prepare unsigned transactions or instructions, and run nonbroadcast `eth_call` (including non-view quoters), forks, traces or gas simulations. The fixed catalog is a starting point, not an allowlist; follow [supplemental-read authentication and evidence rules](inspection.md#supplemental-public-reads). Dependencies or custom tools may be added when needed within the user's request and host approvals, without modifying the installed runtime during research or executing untrusted downloaded code merely because it was supplied. No signing or submission may be invoked or delegated.
-- **Diagnose:** `verify.py` alone checks complete package membership/hashes without a child or network request. `--charter ID` and `--price` explicitly request live checks and may combine; do not add `--offline`. Each diagnostic verifies the package first, and normal execution approvals still apply. Status/timing output is not financial output, proof of sandboxing or a host-discovery test. See [the diagnostic contract](execution.md#package-and-smoke-diagnostic).
-- **Monitoring and schedules:** only when explicitly requested and supported by the host, with agreed scope, destination, duration or finite run count, and cancellation. No unsolicited background activity or skill-imposed scheduling capability is implied.
+No files are deleted. Failed verification retains the candidate as `failed-install` and restores the previous root. If interruption or restoration fails, keep skill use paused and recover from the printed directory. Keep backups outside discovery roots until the new installation is confirmed; never merge old customizations into the reviewed runtime.
 
-For reviewed-runtime acceptance, follow the [post-install checks](../README.md#quick-test-after-installation): research/inspect routing, offline packaged research, conditional forecasts/accrual/time-to-target and strategy comparisons with explicit assumptions, and the signing/submission exclusion (including delegation). Check that helper limits are not global research prohibitions, host permissions and private-data consent remain intact, and the Second Mandate boundaries hold (sample is not holdings, fees are not holder yield, manifesto is not deployment). Live helper checks are optional and require permission.
+After success, verify the loaded path and the printed SHA against `WORK/reviewed-commit.txt`, then refresh discovery/reload as described below. Resume invocations only against the verified root.
 
-HTTP 401/403 is an endpoint-specific denial of the original request, not proof of global chain/provider unavailability or installation failure. Preserve bounded original-response diagnostics if supplied; do not evade that endpoint's access controls or a host denial. Fixed helpers stop, but independently authorized sources or host-managed authenticated access may provide evidence under their own access rules as [supplemental research](inspection.md#supplemental-public-reads). Keep source, block and coverage evidence separate; do not claim offline checks or supplemental results made the original request succeed.
+**Transport compatibility:** user-reported direct-TLS `WRONG_VERSION_NUMBER` failures were endpoint-independent in an intercepted sandbox; urllib+Alchemy worked there. Snapshot/history now use proxy-aware `urllib.request`. That evidence does not establish public-RPC access or universal host compatibility. Test the intended provider and retain honest denial diagnostics.
 
-ClawHub is a separate distribution service: local directory/archive preparation does not establish hosted acceptance, ownership, name availability, moderation or registry clearance. Hosted publication/scanning needs separately scoped permission; never upload merely to check a local package.
+## Host loading and sessions
 
-No prompt, metadata, loader or scanner enforces isolation or universally certifies compatibility. Apply [safety](safety.md) and actual host policy.
+- **Hermes:** find the actual profile root (commonly `~/.hermes/skills`). Use `skills_list`/`skill_view` and literal relative resource paths. `/srstack` or “Use srstack inspect” invokes the selected installation. [Host docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills/).
+- **OpenClaw:** use the intended workspace's `skills/srstack/` or configured managed root; avoid shadowing duplicates. Resources and Python must exist in the execution environment. [Host docs](https://docs.openclaw.ai/tools/skills).
+- **Other hosts:** load the complete Agent Skills runtime and selected relative resources, not `SKILL.md` alone. Packaged explanations can work without Python; live helpers need permitted execution/network access.
+
+After replacement, refresh discovery and reload the skill in the main session if the host supports it. Existing loaded context may remain stale: report that limitation rather than claiming reload succeeded. A fresh `/new` is a host-dependent way to load the new revision, not an automatic installation step or a requirement to restart Telegram. One chat cannot refresh all other chats.
+
+Keep the maintainer working directory outside any tree being moved. A missing cwd requires selecting an existing directory, not reinstalling the host. If interruption or rollback fails, pause skill use and recover the complete root from the printed recovery directory.
+
+## Acceptance and distribution
+
+Run the [post-install checks](../README.md#quick-test-after-installation). Offline integrity, host routing and live RPC access are separate results. HTTP 401/403 means the original request was denied, not that installation failed. The helper's env-only configuration hint is informational; see [provider guidance](execution.md#rpc-provider-guidance).
+
+Use [safety](safety.md) for external access, explicit unsigned-artifact preparation and host approvals. Do not use wrappers or broaden permissions to evade a denial. ClawHub/Skills Hub publication and guard acceptance are separate from a local install and require their own authorization.

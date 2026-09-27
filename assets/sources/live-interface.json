@@ -3,6 +3,43 @@
   "scope": "Publisher selected fixed read/event interfaces and bounded source provenance, including v1.2 auction bindings/order views, historical v1.1 adaptation and distinct raw POL acquisition events; no stored live observations.",
   "records": [
     {
+      "id": "sr-charter-activity-read-interface",
+      "url": "https://www.standardreserve.xyz/assets/mountApp-CAYhOFSW.js",
+      "publisher": "The Standard Reserve official application",
+      "published_at": null,
+      "retrieved_at": "2026-09-26",
+      "review_depth": "Complete ke CentralBank and Rn CharterNFT ABI literals plus DP base deployment literal parsed as data within the truncated publisher-linked reader response; no downloaded code executed.",
+      "claim_stage": "publisher-authenticated selected activity ABI and core identities, not deployed-source equivalence or a current dormancy verdict",
+      "source_urls": [
+        "https://www.standardreserve.xyz/app/",
+        "https://www.standardreserve.xyz/assets/mountApp-CAYhOFSW.js",
+        "https://robin.etherscan.io/address/0x5977B25419f9c0dDcB2F89fE204955622f4F57ea#code",
+        "https://robin.etherscan.io/address/0x69101f92427376FA80476A997d024cf9dC3EaE39#code",
+        "https://sourcify.dev/server/v2/contract/4663/0x5977B25419f9c0dDcB2F89fE204955622f4F57ea?fields=abi,sources,compilation,signatures",
+        "https://sourcify.dev/server/v2/contract/4663/0x69101f92427376FA80476A997d024cf9dC3EaE39?fields=abi,sources,compilation,signatures"
+      ],
+      "locators": [
+        "https://www.standardreserve.xyz/app/ links mountApp-CAYhOFSW.js",
+        "CentralBank 0x5977B25419f9c0dDcB2F89fE204955622f4F57ea: lastActive(address wallet) returns uint256 timestamp; DORMANCY_PERIOD() returns uint256",
+        "CharterNFT 0x69101f92427376FA80476A997d024cf9dC3EaE39: lastTransferred(uint256 tokenId) returns uint256 timestamp",
+        "CentralBank checkIn() is nonpayable and excluded from the read-only catalog; its ABI does not establish its implementation or successful execution",
+        "assets/interfaces/charter-activity-reads.json; exact literal hashes include delimiters and exclude assignment names"
+      ],
+      "literal_sha256": {
+        "ke_central_bank_abi": "8ddcb419c0bbbfd02a03ae08548e67be7fe27ef74fc9bf755d614eda755a8a5b",
+        "Rn_charter_nft_abi": "cbbc2a893a9cca20bcd333d3fb085c5ccb635f9e8954857833bcca3293466c53",
+        "DP_base_deployments": "a04b44d074668e9a8077af4e1a224a8152d1f4217a5620bbbd29942a7d826689"
+      },
+      "summary": "Selected-charter activity inspection reads ownerOf at a pinned block, then uses that authenticated owner only as lastActive argument data on the fixed CentralBank. It independently observes the selected NFT's lastTransferred and the Bank's DORMANCY_PERIOD. All activity integers retain raw units.",
+      "limits": [
+        "Reader asset retrieval was truncated and direct retrieval returned403; the complete selected ABI/deployment literals occur before the cutoff. No complete bundle hash or whole-app review is claimed. Historical DIJs6ehM and BcWoqzfB mount assets returned404.",
+        "Robin Etherscan code pages for both exact addresses returned403. Sourcify v2 contract endpoints requesting abi,sources,compilation,signatures returned404. No source-level reset, transfer-grace or eligibility formula was established.",
+        "ABI names do not authenticate seconds/Unix units, zero-value meaning, dormancy deadline, check-in success or current eligibility. lastActive is a wallet getter, not specifically a last check-in timestamp.",
+        "The complete reviewed ABIs contain no direct dormancy-eligibility getter. Documented lifecycle rules remain separate from these raw contract observations; no clock formula is invented.",
+        "The new ABI evidence supplements, rather than replaces, historical sr-owner-check-in-frontend UI provenance. Runtime code/binding checks and a fresh block are still required."
+      ]
+    },
+    {
       "id": "sr-v1-2-deployment-evidence",
       "url": "https://www.standardreserve.xyz/assets/mountApp-BcWoqzfB.js",
       "publisher": "The Standard Reserve official application; independent Robinhood Blockscout creation records",

@@ -1,5 +1,7 @@
 # Supply, flow and issuance policy
 
+Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
+
 Publisher design: `sr-whitepaper-v1` §§3–5,12,15; [source index](../assets/sources.json). Exact settings and provenance: [monetary parameters](../assets/parameters/monetary.json); removal shares: [participation](../assets/parameters/participation.json) and [reserves](../assets/parameters/reserves.json).
 
 ## Currency and supply — §3

@@ -1,5 +1,7 @@
 # Launch trading, taxes and activation
 
+Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
+
 Current publisher design: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§7,11–12,15 and companion pages. Exact settings: [launch parameters](../assets/parameters/launch.json), not observed execution.
 
 ## Pool launch and fees
@@ -16,7 +18,7 @@ Requested launch-tax curves, trade comparisons or liquidity scenarios may calcul
 
 Fresh `protocol`/`charter` observations distinguish `launch_holding_cap_enabled` from `launch_holding_cap_active`, and both from the Hook's `launch_schedule_active`. The reviewed token source requires cap enablement and an active schedule from its Registry-bound Hook; current tax rates alone do not answer either flag. `launch_holding_cap` is a STANDARD amount, not a transfer-success guarantee. The cap's from-PoolManager check, specified exemptions, separate `pool_manager_gate_enabled` setting and destination blocklist must not be collapsed into a single unrestricted/restricted label. The helper does not enumerate blocked addresses. [sr-standard-source-interface; sr-tax-hook-source-interface; inspection](inspection.md#supply-restrictions-and-control-context)
 
-The reviewed Hook source gates non-POL liquidity additions while the launch schedule is active. Source-reviewed rules are not observed current availability or proof that a particular LP addition, withdrawal, router transfer or trade will settle. Token/Hook bindings and `hook_pending_owner` provide bounded control context, not complete permissions or a completed ownership transfer. Requested how-to, unsigned preparation and nonbroadcast simulation may build on these reads under [safety](safety.md), without signing or submitting transactions.
+The reviewed Hook source gates non-POL liquidity additions while the launch schedule is active. Source-reviewed rules are not observed current availability or proof that an LP addition, withdrawal, router transfer or trade will settle. Token/Hook bindings and `hook_pending_owner` provide bounded control context, not complete permissions or a completed ownership transfer.
 
 ## Activation boundary
 

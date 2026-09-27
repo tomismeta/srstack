@@ -26,8 +26,18 @@ The [official v1.1 reply](https://x.com/standard_rsv/status/2102200074810036373)
 
 `dormancy-clock-reset-actions` and `dormancy-transfer-grace` preserve those separate rules. `withdrawal-retirement-rule` and `withdrawal-availability` record the withdrawal claims without supplying a verified settlement algorithm.
 
+### Inspect one charter's activity
+
+Run `python3 -B -I scripts/snapshot.py charter --id 7 --detail activity`, replacing `7` with the requested public charter ID. JSON input is `{"schema_version":1,"view":"charter","charter_id":7,"detail":"activity"}`. This is a read-only inspection path, not a check-in action.
+
+The helper checks chain, block freshness, contract code and transitive bindings, reads `ownerOf(id)`, then uses that owner only as `lastActive(address)` argument data on the fixed Bank. It also reads `lastTransferred(id)` on the NFT and `DORMANCY_PERIOD()` on the Bank. The authenticated publisher ABI and core identities are recorded in [activity provenance](../assets/sources/live-interface.json) (`sr-charter-activity-read-interface`) and the [supplemental interface](../assets/interfaces/charter-activity-reads.json).
+
+`owner_last_active`, `charter_last_transferred` and `dormancy_period` retain raw integers: the retrieved ABI does not prove time units, zero-value meaning, deployed reset rules or transfer-grace arithmetic. `derived.charter_activity` therefore leaves dormancy status, deadline and last check-in time unknown. **`lastActive` is not specifically a last-check-in timestamp.** A missing or malformed owner prevents the owner-clock call; failed code/binding or decode checks never become successful observations. No saved state or documented 30-day value replaces a failed getter.
+
+The current linked bundle's relevant ABI literals were complete before the reader cutoff; direct bundle and both explorer source requests were denied, and both Sourcify source records were unavailable. See provenance for exact URLs, hashes and retrieval limits. Publisher lifecycle policy above remains separate from deployed implementation; no deadline is computed from an assumed reset/grace formula.
+
 ## Transferability — §§12–13
 
 The owner may enable initially disabled charter transfers through a one-way switch (`transfer-enablement`). Thereafter the seat moves with branches and balance intact. The publisher calls a seat sale an exit without directly selling $STANDARD; no secondary-market availability or price is established. The whitepaper describes authority, not an observed enablement transaction. An optional guardian may pause auctions and vault purchases, **not withdrawals**; see [risks](risks.md). [sr-whitepaper-v1: immutables, transfers]
 
-For a selected charter's balance, dormancy or transfer status, use fresh authenticated reads through [inspection](inspection.md). Published lifecycle rules do not establish that charter's current state; if the fixed reader lacks coverage, other host-authorized evidence paths remain available. Report fields with no obtainable evidence as unknown. Requested how-to, unsigned preparation or nonbroadcast simulation follows [safety](safety.md), without signing or submitting transactions.
+For balance or transfer status beyond this activity route, use fresh authenticated reads through [inspection](inspection.md); unobtainable fields remain unknown. Unsigned artifacts or nonbroadcast preparation require an **explicit user request**, not merely an informational how-to question; see the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).

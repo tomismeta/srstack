@@ -1,5 +1,7 @@
 # Contracts and identity
 
+Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
+
 Identity research, not an execution guide. The [entity index](../assets/entity-index.json) defines packaged attribution scope, not this filename.
 
 ## Packaged boundary
@@ -26,9 +28,9 @@ The official [mount module](https://www.standardreserve.xyz/assets/mountApp-BcWo
 
 The [order-read catalog](../assets/interfaces/v1-2-orderbook-reads.json) authenticates license-auction `bids(uint256 charterId) → (address bidder,uint256 count,uint256 maxUnitPrice)`, `fillable(uint256 charterId) → bool`, `openBidCount() → uint256` and `openBids(uint256 start,uint256 count) → uint256[]`. Auction summary includes only global `license_open_bid_count`, not **“my orders.”** The separate `snapshot.py orderbook --start 0 --count 20` view reads one bounded raw-ID page; optional `--charter-ids N,M` reads independently selected charters at the same block. Authenticate ownership separately and retain incomplete coverage. A bidder is not automatically the current owner; quantity/limit is not settled consideration/acquired branches; `fillable` is not a keeper-execution guarantee.
 
-For a known charter, call `bids`/`fillable` with that **charter ID**, not an invented independent bid ID. The `openBids` ABI names its returned array only `ids`; establish its identifier interpretation before joining to charter reads. Its signature alone proves neither stable pagination ordering nor FCFS priority. Keep `maxUnitPrice` raw unless denomination/scale is separately evidenced; the field name alone does not prove STANDARD18 units.
+For independently known charter IDs, call `bids`/`fillable` with that **charter ID**, not an invented bid ID. `openBids` returns raw `ids` without an authenticated charter mapping; no automatic join to charter reads is supported. The ABI proves neither stable pagination ordering nor FCFS priority. Keep `maxUnitPrice` raw: STANDARD18 denomination/scale is unestablished.
 
-This is publisher ABI and identity evidence, not verified escrow, cancellation/refund, partial-fill, keeper authority or FCFS enforcement. No separate orderbook address is invented. [V1.2 policy](updates.md#protocol-v12-announced-changes) and source records `sr-v1-2-deployment-evidence` / `sr-v1-2-read-interface` state the limits. Explanations, authenticated public reads, unsigned preparation and nonbroadcast simulation are permitted; signing, signature requests and submission are not.
+This publisher ABI/identity evidence does not verify escrow, cancellation/refunds, partial fills, keeper authority or FCFS enforcement. No separate orderbook address is established. [V1.2 policy](updates.md#protocol-v12-announced-changes) and source records `sr-v1-2-deployment-evidence` / `sr-v1-2-read-interface` state the limits.
 
 ## v1.1 identities and control dependencies
 
@@ -81,7 +83,7 @@ For “Do successor migrations make the protocol upgradeable?”, answer **not b
 - ContractionVault and FeeSplitter expose `migrateToSuccessor()` in the publisher-linked ABI; ExpansionVault exposes `migrateToSuccessor(address[] assets)`. They also name `HoldingsMigrated` events.
 - Both auction ABIs name `supplyController()`, `setSupplyController(address)`, `SupplyControllerSet` and `NotSupplyAuthority`.
 - Successor asset movement, registry replacement and component retirement are not necessarily changes to deployed code. An ABI name does not prove which assets move, who has authority, whether the published deployment implements it, or whether an auction controller acts autonomously.
-- These are publisher interfaces, not authenticated implementation behavior. The fixed reader observes configured auction controllers/pending ownership and selected treasury state, not migration/setter execution. Requested explanation, unsigned preparation and nonbroadcast simulation are permitted; signing, signature requests and transaction submission/broadcast are not.
+- These are publisher interfaces, not authenticated implementation behavior. The fixed reader observes configured auction controllers/pending ownership and selected treasury state, not migration/setter execution.
 
 Use this packaged distinction for an explanation question; fresh implementation or current-authority claims need separate evidence. The [deployment source record](../assets/sources/deployments.json) identifies the reviewed publisher-linked bundle.
 
@@ -110,4 +112,4 @@ Evidence must answer who may mint; credit/burn reconciliation; auction setters; 
 
 Use chain + full address for identity, with a stable local record ID and attribution provenance. Investigate activation, source/bytecode correspondence, proxy relationships, permissions, configuration and audit scope separately when requested. Unknowns stay not established, not a single `verified` boolean. Observations may be kept in the answer/session or authorized external artifacts with original anchors; do not rewrite installed identity records during ordinary research.
 
-Answer the requested role or observation first, using a full address when identity is the question, plus the relevant chain and one or two source links/time anchors when needed. Default to one short relevant note (“RPC snapshot; publisher ABI.” for helper observations) and material gaps; keep exhaustive identity/provenance records and raw hashes for requested detail. If packaged identity is absent, say so and perform fresh bounded research as needed for the permitted request. User addresses are investigation inputs, not authenticity. Unsigned artifacts and informational workflows remain subject to [safety](safety.md), with no signing or submission.
+Answer the requested role or observation first, with the full address when identity is the question and one or two relevant source/time anchors. Use “RPC snapshot; publisher ABI.” for helper observations; keep exhaustive provenance and hashes for requested detail. Missing packaged identity may require bounded fresh research. A supplied address is an investigation input, not authenticity.

@@ -1,18 +1,16 @@
 # srstack
 
-**Standard Reserve expertise, analysis and user-directed workflows for AI agents.**
+**Standard Reserve research and live inspection for AI agents.**
 
-srstack explains protocol mechanics, investigates current and historical state, models scenarios and helps with requested research workflows. It is one independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product. It does not sign wallet messages/transactions or submit transactions, directly or through delegated tools.
+Inspect charters, auctions, orderbooks, protocol state and bounded history, or explain and model the published mechanics. This is an independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product. See [safety](references/safety.md#preparation-and-wallet-boundary) for execution boundaries.
 
-**Agent-agnostic, including Muse.** Muse can use the same complete skill bundle as other Agent Skills hosts—no Muse-specific adapter or behavior. Research guidance requires access to the packaged resources; live helpers additionally depend on the host's Python, filesystem, network access and permissions.
+Agent-agnostic, including Muse, Hermes and OpenClaw. Live helpers depend on permitted Python, filesystem and network access; explanations can work offline.
 
-**Version 0.3.0 — unreleased.** Adds protocol v1.2 auction deployments and limit-order guidance, direct branch/auction inspection, conditional next-opening previews and anchored timing, bounded last-N observed auction rounds with event-evidenced prices where available, generation-aware auction and POL history, and user-selected RPC providers. A preview can be unknown: no sales plus an unavailable next-round floor yields no numerical opening. Models, authenticated research, private-data analysis, exports, monitoring and nonbroadcast simulation remain supported through host capabilities; the helpers are conveniences, not a capability allowlist. This working tree has not been tagged or published.
+**Version 0.3.0 — unreleased.** Includes v1.2 auctions, bounded orderbook reads, charter activity inspection, newest-first history with observed-round early stopping, conditional next-opening previews and proxy-aware RPC. No sales plus an unavailable next-round floor yields no numerical opening. S-Bill launch/position support still requires authenticated evidence.
 
-**Helper continuity:** the retired `scripts/scenario.py` and fictional fixture are not restored. Requested models and workflows may use existing host tools or inspectable locally authored code; “no bundled simulator” is not a reason to refuse analysis. The verifier has no `--offline` flag: its default is offline integrity verification. Install a clean runtime export rather than overlaying old files.
+**Dogfood scope:** integrity, synthetic CLI checks, host routing and live reads are separate results. Report PASS / FAIL / BLOCKED only for exercised paths. A provider denial is not a failed install.
 
-**Dogfood scope:** install integrity, helper checks and proxy-backed synthetic CLI exercises are separate from a successful live read on the intended host. Last-N smoke coverage checks that finite budgets retain the head; orderbook smoke coverage checks that raw page IDs never become charter arguments. Neither proves live provider access or conversational routing. Report PASS / FAIL / BLOCKED per exercised path and identify the revision; an HTTP denial is not successful live verification.
-
-**Protocol coverage:** publisher-authenticated v1.2 license/charter deployments and read interfaces, legacy/v1.1 auction history, separate auction periods and charter-cap windows, global open-bid count, POL Buyback, Incentives Vault and administrative dependencies. The separate `orderbook` view reads one bounded raw-ID page and optional explicitly selected charter bids/fillability; it does not identify every order's charter or owner. The skill never places or cancels orders. Current state is read live; POL acquisitions are not ContractionVault burns. S-Bill documentation and frontend evidence do not establish a live staking deployment. Prior release audits do not cover these edited bytes.
+**Coverage:** current v1.2 auction targets, isolated historical generations, separate round/cap-window context, POL Buyback and Incentives Vault. Orderbook pages are raw IDs, not a price/quantity/owner census; explicit charter IDs enable bid detail. No live snapshots are bundled.
 
 **v1.2 migration:** current auction reads now use the replacement deployments. Charter timing is `charter_auction_round_seconds` from `auctionPeriod()`, replacing `charter_auction_day_seconds`. History `--generation current` means v1.2 for both auction kinds; use `license --generation v1.1` for the previous license deployment. Charter history now reports address-qualified `charter_generations` rather than a single `auction_address`. Older round IDs are not carried into the new deployment.
 
@@ -28,14 +26,15 @@ Current charter output also uses `charter_auction_current_round`, `charter_aucti
 | “Are launch holding limits or the Pool Manager gate active?” | Fresh enabled/active flags and cap values; not a guarantee that a transaction will succeed |
 | “What’s the current branch auction status?” | One fresh `snapshot.py auctions` read using the cataloged current license deployment: getter-reported status, remaining branches and price with [round context and interpretation limits](references/auctions.md#current-branch-auction-status-getters-first); no contract rediscovery or history indexing |
 | “What will the next license round open at, and when?” | [Conditional policy preview and derived schedule](references/auctions.md#next-license-opening-documented-policy-estimate) from the same fresh auction snapshot. No sales and an unavailable next-round floor means **unknown price**, not an estimate using today's floor. Scheduled timing is not keeper execution. |
-| “Show me the last 3 license rounds.” / “How did past auctions go?” | [Bounded history scans](references/auction-history.md#question-to-window): `history.py license --generation current --last-rounds 3`, newest blocks first. A young deployment may have fewer than three observed rounds; missing roll/purchase events leave prices unknown. No cross-generation backfill or promise of three priced rounds. |
-| “Can I bid for branches at my chosen price?” | [v1.2 limit-order guidance](references/updates.md#protocol-v12-announced-changes): keeper execution is FCFS best attempt, not guaranteed allocation; queued orders and completed purchases are separate evidence. No order placement, cancellation, signing or submission. |
-| “What can you read from the orderbook?” | `snapshot.py orderbook --start 0 --count 20`: one bounded page of raw IDs, not an authenticated charter/owner mapping. Optional `--charter-ids N,M` reads bids/fillability for explicitly supplied charter IDs, never IDs inferred from that page. |
+| “Show me the last 3 license rounds.” / “How did past auctions go?” | `history.py license --generation current --last-rounds 3`: scans newest-first, stops after a checked chunk supplies three observed rounds, and labels older scope unsearched. Earlier fragments of selected rounds may be missing; a young deployment may have fewer than three. See [coverage](references/auction-history.md#question-to-window). |
+| “Can I bid for branches at my chosen price?” | [v1.2 limit-order guidance](references/updates.md#protocol-v12-announced-changes): FCFS best-attempt keeper execution, not guaranteed allocation. Queued orders and purchases are separate evidence. |
+| “What can you read from the orderbook?” | `snapshot.py orderbook --start 0 --count 20`: raw IDs only, **not a price/quantity/owner listing**. Optional `--charter-ids N,M` reads independently known charter bids/fillability; no automatic page-to-charter join. |
 | “Have charter auctions started, and how often?” | Announced v1.2 launch and one-charter branch-auction cadence, separated from fresh activation/inventory/price observations and the older whitepaper's daily design. The announced 5.5 ETH first opening is not a saved current price. |
 | “What are the current treasury shares and team liability?” | Current/queued FeeSplitter state and vault controls, not holder yield |
 | “What does the vault hold of this public reserve asset?” | Approval-gated raw holdings/pool metadata for that asset, not portfolio enumeration |
 | “How much did buybacks spend and burn in this block window?” | ContractionVault `BuybackExecuted` event totals within checked coverage; POL buybacks have a separate mode reporting raw token output and destination, not burns |
 | “How are my branches doing?” | Public charter ID → branch count, accrued STANDARD and current-rate daily equivalent in one compact read. A supplied public address can be used for scoped charter discovery; no wallet connection. |
+| “When was my charter active; do I need to check in?” | `snapshot.py charter --id N --detail activity`: authenticated owner/activity/transfer/period reads. Raw clocks are not a verified deadline, dormancy verdict or last-check-in timestamp. [Interpretation](references/exits.md#inspect-one-charters-activity). |
 | “How are my S-Bills doing?” | Use supplied public position details or a user-consented export. Authenticate the actual position-read surface before live claims; preview samples and marketing rates are never reported as the user's holdings. |
 | “What is STANDARD trading at, or what is this amount worth?” | Latest reported canonical-pool USD/ETH prices and a gross indicative valuation |
 | “Which contracts are listed, and is their source verified?” | Publisher-listed identities and explorer links; verification status requires a fresh explorer check |
@@ -45,9 +44,9 @@ Current charter output also uses `charter_auction_current_round`, `charter_aucti
 One skill, useful starting routes:
 
 - **Research:** source-linked explanations, documented parameters and evidence gaps.
-- **Inspect:** on-demand protocol, auction and public-charter snapshots, bounded auction history, prices and supplemental evidence. No wallet signing or transaction submission.
+- **Inspect:** current protocol/charter/auction state, bounded orderbook pages and history, prices.
 - **Analyse:** conditional accrual/time-to-target estimates, auction/fee models, forecasts, comparisons and plans with explicit inputs and assumptions.
-- **Workflows:** requested reports, local/private-data analysis, exports, caches, monitoring, authenticated research and nonbroadcast simulations using host-permitted capabilities. These examples are not an exhaustive list.
+- **Workflows:** user-requested reports, exports and bounded automation under host permissions.
 
 Common questions have [direct inspection paths](references/inspection.md#common-question-paths). Default charter JSON contains only charter facts and its supported rate equivalent; explicitly select `--detail full` when combined charter, burn or launch-restriction context is requested at one block. Explanation-only questions go straight to packaged sources without an RPC call or financial questionnaire. STANDARD amounts do not trigger a price lookup unless monetary valuation is requested.
 
@@ -71,7 +70,7 @@ All four fixed entrypoints—`snapshot.py`, `price.py`, `history.py` and `verify
 
 ### RPC reliability
 
-For production, monitoring or reliability-sensitive research, follow [Robinhood's official recommendation](https://docs.robinhood.com/chain/connecting/): use a provider-managed **Alchemy mainnet endpoint**, with archive access for historical state/indexing. This is an attributed infrastructure recommendation, not a measured “most reliable” ranking or an uptime guarantee. Confirm plan limits, batch/log support and historical coverage for the actual workload.
+For **orderbook and last-N history**, prefer a host-managed Alchemy endpoint or `SRSTACK_RPC_URL` provider with the required log/read coverage. The public default is a best-effort starting point for small auction snapshots, not a reliability promise. [Robinhood recommends Alchemy for production](https://docs.robinhood.com/chain/connecting/); confirm quota, batch/log and archive support for the actual workload.
 
 The RPC helpers select `SRSTACK_RPC_URL` first, otherwise use `ALCHEMY_API_KEY` with `https://robinhood-mainnet.g.alchemy.com/v2/{API_KEY}`, otherwise use the credential-free default `https://rpc.mainnet.chain.robinhood.com/`. Supply either optional setting through host-managed environment/secrets, not CLI arguments or installed files. A custom endpoint supports HTTP or HTTPS, path/query components and URL Basic authentication; prefer HTTPS whenever credentials are involved. `verify.py` forwards both environment settings to its live child helpers. The helpers redact endpoint credentials from output and do not silently fail over. Robinhood labels the default public service rate-limited and **not recommended for production**; it is the zero-configuration path for occasional reads, not a provider restriction or the production reliability recommendation.
 
@@ -81,115 +80,7 @@ Explorer links default to **[Robinhood Etherscan](https://robin.etherscan.io/)**
 
 ## Install a reviewed release
 
-Package version `0.3.0` identifies the unreleased development line, not an immutable package or compatibility guarantee. Installation, dogfood and bug reports must pair it with the **full externally recorded source commit SHA**; if that record is unavailable, report revision unknown. The commands below target `v0.3.0` **once that release is published**; an absent tag fails rather than selecting another revision. For dogfood checkouts, select the explicitly supplied full commit instead; do not substitute a moving branch tip. Installation retains that SHA outside the hashed runtime; never embed the package's own commit in hashed files.
-
-These are deliberate maintenance commands for a user or an agent explicitly asked to install/update the skill, subject to normal host approval—not authorization for unsolicited self-updates or guard bypass. Use Git and Python 3.10+ on a supported POSIX host. Review the selected commit, including `maintenance/package.py`, [SKILL.md](SKILL.md), the runtime scripts and [safety](references/safety.md), **before executing package code**. The bundled verifier checks integrity, not publisher authenticity; running it is already executing the package.
-
-### 1. Select paths and pin the release commit
-
-Installing while Telegram/Hermes or another host is running is supported; a running host is not installation failure. Stop other installers and coordinate a pause in srstack invocations for replacement and final verification. Stopping the host, if convenient, is only an optional precaution. In one shell, select its **actual configured skill root** and an existing stable working directory outside it. Use absolute paths. Hermes' default is `$HOME/.hermes/skills`; OpenClaw commonly uses the intended workspace's `skills` directory. Named profiles may differ. For dogfooding, prefer an isolated profile/workspace.
-
-Set `SRSTACK_BACKUPS` outside **every** skill-discovery root, on the same filesystem as `SKILL_PARENT`. It will retain the review clone, staging and any previous installation. Do not use another discovered skill directory as a backup, or leave a shadowing same-name installation in another root. Keep customizations for review; do not merge them into the reviewed runtime.
-
-```sh
-# Select these paths for your host before continuing:
-SKILL_PARENT="$HOME/.hermes/skills"
-SRSTACK_BACKUPS="$HOME/srstack-backups"
-
-cd "$HOME" &&
-mkdir -p "$SKILL_PARENT" "$SRSTACK_BACKUPS" &&
-WORK="$(mktemp -d "$SRSTACK_BACKUPS/srstack-release.XXXXXXXX")" &&
-REVIEW_ROOT="$WORK/source" &&
-git clone --single-branch --branch v0.3.0 \
-  https://github.com/tomismeta/srstack.git "$REVIEW_ROOT" &&
-git -C "$REVIEW_ROOT" fetch origin refs/tags/v0.3.0 &&
-REVIEWED_COMMIT="$(git -C "$REVIEW_ROOT" rev-parse --verify 'FETCH_HEAD^{commit}')" &&
-git -C "$REVIEW_ROOT" checkout --detach "$REVIEWED_COMMIT" &&
-printf '%s\n' "$REVIEWED_COMMIT" > "$WORK/reviewed-commit.txt" &&
-printf 'Review source: %s\nFull source commit: %s\nRecovery directory: %s\n' \
-  "$REVIEW_ROOT" "$REVIEWED_COMMIT" "$WORK"
-```
-
-Stop on any error. Review this detached revision before the next step; do not fetch again and silently change the pin. The clone is the **repository**, not an installable runtime. It contains maintenance tools and tests that must not enter the host's discovered skill. Do not run unreviewed local modifications to the exporter.
-
-### 2. Export the reviewed runtime
-
-Continue in the same shell, only after review and any required execution approval:
-
-```sh
-python3 -B -I "${REVIEW_ROOT:?Complete the review checkout first}/maintenance/package.py" export \
-  --commit "${REVIEWED_COMMIT:?Resolve and review the full commit first}" \
-  --destination "${WORK:?Select the recovery directory first}/staged-runtime"
-```
-
-`staged-runtime` must **not exist**; its parent already exists. The exporter checks that the full commit equals checkout `HEAD`, reads committed bytes rather than working-tree runtime edits, and verifies runtime membership, hashes and aggregate digest before creating the export. It excludes `.git`, `maintenance`, tests, `.github`, `dist` and caches. A failed export must be resolved before proceeding.
-
-### 3. Clean-replace, verify and retain rollback
-
-The following small replacement step verifies staging before touching the old installation, then moves whole directories—never overlays files. **Pause srstack invocations across the two directory moves and final verification.** Each rename is a whole-root move, but the pair is not atomic: the target is briefly absent between them. The host may remain running. The script checks separation from the selected root; you must also ensure the recovery directory is outside any **other** configured discovery root. Run from the stable directory selected above, not from the installation being moved.
-
-```sh
-python3 -B -I - "${SKILL_PARENT:?Select the actual host root}" "${WORK:?Export first}" <<'PY'
-import subprocess
-import sys
-from pathlib import Path
-
-parent = Path(sys.argv[1]).resolve(strict=True)
-work = Path(sys.argv[2]).resolve(strict=True)
-if parent == work or parent in work.parents or work in parent.parents:
-    raise SystemExit("Skill and recovery directories must be separate")
-if parent.stat().st_dev != work.stat().st_dev:
-    raise SystemExit("Recovery directory must be on the skill root's filesystem")
-staged, target, old = work / "staged-runtime", parent / "srstack", work / "previous-install"
-failed = work / "failed-install"
-if old.exists() or old.is_symlink() or failed.exists() or failed.is_symlink():
-    raise SystemExit("Recovery paths already exist; do not overwrite a previous attempt")
-if target.is_symlink() or (target.exists() and not target.is_dir()):
-    raise SystemExit("Refusing a symlink or non-directory installation")
-if staged.is_symlink() or not staged.is_dir():
-    raise SystemExit("Expected a complete staged runtime directory")
-reviewed_commit = (work / "reviewed-commit.txt").read_text(encoding="ascii").strip()
-if len(reviewed_commit) != 40 or any(c not in "0123456789abcdef" for c in reviewed_commit):
-    raise SystemExit("Expected the full reviewed commit SHA in the external recovery record")
-
-def verify(root):
-    subprocess.run([sys.executable, "-B", "-I", str(root / "scripts/verify.py")],
-                   cwd=root, check=True, timeout=30)
-
-print("Recovery directory:", work, flush=True)
-verify(staged)
-moved_old = installed_new = False
-try:
-    if target.exists():
-        target.rename(old)
-        moved_old = True
-    staged.rename(target)
-    installed_new = True
-    verify(target)
-except BaseException:
-    if installed_new:
-        target.rename(failed)
-    if moved_old:
-        old.rename(target)
-        print("Restored previous installation:", target, file=sys.stderr)
-    raise
-print("Installed and verified:", target)
-print("Full reviewed commit SHA:", reviewed_commit)
-print("Keep recovery files and full source pin:", work)
-PY
-```
-
-No files are deleted. On final verification failure, the new root is retained as `failed-install` and the previous root is restored (or the destination is left absent for a first install). If restoration itself fails, keep srstack invocations paused and recover from the printed directory; never use a missing or inconsistent skill root. Telegram/Hermes need not shut down. Whole-root replacement removes obsolete scenario/fixture files from the active runtime without deleting your backup. Keep it until the loaded path and reviewed runtime behavior are confirmed; never discover it as a second skill. A process interruption or filesystem failure may require manual recovery from those same directories before srstack use resumes.
-
-After success, refresh skill discovery if needed and confirm the loaded path is `SKILL_PARENT/srstack`, package version is `0.3.0`, and the printed full SHA matches `WORK/reviewed-commit.txt`. Resume srstack invocations only against the verified root. **Existing chats retain their loaded context:** start a fresh `/new` in each Telegram/Hermes chat that will use the revision (or the host's equivalent new conversation). Installing in one chat cannot restart or refresh the other chats. Restarting the host is optional, not an acceptance criterion; package version alone cannot identify the exact installed revision.
-
-**Hermes installation:** use the complete-bundle instructions above. URL discovery depends on configured sources; importing raw `SKILL.md` does not necessarily import its references, assets and scripts.
-
-**Sandbox transport compatibility:** dogfood reports identified `SSLError: WRONG_VERSION_NUMBER` in the former direct `http.client.HTTPSConnection` RPC path across endpoints, while `urllib.request` to the same Alchemy endpoint succeeded under the host's intercepted/proxied networking. RPC helpers now use standard-library `urllib.request` with normal host proxy configuration; this is transport compatibility, not an approval bypass or endpoint failover. That report establishes urllib+Alchemy on the reporting host, not urllib+public-RPC or all sandbox compatibility. Verify the installed revision on the intended host/provider; an HTTP 403 or denied approval still stops the operation. Never spoof headers, disable TLS checks, or reuse old state to hide a failure. Install the complete exported runtime, not `SKILL.md` alone.
-
-**Host approvals:** trusted skill files and requested public reads do not bypass execution approval. If a one-shot session cannot obtain it, continue in an approval-capable session for the exact helper command rather than trying wrappers, PTYs or `--yolo`. Explicit CLI modes remove the need for stdin but still require normal permission. See [input transport and approvals](references/execution.md#input-transport-and-host-approvals).
-
-Other harnesses can use their Agent Skills loader or explicitly read [SKILL.md](SKILL.md) and selected resources. Resource paths resolve against the loaded skill directory. See [host setup](references/installation.md). Installation and configuration changes require an explicit maintenance request and normal host approval; the skill does not initiate them itself.
+**Current dogfood:** install a reviewed commit from `feature/v0.3.0`, not a nonexistent `v0.3.0` tag. The [installation runbook](references/installation.md#reviewed-installation) resolves a full commit before review, exports committed runtime bytes, and clean-replaces with rollback. If a specific pin was supplied, use it exactly.
 
 ### Quick test after installation
 
@@ -355,7 +246,7 @@ The [contract catalog](assets/entities/robinhood.json) contains **14 publisher-l
 
 The other five have **no direct getter profile**: Founding Sale, Liquidity Manager, Address Registry, Uniswap v4 Pool Manager and Multicall. Registry and Pool Manager identities/code also participate in the treasury authentication graph. Their addresses and explorer links are cataloged; this does not establish complete holdings, permissions or implementation correspondence.
 
-**The catalogs describe bundled coverage, not an inspection allowlist.** Research relevant contracts, networks, sources, interfaces, historical state and events beyond bundled coverage. Prefer fixed helpers where they fit; otherwise use [supplemental tools](references/inspection.md#supplemental-public-reads) or inspectable locally authored code under normal host permissions. Independently authenticate observations and label simulation/assumption boundaries. No catalog edit is needed just to investigate. No wallet signing or transaction submission is permitted.
+Use the fixed helpers where they fit and [authenticated supplemental reads](references/inspection.md#supplemental-public-reads) for gaps. Ordinary research does not modify installed catalogs.
 
 **Publisher-listed addresses and publisher ABIs do not establish source correspondence.** Selected STANDARD and Trading Hook interfaces and accounting/restriction semantics have additional source-review provenance; that review does not verify the other modules or establish current deployment state. The package bundles no contract source and stores no current explorer verdicts. Current verification status requires fresh retrieval. Getter observations do not establish complete administrator powers, upgradeability, audit correspondence or exploit resistance. Source dates identify reference provenance, not live-state freshness.
 
@@ -373,7 +264,7 @@ Packaged research needs a resource reader. Bundled readers use **Python 3.10+ an
 
 Answers lead with content. Estimates get a short label; observations get a brief source note where needed. Detailed provenance and assumptions are available on request, not repeated as small print.
 
-The four bundled helpers retain their fixed input schemas, identities, decoding, finite budgets and integrity checks; they write no files and make no financial transactions. Their partial results and errors remain honest, not silently repaired. Supplemental analysis, user-authorized artifacts/monitoring, authenticated research, unsigned preparation and nonbroadcast simulations are permitted through appropriate tools. Do not sign wallet messages/transactions, invoke signing prompts or submit/broadcast transactions, including through delegated tools. Host permissions, access controls and secret protection remain binding. See [safety](references/safety.md) and [execution](references/execution.md).
+The helpers retain fixed targets, strict decoding, finite budgets and integrity checks; they write no files and make no financial transactions. Ready-to-sign calldata, transaction deep links and filled unsigned objects require an **explicit preparation request**. Explanation/inspection alone does not authorize them. Signing and submission remain excluded. The full rule lives in [safety](references/safety.md#preparation-and-wallet-boundary).
 
 The readers do **not themselves** implement liquidity-depth analysis, amount-specific withdrawal quotes, gas estimation or strategy/settlement models. Use appropriate supplemental tools or explicit calculations for those requests, preserving evidence and assumptions. No result is guaranteed sale proceeds. A helper's missing feature is not a skill-wide prohibition.
 
