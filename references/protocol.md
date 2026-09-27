@@ -2,11 +2,13 @@
 
 Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
 
-Publisher rules and v1.1/v1.2 announcements reviewed through **2026-09-26**, not independently verified implementation or live configuration. Whitepaper: `sr-whitepaper-v1`; scoped changes: `sr-protocol-v1-1-announcement` and `sr-protocol-v1-2-announcement`. Provenance: [source index](../assets/sources.json).
+Publisher rules and selected v1.1/v1.2 announcements reconciled on **2026-09-27**, not independently verified implementation or live configuration. Whitepaper: `sr-whitepaper-v1`; scoped changes: `sr-protocol-v1-1-announcement` and `sr-protocol-v1-2-announcement`. Provenance: [source index](../assets/sources.json); [bounded coverage and timeline gaps](updates.md#september-27-bounded-reconciliation).
 
 ## System and ownership — whitepaper §§1–2
 
 STANDARD describes an ERC-20 currency, an ETH ↔ $STANDARD hooked Uniswap v4 pool, an issuing central bank, charter NFTs, branches within those charters, and expansion/contraction vaults. Traders need no charter. A branch represents a share of issuance, not a reserve-redemption claim. The protocol owns liquidity and reserve assets; the bank/company analogy is not a legal bank account or customer deposit product. [sr-whitepaper-v1: introduction, entities, disclaimer]
+
+The [object and contract map](object-map.md) separates economic objects from contracts and distinguishes ownership, ledger records, funding and control relationships. An NFT ID, branch count, wallet token balance, pending ledger amount, auction bid and S-Bill preview are not interchangeable forms of ownership or income.
 
 Trading generates fees and pool-flow measurements; issuance credits branch balances pro rata; retiring branches releases accrued value through withdrawal minting. The whitepaper describes expansion-license payments as permanent ledger removal; that reference is not a verified v1.1 proceeds split. Token deposits convert wallet tokens into re-mintable ledger value. Post-genesis charter auction ETH enters the ongoing fee engine; founding proceeds have a separate allocation and escrow/finalization sequence. [sr-whitepaper-v1: entities, currency, charters, reserves]
 

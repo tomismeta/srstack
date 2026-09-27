@@ -10,7 +10,7 @@ Read only sources relevant to the question. These links are discovery routes, no
 
 | Publisher source | Relevant context |
 |---|---|
-| [Whitepaper](https://www.standardreserve.xyz/app/protocol/whitepaper/) | Sixteen sections mapped below. The **2026-09-26 review** retained older charter cadence/allocation and no-bids wording conflicting with the [v1.2 announcement](updates.md#protocol-v12-announced-changes). |
+| [Whitepaper](https://www.standardreserve.xyz/app/protocol/whitepaper/) | Sixteen sections mapped below. The **2026-09-27 review** still found older charter cadence/allocation and no-bids wording conflicting with the [v1.2 announcement](updates.md#protocol-v12-announced-changes); the separately updated charter guide now says 12 hours. |
 | [Protocol live page](https://www.standardreserve.xyz/app/protocol/live/) and [contracts tab](https://www.standardreserve.xyz/app/protocol/live/#contracts) | Policy explanations, publisher identity and ABI leads. Authenticate deployments and live observations through [contracts](contracts.md) and [inspection](inspection.md); component text is not state. |
 | [Charters guide](https://www.standardreserve.xyz/app/protocol/charters/) | Entry, issuance shares and retirement; [charters](charters.md), [auctions](auctions.md), [exits](exits.md). |
 | [Official account](https://x.com/standard_rsv) and [developer](https://x.com/0xbeans) | [Updates](updates.md) preserves dated v1.1/v1.2 announcements and earlier proposal boundaries; social review claims are not audit verification. |
@@ -20,9 +20,11 @@ Read only sources relevant to the question. These links are discovery routes, no
 
 [Deployment provenance](../assets/sources/deployments.json) and [interface provenance](../assets/sources/live-interface.json) preserve dated identity, source and ABI reviews. They are leads rather than execution bindings, a complete inventory or a current verification verdict.
 
+The [September27 bounded reconciliation](updates.md#september-27-bounded-reconciliation) records seven page bodies, six app-linked explanation components and ten explicitly enumerated known posts, with source fingerprints and mirror-attributed publication times. **No contiguous official/developer timeline interval was reviewed.** Known-post retrieval and an unchanged mount hash do not establish a complete latest-news sweep, whole-site synchronization or deployed semantics. `sr-source-reconciliation-2026-09-27`
+
 ## Whitepaper: all sixteen sections
 
-Locators belong to `sr-whitepaper-v1` in the [website source record](../assets/sources/website-v1.json), reviewed through **2026-09-26**.
+Locators belong to `sr-whitepaper-v1` in the [website source record](../assets/sources/website-v1.json), reviewed through **2026-09-27**.
 
 | Section / locator | Topic coverage |
 |---|---|

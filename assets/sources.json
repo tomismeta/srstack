@@ -34,6 +34,7 @@
       "id": "website-v1",
       "path": "assets/sources/website-v1.json",
       "record_ids": [
+        "sr-source-reconciliation-2026-09-27",
         "sr-whitepaper-v1",
         "sr-token-page-v1",
         "sr-charters-page-v1",
@@ -43,7 +44,7 @@
         "sr-owner-check-in-frontend",
         "sr-sbill-announcement"
       ],
-      "scope": "Primary whitepaper, companion pages, Second Mandate strategy and dated staking/check-in frontend provenance; sample illustrations and product descriptions are not live state or authenticated deployment evidence"
+      "scope": "Primary whitepaper, companion pages, Second Mandate strategy, dated staking/check-in frontend provenance and a bounded September27 website/known-post reconciliation with explicit timeline gaps; samples and descriptions are not live state or authenticated deployment evidence"
     },
     {
       "id": "deployments",

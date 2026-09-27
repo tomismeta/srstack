@@ -34,6 +34,8 @@ Publisher ABIs name successor holdings-migration entries for both vaults and Fee
 
 The [Second Mandate](updates.md#second-mandate-liquidity-for-tokenized-stocks) proposes seeding tokenized-stock markets, coordinating external capital and returning trading fees to the Reserve for further markets. It establishes neither a new ongoing ETH split nor deployed positions or holder revenue rights. Its reserve-position panel is explicitly sample content; the separate “as of today” graphic uses fixed values in the reviewed component, not live observations. Fresh retrieval alone does not establish holdings. Keep this strategy separate from whitepaper accounting and the specific official v1.1 POL change. [sr-second-mandate-manifesto]
 
+The [S-Bill explanation](updates.md#s-bills-reviewed-product-description-and-preview), freshly reviewed September27, describes bought-back tokens topping a premium budget each epoch and future market revenue following that path. This is a proposed product-funding relationship, not proof of an implemented transfer from the Incentives Vault, a changed fee split, a claim on protocol reserves or enforceable premiums. Keep product copy, reserve strategy and observed asset movements separate. [sr-staking-preview]
+
 ## Contraction execution
 
 The **Contraction Vault**, distinct from POL Buyback, buys STANDARD on-market and burns purchases under the whitepaper rule (`buyback-burn-share`). Retained Incentives Vault tokens must never be counted as these burns. For vault balance V and pool reserves R, the whitepaper rule is:

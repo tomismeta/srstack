@@ -19,7 +19,7 @@
       "locators": [
         "Official /app/ page links mountApp-z6PyBslD.js; complete text reviewed, not a truncated reader excerpt.",
         "Ne CentralBank and Rn CharterNFT explicitly bound to core role calls; Vs STANDARD and As TaxHook in role-scoped reads.",
-        "VP original deployment literal, chain4663: CentralBank0x5977B25419f9c0dDcB2F89fE204955622f4F57ea; CharterNFT0x69101f92427376FA80476A997d024cf9dC3EaE39; STANDARD0x88ad8DdF1E3898412146a534538d418c6F8A9062; TaxHook0xF1eE073811B14359D850825E48d200483200eDcd.",
+        "VP original deployment literal, chain4663: CentralBank0x5977B25419f9c0dDcB2F89fE204955622f4F57ea; CharterNFT0x69101f92427376FA80476A997d024cf9dC3EaE39; TaxHook0xF1eE073811B14359D850825E48d200483200eDcd. STANDARD is attributed at VP.standard; discover its address dynamically from authenticated publisher/onchain relationships, not a stored token pin.",
         "VP historical original auctions: license0xA45CE49303EEd5846F841BFd4bAC6aE8C805EC05 with jc; charter0x65B4f85b4A64424F6bA0fFe0C535100bc6888892 with Ci.",
         "GP historical peripheryV11: license0x44731EFf9da8fDD30003AA7C0B324368B3DfFE5e; contractsCommit2f227a6269effe6ed512d95e0b08313dde901be9. No separate v1.1 charter replacement is identified by this mapping.",
         "m_ removal set and b_ literal v1.1 license adaptation: remove AUCTION_DAY, DECAY_HALF_LIFE_MAX, MAX_PER_CHARTER_PER_DAY, purchasedOnDay, CharterDailyCapExceeded; add auctionPeriod, capWindow, capWindowIndex, MAX_PER_CHARTER_PER_WINDOW, purchasedInWindow, remainingForCharter and new errors.",

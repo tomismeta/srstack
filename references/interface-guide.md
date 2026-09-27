@@ -31,6 +31,7 @@ Choose the evidence needed for the question; these are examples, not mandatory s
 | What could accrue over an interval? | [Accrual inputs](#accrual-inputs), epoch/branch events below | Full accumulator/checkpoint/rounding and deployment correspondence remain unestablished; see [accrual evidence](research-workflow.md#accrual-evidence). |
 | Is this an earned-only budget? | [Ledger/ownership events](#ledger-and-ownership-events), purchase events, anchored balances and checkpoints | Complete deposit/spend/withdrawal/transfer history and origin-consumption rules are needed; mixed origins may remain indeterminate. See [earned-only accounting](research-workflow.md#earned-only-projections-and-reinvestment). |
 | What can be bought, at what price and when? | [Separate auction families](#auction-state), [license allowance/orders](#allowance-and-orders), `MAX_BRANCHES` and family-specific funding | A new ETH-priced charter is not a STANDARD-funded branch-license expansion. Inventory, allowance, capacity, ownership, pause and funds are independent; see [purchase constraints](research-workflow.md#fixed-price-and-windowed-purchases). |
+| When can this charter buy one branch license from accrued STANDARD, using historical license sales? | [Inventory/next-window gate](auctions.md#current-license-availability-and-next-opportunity), `pendingOf`, charter constraints, [historical executions](auction-history.md), [empirical pace](research-workflow.md#empirical-pending-delta-pace) and [dilution scenarios](research-workflow.md#dilution-scenarios) | Sold-out is not buyable now. Pending is not earned-origin proof; historical prints are not the live ask. Separate policy opening, repeat-demand and still-unsold scenarios; clip to evidenced epoch/issuance limits. |
 | What orders exist or filled? | `openBidCount`, `openBids`, `bids`, `fillable`, bid/purchase events | Raw page IDs need authenticated interpretation; bidder need not be current owner. Limit, current ask and settled price differ. |
 | What actually sold or changed? | [Auction events](#auction-events), [history](auction-history.md) | Receipt/canonicality/coverage and historically effective settings are required; no-sale average is undefined. |
 | Is the token restriction enabled, active, or applicable? | [Restrictions](#restrictions) | Enabled, resolved active and the separate gate are not interchangeable; flags do not prove a particular transfer succeeds. |
@@ -100,6 +101,14 @@ Combine only authenticated semantics at a common anchor; queued values are not a
 | `queuedEpochDays()` · `0x41b3e64b` | `—` → `(uint256 value, bool pending)` | K; pending flag distinguishes proposed from active |
 | `queuedBaseIssuancePerDay()` · `0xa3cdd9d4` | `—` → `(uint256 value, bool pending)` | K; pending flag distinguishes proposed from active |
 
+### Optional observation series
+
+For a requested pace/dilution investigation, preserve `currentStreamRatePerSecond()`, `totalBranches()` and the selected charter's `pendingOf()` at the **same identified block**, with its header timestamp. Retain exact raw units and the charter ID. These three values form a compact joint series, not a sufficient proof of earnings or a required preflight for unrelated questions. Add branch count, epoch/issuance boundaries and covered flow history only as needed for the proposed interpretation. Keep observations in an authorized external record, never in installed defaults; do not start unsolicited polling or a standing watch.
+
+The stream's changing drivers remain an explicit research question. Issuance schedules, fee/recycling flows, component stops and administrative changes are possible hypotheses to investigate—not explanations established by a name or a two-point trend. Pin relevant components, settings, events and implementation evidence before attributing a change. `rawStream × 86400` remains raw-unit-per-day arithmetic unless its denomination and components are authenticated or explicitly assumed in a scenario.
+
+Under an expressly assumed pro-rata model, falling aggregate stream and rising eligible branch count both reduce per-branch pace. A changed relevant stream/denominator observation requires re-anchoring a claim about current pace; an older anchored scenario remains a valid historical scenario, not an automatically refreshed forecast. [Empirical pending deltas](research-workflow.md#empirical-pending-delta-pace) and [two-series scenarios](research-workflow.md#dilution-scenarios) provide labelled ways to proceed without certifying Solidity behavior.
+
 ## Auction state
 
 **CHARTER AUCTION and BRANCH-LICENSE AUCTION are separate families.** Resolve the intended family from context; ask only if it remains ambiguous. Each observation is scoped by family, chain, generation, address and block. Proven identical encoding is shared below for compactness, **not** schedules or economics.
@@ -159,6 +168,16 @@ Keep allowance-window usage separate from round inventory and branch capacity. A
 | `openBids(uint256,uint256)` · `0x3b87f7bd` | `start, count` → `(uint256[] ids)` | L12; dynamic raw ID array; ID-to-charter interpretation unresolved |
 | `bids(uint256)` · `0x4423c5f1` | `charterId` → `(address bidder, uint256 count, uint256 maxUnitPrice)` | L12; charterId input explicitly authenticated; limit is not executed price |
 | `fillable(uint256)` · `0x4f071557` | `charterId` → `(bool)` | L12; point-in-time bool, not promised keeper fill |
+
+### Current license quote and orderbook
+
+For “can I buy now?”, first establish the relevant license generation's effective inventory/round and binding charter constraints under [current availability](auctions.md#current-license-availability-and-next-opportunity). A sold-out round is closed to purchases: `currentPrice()`/`quote(count)` may still return curve output, but that is not a buyable ask. A price below pending does not undo zero inventory. Keep a historical exhausted round separate from a possibly replenished effective window.
+
+Where inventory remains, authenticated same-block `currentPrice()` and `quote(count)` provide the auction's price-function/quote output; they do not certify eligibility, funding, final execution or future price. A historical fill is a different comparator. Do not enumerate the orderbook merely to obtain this quote, and do not turn an affordability question into unsolicited bid/keeper advice.
+
+When the user actually asks for the book, `openBidCount()` and bounded `openBids(start,count)` pages expose reported count and raw IDs. Apply the dynamic-array layout above and report page coverage. Join a raw ID to `bids(charterId)` only with independent evidence of that mapping; otherwise leave the join unresolved, or read a separately authenticated charter ID. A successful numeric lookup is not mapping proof. `fillable(charterId)` is a point-in-time flag for an authenticated input, not guaranteed execution or a way to discover the ask.
+
+Report bidder, quantity and `maxUnitPrice` only for evidenced joins. Highest bid is not the executable ask; a limit is not a fill price. Receipt-verified `LicensesPurchased.unitPrice` establishes the reported execution price. Output a block-pinned, coverage-qualified quote/book snapshot or the precise unavailable claim—such as “no authenticated current executable ask”—without converting unknown IDs, funding or availability into a fill guarantee.
 
 ## Restrictions
 

@@ -1,11 +1,12 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-26",
+  "reviewed_at": "2026-09-27",
   "scope": "Published v1.2/v1.1 rules and scoped launch settings, with superseded whitepaper design explicitly retained as historical provenance; never live configuration.",
   "notes": [
     "Announcement/reference values are not saved RPC settings or a current-state fallback. Read each record scope/source; current dynamic values must be fetched live.",
     "Live snapshot observations are separate from documented design settings; remaining budget and supply have different accounting bases.",
-    "Unknown execution details stay unknown. The published launch schedule does not fix future tax or transaction outcomes."
+    "Unknown execution details stay unknown. The published launch schedule does not fix future tax or transaction outcomes.",
+    "The September27 reconciliation refreshed the whitepaper and selected known announcements/components; only participation cadence provenance changed. Group dates and source coverage remain scoped, not a universal parameter or live-state synchronization."
   ],
   "lookup": "Find the parameter ID in groups.record_ids, then read that exact package-root-relative path. This index contains no alternate parameter values.",
   "groups": [

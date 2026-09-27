@@ -18,9 +18,32 @@ Use the [selected guide](interface-guide.md) as an interface lead, or retrieve t
 
 Keep related observations at a common block where possible. Deployment, activation, current routing, proxy relationships, permissions and audit coverage are independent questions; investigate only those material to the answer. Missing evidence limits the affected claim, not all useful observations. Report known results and the specific gap rather than a single “verified” flag. See [inspection](inspection.md) and [research](research-workflow.md).
 
+## Discover a role without prior session context
+
+No previous chat, private backup or installed address router is required. Start with the [official contract directory](https://www.standardreserve.xyz/app/protocol/live/#contracts) and the dated [deployment records](../assets/sources/deployments.json), especially `sr-contract-directory`, `sr-v1-1-deployment-evidence` and `sr-v1-2-deployment-evidence`. The [object map](object-map.md) identifies which role answers the question. These records supply publisher locators and historical discovery evidence, not a permanent current target.
+
+For opt-in dated contract-address leads, read `sr-contract-directory.identity_evidence` in that same file: chain, shared as-of retrieval date, role, generation, full address, literal locator and authentication basis. The date is not an invented first-seen or deployment date. These publisher attributions do not claim code verification at an unspecified block. Fungible-token address pins are excluded: discover token identity from authenticated publisher/dependency relationships and corroborate its code/decimals as needed.
+
+| Requested object or operation | Role to locate | Evidence to connect before interpreting |
+| --- | --- | --- |
+| Total branches, charter branch count or pending ledger | CentralBank | Publisher chain/address binding and relevant NFT/token/registry relationships |
+| Charter holder or transfer | CharterNFT | Bank/NFT relationship and charter ID; module administrator is a different owner |
+| New-charter price or purchase | Charter auction for the relevant generation | Separate charter binding, bank relationship, ETH event layout and own schedule |
+| Expansion price, inventory, bids or purchase | Branch-license auction for the relevant generation | Separate license binding, bank relationship, STANDARD denomination and own allowance/round inputs |
+| Wallet tokens, supply or restrictions | STANDARD and relevant hook/dependencies | Token identity/decimals and role-specific restriction semantics |
+| Treasury, reserves, buybacks or controls | The named vault, FeeSplitter, liquidity manager, POL Buyback, registry or controller | Effective routing and authority; neither a similarly named module nor an old registry event is sufficient |
+
+If the directory is only an application shell, follow its actual linked assets/imports as **data**, preserving the page-to-asset chain. Use observed role bindings and their generation overlays rather than the first address-shaped string. For example, the reviewed publisher mapping replaces license and charter targets separately; an original base mapping is not automatically the current auction. The complete-module/literal fingerprints in `sr-question-interface-2026-09-27` are dated comparison evidence, not a requirement that future assets match.
+
+Bind the discovered full address to chain, role and generation; then corroborate relevant code and cross-contract references at a stated block. A getter outside the selected guide can be used when its ABI is authenticated. Only use registry keys or constructor layouts established by evidence—do not guess a key from a display label. Publisher attribution, nonempty code, matching references, active authorization and implementation equivalence remain separate claims.
+
+A useful discovery progression is publisher deployment diary/directory and linked bindings, then authenticated registry/dependency reads, then corroborating explorer labels/creation records, with dated observations as fallback leads. This is source prioritization, not a mandatory sequence of calls. Explorer labels alone do not authenticate publisher ownership or current routing; an undocumented registry key must not be guessed merely because a prose reference names a role.
+
+For history, follow explicit predecessor/replacement records and creation/activation evidence as well as the current mapping. Save deployment/creation bounds for log planning; do not rediscover a known contract by scanning from genesis. If fresh publication access is unavailable, a dated record may support explicitly historical research, but cannot silently become a current address assertion. Name the unavailable discovery link instead of asking the user to supply information the available publisher evidence already provides.
+
 ## Recover a stale frontend source link
 
-Hashed asset URLs are historical locators, not permanent APIs. Start from the official page and follow its explicit asset/import references as text, within a finite question-relevant scope. Retain the page-to-asset provenance and retrieval time; separate production from test deployment data. Do not evaluate expressions or import downloaded modules to extract an ABI. Stop denied operations without retry, alternate-transport bypass or failover. Truncation or unresolved imports leave coverage incomplete.
+Hashed asset URLs are historical locators, not permanent APIs. Start from the official page and follow its explicit asset/import references as text, within a finite question-relevant scope. Retain the page-to-asset provenance and retrieval time; separate production from test deployment data. Do not evaluate expressions or import downloaded modules to extract an ABI. Classify failed access under [safety](safety.md#public-retrieval-and-calls): stop denied requests without evasion; preserve the scope of a client failure and any separately established permitted path. Truncation or unresolved imports leave coverage incomplete.
 
 The **2026-09-27 review** recovered the complete newly linked publisher module, with whole-body and literal hashes in `sr-question-interface-2026-09-27`. This removes the current extraction gap without rewriting the older records' accurate truncation/denial history. Core implementation correspondence is still unestablished: a separately pinned runtime and Solidity metadata pointer did not yield matching source (`sr-core-accrual-correspondence-2026-09-27`). See [accrual evidence](research-workflow.md#accrual-evidence).
 

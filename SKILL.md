@@ -24,17 +24,21 @@ Keep dependent observations at one identified block; preserve each independent s
 
 Name the metric before interpreting it: **open branches** (`totalBranches`) are not unsold licenses (`remainingToday`) or orders; **pending** is not proven earned-origin, spendable or withdrawable funding; a **rate** is not interval earnings. Bid limits, asks/floors, stored last-sale prices and receipt-verified executions differ. Funds-affordable is not necessarily permitted or executable. Stored day/sold counters may belong to a prior materialized round; compare the authenticated anchor/period and effective availability before declaring sold-out.
 
+An authenticated sold-out license round is closed to purchases: its remaining curve output is not a live buyable ask. Establish the effective round despite lazy storage, then distinguish the receipt-verified close from the next scheduled candidate window.
+
 Keep **charter auctions** (new charter, ETH price, `CharterPurchased`) separate from **branch-license auctions** (expand an existing charter, STANDARD-denominated price, `LicensesPurchased`). Label family/generation and authenticate each clock, inventory and price rule independently. Earned ledger credit is not automatically ETH for a charter purchase.
 
 ## Load only the relevant reference
 
 | Question needs | Reference |
 |---|---|
+| Definitions, object hierarchy, ownership, funding and contract relationships | [Object and contract map](references/object-map.md) |
 | Live state, ownership, charter activity, balances or market value | [Inspection](references/inspection.md) |
-| Deployment or interface authentication | [Contracts](references/contracts.md) |
+| Discovering a role/address without prior context; deployment or interface authentication | [Contracts](references/contracts.md#discover-a-role-without-prior-session-context) |
 | Method/event signatures, layouts, units and generation leads | [Interface guide](references/interface-guide.md) — select only the relevant set |
 | Auction history across contracts; opening, first, average and last prices | [Historical accounting](references/auction-history.md) |
 | Accrual-funded buying, future auctions, comparisons or calculations | [Analysis and projections](references/research-workflow.md) |
+| When a charter can buy one license from accrued STANDARD using historical sales | [Availability and next window](references/auctions.md#current-license-availability-and-next-opportunity), then the relevant [pace/scenario evidence](references/research-workflow.md#empirical-pending-delta-pace) |
 | Protocol, charter, reserve or auction mechanics | [Protocol](references/protocol.md), [charters](references/charters.md), [reserves](references/reserves.md), [auctions](references/auctions.md) — choose the relevant one |
 | Dormancy, check-in or exit interpretation | [Activity and exits](references/exits.md) |
 | Announcements, S-Bills or publisher documents | [Updates](references/updates.md), [documents](references/documents.md) |
@@ -44,9 +48,13 @@ Use the [source index](assets/sources.json) only to locate an unknown source rec
 
 ## History and projections
 
-“All rounds” includes every relevant authenticated generation through the anchor, not just current targets or a recent lookback. Keep chain/address/round identities and coverage gaps separate. Scheduled round windows differ from actual rolls and first-to-last sale spans. Use exact quantities and consideration for weighted prices; a last observed sale is not automatically a final close. Stored price is a lead, not receipt verification.
+“All rounds” includes every relevant authenticated generation through the anchor, not just current targets or a recent lookback. Keep chain/address/round identities and coverage gaps separate. Scheduled round windows differ from actual rolls and first-to-last sale spans. Use exact quantities and consideration for weighted prices; the last receipt-verified sale is a sold-out close only with authenticated exhaustion and complete ordered coverage for that round. Its execution time is not the scheduled boundary. Stored price is a lead, not receipt verification.
+
+Estimate range/page work before starting a large scan. A restrictive provider does not justify default-genesis queries, thousands of tiny chunks or indefinite rate-limit retries. Use deployment/round bounds, an appropriate established authorized capability and a finite stopping condition; expose incomplete coverage rather than quietly accepting a runaway job.
 
 Earned-only funding requires verified unspent earnings plus supported future accrual, less commitments and purchases. Unresolved origin stays **unattributed ledger**, never an earned-budget assumption disguised as the answer. Authenticate contract accrual units, rounding, eligibility and epoch/pause boundaries; separate future conditions as scenarios. Apply purchase debits, effective branch activation, inventory, capacity and allowance resets at their own boundaries. Missing evidence can still support a formula, conditional model or conservative bound. Keep gas and conversion funding separate.
+
+When deployed pace is unestablished, a labelled [empirical pending delta](references/research-workflow.md#empirical-pending-delta-pace) or [dilution scenario](references/research-workflow.md#dilution-scenarios) can still answer “when” conditionally. Expose flow/ownership/branch-count coverage and assumptions; neither model certifies earned origin or contract mechanics. Clip a working projection to the evidenced epoch/issuance window rather than silently extending it.
 
 For nontrivial aggregation, affordability or projections, prefer inspectable executable calculations over mental arithmetic. Choose the method; establish exact units, effective-time ordering and accounting reconciliation before presenting a checked numerical result. Reusing the same inputs and assumptions should reproduce the same numbers without fresh RPC. If execution or evidence is unavailable, give a useful labelled formula, bound or illustration rather than inventing a checked result. See [calculation guidance](references/research-workflow.md#compute-with-explicit-units).
 

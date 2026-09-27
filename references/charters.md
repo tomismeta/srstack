@@ -2,7 +2,7 @@
 
 Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
 
-Publisher design reviewed through **2026-09-26**: [sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§6–10,12–13 and `sr-charters-page-v1`. Dated reference settings: [participation](../assets/parameters/participation.json) and [launch](../assets/parameters/launch.json), not current configuration.
+Publisher design reconciled on **2026-09-27**: [sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§6–10,12–13 and `sr-charters-page-v1`. The fresh charter guide now says 12-hour charter auctions; retained whitepaper daily wording remains superseded design, not verified deployed timing. Dated reference settings: [participation](../assets/parameters/participation.json) and [launch](../assets/parameters/launch.json), not current configuration.
 
 ## How are my branches doing?
 

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-26",
+  "reviewed_at": "2026-09-27",
   "scope": "Publisher v1.2/v1.1 announcements and deployment identity provenance, historical cutover/control relationships and chain routing; no saved live status, settings, prices, balances or ownership.",
   "records": [
     {
@@ -8,8 +8,8 @@
       "url": "https://www.standardreserve.xyz/app/protocol/live/#contracts",
       "publisher": "The Standard Reserve official website",
       "published_at": null,
-      "retrieved_at": "2026-09-26",
-      "review_depth": "September22 complete mount/directory review retained; September25 directory-component review; September26 complete peripheryV12 mapping/override literals recovered before current bundle truncation. complete_asset_sha256 identifies only the historical September22 mount.",
+      "retrieved_at": "2026-09-27",
+      "review_depth": "September22 complete mount/directory, September25 directory and September26 partial-mount v1.2 reviews retained. September27 complete mountApp-z6PyBslD.js and linked directory component retrieved as data; AP/VP/GP/YP chain and deployment literals reconciled. complete_asset_sha256 below identifies only the historical September22 mount; fresh hash is in identity_evidence.",
       "claim_stage": "publisher identity/interface attribution, not deployment-state or authority verification",
       "locators": [
         "https://www.standardreserve.xyz/assets/LiveProtocol-BTvCIoe8.js",
@@ -18,16 +18,47 @@
         "Base contracts plus peripheryV11 treasury additions, then peripheryV12 replacement licenseAuction and charterAuction; see sr-v1-2-deployment-evidence",
         "Treasury polManager remains the original address, labelled Genesis Liquidity Manager",
         "Generic owner/pendingOwner directory controls; historical v1.1 and current v1.2 auction interfaces",
+        "https://www.standardreserve.xyz/assets/mountApp-z6PyBslD.js",
+        "https://www.standardreserve.xyz/assets/LiveProtocol-CMuwXpVZ.js",
         "https://www.standardreserve.xyz/assets/mountApp-BcWoqzfB.js"
       ],
-      "summary": "Publisher directory scope remains16 identities:14 protocol modules plus2 shared infrastructure entries, with current v1.2 auction replacements. The three historical auction identities and three administrative dependencies are not current directory entries. Current settings and ownership must be read live.",
+      "summary": "The September27 publisher directory mapping has16 identities:14 protocol modules plus2 shared infrastructure entries, using the v1.2 auction replacements. The dated identity appendix below preserves18 charter/core/periphery/infrastructure contract-address leads across original, v1.1 and v1.2 bindings, not a live target resolver. Fungible token addresses are deliberately excluded and must be discovered from current publisher/onchain relationships. Three historical auction identities and administrative dependencies are not additional current-directory entries. Authenticate the question's generation, chain, code and relationships afresh.",
       "limits": [
         "No independent source/ABI correspondence, current ownership, activation or audit verification.",
-        "Current full mount retrieval was truncated and direct retrieval denied. Complete v1.2 mapping/ABI literals before the cutoff were reconciled separately; no complete current bundle hash or whole-app audit is claimed.",
+        "The September26 mount retrieval was truncated and direct retrieval denied; complete v1.2 literals before its cutoff were reconciled then. September27 complete-body retrieval supplements rather than erases those historical limits; selected literals are reviewed, not the entire application or deployed implementation.",
         "The directory component can retain the last ownership snapshot after refresh failure; a visible owner value is not automatically fresh evidence.",
         "Publisher ABI names do not establish deployed migration/controller behavior, who may call it, asset scope or current configuration. Asset migration is not necessarily code replacement.",
         "Linked bundle retrieval establishes publisher evidence, not its publication date, feature-introduction date or chronology of deployment."
       ],
+      "identity_evidence": {
+        "retrieved_at": "2026-09-27",
+        "chain_id": 4663,
+        "chain_name": "Robinhood Chain",
+        "source_url": "https://www.standardreserve.xyz/assets/mountApp-z6PyBslD.js",
+        "source_sha256": "8e2178e9e11adc78288afeb0a95bf1c62e7ac118ba08986b3033c2d740cdbd31",
+        "chain_locator": "AP=4663; KP.chainId=AP; KP.contracts=VP; KP.peripheryV11=GP; KP.peripheryV12=YP",
+        "evidence_status": "Dated, scoped publisher chain/role/generation attribution appendix only. Addresses are discovery leads to corroborate, not active/default execution targets, an authorization list, source-bytecode correspondence or current ownership/routing. Discover STANDARD and other fungible-token identities dynamically from authenticated publisher/onchain relationships; no token-address pins are retained here.",
+        "identities": [
+          {"role":"Registry","generation":"original","address":"0x855C294dD019E9e0d84C058cFF7404f5F2dDCa4b","locator":"VP.registry"},
+          {"role":"CentralBank","generation":"original","address":"0x5977B25419f9c0dDcB2F89fE204955622f4F57ea","locator":"VP.centralBank"},
+          {"role":"CharterNFT","generation":"original","address":"0x69101f92427376FA80476A997d024cf9dC3EaE39","locator":"VP.charterNFT"},
+          {"role":"TaxHook","generation":"original","address":"0xF1eE073811B14359D850825E48d200483200eDcd","locator":"VP.taxHook"},
+          {"role":"Genesis Liquidity Manager","generation":"original","address":"0x242F3e67BEf43470C2434d95E7D618E19f87c8f8","locator":"VP.polManager; directory label is not current Registry POL_MANAGER routing"},
+          {"role":"FeeSplitter","generation":"original","address":"0xaa12DEda4aC19233A315777b17ff6ff5029D01b2","locator":"VP.feeSplitter"},
+          {"role":"ContractionVault","generation":"original","address":"0x796e80E8ABcedc30c700A9587F7933d3342B8946","locator":"VP.contractionVault"},
+          {"role":"ExpansionVault","generation":"original","address":"0x6f457765035958725367a1D4C1f6064b047DAdB3","locator":"VP.expansionVault"},
+          {"role":"LicenseAuction","generation":"original historical","address":"0xA45CE49303EEd5846F841BFd4bAC6aE8C805EC05","locator":"VP.licenseAuction"},
+          {"role":"CharterAuction","generation":"original historical","address":"0x65B4f85b4A64424F6bA0fFe0C535100bc6888892","locator":"VP.charterAuction; no separate v1.1 charter replacement"},
+          {"role":"GenesisMinter","generation":"original","address":"0xF54B589EADC2aaE98b96DaD58d89BCBF27503e46","locator":"VP.genesisMinter"},
+          {"role":"Uniswap v4 PoolManager","generation":"shared infrastructure in original mapping","address":"0x8366a39CC670B4001A1121B8F6A443A643e40951","locator":"VP.poolManager; not a unique pool address"},
+          {"role":"Multicall3","generation":"shared infrastructure in original mapping","address":"0xca11bde05977b3631167028862be2a173976ca11","locator":"VP.multicall3"},
+          {"role":"LicenseAuction","generation":"v1.1 historical","address":"0x44731EFf9da8fDD30003AA7C0B324368B3DfFE5e","locator":"GP.licenseAuction.address; contractsCommit2f227a6269effe6ed512d95e0b08313dde901be9"},
+          {"role":"POL Buyback","generation":"v1.1 addition","address":"0x50e4C444f71dF2Db8593c6c8ba4d493De618E147","locator":"GP.polBuyback; distinct from VP.polManager"},
+          {"role":"IncentivesVault","generation":"v1.1 addition","address":"0x9481404d30C296e57C93f05A49934A901719bbA9","locator":"GP.incentivesVault"},
+          {"role":"LicenseAuction","generation":"v1.2 publisher replacement","address":"0x7CD3c6ec047B1A21ea65AF64D7c850e6f6049015","locator":"YP.licenseAuction.address; contractsCommitaba72a3e0bc6125ad6e176493802f7bfeef0206f"},
+          {"role":"CharterAuction","generation":"v1.2 publisher replacement","address":"0x1E369e5977e1d90D9A1Ec52aC72a124346E622E4","locator":"YP.charterAuction.address; contractsCommitaba72a3e0bc6125ad6e176493802f7bfeef0206f"}
+        ]
+      },
       "complete_asset_sha256": "d27a000d06008e547268a2a6f12fcef1115800ebb9d9eacaa761e1e866310488"
     },
     {
@@ -76,21 +107,26 @@
       "url": "https://x.com/0xbeans/status/2101024624914170176",
       "publisher": "0xBeans (@0xbeans), developer account; not the official project account",
       "published_at": null,
-      "retrieved_at": "2026-09-18",
-      "review_depth": "Root post and three proposal explanations plus deployment/security-review follow-up, retrieved through the public Nitter mirror; absolute publication time and individual reply URLs were not exposed.",
+      "retrieved_at": "2026-09-27",
+      "review_depth": "Root plus four proposal/deployment follow-up posts freshly retrieved through the public Nitter mirror. September18 review lacked absolute time/individual reply URLs; September27 exposes those locators. No contiguous developer timeline interval reviewed.",
       "claim_stage": "historical developer proposal; official v1.1 announcement supersedes proposal status only for its confirmed changes",
       "locators": [
         "https://nitter.tiekoetter.com/0xbeans/status/2101024624914170176",
+        "https://x.com/0xbeans/status/2101024627111940519",
+        "https://x.com/0xbeans/status/2101024629523624164",
+        "https://x.com/0xbeans/status/2101024632069566493",
+        "https://x.com/0xbeans/status/2101024634296836470",
         "12h branch auctions",
         "a more deliberate burn policy",
         "incremental liquidity on the buy side only",
         "contract deployment and separate security review required"
       ],
       "summary": "Earlier proposal context. The official v1.1 announcement confirms12h license rounds, faster half-life and bid-side-only POL sending acquired tokens to the Incentives Vault. This proposal alone remains the source of the unconfirmed50/50 branch-proceeds split, team-allocation restrictions and eventual unused-incentive burns; none is current verified policy.",
+      "published_time_evidence": "September27 mirror attributes Sep18,2026 19:04UTC to root and four enumerated proposal replies, at minute precision. This is mirror evidence, not direct X verification.",
       "limits": [
         "Mirror-transcribed developer statements are not independently authenticated implementation or official policy evidence; refresh the original thread for current status.",
         "The announced team-allocation restrictions and eventual burn of unused incentives are proposed requirements, not verified permissions or guaranteed outcomes.",
-        "The relative deployment estimate early next week is not an absolute date or evidence of completion; publication time remains unavailable.",
+        "The relative deployment estimate early next week remains historical context, not an exact deployment date or completion evidence; the fresh mirror now supplies a root/thread publication time.",
         "No contract addresses, replacement bindings, authenticated incentive-vault ABI or deployed payment/accounting path are established by this thread.",
         "Do not promote unconfirmed proposal elements to canonical current mechanics. The official announcement supersedes cadence/POL proposal status but does not confirm a50/50 license-proceeds split or enforceable incentive restrictions."
       ]
@@ -100,8 +136,8 @@
       "url": "https://x.com/standard_rsv/status/2102194858538815645",
       "publisher": "The Standard Reserve official account (@standard_rsv)",
       "published_at": null,
-      "retrieved_at": "2026-09-22",
-      "review_depth": "Official root post and check-in reply through public Nitter mirror; no audit report independently reviewed.",
+      "retrieved_at": "2026-09-27",
+      "review_depth": "Official root and linked check-in reply freshly retrieved through public Nitter mirror, corroborating September22 text; no audit report independently reviewed or contiguous account timeline interval covered.",
       "claim_stage": "official announced v1.1 policy and reported security review, not a perpetual live-state or audit guarantee",
       "locators": [
         "https://nitter.tiekoetter.com/standard_rsv/status/2102194858538815645",
@@ -123,8 +159,8 @@
       "url": "https://x.com/standard_rsv/status/2103991044119654721",
       "publisher": "The Standard Reserve official account (@standard_rsv)",
       "published_at": null,
-      "retrieved_at": "2026-09-26",
-      "review_depth": "Official root post retrieved via public Nitter mirror; compared with current public whitepaper HTML and linked guide/component text.",
+      "retrieved_at": "2026-09-27",
+      "review_depth": "Official root freshly retrieved via public Nitter mirror; compared with current public whitepaper HTML and linked guide/component text. September26 review retained as provenance; no linked video or contiguous account timeline reviewed.",
       "claim_stage": "official announced v1.2 policy and publisher-reported security review, not independent implementation or current-state proof",
       "locators": [
         "https://nitter.tiekoetter.com/standard_rsv/status/2103991044119654721",
@@ -133,11 +169,11 @@
         "All changes have gone through a security review"
       ],
       "summary": "Announces desired-price bids for branch auctions in an open orderbook, with execution price FCFS best attempt by a keeper; charter auctions begin with one charter per branch-auction period, an initial5.5ETH opening and subsequent openings at3xclearing price.",
-      "published_time_evidence": "Retrieved mirror exposed relative10m, not an absolute publication time; retrieval date is separate.",
+      "published_time_evidence": "September26 review exposed relative10m only. September27 mirror response also attributes Sep26,2026 23:32UTC to the root, at minute precision; not direct X verification or retrieval time.",
       "limits": [
         "FCFS best attempt is not guaranteed fill, price, execution time, reserved inventory or independently verified onchain priority enforcement.",
         "Initial5.5ETH is an announced first opening, not a current quote, observed executed price or floor. No unsold-period fallback or exact price arithmetic is established.",
-        "Current whitepaper and guide still retain daily/24h charter, initial-zero and blanket no-bids/escrow wording. Those older design descriptions are superseded for announced v1.2 cadence/allocation and order entry, not current truths.",
+        "The September27 whitepaper still retains daily/24h charter, initial-zero and blanket no-bids/escrow wording. The September26 guide was daily too, but the September27 guide now explicitly says12hours. Preserve the remaining whitepaper conflict rather than treating superseded design text as current policy.",
         "Funding/escrow, cancellation/refund, expiry, partial fills, keeper permissions and continued direct-purchase paths require their own authenticated implementation evidence.",
         "Publisher security-review claim does not identify an independently reviewed report, reviewer, revision, scope, remediation or deployment correspondence; S-Bill audit/readiness is not implied.",
         "Announcement alone supplies no contract binding, usable order read interface, deployment block or perpetual live-state guarantee."
