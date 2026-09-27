@@ -2,10 +2,14 @@
 """Read a fixed Robinhood RPC snapshot; Python standard library only.
 
 With no arguments, supply JSON on stdin: {"schema_version":1,"view":"protocol"}.
-Views: protocol, charter (requires integer charter_id), auctions, treasury.
+Views: protocol, charter (requires integer charter_id), auctions, treasury, orderbook.
 CLI: protocol|auctions [--detail summary|full]
      charter --id UINT256 [--detail summary|full]
      treasury [--asset ADDRESS] [--detail summary|full]
+     orderbook --start UINT256 --count 1..100 [--charter-ids CSV] [--detail summary|full]
+Orderbook JSON requires start/count; optional charter_ids: at most 10 unique uint256s.
+One page only. Returned IDs have unestablished semantics; never joined to charter IDs.
+Selected charter bids/fillable are independent observations; bid prices retain raw units.
 Treasury JSON accepts optional reserve_asset: one nonzero public asset address.
 It is getter argument data only, never an eth_call target. Holdings use raw units.
 CLI mode never reads stdin. UINT256 is 1..78 ASCII decimal digits in uint256 range.
@@ -32,6 +36,8 @@ import time
 from datetime import datetime, timezone
 import unicodedata
 from urllib.parse import parse_qsl, quote, unquote, urlsplit
+import urllib.error
+import urllib.request
 
 
 RPC_URL = "https://rpc.mainnet.chain.robinhood.com/"
@@ -49,7 +55,9 @@ OVERALL_TIMEOUT = 40
 MAX_BLOCK_AGE = 300
 MAX_FUTURE_SECONDS = 30
 UINT256_MAX = (1 << 256) - 1
-PROFILES = {"protocol", "charter", "auctions", "treasury"}
+PROFILES = {"protocol", "charter", "auctions", "treasury", "orderbook"}
+MAX_ORDERBOOK_PAGE = 100
+MAX_ORDERBOOK_CHARTERS = 10
 ADDRESS = re.compile(r"0x[0-9a-fA-F]{40}\Z")
 WORD = re.compile(r"0x[0-9a-fA-F]{64}\Z")
 QUANTITY = re.compile(r"0x(?:0|[1-9a-fA-F][0-9a-fA-F]*)\Z")
@@ -66,7 +74,8 @@ ASSET_DETAILS = frozenset(("expansion_holdings", "expansion_reserve_pool"))
 INCENTIVES_BALANCE = "incentives_vault_standard_balance"
 # Reviewed execution metadata, not a source/bytecode equivalence assertion.
 # Changing the callable surface requires deliberate review and a new fingerprint.
-CALLS_SHA256 = "6a9a06ce2b1ba1453b8a3145a7aea743f37c84624fe5a922ccde3b089832485a"
+CALLS_SHA256 = "bb3bbf086d799a02bdcb7c99288a701ada290bcfb9c04a204aac5bbb8af697e8"
+ORDERBOOK_SHA256 = "5f959244f3e8f50c077c3e4f81e4c733a838e300c3b7b9abe281ba992875d0d4"
 
 
 class InputError(ValueError):
@@ -116,10 +125,21 @@ def _rpc_endpoint():
         authorization = base64.b64encode((user + ":" + password).encode()).decode()
         headers["Authorization"] = "Basic " + authorization
         secrets.update((user, password, authorization))
+    # Proxy authentication is host configuration, never output evidence.
+    for proxy in urllib.request.getproxies().values():
+        try:
+            parsed_proxy = urlsplit(proxy if "://" in proxy else "http://" + proxy)
+            if parsed_proxy.username is not None:
+                user = unquote(parsed_proxy.username)
+                password = unquote(parsed_proxy.password or "")
+                authorization = base64.b64encode((user + ":" + password).encode()).decode()
+                secrets.update((proxy, user, password, authorization))
+        except ValueError:
+            pass
     secrets.update(unquote(value) for value in tuple(secrets))
     secrets.update(quote(value, safe="") for value in tuple(secrets))
     secrets.update(json.dumps(value, ensure_ascii=True)[1:-1] for value in tuple(secrets))
-    return {"scheme": parsed.scheme, "host": host, "port": port, "target": target,
+    return {"url": parsed.scheme + "://" + authority + target,
             "headers": headers, "label": label, "secrets": tuple(sorted(secrets - {""}, key=len, reverse=True))}
 
 
@@ -214,7 +234,8 @@ def _integer(value, maximum=UINT256_MAX):
 
 def _validate_input(config):
     try:
-        _keys(config, {"schema_version", "view"}, {"detail", "charter_id", "reserve_asset"})
+        _keys(config, {"schema_version", "view"}, {"detail", "charter_id", "reserve_asset",
+                                                 "start", "count", "charter_ids"})
         if type(config["schema_version"]) is not int or config["schema_version"] != 1:
             raise ValueError("unsupported schema_version")
         if not isinstance(config["view"], str) or config["view"] not in PROFILES:
@@ -232,6 +253,19 @@ def _validate_input(config):
                 raise ValueError("reserve_asset is only accepted for treasury view")
             if not isinstance(asset, str) or not ADDRESS.fullmatch(asset) or asset.lower() == ZERO_ADDRESS:
                 raise ValueError("reserve_asset requires one nonzero public asset address")
+        order_fields = {"start", "count", "charter_ids"}
+        if config["view"] == "orderbook":
+            if not _integer(config.get("start")) or not _integer(config.get("count"), MAX_ORDERBOOK_PAGE) or config["count"] == 0:
+                raise ValueError("orderbook requires uint256 start and count from 1 to 100")
+            if config["start"] > UINT256_MAX - config["count"]:
+                raise ValueError("orderbook start plus count exceeds uint256")
+            identifiers = config.get("charter_ids", [])
+            if (not isinstance(identifiers, list) or len(identifiers) > MAX_ORDERBOOK_CHARTERS
+                    or not all(_integer(identifier) for identifier in identifiers)
+                    or len(set(identifiers)) != len(identifiers)):
+                raise ValueError("charter_ids requires at most 10 unique uint256 integers")
+        elif order_fields & config.keys():
+            raise ValueError("start, count and charter_ids are only accepted for orderbook view")
     except (ValueError, TypeError) as error:
         raise InputError(str(error)) from None
     result = dict(config, detail=config.get("detail", "summary"))
@@ -397,7 +431,7 @@ def _validate_package(interface, catalog):
     return {role: entities[identifier] for role, identifier in contracts.items()}
 
 
-def _load_package():
+def _load_package(orderbook=False):
     descriptors = []
     try:
         if (not all(hasattr(os, flag) for flag in ("O_DIRECTORY", "O_NOFOLLOW", "O_NONBLOCK"))
@@ -416,6 +450,23 @@ def _load_package():
             loaded.append(data)
             hashes["assets/" + folder + "/" + filename] = digest
         interface, catalog = loaded
+        if orderbook:
+            directory = _directory(assets, "interfaces")
+            descriptors.append(directory)
+            data, digest = _read_file(directory, "v1-2-orderbook-reads.json")
+            keys = ("schema_version", "chain_id", "entity_id", "address", "source_ids",
+                    "publisher_evidence", "selectors", "reads")
+            fingerprint = hashlib.sha256(json.dumps({key: data[key] for key in keys},
+                                                    sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+            if fingerprint != ORDERBOOK_SHA256 or data["entity_id"] != interface["contracts"]["licenseAuction"]:
+                raise ValueError("unreviewed orderbook interface")
+            # Main metadata is validated before adding a separate, reviewed surface.
+            addresses = _validate_package(interface, catalog)
+            if addresses["licenseAuction"] != data["address"].lower():
+                raise ValueError("orderbook target does not match fixed catalog")
+            interface["orderbook"] = data
+            hashes["assets/interfaces/v1-2-orderbook-reads.json"] = digest
+            return interface, addresses, hashes
         return interface, _validate_package(interface, catalog), hashes
     except (OSError, ValueError, TypeError, KeyError, RecursionError, RuntimeError):
         raise PackageDataError("fixed bundled interface or entity data is missing, unsafe, or invalid") from None
@@ -423,6 +474,35 @@ def _load_package():
         for descriptor in reversed(descriptors):
             os.close(descriptor)
 
+
+
+def _orderbook_calls(data, config):
+    calls = []
+
+    def add(function, identifier, arguments):
+        abi = next(item for item in data["reads"] if item["name"] == function)
+        types = [item["type"] for item in abi["inputs"]]
+        signature = function + "(" + ",".join(types) + ")"
+        outputs = abi["outputs"]
+        call = {"id": identifier, "contract": "licenseAuction", "function": function,
+                "signature": signature, "input_types": types, "args": arguments,
+                "selector": data["selectors"][signature], "decimals": 0,
+                "unit": "orders" if function == "openBidCount" else "boolean" if function == "fillable" else "raw",
+                "output_type": "tuple" if len(outputs) > 1 else outputs[0]["type"]}
+        if call["output_type"] == "tuple":
+            call["components"] = [{"name": field["name"], "output_type": field["type"],
+                                   "decimals": 0, "unit": "address" if field["type"] == "address" else "raw"}
+                                  for field in outputs]
+        if function == "openBids":
+            call["max_items"] = config["count"]
+        calls.append(call)
+
+    add("openBidCount", "license_open_bid_count", [])
+    add("openBids", "orderbook_page", [config["start"], config["count"]])
+    for index, charter_id in enumerate(config.get("charter_ids", [])):
+        add("bids", "orderbook_bid_" + str(index), [charter_id])
+        add("fillable", "orderbook_fillable_" + str(index), [charter_id])
+    return calls
 
 def _diagnostic_text(text, limit):
     """Bound untrusted response text; never expose common credential material."""
@@ -438,7 +518,24 @@ def _diagnostic_text(text, limit):
     return text.encode("utf-8")[:limit].decode("utf-8", errors="ignore")
 
 
-def _http_failure(response, connection, deadline, monotonic, failure):
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, request, response, code, message, headers, new_url):
+        return None
+
+
+def _response_socket(response):
+    # urllib HTTPError wraps an HTTPResponse; success exposes it directly.
+    stream = response.fp if isinstance(response, urllib.error.HTTPError) else response
+    return getattr(getattr(getattr(stream, "fp", None), "raw", None), "_sock", None)
+
+
+def _read_timeout(response, remaining):
+    connection = _response_socket(response)
+    if connection is not None:
+        connection.settimeout(min(REQUEST_TIMEOUT, remaining))
+
+
+def _http_failure(response, deadline, monotonic, failure):
     diagnostics = {"http_status": response.status, "endpoint": _rpc_endpoint()["label"], "headers": {},
                    "response_excerpt": "", "excerpt_bytes": 0, "truncated": True,
                    "read_error": None, "untrusted_response": True, "cause": "unconfirmed"}
@@ -453,7 +550,7 @@ def _http_failure(response, connection, deadline, monotonic, failure):
     try:
         header_bytes = 0
         for name in DIAGNOSTIC_HEADERS:
-            value = response.getheader(name)
+            value = response.headers.get(name)
             remaining_header = MAX_DIAGNOSTIC_BYTES - header_bytes - len(name)
             if remaining_header <= 0:
                 break
@@ -461,15 +558,14 @@ def _http_failure(response, connection, deadline, monotonic, failure):
                 value = _diagnostic_text(value, min(256, remaining_header))
                 diagnostics["headers"][name] = value
                 header_bytes += len(name) + len(value.encode("utf-8"))
-        length = response.getheader("Content-Length")
+        length = response.headers.get("Content-Length")
         expected = int(length) if length is not None and len(length) <= 20 and length.isascii() and length.isdecimal() else None
         while size <= MAX_DIAGNOSTIC_BYTES:
             remaining = deadline - monotonic()
             if remaining <= 0:
                 diagnostics["read_error"] = "request deadline exceeded"
                 break
-            if connection.sock is not None:
-                connection.sock.settimeout(min(REQUEST_TIMEOUT, remaining))
+            _read_timeout(response, remaining)
             chunk = response.read1(MAX_DIAGNOSTIC_BYTES + 1 - size)
             if not chunk:
                 diagnostics["truncated"] = expected is not None and size < expected
@@ -486,27 +582,34 @@ def _http_failure(response, connection, deadline, monotonic, failure):
     raise error
 
 
-def _https_request(connection, payload, deadline, monotonic, failure=None, endpoint=None):
-    """Read one bounded HTTP response on the selected direct connection."""
+def _https_request(opener, payload, deadline, monotonic, failure=None, endpoint=None, active=None):
+    """Read one bounded response using the host's normal urllib proxy handling."""
     endpoint = endpoint or _rpc_endpoint()
+    response = None
     try:
-        connection.connect()
-        if monotonic() >= deadline:
+        remaining = deadline - monotonic()
+        if remaining <= 0:
             raise SnapshotError("RPC request deadline exceeded before sending")
-        connection.request("POST", endpoint["target"], body=payload, headers=endpoint["headers"])
-        response = connection.getresponse()
+        request = urllib.request.Request(endpoint["url"], data=payload,
+                                         headers=endpoint["headers"], method="POST")
+        try:
+            response = opener.open(request, timeout=min(REQUEST_TIMEOUT, remaining))
+        except urllib.error.HTTPError as error:
+            response = error
+        if active is not None:
+            active.append(response)
         if response.status != 200:
-            _http_failure(response, connection, deadline, monotonic, failure)
-        length = response.getheader("Content-Length")
-        if length is not None and (not length.isdecimal() or int(length) > MAX_RESPONSE_BYTES):
+            _http_failure(response, deadline, monotonic, failure)
+        length = response.headers.get("Content-Length")
+        if length is not None and (len(length) > 20 or not length.isascii()
+                                   or not length.isdecimal() or int(length) > MAX_RESPONSE_BYTES):
             raise SnapshotError("RPC response exceeds byte limit")
         chunks, size = [], 0
         while size <= MAX_RESPONSE_BYTES:
             remaining = deadline - monotonic()
             if remaining <= 0:
                 raise SnapshotError("snapshot deadline exceeded")
-            if connection.sock is not None:
-                connection.sock.settimeout(min(REQUEST_TIMEOUT, remaining))
+            _read_timeout(response, remaining)
             chunk = response.read1(min(65536, MAX_RESPONSE_BYTES + 1 - size))
             if not chunk:
                 break
@@ -517,27 +620,27 @@ def _https_request(connection, payload, deadline, monotonic, failure=None, endpo
         if length is not None and size != int(length):
             raise SnapshotError("incomplete RPC response")
         return b"".join(chunks)
-    except (OSError, http.client.HTTPException, socket.timeout):
+    except (OSError, http.client.HTTPException):
         raise SnapshotError("RPC transport failed") from None
     finally:
-        connection.close()
+        if response is not None:
+            response.close()
 
 
 def _https(payload, timeout, deadline, monotonic):
-    """Bound DNS, TLS, headers, and body, including slow trickle responses."""
+    """Bound proxy-aware DNS, TLS, headers and body without redirects or retries."""
     timeout = min(timeout, deadline - monotonic())
     if timeout <= 0:
         raise SnapshotError("snapshot deadline exceeded")
     endpoint = _rpc_endpoint()
-    connection_type = http.client.HTTPSConnection if endpoint["scheme"] == "https" else http.client.HTTPConnection
-    connection = connection_type(endpoint["host"], port=endpoint["port"], timeout=timeout)
+    opener = urllib.request.build_opener(_NoRedirect())
     request_deadline = min(deadline, monotonic() + timeout)
     finished = threading.Event()
-    outcome, failure = [], []
+    outcome, failure, active = [], [], []
 
     def request():
         try:
-            outcome.append(_https_request(connection, payload, request_deadline, monotonic, failure, endpoint))
+            outcome.append(_https_request(opener, payload, request_deadline, monotonic, failure, endpoint, active))
         except Exception as error:
             outcome.append(error)
         finally:
@@ -548,12 +651,12 @@ def _https(payload, timeout, deadline, monotonic):
     worker = threading.Thread(target=request, daemon=True)
     worker.start()
     if not finished.wait(timeout):
-        if connection.sock is not None:
+        connection = _response_socket(active[0]) if active else None
+        if connection is not None:
             try:
-                connection.sock.shutdown(socket.SHUT_RDWR)
+                connection.shutdown(socket.SHUT_RDWR)
             except OSError:
                 pass
-        connection.close()
         if failure:
             diagnostics = dict(failure[0].diagnostics)
             diagnostics["headers"] = dict(diagnostics["headers"])
@@ -662,6 +765,17 @@ def _decode(value, kind):
 
 
 def _decode_result(value, call):
+    if call["output_type"] == "uint256[]":
+        maximum = call["max_items"]
+        if (not isinstance(value, str) or not 130 <= len(value) <= 130 + 64 * maximum
+                or not re.fullmatch(r"0x[0-9a-fA-F]+", value) or (len(value) - 2) % 64):
+            raise ValueError("invalid dynamic array ABI size")
+        if int(value[2:66], 16) != 32:
+            raise ValueError("invalid dynamic array ABI offset")
+        count = int(value[66:130], 16)
+        if count > maximum or len(value) != 130 + 64 * count:
+            raise ValueError("invalid dynamic array ABI count")
+        return [int(value[offset:offset + 64], 16) for offset in range(130, len(value), 64)]
     if call["output_type"] != "tuple":
         return _decode(value, call["output_type"])
     components = call["components"]
@@ -819,8 +933,8 @@ def _derive(config, raw, values, errors, timestamp):
         for prefix in ("license", "charter_auction"):
             started, paused, remaining = (prefix + suffix for suffix in ("_started", "_paused", "_remaining"))
             is_license = prefix == "license"
-            current = prefix + ("_current_round" if is_license else "_current_day")
-            last = prefix + ("_last_sale_round" if is_license else "_last_sale_day")
+            current = prefix + "_current_round"
+            last = prefix + "_last_sale_round"
             period = prefix + "_round_seconds"
             anchor = "license_auction_anchor" if is_license else "charter_auction_anchor"
             context_id = prefix + "_round_context"
@@ -871,8 +985,7 @@ def _derive(config, raw, values, errors, timestamp):
                 values.pop(price, None)
             # Availability getters may already use the elapsed round while stored
             # counters lag. Keep the live price observation, never an old closing recap.
-            for identifier in (current, prefix + "_sold", prefix + ("_round_cap" if is_license else "_day_cap"),
-                               prefix + ("_round_floor" if is_license else "_day_floor")):
+            for identifier in (current, prefix + "_sold", prefix + "_round_cap", prefix + "_round_floor"):
                 if identifier in values:
                     values[identifier]["round_context"] = context
             for identifier in (remaining, price):
@@ -895,7 +1008,7 @@ def _derive(config, raw, values, errors, timestamp):
 def snapshot(config, transport=None, now=None, monotonic=None):
     """Read a snapshot; injectable clocks/byte transport support offline checks."""
     config = _validate_input(config)
-    interface, addresses, hashes = _load_package()
+    interface, addresses, hashes = _load_package(orderbook=config["view"] == "orderbook")
     now = now or time.time
     rpc = _RPC(transport or _https, monotonic or time.monotonic, config["detail"] == "full")
     if _quantity(rpc.one("eth_chainId", [])) != CHAIN_ID:
@@ -904,6 +1017,8 @@ def snapshot(config, transport=None, now=None, monotonic=None):
     tag = hex(number)
     selected = [call for call in interface["calls"] if config["view"] in call["profiles"]
                 and ("$reserve_asset" not in call["args"] or "reserve_asset" in config)]
+    if config["view"] == "orderbook":
+        selected = _orderbook_calls(interface["orderbook"], config)
     if config["detail"] == "summary":
         if config["view"] == "charter":
             selected = [call for call in selected if call["id"] in CHARTER_SUMMARY_CALLS]
@@ -1004,29 +1119,54 @@ def snapshot(config, transport=None, now=None, monotonic=None):
             result["message"] = "Charter pending unavailable; no accrued-balance valuation."
     if "reserve_asset" in config:
         result["reserve_asset"] = config["reserve_asset"]
+    if config["view"] == "orderbook":
+        page_value = values.pop("orderbook_page", None)
+        page = {"start": str(config["start"]), "count": config["count"],
+                "raw_ids": [str(value) for value in page_value["value"]] if page_value is not None else None,
+                "type": "uint256[]", "identifier_semantics": "unestablished",
+                "coverage": "single_bounded_page", "complete_orderbook": False}
+        if "orderbook_page" in errors:
+            page["error"] = errors["orderbook_page"]
+        charters = []
+        for index, charter_id in enumerate(config.get("charter_ids", [])):
+            bid_id, fillable_id = "orderbook_bid_" + str(index), "orderbook_fillable_" + str(index)
+            charters.append({"charter_id": str(charter_id),
+                             "bids": values.pop(bid_id, None), "fillable": values.pop(fillable_id, None),
+                             "errors": {getter: errors[key] for getter, key in (("bids", bid_id), ("fillable", fillable_id))
+                                        if key in errors}})
+        result["orderbook"] = {"page": page, "selected_charters": charters,
+                               "selection_basis": "explicit_charter_ids_not_page_ids",
+                               "bid_price_units": "raw_unestablished_denomination",
+                               "fillable_basis": "pinned_block_getter_not_execution_guarantee"}
+        if config["detail"] == "full":
+            evidence["orderbook_publisher_evidence"] = interface["orderbook"]["publisher_evidence"]
     return result
 
 
 def _cli_config(arguments):
-    if len(arguments) > 5 or any(len(value) > 80 for value in arguments):
-        raise InputError("CLI accepts at most 5 arguments of at most 80 characters")
+    if len(arguments) > 9 or any(len(value) > 789 for value in arguments):
+        raise InputError("CLI accepts at most 9 arguments of at most 789 characters")
     if not arguments or arguments[0] not in PROFILES:
-        raise InputError("expected protocol, auctions, charter, or treasury as the first argument")
+        raise InputError("expected protocol, auctions, charter, treasury, or orderbook as the first argument")
     config = {"schema_version": 1, "view": arguments[0]}
     seen = set()
     index = 1
     while index < len(arguments):
         flag = arguments[index]
-        if flag not in ("--id", "--detail", "--asset") or flag in seen:
+        if flag not in ("--id", "--detail", "--asset", "--start", "--count", "--charter-ids") or flag in seen:
             raise InputError("unknown or repeated CLI flag")
         seen.add(flag)
         if index + 1 == len(arguments):
             raise InputError("CLI flag requires a value")
         value = arguments[index + 1]
-        if flag == "--id":
+        if flag in ("--id", "--start", "--count"):
             if not re.fullmatch(r"[0-9]{1,78}", value):
-                raise InputError("--id requires 1..78 ASCII decimal digits")
-            config["charter_id"] = int(value)
+                raise InputError(flag + " requires 1..78 ASCII decimal digits")
+            config["charter_id" if flag == "--id" else flag[2:]] = int(value)
+        elif flag == "--charter-ids":
+            if not re.fullmatch(r"[0-9]{1,78}(?:,[0-9]{1,78}){0,9}", value):
+                raise InputError("--charter-ids requires 1..10 comma-separated uint256 integers")
+            config["charter_ids"] = [int(identifier) for identifier in value.split(",")]
         elif flag == "--asset":
             config["reserve_asset"] = value
         else:

@@ -292,11 +292,11 @@ class HistoryChecks(unittest.TestCase):
         fixture.purchase(day=8, block=112)
         report = fixture.run(generation="legacy", last_rounds=1, max_chunks=1, detail="full")
         self.assertEqual(report["status"], "partial")
-        self.assertEqual([row["day"] for row in report["rounds"]], ["7"])
+        self.assertEqual([row["day"] for row in report["rounds"]], ["8"])
         self.assertEqual(report["coverage"]["round_selection"]["generations"][0]["shortfall"], 0)
-        self.assertEqual(report["coverage"]["missing"][0]["from_block"], 110)
+        self.assertEqual((report["coverage"]["missing"][0]["from_block"], report["coverage"]["missing"][0]["to_block"]), (100, 109))
         self.assertIn("requested_window_has_coverage_gaps", report["rounds"][0]["gaps"])
-        self.assertEqual(fixture.windows(), [(100, 109)])
+        self.assertEqual(fixture.windows(), [(110, 119)])
 
     def test_last_rounds_default_stays_a_finite_lookback_not_deployment_history(self):
         fixture = RPCFixture()
@@ -309,7 +309,62 @@ class HistoryChecks(unittest.TestCase):
                          {"from_block": fixture.head - history.DEFAULT_LOOKBACK + 1, "to_block": fixture.head})
         self.assertEqual([row["day"] for row in report["rounds"]], ["2"])
         self.assertEqual(report["coverage"]["missing"], [])
-        self.assertEqual(fixture.windows()[-1][1], fixture.head)
+        self.assertEqual(fixture.windows()[0][1], fixture.head)
+
+    def test_young_v12_default_lookback_preserves_tip_and_purchase_chronology(self):
+        fixture = RPCFixture()
+        deployment = fixture.catalog["contracts"]["licenseAuction"]["deployment_block"]
+        fixture.head = deployment + 15_000
+        current = fixture.addresses["licenseAuction"]
+        fixture.purchase(day=7, count=2, price=9, block=deployment)["address"] = current
+        fixture.purchase(day=7, count=3, price=2, block=fixture.head)["address"] = current
+        report = history.history({"schema_version": 1, "auction": "license", "generation": "current",
+                                  "last_rounds": 1, "detail": "full"},
+                                 transport=fixture, now=lambda: NOW, monotonic=lambda: 0)
+        self.assertEqual(report["status"], "ok")
+        self.assertEqual(fixture.windows(), [(fixture.head - 9999, fixture.head), (deployment, fixture.head - 10_000)])
+        self.assertEqual(report["coverage"]["missing"], [])
+        self.assertEqual(report["coverage"]["completed"][0]["scan_status"], "no_deployed_emitters")
+        self.assertEqual(report["coverage"]["completed"][0]["from_block"], fixture.head - 999_999)
+        self.assertEqual(report["coverage"]["completed"][0]["to_block"], deployment - 1)
+        self.assertEqual(report["evidence"]["usage"]["log_chunks"], 2)
+        row = report["rounds"][0]
+        self.assertEqual((row["purchase_quantity"], row["consideration"]["total_raw"]), ("5", "24"))
+        self.assertEqual(row["first_observed_purchase"]["block_number"], deployment)
+        self.assertEqual(row["last_observed_purchase"]["block_number"], fixture.head)
+        self.assertEqual(row["last_observed_purchase"]["unit_price"]["raw"], "2")
+        self.assertEqual([event["block_number"] for event in report["evidence"]["decoded_events"]], [deployment, fixture.head])
+
+    def test_young_v12_one_chunk_keeps_tip_and_marks_older_coverage_missing(self):
+        fixture = RPCFixture()
+        deployment = fixture.catalog["contracts"]["licenseAuction"]["deployment_block"]
+        fixture.head = deployment + 15_000
+        current = fixture.addresses["licenseAuction"]
+        fixture.purchase(day=99, block=deployment)["address"] = current
+        fixture.purchase(day=2, block=fixture.head)["address"] = current
+        report = history.history({"schema_version": 1, "auction": "license", "generation": "current",
+                                  "last_rounds": 1, "max_chunks": 1},
+                                 transport=fixture, now=lambda: NOW, monotonic=lambda: 0)
+        self.assertEqual(report["status"], "partial")
+        self.assertEqual(fixture.windows(), [(fixture.head - 9999, fixture.head)])
+        self.assertEqual([row["day"] for row in report["rounds"]], ["2"])
+        self.assertEqual(report["rounds"][0]["last_observed_purchase"]["block_number"], fixture.head)
+        self.assertEqual([(row["from_block"], row["to_block"]) for row in report["coverage"]["missing"]],
+                         [(fixture.head - 999_999, fixture.head - 10_000)])
+        self.assertEqual(report["coverage"]["round_selection"]["generations"][0]["shortfall"], 0)
+        self.assertIn("requested_window_has_coverage_gaps", report["rounds"][0]["gaps"])
+
+    def test_last_rounds_reverse_scan_reorg_discards_already_checked_tip(self):
+        fixture = RPCFixture()
+        fixture.purchase(day=7, block=112)
+        fixture.purchase(day=7, block=102)["removed"] = True
+        report = fixture.run(generation="legacy", last_rounds=1, detail="full")
+        self.assertEqual(fixture.windows(), [(110, 119), (100, 109)])
+        self.assertEqual(report["rounds"], [])
+        self.assertEqual(report["evidence"]["decoded_events"], [])
+        self.assertEqual(report["coverage"]["completed"], [])
+        self.assertEqual([(row["from_block"], row["to_block"]) for row in report["coverage"]["missing"]], [(100, 119)])
+        self.assertEqual(report["evidence"]["invalidated_windows"][0]["from_block"], 110)
 
     def test_day_full_events_exclude_other_rounds_and_roundless_configuration(self):
         fixture = RPCFixture()
@@ -1026,23 +1081,28 @@ class POLBuybackChecks(unittest.TestCase):
         self.assertGreaterEqual(fixture.headers_read[deployment - 2], 2)
         self.assertGreaterEqual(fixture.headers_read[deployment - 1], 3)
 
-    def test_predeployment_checked_window_still_obeys_chunk_budget_and_reorg(self):
-        for failure in ("chunk", "reorg"):
-            with self.subTest(failure=failure):
+    def test_predeployment_prefix_preserves_log_chunk_budget_but_not_reorgs(self):
+        for reorg in (False, True):
+            with self.subTest(reorg=reorg):
                 fixture = RPCFixture("pol-buybacks")
                 deployment = fixture.catalog["contracts"]["polBuyback"]["deployment_block"]
-                if failure == "reorg":
+                fixture.add("BuybackExecuted", block=deployment, ethIn=7, tokensOut=11, destination="0x" + "12" * 20)
+                if reorg:
                     def mutate(number, count, header):
                         if number == deployment - 1 and count == 2:
                             header["hash"] = "0x" + "ef" * 32
                         return header
                     fixture.header_mutation = mutate
-                report = fixture.run(from_block=deployment - 2, to_block=deployment + 2, max_chunks=1)
-                self.assertEqual(report["status"], "partial")
-                self.assertEqual(fixture.windows(), [])
-                self.assertFalse(report["pol_buybacks"]["requested_range_complete"])
-                self.assertEqual(report["coverage"]["missing"][0]["from_block"], deployment if failure == "chunk" else deployment - 2)
-                self.assertEqual(report["pol_buybacks"]["tokens_out"]["total_raw"], "0" if failure == "chunk" else None)
+                report = fixture.run(from_block=deployment - 999_997, to_block=deployment + 2, max_chunks=1)
+                self.assertEqual(report["status"], "partial" if reorg else "ok")
+                self.assertEqual(fixture.windows(), [] if reorg else [(deployment, deployment + 2)])
+                self.assertEqual(report["pol_buybacks"]["requested_range_complete"], not reorg)
+                self.assertEqual(report["pol_buybacks"]["tokens_out"]["total_raw"], None if reorg else "11")
+                if reorg:
+                    self.assertEqual(report["coverage"]["missing"][0]["from_block"], deployment - 999_997)
+                else:
+                    self.assertEqual(report["coverage"]["missing"], [])
+                    self.assertEqual(report["evidence"]["usage"]["log_chunks"], 1)
 
 
 class HistoryMainChecks(unittest.TestCase):

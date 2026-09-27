@@ -524,7 +524,9 @@ def history(config, transport=None, now=None, monotonic=None):
     start, end = config.get("from_block"), config.get("to_block", config.get("anchor_block"))
     if start is None and end is not None:
         start = max(0, end - config["lookback_blocks"] + 1)
-    cursor, anchor, budget, s = start, None, None, None
+    newest_first = "last_rounds" in config
+    cursor, anchor, budget, s = end if newest_first else start, None, None, None
+    log_chunks = 0
     evidence = {"chain_id": 4663, "accounting": ("BuybackExecuted ethSpent and tokensBurned; event accounting, not proof of actual ERC20 movement or protocol-wide burns"
                                                if kind == "buybacks" else "BuybackExecuted ethIn, raw tokensOut and reported destination; no established token denomination, burns or wallet flows"
                                                if kind == "pol-buybacks" else "purchase events; receipts and payment flows not independently reconciled"),
@@ -560,7 +562,7 @@ def history(config, transport=None, now=None, monotonic=None):
         if end is None:
             end = anchor["number"]
             start = max(0, end - config["lookback_blocks"] + 1)
-        cursor = start
+        cursor = end if newest_first else start
         evidence["anchor"] = anchor
         evidence["scan_emitters"] = [{"address": address, "contract_role": emitter["role"], "entity_id": emitter["entity_id"],
                                       "from_block": max(start, emitter["deployment_block"]), "to_block": end}
@@ -576,19 +578,32 @@ def history(config, transport=None, now=None, monotonic=None):
         seen_days = set()
         seen_transactions, seen_block_hashes = {}, {anchor["hash"]: anchor["number"]}
         previous_timestamp = None
-        while cursor <= end:
-            stage = "window_" + str(cursor)
+        first_deployment = min(emitter["deployment_block"] for emitter in emitters.values())
+        while start <= cursor <= end:
+            # Keep explicit inclusive bounds within each query, but prioritize
+            # the tip for last-N requests even when a finite budget stops us.
+            if newest_first:
+                first, stop = max(start, cursor - config["chunk_blocks"] + 1), cursor
+                for emitter in emitters.values():
+                    if first < emitter["deployment_block"] <= stop:
+                        first = emitter["deployment_block"]
+            else:
+                first, stop = cursor, min(end, cursor + config["chunk_blocks"] - 1)
+                for emitter in emitters.values():
+                    if first < emitter["deployment_block"] <= stop:
+                        stop = emitter["deployment_block"] - 1
+            # Catalog-proven absence is one header-checked prefix, not hundreds
+            # of empty RPC chunks. Never query with an empty address filter.
+            if cursor < first_deployment:
+                first, stop = (start, cursor) if newest_first else (cursor, min(end, first_deployment - 1))
+            selected = {address: emitter for address, emitter in emitters.items() if emitter["deployment_block"] <= first}
+            stage = "window_" + str(first)
             budget.check()
-            if len(completed) >= config["max_chunks"]:
-                raise HistoryError("history chunk budget exhausted")
-            stop = min(end, cursor + config["chunk_blocks"] - 1)
-            # Split at deployment, not cutover: include initialization and never
-            # infer that the legacy address stopped emitting at registry change.
-            for emitter in emitters.values():
-                if cursor < emitter["deployment_block"] <= stop:
-                    stop = emitter["deployment_block"] - 1
-            selected = {address: emitter for address, emitter in emitters.items() if emitter["deployment_block"] <= cursor}
-            observed, headers = _window(s, rpc, budget, selected, cursor, stop, anchor, now)
+            if selected:
+                if log_chunks >= config["max_chunks"]:
+                    raise HistoryError("history chunk budget exhausted")
+                log_chunks += 1
+            observed, headers = _window(s, rpc, budget, selected, first, stop, anchor, now)
             for event in observed:
                 position = event["block_number"], event["transaction_index"]
                 if seen_transactions.setdefault(event["transaction_hash"], position) != position:
@@ -596,19 +611,22 @@ def history(config, transport=None, now=None, monotonic=None):
             for number, header in headers.items():
                 if seen_block_hashes.setdefault(header["hash"], number) != number:
                     raise ReorgError("block hash occurs at conflicting numbers across windows")
-            if previous_timestamp is not None and previous_timestamp > headers[cursor]["timestamp"]:
-                raise ReorgError("block timestamps conflict across windows")
-            previous_timestamp = headers[stop]["timestamp"]
+            if previous_timestamp is not None:
+                inconsistent = (headers[stop]["timestamp"] > previous_timestamp if newest_first
+                                else previous_timestamp > headers[first]["timestamp"])
+                if inconsistent:
+                    raise ReorgError("block timestamps conflict across windows")
+            previous_timestamp = headers[first if newest_first else stop]["timestamp"]
             days = {(e["address"], e["fields"]["day"]) for e in observed if "day" in e["fields"] and ("day" not in config or e["fields"]["day"] == config["day"])}
             if len(seen_days | days) > MAX_ROUNDS:
                 raise HistoryError("history observed-round budget exhausted")
             seen_days.update(days)
             events.extend(observed)
             digest = hashlib.sha256(json.dumps(list(headers.values()), sort_keys=True, separators=(",", ":")).encode()).hexdigest()
-            completed.append({"from_block": cursor, "to_block": stop, "emitter_addresses": list(selected),
+            completed.append({"from_block": first, "to_block": stop, "emitter_addresses": list(selected),
                               "scan_status": "logs_checked" if selected else "no_deployed_emitters",
                               "matched_events": len(observed), "checked_headers_sha256": digest})
-            cursor = stop + 1
+            cursor = first - 1 if newest_first else stop + 1
         stage = "final_anchor"
         final = _header(s, rpc.one("eth_getBlockByNumber", [hex(end), False]), end, now)
         if final != anchor:
@@ -620,14 +638,20 @@ def history(config, transport=None, now=None, monotonic=None):
             evidence["invalidated_windows"] = completed[:]
             completed.clear()
             events.clear()
-            cursor = start
+            cursor = end if newest_first else start
             invalidated = True
         evidence["final_anchor_check"] = "changed" if invalidated else "unavailable; committed windows retain their own anchor checks"
     missing = []
     if start is None or end is None:
         missing.append({"from_block": start, "to_block": end, "reason": "anchor or requested range unavailable"})
-    elif cursor is None or cursor <= end:
-        missing.append({"from_block": start if cursor is None else cursor, "to_block": end, "reason": next(reversed(errors.values()))["message"] if errors else "not scanned"})
+    elif cursor is None or start <= cursor <= end:
+        missing.append({"from_block": start if newest_first or cursor is None else cursor,
+                        "to_block": end if not newest_first or cursor is None else cursor,
+                        "reason": next(reversed(errors.values()))["message"] if errors else "not scanned"})
+    # Query direction must never change first/last purchase accounting or
+    # overwrite a round's newest event position with an older observation.
+    events.sort(key=lambda event: (event["block_number"], event["log_index"]))
+    completed.sort(key=lambda window: window["from_block"])
     evidence["retrieved_at"] = datetime.fromtimestamp(now(), timezone.utc).isoformat().replace("+00:00", "Z")
     evidence["budgets"] = {"max_blocks": MAX_BLOCKS, "chunk_blocks": config["chunk_blocks"], "max_chunks": config["max_chunks"],
                            "max_rpc_requests": MAX_REQUESTS, "max_total_response_bytes": MAX_TOTAL_BYTES,
@@ -635,7 +659,8 @@ def history(config, transport=None, now=None, monotonic=None):
                            "max_headers_per_window": MAX_HEADERS, "max_rounds": MAX_ROUNDS, "overall_seconds": OVERALL_TIMEOUT,
                            "minimum_live_http_interval_seconds": MIN_REQUEST_INTERVAL}
     if budget is not None:
-        evidence["usage"] = {"rpc_requests": budget.requests, "http_requests": budget.http_requests, "response_bytes": budget.response_bytes, "returned_logs": budget.logs}
+        evidence["usage"] = {"rpc_requests": budget.requests, "http_requests": budget.http_requests, "response_bytes": budget.response_bytes,
+                             "returned_logs": budget.logs, "log_chunks": log_chunks}
     selected_events, round_selection = _select_round_events(events, config, emitters)
     insufficient = round_selection is not None and (not round_selection["generations"] or
                    any(row["shortfall"] for row in round_selection["generations"]))
@@ -643,6 +668,7 @@ def history(config, transport=None, now=None, monotonic=None):
         evidence["decoded_events"] = selected_events
     result = {"schema_version": 1, "status": "partial" if errors or missing or insufficient else "ok",
               "coverage": {"selection": config, "requested": {"from_block": start, "to_block": end}, "completed": completed, "missing": missing,
+                           "scan_order": "newest_first" if newest_first else "oldest_first",
                            "scope": ("selected ContractionVault BuybackExecuted events over checked scanned windows, not all-history absence or protocol-wide burns; silent provider omissions cannot be independently excluded"
                                      if kind == "buybacks" else "selected POL Buyback raw event accounting, not burned-token accounting or proven wallet flows; silent provider omissions cannot be independently excluded"
                                      if kind == "pol-buybacks" else "selected catalog auction generations over checked windows; authenticated creation boundaries are scan starts, activation is not an emission cutoff; not complete rounds or independently proven provider completeness")},
@@ -693,7 +719,8 @@ def main():
               "       auctions: [--generation all|current|legacy] (default all); license also accepts v1.1\n"
               "Defaults: fresh head, 1000000-block lookback, 10000-block chunks, 100 chunks.\n"
               "Day is auction-only: an emitted round ID, not UTC or 24 hours.\n"
-              "Last rounds: latest N observed rounds per selected generation in the bounded scan, not complete history.\n"
+              "Last rounds: scan newest first, selecting latest N observed rounds per generation, not complete history.\n"
+              "Other scans run oldest first; catalog-proven precreation prefixes do not consume log chunk slots.\n"
               "Insufficient observed rows are partial; no unseen rounds are invented. JSON stdout only; no saved results.")
         return 0
     try:

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "scope": "Authenticated publisher v1.2 orderbook read and event ABI for host-authorized supplemental read-only research; not a generic executable helper, signing interface or stored order state.",
+  "scope": "Authenticated publisher v1.2 orderbook ABI consumed by snapshot.py orderbook for bounded read-only observations; no signing, simulation, submission or saved order state.",
   "chain_id": 4663,
   "entity_id": "sr-robinhood-license-auction-v1-2",
   "address": "0x7CD3c6ec047B1A21ea65AF64D7c850e6f6049015",
@@ -15,6 +15,12 @@
     "license_abi_literal_sha256": "d6e13394240b028717741f2185110a2f2bb746e80cf37a37c48a7a56b2b984d6",
     "deployment_literal_sha256": "5e838c85151ce28b2fbcb99ea24e637fcdb7512efcf037c5e635adb111e05eeb",
     "hash_scope": "UTF-8 exact complete JavaScript array/object literal including delimiters, excluding variable name and assignment; not complete asset hashes. Full reader asset was truncated and direct request denied. Literals parsed as data only; no downloaded code executed."
+  },
+  "selectors": {
+    "bids(uint256)": "0x4423c5f1",
+    "fillable(uint256)": "0x4f071557",
+    "openBidCount()": "0x0e337f95",
+    "openBids(uint256,uint256)": "0x3b87f7bd"
   },
   "reads": [
     {
@@ -184,13 +190,13 @@
     "bids": "One charterId-keyed tuple in ABI order: bidder address, count uint256, maxUnitPrice uint256. Preserve named raw fields; bidder is not independently authenticated as current charter owner, an escrow balance or a reserved allocation.",
     "fillable": "Getter-reported boolean for one charterId at the pinned block; not a simulation result, keeper promise or future execution guarantee.",
     "openBidCount": "Number reported by openBidCount; order-count context, not remaining licenses or successful purchases. Included in the fixed auctions snapshot as license_open_bid_count.",
-    "openBids": "Unsigned start/count arguments and dynamic uint256[] ids result. The ABI names the result ids but does not alone establish pagination order, stable cursors or FCFS priority. Validate the publisher's ID interpretation before joining results to charterId-keyed bids/fillable; a page is not a complete orderbook.",
+    "openBids": "Unsigned explicit start/count and exact dynamic uint256[] ids decoding; at most 100 requested IDs. Returned IDs retain unestablished identifier semantics and are never automatically passed to charterId-keyed getters. Ordering, stable cursors, FCFS priority and complete coverage are not established.",
     "events": "Bid lifecycle evidence is supplemental only. Do not add BidFilled consideration to LicensesPurchased totals without transaction-level reconciliation; placement is not execution."
   },
   "limits": [
-    "Pin one chain-checked block and its hash for each bounded page and related getters. Authenticate code and bank/registry relationships before interpreting values. Set explicit page, call and response-byte limits; report partial coverage instead of unbounded enumeration.",
-    "Current STANDARD denomination requires an independently checked token decimals binding. ABI integer types alone do not authenticate scaling, funding, exact fill conditions or payment routing.",
+    "snapshot.py orderbook requires explicit start and count (1..100), accepts at most 10 unique explicit charter_ids, and performs no automatic pagination or joins. Chain, code, bank/registry relationships and unchanged pinned block hash are checked with the snapshot transport and existing byte/time/call bounds.",
+    "bids retains bidder, count and maxUnitPrice as typed raw fields. No denomination/decimals scaling, funding, exact fill conditions or payment routing is inferred.",
     "No independent source/bytecode equivalence, escrow semantics, keeper ABI/address, priority enforcement or audit-to-deployment correspondence is established.",
-    "This catalog is not consumed by snapshot.py for charter-specific orders. It adds no signing, simulation, write or submission capability; host-authorized unsigned preparation remains a separate workflow."
+    "One page is bounded partial coverage even when empty or shorter than requested. Selected charter observations are independent of returned page IDs. fillable is a pinned-block getter observation, not future execution assurance."
   ]
 }

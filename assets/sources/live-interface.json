@@ -57,7 +57,7 @@
         "pw_license_abi_11625_bytes": "d6e13394240b028717741f2185110a2f2bb746e80cf37a37c48a7a56b2b984d6",
         "a__charter_abi_7900_bytes": "308ee26f3043e56a015d934d134f9694c5c7dcdf53e33ff7bee91a4513ec6dd0"
       },
-      "summary": "Binds current snapshots to both v1.2 auction addresses with auctionPeriod() for each; licenses retain separate cap-window semantics. Global openBidCount is a current count only when freshly read; charter-keyed bids/fillable and paginated openBids support authenticated supplemental read-only order research, not a wallet-position helper.",
+      "summary": "Binds current snapshots to both v1.2 auction addresses with auctionPeriod() for each; licenses retain separate cap-window semantics. Global openBidCount requires a fresh read. The fixed orderbook view uses this ABI for one bounded raw-ID page and independently selected charter bids/fillable, not owner discovery or inferred page-to-charter mapping.",
       "limits": [
         "ABI names/types authenticate bounded decoding, not exact keeper ordering, guaranteed fill/price/time, funding/escrow, cancellation/refund, expiry, partial-fill or permission semantics.",
         "A bidder is the recorded bid address, not automatically the charter's present owner; count and maxUnitPrice are reported order fields, not acquired branches or executed consideration.",

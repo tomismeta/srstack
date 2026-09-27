@@ -48,7 +48,7 @@ class RPCFixture:
             "license_max_per_charter_per_window": 3, "license_licenses_per_round": 50,
             "license_decay_half_life_seconds": 7200, "license_round_half_life_seconds": 7200,
             "license_round_cap": 50, "license_sold": 43,
-            "charter_auction_current_day": 4, "charter_auction_round_seconds": 86400,
+            "charter_auction_current_round": 4, "charter_auction_round_seconds": 86400,
             "charter_auction_anchor": NOW - 2 - 4 * 86400,
             "charter_auction_paused": False, "charter_auction_remaining": 3,
         }
@@ -88,7 +88,10 @@ class RPCFixture:
                         value = self.addresses[call["binds_to"]]
                     else:
                         value = self.values.get(identifier, "0x" + "ab" * 20 if call["output_type"] == "address" else True if call["output_type"] == "bool" else 1)
-                    if call["output_type"] == "tuple":
+                    if call["output_type"] == "uint256[]":
+                        value = self.values.get(identifier, [500, 800])
+                        words = [32, len(value), *value]
+                    elif call["output_type"] == "tuple":
                         value = self.values.get(identifier, {
                             component["name"]: ("0x" + "ab" * 20 if component["output_type"] == "address"
                                                 else True if component["output_type"] == "bool" else 1)
@@ -108,8 +111,20 @@ class RPCFixture:
         # Reverse ordering deliberately: JSON-RPC batches are unordered.
         return json.dumps(list(reversed(response))).encode()
 
-    def run(self, view="protocol", detail="summary", asset=None):
+    def orderbook_config(self, start=0, count=2, charter_ids=()):
+        config = {"schema_version": 1, "view": "orderbook", "start": start, "count": count,
+                  "charter_ids": list(charter_ids)}
+        interface, _, _ = snapshot._load_package(orderbook=True)
+        for call in snapshot._orderbook_calls(interface["orderbook"], config):
+            self.calls[(self.addresses[call["contract"]], snapshot._calldata(call, config))] = call
+        self.values.setdefault("orderbook_bid_0", {"bidder": ASSET, "count": 3, "maxUnitPrice": WAD + 7})
+        self.values.setdefault("license_open_bid_count", 1000)
+        return config
+
+    def run(self, view="protocol", detail="summary", asset=None, **orderbook):
         config = {"schema_version": 1, "view": view, "detail": detail}
+        if view == "orderbook":
+            config.update(self.orderbook_config(**orderbook))
         if view == "charter":
             config["charter_id"] = 7
         if asset is not None:
@@ -122,6 +137,18 @@ def rpc_server(respond):
     requests = []
 
     class Handler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            requests.append((self.path, None, dict(self.headers)))
+            self.send_response(200)
+            self.send_header("Content-Length", "0")
+            self.end_headers()
+
+        def do_CONNECT(self):
+            requests.append(("CONNECT " + self.path, None, dict(self.headers)))
+            self.send_response(403)
+            self.send_header("Content-Length", "0")
+            self.end_headers()
+
         def do_POST(self):
             payload = self.rfile.read(int(self.headers["Content-Length"]))
             requests.append((self.path, json.loads(payload), dict(self.headers)))
@@ -152,6 +179,10 @@ class SnapshotChecks(unittest.TestCase):
         environment = patch.dict(os.environ, {}, clear=True)
         environment.start()
         self.addCleanup(environment.stop)
+        proxies = patch.object(snapshot.urllib.request, "getproxies",
+                               snapshot.urllib.request.getproxies_environment)
+        proxies.start()
+        self.addCleanup(proxies.stop)
         self.rpc = RPCFixture()
 
     def test_input_denials_precede_transport(self):
@@ -262,6 +293,144 @@ class SnapshotChecks(unittest.TestCase):
             self.assertEqual(actual, code)
             self.assertEqual(stdout.getvalue(), "")
             self.assertIn("error", json.loads(stderr.getvalue()))
+
+    def test_orderbook_requires_finite_explicit_scope_before_transport(self):
+        good = {"schema_version": 1, "view": "orderbook", "start": 0, "count": 2}
+        cases = [{key: value for key, value in good.items() if key != missing} for missing in ("start", "count")]
+        cases.extend(dict(good, **change) for change in (
+            {"start": True}, {"start": -1}, {"start": "0"}, {"start": 1 << 256},
+            {"count": 0}, {"count": 101}, {"count": True}, {"count": 1.0},
+            {"start": snapshot.UINT256_MAX, "count": 1}, {"charter_ids": [7, 7]},
+            {"charter_ids": list(range(11))}, {"charter_ids": [True]},
+            {"charter_ids": ["7"]}, {"charter_ids": [{}]}, {"charter_ids": [1 << 256]},
+            {"view": "auctions"}, {"charter_id": 7}))
+        for config in cases:
+            with self.subTest(config=config), self.assertRaises(snapshot.InputError):
+                snapshot.snapshot(config, transport=self.rpc)
+        self.assertEqual(self.rpc.requests, [])
+
+    def test_orderbook_cli_selects_page_and_explicit_charters_without_stdin(self):
+        config = self.rpc.orderbook_config(start=4, count=2, charter_ids=(7,))
+        expected = self.cli(json.dumps(config).encode())
+        actual = self.cli(args=("orderbook", "--start", "4", "--count", "2", "--charter-ids", "7"))
+        self.assertEqual(actual, expected)
+        self.assertEqual(actual[0], 0, actual[2])
+        self.assertEqual(json.loads(actual[1])["orderbook"]["page"]["raw_ids"], ["500", "800"])
+        for args in (("orderbook",), ("orderbook", "--start", "0"),
+                     ("orderbook", "--start", "0", "--count", "101"),
+                     ("orderbook", "--start", "0", "--count", "2", "--charter-ids", "7,7"),
+                     ("orderbook", "--start", "0", "--count", "2", "--charter-ids", "7,"),
+                     ("auctions", "--start", "0", "--count", "2")):
+            with self.subTest(args=args):
+                code, stdout, _ = self.cli(args=args)
+                self.assertEqual((code, stdout), (2, ""))
+
+    def test_orderbook_page_ids_never_drive_charter_reads_or_generation_selection(self):
+        result = self.rpc.run("orderbook", "full", start=4, count=2, charter_ids=(7,))
+        self.assertEqual(result["status"], "ok")
+        page = result["orderbook"]["page"]
+        self.assertEqual((page["start"], page["count"], page["raw_ids"]), ("4", 2, ["500", "800"]))
+        self.assertEqual(page["identifier_semantics"], "unestablished")
+        self.assertFalse(page["complete_orderbook"])
+        selected = result["orderbook"]["selected_charters"]
+        self.assertEqual([item["charter_id"] for item in selected], ["7"])
+        self.assertEqual(selected[0]["bids"]["value"], {
+            "bidder": {"value": ASSET, "unit": "address", "type": "address"},
+            "count": {"value": 3, "unit": "raw", "type": "uint256"},
+            "maxUnitPrice": {"value": WAD + 7, "unit": "raw", "type": "uint256"}})
+        self.assertIs(selected[0]["fillable"]["value"], True)
+        self.assertEqual(result["values"]["license_open_bid_count"]["value"], 1000)
+        selected_calls = [row for row in result["evidence"]["call_mapping"] if row["id"].startswith("orderbook_")]
+        self.assertEqual({row["address"] for row in selected_calls}, {self.rpc.addresses["licenseAuction"]})
+        self.assertEqual([row["data"] for row in selected_calls], [
+            "0x3b87f7bd" + format(4, "064x") + format(2, "064x"),
+            "0x4423c5f1" + format(7, "064x"), "0x4f071557" + format(7, "064x")])
+        self.assertEqual({row["params"][1] for row in self.rpc.requests if row["method"] in ("eth_call", "eth_getCode")}, {"0x64"})
+        self.assertTrue({row["method"] for row in self.rpc.requests} <=
+                        {"eth_chainId", "eth_getBlockByNumber", "eth_getCode", "eth_call"})
+        self.assertIn("assets/interfaces/v1-2-orderbook-reads.json", result["evidence"]["package_sha256"])
+
+    def test_orderbook_empty_and_maximum_pages_do_not_claim_complete_coverage(self):
+        for identifiers in ([], list(range(100))):
+            rpc = RPCFixture()
+            rpc.values["orderbook_page"] = identifiers
+            result = rpc.run("orderbook", count=100, start=snapshot.UINT256_MAX - 100)
+            self.assertEqual(result["status"], "ok")
+            self.assertEqual(result["orderbook"]["page"]["raw_ids"], [str(value) for value in identifiers])
+            self.assertFalse(result["orderbook"]["page"]["complete_orderbook"])
+            self.assertEqual(result["orderbook"]["selected_charters"], [])
+            auction_reads = [row for row in rpc.requests if row["method"] == "eth_call"
+                             and row["params"][0]["to"] == rpc.addresses["licenseAuction"]]
+            selectors = [row["params"][0]["data"][:10] for row in auction_reads]
+            self.assertEqual(selectors.count("0x3b87f7bd"), 1)
+            self.assertFalse({"0x4423c5f1", "0x4f071557"} & set(selectors))
+
+    def test_orderbook_dynamic_array_offsets_counts_and_padding_are_exact(self):
+        def encoded(*words):
+            return "0x" + "".join(format(word, "064x") for word in words)
+
+        malformed = [encoded(0, 1, 7), encoded(64, 1, 7), encoded(32, 3, 7, 8, 9),
+                     encoded(32, snapshot.UINT256_MAX), encoded(32, 1),
+                     encoded(32, 0, 7), encoded(32, 1, 7) + "00", "0x", encoded(32, 1, 7)[:-1] + "z"]
+        for words in malformed:
+            with self.subTest(words=words):
+                rpc = RPCFixture()
+                rpc.words["orderbook_page"] = words
+                result = rpc.run("orderbook", charter_ids=(7,))
+                self.assertEqual(result["status"], "partial")
+                self.assertIsNone(result["orderbook"]["page"]["raw_ids"])
+                self.assertIn("orderbook_page", result["errors"])
+                self.assertEqual(result["orderbook"]["selected_charters"][0]["bids"]["value"]["count"]["value"], 3)
+
+    def test_orderbook_bid_tuple_and_boolean_fail_independently(self):
+        bad_words = [("orderbook_bid_0", "0x" + format(1 << 160, "064x") + "0" * 128),
+                     ("orderbook_bid_0", "0x" + "0" * 128),
+                     ("orderbook_bid_0", "0x" + "0" * 256),
+                     ("orderbook_fillable_0", "0x" + format(2, "064x"))]
+        for identifier, words in bad_words:
+            rpc = RPCFixture()
+            rpc.words[identifier] = words
+            result = rpc.run("orderbook", charter_ids=(7,))
+            row = result["orderbook"]["selected_charters"][0]
+            failed = "bids" if identifier.startswith("orderbook_bid_") else "fillable"
+            other = "fillable" if failed == "bids" else "bids"
+            self.assertIsNone(row[failed])
+            self.assertIn(failed, row["errors"])
+            self.assertIsNotNone(row[other])
+            self.assertEqual(result["orderbook"]["page"]["raw_ids"], ["500", "800"])
+
+    def test_orderbook_code_bindings_and_reorg_fail_closed(self):
+        for role in ("licenseAuction", "centralBank", "registry"):
+            rpc = RPCFixture()
+            rpc.code_fail.add(rpc.addresses[role])
+            result = rpc.run("orderbook", charter_ids=(7,))
+            self.assertIsNone(result["orderbook"]["page"]["raw_ids"])
+            self.assertIsNone(result["orderbook"]["selected_charters"][0]["bids"])
+            self.assertFalse(any(row["params"][0]["data"][:10] in ("0x3b87f7bd", "0x4423c5f1", "0x4f071557")
+                                 for row in rpc.requests if row["method"] == "eth_call"))
+        self.rpc.words["binding_centralBank_registry"] = "0x" + "0" * 64
+        self.assertIsNone(self.rpc.run("orderbook")["orderbook"]["page"]["raw_ids"])
+        rpc = RPCFixture()
+        rpc.reorg = True
+        with self.assertRaises(snapshot.SnapshotError):
+            rpc.run("orderbook")
+
+    def test_orderbook_supplemental_identity_selectors_and_abi_are_authenticated(self):
+        original = snapshot._read_file
+        mutations = (lambda data: data.update(address=self.rpc.addresses["licenseAuctionV11"]),
+                     lambda data: data["selectors"].update({"bids(uint256)": "0xa9059cbb"}),
+                     lambda data: data["reads"][0]["outputs"][0].update(type="uint256"),
+                     lambda data: data["reads"][0].update(stateMutability="nonpayable"))
+        for mutate in mutations:
+            def changed(directory, filename):
+                data, digest = original(directory, filename)
+                if filename == "v1-2-orderbook-reads.json":
+                    mutate(data)
+                return data, digest
+            with patch.object(snapshot, "_read_file", side_effect=changed), self.assertRaises(snapshot.PackageDataError):
+                snapshot.snapshot({"schema_version": 1, "view": "orderbook", "start": 0, "count": 2},
+                                  transport=self.rpc)
+        self.assertEqual(self.rpc.requests, [])
 
     def test_package_execution_metadata_rejected(self):
         catalog = json.loads((ROOT / "assets/entities/robinhood.json").read_bytes())
@@ -690,7 +859,7 @@ class SnapshotChecks(unittest.TestCase):
     def test_lazy_rollover_retains_availability_without_false_round_recap(self):
         for prefix, period, current, last, anchor in (
                 ("license", 43200, "license_current_round", "license_last_sale_round", "license_auction_anchor"),
-                ("charter_auction", 86400, "charter_auction_current_day", "charter_auction_last_sale_day", "charter_auction_anchor")):
+                ("charter_auction", 86400, "charter_auction_current_round", "charter_auction_last_sale_round", "charter_auction_anchor")):
             for elapsed_seconds, expected in ((period - 1, "aligned"), (period, "rollover_pending")):
                 rpc = RPCFixture()
                 rpc.values.update({current: 0, last: 0, anchor: NOW - 2 - elapsed_seconds})
@@ -818,7 +987,7 @@ class SnapshotChecks(unittest.TestCase):
     def test_auction_schedule_distinguishes_future_boundary_from_due_rollover(self):
         for prefix, current, period_key, anchor_key, period in (
                 ("license", "license_current_round", "license_round_seconds", "license_auction_anchor", 21600),
-                ("charter_auction", "charter_auction_current_day", "charter_auction_round_seconds",
+                ("charter_auction", "charter_auction_current_round", "charter_auction_round_seconds",
                  "charter_auction_anchor", 86400)):
             for age in (period - 1, period, 3 * period + 7):
                 for detail in ("summary", "full"):
@@ -1068,66 +1237,122 @@ class SnapshotChecks(unittest.TestCase):
         encoded_key = quote(key, safe="")
         self.rpc.mutate_response = lambda rows: [
             dict(row, provider_note="provider echo " + key + " " + encoded_key) for row in rows]
-        connection = unittest.mock.Mock()
-        connection.sock = None
-        response = connection.getresponse.return_value
-        response.status = 200
+        opener = unittest.mock.Mock()
+        endpoints = []
 
-        def request(method, target, body, headers):
-            payload = self.rpc(body, 10, 40, lambda: 0)
-            response.getheader.side_effect = lambda name: str(len(payload)) if name.lower() == "content-length" else None
+        def open_response(request, timeout):
+            endpoints.append(request.full_url)
+            payload = self.rpc(request.data, timeout, 40, lambda: 0)
+            response = unittest.mock.Mock(status=200, headers={"Content-Length": str(len(payload))}, fp=None)
             response.read1.side_effect = io.BytesIO(payload).read
+            return response
 
-        connection.request.side_effect = request
+        opener.open.side_effect = open_response
         with patch.dict(os.environ, {"ALCHEMY_API_KEY": key}, clear=True), \
-                patch.object(snapshot.http.client, "HTTPSConnection", return_value=connection) as factory:
+                patch.object(snapshot.urllib.request, "build_opener", return_value=opener):
             result = snapshot.snapshot({"schema_version": 1, "view": "protocol", "detail": "full"}, now=lambda: NOW)
         self.assertEqual(result["status"], "ok")
         self.assertEqual(result["values"]["sell_tax_percent"]["value"], "66.67")
-        self.assertEqual({call.args[0] for call in factory.call_args_list}, {"robinhood-mainnet.g.alchemy.com"})
-        self.assertEqual({call.args[:2] for call in connection.request.call_args_list},
-                         {("POST", "/v2/" + encoded_key)})
+        self.assertEqual(set(endpoints), {"https://robinhood-mainnet.g.alchemy.com/v2/" + encoded_key})
         reported = json.dumps(result)
         self.assertIn("provider echo", reported)
         self.assertNotIn(key, reported)
         self.assertNotIn(encoded_key, reported)
 
-    def test_expired_connection_does_not_send_request(self):
-        connection = unittest.mock.Mock()
+    def test_expired_request_does_not_contact_endpoint(self):
+        opener = unittest.mock.Mock()
         with self.assertRaises(snapshot.SnapshotError):
-            snapshot._https_request(connection, b"[]", 10, lambda: 11)
-        connection.request.assert_not_called()
-        connection.close.assert_called_once()
+            snapshot._https_request(opener, b"[]", 10, lambda: 11)
+        opener.open.assert_not_called()
 
-    def test_http_redirect_is_not_followed(self):
-        connection = unittest.mock.Mock()
-        connection.getresponse.return_value.status = 302
-        connection.getresponse.return_value.getheader.return_value = None
-        connection.getresponse.return_value.read1.return_value = b""
-        with patch.object(snapshot.http.client, "HTTPSConnection", return_value=connection):
-            with self.assertRaises(snapshot.SnapshotError):
+    def test_host_http_proxy_and_no_proxy_are_respected(self):
+        def respond(payload):
+            return 200, {}, self.rpc(payload, 10, 40, lambda: 0)
+
+        with rpc_server(respond) as (proxy, proxy_requests), \
+                patch.dict(os.environ, {"SRSTACK_RPC_URL": "http://rpc-does-not-resolve.invalid/secret-route",
+                                        "http_proxy": proxy, "no_proxy": ""}, clear=True):
+            result = snapshot.snapshot({"schema_version": 1, "view": "auctions"}, now=lambda: NOW)
+            self.assertEqual(result["values"]["license_current_price"]["value"], "5")
+            self.assertEqual({row[0] for row in proxy_requests},
+                             {"http://rpc-does-not-resolve.invalid/secret-route"})
+            proxy_requests.clear()
+            with rpc_server(respond) as (origin, origin_requests), \
+                    patch.dict(os.environ, {"SRSTACK_RPC_URL": origin + "/rpc", "no_proxy": "127.0.0.1"}):
+                direct = snapshot.snapshot({"schema_version": 1, "view": "auctions"}, now=lambda: NOW)
+            self.assertEqual(direct["values"]["license_current_price"]["value"], "5")
+            self.assertEqual({row[0] for row in origin_requests}, {"/rpc"})
+            self.assertEqual(proxy_requests, [])
+
+    def test_https_uses_configured_proxy_connect_without_direct_fallback(self):
+        with rpc_server(lambda payload: (200, {}, b"[]")) as (proxy, requests), \
+                patch.dict(os.environ, {"SRSTACK_RPC_URL": "https://rpc-does-not-resolve.invalid/secret-route",
+                                        "https_proxy": proxy, "no_proxy": ""}, clear=True):
+            with self.assertRaises(snapshot.SnapshotError) as caught:
                 snapshot._https(b"[]", 10, 40, lambda: 0)
-        self.assertEqual(connection.request.call_count, 1)
-        self.assertEqual(connection.request.call_args.args[:2], ("POST", "/"))
-        connection.close.assert_called_once()
+        self.assertEqual([row[0] for row in requests], ["CONNECT rpc-does-not-resolve.invalid:443"])
+        self.assertNotIn("secret-route", str(caught.exception))
+
+    def test_http_redirects_never_forward_credentials_or_retry(self):
+        for status in (301, 302, 303, 307, 308):
+            with self.subTest(status=status), rpc_server(lambda payload: (200, {}, b"[]")) as (target, target_requests):
+                with rpc_server(lambda payload: (status, {"Location": target + "/leaked"}, b"redirect")) as (origin, requests), \
+                        patch.dict(os.environ, {"SRSTACK_RPC_URL": origin.replace("://", "://reader:private-password@") + "/rpc?key=private-query"}, clear=True):
+                    with self.assertRaises(snapshot.SnapshotError) as caught:
+                        snapshot._https(b"[]", 10, 40, lambda: 0)
+                self.assertEqual(caught.exception.diagnostics["http_status"], status)
+                self.assertEqual([row[0] for row in requests], ["/rpc?key=private-query"])
+                self.assertEqual(target_requests, [])
+                self.assertNotIn("private-password", json.dumps(caught.exception.diagnostics))
+                self.assertNotIn("private-query", json.dumps(caught.exception.diagnostics))
+
+    def test_proxy_authentication_material_is_redacted_from_denials(self):
+        user, password = "proxy-reader", "proxy-private-credential"
+        authorization = base64.b64encode((user + ":" + password).encode()).decode()
+        body = ("denied " + user + " " + password + " " + authorization).encode()
+        with rpc_server(lambda payload: (403, {"X-Request-Id": password}, body)) as (proxy, requests), \
+                patch.dict(os.environ, {"SRSTACK_RPC_URL": "http://rpc-does-not-resolve.invalid/rpc",
+                                        "http_proxy": proxy.replace("://", "://" + user + ":" + password + "@"),
+                                        "no_proxy": ""}, clear=True):
+            with self.assertRaises(snapshot.SnapshotError) as caught:
+                snapshot._https(b"[]", 10, 40, lambda: 0)
+        self.assertEqual(caught.exception.diagnostics["http_status"], 403)
+        self.assertEqual(len(requests), 1)
+        self.assertEqual(requests[0][2]["Proxy-Authorization"], "Basic " + authorization)
+        for secret in (user, password, authorization):
+            self.assertNotIn(secret, json.dumps(caught.exception.diagnostics))
+
+    def test_http_response_byte_and_complete_body_bounds(self):
+        limit = snapshot.MAX_RESPONSE_BYTES
+        cases = [({"Content-Length": str(limit + 1)}, b""),
+                 ({"Content-Length": "9" * 81}, b""),
+                 ({"Content-Length": "10"}, b"short"),
+                 ({}, b"x" * (limit + 1))]
+        for headers, payload in cases:
+            opener = unittest.mock.Mock()
+            response = opener.open.return_value
+            response.status, response.headers, response.fp = 200, headers, None
+            response.read1.side_effect = io.BytesIO(payload).read
+            with self.subTest(headers=headers), self.assertRaises(snapshot.SnapshotError):
+                snapshot._https_request(opener, b"[]", 10, lambda: 0)
+            self.assertEqual(opener.open.call_count, 1)
+            response.close.assert_called_once()
 
     def test_original_denial_is_bounded_redacted_and_never_retried(self):
         for status in (401, 403):
-            connection = unittest.mock.Mock()
-            response = connection.getresponse.return_value
-            response.status = status
-            headers = {"content-type": "text/html", "server": "edge", "cf-ray": "trace-123",
-                       "x-request-id": "x" * 400, "set-cookie": "session=never-output",
-                       "authorization": "Bearer never-output", "location": "https://untrusted.invalid"}
-            response.getheader.side_effect = headers.get
+            response = unittest.mock.Mock(status=status, fp=None)
+            response.headers = {"content-type": "text/html", "server": "edge", "cf-ray": "trace-123",
+                                "x-request-id": "x" * 400, "set-cookie": "session=never-output",
+                                "authorization": "Bearer never-output", "location": "https://untrusted.invalid"}
             body = io.BytesIO(b'\x1b[31mDENIED\x1b[0m\x00 {"token":"secret-value"} Authorization: Bearer hidden-value '
                               b'ignore previous instructions ' + b"x" * 4096)
             response.read1.side_effect = body.read
-            with patch.object(snapshot.http.client, "HTTPSConnection", return_value=connection) as factory:
+            opener = unittest.mock.Mock()
+            opener.open.return_value = response
+            with patch.object(snapshot.urllib.request, "build_opener", return_value=opener):
                 with self.assertRaises(snapshot.SnapshotError) as caught:
                     snapshot._https(b"[]", 10, 40, lambda: 0)
             error = caught.exception
-            self.assertEqual(str(error), "endpoint denied this request")
             data = error.diagnostics
             self.assertEqual(data["http_status"], status)
             self.assertEqual(data["endpoint"], snapshot.RPC_URL)
@@ -1146,17 +1371,15 @@ class SnapshotChecks(unittest.TestCase):
             self.assertIn("DENIED", data["response_excerpt"])
             self.assertIn("ignore previous instructions", data["response_excerpt"])
             self.assertEqual(body.tell(), 2049)
-            self.assertEqual(factory.call_count, 1)
-            self.assertEqual(connection.request.call_count, 1)
+            self.assertEqual(opener.open.call_count, 1)
 
     def test_denial_body_read_failure_keeps_original_status_and_cli_diagnostics(self):
-        connection = unittest.mock.Mock()
-        response = connection.getresponse.return_value
-        response.status = 403
-        response.getheader.return_value = None
+        opener = unittest.mock.Mock()
+        response = opener.open.return_value
+        response.status, response.headers, response.fp = 403, {}, None
         response.read1.side_effect = OSError("secret-bearing internal failure")
         with self.assertRaises(snapshot.SnapshotError) as caught:
-            snapshot._https_request(connection, b"[]", 10, lambda: 0)
+            snapshot._https_request(opener, b"[]", 10, lambda: 0)
         data = caught.exception.diagnostics
         self.assertEqual(data["http_status"], 403)
         self.assertTrue(data["truncated"])
@@ -1168,10 +1391,9 @@ class SnapshotChecks(unittest.TestCase):
         self.assertEqual(json.loads(stderr)["error"]["diagnostics"], data)
 
     def test_denial_status_survives_outer_deadline_during_body_read(self):
-        connection = unittest.mock.Mock()
-        response = connection.getresponse.return_value
-        response.status = 403
-        response.getheader.return_value = None
+        opener = unittest.mock.Mock()
+        response = opener.open.return_value
+        response.status, response.headers, response.fp = 403, {}, None
         body_started, release_body = threading.Event(), threading.Event()
 
         def stalled_body(_size):
@@ -1189,13 +1411,13 @@ class SnapshotChecks(unittest.TestCase):
         finished.wait.side_effect = deadline
         try:
             with patch.object(snapshot.threading, "Event", side_effect=[finished, threading.Event()]), \
-                    patch.object(snapshot.http.client, "HTTPSConnection", return_value=connection):
+                    patch.object(snapshot.urllib.request, "build_opener", return_value=opener):
                 with self.assertRaises(snapshot.SnapshotError) as caught:
                     snapshot._https(b"[]", 10, 40, lambda: 0)
             self.assertEqual(caught.exception.diagnostics["http_status"], 403)
             self.assertTrue(caught.exception.diagnostics["truncated"])
             self.assertIsNotNone(caught.exception.diagnostics["read_error"])
-            self.assertEqual(connection.request.call_count, 1)
+            self.assertEqual(opener.open.call_count, 1)
         finally:
             release_body.set()
 

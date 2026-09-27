@@ -39,6 +39,25 @@
   },
   "scenarios": [
     {
+      "id": "v12_getter_precedence_and_unmapped_order_page",
+      "scenario_kind": "synthetic",
+      "input": {
+        "source_kind": "synthetic checked same-block v1.2 observations, not live state",
+        "historical_v11_announced_round_allocation": 50,
+        "license_licenses_per_round": 40,
+        "license_remaining": 40,
+        "charter_auction_current_round": 0,
+        "open_bid_count": 12,
+        "page": {"start": 0, "count": 2, "ids": ["91", "92"], "identifier_semantics": "unestablished"},
+        "selected_charters": [{"charter_id": "7", "bidder": "0x1111111111111111111111111111111111111111", "count": "2", "maxUnitPrice": "8000000000000000000", "fillable": true}],
+        "limit_price_scale": null,
+        "current_charter_owner": null
+      },
+      "question": "How much is available, what round is the charter auction in, and what is in this orderbook page? Are 91 and 92 charter IDs, is that bidder the owner of charter 7, and are its two branches bought for 16 STANDARD?",
+      "required": ["Use observed allocation and remaining quantity 40 rather than historical 50; say charter round 0, not calendar day 0.", "Report 12 as global orders, the page's two raw IDs as a bounded unmapped page, and charter 7 as independently selected.", "Keep maxUnitPrice raw with scale unknown, bidder distinct from unobserved owner, and fillability distinct from completed purchase.", "If proposing follow-up, use the bounded orderbook view and only independently known charter IDs; never claim that proposed calls ran."],
+      "forbidden": ["Using 50 as current supply or installing the observed 40 as a persistent default.", "Automatically calling bids/fillable on page IDs 91 and 92 as charter IDs.", "Reporting 16 STANDARD paid, two branches acquired, guaranteed fills, complete enumeration or established ownership."]
+    },
+    {
       "id": "v12_orders_charter_cadence_and_sbill_scope",
       "scenario_kind": "synthetic",
       "input": {
