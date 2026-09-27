@@ -2,14 +2,11 @@
 
 Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
 
-Published accounting and v1.1 policy, not saved holdings or verified privileges. Sources: `sr-whitepaper-v1` §§3,6,11–12,15 and `sr-protocol-v1-1-announcement` via the [source index](../assets/sources.json). Exact reference scopes: [reserve parameters](../assets/parameters/reserves.json), [launch parameters](../assets/parameters/launch.json). Current balances, owners and routing require live reads.
+Published accounting and v1.1 policy reviewed through **2026-09-26**, not holdings or verified privileges. Sources: `sr-whitepaper-v1` §§3,6,11–12,15 and `sr-protocol-v1-1-announcement` via the [source index](../assets/sources.json). Dated reference scopes: [reserve parameters](../assets/parameters/reserves.json), [launch parameters](../assets/parameters/launch.json). Current balances, owners and routing require authenticated public reads.
 
 ## Founding funding is not the ongoing fee split
 
 Founding proceeds escrow until finalization and fund liquidity and protocol vaults, with no team share. The current publication does not specify the exact split. Genesis token liquidity is described in the currency section; do not substitute ongoing fee-allocation percentages for founding receipts. [sr-whitepaper-v1: currency, charters]
-
-
-The founding allocation is separate from steady-state trading/charter-auction receipts. Do not use ongoing fee percentages for founding proceeds. [sr-whitepaper-v1: reserves]
 
 ## Ongoing ETH routing — §11
 
@@ -29,9 +26,9 @@ The whitepaper describes genesis liquidity as non-withdrawable and says those po
 
 Authoritative ownership/authority records: `reserve-redemption-policy`, `pol-withdrawal-policy`, `expansion-reserve-purchase-policy`.
 
-For current routing/liability and vault observations use `snapshot.py treasury`. An explicitly specified `--asset ADDRESS` is checked with `isReserveAsset` before Expansion Vault holdings/pool calls; approved holdings remain raw token units without independently authenticated decimals, not a complete portfolio. The fixed authenticated STANDARD `balanceOf(incentivesVault)` provides the separately requested token balance, while generic owner/pending-owner reads provide bounded control context. These do not invent complete POL Buyback/Incentives Vault ABIs or establish incentive distribution privileges. Every balance and owner is read live, never filled from review snapshots.
+For present holdings, liabilities or routing, authenticate the relevant deployment, asset identity, units and relationships, then use host public-read tools at a common block. A selected asset balance is not a complete portfolio; token balances and module ownership do not establish distribution entitlements or every privileged path. Never replace missing reads with stored review observations.
 
-`history.py buybacks` reports Contraction Vault `BuybackExecuted(uint256,uint256)` ETH/ STANDARD burned-token event accounting. **`history.py pol-buybacks` is separate**: POL Buyback `BuybackExecuted(uint256,uint256,address)` reports ETH input, raw `tokensOut` and destination. The POL event alone does not authenticate token identity/decimals, burn accounting or wallet movements, so no guessed token-binding getter or normalized token amount is added. Neither mode is aggregate burn history or independent receipt/transfer reconciliation. [Inspection](inspection.md#common-question-paths) and [history](auction-history.md) retain those boundaries.
+For [historical buybacks](auction-history.md), distinguish Contraction Vault burns from POL acquisitions retained elsewhere. Similar event names do not establish token identity, decimals, burns or wallet movements; corroborate the semantics and relevant receipt transfers before those claims. Aggregate burn counters are not receipt-attributed buyback accounting.
 
 Publisher ABIs name successor holdings-migration entries for both vaults and FeeSplitter. Asset movement is distinct from changing deployed code; whitepaper non-upgradeability is not proof that holdings cannot move between components. An ABI alone establishes neither deployment correspondence, who can move what, Registry replacement rules nor present authority. These are implementation questions, not custody assurances. [sr-contract-directory; contracts](contracts.md)
 

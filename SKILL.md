@@ -1,6 +1,6 @@
 ---
 name: srstack
-description: Standard Reserve research, auctions, charters, orderbook.
+description: Standard Reserve research, live state and accrual scenarios.
 license: MIT
 metadata:
   version: "0.3.0"
@@ -8,64 +8,41 @@ metadata:
 
 # srstack
 
-Research Standard Reserve and inspect public protocol, charter, auction and orderbook state. Prefer the bundled commands where they fit; use authenticated supplemental evidence for gaps.
+Answer Standard Reserve questions using the host's permitted readers, RPC tools and calculation capabilities. No bundled execution client, contract allowlist, fixed ABI, bytecode gate or accrual rate. Packaged references explain dated policy and evidence; they are not live configuration.
 
-Helpers need permitted Python 3.10+ execution and network access for live reads. Packaged explanations and calculations can work offline.
+Respond to the question, not a prescribed workflow. A bare invocation warrants a brief “What would you like to know about Standard Reserve?”, not a menu or unsolicited reads. Infer ordinary scope from context; ask only for a material choice or public identifier that cannot be established from available evidence. Do not require users to know contracts, methods or commands.
 
-## Answer style
+## Choose the smallest sufficient evidence
 
-Lead with the answer or useful numbers. Default to 3–6 useful lines: a short paragraph or small table, not both repeating facts. Normally cite one or two useful links and a short observation time. Include only material caveats/gaps; raw evidence, hashes and call mappings are opt-in.
+Prefer authenticated contract reads when they directly answer the question or narrow discovery: balances, ownership, permissions, position state, accrual, supply, treasury and auction settings. Use execution events for historical purchases/flows, appropriate market sources for quotes, and original publications for documented policy. Explanation-only or fully supplied hypothetical questions need no live RPC.
 
-Snapshot summary output is compact in the helper itself; `--detail full` opts into raw evidence. Keep that distinction when presenting results rather than retrieving full output only to hide it.
+Authenticate relevant chain, deployment/generation, interface, units and implementation relationships from current publisher, registry or verification evidence. Treat retrieved ABIs as data; a method name, verified-source badge or successful call does not prove economic semantics. Dated source records are leads, never permanent current targets. Missing packaged coverage is not a reason to refuse research.
 
-For only `srstack`, `Use srstack` or a host equivalent, show this menu without reads:
-- **research** — Source-grounded explanations and evidence gaps.
-- **inspect** — On-demand public protocol, auction, charter or treasury state, bounded auction/buyback history, STANDARD price or gross accrued-balance value.
-- **analyse** — Calculations, conditional forecasts, scenarios, comparisons and plans using evidence and explicit assumptions.
-- **workflows** — User-requested reports, exports and bounded automation under [host permissions](references/safety.md).
+Keep dependent observations at one identified block; preserve each independent source's time and coverage. Reuse established identities/interfaces and same-block results within the question, unless evidence or freshness requires revalidation. Batch independent calls within actual provider limits; deduplicate transaction/header reads. Prefer bounded enumeration or a relevant index over blind block scanning. No repeated preflight, default cross-check, full catalog load or broad history scan for a narrow question. Stop when the requested evidence is sufficient; report partial results rather than silently expanding scope or switching providers.
 
-Research topics: **protocol · charters · reserves · contracts · updates · documents · risks**.
+## Load only the relevant reference
 
-## Route, then load only what is needed
-
-**Contract reads first wherever they are the most direct reliable evidence.** Apply this across protocol, charters/positions, ownership, balances, permissions, treasury, auctions and orderbook—not just history. Prefer authenticated getters and bounded enumeration over reconstruction or broad logs; use historical state to narrow event searches. Use events for executions, market sources for market quotes and documents for policy. Do not add RPC to explanation-only questions or force a getter to answer a metric it does not establish.
-
-| Intent | First resource |
+| Question needs | Reference |
 |---|---|
-| “How are my branches doing?” / charter N earnings | `python3 -B -I scripts/snapshot.py charter --id N`: report branches, accrued STANDARD and current-rate daily equivalent. No price lookup unless requested. For an address rather than an ID, use scoped ownership discovery. |
-| Dormancy / last activity / do I need to check in? | `python3 -B -I scripts/snapshot.py charter --id N --detail activity`: owner and raw activity/transfer/period getters. Deadline, dormancy status and last check-in stay unknown without authenticated semantics; `lastActive` is not specifically check-in. [Activity interpretation](references/exits.md#inspect-one-charters-activity). |
-| Current branch/license auction status or price | `python3 -B -I scripts/snapshot.py auctions`: report license availability, remaining quantity, usable price and observation time. No history scan or contract rediscovery. |
-| “What will the next license round open at?” / “When does it start?” | Run `python3 -B -I scripts/snapshot.py auctions`; use its [conditional policy preview and derived schedule](references/auctions.md#next-license-opening-documented-policy-estimate). No sales plus an unavailable next-round floor means **unknown opening price**, not today's floor as a fallback. A supported sale-based candidate is provisional and floor-qualified; a scheduled boundary is not keeper execution. |
-| Branch limit orders / “what's on the book?” | `python3 -B -I scripts/snapshot.py orderbook --start 0 --count 20`: a bounded raw-ID page, **not a price/quantity/owner listing**. Optional `--charter-ids N,M` reads independently known charter bids/fillability. Never autojoin page IDs or promise fills. [Interpretation](references/auctions.md). |
-| Charter-auction launch or cadence | [Protocol v1.2](references/updates.md#protocol-v12-announced-changes): announced one charter at branch-auction cadence; 5.5 ETH is the announced first opening, not a current quote. Use fresh auction observations and surface any interface/schedule conflict rather than imposing the older 24-hour design. |
-| Current state, burns, cap/gate, owners, charter balance/worth or STANDARD price | [Inspection common paths](references/inspection.md#common-question-paths) |
-| Last N rounds / round-price table / auction purchases or revenue | `python3 -B -I scripts/history.py license --generation current --last-rounds 3`: contract-state discovery first, targeted logs of at most 10 blocks. For first/average/opening prices across the selected window, omit last-N early stopping. Report observed prices and unsearched scope, not complete-round averages. [History routes](references/auction-history.md#question-to-window). |
-| Treasury routing, team liability, buyback controls or a specified reserve asset | [Inspection common paths](references/inspection.md#common-question-paths): `snapshot.py treasury`, optional `--asset ADDRESS`; approval-gated raw holdings, not a portfolio |
-| Past buybacks | [Bounded history helper](references/auction-history.md): `history.py buybacks` for ContractionVault burn accounting; `history.py pol-buybacks` for POL event-reported ETH, raw token output and destination, not burns |
-| Second Mandate, manifesto, tokenized-stock liquidity vision or sample positions | [Second Mandate](references/updates.md#second-mandate-liquidity-for-tokenized-stocks) |
-| “How are my S-Bills doing?” / staking positions | [Position inspection](references/inspection.md#common-question-paths): use a supplied public bill ID/address or user-consented position export; establish the actual deployment/read surface, never substitute preview samples or an old availability label. |
-| Burn/ledger retirement or epoch rules, without live values | [Supply and epoch policy](references/protocol-policy.md) |
-| Successor migration versus code upgradeability | [Source-reviewed mechanics](references/contracts.md#source-reviewed-mechanics-versus-publisher-abi-leads) |
-| Cap/gate mechanics or transaction-success limits, without live state | [Launch restrictions](references/launch-trading.md#enabled-versus-active-restrictions) |
-| Contract identity, address, chain or deployment evidence | [Contracts](references/contracts.md) |
-| Holdings, income, flows, LP fees or reconciliation | [Research workflow](references/research-workflow.md) |
-| Estimates, time-to-target, scenarios, strategy comparisons or user-supplied data | [Research workflow](references/research-workflow.md) plus the relevant mechanics reference; distinguish observations from assumptions |
-| Setup, host loading or release identity | [Installation](references/installation.md) |
-| Protocol / charters / reserves | [Protocol](references/protocol.md) / [charters](references/charters.md) / [reserves](references/reserves.md) |
-| Updates / documents / risks | [Updates](references/updates.md) / [documents](references/documents.md) / [risks](references/risks.md) |
+| Live state, ownership, charter activity, balances or market value | [Inspection](references/inspection.md) |
+| Deployment or interface authentication | [Contracts](references/contracts.md) |
+| Auction history across contracts; opening, first, average and last prices | [Historical accounting](references/auction-history.md) |
+| Accrual-funded buying, future auctions, comparisons or calculations | [Analysis and projections](references/research-workflow.md) |
+| Protocol, charter, reserve or auction mechanics | [Protocol](references/protocol.md), [charters](references/charters.md), [reserves](references/reserves.md), [auctions](references/auctions.md) — choose the relevant one |
+| Dormancy, check-in or exit interpretation | [Activity and exits](references/exits.md) |
+| Announcements, S-Bills or publisher documents | [Updates](references/updates.md), [documents](references/documents.md) |
+| Tool capabilities, provider limits or installation | [Execution](references/execution.md), [installation](references/installation.md) — only when needed |
 
-Specific intent wins over broad topic. Explanation-only questions need no live refresh. Follow the direct link; use the [source](assets/sources.json) or [parameter](assets/parameters.json) index only to locate an unknown ID. Do not preload whole guides or all references. Recover relevant truncation before claiming coverage.
+Use the [source index](assets/sources.json) only to locate an unknown source record. [Policy parameters](assets/parameters.json) are dated claims, not calculation defaults. Do not preload the corpus.
 
-For auctions, distinguish stored counters from elapsed rounds and auction periods from charter cap windows. Label pending rollover; never combine stale sales with current availability as “sold today.” Current state uses getters; purchases/revenue use history. Failed reads stay unavailable.
+## History and projections
 
-For orderbook and last-N history, prefer host-managed `SRSTACK_RPC_URL` or `ALCHEMY_API_KEY`; the public default is best-effort for small snapshots. Helpers never silently fail over. A 401/403 is a blocked request, not a failed install. Keep secrets out of prompts/files/CLI arguments. [Provider configuration](references/execution.md#rpc-provider-guidance).
+“All rounds” or “across contracts” includes every relevant authenticated generation through the stated anchor, not just the current deployment or a recent lookback. Keep chain/address/round keys separate. Distinguish exhausted index pagination, receipt matches, canonical checks and unresolved scope; equal sampled state does not prove an empty interval. Opening-event price, first executed price, quantity-weighted average and last observed sale are different values. A last sale is not automatically a final close.
 
-For requested estimates and comparisons, calculate with explicit inputs, assumptions and units. Ask only for material missing choices. Uncertainty permits labelled models, not invented facts or guaranteed returns.
+For accrual-funded scenarios, use verified unspent earned accrual plus projected new accrual, less commitments and simulated purchases. Exclude externally funded or unattributed balances. Read the applicable accrual pace, eligible position quantity and epoch/pause/expiry conditions from the contract; authenticate scales and accounting before calculation. Do not hardcode rates or extrapolate past an established boundary without an explicit scenario. Deduct purchase cost before modeling any evidenced increase in earning capacity. Distinguish accrued, claimable and auction-spendable amounts; report gas or conversion funding separately. Future prices, inventory and unchanged conditions are assumptions unless established, not promises. Missing inputs can support a labelled formula or scenario, never invented observations.
 
-## Evidence and operational boundaries
+## Answer and safety
 
-- Current claims need fresh evidence; historical observations keep their original time/block. Distinguish rules, proposals, samples, observations and estimates. Missing evidence is unknown, not zero; sample positions are not holdings or entitlements.
-- Preserve units: ledger STANDARD is not wallet tokens, branches are not charters, and USD is not ETH or implicitly a stablecoin. Rate equivalents are not promised earnings; gross accrued value is not net proceeds or charter resale value.
-- Apply [safety](references/safety.md) for access and execution. Never sign, request signatures or submit/broadcast transactions, including through delegation. Calldata, transaction deep links and filled unsigned transaction objects require an **explicit request to prepare them**; an inspect or explanation request is not authorization.
-- Default Robinhood Chain explorer links to `https://robin.etherscan.io/`: `/address/ADDRESS`, `/tx/HASH`, `/block/NUMBER`. Retain other providers' actual evidence URLs only as provenance. Bytecode, publisher ABI, Similar Match and exact source verification are distinct.
-- Preserve original denial diagnostics and host controls. Independent sources require their own identity, time/block and coverage evidence; never present a failed helper as successful or use installed snapshots as fallback state.
+Lead with the requested answer or table, not an evidence ceremony. Keep ordinary answers short; expand for a requested full list or calculation. State material assumptions, source/block time and gaps once. Retain exact integer/decimal inputs and round only for display. Ledger credits, wallet tokens, branches, charters, ETH and USD are not interchangeable.
+
+Apply [safety](references/safety.md). Never sign, request signatures or submit/broadcast transactions, including through delegation. Calldata, transaction deep links and filled unsigned transaction objects require an explicit preparation request. Keep credentials in host-managed facilities, not prompts, commands, files or outputs. Preserve original denial diagnostics; no bypass or concealed fallback. Keep observations and authorized checkpoints outside the installed skill. No unsolicited monitoring or self-modification.

@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT
 MANIFEST = "release-manifest.json"
 VERSION = "0.3.0"
-SCRIPT_FILES = {"scripts/snapshot.py", "scripts/price.py", "scripts/history.py", "scripts/verify.py"}
+CORPUS_FILES = {"assets/sources.json", "assets/parameters.json"}
 TOP_FILES = {"SKILL.md", "README.md", "LICENSE", MANIFEST}
 REPOSITORY_DIRS = {"maintenance", ".github", ".git", "dist"}
 CACHE_DIRS = {"__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache"}
@@ -25,7 +25,7 @@ REPOSITORY_FILES = {".gitignore", ".git"}
 
 def runtime_path(path):
     """Reject ambiguous names before classifying runtime versus repository content."""
-    # Match the installed verifier's path bounds before building an artifact.
+    # Bound path length/depth before reading or writing package members.
     if not isinstance(path, str) or len(path.encode("utf-8")) > 255:
         raise ValueError("Invalid package path")
     parts = path.split("/")
@@ -36,9 +36,12 @@ def runtime_path(path):
             or any(part in CACHE_DIRS for part in parts)
             or parts[-1] == ".DS_Store" or PurePosixPath(path).suffix in {".pyc", ".pyo", ".pyd"}):
         return False
-    if path in TOP_FILES | SCRIPT_FILES:
+    if path in TOP_FILES | CORPUS_FILES:
         return True
-    if parts[0] in {"assets", "references"} and len(parts) > 1 and PurePosixPath(path).suffix in {".md", ".json"}:
+    if len(parts) == 2 and parts[0] == "references" and PurePosixPath(path).suffix == ".md":
+        return True
+    if (len(parts) == 3 and parts[0] == "assets" and parts[1] in {"sources", "parameters"}
+            and PurePosixPath(path).suffix == ".json"):
         return True
     raise ValueError(f"Unexpected runtime file: {path}")
 
@@ -47,36 +50,51 @@ def require_runtime(files):
     for path in files:
         if not runtime_path(path):
             raise ValueError(f"Repository-only path in runtime: {path}")
-    for required in (TOP_FILES - {MANIFEST}) | SCRIPT_FILES:
+    for required in (TOP_FILES - {MANIFEST}) | CORPUS_FILES:
         if required not in files:
             raise ValueError(f"Missing {required}")
 
 
-def package_files():
-    if PACKAGE.is_symlink() or not PACKAGE.is_dir():
-        raise ValueError("Package root must be a real directory, not a symlink")
+def package_files(root=None):
+    """Read repository runtime content, or an exact standalone runtime root."""
+    repository = root is None
+    root = PACKAGE if repository else Path(root).expanduser()
+    if ".." in root.parts:
+        raise ValueError("Package root must not contain parent traversal")
+    root = root.absolute()
+    if any(path.is_symlink() for path in (root, *root.parents)) or not root.is_dir():
+        raise ValueError("Package root and ancestors must be real directories")
     files = {}
-    for directory, dirs, names in os.walk(PACKAGE, followlinks=False):
-        dirs[:] = sorted(name for name in dirs
-                         if name not in CACHE_DIRS
-                         and not (Path(directory) == PACKAGE and name in REPOSITORY_DIRS))
+    allowed_dirs = {"assets", "assets/sources", "assets/parameters", "references"}
+
+    def scan_error(error):
+        raise error
+
+    for directory, dirs, names in os.walk(root, followlinks=False, onerror=scan_error):
         base = Path(directory)
+        if repository:
+            dirs[:] = [name for name in dirs if name not in CACHE_DIRS
+                       and not (base == root and name in REPOSITORY_DIRS)]
+        dirs.sort()
         for name in dirs:
-            if (base / name).is_symlink():
-                raise ValueError(f"Symlink not allowed: {base / name}")
+            path = base / name
+            if path.is_symlink():
+                raise ValueError(f"Symlink not allowed: {path}")
+            if not repository and path.relative_to(root).as_posix() not in allowed_dirs:
+                raise ValueError(f"Unexpected runtime directory: {path}")
         for name in sorted(names):
-            if name == ".git":
-                continue
-            if Path(directory) == PACKAGE and name in REPOSITORY_FILES:
+            if repository and base == root and name in REPOSITORY_FILES:
                 continue
             path = base / name
             if path.is_symlink():
                 raise ValueError(f"Symlink not allowed: {path}")
             if not path.is_file():
                 raise ValueError(f"Nonregular runtime file: {path}")
-            relative = path.relative_to(PACKAGE).as_posix()
+            relative = path.relative_to(root).as_posix()
             if runtime_path(relative):
                 files[relative] = path.read_bytes()
+            elif not repository:
+                raise ValueError(f"Repository-only file in runtime: {relative}")
     require_runtime(files)
     return files
 
@@ -160,65 +178,30 @@ def verify_content(files):
         for target in re.findall(r"\]\(([^)]+)\)", content.decode()):
             local_target(owner, target, files)
     records = []
+    parameter_paths = set()
     for group in parsed["assets/parameters.json"]["groups"]:
         path = group["path"]
         if path not in parsed or not path.startswith("assets/parameters/"):
             raise ValueError(f"Invalid parameter group path: {path}")
+        if path in parameter_paths:
+            raise ValueError(f"Duplicate parameter group path: {path}")
+        parameter_paths.add(path)
         group_records = parsed[path]["records"]
         if group["record_ids"] != [r["id"] for r in group_records]:
             raise ValueError(f"Parameter index mismatch: {path}")
         records.extend(group_records)
+    if parameter_paths != {path for path in parsed if path.startswith("assets/parameters/")}:
+        raise ValueError("Parameter index group membership mismatch")
     if len({r["id"] for r in records}) != len(records):
         raise ValueError("Duplicate parameter IDs")
-    entity_index = parsed["assets/entity-index.json"]
-    entities = []
-    for group in entity_index.get("groups", []):
-        path = group["path"]
-        if path not in parsed or not path.startswith("assets/entities/"):
-            raise ValueError(f"Missing/invalid entity group {path}")
-        catalog = parsed[path]
-        group_records = catalog["records"]
-        if group["record_ids"] != [record["id"] for record in group_records]:
-            raise ValueError(f"Entity index mismatch: {path}")
-        if group["chain_id"] != catalog["chain"]["id"]:
-            raise ValueError(f"Entity group chain mismatch: {path}")
-        for record in group_records:
-            address = record["address"]
-            if record["chain_id"] != group["chain_id"] or not re.fullmatch(r"0x[0-9a-fA-F]{40}", address):
-                raise ValueError(f"Invalid entity identity: {record['id']}")
-            if record["chain_id"] != 4663 or record["explorer_url"] != f"https://robin.etherscan.io/address/{address}#code":
-                raise ValueError(f"Wrong-chain/nonpreferred explorer: {record['id']}")
-            attribution = record["attribution"]
-            status = attribution["status"]
-            directory_status = record.get("directory_status")
-            allowed_directory_status = {
-                "publisher-listed": {"current-publisher-entry", "historical-generation"},
-                "relationship-observed": {"dependency-not-directory-entry"},
-            }
-            if (status not in allowed_directory_status or not attribution["source_ids"]
-                    or directory_status not in allowed_directory_status[status]):
-                raise ValueError(f"Missing or inconsistent entity attribution: {record['id']}")
-        entities.extend(group_records)
-    identities = {(record["chain_id"], record["address"].lower()) for record in entities}
-    if len(identities) != len(entities) or len({record["id"] for record in entities}) != len(entities):
-        raise ValueError("Duplicate entity identity or record ID")
-    counts = {
-        "publisher_attributed_records": sum(record["attribution"]["status"] == "publisher-listed" for record in entities),
-        "relationship_attributed_records": sum(record["attribution"]["status"] == "relationship-observed" for record in entities),
-        "inventory_records": len(entities),
-        "current_directory_records": sum(record["directory_status"] == "current-publisher-entry" for record in entities),
-    }
-    if any(type(entity_index.get(key)) is not int or entity_index[key] != count for key, count in counts.items()):
-        raise ValueError("Entity attribution count mismatch")
     return {"files": len(files), "sources": len(source_ids), "parameters": len(records),
-            "entities": len(entities),
             "max_file_bytes": max(map(len, files.values()))}
 
 
 def make_manifest(files):
     return {
         "schema_version": 1, "name": "srstack", "version": VERSION,
-        "scope": "Runtime knowledge, fixed public readers and installation verifier; excludes manifest, repository maintenance, CI, Git metadata, and build/cache artifacts",
+        "scope": "Documentation and dated source/parameter corpus; excludes manifest, repository maintenance, CI, Git metadata, and build/cache artifacts",
         "digest_convention": "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest",
         **fingerprints(files),
     }
@@ -243,9 +226,9 @@ def git(*arguments):
 
 def reviewed_head(commit):
     if not re.fullmatch(r"[0-9a-fA-F]{40}", commit):
-        raise ValueError("Export requires a full 40-hex reviewed commit")
+        raise ValueError("A full 40-hex reviewed commit is required")
     if Path(os.fsdecode(git("rev-parse", "--show-toplevel")).strip()).resolve() != ROOT:
-        raise ValueError("Export must run from the public repository's own checkout")
+        raise ValueError("Reviewed verification/export requires the public repository's own checkout")
     if git("rev-parse", "--verify", "HEAD").decode().strip() != commit.lower():
         raise ValueError("HEAD is not the supplied reviewed commit")
     if git("cat-file", "-t", commit).strip() != b"commit":
@@ -298,6 +281,20 @@ def committed_files(commit):
     if seen != set(entries):
         raise ValueError("Git archive does not match committed tree membership")
     return files
+
+
+def verify_installation(commit, root):
+    """Verify standalone bytes using this reviewed repository, not installed code."""
+    reviewed_head(commit)
+    files = package_files(root)
+    report = verify_manifest(files)
+    expected = committed_files(commit)
+    verify_manifest(expected)
+    if files != expected:
+        raise ValueError("Runtime bytes do not match the reviewed commit")
+    reviewed_head(commit)
+    report.update(commit=commit.lower(), root=str(Path(root).expanduser().absolute()))
+    return report
 
 
 def export_package(commit, destination):
@@ -379,14 +376,19 @@ def main():
     parser.add_argument("action", choices=["build", "verify", "archive", "export"])
     parser.add_argument("--commit", help="Reviewed full 40-hex commit; must equal HEAD")
     parser.add_argument("--destination", type=Path, help="New runtime directory; parent must exist")
+    parser.add_argument("--root", type=Path, help="Standalone runtime to verify against --commit")
     args = parser.parse_args()
     if args.action == "export":
-        if args.commit is None or args.destination is None:
-            parser.error("export requires --commit and --destination")
+        if args.commit is None or args.destination is None or args.root is not None:
+            parser.error("export requires --commit and --destination, without --root")
         report = export_package(args.commit, args.destination)
+    elif args.action == "verify" and args.root is not None:
+        if args.commit is None or args.destination is not None:
+            parser.error("verify --root requires --commit, without --destination")
+        report = verify_installation(args.commit, args.root)
     else:
-        if args.commit is not None or args.destination is not None:
-            parser.error("--commit and --destination are only valid for export")
+        if args.commit is not None or args.destination is not None or args.root is not None:
+            parser.error("--commit requires export or verify --root; --destination requires export")
         files = package_files()
         if args.action == "build":
             report = verify_content(files)

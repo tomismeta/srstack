@@ -15,13 +15,13 @@
         "pairs[].chainId, pairAddress, dexId, labels, baseToken, quoteToken",
         "pairs[].priceUsd and priceNative"
       ],
-      "summary": "The fixed price helper requests the publisher-listed canonical ETH/STANDARD pool on Robinhood, checks exact pool and asset identities, and interprets priceUsd as USD per STANDARD and priceNative as ETH per STANDARD. The entity catalog owns the token and pool identities.",
+      "summary": "At review, the publisher-listed ETH/STANDARD pool on Robinhood used priceUsd for USD per STANDARD and priceNative for ETH per STANDARD. Re-establish exact pool and asset identities before using current quotes; this dated record is not a current pool binding.",
       "limits": [
         "Provider-reported indicative prices, not block-scoped contract state or executable quotes.",
         "The consumed API schema supplies no price-observation timestamp. HTTP retrieval, pool creation and image cache timestamps are not quote-observation times.",
         "USD conversion is provider-reported; it is not independently verified ETH/USD feed data.",
         "Gross quantity valuations exclude withdrawal fees, trading taxes, LP fees, slippage and gas. They are not charter resale values or guaranteed proceeds.",
-        "The fixed helper fetches on demand without a stored-price fallback. Requested historical reuse or caches must retain source and as-of context; current indicative prices do not establish future prices."
+        "Requested historical reuse or caches must retain source and as-of context. Neither a saved price nor a fresh indicative quote establishes a future price."
       ]
     },
     {
@@ -38,14 +38,14 @@
         "data.id, type, attributes.address and relationships.base_token, quote_token, dex",
         "attributes.base_token_price_usd and base_token_price_native_currency"
       ],
-      "summary": "The fixed helper can use the same canonical ETH/STANDARD pool through GeckoTerminal, either by explicit source choice, as a labelled availability fallback, or as a requested cross-check. The canonical native-ETH quote is identified by its zero address, not a WETH display label. USD and ETH values stay together from one provider response.",
+      "summary": "The reviewed GeckoTerminal interface reports pool/token identities and USD/native prices together. For the reviewed ETH/STANDARD pool, the zero address identified native ETH, not a WETH display label. Authenticate current pool/asset relationships and retain denominations from one response.",
       "limits": [
         "Public beta API; pin the declared version and retain provider attribution.",
         "No quote-observation timestamp in the consumed pool interface. Retrieval, cache age, pool creation, candle and trade timestamps must not be relabelled as the pool quote's observation time.",
         "More decimal digits do not establish greater accuracy; separate provider reads are not atomic or interchangeable.",
-        "The fixed helper cross-check reports disagreement without averaging prices, mixing denominations or changing the selected valuation source. Requested supplemental comparisons or derived models must identify their inputs and method.",
+        "Requested cross-checks report disagreement without averaging prices or mixing denominations. Derived models must identify their inputs and method.",
         "CoinGecko onchain data belongs to the same provider family, not an independent third corroborating source.",
-        "The fixed helper has no stored-price fallback. Supplemental provider selection and requested historical reuse remain subject to host/provider access rules; never bypass an access restriction or label an old quote as current."
+        "Provider selection and requested historical reuse remain subject to host/provider access rules; never bypass an access restriction or label an old quote as current."
       ]
     }
   ]

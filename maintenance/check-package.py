@@ -48,7 +48,7 @@ class PackageChecks(unittest.TestCase):
         self.script.parent.mkdir()
         shutil.copyfile(SCRIPT, self.script)
         for name in ("maintenance/private.json", ".github/workflows/validate.yml", ".gitignore",
-                     "dist/old.zip", "scripts/__pycache__/snapshot.pyc", ".DS_Store"):
+                     "dist/old.zip", "maintenance/__pycache__/package.pyc", ".DS_Store"):
             target = self.root / name
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text("repository-only\n")
@@ -95,19 +95,64 @@ class PackageChecks(unittest.TestCase):
         self.assertEqual(manifest["content_sha256"], report["content_sha256"])
         self.assertEqual(self.commit, report["commit"])
 
-    def test_export_supports_default_installed_integrity(self):
+    def test_reviewed_repository_verifies_standalone_runtime_without_installed_code(self):
         result = self.invoke("export", "--commit", self.commit, "--destination", str(self.destination))
         self.assertEqual(0, result.returncode, result.stderr.decode())
-        result = subprocess.run(
-            [sys.executable, "-B", "-I", str(self.destination / "scripts/verify.py")],
-            stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=70,
-        )
-        self.assertEqual(0, result.returncode, result.stderr.decode() + result.stdout.decode())
+        result = self.invoke("verify", "--root", str(self.destination), "--commit", self.commit)
+        self.assertEqual(0, result.returncode, result.stderr.decode())
         report = json.loads(result.stdout)
-        self.assertEqual("ok", report["status"])
-        self.assertEqual([("integrity", "ok")],
-                         [(stage["name"], stage["status"]) for stage in report["stages"]])
+        self.assertEqual(self.commit, report["commit"])
+        self.assertEqual(json.loads(self.runtime[self.package.MANIFEST])["content_sha256"],
+                         report["content_sha256"])
+        self.assertFalse((self.destination / "scripts").exists())
         self.assertEqual(self.runtime, directory_bytes(self.destination))
+
+    def test_external_verification_rejects_extra_missing_and_changed_bytes(self):
+        self.package.export_package(self.commit, self.destination)
+        for extra in ("references/unreviewed.md", ".DS_Store", "maintenance/private.json",
+                      "scripts/verify.py", "assets/entities/obsolete.json",
+                      "assets/__pycache__/untrusted.pyc"):
+            with self.subTest(extra=extra):
+                path = self.destination / extra
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(b"unreviewed")
+                with self.assertRaises(ValueError):
+                    self.package.verify_installation(self.commit, self.destination)
+                path.unlink()
+                while path.parent != self.destination and not any(path.parent.iterdir()):
+                    path = path.parent
+                    path.rmdir()
+        readme = self.destination / "README.md"
+        readme.unlink()
+        with self.assertRaises(ValueError):
+            self.package.verify_installation(self.commit, self.destination)
+        readme.write_bytes(self.runtime["README.md"] + b"\nChanged bytes.\n")
+        with self.assertRaises(ValueError):
+            self.package.verify_installation(self.commit, self.destination)
+
+    def test_self_consistent_manifest_cannot_replace_reviewed_bytes(self):
+        self.package.export_package(self.commit, self.destination)
+        files = dict(self.runtime)
+        files["README.md"] += b"\nUnreviewed but self-consistent change.\n"
+        files[self.package.MANIFEST] = json.dumps(self.package.make_manifest(files)).encode()
+        for path in ("README.md", self.package.MANIFEST):
+            (self.destination / path).write_bytes(files[path])
+        with self.assertRaisesRegex(ValueError, "reviewed commit"):
+            self.package.verify_installation(self.commit, self.destination)
+
+    def test_external_verification_requires_pin_and_rejects_symlinks_and_traversal(self):
+        self.package.export_package(self.commit, self.destination)
+        self.assertNotEqual(0, self.invoke("verify", "--root", str(self.destination)).returncode)
+        link = self.work / "runtime-link"
+        link.symlink_to(self.destination, target_is_directory=True)
+        for root in (link, link / "references" / "..", self.destination / "references" / ".."):
+            with self.subTest(root=root), self.assertRaises(ValueError):
+                self.package.verify_installation(self.commit, root)
+        original = self.destination / "README.md"
+        original.unlink()
+        original.symlink_to(self.root / "README.md")
+        with self.assertRaises(ValueError):
+            self.package.verify_installation(self.commit, self.destination)
 
     def test_build_verify_and_deterministic_archive_exclude_repository_files(self):
         (self.root / "README.md").write_bytes(self.runtime["README.md"] + b"\nReviewed update.\n")
@@ -127,7 +172,7 @@ class PackageChecks(unittest.TestCase):
         self.assertEqual(0, result.returncode, result.stderr.decode())
         self.assertEqual(first, archive.read_bytes())
 
-    def test_build_rejects_paths_the_installed_verifier_cannot_accept(self):
+    def test_build_rejects_ambiguous_or_excessive_paths(self):
         for relative in ("assets/control\x7f.json", "assets/" + "deep/" * 7 + "bad.json",
                          "assets/" + "a" * 121 + "/" + "b" * 121 + "/x.json"):
             with self.subTest(path=relative):
@@ -184,18 +229,22 @@ class PackageChecks(unittest.TestCase):
             self.package.export_package(commit, self.destination)
         self.assert_no_install()
 
-    def test_source_index_requires_exact_records_and_group_membership(self):
-        for mutation in ("extra-id", "missing-group"):
-            files = dict(self.runtime)
-            index = json.loads(files["assets/sources.json"])
-            if mutation == "extra-id":
-                index["groups"][0]["record_ids"].append("nonexistent-source")
-            else:
-                index["groups"].pop()
-            files["assets/sources.json"] = json.dumps(index).encode()
-            files[self.package.MANIFEST] = json.dumps(self.package.make_manifest(files)).encode()
-            with self.subTest(mutation=mutation), self.assertRaises(ValueError):
-                self.package.verify_manifest(files)
+    def test_corpus_indexes_require_exact_records_and_group_membership(self):
+        for corpus in ("sources", "parameters"):
+            for mutation in ("extra-id", "missing-group", "duplicate-group"):
+                files = dict(self.runtime)
+                path = f"assets/{corpus}.json"
+                index = json.loads(files[path])
+                if mutation == "extra-id":
+                    index["groups"][0]["record_ids"].append("nonexistent-record")
+                elif mutation == "missing-group":
+                    index["groups"].pop()
+                else:
+                    index["groups"].append(index["groups"][0])
+                files[path] = json.dumps(index).encode()
+                files[self.package.MANIFEST] = json.dumps(self.package.make_manifest(files)).encode()
+                with self.subTest(corpus=corpus, mutation=mutation), self.assertRaises(ValueError):
+                    self.package.verify_manifest(files)
 
     def test_existing_directory_file_and_dangling_symlink_are_preserved(self):
         self.destination.mkdir()

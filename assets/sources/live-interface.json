@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "scope": "Publisher selected fixed read/event interfaces and bounded source provenance, including v1.2 auction bindings/order views, historical v1.1 adaptation and distinct raw POL acquisition events; no stored live observations.",
+  "scope": "Dated publisher interface and deployment provenance. Addresses, method locators and excerpt hashes describe reviewed sources, not current execution bindings, bundled ABIs or runtime allowlists. No stored live observations.",
   "records": [
     {
       "id": "sr-charter-activity-read-interface",
@@ -22,15 +22,15 @@
         "https://www.standardreserve.xyz/app/ links mountApp-CAYhOFSW.js",
         "CentralBank 0x5977B25419f9c0dDcB2F89fE204955622f4F57ea: lastActive(address wallet) returns uint256 timestamp; DORMANCY_PERIOD() returns uint256",
         "CharterNFT 0x69101f92427376FA80476A997d024cf9dC3EaE39: lastTransferred(uint256 tokenId) returns uint256 timestamp",
-        "CentralBank checkIn() is nonpayable and excluded from the read-only catalog; its ABI does not establish its implementation or successful execution",
-        "assets/interfaces/charter-activity-reads.json; exact literal hashes include delimiters and exclude assignment names"
+        "CentralBank checkIn() is nonpayable; its ABI does not establish its implementation or successful execution",
+        "Exact excerpt hashes include literal delimiters and exclude assignment names; they identify dated source excerpts, not a runtime gate"
       ],
       "literal_sha256": {
         "ke_central_bank_abi": "8ddcb419c0bbbfd02a03ae08548e67be7fe27ef74fc9bf755d614eda755a8a5b",
         "Rn_charter_nft_abi": "cbbc2a893a9cca20bcd333d3fb085c5ccb635f9e8954857833bcca3293466c53",
         "DP_base_deployments": "a04b44d074668e9a8077af4e1a224a8152d1f4217a5620bbbd29942a7d826689"
       },
-      "summary": "Selected-charter activity inspection reads ownerOf at a pinned block, then uses that authenticated owner only as lastActive argument data on the fixed CentralBank. It independently observes the selected NFT's lastTransferred and the Bank's DORMANCY_PERIOD. All activity integers retain raw units.",
+      "summary": "The reviewed publisher ABI exposes ownerOf, wallet-scoped lastActive, selected-NFT lastTransferred and DORMANCY_PERIOD. These dated interface observations do not establish present deployment, reset semantics or eligibility.",
       "limits": [
         "Reader asset retrieval was truncated and direct retrieval returned403; the complete selected ABI/deployment literals occur before the cutoff. No complete bundle hash or whole-app review is claimed. Historical DIJs6ehM and BcWoqzfB mount assets returned404.",
         "Robin Etherscan code pages for both exact addresses returned403. Sourcify v2 contract endpoints requesting abi,sources,compilation,signatures returned404. No source-level reset, transfer-grace or eligibility formula was established.",
@@ -94,14 +94,14 @@
         "pw_license_abi_11625_bytes": "d6e13394240b028717741f2185110a2f2bb746e80cf37a37c48a7a56b2b984d6",
         "a__charter_abi_7900_bytes": "308ee26f3043e56a015d934d134f9694c5c7dcdf53e33ff7bee91a4513ec6dd0"
       },
-      "summary": "Binds current snapshots to both v1.2 auction addresses with auctionPeriod() for each; licenses retain separate cap-window semantics. Global openBidCount requires a fresh read. The fixed orderbook view uses this ABI for one bounded raw-ID page and independently selected charter bids/fillable, not owner discovery or inferred page-to-charter mapping.",
+      "summary": "At review, the publisher bound both v1.2 auction addresses to auctionPeriod(); licenses retained separate cap-window semantics. Its order views exposed openBidCount, paginated raw IDs, bids and fillable. This is historical interface provenance, not a current target, owner census or proof of page-ID semantics.",
       "limits": [
         "ABI names/types authenticate bounded decoding, not exact keeper ordering, guaranteed fill/price/time, funding/escrow, cancellation/refund, expiry, partial-fill or permission semantics.",
         "A bidder is the recorded bid address, not automatically the charter's present owner; count and maxUnitPrice are reported order fields, not acquired branches or executed consideration.",
         "openBidCount and openBids are global orderbook scope, not a wallet's orders. fillable is a point-in-time reported flag, not guaranteed keeper execution.",
         "bids/fillable explicitly take charterId; use an evidenced charter ID directly. openBids names its array only ids: authenticate identifier interpretation before joining it to charter-keyed reads. The ABI alone establishes neither pagination ordering/stable cursors nor FCFS priority.",
         "Keep maxUnitPrice in raw units until publisher denomination/scale evidence is established; its field name alone does not authenticate STANDARD18 normalization.",
-        "Purchase-history helpers do not reconstruct bids, cancellations or failed attempts. Retained event layouts are interpreted per emitting generation, not merged by round number.",
+        "Purchase events do not reconstruct bids, cancellations or failed attempts. Event layouts must be authenticated per emitting generation; round numbers alone do not identify rounds.",
         "The complete ABI literals were available inside a partial bundle retrieval; no full-bundle hash, source-bytecode reproduction or executed wallet flow is claimed.",
         "No signing, signature requests or transaction submission; authenticated supplemental reads and unsigned preparation remain permitted."
       ]
@@ -121,7 +121,7 @@
       "complete_asset_sha256": "5e7399b7972c9336ee9a633c76aec6bb85ddd85f86f673f81efeda6079cc29bc",
       "complete_asset_bytes": 844282,
       "locators": [
-        "vC deployment map, chain 4663; existing catalog identities, no new Second Mandate target",
+        "vC deployment map, chain 4663; reviewed historical identities, no evidenced new Second Mandate target",
         "_e CentralBank; _t LicenseAuction; mr CharterAuction; LC FeeSplitter; DC ExpansionVault; OC ContractionVault",
         "Static view/pure function arguments, scalar/flat tuple returns and explicit pending flags",
         "ContractionVault BuybackExecuted(uint256 ethSpent,uint256 tokensBurned)",
@@ -135,7 +135,7 @@
       "limits": [
         "Publisher ABI and configured relationships do not establish independently verified source, complete authority, settlement readiness or Second Mandate activation.",
         "Queued values are not active settings. Basis-point fields, raw pool-fee flags and signed tick spacing have distinct units.",
-        "Reserve-asset addresses are investigation inputs until same-block vault approval succeeds in the fixed treasury helper. Holdings remain raw token units without independently authenticated decimals; this helper does not perform arbitrary token metadata calls or asset enumeration. Supplemental metadata research is allowed, but asset identities and scales cannot be invented.",
+        "Reserve-asset identities, applicable vault approval and token decimals require independent current evidence. Dated interface provenance establishes neither present holdings nor a complete asset universe.",
         "recycleStreamed and issuanceStreamed internal scaling is not established by reviewed publisher formatting; preserve raw ledger units in factual reporting. Any requested hypothetical accounting model must label assumed scales, or obtain independent evidence for a factual conversion.",
         "Buyback event accounting is limited to checked coverage and authenticated denomination; not independently reconciled transfers, complete burn attribution or a return forecast.",
         "No observations, balances, historical totals or financial examples are stored in this provenance record."
@@ -171,8 +171,7 @@
       },
       "hash_convention": "SHA-256 of exact UTF-8 literal text: opening [ through matching ] for ABI arrays, or opening { through matching } for vC; excludes variable name, equals sign, separators and added newline. These are complete excerpt hashes, not a full bundle hash.",
       "topic_provenance": "Canonical signatures are derived from the authenticated ABI input types. topic0 is Ethereum Keccak-256, obtained through public web3_sha3; purchase/roll/supporting-cost topics were corroborated in original public RPC receipts. NIST SHA3-256 is not interchangeable.",
-      "event_catalog": "assets/interfaces/auction-events.json",
-      "summary": "The publisher binds the two auction roles to the packaged Robinhood identities and supplies purchase, activation, roll and configuration event definitions. LicensesPurchased carries charterId, day, count and unitPrice; CharterPurchased carries charterId, buyer, day and price. DayRolled carries day, startPrice, floorPrice and cap, but no timestamp, duration or end reason. Supporting BranchesOpened records total reported STANDARD ledger cost. The catalog enables bounded on-demand research without changing the helper callable surface. The original license binding is legacy-generation provenance. Current v1.1 identity and adapted interface come from sr-v1-1-deployment-evidence and sr-v1-1-read-interface; historical rounds remain qualified by emitting address.",
+      "summary": "The reviewed publisher linked auction roles to deployment identities and event definitions. LicensesPurchased carries charterId, day, count and unitPrice; CharterPurchased carries charterId, buyer, day and price. DayRolled carries day, startPrice, floorPrice and cap, but no timestamp, duration or end reason. BranchesOpened reports total STANDARD ledger cost. These are dated original-generation observations; v1.1 provenance is separate, and historical rounds remain qualified by emitting address.",
       "limits": [
         "The older app-CIqwBLws.js returned 404 during this review; its historical read-interface provenance remains separate and unchanged.",
         "Source-reader output truncated the large mount module outside the complete reviewed literals. No full-bundle size, SHA-256 or complete application-call-graph claim is made; linked source recovery stays bounded.",
@@ -181,7 +180,7 @@
         "Publisher identity and ABI do not independently verify deployed bytecode, every past generation, payment routing, authority completeness or economic outcomes.",
         "Bounded source-review log and receipt evidence is retained outside package runtime resources; no auction rounds, prices, totals, timing recap or performance table is stored here.",
         "Source retrieval and review dates are not source publication, contract deployment or protocol-state freshness timestamps.",
-        "The event catalog supports the fixed bounded read-only history helper; it adds no signing/submission actions, expanded helper eth_call surface, indexer or persistence. These capability limits do not prohibit host-authorized supplemental research, conditional analysis or requested external artifacts."
+        "These dated excerpts do not select current deployments or constrain host-authorized supplemental research. Authenticate the relevant generation and event semantics for each historical claim."
       ]
     },
     {
@@ -202,8 +201,8 @@
       "bundle_sha256": "b3df8d48b6877e4e526b17f9f5be8716d2651908535b1cebb95d8b24c3f97de2",
       "summary": "Pinned publisher ABI and frontend mappings establish the original 68-call read interface for protocol, charter and auction queries using the public Robinhood RPC endpoint. This publisher-bundle provenance is retained; the separate STANDARD and TaxHook source records describe the bounded reconciliation and ten additional getters. Publisher provenance alone is not evidence of current contract state or independent source/bytecode equivalence.",
       "limits": [
-        "No borrowed cross-chain ABI; no downloaded code is executed by the helper.",
-        "Only the selected scalar view/pure surface is included in this historical helper interface; it supplies no transaction actions or raw caller selectors. Current helper RPC endpoint selection is separately configured through host-managed environment settings. Supplemental research is not confined to that helper surface.",
+        "No borrowed cross-chain ABI; reviewed excerpts were parsed as data, not executed.",
+        "This historical review covered selected scalar view/pure methods, not an exhaustive or current callable interface. Discover and authenticate the interface relevant to the question.",
         "Old-block state may be unavailable from this public provider; do not silently replace a pinned read with latest.",
         "Current price-function output may continue decaying after sellout; it is not a purchasable quote without availability."
       ]
@@ -309,7 +308,7 @@
       "summary": "POL Buyback emits BuybackExecuted(uint256 ethIn,uint256 tokensOut,address indexed destination). Bounded history reports ETH input, raw tokensOut and destination; do not conflate retained POL acquisitions with the distinct ContractionVault BuybackExecuted(uint256,uint256) burn accounting.",
       "limits": [
         "No authenticated full POL Buyback or Incentives Vault ABI; no invented standard()/token-binding getter.",
-        "tokensOut remains raw units, without asserting token identity or decimals from the event. The helper does not claim ERC20 transfers, wallet flows, burns, distributions or complete history from these logs.",
+        "tokensOut remains raw units; these logs alone establish neither token identity/decimals nor ERC20 transfers, wallet flows, burns, distributions or complete history.",
         "Historical transfer corroboration informs deployment research only; current balance and ongoing destinations require fresh evidence.",
         "Event signature differs from ContractionVault BuybackExecuted(uint256,uint256); never mix the two accounting modes."
       ]

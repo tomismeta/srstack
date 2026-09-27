@@ -2,7 +2,7 @@
 
 Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
 
-Current design: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§6,11–12,15. Exact economics: [launch parameters](../assets/parameters/launch.json).
+Publisher founding design reviewed through **2026-09-26**: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§6,11–12,15. Dated reference economics: [launch parameters](../assets/parameters/launch.json), not current configuration.
 
 ## Paid founding distribution
 

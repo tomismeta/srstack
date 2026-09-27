@@ -33,20 +33,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Verify committed runtime manifest
         run: python3 -B maintenance/package.py verify
-      - name: Check read-only snapshot behavior
-        run: python3 -B maintenance/check-snapshot.py
-      - name: Check market price and gross valuation behavior
-        run: python3 -B maintenance/check-price.py
-      - name: Check bounded auction history behavior
-        run: python3 -B maintenance/check-history.py
-      - name: Check state-guided history and round prices
-        run: |
-          python3 -B maintenance/check-history-state.py
-          python3 -B maintenance/check-history-accounting.py
-      - name: Check independent interface vectors
-        run: python3 -B maintenance/check-interface.py
-      - name: Check installed verification and fixed smoke orchestration
-        run: python3 -B maintenance/check-verify.py
       - name: Check packaging and reviewed-commit export
         run: python3 -B maintenance/check-package.py
       - name: Check deterministic runtime archive

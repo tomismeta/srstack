@@ -2,7 +2,7 @@
 
 Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
 
-Publisher rules and announced v1.1/v1.2 changes, not independently verified implementation or saved live state. Whitepaper design: `sr-whitepaper-v1`; later scoped changes: `sr-protocol-v1-1-announcement` and `sr-protocol-v1-2-announcement`. Retrieval dates and provenance are in the [source index](../assets/sources.json).
+Publisher rules and v1.1/v1.2 announcements reviewed through **2026-09-26**, not independently verified implementation or live configuration. Whitepaper: `sr-whitepaper-v1`; scoped changes: `sr-protocol-v1-1-announcement` and `sr-protocol-v1-2-announcement`. Provenance: [source index](../assets/sources.json).
 
 ## System and ownership — whitepaper §§1–2
 
@@ -14,7 +14,7 @@ The official [Second Mandate](updates.md#second-mandate-liquidity-for-tokenized-
 
 The historical [v1.1 update](updates.md#protocol-v11-announced-changes) announced 12-hour license rounds of 50 branches, three per charter per 24-hour cap window, a two-hour license-auction half-life, and bid-side-only POL sending acquisitions to the Incentives Vault. **50 is not the current v1.2 allocation:** fresh per-round supply, cap and remaining-inventory getters govern current answers. These historical published references never override live settings; the earlier proposed 50/50 branch-payment split is not confirmed. POL Buyback and Incentives Vault do not replace Contraction Vault burn accounting or automatically change charter schedules.
 
-The later [v1.2 update](updates.md#protocol-v12-announced-changes) announces branch limit orders with FCFS best-attempt keeper execution and one charter auctioned at branch-auction cadence. The announced first charter opening is 5.5 ETH, then 3× the clearing price for later openings; these are launch/policy terms, not current prices or guaranteed fills. Current auction reads target the publisher-authenticated v1.2 replacements; earlier generations remain historical identities. Neither this auction release nor its security-review claim establishes an S-Bill launch or completed S-Bill audit.
+The later [v1.2 update](updates.md#protocol-v12-announced-changes) announced branch limit orders with FCFS best-attempt keeper execution and charter auctions at branch cadence. Its initial 5.5 ETH opening and subsequent 3× clearing-price rule are dated policy, not current prices or guaranteed fills. Authenticate current deployments; retain earlier generations for historical scope. This auction release and its review claim establish neither S-Bill launch nor completed S-Bill audit.
 
 ## Read only the needed mechanics
 
@@ -35,6 +35,6 @@ These are the publisher's incentive arguments, not guaranteed rational behavior,
 
 ## Presentation is not state
 
-Use fresh `protocol` getters for current issuance, supply and taxes, and `snapshot.py auctions` directly for current v1.1 license availability: no rediscovery, reindexing or history scanning. Auction round timing and charter cap windows are distinct; stored “today” counters may lag lazy rollover and are not a human-day recap. These helpers use pinned authenticated interfaces with block/binding checks, not asserted source-code equivalence. If reads fail, current fields are unavailable rather than filled from saved snapshots or published defaults. Historical evidence and source rules remain usable only as attributed context or explicit scenarios. [sr-protocol-conditions; sr-v1-1-read-interface]
+Use host public-read tools and authenticated current deployments/interfaces for requested state. Auction rounds and charter cap windows differ; stored “today” counters may lag rollover and are not calendar recaps. Failed reads leave fields unknown, never filled from historical snapshots or published defaults. Source rules remain useful as attributed policy or explicitly labelled scenarios, not hardcoded live economics.
 
 See [documents](documents.md) for all sixteen current sections and [risks](risks.md) for remaining evidence gaps.

@@ -1,168 +1,17 @@
-# Bundled execution boundary
+# Host-native public reads
 
-Use runtime preflight and input/approval rules, then only the relevant helper contract. [Inspection](inspection.md#common-question-paths) gives answer extraction; [history](auction-history.md) defines bounded scans. Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
-
-Four stateless standard-library Python 3.10+ entrypoints: `snapshot.py` (state), `price.py` (canonical-pool quotes/gross valuation), `history.py` (contract-state-guided auction discovery and event accounting) and `verify.py` (integrity/selected diagnostics). None accepts arbitrary code, paths, selectors, RPC targets, headers or wallet inputs. Treasury's reserve-asset argument is passed to fixed vault calls, not used as a target. RPC configuration uses only the environment below. Helpers perform no financial actions or simulations; broader research and host workflows follow [safety](safety.md), not altered catalogs.
+Use suitable host public-read tools, not a protocol-specific runtime. No prescribed commands, output schema or always-run read set.
 
 ## Trusted runtime preflight
 
-Resolve the installed root from a trusted reviewed package/commit, not a working-directory lookalike or website. Before execution, compare the script and its fixed dependencies with trusted `release-manifest.json` data using existing host read/hash utilities or minimal fixed launcher glue. Snapshot uses `assets/entities/robinhood.json` and `assets/interfaces/robinhood-reads.json`; price uses the entity catalog only. History also loads the reviewed sibling `snapshot.py` for bounded RPC transport and uses `assets/interfaces/auction-events.json` with the fixed entity catalog. Verify these dependencies too. Paths must remain inside the trusted root and are never caller-selected. A self-supplied matching manifest alone establishes neither trust nor source authenticity. Failed/unavailable verification stops execution. Keep hashes/resource bodies out of chat unless requested; a trusted host performing equivalent verification satisfies this preflight.
-
-Manifest `content_files` maps relative paths to SHA-256 strings; `content_sha256` is the aggregate digest, not a per-file lookup.
-For buybacks, also verify `assets/interfaces/treasury-events.json`; the shared snapshot callable catalog supplies the fixed token binding/decimals checks. Interface metadata uses schema 2; helper input/output remains schema 1.
-
-Execution requires a POSIX-compatible host with safe descriptor-relative package reads: `O_DIRECTORY`, `O_NOFOLLOW`, `O_NONBLOCK`, `open`/`stat` with `dir_fd`, and `stat(..., follow_symlinks=False)`; verification also requires descriptor-based `scandir`. Python version alone is insufficient. Unsupported hosts must not weaken or bypass these checks.
+Use trusted installed guidance and existing host tools. Package integrity is not deployment authentication. Parse source/ABI as data; never execute downloaded code to extract interfaces. Local arithmetic/parsing may use authenticated inputs under host permissions.
 
 ## Input transport and host approvals
 
-Prefer fixed CLI modes or a host tool's separate stdin field with a fixed argument array. Missing stdin capability permits the documented CLI alternative; denied approval does not permit another launcher. Obtain host approval for the exact operation. Denial/unavailable approval stops it; never evade it through tools, providers, PTYs, wrappers or weaker guards.
-
-Host denial differs from endpoint HTTP 401/403: an independently accessible source may provide separately authorized evidence under its own rules, without rerouting the denied request. Preserve the original failure; supplemental evidence is not successful helper output or permission to invent missing inputs.
-
-For snapshot and price, no arguments means JSON stdin: send one bounded JSON document, then **close stdin (EOF)**. This is not newline-framed or interactive input; a trailing newline does not finish the request while stdin remains open. Non-help CLI arguments select explicit CLI mode and never read or fall back to stdin. History and verification do not use stdin. `--help` performs no live read. Use separate flag/value tokens, not shell interpolation; unknown, repeated or conflicting flags fail before network access. Snapshot's view and history's auction kind come first. Arguments can appear in process listings or host logs; stdin also does not imply transcript privacy.
-
-Never interpolate user/source text into commands, use command substitution, construct untrusted heredocs, use `shell=True`, or execute input strings/source-provided launchers. No safe transport means no execution. Do not install dependencies or write temporary input files without permission.
-
-The host owns the end-to-end timeout, including input acquisition/EOF, process startup, package reads and output handling. Drain stdout and stderr concurrently with bounded capture; do not wait for one pipe to finish before reading the other. If the host times out, terminates the process or truncates capture, report an incomplete invocation: incomplete/truncated output is **not** a valid partial JSON result, and must not be repaired or treated as one.
-
-Helper timers have narrower scope: snapshot's 40-second RPC budget, price's 20-second provider budget and history's 180-second collection budget begin after input validation and package loading. They bound their network/collection work, not startup, waiting for JSON EOF, package loading or final output serialization/writes. Verification's 60-second limit applies separately to each launched child, not package verification or the whole invocation; two selected children run sequentially. Prefer existing host timeout/capture facilities; these helper budgets do not establish a whole-process deadline.
-
-### Cross-helper result contract
-
-For handled entrypoint paths, parse the channel and exit code **for that helper**, then inspect the JSON fields; there is no shared error envelope. A valid partial result is a complete JSON document describing incomplete data, not an interrupted stream.
-
-| Helper | Data/report result | Handled failure |
-| --- | --- | --- |
-| `snapshot.py`, `price.py` | Exit `0`, stdout JSON, `status: "ok"|"partial"` | Exit `2` invalid input, `4` package failure, `5` fatal read/transport failure: stderr JSON with `error.type` (`invalid_input`, `package_data_error`, or `snapshot_error`/`price_error`); no data stdout |
-| `history.py` | Exit `0` checked requested window, or `4` partial/unavailable collection: stdout JSON, `status: "ok"|"partial"`; inspect `coverage`, `errors` and observations | Exit `2` invalid input: stdout JSON, `status: "error"`, `error.kind: "input"`; not stderr |
-| `verify.py` | Normal stage report on stdout, `status: "ok"|"failed"`: exit `0` passing, `4` integrity/host failure, `5` nonpassing smoke | Exit `2` invalid CLI: stderr JSON with `error.type: "invalid_input"` |
-
-All four return exit `0` with plain-text stdout for `--help`, not JSON. This table does not promise structured output for unhandled interpreter/OS failures or external termination. Useful data is not diagnostic success: snapshot/price partial data exits `0`, history partial data exits `4`, and a verifier smoke with partial data exits `5`. History's checked-window success does not establish complete auction rounds, provider completeness or independently authenticated event semantics.
-
-## Snapshot helper
-
-Use the fixed argument array `python3 -B -I scripts/snapshot.py` from the verified root with separate serialized JSON stdin, or one of these equivalent explicit commands:
-
-```sh
-python3 -B -I scripts/snapshot.py protocol
-python3 -B -I scripts/snapshot.py auctions
-python3 -B -I scripts/snapshot.py orderbook --start 0 --count 20
-python3 -B -I scripts/snapshot.py treasury
-python3 -B -I scripts/snapshot.py charter --id 1 --detail summary
-python3 -B -I scripts/snapshot.py charter --id 1 --detail activity
-```
-
-`--detail summary|full` defaults to summary for every view; `activity` is accepted only for `charter`. Charter-only `--id UINT256` is required and accepts 1–78 ASCII decimal digits through `2^256 - 1` (leading zeroes allowed). Replace example ID `1` with the intended public ID.
-
-`--asset ADDRESS` is optional only for `treasury`: a nonzero 20-byte hexadecimal public asset address. It is passed only to fixed ExpansionVault getters. Same-block `isReserveAsset()` approval must succeed before this helper's holdings/pool reads; false or unavailable approval omits those details. The snapshot helper implements no token metadata queries, asset discovery or POL-manager enumeration. Those public reads are permitted separately through [supplemental inspection](inspection.md#supplemental-public-reads); reserve approval is a protocol observation, not an access permission.
-
-`orderbook` requires `--start UINT256 --count N` (1–100) for one bounded `openBids` page. Optional `--charter-ids N,M` selects up to ten unique independently known charter IDs for `bids`/`fillable` calls. Page IDs are raw observations, with no authenticated charter mapping or automatic join. There is no automatic crawl or wallet discovery.
-
-Input is a JSON object bounded to 4,096 bytes:
-
-```json
-{"schema_version":1,"view":"protocol","detail":"summary"}
-```
-
-- `schema_version`: integer `1`.
-- `view`: `protocol`, `charter`, `auctions`, `orderbook` or `treasury`; selects a fixed call profile, not an arbitrary query.
-- `charter_id`: integer from `0` through `2^256 - 1`, required only for `charter` and rejected for other views; no wallet address or private position data.
-- `reserve_asset`: optional public asset address, treasury only, with the same rules as `--asset`.
-- `start` and `count`: required only for `orderbook`; unsigned uint256 start and integer count 1–100. Optional `charter_ids`: at most ten unique uint256 integers, independently selected rather than inferred from page IDs.
-- `detail`: optional `summary` (default), `full`, or charter-only `activity`. Other keys or invalid values are rejected.
-
-`protocol` covers issuance, supply/permanent-cap reduction, fees, launch-cap/gate and pool/emissions state. Default `charter` is scoped to the requested ID, owner, branches, pending and supported current-rate equivalent—not protocol/burn/Hook fields. Default `auctions` includes license last-sale inputs, a conditional documented-policy opening preview and derived schedule; these cannot stand in for historical round accounting. `--detail full` opts into broader profile observations, closing diagnostics and raw evidence, with explicit nonhistorical labels for last-sale/closing getters. [Inspection](inspection.md#common-question-paths) documents extraction. Necessary code, binding, decimals and rate prerequisites still run; a smaller result is not a relaxed trust check.
-
-For dormancy/check-in questions, use `charter --id N --detail activity` or `{"schema_version":1,"view":"charter","charter_id":N,"detail":"activity"}` (replace `N` with an integer). This owner-first route reads `charter_owner`, `owner_last_active`, `charter_last_transferred` and `dormancy_period` through the supplemental publisher ABI with pinned-block checks. Activity uint256 quantities remain raw with unestablished units: no UTC conversions, reset formula or transfer-grace calculation. `derived.charter_activity` explicitly leaves dormancy status, deadline and last check-in unknown; `lastActive` is not check-in-specific. See [dormancy evidence](exits.md#dormancy--10).
-
-Current auction status uses the packaged v1.2 license and charter targets directly, not address discovery or log reconstruction. Both use `auctionPeriod()`; the original charter's `AUCTION_DAY()` is historical scope, not a fallback. License `capWindow()` is separate, and retained `licensesPerDay()` reports allocation **per round**. Compare stored counters with anchor/observed period at the pinned timestamp; pending lazy rollover prevents treating them as current-round or human-24-hour sales. `license_open_bid_count` reports orders, not licenses or fills. The separate `orderbook` view adds one page and selected charter bids/fillability; charter purchase allowance remains supplemental scope.
-
-The reader validates fixed catalogs as bounded, contained package data, never evaluates them as code and accepts no catalog-file override. Orderbook additionally authenticates its separate ABI catalog and strictly decodes a bounded canonical `uint256[]` page and selected static bid tuples/booleans, leaving limit-price scale unestablished. RPC configuration follows the environment precedence below. It checks Robinhood chain ID 4663, anchors reads to one block, checks code and transitive required bindings, and strictly decodes fixed `view`/`pure` calls. It requires a block no more than 300 seconds old or 30 seconds in the future; requests have a 10-second timeout and the overall read a 40-second deadline. Failed dependencies suppress affected roles before selected value reads. The CentralBank→Registry cross-check is treasury-scoped; compact charter retains its existing prerequisites. These checks are not source equivalence or implementation verification.
-
-Existing CentralBank↔CharterNFT identity prerequisites remain required wherever the selected role depends on CentralBank, including auction/treasury closures. A failed NFT relationship therefore suppresses bank-dependent observations even without a charter query; independently authenticated ExpansionVault observations can remain. This conservative authentication requirement is not an extra financial output or permission to enumerate charters.
-
-The callable fingerprint pins the reviewed signature/selector pairs; it detects metadata changes, not selector correctness. Signatures are tied to the publisher ABI definitions. Neither the reader nor the offline checks independently recomputes Ethereum function selectors with Keccak-256. Reviewing each signature/selector pair is a maintainer responsibility before changing the interface and its fingerprint; a matching fingerprint is not an independent selector verification.
-
-Successful JSON has `schema_version`, `status` (`ok` or `partial`), `view`, `values`, `derived`, `errors`, `evidence` and `note: "RPC snapshot; publisher ABI."`. `values` and `derived` map IDs to `{value, unit}`. Scaled quantities are exact decimal strings; counts are integers, booleans are booleans and addresses are strings. Missing/failed data is never zero. Shared `evidence` contains `chain_id`, `block_number`, `block_hash`, `block_timestamp`, `retrieved_at`, `interface_source_ids`, `package_sha256` and credential-redacted `rpc_url` in both summary and full detail. Full detail adds `call_mapping`, `rpc_exchanges` and `publisher_bundle`; neither detail level makes the ABI source-verified.
-
-Tuple observations add `type: "tuple"` and use `value` as a map of ABI component names to `{value, unit, type}`. `queuedShares.pending` stays explicit; queued values never replace active policy. Reserve holdings use raw token units, pool fee preserves raw flag-bearing units, and tick spacing is signed ticks. `recycle_streamed_raw`/`issuance_streamed_raw` retain raw ledger units because their scaling is unestablished; do not derive ledger equations. Other recycling quantities use separately documented publisher STANDARD denominations. Treasury includes configured vault percentage, configured/effective pool percentage and TWAP limits; no effective vault-percentage getter exists in the reviewed ABI.
-
-Derived IDs are profile-scoped: protocol/full context can expose `global_gross_daily`, `remaining_gross_budget` and `permanent_removed`; charter summary exposes only supported `charter_gross_daily`; auctions expose availability statuses, a license next-opening preview and clock-derived schedules. Daily equivalents require successfully observed active emissions and rate prerequisites; inactive or unknown emissions omit them, while a confirmed active zero rate remains zero. They extrapolate the current stream including recycling, not guaranteed future accrual. Current auction prices are omitted when inactive, paused, sold out or unknown. Last-sale/closing getters are explicitly `not_historical`: even a matching current sold-out day establishes neither a round's average nor its complete sales history. Structured preview/schedule objects carry their own inputs, basis and qualifications rather than being executable prices or keeper transaction promises; see [auction guidance](auctions.md#next-license-opening-documented-policy-estimate).
-
-`charter_gross_daily` is an analytical pro-rata current-rate equivalent: `floor(stream_rate_per_second_raw × charter_branches × 86400 / total_branches)`, scaled from 18 decimals. Round only the final raw daily amount; this does not emulate unverified contract accrual rounding or establish actual earned/claimable income.
-
-`permanent_removed` retains `HARD_CAP() - maxSupply()`; separate token-burn/ledger-retirement observations decompose that cap reduction, not buyback causes or remaining issuance budget. Flags and observed address strings are not new target inputs. The reader uses fixed role mappings, including historical auction identities solely for history authentication, and bounded reviewed call catalogs. Treasury adds generic owner/pending-owner context and fixed STANDARD `balanceOf(incentivVault)`, not guessed buyback/vault methods, arbitrary token targets or stored balances. It adds no blocklist-address argument, settlement action or general RPC surface. Publisher-described epoch-end accrual stops remain outside daily extrapolation.
-
-Exit codes/channels follow the [cross-helper contract](#cross-helper-result-contract). The snapshot writes no files and has no saved-state fallback.
-
-HTTP failures retain bounded diagnostics from the **original response**: status, credential-redacted endpoint, allowlisted headers, sanitized excerpt and truncation/read-failure indicators. See [diagnostic fields](inspection.md#original-http-failure-evidence). HTTP 401/403 identifies denial of this request, not its cause or global unavailability. Do not repeat it for diagnostics; report any separately sourced evidence distinctly.
-
-Snapshot/history RPC use `urllib.request`, normal host-configured proxies and default TLS verification. All redirects are rejected. This does not configure proxies, certify provider availability or change price transport. Credentials remain host-managed.
+Pass external values as data. Apply [host approvals](safety.md#host-execution-and-approval) and [preparation limits](safety.md#preparation-and-wallet-boundary). Bound runtime/capture; interrupted or truncated responses are incomplete evidence.
 
 ## RPC provider guidance
 
-For last-N history and orderbook requests, recommend host-managed **Alchemy** or `SRSTACK_RPC_URL`. The credential-free public default is a **best-attempt option for small snapshots only**, not dependable history/orderbook infrastructure. The [official connecting guide](https://docs.robinhood.com/chain/connecting/) recommends Alchemy for production, describes public RPC as rate-limited, and calls for archive endpoints for historical reads/indexing. This is guidance, not measured availability or proof of any plan's coverage. [sr-robinhood-rpc-guidance]
+Select authorized providers by capability: current/historical state, indexes, receipts and logs differ. Check coverage and page/window limits; a paid tier proves no completeness. Credentials stay in host-managed environment/secrets facilities, never chat, files or CLI arguments.
 
-`snapshot.py` and `history.py` select the RPC endpoint in this order:
-
-1. `SRSTACK_RPC_URL`: an optional custom HTTP or HTTPS endpoint, including path/query components and URL Basic authentication.
-2. `ALCHEMY_API_KEY`: an optional key used with `https://robinhood-mainnet.g.alchemy.com/v2/{API_KEY}` when no custom URL is supplied.
-3. `https://rpc.mainnet.chain.robinhood.com/`: the credential-free official public default retained in the callable catalog.
-
-Have the host inject either optional setting through its approved environment/secrets facilities. Prefer HTTPS whenever credentials are involved; HTTP is supported but does not encrypt credentials in transit. There is no endpoint CLI flag or JSON input field. `verify.py` forwards `SRSTACK_RPC_URL` and `ALCHEMY_API_KEY` to its live child helpers. Provider recommendations are not restrictions on the selected provider, and custom selection does not relax chain 4663, deployment, interface, block or coverage checks.
-
-Keep keys and credential-bearing URLs out of prompts, command lines, outputs, artifacts and installed skill files. Helper endpoint evidence and diagnostics redact credentials; do not reveal secrets while configuring the host or reporting failures. A selected endpoint failure is reported without silent provider failover. Confirm the selected plan's historical state/log coverage rather than assuming archive access. Never install live state or endpoint-health snapshots, bypass a denial or replace failed live reads with saved state.
-
-Auction history defaults to contract-state discovery with at-most-ten-block event queries. It requires historical EIP-1898 hash-pinned `eth_call`; log access alone is insufficient. Equal-state intervals remain unsearched, not proven empty. A ten-block log limit does not prove a paid key is necessary. Explicit log-only collection is available for an evidenced narrow interval; neither strategy silently retries, downgrades to latest state or changes provider after failure.
-
-## Price helper
-
-Use the fixed argument array `python3 -B -I scripts/price.py` from the verified root, with separate serialized JSON stdin and the same safe transport rules above. The API is `price(config, transport=None, now=None, monotonic=None)`; an injected transport takes `(source, path, timeout, deadline, monotonic)` and returns bytes. Dependency injection is for controlled callers, not user-configurable destinations. This reader answers current-price and gross current-value questions, not future returns.
-
-Explicit CLI alternatives are `python3 -B -I scripts/price.py --quote`, `--amount-standard DECIMAL`, `--source auto|dexscreener|geckoterminal` and `--cross-check`. `--quote` explicitly requests a quote without waiting for stdin; it **conflicts with `--amount-standard`**, whose form requests a quote plus local gross valuation. Either form may combine with source/cross-check options. Any non-help option selects CLI mode; for example `--source geckoterminal` alone requests that provider's quote. Amounts retain the unsigned plain-decimal-string rules below. No flags still means JSON stdin, not an implicit live quote.
-
-Input requires `{"schema_version":1}` and permits only `standard_amount`, `source` and `cross_check`. `schema_version` is integer `1`; optional `"standard_amount":"123.45"` must be an unsigned plain decimal **string**, not a JSON number, sign, exponent or whitespace-padded value. Zero is allowed. `source` is `"auto"` (default), `"dexscreener"` or `"geckoterminal"`; `cross_check` is a boolean (default `false`). No `view`, `detail`, URLs, addresses, wallet data or other keys.
-
-Identity comes only from fixed `assets/entities/robinhood.json`: `sr-robinhood-standard`'s address and `market.pool_id`, Robinhood chain 4663 and native ETH's zero address. Both providers use fixed direct HTTPS GETs, no search, token-pair discovery or legacy-pair-alias fallback, and `User-Agent: srstack/0.3.0 (+https://github.com/tomismeta/srstack)`. The optional amount is multiplied locally; neither amount nor charter ID is sent to a provider.
-
-- **DEX Screener:** `https://api.dexscreener.com/latest/dex/pairs/robinhood/<catalog pool id>`, with `Accept: application/json`. Exactly one returned `pairs` element must match `chainId: robinhood`, `dexId: uniswap`, label `v4`, the exact pool ID, STANDARD base address and zero-address ETH quote.
-- **GeckoTerminal:** `https://api.geckoterminal.com/api/v2/networks/robinhood/pools/<catalog pool id>`, with `Accept: application/json;version=20230203`. Require `data.type: pool`, `data.id: robinhood_<pool id>`, `attributes.address` equal to the pool ID, base-token relationship `robinhood_<STANDARD address>`, quote-token relationship `robinhood_0x0000000000000000000000000000000000000000` and dex relationship `uniswap-v4-robinhood`. The zero address identifies native ETH regardless of a misleading WETH display name. USD and ETH quotes come from `attributes.base_token_price_usd` and `attributes.base_token_price_native_currency`.
-
-`auto` tries DEX Screener first and permits a clearly labelled GeckoTerminal fallback only for transient/availability failures: timeout, HTTP 404/429/5xx, empty/null data or both prices absent. Invalid JSON, oversized data, malformed schema, identity mismatch, invalid price values with no usable quote, host `PermissionError` and HTTP 401/403 are not fallback grounds. Never bypass access denial. A usable partial DEX Screener result remains selected; do not fill its missing denomination from another provider. An explicit source uses only that provider unless `cross_check: true`; it does not silently fall back. At most two requests are allowed per invocation, with 10 seconds per request and 20 seconds total; there is no third retry.
-
-Successful JSON has `schema_version: 1`, `status: "ok"` or `"partial"`, `values`, `errors`, `evidence` and a concise provider-reported indicative-price `note`. Valid quotes are `values.standard_usd: {value: <decimal string>, unit: "USD/STANDARD"}` and `values.standard_eth: {value: <decimal string>, unit: "ETH/STANDARD"}`. Missing/invalid denominations are omitted and recorded in `errors`; one usable denomination returns `partial`. With neither usable, only an eligible `auto` availability failure can proceed to fallback; otherwise the invocation is fatal.
-
-A successful fallback adds `fallback: {from: "DEX Screener", to: "GeckoTerminal", reason: <sanitized string>}`, `errors.primary_source` and root `status: "partial"`; the note explicitly names GeckoTerminal as the fallback provider. Disclose the selected provider and fallback reason, not just the quote.
-
-Supplying an amount adds `valuation` with normalized-string `standard_amount`, available `gross_usd: {value: <decimal string>, unit: "USD"}` / `gross_eth: {value: <decimal string>, unit: "ETH"}`, and `basis: "Gross indicative value before withdrawal and trading costs; not net proceeds or charter value."` Both denominations use the selected provider's single response, once. Cross-check data never fills a missing denomination or enters valuation; never average sources or choose the higher quote to alter this result. Prefer this arithmetic for supported current gross marks. Separately labelled cross-source statistics, conversions and conditional models are permitted under the [calculation rules](research-workflow.md#4-compute-with-explicit-units), with their own evidence or explicit assumptions; preserve the original helper result. Never relabel charter accrued ledger amounts as wallet holdings, net proceeds or charter resale/earning capacity.
-
-`evidence` contains the selected `provider` (`"DEX Screener"` or `"GeckoTerminal"`), corresponding `source_ids` (`["dexscreener-api"]` or `["geckoterminal-api"]`), `source_url`, `market_url`, `chain_id: 4663`, `pool_id`, `token_address`, `quote_token_address`, UTC `retrieved_at`, `price_observed_at: null`, `price_observation_time_status: "not_supplied_by_provider"` and `package_sha256`. Each successful provider observation has its own retrieval time; retrieval is not quote-observation time. No provider chain-block or same-block assertion is available. HTTP Date, cache age, pool/pair creation, image, trade or candle times must not become quote times. Matching identity is not independent freshness or execution assurance.
-
-Only an explicit cross-check request sets `cross_check: true`; normal success makes no second request. The result then adds `cross_check: {provider, status, values, evidence, errors, disagreement_percent}` for the other provider. Its status is `"ok"`, `"partial"` or `"unavailable"`; quote/evidence shapes match the selected result. For each denomination usable in both responses, `disagreement_percent.standard_usd` or `.standard_eth` is a decimal string: `abs(other - selected) / selected * 100`, rounded to four decimal places. The selected provider and valuation do not change. A failed secondary leaves selected quotes usable, records the failure and makes root status partial. If `auto` already fell back, reuse the failed primary observation as the unavailable cross-check; never make a third request. Show material differences and secondary failures. Cross-checks are neither atomic observations nor independent-truth guarantees; GeckoTerminal and CoinGecko belong to the same provider family.
-
-Examples: “Cross-check the current STANDARD price” → `{"schema_version":1,"cross_check":true}`. “Use GeckoTerminal for the current STANDARD price” → `{"schema_version":1,"source":"geckoterminal"}`. These options select the helper's fixed providers. Other relevant public providers or market discovery use [supplemental inspection](inspection.md#supplemental-public-reads), not altered helper inputs or credential handling.
-
-Exit codes/channels follow the [cross-helper contract](#cross-helper-result-contract). Missing prices remain unknown; availability fallback is limited to the cases above. Price writes no files, stores no holdings and loads no credentials. Authorized external records retain original observation times, never concealed cached success.
-
-## Package and smoke diagnostic
-
-Use `python3 -B -I scripts/verify.py` from a trusted runtime root. With no flags it verifies complete runtime membership, each manifest-listed hash and the aggregate digest, and launches no child. It rejects extra/missing files, caches, symlinks and unsupported containment primitives; a full repository is not a runtime install. The verifier itself must already be trusted through review/pinning and the outer ZIP checksum or trusted host verification. Its matching self-supplied manifest proves neither authenticity nor sandboxing.
-
-```sh
-python3 -B -I scripts/verify.py
-python3 -B -I scripts/verify.py --charter 1
-python3 -B -I scripts/verify.py --price
-python3 -B -I scripts/verify.py --charter 1 --price
-```
-
-`--charter UINT256` selects one live charter snapshot; `--price` alone selects a quote. Together they read the charter, then value its pending STANDARD only if the charter result is fully `ok` and pending is valid; otherwise price is `skipped`, not a quote-only fallback or zero balance. Replace example ID `1`. Diagnostics emit no financial answer; use the [direct valuation path](inspection.md#common-question-paths), which may use successful pending despite unrelated partial fields. No arbitrary scripts/paths/commands are accepted. Exact flag/value tokens only; duplicates, abbreviations, unknown/conflicting flags and help combinations are invalid.
-
-Every smoke first verifies the entire package; failure prevents all child execution. The diagnostic invokes only the two fixed data helpers with the current interpreter's `-B -I`, closed stdin, no shell and a minimal environment that forwards the optional `SRSTACK_RPC_URL` and `ALCHEMY_API_KEY` settings. It writes no files and has no network of its own; live children retain their existing bounded read permissions. Each child has a 60-second ceiling and 2 MiB combined stdout/stderr limit. Verification bounds are 128 KiB for the manifest, 1 MiB per content file, 16 MiB total, 512 files including the manifest and 128 directories. These limits and matching hashes are not execution-policy enforcement or an authenticity certification.
-
-Normal diagnostic stdout is compact JSON: `schema_version: 1`, root `status: "ok"|"failed"`, `stages` and an integrity-not-authenticity `note`. Each selected stage reports name, status, scope and elapsed milliseconds. Failed helpers retain error type and a printable message capped at 240 characters, not arbitrary stderr. Captured original RPC HTTP diagnostics are retained under `helper_error.diagnostics` with bounded safe headers and an untrusted response excerpt, so diagnosing denial requires no second request. Partial results retain a count and up to eight bounded field errors. Successful integrity reports file/byte counts and `content_sha256`. No stage prints financial results, and an exit 5 alone does not identify a network outage.
-
-Failed integrity stages preserve `error: "invalid_or_unreadable_install"` and add a bounded `reason` code: `unsupported_host` (missing safe primitives), `invalid_manifest` (manifest structure), `membership_mismatch` (unexpected/missing entries), `content_mismatch` (digest mismatch), `unsafe_entry` (unsafe file/directory kind or link), `changed_during_read` (identity/content metadata changed), `limit_exceeded` (package bounds), `read_failure` (unreadable package), or `invalid_content` (content decoding). Reasons expose neither paths nor raw exception text; they classify the failed integrity check, not authenticity or the validity of financial/event semantics. Root/stage failure, exit `4` and skipped selected children remain unchanged.
-
-Exit `0`: all requested stages `ok` (or help). Exit `2`: invalid CLI, structured JSON on stderr. Exit `4`: integrity/unsupported-host failure. Exit `5`: any smoke is partial, failed or skipped. A partial helper result can be useful to an inspection caller but is **not a passing diagnostic**. Read the stage status, not merely whether a command returned output.
-
-`elapsed_ms` covers local verification or child execution; it excludes host startup, model reasoning, skill discovery, approval waits and response rendering. Network variability and separate host latency preclude an end-to-end runtime promise. Use normal approval flow for the complete selected command; missing approval means stop, not try another launcher.
+Reuse pinned observations, headers and interfaces; batch compatible calls. Stop at sufficient evidence or declared bounds. No denial bypass, retry or failover to evade controls; retain original failures under [safety](safety.md#public-retrieval-and-calls).

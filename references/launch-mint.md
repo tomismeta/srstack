@@ -2,7 +2,7 @@
 
 Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
 
-Current publisher design: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§6,11–12,15; retrieval dates remain in source records. Exact settings: [launch parameters](../assets/parameters/launch.json). Design terms are not observed mint or finalization transactions.
+Publisher founding design reviewed through **2026-09-26**: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§6,11–12,15. Dated reference terms: [launch parameters](../assets/parameters/launch.json), not current configuration or observed mint/finalization transactions.
 
 ## Founding terms
 
@@ -14,6 +14,6 @@ Whitelist entry charges `whitelist-liquidity-fee` with `whitelist-wallet-limit`;
 
 Exact scheduled clock times and the public opening price are **not established from current source**. Wallet eligibility and sale availability also require separate authenticated evidence; a design document does not establish them. Assumed times/prices may be used in labeled scenarios, never as a live offer.
 
-For sale availability or finalization, obtain fresh authenticated state through [inspection](inspection.md), using the fixed reader where it covers the question or other host-authorized evidence paths; use [updates](updates.md) for official announcements. If the relevant state cannot be read, report it as unknown. Founding terms alone are not a live offer. [sr-protocol-conditions; sr-publisher-read-interface]
+For sale availability or finalization, use authenticated host public reads through [inspection](inspection.md); [updates](updates.md) covers official announcements. Missing state stays unknown. Founding terms alone are not a live offer.
 
 [Trading](launch-trading.md) covers taxes and pool settings; [contracts](contracts.md) routes deployment identity and implementation limits.

@@ -208,7 +208,7 @@
       "summary": "Official documentation recommends Alchemy for Robinhood Chain infrastructure: https://robinhood-mainnet.g.alchemy.com/v2/{API_KEY}. The public https://rpc.mainnet.chain.robinhood.com endpoint is rate-limited and not recommended for production. Historical reads and indexing require an archive endpoint.",
       "limits": [
         "This is provider guidance, not an independently measured reliability comparison or guarantee that a selected plan supplies every historical method.",
-        "Bundled RPC helpers select SRSTACK_RPC_URL > ALCHEMY_API_KEY > the official public default. Optional Alchemy keys or custom HTTP/HTTPS endpoints, including path/query and Basic authentication, use host-managed environment secrets; HTTPS is preferred for credentials. Provider recommendations do not restrict endpoint selection, and there is no silent failover.",
+        "Select an authorized provider through existing host capabilities and approved credential facilities. No fixed endpoint, package-specific environment variable or automatic failover is required. Use secure transport for credentials; dated provider guidance does not restrict authenticated alternatives.",
         "Keep credentials in approved host facilities, not prompts, command lines, output artifacts or installed skill files; endpoint evidence and diagnostics redact credentials. Do not bypass provider access controls or substitute saved observations for failed live reads.",
         "No live RPC health snapshot or fallback state is stored."
       ]

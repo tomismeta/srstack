@@ -2,7 +2,7 @@
 
 Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-boundary).
 
-Documented limits, not vulnerability findings or an audit. Current publisher source: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1`.
+Documented limits, not vulnerability findings or an audit. Publisher sources reviewed through **2026-09-26**: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1`; these are dated policy evidence, not current configuration.
 
 ## Publisher disclaimer — §16
 
@@ -31,7 +31,7 @@ The current whitepaper has sixteen sections. Policy bounds, withdrawal-fee envel
 
 The launch tax schedule is a published reference rule; read current settings freshly through the publisher ABI. If reads are unavailable, current settings remain unknown—not launch defaults. These observations do not establish future taxes, exact auction execution or transaction-specific amounts. Do not turn an unavailable auction into a zero-cost quote.
 
-The directory identifies the targets; the fixed reader supports block-scoped observations with explicit bindings and decoding. Source equivalence, complete permissions, audit correspondence and reserve custody are separate questions. Mention only the limitation material to the answer; details remain in [contracts](contracts.md) and [inspection](inspection.md). [sr-contract-directory; sr-publisher-read-interface]
+Publisher directories seed identity discovery, not permanent routing. Authenticate deployments and interfaces for public reads; source correspondence, complete permissions, audit scope and custody are separate questions. Mention only limitations material to the answer. See [contracts](contracts.md) and [inspection](inspection.md).
 
 The [official v1.1 release](updates.md#protocol-v11-announced-changes) reports a security review, not independently checked audit coverage or a safety guarantee. Publisher ABI adaptation and historical cutover are supported, but full new-module Solidity/source correspondence, exact cap-window/price math, license-payment split and Incentives Vault distribution privileges remain unverified. The earlier proposed 50/50 auction split is not confirmed. Acquired POL tokens retained in the Incentives Vault are not permanent burns, promised rewards or enforceable holder entitlements. Current settings, balances and owners must be read live; no private review RPC snapshot is installed as fallback.
 
@@ -41,6 +41,6 @@ The official [Second Mandate](updates.md#second-mandate-liquidity-for-tokenized-
 
 Burning, retirement, redistribution, permanent liquidity and buybacks are not promises of returns, realizable exit prices, solvency, continuous settlement or manipulation resistance. Requested conditional forecasts, accrual/time-to-target calculations, strategy comparisons and settlement/liquidity simulations are allowed. Separate sourced facts, user assumptions and estimates; source-rule models need not await verified implementation, but cannot establish deployed behavior, executable quotes or guaranteed outcomes. State material timing, fees, dilution and market assumptions, and label historical/sample inputs rather than presenting them as current.
 
-Mathematics, informational guidance and simulations are distinct from execution. [Execution](execution.md) describes bundled helper contracts; their coverage is not a global limit on authorized research or modeling. Host permissions and access controls still apply.
+Earnings-funded projections require verified unspent earned accrual and contract-derived future accrual, net of commitments and purchases; exclude deposits, wallet funds and unknown attribution. Do not extend a current rate beyond an epoch boundary without a labelled scenario. Generic price arithmetic needs no protocol-specific economic defaults. Mathematics is not execution: [host read access](execution.md) remains subject to permissions and access controls, and gas is distinct from protocol costs.
 
 Use [policy](protocol-policy.md), [auctions](auctions.md), [exits](exits.md), [reserves](reserves.md) and the [parameter catalog](../assets/parameters.json) for topic-specific facts. Do not classify missing evidence as a vulnerability or call this public-source review an audit.

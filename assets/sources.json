@@ -26,7 +26,7 @@
         "sr-v1-1-read-interface",
         "sr-pol-buyback-event-interface"
       ],
-      "scope": "Publisher selected fixed read/event interfaces and bounded source provenance, including v1.2 auction bindings and limit-order views, historical v1.1 adaptation and distinct raw POL acquisition events; no stored live observations."
+      "scope": "Dated publisher interface/deployment provenance, including v1.2 order views, v1.1 adaptation and raw POL acquisition events. Source locators are not current bindings, bundled ABIs or runtime allowlists."
     },
     {
       "id": "website-v1",

@@ -1,6 +1,6 @@
 # Exits, dormancy and transfers
 
-Publisher design: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§9–10,12–13. Exact settings and limits: [participation parameters](../assets/parameters/participation.json).
+Publisher design reviewed through **2026-09-26**: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§9–10,12–13. Dated reference settings: [participation parameters](../assets/parameters/participation.json), not current configuration.
 
 ## Earning, withdrawal and resolution fees — §9
 
@@ -28,13 +28,9 @@ The [official v1.1 reply](https://x.com/standard_rsv/status/2102200074810036373)
 
 ### Inspect one charter's activity
 
-Run `python3 -B -I scripts/snapshot.py charter --id 7 --detail activity`, replacing `7` with the requested public charter ID. JSON input is `{"schema_version":1,"view":"charter","charter_id":7,"detail":"activity"}`. This is a read-only inspection path, not a check-in action.
+Use the supplied public charter ID and host public-read tools to authenticate ownership, relevant activity records and their deployed semantics. Establish time units, zero-value meaning, qualifying reset actions and transfer-grace interaction before deriving inactivity or a deadline. A general last-activity timestamp is not necessarily the last check-in.
 
-The helper checks chain, block freshness, contract code and transitive bindings, reads `ownerOf(id)`, then uses that owner only as `lastActive(address)` argument data on the fixed Bank. It also reads `lastTransferred(id)` on the NFT and `DORMANCY_PERIOD()` on the Bank. The authenticated publisher ABI and core identities are recorded in [activity provenance](../assets/sources/live-interface.json) (`sr-charter-activity-read-interface`) and the [supplemental interface](../assets/interfaces/charter-activity-reads.json).
-
-`owner_last_active`, `charter_last_transferred` and `dormancy_period` retain raw integers: the retrieved ABI does not prove time units, zero-value meaning, deployed reset rules or transfer-grace arithmetic. `derived.charter_activity` therefore leaves dormancy status, deadline and last check-in time unknown. **`lastActive` is not specifically a last-check-in timestamp.** A missing or malformed owner prevents the owner-clock call; failed code/binding or decode checks never become successful observations. No saved state or documented 30-day value replaces a failed getter.
-
-The current linked bundle's relevant ABI literals were complete before the reader cutoff; direct bundle and both explorer source requests were denied, and both Sourcify source records were unavailable. See provenance for exact URLs, hashes and retrieval limits. Publisher lifecycle policy above remains separate from deployed implementation; no deadline is computed from an assumed reset/grace formula.
+The dated [activity-interface review](../assets/sources/live-interface.json) identified public read leads but did not establish those implementation semantics. Do not invent a getter sequence, import a documented dormancy duration as live state, or turn missing activity evidence into “inactive.” Report established observations and the specific missing interpretation; inspecting activity is not performing a check-in.
 
 ## Transferability — §§12–13
 

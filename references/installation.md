@@ -1,6 +1,6 @@
 # Host installation and capabilities
 
-Install/update only when requested and under normal host approval. Use Git and Python 3.10+ on a supported POSIX host. Review the exporter, runtime and [safety rules](safety.md) before executing package code; integrity verification is not publisher authentication.
+Install/update only when requested and under normal host approval. Repository maintenance uses Git and Python 3.10+ on a supported POSIX host; neither is a runtime prerequisite. Review the exporter, runtime and [safety rules](safety.md) before executing maintenance code; integrity verification is not publisher authentication.
 
 **Identity:** `0.3.0` is the unreleased development line. The full reviewed commit identifies the installed package; retain it outside the hashed runtime, never inside its own files. Installation and bug reports need the loaded path and recorded SHA. Ordinary charter/auction answers do not need revision ceremony.
 
@@ -45,11 +45,11 @@ python3 -B -I "${REVIEW_ROOT:?Complete the review checkout first}/maintenance/pa
   --destination "${WORK:?Select the recovery directory first}/staged-runtime"
 ```
 
-`staged-runtime` must **not exist**; its parent already exists. The exporter checks that the full commit equals checkout `HEAD`, reads committed bytes rather than working-tree runtime edits, and verifies runtime membership, hashes and aggregate digest before creating the export. It excludes `.git`, `maintenance`, tests, `.github`, `dist` and caches. A failed export must be resolved before proceeding.
+`staged-runtime` must **not exist**; its parent already exists. The exporter checks that the full commit equals checkout `HEAD`, reads committed bytes rather than working-tree runtime edits, and verifies exact runtime membership, hashes and aggregate digest before creating the export. The runtime contains only `SKILL.md`, `README.md`, `LICENSE`, `release-manifest.json`, reference documents and the source/parameter corpus. It excludes executable helpers, deployment/interface registries, `.git`, `maintenance`, tests, `.github`, `dist` and caches. A failed export must be resolved before proceeding.
 
 ### 3. Clean-replace, verify and retain rollback
 
-The following small replacement step verifies staging before touching the old installation, then moves whole directories—never overlays files. **Pause srstack invocations across the two directory moves and final verification.** Each rename is a whole-root move, but the pair is not atomic: the target is briefly absent between them. The host may remain running. The script checks separation from the selected root; you must also ensure the recovery directory is outside any **other** configured discovery root. Run from the stable directory selected above, not from the installation being moved.
+The following small replacement step verifies staging before touching the old installation, then moves whole directories—never overlays files. Verification runs the reviewed repository's maintenance tool **outside discovery**, comparing the candidate and installed bytes with the reviewed commit; it never executes code from either runtime. **Pause srstack invocations across the two directory moves and final verification.** Each rename is a whole-root move, but the pair is not atomic: the target is briefly absent between them. The host may remain running. The script checks separation from the selected root; you must also ensure the recovery directory is outside any **other** configured discovery root. Run from the stable directory selected above, not from the installation being moved.
 
 ```sh
 python3 -B -I - "${SKILL_PARENT:?Select the actual host root}" "${WORK:?Export first}" <<'PY'
@@ -74,10 +74,12 @@ if staged.is_symlink() or not staged.is_dir():
 reviewed_commit = (work / "reviewed-commit.txt").read_text(encoding="ascii").strip()
 if len(reviewed_commit) != 40 or any(c not in "0123456789abcdef" for c in reviewed_commit):
     raise SystemExit("Expected the full reviewed commit SHA in the external recovery record")
+verifier = work / "source" / "maintenance" / "package.py"
 
 def verify(root):
-    subprocess.run([sys.executable, "-B", "-I", str(root / "scripts/verify.py")],
-                   cwd=root, check=True, timeout=30)
+    subprocess.run([sys.executable, "-B", "-I", str(verifier), "verify",
+                    "--root", str(root), "--commit", reviewed_commit],
+                   cwd=work, check=True, timeout=30)
 
 print("Recovery directory:", work, flush=True)
 verify(staged)
@@ -106,13 +108,13 @@ No files are deleted. Failed verification retains the candidate as `failed-insta
 
 After success, verify the loaded path and the printed SHA against `WORK/reviewed-commit.txt`, then refresh discovery/reload as described below. Resume invocations only against the verified root.
 
-**Transport compatibility:** user-reported direct-TLS `WRONG_VERSION_NUMBER` failures were endpoint-independent in an intercepted sandbox; urllib+Alchemy worked there. Snapshot/history now use proxy-aware `urllib.request`. That evidence does not establish public-RPC access or universal host compatibility. Test the intended provider and retain honest denial diagnostics.
+To recheck installed bytes later, retain the reviewed repository outside discovery and run `python3 -B -I "$REVIEW_ROOT/maintenance/package.py" verify --root "$SKILL_PARENT/srstack" --commit "$REVIEWED_COMMIT"`. The full commit must still equal that checkout's `HEAD`. This checks membership and bytes, not host loading or public-source access.
 
 ## Host loading and sessions
 
-- **Hermes:** find the actual profile root (commonly `~/.hermes/skills`). Use `skills_list`/`skill_view` and literal relative resource paths. `/srstack` or “Use srstack inspect” invokes the selected installation. [Host docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills/).
-- **OpenClaw:** use the intended workspace's `skills/srstack/` or configured managed root; avoid shadowing duplicates. Resources and Python must exist in the execution environment. [Host docs](https://docs.openclaw.ai/tools/skills).
-- **Other hosts:** load the complete Agent Skills runtime and selected relative resources, not `SKILL.md` alone. Packaged explanations can work without Python; live helpers need permitted execution/network access.
+- **Hermes:** find the actual profile root (commonly `~/.hermes/skills`). Use `skills_list`/`skill_view` and literal relative resource paths. `/srstack` or a natural question asking to use srstack invokes the selected installation. [Host docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills/).
+- **OpenClaw:** use the intended workspace's `skills/srstack/` or configured managed root; avoid shadowing duplicates. The reference/corpus files must be available to the host. [Host docs](https://docs.openclaw.ai/tools/skills).
+- **Other hosts:** load the complete Agent Skills runtime and selected relative resources, not `SKILL.md` alone. Questions use the host's permitted public-read tools; the installed skill has no executable helpers. Explanation-only requests do not require network access.
 
 After replacement, refresh discovery and reload the skill in the main session if the host supports it. Existing loaded context may remain stale: report that limitation rather than claiming reload succeeded. A fresh `/new` is a host-dependent way to load the new revision, not an automatic installation step or a requirement to restart Telegram. One chat cannot refresh all other chats.
 
@@ -120,6 +122,6 @@ Keep the maintainer working directory outside any tree being moved. A missing cw
 
 ## Acceptance and distribution
 
-Run the [post-install checks](../README.md#quick-test-after-installation). Offline integrity, host routing and live RPC access are separate results. HTTP 401/403 means the original request was denied, not that installation failed. The helper's env-only configuration hint is informational; see [provider guidance](execution.md#rpc-provider-guidance).
+Run the [post-install checks](../README.md#quick-test-after-installation). Byte integrity, actual host loading and live public-read access are separate results. The repository-only `maintenance/agent-acceptance.json` supplies real question-driven manual scenarios, not executed results or a model replay. HTTP 401/403 means that request was denied, not that installation failed. Stop the denied operation without retrying, endpoint failover or alternate-tool bypass; credentials belong only in host-managed environment/configuration, never chat, runtime files or command arguments.
 
 Use [safety](safety.md) for external access, explicit unsigned-artifact preparation and host approvals. Do not use wrappers or broaden permissions to evade a denial. ClawHub/Skills Hub publication and guard acceptance are separate from a local install and require their own authorization.
