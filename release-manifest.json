@@ -6,8 +6,8 @@
   "digest_convention": "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest",
   "content_files": {
     "LICENSE": "14b82531e814378b84e97596f68a98c70becee3251b206c545d4f07d73105af3",
-    "README.md": "56ed0b3e819d9d77be94a0ec5e91614a0014d660627fe22625cba2dd5817fe6f",
-    "SKILL.md": "269e887c5f2ad0e8eb47e202b4f264172f22cabc436472fcf0354978fda60692",
+    "README.md": "9e58d1a73f1105d96f33721418edf5b413839bd6492ff21c0dec0bff888a5449",
+    "SKILL.md": "94a2a45cb78ae499d5623dfdec72f684ac0d02c5aa71bac24e08b1f675135178",
     "assets/entities/contracts.json": "a215b2e85b7e29b4924feadcb7247a2dbae6c660322416185c8b2dc8ea3adecb",
     "assets/examples/research-evidence-v1.json": "2c7c4878c6e33edd769d07b7847c2b484c4b0c01d62bedb222d6c29ee46e81b1",
     "assets/interfaces/capabilities.json": "9d72477e158a728fbc109c17fe3bdec5227e2ee1d32ee4f9f5e7e675c93f9f3d",
@@ -38,7 +38,7 @@
     "assets/sources/live-interface.json": "e30f80a7773c1cb733a003454f19ee265b8d312531649780a1727b23be32ff2e",
     "assets/sources/market-price.json": "49272fc20e9758516de2a67d177562b239ef105113abb9389a712bbc67ea26ed",
     "assets/sources/website-v1.json": "5c3b5beaff11cfc2500f6685789b64e29a032cda4e7d0443310785308a0f5584",
-    "references/auction-history.md": "61f93d888416cb99b1e4ad102a2a1c8f7ada5cf00089c829561ad0512ee6ac40",
+    "references/auction-history.md": "c46c0c5687e79bd7e67ea1cdae6dccd4a92f20d4bdcf0ed8f544d7969501ec25",
     "references/auctions.md": "5840a7fe77d789b8df82e70fb7accdb7debce037c58f855fc8464bf6326e0a27",
     "references/capabilities.md": "244fe3fc7a57914497253c5ae9f5126dc43e914f19bf2a9fc0869a1c8646bbfc",
     "references/charters.md": "6e6e581b89807b1b39a444eebe535964426aadd6e548cc8251f25b872473ac8e",
@@ -68,10 +68,10 @@
     "references/research-workflow.md": "241e2801c14b1daa9440c89da8a84074371ceaf411ce538c40714a1c0db535bb",
     "references/reserves.md": "7ffad71ea4c5d864a34d68802d9389c2661a380b790e65310cf5aacb848122dc",
     "references/risks.md": "7357373ec0b13886ced3d35b221bdb226ad663e8c7b018fab5b16498032c83f0",
-    "references/safety.md": "a113bd29510b9ae935a4fbc5161dabc45cb3e8fe80ab0a79be05aa1042ca2ec7",
+    "references/safety.md": "592aed8adeb39d3caea207b70d237d24e37f2947be853e77524438fc5637a303",
     "references/updates.md": "a9c53e18aff62c2eacb282987372307401e2671490f290dba56ce278d45552f4",
     "scripts/calculations.py": "6ab831a24098d05a22c561546b6b487877a89d27c7eb7435dc303c777b732238",
     "scripts/research.py": "18b3ac0070b2cbe827d7a031c74456f0b6cdab9b125121af2e15e0e27c00016f"
   },
-  "content_sha256": "7bb4d81aa860f69e369598aa2cc96103eb10b6fb718fd394cdfcab6a3fc13b07"
+  "content_sha256": "db2f9c33f04e08bfedc896ce4c018406ece57be61fafc618bf8f59a3bbac912a"
 }
