@@ -17,6 +17,9 @@ PACKAGE = ROOT
 MANIFEST = "release-manifest.json"
 VERSION = "0.3.0"
 CORPUS_FILES = {"assets/sources.json", "assets/parameters.json"}
+RESEARCH_FILES = {
+    "scripts/calculations.py", "scripts/research.py", "assets/schemas/research-evidence-v1.json",
+}
 TOP_FILES = {"SKILL.md", "README.md", "LICENSE", MANIFEST}
 REPOSITORY_DIRS = {"maintenance", "research", ".github", ".git", "dist"}
 CACHE_DIRS = {"__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache"}
@@ -36,7 +39,7 @@ def runtime_path(path):
             or any(part in CACHE_DIRS for part in parts)
             or parts[-1] == ".DS_Store" or PurePosixPath(path).suffix in {".pyc", ".pyo", ".pyd"}):
         return False
-    if path in TOP_FILES | CORPUS_FILES:
+    if path in TOP_FILES | CORPUS_FILES | RESEARCH_FILES:
         return True
     if len(parts) == 2 and parts[0] == "references" and PurePosixPath(path).suffix == ".md":
         return True
@@ -50,7 +53,7 @@ def require_runtime(files):
     for path in files:
         if not runtime_path(path):
             raise ValueError(f"Repository-only path in runtime: {path}")
-    for required in (TOP_FILES - {MANIFEST}) | CORPUS_FILES:
+    for required in (TOP_FILES - {MANIFEST}) | CORPUS_FILES | RESEARCH_FILES:
         if required not in files:
             raise ValueError(f"Missing {required}")
 
@@ -65,7 +68,8 @@ def package_files(root=None):
     if any(path.is_symlink() for path in (root, *root.parents)) or not root.is_dir():
         raise ValueError("Package root and ancestors must be real directories")
     files = {}
-    allowed_dirs = {"assets", "assets/sources", "assets/parameters", "references"}
+    allowed_dirs = {"assets", "assets/sources", "assets/parameters", "assets/schemas",
+                    "references", "scripts"}
 
     def scan_error(error):
         raise error
@@ -201,7 +205,7 @@ def verify_content(files):
 def make_manifest(files):
     return {
         "schema_version": 1, "name": "srstack", "version": VERSION,
-        "scope": "Documentation and dated source/parameter corpus; excludes manifest, repository maintenance, CI, Git metadata, and build/cache artifacts",
+        "scope": "Documentation, dated source/parameter corpus, optional research calculation code and evidence schema; excludes manifest, source-only research tests/fixtures, repository maintenance, CI, Git metadata, and build/cache artifacts",
         "digest_convention": "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest",
         **fingerprints(files),
     }

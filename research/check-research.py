@@ -1,4 +1,4 @@
-"""Offline consumer-visible regressions for optional source-only helpers.
+"""Offline consumer-visible regressions for optional bundled helpers.
 
 Run with `python3 -B research/check-research.py` from the skill source checkout.
 Fixtures are fictional, never retrieved chain data. No transport or ABI decoding.
@@ -9,7 +9,13 @@ from decimal import Context, Decimal, ROUND_DOWN, localcontext
 from fractions import Fraction
 import json
 from pathlib import Path
+import subprocess
+import sys
+import tempfile
 import unittest
+
+SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
+sys.path.insert(0, str(SCRIPTS))
 
 from calculations import (estimate_workload, gap_to_floor_scenario,
                           pending_delta_pace, summarize_rounds, weighted_price)
@@ -265,6 +271,46 @@ class ScenarioChecks(unittest.TestCase):
         for precision in (15, 201, True, 32.0):
             with self.subTest(precision=precision), self.assertRaises(ValueError):
                 gap_to_floor_scenario(10, 0, 1, 1, precision=precision)
+
+
+class CommandChecks(unittest.TestCase):
+    def invoke(self, command, document, *, file_input=False):
+        with tempfile.TemporaryDirectory() as directory:
+            arguments = [sys.executable, "-I", "-B", str(SCRIPTS / "research.py"), command]
+            if file_input:
+                source = Path(directory) / "supplied evidence.json"
+                source.write_text(document, encoding="utf-8")
+                arguments.extend(["--input", str(source)])
+            return subprocess.run(arguments, input=None if file_input else document,
+                                  text=True, capture_output=True, cwd=directory, timeout=15)
+
+    def test_wire_accounting_retains_large_integer_remainder_and_no_sale(self):
+        process = self.invoke("weighted-price", '{"rows":[[2,"1000000000000000001"],[1,"1000000000000000002"]]}')
+        self.assertEqual(process.returncode, 0, process.stderr)
+        result = json.loads(process.stdout)
+        self.assertEqual(result["consideration_raw"], "3000000000000000004")
+        self.assertEqual(result["average_raw"], {"numerator": "3000000000000000004", "denominator": "3"})
+        self.assertEqual((result["quotient_raw"], result["remainder"]), ("1000000000000000001", "1"))
+        empty = self.invoke("weighted-price", '{"rows":[]}')
+        self.assertEqual(empty.returncode, 0, empty.stderr)
+        self.assertIsNone(json.loads(empty.stdout)["average_raw"])
+
+    def test_file_decimal_scenario_avoids_binary_float_rounding(self):
+        process = self.invoke("curve", '{"opening":110.1,"floor":10.1,"half_life":7,"elapsed":7,"precision":32}',
+                              file_input=True)
+        self.assertEqual(process.returncode, 0, process.stderr)
+        result = json.loads(process.stdout)
+        self.assertEqual(result["value"], "60.1")
+        self.assertEqual(Decimal(result["absolute_error_bound"]), 0)
+
+    def test_ambiguous_or_invalid_input_emits_no_calculation(self):
+        for document in ('{"rows":[],"rows":[[1,2]]}', '{"rows":[[NaN,2]]}',
+                         '{"rows":[[1.0,2]]}', '{"rows":[[true,2]]}', '[]', '{"rows":'):
+            with self.subTest(document=document):
+                process = self.invoke("weighted-price", document)
+                self.assertEqual(process.returncode, 2)
+                self.assertEqual(process.stdout, "")
+                self.assertIn("error", json.loads(process.stderr))
 
 
 if __name__ == "__main__":

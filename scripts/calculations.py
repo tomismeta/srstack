@@ -1,4 +1,4 @@
-"""Optional, offline arithmetic for Python 3.10+; no transport or execution API.
+"""Optional, offline arithmetic for Python 3.10+; no network or wallet API.
 
 Callers may use, adapt or ignore this module. It is not a required analysis
 workflow or an evidence validator. Financial accounting uses integers/Fraction;

@@ -19,7 +19,7 @@ Current quantities require fresh evidence. Packaged knowledge can answer explana
 
 ## Minimal architecture
 
-The installed skill contains instructions, topic references, a bounded [dated interface guide](references/interface-guide.md), source/policy records, a license and an integrity manifest. **No executable runtime, active deployment router, broad ABI catalog, bytecode allowlist, embedded rates, wallet connector or background service.** The guide restores selected signatures/selectors, event layouts and evidenced units as generation-scoped discovery aids. Historical addresses are provenance, not current execution bindings; interface decoding is not implementation verification.
+The installed skill contains instructions, topic references, a bounded [dated interface guide](references/interface-guide.md), source/policy records, an optional offline calculation library/CLI and evidence schema, a license and an integrity manifest. **No RPC transport, active deployment router, broad ABI catalog, bytecode allowlist, embedded rates, wallet connector or background service.** The guide restores selected signatures/selectors, event layouts and evidenced units as generation-scoped discovery aids. Historical addresses are provenance, not current execution bindings; interface decoding is not implementation verification.
 
 The [object and contract map](references/object-map.md) defines economic objects separately from contracts and makes ownership, recorded state, funding, routing and control relationships explicit. [Role discovery](references/contracts.md#discover-a-role-without-prior-session-context) connects a natural question to dated identity evidence and fresh publisher/onchain corroboration without requiring old chats or backups.
 
@@ -33,7 +33,7 @@ The [object and contract map](references/object-map.md) defines economic objects
 
 The agent may use inspectable local calculation code when needed under host permissions. That is not a bundled protocol client or permission to execute downloaded code. No Python dependency is required to load the skill; live access and exact arithmetic depend on actual host capabilities.
 
-The reviewed source checkout also offers [optional offline research aids](references/research-tools.md): pure calculation functions, a versioned evidence interchange schema and synthetic regression fixtures under `research/`. None is installed. Agents may use, adapt or ignore them, choose another language/store, or write a different solution. No helper invocation, dataset format or checkout is a prerequisite for answering; arithmetic input checks are not agent workflow controls. There is no transport client, live-data bundle, default deployment or automatic code download.
+The installed [optional offline research aids](references/research-tools.md) provide `scripts/calculations.py`, the thin `scripts/research.py` CLI and `assets/schemas/research-evidence-v1.json`. Python 3.10+ and its standard library are needed only when choosing these helpers; tests and synthetic fixtures remain source-only under `research/`. Agents may use, adapt or ignore them, choose another language/store, or write a different solution. No helper invocation, dataset format or checkout is a prerequisite for answering; arithmetic input checks are not agent workflow controls. Installation does not run the helpers or grant execution permission. There is no transport client, live-data bundle, default deployment or automatic code download.
 
 Live support is capability-based, not a blanket host-brand promise: the host needs authorized public reads, applicable ABI/Keccak encoding/decoding and exact calculation; historical questions additionally need adequate event/index/receipt coverage. Below that baseline, dated explanations and conditional reasoning remain useful, but blocked live checks cannot be counted as successful live acceptance. No particular language, client or RPC provider is required.
 
@@ -88,7 +88,13 @@ After deliberate content changes, regenerate the manifest with `python3 -B maint
 
 This host-native cutover removes the previous fixed snapshot, price, history and diagnostic clients and their execution catalogs. There are no compatibility commands or retired helper aliases. Existing host-native research tools replace them; any automatic discovery, checkpointing or batching must actually be supported or implemented by the host agent before being claimed.
 
-The source-only calculation toolkit does not restore the retired protocol clients. Specialized references own exact accounting, round dating, allowance windows, order-ID caveats and history coverage. Stale host workshop/install prompts need explicit host-maintainer cleanup outside this repository; package installation does not rewrite other skills, credentials or global instructions.
+The installed optional calculation toolkit does not restore the retired protocol clients. Specialized references own exact accounting, round dating, allowance windows, order-ID caveats and history coverage. Stale host workshop/install prompts need explicit host-maintainer cleanup outside this repository; package installation does not rewrite other skills, credentials or global instructions.
+
+### Bundled research execution (unreleased)
+
+The current revision installs the optional offline library, five-command JSON CLI (`weighted-price`, `rounds`, `pace`, `workload`, `curve`) and evidence-v1 schema, with exact JSON serialization and no source-checkout dependency. Tests and fictional fixtures stay outside the runtime. No transport, protocol defaults, automatic execution, dependency installation or wallet capability is added.
+
+Verification passed 23 calculation/CLI regressions and 20 packaging/export regressions, including execution after deleting the isolated source-checkout fixture and unchanged installed bytes afterward. All five documented CLI examples, file-input reconstruction and a direct library import ran from a standalone 39-file runtime candidate in another working directory, with checkout reads and network access denied by a Python audit hook. Exact rational values and unknown timestamps remained intact. This is offline execution and packaging evidence, not live-provider acceptance, a production sandbox or a claim that every release gate passed. The dated results below describe earlier revisions.
 
 ### Earlier interface-revision verification
 
@@ -110,7 +116,9 @@ Source reconciliation reread seven website page bodies and ten known social post
 
 Matching source/compiler correspondence and complete accrual/ledger-origin semantics remain unestablished. Bounded runtime-path research was retained outside the package and was not promoted into new certified onchain semantics. A real attributable earned-only 24-hour scenario remains blocked; empirical and explicitly assumed calculations have their own successful, narrower evidence. This unreleased development revision does not claim every mandatory release gate passed.
 
-### Optional research-aids revision (2026-09-27)
+### Earlier source-only research-aids revision (2026-09-27)
+
+This historical entry records the pre-bundling distribution and its verification; the current installed membership is described above.
 
 Added source-only exact weighted accounting, observed round reconstruction, signed pending-delta pace, inclusive-range workload estimates and a separately named, fully parameterized gap-to-floor mathematical scenario. The optional version1 evidence schema retains raw observations, hash-keyed headers/timestamps, separate receipt checks and coverage gaps. Only the guidance and fictional worked explanation enter the installed skill; library, schema, tests and synthetic fixtures remain excluded. No transport, live dataset, protocol defaults or new wallet capability was added.
 

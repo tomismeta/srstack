@@ -24,7 +24,7 @@
         "Each auction's own auctionAnchor, auctionPeriod, dayHalfLife, decayHalfLife, dayStartPrice, dayFloorPrice, currentPrice, currentDay and remainingToday were read as separate inputs, not inherited from whitepaper defaults.",
         "Whitepaper sections7-8 describe exponential decay of the gap to the floor, not exponential decay of the whole opening price. The optional mathematical scenario requires all its inputs explicitly and does not certify deployed fixed-point rounding."
       ],
-      "summary": "Fresh source and contract input checks support keeping exact aggregation separate from assumed economic models. No active address, price, floor, rate, cap, branch count, epoch endpoint or auction timing is a calculation default. The source-only tools do no discovery or authentication.",
+      "summary": "Fresh source and contract input checks support keeping exact aggregation separate from assumed economic models. No active address, price, floor, rate, cap, branch count, epoch endpoint or auction timing is a calculation default. The optional offline tools, now installed as a library and CLI alongside the evidence schema, do no discovery or authentication. Bundling changes distribution, not the scope or date of this evidence.",
       "fingerprint_convention": "Hash complete UTF-8 bytes. This retrieval measured860946bytes and860338JavaScript string code units with the same SHA-256 as the prior reviewed body; these different length measures do not imply source drift. A dated fingerprint is provenance, never a future live-source allowlist.",
       "limits": [
         "Code presence and cross-references do not prove Registry role authorization, historical configuration or complete implementation correspondence.",

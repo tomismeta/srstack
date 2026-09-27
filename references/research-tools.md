@@ -2,31 +2,77 @@
 
 These are optional aids, not a dependency, required workflow, answer gate or prescribed tool budget. Use, adapt or ignore them; an independent exact calculator, host-native code or another suitable evidence format is equally valid. Missing helpers do not block an answer whose arithmetic and evidence can be established another way. The [research guidance](research-workflow.md) and [history guidance](auction-history.md) describe the underlying distinctions, not a required sequence of calls.
 
-## Source checkout, not installed execution
+## Installed optional library, CLI and schema
 
-The [source repository](https://github.com/tomismeta/srstack)'s `research/` directory contains a standard-library Python calculation module (`calculations.py`), an optional JSON Schema (`evidence.schema.json`) and fictional regression fixtures (`fixtures/`). These are source-only maintenance resources, not code or live datasets installed with the skill. This runtime reference does not fetch, install or execute anything. No CLI, provider, RPC transport, fixed address, live price, live rate or fixed allocation is supplied by these helpers.
+The installed skill includes `scripts/calculations.py`, the thin `scripts/research.py` CLI and `assets/schemas/research-evidence-v1.json`. The library and CLI use Python 3.10+ and only its standard library; there are no dependencies or install hooks. A source checkout is not needed to use them. Regression tests and synthetic fixtures remain source-only under `research/`. Loading or installing the skill does not automatically execute anything. No provider, RPC transport, fixed address, live price, live rate or fixed allocation is supplied by these helpers.
 
-If useful, inspect a source checkout under the host's existing permissions at the reviewed commit recorded in the external installation record, and choose to run its offline library. Otherwise use the host's preferred tools, language or dependencies, or write an independent calculation. A documentation link does not grant execution permission or justify running unreviewed external code; ordinary [host permissions](safety.md#public-retrieval-and-calls) still apply to code, dependencies, public retrieval and artifact storage. Nothing here permits signing, transactions, wallet-secret access or a change to the existing wallet boundary.
+Choose to run the reviewed installed code only under existing [host permissions](safety.md#public-retrieval-and-calls), or use another language, host tool or independent calculation. Bundling code grants no execution, retrieval or storage permission. Nothing here permits signing, transactions, wallet-secret access or a change to the existing wallet boundary. These tools calculate supplied inputs; they neither collect evidence nor execute protocol actions.
 
-For an optional example, run this **from the skill directory of an inspected source checkout** (the directory containing `research/`). It uses only the synthetic fixture, not network data:
+### CLI inputs and exact JSON output
+
+Use `python3 -I -B /absolute/path/to/installed/srstack/scripts/research.py COMMAND`. Supply one JSON object on stdin, or select a UTF-8 file with `COMMAND --input /absolute/path/to/input.json`; the file replaces stdin. Resolve the script path from the actual loaded installation, not the working directory. `-I -B` is supported: isolated Python execution does not require a source checkout, `PYTHONPATH` or bytecode writes.
+
+| Command | Input object | Calculation |
+| --- | --- | --- |
+| `weighted-price` | `{"rows":[[quantity,raw_price],...]}` | `weighted_price(rows)`: compatible nonnegative quantity/raw-unit-price pairs; the caller establishes units. |
+| `rounds` | Full evidence-v1 document: `schema_version: "1"`, `sources`, `headers`, `events`, `coverage`, with optional extensions described below | `summarize_rounds(document)`: observed groups, exact uncontested totals, conflicts, removed/deferred records and supplied coverage. Not a schema validator. |
+| `pace` | `opening_raw`, `closing_raw`, `opening_timestamp`, `closing_timestamp`, `opening_asset`, `closing_asset`, `opening_scale`, `closing_scale`, `period_seconds` | `pending_delta_pace(...)`: equal known asset identities and positive scales, increasing timestamps, explicit positive display period. Scales mean raw units per whole asset; times are integer seconds. |
+| `workload` | `ranges: [[from_block,to_block],...]`, `max_blocks_per_request`, optional `overlaps: "reject"` or `"normalize"` | `estimate_workload(...)`: inclusive nonnegative bounds and positive maximum range length. Default overlap rejection is arithmetic behavior, not a provider limit. Normalization unions overlapping/adjacent ranges before estimating. No scan is started. |
+| `curve` | `opening`, `floor`, `half_life`, `elapsed`, `precision` | `gap_to_floor_scenario(...)`: the explicitly assumed mathematical curve below, not a protocol price oracle. Times share a caller-chosen unit; precision is a JSON integer from 16 through 200, not a string. |
+
+For `pace`, `workload` and `curve`, keys are exactly the function parameter names; no wrapper object is used. Integer financial fields accept JSON integers or canonical nonnegative decimal strings (`"0"` or a nonzero digit followed by digits), not booleans, signs, leading zeroes, decimal points or exponent notation. The CLI parses fractional/exponent JSON number tokens directly as exact lexical strings, never binary floats: curve input `1.25` and `"1.25"` both retain exact value, while integer fields reject `1.0` and `1e3`. Curve values also accept rational strings such as `"1/3"`. Nonfinite numbers, duplicate object keys and malformed JSON are rejected.
+
+Output is the direct calculation result as one JSON value on stdout, not a status envelope. Every Python integer, including counts, indices, precision and passed-through integer metadata, becomes a decimal string; signed results retain their minus sign. `Fraction` becomes `{"numerator":"...","denominator":"..."}`, `Decimal` becomes a string, arrays remain arrays, and booleans/null remain booleans/null. Fractional/exponent input tokens passed through in evidence retain their exact spelling as strings. No output numeric value requires a consumer to round through binary floating point. The library itself returns Python integers, `Fraction` and `Decimal`.
+
+Exit **0** after a calculation means only that calculation completed; it does not certify evidence, coverage, receipts, canonicality, a round close or economic meaning. Standard `--help` also exits 0 without calculating. Exit **2** reports invalid arguments/input or an input-read failure on stderr. Successful partial summaries may retain unknown, deferred, disputed or removed observations. Neither CLI success nor optional JSON Schema validation is an answer or completeness gate.
+
+### Small fictional stdin examples
+
+Set `SRSTACK_ROOT` to the absolute path of the reviewed installed skill. These examples need no source-only fixtures, network access or live configuration; none is a financial observation:
 
 ```sh
-python3 - <<'PY'
-import json
+SRSTACK_ROOT='/absolute/path/to/installed/srstack'
+python3 -I -B "$SRSTACK_ROOT/scripts/research.py" weighted-price <<'JSON'
+{"rows":[["2","105"],["3","99"]]}
+JSON
+python3 -I -B "$SRSTACK_ROOT/scripts/research.py" pace <<'JSON'
+{"opening_raw":"1000","closing_raw":"970","opening_timestamp":"100","closing_timestamp":"110","opening_asset":"FICTIONAL_UNIT","closing_asset":"FICTIONAL_UNIT","opening_scale":"100","closing_scale":"100","period_seconds":"60"}
+JSON
+python3 -I -B "$SRSTACK_ROOT/scripts/research.py" workload <<'JSON'
+{"ranges":[["10","19"],["30","34"]],"max_blocks_per_request":"4","overlaps":"reject"}
+JSON
+python3 -I -B "$SRSTACK_ROOT/scripts/research.py" curve <<'JSON'
+{"opening":"10","floor":"2","half_life":"4","elapsed":"4","precision":32}
+JSON
+python3 -I -B "$SRSTACK_ROOT/scripts/research.py" rounds <<'JSON'
+{"schema_version":"1","sources":[],"headers":{},"events":[],"coverage":{"requested":[],"scanned":[],"failed":[],"unsearched":[]},"assumptions":[{"label":"Fictional empty packet; no history coverage supplied"}]}
+JSON
+```
+
+The weighted-price example's exact raw consideration is `507`, quantity is `5` and raw average is `507/5`, with quotient `101` and remainder `2`. The pace example deliberately has a negative ledger delta, not negative proved earnings. The rounds example supplies no observations or coverage; an empty summary cannot establish zero historical sales.
+
+For a file instead of stdin, use `python3 -I -B "$SRSTACK_ROOT/scripts/research.py" rounds --input /absolute/path/to/evidence.json`. Keep research inputs/results outside the installed skill.
+
+### Import the installed library
+
+Direct callers can choose their own exact result handling without using the CLI. This explicit installed-path import works from any working directory and with Python isolation:
+
+```sh
+python3 -I -B - "$SRSTACK_ROOT/scripts" <<'PY'
 import sys
 from pathlib import Path
-from pprint import pprint
 
-root = Path.cwd()
-sys.path.insert(0, str(root / "research"))
-from calculations import summarize_rounds
+scripts = Path(sys.argv[1])
+if not scripts.is_absolute():
+    raise SystemExit("Supply the absolute installed scripts path")
+sys.path.insert(0, str(scripts))
+from calculations import weighted_price
 
-fixture = json.loads((root / "research/fixtures/round-v1.json").read_text())
-pprint(summarize_rounds(fixture))
+print(weighted_price([("2", "105"), ("3", "99")]))
 PY
 ```
 
-`summarize_rounds(document)` performs arithmetic on the supplied observations. Its output does not make synthetic, index-only, incomplete or unverified inputs authoritative. The fixture's values and routing metadata are fictional. Round outputs include ordered `first_observed`/`last_observed` records, header-derived `observed_span_seconds` when known, an uncontested minimum raw unit price and exact uncontested totals. Ties and disputed observations remain visible; none is automatically a closing sale. Deferred, conflicting and removed records are retained with provenance, and unavailable grouping/arithmetic inputs are not zero. Other established facts or conditional results remain usable.
+`summarize_rounds(document)` performs arithmetic on the supplied observations. Its output does not make synthetic, index-only, incomplete or unverified inputs authoritative. Round outputs include ordered `first_observed`/`last_observed` records, header-derived `observed_span_seconds` when known, an uncontested minimum raw unit price and exact uncontested totals. Ties and disputed observations remain visible; none is automatically a closing sale. Deferred, conflicting and removed records are retained with provenance, and unavailable grouping/arithmetic inputs are not zero. Other established facts or conditional results remain usable.
 
 ## Exact arithmetic versus a mathematical scenario
 
@@ -63,7 +109,7 @@ Suppose a fictional scheduled opening is at time `1000`, first purchase at `1010
 
 ## Optional external evidence interchange
 
-`research/evidence.schema.json` defines version `"1"` as a portable example, not required storage, an access policy or a closed-world census. The host may choose any authorized external artifact and adapt any format. There is no default storage directory. Do not put live observations back into skill resources or persist credentials, provider API keys, secret endpoint query strings, wallet material or unrelated private data. Ordinary questions do not require persistence.
+The installed `assets/schemas/research-evidence-v1.json` defines version `"1"` as a portable example, not required storage, an access policy or a closed-world census. The host may choose any authorized external artifact and adapt any format. There is no default storage directory. Do not put live observations back into skill resources or persist credentials, provider API keys, secret endpoint query strings, wallet material or unrelated private data. Ordinary questions do not require persistence.
 
 The optional document keeps these concerns distinct:
 

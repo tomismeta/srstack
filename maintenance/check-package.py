@@ -48,8 +48,9 @@ class PackageChecks(unittest.TestCase):
         self.script.parent.mkdir()
         shutil.copyfile(SCRIPT, self.script)
         for name in ("maintenance/private.json", ".github/workflows/validate.yml", ".gitignore",
-                     "research/calculations.py", "research/evidence.schema.json",
-                     "dist/old.zip", "maintenance/__pycache__/package.pyc", ".DS_Store"):
+                     "research/check-research.py", "research/fixtures/evidence.json",
+                     "dist/old.zip", "maintenance/__pycache__/package.pyc",
+                     "scripts/__pycache__/calculations.pyc", ".DS_Store"):
             target = self.root / name
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text("repository-only\n")
@@ -96,7 +97,7 @@ class PackageChecks(unittest.TestCase):
         self.assertEqual(manifest["content_sha256"], report["content_sha256"])
         self.assertEqual(self.commit, report["commit"])
 
-    def test_reviewed_repository_verifies_standalone_runtime_without_installed_code(self):
+    def test_reviewed_repository_verifies_standalone_runtime_against_commit(self):
         result = self.invoke("export", "--commit", self.commit, "--destination", str(self.destination))
         self.assertEqual(0, result.returncode, result.stderr.decode())
         result = self.invoke("verify", "--root", str(self.destination), "--commit", self.commit)
@@ -105,15 +106,28 @@ class PackageChecks(unittest.TestCase):
         self.assertEqual(self.commit, report["commit"])
         self.assertEqual(json.loads(self.runtime[self.package.MANIFEST])["content_sha256"],
                          report["content_sha256"])
-        self.assertFalse((self.destination / "scripts").exists())
+        self.assertEqual(self.runtime, directory_bytes(self.destination))
+
+    def test_export_runs_without_checkout_and_does_not_mutate_runtime(self):
+        self.package.export_package(self.commit, self.destination)
+        shutil.rmtree(self.root)
+        result = subprocess.run(
+            [sys.executable, "-I", str(self.destination / "scripts/research.py"), "workload"],
+            input='{"ranges":[[0,5],[5,9]],"max_blocks_per_request":3,"overlaps":"normalize"}',
+            text=True, capture_output=True, cwd=self.work, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(json.loads(result.stdout),
+                         {"ranges": [["0", "9"]], "blocks": "10",
+                          "range_requests": "4", "overlaps": "normalize"})
         self.assertEqual(self.runtime, directory_bytes(self.destination))
 
     def test_external_verification_rejects_extra_missing_and_changed_bytes(self):
         self.package.export_package(self.commit, self.destination)
         for extra in ("references/unreviewed.md", ".DS_Store", "maintenance/private.json",
                       "scripts/verify.py", "assets/entities/obsolete.json",
-                      "research/calculations.py", "research/evidence.schema.json",
-                      "assets/__pycache__/untrusted.pyc"):
+                      "research/check-research.py", "research/fixtures/evidence.json",
+                      "assets/schemas/unreviewed.json",
+                      "assets/__pycache__/untrusted.pyc", "scripts/__pycache__/calculations.pyc"):
             with self.subTest(extra=extra):
                 path = self.destination / extra
                 path.parent.mkdir(parents=True, exist_ok=True)
@@ -124,20 +138,24 @@ class PackageChecks(unittest.TestCase):
                 while path.parent != self.destination and not any(path.parent.iterdir()):
                     path = path.parent
                     path.rmdir()
-        readme = self.destination / "README.md"
-        readme.unlink()
-        with self.assertRaises(ValueError):
-            self.package.verify_installation(self.commit, self.destination)
-        readme.write_bytes(self.runtime["README.md"] + b"\nChanged bytes.\n")
-        with self.assertRaises(ValueError):
-            self.package.verify_installation(self.commit, self.destination)
+        for relative in ("README.md", "scripts/calculations.py", "scripts/research.py",
+                         "assets/schemas/research-evidence-v1.json"):
+            with self.subTest(path=relative):
+                path = self.destination / relative
+                path.unlink()
+                with self.assertRaises(ValueError):
+                    self.package.verify_installation(self.commit, self.destination)
+                path.write_bytes(self.runtime[relative] + b"\n")
+                with self.assertRaises(ValueError):
+                    self.package.verify_installation(self.commit, self.destination)
+                path.write_bytes(self.runtime[relative])
 
     def test_self_consistent_manifest_cannot_replace_reviewed_bytes(self):
         self.package.export_package(self.commit, self.destination)
         files = dict(self.runtime)
-        files["README.md"] += b"\nUnreviewed but self-consistent change.\n"
+        files["scripts/research.py"] += b"\n# Unreviewed but self-consistent change.\n"
         files[self.package.MANIFEST] = json.dumps(self.package.make_manifest(files)).encode()
-        for path in ("README.md", self.package.MANIFEST):
+        for path in ("scripts/research.py", self.package.MANIFEST):
             (self.destination / path).write_bytes(files[path])
         with self.assertRaisesRegex(ValueError, "reviewed commit"):
             self.package.verify_installation(self.commit, self.destination)
@@ -225,7 +243,8 @@ class PackageChecks(unittest.TestCase):
             self.assert_no_install()
 
     def test_committed_content_change_without_manifest_refuses_export(self):
-        (self.root / "README.md").write_bytes(self.runtime["README.md"] + b"\nUnreviewed delta.\n")
+        (self.root / "scripts/calculations.py").write_bytes(
+            self.runtime["scripts/calculations.py"] + b"\n# Unreviewed delta.\n")
         commit = self.commit_tree()
         with self.assertRaises(ValueError):
             self.package.export_package(commit, self.destination)

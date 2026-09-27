@@ -1,6 +1,6 @@
 # Host installation and capabilities
 
-Install/update only when requested and under normal host approval. Repository maintenance uses Git and Python 3.10+ on a supported POSIX host; neither is a runtime prerequisite. Review the exporter, runtime and [safety rules](safety.md) before executing maintenance code; integrity verification is not publisher authentication.
+Install/update only when requested and under normal host approval. Repository maintenance uses Git and Python 3.10+ on a supported POSIX host. Neither is needed to load the skill; Python 3.10+ is needed only if choosing its optional standard-library calculation helpers. Review the exporter, runtime and [safety rules](safety.md) before executing code; integrity verification is not publisher authentication.
 
 **Identity:** `0.3.0` is the unreleased development line. The full reviewed commit identifies the installed package; retain it outside the hashed runtime, never inside its own files. Installation and bug reports need the loaded path and recorded SHA. Ordinary charter/auction answers do not need revision ceremony.
 
@@ -45,9 +45,9 @@ python3 -B -I "${REVIEW_ROOT:?Complete the review checkout first}/maintenance/pa
   --destination "${WORK:?Select the recovery directory first}/staged-runtime"
 ```
 
-`staged-runtime` must **not exist**; its parent already exists. The exporter checks that the full commit equals checkout `HEAD`, reads committed bytes rather than working-tree runtime edits, and verifies exact runtime membership, hashes and aggregate digest before creating the export. The runtime contains only `SKILL.md`, `README.md`, `LICENSE`, `release-manifest.json`, reference documents and the source/parameter corpus. It excludes executable helpers, protocol clients, deployment registries, exhaustive ABI catalogs, `.git`, `maintenance`, tests, `.github`, `dist` and caches. A failed export must be resolved before proceeding.
+`staged-runtime` must **not exist**; its parent already exists. The exporter checks that the full commit equals checkout `HEAD`, reads committed bytes rather than working-tree runtime edits, and verifies exact runtime membership, hashes and aggregate digest before creating the export. The runtime includes `SKILL.md`, `README.md`, `LICENSE`, `release-manifest.json`, reference documents, the source/parameter corpus, `scripts/calculations.py`, `scripts/research.py` and `assets/schemas/research-evidence-v1.json`. The library, CLI and schema are installed and covered by the manifest; use needs no source checkout. It excludes retired protocol clients, deployment registries, exhaustive ABI catalogs, `.git`, `maintenance`, source-only `research/` tests/fixtures, `.github`, `dist` and caches. A failed export must be resolved before proceeding.
 
-The hashed references include a bounded, dated Markdown [method/event guide](interface-guide.md): question-oriented canonical signatures, argument/return/event layouts, indexed fields, evidenced units, generation applicability and source/review provenance. It is not a complete ABI, current-address router, allowlist or executable client. Its entries are leads for deployment-specific authentication, not evidence that a dated binding or mechanic still applies. Installation adds no runtime tools or dependencies.
+The hashed references include a bounded, dated Markdown [method/event guide](interface-guide.md): question-oriented canonical signatures, argument/return/event layouts, indexed fields, evidenced units, generation applicability and source/review provenance. It is not a complete ABI, current-address router, allowlist or executable client. Its entries are leads for deployment-specific authentication, not evidence that a dated binding or mechanic still applies. Installation bundles optional offline calculation code but does not execute it, install dependencies, provide transport or grant permissions. Host-native tools, other languages and independent calculations remain valid.
 
 ### 3. Clean-replace, verify and retain rollback
 
@@ -116,7 +116,7 @@ To recheck installed bytes later, retain the reviewed repository outside discove
 
 - **Hermes:** find the actual profile root (commonly `~/.hermes/skills`). Use `skills_list`/`skill_view` and literal relative resource paths. `/srstack` or a natural question asking to use srstack invokes the selected installation. [Host docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills/).
 - **OpenClaw:** use the intended workspace's `skills/srstack/` or configured managed root; avoid shadowing duplicates. The reference/corpus files must be available to the host. [Host docs](https://docs.openclaw.ai/tools/skills).
-- **Other hosts:** load the complete Agent Skills runtime and selected relative resources, not `SKILL.md` alone. Questions use the host's permitted public-read tools; the installed skill has no executable helpers. Explanation-only requests do not require network access.
+- **Other hosts:** load the complete Agent Skills runtime and selected relative resources, not `SKILL.md` alone. Questions use the host's permitted public-read tools; the installed optional helpers only calculate supplied inputs, without network transport. Explanation-only requests do not require network access.
 
 After replacement, refresh discovery and reload the skill in the main session if the host supports it. Existing loaded context may remain stale: report that limitation rather than claiming reload succeeded. A fresh `/new` is a host-dependent way to load the new revision, not an automatic installation step or a requirement to restart Telegram. One chat cannot refresh all other chats.
 

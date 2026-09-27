@@ -38,7 +38,7 @@ Keep **charter auctions** (new charter, ETH price, `CharterPurchased`) separate 
 | Method/event signatures, layouts, units and generation leads | [Interface guide](references/interface-guide.md) — select only the relevant set |
 | Auction history across contracts; opening, first, average and last prices | [Historical accounting](references/auction-history.md) |
 | Accrual-funded buying, future auctions, comparisons or calculations | [Analysis and projections](references/research-workflow.md) |
-| Optional reproducible arithmetic, round reconstruction or an external evidence format | [Research aids](references/research-tools.md) — source-checkout tools, never required or installed |
+| Optional reproducible arithmetic, round reconstruction or an external evidence format | [Research aids](references/research-tools.md) — installed optional library, CLI and schema; never required |
 | When a charter can buy one license from accrued STANDARD using historical sales | [Availability and next window](references/auctions.md#current-license-availability-and-next-opportunity), then the relevant [pace/scenario evidence](references/research-workflow.md#empirical-pending-delta-pace) |
 | Protocol, charter, reserve or auction mechanics | [Protocol](references/protocol.md), [charters](references/charters.md), [reserves](references/reserves.md), [auctions](references/auctions.md) — choose the relevant one |
 | Dormancy, check-in or exit interpretation | [Activity and exits](references/exits.md) |
