@@ -1,7 +1,44 @@
 {
   "schema_version": 1,
-  "scope": "Dated publisher interface and deployment provenance. Addresses, method locators and excerpt hashes describe reviewed sources, not current execution bindings, a full ABI catalog or runtime allowlists. The selected method/event guide is generation-scoped encoding evidence. No saved monetary state or runtime defaults.",
+  "scope": "Dated publisher interface and deployment provenance. The complete reviewed publisher-definition inventory is assets/interfaces with dated bindings in assets/entities/contracts.json; earlier selected/excerpt reviews retain their original scopes. No current routing, execution allowlist, saved monetary state or implementation-equivalence claim.",
   "records": [
+    {
+      "id": "sr-complete-interface-inventory-2026-09-27",
+      "url": "https://www.standardreserve.xyz/assets/mountApp-z6PyBslD.js",
+      "publisher": "The Standard Reserve official application",
+      "published_at": null,
+      "retrieved_at": "2026-09-27",
+      "review_depth": "Complete publisher-linked module acquired as UTF-8 data; Acorn AST enumeration of all literal ABI arrays, supplemental declaration strings and role-bound calls; full preservation of 12 protocol ABI literals, the explicit v1.1 license adaptation, one selective control fragment and one Multicall fragment. No downloaded JavaScript executed.",
+      "claim_stage": "complete reviewed publisher-definition inventory, not complete deployed ABI/source coverage or current execution routing",
+      "source_urls": [
+        "https://www.standardreserve.xyz/app/",
+        "https://www.standardreserve.xyz/assets/mountApp-z6PyBslD.js"
+      ],
+      "complete_asset_bytes": 860946,
+      "complete_asset_sha256": "8e2178e9e11adc78288afeb0a95bf1c62e7ac118ba08986b3033c2d740cdbd31",
+      "page_bytes": 6652,
+      "page_sha256": "553bcb2d2980a0347854c2f58a212cfd4573a7899370c2b520b64dccccbf6977",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "inventory_path": "assets/interfaces/reviews.json",
+      "contract_bindings_path": "assets/entities/contracts.json",
+      "locators": [
+        "Ne CentralBank; Rn CharterNFT; Vs STANDARD; As TaxHook; d_ ContractionVault; p_ ExpansionVault; f_ FeeSplitter; tn GenesisMinter.",
+        "jc original license; b_ explicit v1.1 license adaptation using m_ removal set; vw v1.2 license; Ci original charter; h_ v1.2 charter. No distinct v1.1 charter replacement is invented.",
+        "VP original bindings, GP peripheryV11 and YP peripheryV12; _M directory role descriptions. Shared review stores exact UTF-8 byte ranges and hashes for all definitions/bindings.",
+        "qu selective owner/pendingOwner declarations bound to owned directory roles; executionPermissionless explicitly bound to Registry only. Nt is the Multicall infrastructure fragment.",
+        "905 entries across 15 interface files, including every declared function/event/error/constructor/receive entry; exact overloads, tuple components, mutability, indexed bits, canonical signatures and Ethereum Keccak selectors/topics retained.",
+        "Full reviewed auction definitions do not expose aggregate daySold(uint256), dayPrice(uint256), dayAnchorTime(), or dedicated SoldOut/AuctionEnded event names. Original purchasedOnDay(charterId,day) and newer purchasedInWindow(charterId,window) are separately preserved keyed usage reads, not aggregate price/sales history.",
+        "All 24 pure ABI-shaped literal arrays were classified: 21 named arrays plus three inline SDK metadata/ENS definitions. Eight named SDK ENS/DNS/signature/domain/generic ERC20 arrays and the three inline arrays are outside protocol role binding; Nt is included as infrastructure. d0/e6 composed SDK ENS definitions are separately excluded. Gp/yC event subsets match full role layouts; deployless SDK constructors are not protocol deployments."
+      ],
+      "summary": "The installed data now covers all identified role-bound definitions in the complete reviewed publisher module rather than only the prior question-driven subset. Nineteen historical chain/address/role/generation bindings are provenance, not active aliases. Registry, Genesis Liquidity Manager, POL Buyback and Incentives Vault have only selective control reads here; PoolManager has no bound ABI. These gaps remain explicit unknowns, not negative claims about deployed capabilities.",
+      "limits": [
+        "Complete source-definition inventory does not independently prove deployed ABI completeness, source-bytecode correspondence, permissions, effective economics or transaction success.",
+        "The v1.1 adapter deliberately removes the original constructor; its deployed constructor is not established by the adapter.",
+        "No complete Registry, Genesis Liquidity Manager, POL Buyback, Incentives Vault or shared PoolManager implementation ABI was found bound in this module. Supplemental historical evidence remains separately scoped.",
+        "Imported/chunk-specific surfaces outside this module and all-time historical deployments are not claimed complete. Every future interface addition must repeat the documented source/coverage/review methodology.",
+        "No saved live monetary state, current-address aliases, runtime network client, signing or submission authority. Dated hashes are source provenance, never future acceptance allowlists."
+      ]
+    },
     {
       "id": "sr-offline-research-evidence-2026-09-27",
       "url": "https://www.standardreserve.xyz/app/protocol/live/",

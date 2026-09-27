@@ -1,0 +1,2540 @@
+{
+  "schema_version": 1,
+  "id": "genesis-minter",
+  "role": "genesis_minter",
+  "generation": "original",
+  "review_id": "publisher-protocol-interfaces-2026-09-27",
+  "coverage": {
+    "kind": "complete_literal",
+    "source_definition_complete": true,
+    "deployed_implementation_complete": false,
+    "source_locator": "tn",
+    "source_fragment": {
+      "bytes": 11598,
+      "sha256": "65228965da68951ee5aefb8d4ac60b5327cd4ffd7cdd208f95db6730011117f2",
+      "start_utf8_byte": 437845,
+      "end_utf8_byte": 449443
+    },
+    "entry_counts": {
+      "constructor": 1,
+      "error": 31,
+      "event": 10,
+      "fallback": 0,
+      "function": 49,
+      "receive": 0
+    },
+    "abi_sha256": "a21ce9c4690b6e81ac35266b2c09f09bd8f45e0f588f0c3e6a3104c2e2b654c9"
+  },
+  "entries": [
+    {
+      "signature": "constructor(address,address,address,address,bytes32,uint256,uint256,uint256,uint256,address)",
+      "declaration": "constructor(address bank_, address pol_, address contractionVault_, address expansionVault_, bytes32 merkleRoot_, uint256 allowlistAllocation_, uint256 whitelistPrice_, uint256 publicStartPrice_, uint256 wlWindow_, address initialOwner) nonpayable",
+      "abi": {
+        "type": "constructor",
+        "inputs": [
+          {
+            "name": "bank_",
+            "type": "address",
+            "internalType": "contract CentralBank"
+          },
+          {
+            "name": "pol_",
+            "type": "address",
+            "internalType": "contract PolManager"
+          },
+          {
+            "name": "contractionVault_",
+            "type": "address",
+            "internalType": "address payable"
+          },
+          {
+            "name": "expansionVault_",
+            "type": "address",
+            "internalType": "address payable"
+          },
+          {
+            "name": "merkleRoot_",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "allowlistAllocation_",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "whitelistPrice_",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "publicStartPrice_",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "wlWindow_",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "initialOwner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares deployment arguments for genesis minter: bank_, pol_, contractionVault_, expansionVault_, merkleRoot_, allowlistAllocation_, whitelistPrice_, publicStartPrice_, wlWindow_, initialOwner. This layout does not prove any deployed constructor values or source/bytecode correspondence.",
+      "units": "Addresses are identities; payable value is native wei. Other constructor numeric scales are not established solely by these types.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ]
+    },
+    {
+      "signature": "BPS()",
+      "declaration": "function BPS() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "BPS",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the bps named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x249d39e9"
+    },
+    {
+      "signature": "CONTRACTION_SHARE_BPS()",
+      "declaration": "function CONTRACTION_SHARE_BPS() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "CONTRACTION_SHARE_BPS",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the contraction share bps named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x5e288e8b"
+    },
+    {
+      "signature": "DUTCH_DURATION()",
+      "declaration": "function DUTCH_DURATION() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "DUTCH_DURATION",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the dutch duration named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x5370c780"
+    },
+    {
+      "signature": "EXPANSION_SHARE_BPS()",
+      "declaration": "function EXPANSION_SHARE_BPS() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "EXPANSION_SHARE_BPS",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the expansion share bps named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x14aca095"
+    },
+    {
+      "signature": "FLOOR_ETH()",
+      "declaration": "function FLOOR_ETH() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "FLOOR_ETH",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the floor eth named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x7724e693"
+    },
+    {
+      "signature": "GENESIS_CHARTERS()",
+      "declaration": "function GENESIS_CHARTERS() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "GENESIS_CHARTERS",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the genesis charters named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xf64a86ef"
+    },
+    {
+      "signature": "MAX_PER_WALLET()",
+      "declaration": "function MAX_PER_WALLET() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "MAX_PER_WALLET",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the max per wallet named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x0f2cdd6c"
+    },
+    {
+      "signature": "MAX_PUBLIC_START_RATIO()",
+      "declaration": "function MAX_PUBLIC_START_RATIO() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "MAX_PUBLIC_START_RATIO",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the max public start ratio named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xab8464bb"
+    },
+    {
+      "signature": "POL_SHARE_BPS()",
+      "declaration": "function POL_SHARE_BPS() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "POL_SHARE_BPS",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the pol share bps named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x88ac5da6"
+    },
+    {
+      "signature": "POOL_FEE()",
+      "declaration": "function POOL_FEE() view returns (uint24)",
+      "abi": {
+        "type": "function",
+        "name": "POOL_FEE",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint24",
+            "internalType": "uint24"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the pool fee named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xdd1b9c4a"
+    },
+    {
+      "signature": "POOL_TICK_SPACING()",
+      "declaration": "function POOL_TICK_SPACING() view returns (int24)",
+      "abi": {
+        "type": "function",
+        "name": "POOL_TICK_SPACING",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "int24",
+            "internalType": "int24"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the pool tick spacing named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x7381527f"
+    },
+    {
+      "signature": "acceptOwnership()",
+      "declaration": "function acceptOwnership() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "acceptOwnership",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the ownership-acceptance operation, separate from proposing a new owner.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x79ba5097"
+    },
+    {
+      "signature": "allowlistAllocation()",
+      "declaration": "function allowlistAllocation() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "allowlistAllocation",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the founding allowlist allocation count, not remaining public supply.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x39ad28d0"
+    },
+    {
+      "signature": "allowlistClaimed(address)",
+      "declaration": "function allowlistClaimed(address wallet) view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "allowlistClaimed",
+        "inputs": [
+          {
+            "name": "wallet",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the supplied wallet allowlist-claim flag, not NFT ownership today.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x30b42ec2"
+    },
+    {
+      "signature": "allowlistMinted()",
+      "declaration": "function allowlistMinted() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "allowlistMinted",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports minted founding allowlist count, distinct from totalMinted.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x32d6f032"
+    },
+    {
+      "signature": "bank()",
+      "declaration": "function bank() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "bank",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "contract CentralBank"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the bank dependency address for this role. An address observation is not current authorization, code equivalence or permission to call the dependency.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x76cdb03b"
+    },
+    {
+      "signature": "claimAllowlist(bytes32[])",
+      "declaration": "function claimAllowlist(bytes32[] proof) payable returns (uint256 id)",
+      "abi": {
+        "type": "function",
+        "name": "claimAllowlist",
+        "inputs": [
+          {
+            "name": "proof",
+            "type": "bytes32[]",
+            "internalType": "bytes32[]"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "id",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "payable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names founding allowlist mint with a Merkle proof; proof validity, quotas and payment conditions require independent checks.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xe6c401f7"
+    },
+    {
+      "signature": "contractionVault()",
+      "declaration": "function contractionVault() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "contractionVault",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address payable"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the contraction vault dependency address for this role. An address observation is not current authorization, code equivalence or permission to call the dependency.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x9a829a0f"
+    },
+    {
+      "signature": "currentPublicPrice()",
+      "declaration": "function currentPublicPrice() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "currentPublicPrice",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the founding public-mint price field, not the ongoing charter-auction price or guaranteed availability.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xa55c9079"
+    },
+    {
+      "signature": "dutchEnd()",
+      "declaration": "function dutchEnd() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "dutchEnd",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the founding Dutch-window endpoint field, not an ongoing auction end.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xa5da2e60"
+    },
+    {
+      "signature": "eip712Domain()",
+      "declaration": "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "abi": {
+        "type": "function",
+        "name": "eip712Domain",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "fields",
+            "type": "bytes1",
+            "internalType": "bytes1"
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "version",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "chainId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "verifyingContract",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "salt",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "extensions",
+            "type": "uint256[]",
+            "internalType": "uint256[]"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Returns EIP-712 domain fields including ordered dynamic extensions; interface availability does not authorize signing.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x84b0196e"
+    },
+    {
+      "signature": "endStrict()",
+      "declaration": "function endStrict() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "endStrict",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names ending founding strict mode; authorization and exact phase consequences require source proof.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x8f1727ed"
+    },
+    {
+      "signature": "expansionVault()",
+      "declaration": "function expansionVault() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "expansionVault",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address payable"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the expansion vault dependency address for this role. An address observation is not current authorization, code equivalence or permission to call the dependency.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x634065ce"
+    },
+    {
+      "signature": "finalizeAndLaunch(uint256)",
+      "declaration": "function finalizeAndLaunch(uint256 launchPriceWei) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "finalizeAndLaunch",
+        "inputs": [
+          {
+            "name": "launchPriceWei",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names founding-sale finalization and launch; allocation, liquidity placement and downstream state effects require receipt/source evidence.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x91104339"
+    },
+    {
+      "signature": "finalized()",
+      "declaration": "function finalized() view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "finalized",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports founding-sale finalization status, not an independently verified liquidity launch or later mandate activation.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xb3f05b97"
+    },
+    {
+      "signature": "hashFor(address)",
+      "declaration": "function hashFor(address wallet) view returns (bytes32)",
+      "abi": {
+        "type": "function",
+        "name": "hashFor",
+        "inputs": [
+          {
+            "name": "wallet",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Returns the founding-sale hash for the supplied wallet; domain, signing authorization and intended use require source evidence.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x07994423"
+    },
+    {
+      "signature": "launchTickFor(uint256)",
+      "declaration": "function launchTickFor(uint256 launchPriceWei) pure returns (int24)",
+      "abi": {
+        "type": "function",
+        "name": "launchTickFor",
+        "inputs": [
+          {
+            "name": "launchPriceWei",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "int24",
+            "internalType": "int24"
+          }
+        ],
+        "stateMutability": "pure"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Returns a launch tick calculation for the supplied input; currency ordering and economic meaning need source evidence.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x4df4e2e4"
+    },
+    {
+      "signature": "merkleRoot()",
+      "declaration": "function merkleRoot() view returns (bytes32)",
+      "abi": {
+        "type": "function",
+        "name": "merkleRoot",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the founding allowlist commitment; the root does not itself supply or validate a wallet membership proof.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x2eb4a7ab"
+    },
+    {
+      "signature": "mintPublic(uint256,bytes)",
+      "declaration": "function mintPublic(uint256 maxPrice, bytes data) payable returns (uint256 id)",
+      "abi": {
+        "type": "function",
+        "name": "mintPublic",
+        "inputs": [
+          {
+            "name": "maxPrice",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "data",
+            "type": "bytes",
+            "internalType": "bytes"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "id",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "payable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names public founding mint with supplied price ceiling and data; this is not an ongoing auction purchase.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x44a8715b"
+    },
+    {
+      "signature": "mintStart()",
+      "declaration": "function mintStart() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "mintStart",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the founding mint-start field, not contract deployment time.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x255e4685"
+    },
+    {
+      "signature": "mintedBy(address)",
+      "declaration": "function mintedBy(address wallet) view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "mintedBy",
+        "inputs": [
+          {
+            "name": "wallet",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports founding mint count keyed by wallet; transfers mean this need not equal current NFT balance.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x3cef28d2"
+    },
+    {
+      "signature": "open()",
+      "declaration": "function open() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "open",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names opening of the founding sale; exact timing and caller authority require source correspondence.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xfcfff16f"
+    },
+    {
+      "signature": "opened()",
+      "declaration": "function opened() view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "opened",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the founding-sale open flag; founding sale and ongoing charter auction are different modules.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x5f88eade"
+    },
+    {
+      "signature": "operator()",
+      "declaration": "function operator() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "operator",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the founding-sale operator address; role authority and administrator are separate.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x570ca735"
+    },
+    {
+      "signature": "owner()",
+      "declaration": "function owner() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "owner",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the module administrator, not a charter holder or proof of every permission.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x8da5cb5b"
+    },
+    {
+      "signature": "pendingOwner()",
+      "declaration": "function pendingOwner() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "pendingOwner",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the proposed administrator in the ownership handoff; proposal is not acceptance.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xe30c3978"
+    },
+    {
+      "signature": "pol()",
+      "declaration": "function pol() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "pol",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "contract PolManager"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the pol dependency address for this role. An address observation is not current authorization, code equivalence or permission to call the dependency.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xe46761c4"
+    },
+    {
+      "signature": "publicStart()",
+      "declaration": "function publicStart() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "publicStart",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the founding public-window start field, distinct from allowlist start.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xa5f4c6ff"
+    },
+    {
+      "signature": "publicStartPrice()",
+      "declaration": "function publicStartPrice() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "publicStartPrice",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the founding public-mint opening-price input, distinct from currentPublicPrice.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x2e541b7e"
+    },
+    {
+      "signature": "renounceOwnership()",
+      "declaration": "function renounceOwnership() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "renounceOwnership",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the ownership-renunciation operation; resulting authority of other modules is a separate question.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x715018a6"
+    },
+    {
+      "signature": "setOperator(address)",
+      "declaration": "function setOperator(address signer) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "setOperator",
+        "inputs": [
+          {
+            "name": "signer",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the operator configuration operation with inputs signer. The ABI does not prove caller permissions, effective timing or dependent state changes.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xb3ab15fb"
+    },
+    {
+      "signature": "setWlWindow(uint256)",
+      "declaration": "function setWlWindow(uint256 newWindow) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "setWlWindow",
+        "inputs": [
+          {
+            "name": "newWindow",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the wl window configuration operation with inputs newWindow. The ABI does not prove caller permissions, effective timing or dependent state changes.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x301fcda9"
+    },
+    {
+      "signature": "strict()",
+      "declaration": "function strict() view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "strict",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports founding-sale strict-mode flag; do not invent its exact restrictions from the flag alone.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xec104f6b"
+    },
+    {
+      "signature": "strictEnded()",
+      "declaration": "function strictEnded() view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "strictEnded",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the founding strict-mode end flag, not finalization or sold-out state.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x78af1280"
+    },
+    {
+      "signature": "totalMinted()",
+      "declaration": "function totalMinted() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "totalMinted",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports founding-sale minted count, distinct from later charter auction activity.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xa2309ff8"
+    },
+    {
+      "signature": "totalProceeds()",
+      "declaration": "function totalProceeds() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "totalProceeds",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports founding-sale proceeds accounting; distribution and received assets need reconciliation.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xf1db23dc"
+    },
+    {
+      "signature": "transferOwnership(address)",
+      "declaration": "function transferOwnership(address newOwner) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "transferOwnership",
+        "inputs": [
+          {
+            "name": "newOwner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the administrator-handoff proposal with the supplied new owner; does not itself prove acceptance.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xf2fde38b"
+    },
+    {
+      "signature": "whitelistPrice()",
+      "declaration": "function whitelistPrice() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "whitelistPrice",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the founding allowlist price, distinct from public-mint pricing.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xfc1a1c36"
+    },
+    {
+      "signature": "wlWindow()",
+      "declaration": "function wlWindow() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "wlWindow",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the founding allowlist-window input; effective timing/phase transitions require implementation evidence.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x538575bb"
+    },
+    {
+      "signature": "AllowlistClaimed(address,uint256,uint256)",
+      "declaration": "event AllowlistClaimed(address indexed account, uint256 indexed charterId, uint256 price)",
+      "abi": {
+        "type": "event",
+        "name": "AllowlistClaimed",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "price",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports founding allowlist acquisition with indexed wallet and charter ID; price is in data.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xedfdae36dc08c9a0a687c8731d0bff6a635598107a4bf81cdad2a39e567039af",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "account",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "charterId",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 2,
+            "name": "price",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "EIP712DomainChanged()",
+      "declaration": "event EIP712DomainChanged()",
+      "abi": {
+        "type": "event",
+        "name": "EIP712DomainChanged",
+        "inputs": [],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports a signing-domain change without fields; it does not authorize signature requests.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x0a6387c9ea3628b88a633bb4f3b151770f70085117a15f9bf3787cda53f13d31",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 0,
+        "fields": []
+      }
+    },
+    {
+      "signature": "GenesisFinalizedAndLaunched(uint256,uint256,uint256,uint256,uint256,uint256,uint256,int24)",
+      "declaration": "event GenesisFinalizedAndLaunched(uint256 totalMinted, uint256 totalProceeds, uint256 floorShare, uint256 polShare, uint256 contractionShare, uint256 expansionShare, uint256 launchPriceWei, int24 launchTick)",
+      "abi": {
+        "type": "event",
+        "name": "GenesisFinalizedAndLaunched",
+        "inputs": [
+          {
+            "name": "totalMinted",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "totalProceeds",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "floorShare",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "polShare",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "contractionShare",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "expansionShare",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "launchPriceWei",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "launchTick",
+            "type": "int24",
+            "indexed": false,
+            "internalType": "int24"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports founding totals, allocation shares, launchPriceWei and signed launch tick; reconcile the actual liquidity/recipient effects separately.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x9dd2a3de967ad06808d0896233a2f261db7cd96284bb119f9bcd1ae9e71fa584",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 8,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "totalMinted",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 1,
+            "name": "totalProceeds",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 2,
+            "name": "floorShare",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 2,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 3,
+            "name": "polShare",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 3,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 4,
+            "name": "contractionShare",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 4,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 5,
+            "name": "expansionShare",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 5,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 6,
+            "name": "launchPriceWei",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 6,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 7,
+            "name": "launchTick",
+            "canonical_type": "int24",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 7,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "MintOpened(uint256,uint256,uint256)",
+      "declaration": "event MintOpened(uint256 wlStart, uint256 publicStart, uint256 dutchEnd)",
+      "abi": {
+        "type": "event",
+        "name": "MintOpened",
+        "inputs": [
+          {
+            "name": "wlStart",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "publicStart",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "dutchEnd",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports founding allowlist start, public start and Dutch end fields, not ongoing auction timing.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x83f0784f1c8159d952c926eeaceab3cb001654e3341dbce8db1960763311f463",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 3,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "wlStart",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 1,
+            "name": "publicStart",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 2,
+            "name": "dutchEnd",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 2,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "OperatorSet(address)",
+      "declaration": "event OperatorSet(address operator)",
+      "abi": {
+        "type": "event",
+        "name": "OperatorSet",
+        "inputs": [
+          {
+            "name": "operator",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports operator set with ordered fields operator. This configuration/relationship observation is not proof of present effective policy; use the event block and authenticated emitter.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x99d737e0adf2c449d71890b86772885ec7959b152ddb265f76325b6e68e105d3",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "operator",
+            "canonical_type": "address",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "OwnershipTransferStarted(address,address)",
+      "declaration": "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "abi": {
+        "type": "event",
+        "name": "OwnershipTransferStarted",
+        "inputs": [
+          {
+            "name": "previousOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "newOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports proposed administrator handoff; both addresses are indexed and data is empty, distinct from completed acceptance.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x38d16b8cac22d99fc7c124b9cd0de2d3fa1faef420bfe791d8c362d765e22700",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "previousOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "newOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "OwnershipTransferred(address,address)",
+      "declaration": "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "abi": {
+        "type": "event",
+        "name": "OwnershipTransferred",
+        "inputs": [
+          {
+            "name": "previousOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "newOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports administrator ownership transfer; it is not a charter ownership log or proof of every control permission.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "previousOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "newOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "PublicMinted(address,uint256,uint256)",
+      "declaration": "event PublicMinted(address indexed account, uint256 indexed charterId, uint256 price)",
+      "abi": {
+        "type": "event",
+        "name": "PublicMinted",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "price",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports founding public acquisition with indexed wallet and charter ID, separate from ongoing charter auctions.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xc1a73b31b32801ebbb4cae30b73eae4345be9f2915ea60306383c245ef8fac44",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "account",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "charterId",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 2,
+            "name": "price",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "StrictEnded()",
+      "declaration": "event StrictEnded()",
+      "abi": {
+        "type": "event",
+        "name": "StrictEnded",
+        "inputs": [],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports founding strict-mode end without fields, distinct from finalization.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xbdba2a32bf96d58e2477e034034f21c31f0203ff8e5d53228e696c4943962990",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 0,
+        "fields": []
+      }
+    },
+    {
+      "signature": "WlWindowSet(uint256,uint256)",
+      "declaration": "event WlWindowSet(uint256 previousWindow, uint256 newWindow)",
+      "abi": {
+        "type": "event",
+        "name": "WlWindowSet",
+        "inputs": [
+          {
+            "name": "previousWindow",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "newWindow",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports wl window set with ordered fields previousWindow, newWindow. This configuration/relationship observation is not proof of present effective policy; use the event block and authenticated emitter.",
+      "units": "Founding-sale ETH price/proceeds display is native wei (18 decimals); allocation/mint quantities are unscaled. Time, tick and ratio fields require their own semantic evidence; do not infer scale from uint256.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x275378a1403c9ed337fb0a0fad50a68dddb9885b537b657a22a2c3046f2a07b2",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 2,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "previousWindow",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 1,
+            "name": "newWindow",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "AllocationTooLarge()",
+      "declaration": "error AllocationTooLarge()",
+      "abi": {
+        "type": "error",
+        "name": "AllocationTooLarge",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the AllocationTooLarge revert condition (allocation too large) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x9fab5d0f"
+    },
+    {
+      "signature": "AllowlistAlreadyClaimed()",
+      "declaration": "error AllowlistAlreadyClaimed()",
+      "abi": {
+        "type": "error",
+        "name": "AllowlistAlreadyClaimed",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the AllowlistAlreadyClaimed revert condition (allowlist already claimed) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x4d5e52e7"
+    },
+    {
+      "signature": "AllowlistExhausted()",
+      "declaration": "error AllowlistExhausted()",
+      "abi": {
+        "type": "error",
+        "name": "AllowlistExhausted",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the AllowlistExhausted revert condition (allowlist exhausted) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x6cefdb55"
+    },
+    {
+      "signature": "AllowlistNotOpen()",
+      "declaration": "error AllowlistNotOpen()",
+      "abi": {
+        "type": "error",
+        "name": "AllowlistNotOpen",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the AllowlistNotOpen revert condition (allowlist not open) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xb792803c"
+    },
+    {
+      "signature": "AlreadyFinalized()",
+      "declaration": "error AlreadyFinalized()",
+      "abi": {
+        "type": "error",
+        "name": "AlreadyFinalized",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the AlreadyFinalized revert condition (already finalized) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x475a2535"
+    },
+    {
+      "signature": "AlreadyOpen()",
+      "declaration": "error AlreadyOpen()",
+      "abi": {
+        "type": "error",
+        "name": "AlreadyOpen",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the AlreadyOpen revert condition (already open) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x965f8d94"
+    },
+    {
+      "signature": "EthTransferFailed()",
+      "declaration": "error EthTransferFailed()",
+      "abi": {
+        "type": "error",
+        "name": "EthTransferFailed",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the EthTransferFailed revert condition (eth transfer failed) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x6d963f88"
+    },
+    {
+      "signature": "GenesisExhausted()",
+      "declaration": "error GenesisExhausted()",
+      "abi": {
+        "type": "error",
+        "name": "GenesisExhausted",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the GenesisExhausted revert condition (genesis exhausted) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x4cf5941a"
+    },
+    {
+      "signature": "IncorrectPayment()",
+      "declaration": "error IncorrectPayment()",
+      "abi": {
+        "type": "error",
+        "name": "IncorrectPayment",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the IncorrectPayment revert condition (incorrect payment) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x569e8c11"
+    },
+    {
+      "signature": "InsufficientPayment()",
+      "declaration": "error InsufficientPayment()",
+      "abi": {
+        "type": "error",
+        "name": "InsufficientPayment",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the InsufficientPayment revert condition (insufficient payment) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xcd1c8867"
+    },
+    {
+      "signature": "InvalidLaunchPrice()",
+      "declaration": "error InvalidLaunchPrice()",
+      "abi": {
+        "type": "error",
+        "name": "InvalidLaunchPrice",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the InvalidLaunchPrice revert condition (invalid launch price) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x4cf876a7"
+    },
+    {
+      "signature": "InvalidPolManager()",
+      "declaration": "error InvalidPolManager()",
+      "abi": {
+        "type": "error",
+        "name": "InvalidPolManager",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the InvalidPolManager revert condition (invalid pol manager) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x8699caec"
+    },
+    {
+      "signature": "InvalidPrice()",
+      "declaration": "error InvalidPrice()",
+      "abi": {
+        "type": "error",
+        "name": "InvalidPrice",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the InvalidPrice revert condition (invalid price) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x00bfc921"
+    },
+    {
+      "signature": "InvalidProof()",
+      "declaration": "error InvalidProof()",
+      "abi": {
+        "type": "error",
+        "name": "InvalidProof",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the InvalidProof revert condition (invalid proof) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x09bde339"
+    },
+    {
+      "signature": "InvalidShortString()",
+      "declaration": "error InvalidShortString()",
+      "abi": {
+        "type": "error",
+        "name": "InvalidShortString",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the InvalidShortString revert condition (invalid short string) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xb3512b0c"
+    },
+    {
+      "signature": "InvalidWindow()",
+      "declaration": "error InvalidWindow()",
+      "abi": {
+        "type": "error",
+        "name": "InvalidWindow",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the InvalidWindow revert condition (invalid window) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x392334ed"
+    },
+    {
+      "signature": "IsNoGoodSorry()",
+      "declaration": "error IsNoGoodSorry()",
+      "abi": {
+        "type": "error",
+        "name": "IsNoGoodSorry",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the IsNoGoodSorry revert condition (is no good sorry) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xe26a76b8"
+    },
+    {
+      "signature": "LaunchConfigurationInvalid()",
+      "declaration": "error LaunchConfigurationInvalid()",
+      "abi": {
+        "type": "error",
+        "name": "LaunchConfigurationInvalid",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the LaunchConfigurationInvalid revert condition (launch configuration invalid) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x530af203"
+    },
+    {
+      "signature": "LaunchNotReady()",
+      "declaration": "error LaunchNotReady()",
+      "abi": {
+        "type": "error",
+        "name": "LaunchNotReady",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the LaunchNotReady revert condition (launch not ready) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xe265713f"
+    },
+    {
+      "signature": "MintNotOpen()",
+      "declaration": "error MintNotOpen()",
+      "abi": {
+        "type": "error",
+        "name": "MintNotOpen",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the MintNotOpen revert condition (mint not open) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x951b974f"
+    },
+    {
+      "signature": "NoProceeds()",
+      "declaration": "error NoProceeds()",
+      "abi": {
+        "type": "error",
+        "name": "NoProceeds",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the NoProceeds revert condition (no proceeds) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xc4d8fa87"
+    },
+    {
+      "signature": "OnlyDirectCaller()",
+      "declaration": "error OnlyDirectCaller()",
+      "abi": {
+        "type": "error",
+        "name": "OnlyDirectCaller",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the OnlyDirectCaller revert condition (only direct caller) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xa06f0418"
+    },
+    {
+      "signature": "OwnableInvalidOwner(address)",
+      "declaration": "error OwnableInvalidOwner(address owner)",
+      "abi": {
+        "type": "error",
+        "name": "OwnableInvalidOwner",
+        "inputs": [
+          {
+            "name": "owner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the OwnableInvalidOwner revert condition (ownable invalid owner) with owner. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x1e4fbdf7"
+    },
+    {
+      "signature": "OwnableUnauthorizedAccount(address)",
+      "declaration": "error OwnableUnauthorizedAccount(address account)",
+      "abi": {
+        "type": "error",
+        "name": "OwnableUnauthorizedAccount",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the OwnableUnauthorizedAccount revert condition (ownable unauthorized account) with account. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x118cdaa7"
+    },
+    {
+      "signature": "PriceAboveMax()",
+      "declaration": "error PriceAboveMax()",
+      "abi": {
+        "type": "error",
+        "name": "PriceAboveMax",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the PriceAboveMax revert condition (price above max) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xf2e3adf8"
+    },
+    {
+      "signature": "PublicNotOpen()",
+      "declaration": "error PublicNotOpen()",
+      "abi": {
+        "type": "error",
+        "name": "PublicNotOpen",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the PublicNotOpen revert condition (public not open) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xd04129b3"
+    },
+    {
+      "signature": "ReentrancyGuardReentrantCall()",
+      "declaration": "error ReentrancyGuardReentrantCall()",
+      "abi": {
+        "type": "error",
+        "name": "ReentrancyGuardReentrantCall",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ReentrancyGuardReentrantCall revert condition (reentrancy guard reentrant call) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x3ee5aeb5"
+    },
+    {
+      "signature": "StrictAlreadyEnded()",
+      "declaration": "error StrictAlreadyEnded()",
+      "abi": {
+        "type": "error",
+        "name": "StrictAlreadyEnded",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the StrictAlreadyEnded revert condition (strict already ended) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x931802ae"
+    },
+    {
+      "signature": "StringTooLong(string)",
+      "declaration": "error StringTooLong(string str)",
+      "abi": {
+        "type": "error",
+        "name": "StringTooLong",
+        "inputs": [
+          {
+            "name": "str",
+            "type": "string",
+            "internalType": "string"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the StringTooLong revert condition (string too long) with str. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x305a27a9"
+    },
+    {
+      "signature": "WalletLimitReached()",
+      "declaration": "error WalletLimitReached()",
+      "abi": {
+        "type": "error",
+        "name": "WalletLimitReached",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the WalletLimitReached revert condition (wallet limit reached) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x84dab646"
+    },
+    {
+      "signature": "ZeroAddress()",
+      "declaration": "error ZeroAddress()",
+      "abi": {
+        "type": "error",
+        "name": "ZeroAddress",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ZeroAddress revert condition (zero address) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xd92e233d"
+    }
+  ]
+}

@@ -47,6 +47,7 @@ class PackageChecks(unittest.TestCase):
         self.script = self.root / "maintenance/package.py"
         self.script.parent.mkdir()
         shutil.copyfile(SCRIPT, self.script)
+        shutil.copyfile(SCRIPT.with_name("inventory.py"), self.script.with_name("inventory.py"))
         for name in ("maintenance/private.json", ".github/workflows/validate.yml", ".gitignore",
                      "research/check-research.py", "research/fixtures/evidence.json",
                      "dist/old.zip", "maintenance/__pycache__/package.pyc",
@@ -139,7 +140,9 @@ class PackageChecks(unittest.TestCase):
                     path = path.parent
                     path.rmdir()
         for relative in ("README.md", "scripts/calculations.py", "scripts/research.py",
-                         "assets/schemas/research-evidence-v1.json"):
+                         "assets/schemas/research-evidence-v1.json",
+                         "assets/entities/contracts.json", "assets/interfaces/reviews.json",
+                         "assets/interfaces/capabilities.json", "assets/examples/research-evidence-v1.json"):
             with self.subTest(path=relative):
                 path = self.destination / relative
                 path.unlink()

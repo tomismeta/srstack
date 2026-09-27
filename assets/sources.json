@@ -15,6 +15,7 @@
       "id": "live-interface",
       "path": "assets/sources/live-interface.json",
       "record_ids": [
+        "sr-complete-interface-inventory-2026-09-27",
         "sr-offline-research-evidence-2026-09-27",
         "sr-question-interface-2026-09-27",
         "sr-core-accrual-correspondence-2026-09-27",
@@ -29,7 +30,7 @@
         "sr-v1-1-read-interface",
         "sr-pol-buyback-event-interface"
       ],
-      "scope": "Dated publisher interface/deployment provenance, selected generation-scoped encoding and denomination evidence, core implementation-correspondence limits, and raw POL acquisition events. Source locators are not current bindings, full ABI catalogs or runtime allowlists."
+      "scope": "Dated publisher interface/deployment provenance, complete reviewed module-bound definition inventory with explicit role gaps, generation-scoped encoding/denomination evidence, implementation-correspondence limits and raw POL acquisition events. Source locators and dated bindings are not current routing or runtime allowlists."
     },
     {
       "id": "website-v1",

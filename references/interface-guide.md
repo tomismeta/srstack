@@ -1,6 +1,6 @@
 # Question-driven interface guide
 
-**Reviewed 2026-09-27.** Selected encoding/decoding leads, not a broad ABI catalog, question whitelist, call sequence, deployment router or execution allowlist. Authenticate the chain, emitting/called address, generation and block under [contracts](contracts.md#authenticate-the-requested-role). Other authenticated interfaces remain usable. No signing or submission is authorized here.
+**Reviewed 2026-09-27.** This is a question-driven summary, not the complete data inventory, a question whitelist, call sequence, deployment router or execution allowlist. The [full reviewed inventory](interface-inventory.md) now includes all identified protocol-role definitions in the complete publisher module, with explicit role gaps; [capabilities](capabilities.md) distinguishes available reads from scoped absences and unknowns. Authenticate the chain, emitting/called address, generation and block under [contracts](contracts.md#authenticate-the-requested-role). Other authenticated interfaces remain usable. No signing or submission is authorized here.
 
 ## Dated provenance
 
@@ -45,6 +45,18 @@ Call data is selector followed by ABI arguments. For these static inputs, each o
 `openBids(uint256,uint256)` returns one **dynamic** `uint256[]`: word0 is a byte offset from the beginning of return data (normally `0x20`); at that offset is the element count, followed by that many 32-byte IDs. The offset is not the first ID, and neither the offset nor length is a charter ID. Respect offsets/bounds rather than taking every word as an element. ABI parameter names explicitly identify `bids`/`fillable` inputs as `charterId`; `openBids` names its output only `ids`. A successful `bids(rawId)` call does not authenticate the join, page ordering, completeness or stable pagination. Existing publisher order reads use already-known charter IDs, not a proven raw-page mapping.
 
 All listed events are nonanonymous. Indexed fields occupy topic1 onward in listed order; nonindexed fields occupy consecutive 32-byte data words in listed order. The two `Transfer(address,address,uint256)` layouts have **the same topic0 but different indexing**: NFT tokenId is topic3; ERC20 value is data word0. Authenticate emitter/role before decoding. Empty data is valid only where shown. Filter/log existence alone is not receipt success or a complete history claim.
+
+**Use full event declarations, not signature-only strings, to build a decoder.** A canonical signature supplies topic0 but deliberately omits names and `indexed`. Every [inventory entry](interface-inventory.md#data-layout-and-event-decoding) supplies the complete `abi`, an explicit `declaration`, and a structural `event_layout`. These examples expose the location distinction directly:
+
+```solidity
+event LicensesPurchased(uint256 indexed charterId, uint256 indexed day, uint256 count, uint256 unitPrice)
+event CharterPurchased(uint256 indexed charterId, address indexed buyer, uint256 indexed day, uint256 price)
+event CheckedIn(address indexed wallet)
+event Transfer(address indexed from, address indexed to, uint256 indexed tokenId) // CharterNFT
+event Transfer(address indexed from, address indexed to, uint256 value) // STANDARD
+```
+
+For `LicensesPurchased`, topics 1/2 contain charterId/day and data contains count/unitPrice. For `CharterPurchased`, topics 1/2/3 contain charterId/buyer/day and data contains only price. `CheckedIn` has one indexed wallet and **empty data**. Passing a signature-only declaration to a decoder can incorrectly expect topic fields in data. Keep the authenticated emitter/role and full indexed layout with the log.
 
 ## Units and semantic limits
 
@@ -218,7 +230,7 @@ For decoding historical inputs or host-authorized unsigned preparation only, **n
 K purchase/deposit/withdrawal events, N ownership changes and S token/ceiling events are different ledgers. Withdrawals/retirements/transfers can alter future eligibility and ownership attribution; event names alone do not prove an accumulator update rule. No complete earned-origin budget follows from observing only some of them.
 
 | Canonical signature · topic0 | Indexed topics after topic0 | Data words in order | Scope; qualification |
-| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- |
 | `CharterCreated(uint256,address)`<br>`0xa07694e6f3d67919253eb27a138a6aa6b5e10c316a4be927b34b93b97942d2c5` | `uint256 charterId, address to` | `empty` | K |
 | `BranchesOpened(uint256,uint256,uint256)`<br>`0xfca0d4c142a1e3085d891c92cde8193ccd316ff4ba9bb3f6b439136681115856` | `uint256 charterId` | `uint256 count, uint256 cost` | K; cost is total ledger consideration; do not add again to purchase consideration |
 | `Deposited(uint256,address,uint256)`<br>`0x1599c0fcf897af5babc2bfcf707f5dc050f841b044d97c3251ecec35b9abf80b` | `uint256 charterId, address from` | `uint256 amount` | K; external ledger inflow, not earned emissions |
@@ -246,7 +258,7 @@ Layouts below are compared across the indicated generations; round identity rema
 L* prices/consideration below use publisher STANDARD18 ledger denomination; caps/counts are licenses. Keep this history separate from charter sales even where roll/configuration topic0 matches.
 
 | Canonical signature · topic0 | Indexed topics after topic0 | Data words in order | Scope; qualification |
-| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- |
 | `AuctionStarted(uint256,uint256)`<br>`0xf8910119ddbef5440c54532457dfe8250a10ed39e583292818f44724b9e1344c` | `uint256 day` | `uint256 startPrice` | L* |
 | `DayRolled(uint256,uint256,uint256,uint256)`<br>`0xfe150722db0c02a69373b1d32f7d153b415b253b5bce66b95e7b1f5d9ce65c3f` | `uint256 day` | `uint256 startPrice, uint256 floorPrice, uint256 cap` | L*; no timestamp, duration, or end reason |
 | `LicensesPurchased(uint256,uint256,uint256,uint256)`<br>`0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5` | `uint256 charterId, uint256 day` | `uint256 count, uint256 unitPrice` | L*; count × unitPrice is consideration, not tx value |
@@ -265,7 +277,7 @@ L* prices/consideration below use publisher STANDARD18 ledger denomination; caps
 C* prices below are ETH wei; caps/counts are charters. Neither this event family nor its inventory is an existing charter's branch-license allowance.
 
 | Canonical signature · topic0 | Indexed topics after topic0 | Data words in order | Scope; qualification |
-| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- |
 | `AuctionStarted(uint256,uint256)`<br>`0xf8910119ddbef5440c54532457dfe8250a10ed39e583292818f44724b9e1344c` | `uint256 day` | `uint256 startPrice` | C* |
 | `DayRolled(uint256,uint256,uint256,uint256)`<br>`0xfe150722db0c02a69373b1d32f7d153b415b253b5bce66b95e7b1f5d9ce65c3f` | `uint256 day` | `uint256 startPrice, uint256 floorPrice, uint256 cap` | C*; no timestamp, duration, or end reason |
 | `DecayHalfLifeSet(uint256)`<br>`0x3491d4ab69d4f73c3d81521a7c13c6f4299f2216ed9b9cc044949888cf5824f2` | `none` | `uint256 halfLife` | C* |

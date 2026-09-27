@@ -18,11 +18,11 @@
   "stages": [
     {
       "id": "package_integrity",
-      "pass_requires": "Reviewed-commit export/verification establishes exact runtime membership and bytes against the candidate pin; no executable helpers or removed catalogs are installed. This says nothing about host loading or live access."
+      "pass_requires": "Reviewed-commit export/verification establishes exact runtime membership and bytes against the candidate pin, including optional offline helpers, reviewed contract/interface/capability inventories and the explicitly synthetic worked example. Retired protocol clients, source-only regression machinery and unreviewed resources are excluded. Inventory consistency preserves scoped coverage, indexing and review provenance; none of these checks establishes host loading, live access or deployed implementation correspondence."
     },
     {
       "id": "loaded_revision_and_isolation",
-      "pass_requires": "Host evidence identifies the actual loaded path/revision and fresh-session isolation from old installs, backups, catalogs, answer packets and workshops. Confirm excluded material is outside the host's discovery/search roots; a digest on disk without evidence of what the host loaded is insufficient."
+      "pass_requires": "Host evidence identifies the actual loaded path/revision and fresh-session isolation from old installs, backups, retired catalogs, external answer packets and workshops. The current reviewed inventories and labelled synthetic example are intended runtime resources, not hidden prior context. Confirm excluded material is outside the host's discovery/search roots; a digest on disk without evidence of what the host loaded is insufficient."
     },
     {
       "id": "host_capability",

@@ -1,0 +1,1334 @@
+{
+  "schema_version": 1,
+  "id": "expansion-vault",
+  "role": "expansion_vault",
+  "generation": "original",
+  "review_id": "publisher-protocol-interfaces-2026-09-27",
+  "coverage": {
+    "kind": "complete_literal",
+    "source_definition_complete": true,
+    "deployed_implementation_complete": false,
+    "source_locator": "p_",
+    "source_fragment": {
+      "bytes": 6140,
+      "sha256": "6c129620d62a571dc2ccd1f2133b24ec5d53e5348a1e3cfc38956d7748354b45",
+      "start_utf8_byte": 426588,
+      "end_utf8_byte": 432728
+    },
+    "entry_counts": {
+      "constructor": 1,
+      "error": 17,
+      "event": 8,
+      "fallback": 0,
+      "function": 18,
+      "receive": 1
+    },
+    "abi_sha256": "f4edf28e10259aafed08d6ad936e82f560e570abcdb3e3100e08b11afcb6323d"
+  },
+  "entries": [
+    {
+      "signature": "constructor(address,address,address)",
+      "declaration": "constructor(address poolManager_, address registry_, address initialOwner) nonpayable",
+      "abi": {
+        "type": "constructor",
+        "inputs": [
+          {
+            "name": "poolManager_",
+            "type": "address",
+            "internalType": "contract IPoolManager"
+          },
+          {
+            "name": "registry_",
+            "type": "address",
+            "internalType": "contract AddressRegistry"
+          },
+          {
+            "name": "initialOwner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares deployment arguments for expansion vault: poolManager_, registry_, initialOwner. This layout does not prove any deployed constructor values or source/bytecode correspondence.",
+      "units": "Addresses are identities; payable value is native wei. Other constructor numeric scales are not established solely by these types.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ]
+    },
+    {
+      "signature": "receive()",
+      "declaration": "receive() payable",
+      "abi": {
+        "type": "receive",
+        "stateMutability": "payable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the payable receive entrypoint for expansion vault. ABI presence does not establish forwarding, acceptance conditions or downstream fund use.",
+      "units": "Addresses are identities; payable value is native wei. Other constructor numeric scales are not established solely by these types.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ]
+    },
+    {
+      "signature": "acceptOwnership()",
+      "declaration": "function acceptOwnership() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "acceptOwnership",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the ownership-acceptance operation, separate from proposing a new owner.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x79ba5097"
+    },
+    {
+      "signature": "clearReserveAsset(address)",
+      "declaration": "function clearReserveAsset(address asset) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "clearReserveAsset",
+        "inputs": [
+          {
+            "name": "asset",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names removal of the selected reserve-asset configuration; holdings disposition is not established by the name.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xae31147d"
+    },
+    {
+      "signature": "holdingsOf(address)",
+      "declaration": "function holdingsOf(address asset) view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "holdingsOf",
+        "inputs": [
+          {
+            "name": "asset",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports holdings for one supplied reserve asset, not an enumerated portfolio; authenticate the asset and its decimals separately.",
+      "units": "Reserve-asset quantities remain raw token units until the selected asset/decimals are authenticated; explicitly ETH-labelled spend fields are wei.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x03995b2d"
+    },
+    {
+      "signature": "isReserveAsset(address)",
+      "declaration": "function isReserveAsset(address asset) view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "isReserveAsset",
+        "inputs": [
+          {
+            "name": "asset",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports reserve-asset approval for one supplied asset; it does not enumerate all approved assets or prove a purchase succeeds.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xdd04e584"
+    },
+    {
+      "signature": "migrateToSuccessor(address[])",
+      "declaration": "function migrateToSuccessor(address[] assets) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "migrateToSuccessor",
+        "inputs": [
+          {
+            "name": "assets",
+            "type": "address[]",
+            "internalType": "address[]"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names migration of module holdings to a successor; it does not imply bytecode upgradeability or transfer of every position.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xb1cb9e3b"
+    },
+    {
+      "signature": "owner()",
+      "declaration": "function owner() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "owner",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the module administrator, not a charter holder or proof of every permission.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x8da5cb5b"
+    },
+    {
+      "signature": "pause()",
+      "declaration": "function pause() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "pause",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the pause operation; exact guardian/owner permissions require separate evidence.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x8456cb59"
+    },
+    {
+      "signature": "paused()",
+      "declaration": "function paused() view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "paused",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the module pause flag; other eligibility and permission conditions remain independent.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x5c975abb"
+    },
+    {
+      "signature": "pendingOwner()",
+      "declaration": "function pendingOwner() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "pendingOwner",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the proposed administrator in the ownership handoff; proposal is not acceptance.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xe30c3978"
+    },
+    {
+      "signature": "poolManager()",
+      "declaration": "function poolManager() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "poolManager",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "contract IPoolManager"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the pool manager dependency address for this role. An address observation is not current authorization, code equivalence or permission to call the dependency.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xdc4c90d3"
+    },
+    {
+      "signature": "purchaseReserve(address,uint256,uint256)",
+      "declaration": "function purchaseReserve(address asset, uint256 ethAmount, uint256 minAmountOut) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "purchaseReserve",
+        "inputs": [
+          {
+            "name": "asset",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "ethAmount",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "minAmountOut",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names purchase of a selected reserve asset with explicit execution limits; approval, liquidity, slippage and resulting holdings require evidence.",
+      "units": "Reserve-asset quantities remain raw token units until the selected asset/decimals are authenticated; explicitly ETH-labelled spend fields are wei.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x1c6d951b"
+    },
+    {
+      "signature": "registry()",
+      "declaration": "function registry() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "registry",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "contract AddressRegistry"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the registry dependency address for this role. An address observation is not current authorization, code equivalence or permission to call the dependency.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x7b103999"
+    },
+    {
+      "signature": "renounceOwnership()",
+      "declaration": "function renounceOwnership() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "renounceOwnership",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the ownership-renunciation operation; resulting authority of other modules is a separate question.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x715018a6"
+    },
+    {
+      "signature": "reservePool(address)",
+      "declaration": "function reservePool(address asset) view returns (address currency0, address currency1, uint24 fee, int24 tickSpacing, address hooks)",
+      "abi": {
+        "type": "function",
+        "name": "reservePool",
+        "inputs": [
+          {
+            "name": "asset",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "currency0",
+            "type": "address",
+            "internalType": "Currency"
+          },
+          {
+            "name": "currency1",
+            "type": "address",
+            "internalType": "Currency"
+          },
+          {
+            "name": "fee",
+            "type": "uint24",
+            "internalType": "uint24"
+          },
+          {
+            "name": "tickSpacing",
+            "type": "int24",
+            "internalType": "int24"
+          },
+          {
+            "name": "hooks",
+            "type": "address",
+            "internalType": "contract IHooks"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Returns the selected asset pool metadata as flat currency0,currency1,fee,tickSpacing,hooks outputs; raw fee flags and signed ticks are not monetary amounts.",
+      "units": "Pool currencies/hooks are addresses; fee is a raw uint24 fee/flag field, not automatically basis points; tickSpacing/ticks are signed tick units. Other deltas/amounts need currency-specific scale evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x27417a82"
+    },
+    {
+      "signature": "setReservePool(address,(address,address,uint24,int24,address))",
+      "declaration": "function setReservePool(address asset, (address,address,uint24,int24,address) key) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "setReservePool",
+        "inputs": [
+          {
+            "name": "asset",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "key",
+            "type": "tuple",
+            "internalType": "struct PoolKey",
+            "components": [
+              {
+                "name": "currency0",
+                "type": "address",
+                "internalType": "Currency"
+              },
+              {
+                "name": "currency1",
+                "type": "address",
+                "internalType": "Currency"
+              },
+              {
+                "name": "fee",
+                "type": "uint24",
+                "internalType": "uint24"
+              },
+              {
+                "name": "tickSpacing",
+                "type": "int24",
+                "internalType": "int24"
+              },
+              {
+                "name": "hooks",
+                "type": "address",
+                "internalType": "contract IHooks"
+              }
+            ]
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the reserve pool configuration operation with inputs asset, key. The ABI does not prove caller permissions, effective timing or dependent state changes.",
+      "units": "Pool currencies/hooks are addresses; fee is a raw uint24 fee/flag field, not automatically basis points; tickSpacing/ticks are signed tick units. Other deltas/amounts need currency-specific scale evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xeb25f677"
+    },
+    {
+      "signature": "transferOwnership(address)",
+      "declaration": "function transferOwnership(address newOwner) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "transferOwnership",
+        "inputs": [
+          {
+            "name": "newOwner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the administrator-handoff proposal with the supplied new owner; does not itself prove acceptance.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xf2fde38b"
+    },
+    {
+      "signature": "unlockCallback(bytes)",
+      "declaration": "function unlockCallback(bytes data) nonpayable returns (bytes)",
+      "abi": {
+        "type": "function",
+        "name": "unlockCallback",
+        "inputs": [
+          {
+            "name": "data",
+            "type": "bytes",
+            "internalType": "bytes"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bytes",
+            "internalType": "bytes"
+          }
+        ],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the unlock callback callback with the exact nested pool/action/delta fields. Caller constraints, currency order, delta sign interpretation and settlement effects require implementation evidence; it is not a user-facing read.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x91dd7346"
+    },
+    {
+      "signature": "unpause()",
+      "declaration": "function unpause() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "unpause",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the unpause operation; a declared operation does not prove the caller may execute it.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x3f4ba83a"
+    },
+    {
+      "signature": "GuardianPaused(address)",
+      "declaration": "event GuardianPaused(address indexed guardian)",
+      "abi": {
+        "type": "event",
+        "name": "GuardianPaused",
+        "inputs": [
+          {
+            "name": "guardian",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports indexed guardian on pause; a pause log does not prove the module remains paused now.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xd5354f32595d4786b7a234166bc1e34f4ee58f9e9d534b0fc5abd8e122f25fd5",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "guardian",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "GuardianUnpaused()",
+      "declaration": "event GuardianUnpaused()",
+      "abi": {
+        "type": "event",
+        "name": "GuardianUnpaused",
+        "inputs": [],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports unpause with no fields; topic-only data is valid.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x984d636c2614e303400b04f078fb33065fa357cbc6859737a5e4528627f4fa18",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 0,
+        "fields": []
+      }
+    },
+    {
+      "signature": "HoldingsMigrated(address,uint256)",
+      "declaration": "event HoldingsMigrated(address indexed successor, uint256 ethMoved)",
+      "abi": {
+        "type": "event",
+        "name": "HoldingsMigrated",
+        "inputs": [
+          {
+            "name": "successor",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "ethMoved",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports successor and ETH moved; it does not prove migration of every asset or liquidity position.",
+      "units": "Publisher/source evidence denotes ETH accounting as wei (18 decimals); BuybackExecuted.tokensBurned is STANDARD18. Counts, flags and recipient identities are not money.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x98c9bf0d2b79ecbf5d1527aee70d8b86d4761c9f5234c3ae6f73a8ef61fc6c54",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "successor",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "ethMoved",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "OwnershipTransferStarted(address,address)",
+      "declaration": "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "abi": {
+        "type": "event",
+        "name": "OwnershipTransferStarted",
+        "inputs": [
+          {
+            "name": "previousOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "newOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports proposed administrator handoff; both addresses are indexed and data is empty, distinct from completed acceptance.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x38d16b8cac22d99fc7c124b9cd0de2d3fa1faef420bfe791d8c362d765e22700",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "previousOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "newOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "OwnershipTransferred(address,address)",
+      "declaration": "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "abi": {
+        "type": "event",
+        "name": "OwnershipTransferred",
+        "inputs": [
+          {
+            "name": "previousOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "newOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports administrator ownership transfer; it is not a charter ownership log or proof of every control permission.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "previousOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "newOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "ReserveAssetCleared(address)",
+      "declaration": "event ReserveAssetCleared(address indexed asset)",
+      "abi": {
+        "type": "event",
+        "name": "ReserveAssetCleared",
+        "inputs": [
+          {
+            "name": "asset",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports removal of an asset configuration, not proof of zero remaining holdings.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xa170ba61334816e5b92a1e53f69d32c4aadd1d626fa7e735dfdb4b562aedf662",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "asset",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "ReservePoolSet(address,(address,address,uint24,int24,address))",
+      "declaration": "event ReservePoolSet(address indexed asset, (address,address,uint24,int24,address) key)",
+      "abi": {
+        "type": "event",
+        "name": "ReservePoolSet",
+        "inputs": [
+          {
+            "name": "asset",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "key",
+            "type": "tuple",
+            "indexed": false,
+            "internalType": "struct PoolKey",
+            "components": [
+              {
+                "name": "currency0",
+                "type": "address",
+                "internalType": "Currency"
+              },
+              {
+                "name": "currency1",
+                "type": "address",
+                "internalType": "Currency"
+              },
+              {
+                "name": "fee",
+                "type": "uint24",
+                "internalType": "uint24"
+              },
+              {
+                "name": "tickSpacing",
+                "type": "int24",
+                "internalType": "int24"
+              },
+              {
+                "name": "hooks",
+                "type": "address",
+                "internalType": "contract IHooks"
+              }
+            ]
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports indexed asset and a nonindexed pool-key tuple; decode all tuple components rather than treating the tuple as one word.",
+      "units": "Pool currencies/hooks are addresses; fee is a raw uint24 fee/flag field, not automatically basis points; tickSpacing/ticks are signed tick units. Other deltas/amounts need currency-specific scale evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x24859ebefe230c75cf2e0e0a8faedf401788cb178dfd596fc3762874eae1634b",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "asset",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "key",
+            "canonical_type": "(address,address,uint24,int24,address)",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "ReservePurchased(address,uint256,uint256)",
+      "declaration": "event ReservePurchased(address indexed asset, uint256 ethSpent, uint256 amountOut)",
+      "abi": {
+        "type": "event",
+        "name": "ReservePurchased",
+        "inputs": [
+          {
+            "name": "asset",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "ethSpent",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "amountOut",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports selected asset, ETH spent and asset amountOut; authenticate asset decimals and reconcile the swap separately.",
+      "units": "Reserve-asset quantities remain raw token units until the selected asset/decimals are authenticated; explicitly ETH-labelled spend fields are wei.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xc26b97db5b480365c3b55bb29458567c190c74458502424bce29058ac06eaa22",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 2,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "asset",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "ethSpent",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 2,
+            "name": "amountOut",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "AssetNotWhitelisted()",
+      "declaration": "error AssetNotWhitelisted()",
+      "abi": {
+        "type": "error",
+        "name": "AssetNotWhitelisted",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the AssetNotWhitelisted revert condition (asset not whitelisted) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x8622f8e4"
+    },
+    {
+      "signature": "ContractPaused()",
+      "declaration": "error ContractPaused()",
+      "abi": {
+        "type": "error",
+        "name": "ContractPaused",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ContractPaused revert condition (contract paused) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xab35696f"
+    },
+    {
+      "signature": "EthTransferFailed()",
+      "declaration": "error EthTransferFailed()",
+      "abi": {
+        "type": "error",
+        "name": "EthTransferFailed",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the EthTransferFailed revert condition (eth transfer failed) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x6d963f88"
+    },
+    {
+      "signature": "HookedReservePool()",
+      "declaration": "error HookedReservePool()",
+      "abi": {
+        "type": "error",
+        "name": "HookedReservePool",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the HookedReservePool revert condition (hooked reserve pool) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x1b540499"
+    },
+    {
+      "signature": "InsufficientBalance()",
+      "declaration": "error InsufficientBalance()",
+      "abi": {
+        "type": "error",
+        "name": "InsufficientBalance",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the InsufficientBalance revert condition (insufficient balance) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xf4d678b8"
+    },
+    {
+      "signature": "InsufficientOutput()",
+      "declaration": "error InsufficientOutput()",
+      "abi": {
+        "type": "error",
+        "name": "InsufficientOutput",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the InsufficientOutput revert condition (insufficient output) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xbb2875c3"
+    },
+    {
+      "signature": "NoSuccessor()",
+      "declaration": "error NoSuccessor()",
+      "abi": {
+        "type": "error",
+        "name": "NoSuccessor",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the NoSuccessor revert condition (no successor) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x1c778cf5"
+    },
+    {
+      "signature": "NotGuardian()",
+      "declaration": "error NotGuardian()",
+      "abi": {
+        "type": "error",
+        "name": "NotGuardian",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the NotGuardian revert condition (not guardian) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xef6d0f02"
+    },
+    {
+      "signature": "NotNativeEthPool()",
+      "declaration": "error NotNativeEthPool()",
+      "abi": {
+        "type": "error",
+        "name": "NotNativeEthPool",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the NotNativeEthPool revert condition (not native eth pool) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xa78a8981"
+    },
+    {
+      "signature": "NotPaused()",
+      "declaration": "error NotPaused()",
+      "abi": {
+        "type": "error",
+        "name": "NotPaused",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the NotPaused revert condition (not paused) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x6cd60201"
+    },
+    {
+      "signature": "NotPoolManager()",
+      "declaration": "error NotPoolManager()",
+      "abi": {
+        "type": "error",
+        "name": "NotPoolManager",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the NotPoolManager revert condition (not pool manager) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xae18210a"
+    },
+    {
+      "signature": "OwnableInvalidOwner(address)",
+      "declaration": "error OwnableInvalidOwner(address owner)",
+      "abi": {
+        "type": "error",
+        "name": "OwnableInvalidOwner",
+        "inputs": [
+          {
+            "name": "owner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the OwnableInvalidOwner revert condition (ownable invalid owner) with owner. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x1e4fbdf7"
+    },
+    {
+      "signature": "OwnableUnauthorizedAccount(address)",
+      "declaration": "error OwnableUnauthorizedAccount(address account)",
+      "abi": {
+        "type": "error",
+        "name": "OwnableUnauthorizedAccount",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the OwnableUnauthorizedAccount revert condition (ownable unauthorized account) with account. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x118cdaa7"
+    },
+    {
+      "signature": "PoolAssetMismatch()",
+      "declaration": "error PoolAssetMismatch()",
+      "abi": {
+        "type": "error",
+        "name": "PoolAssetMismatch",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the PoolAssetMismatch revert condition (pool asset mismatch) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x70829bcd"
+    },
+    {
+      "signature": "PoolNotInitialized()",
+      "declaration": "error PoolNotInitialized()",
+      "abi": {
+        "type": "error",
+        "name": "PoolNotInitialized",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the PoolNotInitialized revert condition (pool not initialized) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x486aa307"
+    },
+    {
+      "signature": "ReentrancyGuardReentrantCall()",
+      "declaration": "error ReentrancyGuardReentrantCall()",
+      "abi": {
+        "type": "error",
+        "name": "ReentrancyGuardReentrantCall",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ReentrancyGuardReentrantCall revert condition (reentrancy guard reentrant call) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x3ee5aeb5"
+    },
+    {
+      "signature": "SafeERC20FailedOperation(address)",
+      "declaration": "error SafeERC20FailedOperation(address token)",
+      "abi": {
+        "type": "error",
+        "name": "SafeERC20FailedOperation",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the SafeERC20FailedOperation revert condition (safe erc20 failed operation) with token. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x5274afe7"
+    }
+  ]
+}

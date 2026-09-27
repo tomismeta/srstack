@@ -1,0 +1,1525 @@
+{
+  "schema_version": 1,
+  "id": "charter-nft",
+  "role": "charter_nft",
+  "generation": "original",
+  "review_id": "publisher-protocol-interfaces-2026-09-27",
+  "coverage": {
+    "kind": "complete_literal",
+    "source_definition_complete": true,
+    "deployed_implementation_complete": false,
+    "source_locator": "Rn",
+    "source_fragment": {
+      "bytes": 7379,
+      "sha256": "cbbc2a893a9cca20bcd333d3fb085c5ccb635f9e8954857833bcca3293466c53",
+      "start_utf8_byte": 409069,
+      "end_utf8_byte": 416448
+    },
+    "entry_counts": {
+      "constructor": 1,
+      "error": 13,
+      "event": 7,
+      "fallback": 0,
+      "function": 26,
+      "receive": 0
+    },
+    "abi_sha256": "75395fdcc95f99fe09679c9c27c7a9b41138b9c2771fd46c59f4f3c1c2a3a6b1"
+  },
+  "entries": [
+    {
+      "signature": "constructor(address,address)",
+      "declaration": "constructor(address centralBank_, address initialOwner) nonpayable",
+      "abi": {
+        "type": "constructor",
+        "inputs": [
+          {
+            "name": "centralBank_",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "initialOwner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares deployment arguments for charter nft: centralBank_, initialOwner. This layout does not prove any deployed constructor values or source/bytecode correspondence.",
+      "units": "Addresses are identities; payable value is native wei. Other constructor numeric scales are not established solely by these types.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ]
+    },
+    {
+      "signature": "acceptOwnership()",
+      "declaration": "function acceptOwnership() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "acceptOwnership",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the ownership-acceptance operation, separate from proposing a new owner.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x79ba5097"
+    },
+    {
+      "signature": "approve(address,uint256)",
+      "declaration": "function approve(address to, uint256 tokenId) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "approve",
+        "inputs": [
+          {
+            "name": "to",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "tokenId",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names approval for the spender or selected NFT recipient/token ID according to this role; approval is not a completed transfer.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x095ea7b3"
+    },
+    {
+      "signature": "balanceOf(address)",
+      "declaration": "function balanceOf(address owner) view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "balanceOf",
+        "inputs": [
+          {
+            "name": "owner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the selected account balance in this role; distinguish NFT count from fungible token units and bank pending ledger.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x70a08231"
+    },
+    {
+      "signature": "burn(uint256)",
+      "declaration": "function burn(uint256 id) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "burn",
+        "inputs": [
+          {
+            "name": "id",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names burning of tokens or a charter NFT according to the role; do not conflate NFT destruction with permanent STANDARD ceiling reduction.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x42966c68"
+    },
+    {
+      "signature": "centralBank()",
+      "declaration": "function centralBank() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "centralBank",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the central bank dependency address for this role. An address observation is not current authorization, code equivalence or permission to call the dependency.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x9a4a0fb2"
+    },
+    {
+      "signature": "enableTransfers()",
+      "declaration": "function enableTransfers() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "enableTransfers",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the NFT transfer-enablement operation; access control and irreversibility need source correspondence.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xaf35c6c7"
+    },
+    {
+      "signature": "getApproved(uint256)",
+      "declaration": "function getApproved(uint256 tokenId) view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "getApproved",
+        "inputs": [
+          {
+            "name": "tokenId",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the approved address for a selected NFT token ID, not its owner or all-operator approval.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x081812fc"
+    },
+    {
+      "signature": "isApprovedForAll(address,address)",
+      "declaration": "function isApprovedForAll(address owner, address operator) view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "isApprovedForAll",
+        "inputs": [
+          {
+            "name": "owner",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "operator",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports an owner/operator approval flag, separate from per-token approval.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xe985e9c5"
+    },
+    {
+      "signature": "lastTransferred(uint256)",
+      "declaration": "function lastTransferred(uint256 tokenId) view returns (uint256 timestamp)",
+      "abi": {
+        "type": "function",
+        "name": "lastTransferred",
+        "inputs": [
+          {
+            "name": "tokenId",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "timestamp",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the transfer-time field for a selected NFT; transfer grace, reset behavior and dormancy eligibility require separate evidence.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x9bc34afe"
+    },
+    {
+      "signature": "mint(address)",
+      "declaration": "function mint(address to) nonpayable returns (uint256 id)",
+      "abi": {
+        "type": "function",
+        "name": "mint",
+        "inputs": [
+          {
+            "name": "to",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "id",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names role-specific minting to a recipient; a declared interface is not minting authority.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x6a627842"
+    },
+    {
+      "signature": "name()",
+      "declaration": "function name() view returns (string)",
+      "abi": {
+        "type": "function",
+        "name": "name",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "string",
+            "internalType": "string"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports token/NFT display name, not authenticated deployment identity.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x06fdde03"
+    },
+    {
+      "signature": "nextId()",
+      "declaration": "function nextId() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "nextId",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the NFT next-ID field; do not infer a complete existing-token set from this counter.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x61b8ce8c"
+    },
+    {
+      "signature": "owner()",
+      "declaration": "function owner() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "owner",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the module administrator, not a charter holder or proof of every permission.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x8da5cb5b"
+    },
+    {
+      "signature": "ownerOf(uint256)",
+      "declaration": "function ownerOf(uint256 tokenId) view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "ownerOf",
+        "inputs": [
+          {
+            "name": "tokenId",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the selected NFT owner at the queried block, not its historical buyer or the NFT module administrator.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x6352211e"
+    },
+    {
+      "signature": "pendingOwner()",
+      "declaration": "function pendingOwner() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "pendingOwner",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the proposed administrator in the ownership handoff; proposal is not acceptance.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xe30c3978"
+    },
+    {
+      "signature": "renounceOwnership()",
+      "declaration": "function renounceOwnership() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "renounceOwnership",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the ownership-renunciation operation; resulting authority of other modules is a separate question.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x715018a6"
+    },
+    {
+      "signature": "safeTransferFrom(address,address,uint256)",
+      "declaration": "function safeTransferFrom(address from, address to, uint256 tokenId) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "safeTransferFrom",
+        "inputs": [
+          {
+            "name": "from",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "to",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "tokenId",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names an ERC721 safe-transfer overload; the bytes overload carries receiver data and must not be collapsed with the three-argument form.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x42842e0e"
+    },
+    {
+      "signature": "safeTransferFrom(address,address,uint256,bytes)",
+      "declaration": "function safeTransferFrom(address from, address to, uint256 tokenId, bytes data) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "safeTransferFrom",
+        "inputs": [
+          {
+            "name": "from",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "to",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "tokenId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "data",
+            "type": "bytes",
+            "internalType": "bytes"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names an ERC721 safe-transfer overload; the bytes overload carries receiver data and must not be collapsed with the three-argument form.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xb88d4fde"
+    },
+    {
+      "signature": "setApprovalForAll(address,bool)",
+      "declaration": "function setApprovalForAll(address operator, bool approved) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "setApprovalForAll",
+        "inputs": [
+          {
+            "name": "operator",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "approved",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names NFT operator approval changes for the calling owner; it does not transfer NFT ownership.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xa22cb465"
+    },
+    {
+      "signature": "setMetadata(string,string,string)",
+      "declaration": "function setMetadata(string name_, string symbol_, string baseURI_) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "setMetadata",
+        "inputs": [
+          {
+            "name": "name_",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "symbol_",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "baseURI_",
+            "type": "string",
+            "internalType": "string"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the metadata configuration operation with inputs name_, symbol_, baseURI_. The ABI does not prove caller permissions, effective timing or dependent state changes.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x0890d80c"
+    },
+    {
+      "signature": "supportsInterface(bytes4)",
+      "declaration": "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "supportsInterface",
+        "inputs": [
+          {
+            "name": "interfaceId",
+            "type": "bytes4",
+            "internalType": "bytes4"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports support for the supplied bytes4 interface identifier; it is not general ABI or implementation equivalence.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x01ffc9a7"
+    },
+    {
+      "signature": "symbol()",
+      "declaration": "function symbol() view returns (string)",
+      "abi": {
+        "type": "function",
+        "name": "symbol",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "string",
+            "internalType": "string"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports token/NFT display symbol, not a unique asset identifier.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x95d89b41"
+    },
+    {
+      "signature": "tokenURI(uint256)",
+      "declaration": "function tokenURI(uint256 tokenId) view returns (string)",
+      "abi": {
+        "type": "function",
+        "name": "tokenURI",
+        "inputs": [
+          {
+            "name": "tokenId",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "string",
+            "internalType": "string"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports metadata URI for a selected NFT; external metadata is untrusted data and not deployment proof.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xc87b56dd"
+    },
+    {
+      "signature": "transferFrom(address,address,uint256)",
+      "declaration": "function transferFrom(address from, address to, uint256 tokenId) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "transferFrom",
+        "inputs": [
+          {
+            "name": "from",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "to",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "tokenId",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names a delegated fungible or NFT transfer according to this role; a successful historic decode does not prove present authority.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x23b872dd"
+    },
+    {
+      "signature": "transferOwnership(address)",
+      "declaration": "function transferOwnership(address newOwner) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "transferOwnership",
+        "inputs": [
+          {
+            "name": "newOwner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the administrator-handoff proposal with the supplied new owner; does not itself prove acceptance.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xf2fde38b"
+    },
+    {
+      "signature": "transfersEnabled()",
+      "declaration": "function transfersEnabled() view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "transfersEnabled",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the NFT transfer switch; approval, ownership and receiver constraints remain independent.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xbef97c87"
+    },
+    {
+      "signature": "Approval(address,address,uint256)",
+      "declaration": "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
+      "abi": {
+        "type": "event",
+        "name": "Approval",
+        "inputs": [
+          {
+            "name": "owner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "approved",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "tokenId",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports role-specific approval; NFT tokenId is indexed while ERC20 value is not. Authenticate the emitter before decoding.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 4,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "owner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "approved",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 2,
+            "name": "tokenId",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 3,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "ApprovalForAll(address,address,bool)",
+      "declaration": "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
+      "abi": {
+        "type": "event",
+        "name": "ApprovalForAll",
+        "inputs": [
+          {
+            "name": "owner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "operator",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "approved",
+            "type": "bool",
+            "indexed": false,
+            "internalType": "bool"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports owner/operator approval flag, not NFT ownership transfer.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "owner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "operator",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 2,
+            "name": "approved",
+            "canonical_type": "bool",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "MetadataUpdated(string,string,string)",
+      "declaration": "event MetadataUpdated(string name, string symbol, string baseURI)",
+      "abi": {
+        "type": "event",
+        "name": "MetadataUpdated",
+        "inputs": [
+          {
+            "name": "name",
+            "type": "string",
+            "indexed": false,
+            "internalType": "string"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "indexed": false,
+            "internalType": "string"
+          },
+          {
+            "name": "baseURI",
+            "type": "string",
+            "indexed": false,
+            "internalType": "string"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports dynamic NFT name, symbol and baseURI fields; decode offsets, not one-word strings.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x61b45807b5528344b8b2c26433a3aabead6c9dc6239e146e7ba7c812fded07d0",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 3,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "name",
+            "canonical_type": "string",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 1,
+            "name": "symbol",
+            "canonical_type": "string",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 2,
+            "name": "baseURI",
+            "canonical_type": "string",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 2,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "OwnershipTransferStarted(address,address)",
+      "declaration": "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "abi": {
+        "type": "event",
+        "name": "OwnershipTransferStarted",
+        "inputs": [
+          {
+            "name": "previousOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "newOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports proposed administrator handoff; both addresses are indexed and data is empty, distinct from completed acceptance.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x38d16b8cac22d99fc7c124b9cd0de2d3fa1faef420bfe791d8c362d765e22700",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "previousOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "newOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "OwnershipTransferred(address,address)",
+      "declaration": "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "abi": {
+        "type": "event",
+        "name": "OwnershipTransferred",
+        "inputs": [
+          {
+            "name": "previousOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "newOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports administrator ownership transfer; it is not a charter ownership log or proof of every control permission.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "previousOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "newOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "Transfer(address,address,uint256)",
+      "declaration": "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
+      "abi": {
+        "type": "event",
+        "name": "Transfer",
+        "inputs": [
+          {
+            "name": "from",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "to",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "tokenId",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports role-specific token movement; NFT tokenId is indexed topic3 while ERC20 value is in data despite identical signature/topic0.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 4,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "from",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "to",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 2,
+            "name": "tokenId",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 3,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "TransfersEnabled()",
+      "declaration": "event TransfersEnabled()",
+      "abi": {
+        "type": "event",
+        "name": "TransfersEnabled",
+        "inputs": [],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports NFT transfer enablement without fields; topic-only data is valid.",
+      "units": "NFT IDs and balances are unscaled identifiers/counts, never STANDARD amounts. lastTransferred is a timestamp-labelled field; reset/grace semantics remain unverified.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xeadb24812ab3c9a55c774958184293ebdb6c7f6a2dbab11f397d80c86feb65d3",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 0,
+        "fields": []
+      }
+    },
+    {
+      "signature": "AlreadyEnabled()",
+      "declaration": "error AlreadyEnabled()",
+      "abi": {
+        "type": "error",
+        "name": "AlreadyEnabled",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the AlreadyEnabled revert condition (already enabled) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xf2a5f75a"
+    },
+    {
+      "signature": "ERC721IncorrectOwner(address,uint256,address)",
+      "declaration": "error ERC721IncorrectOwner(address sender, uint256 tokenId, address owner)",
+      "abi": {
+        "type": "error",
+        "name": "ERC721IncorrectOwner",
+        "inputs": [
+          {
+            "name": "sender",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "tokenId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "owner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ERC721IncorrectOwner revert condition (erc721 incorrect owner) with sender, tokenId, owner. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x64283d7b"
+    },
+    {
+      "signature": "ERC721InsufficientApproval(address,uint256)",
+      "declaration": "error ERC721InsufficientApproval(address operator, uint256 tokenId)",
+      "abi": {
+        "type": "error",
+        "name": "ERC721InsufficientApproval",
+        "inputs": [
+          {
+            "name": "operator",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "tokenId",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ERC721InsufficientApproval revert condition (erc721 insufficient approval) with operator, tokenId. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x177e802f"
+    },
+    {
+      "signature": "ERC721InvalidApprover(address)",
+      "declaration": "error ERC721InvalidApprover(address approver)",
+      "abi": {
+        "type": "error",
+        "name": "ERC721InvalidApprover",
+        "inputs": [
+          {
+            "name": "approver",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ERC721InvalidApprover revert condition (erc721 invalid approver) with approver. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xa9fbf51f"
+    },
+    {
+      "signature": "ERC721InvalidOperator(address)",
+      "declaration": "error ERC721InvalidOperator(address operator)",
+      "abi": {
+        "type": "error",
+        "name": "ERC721InvalidOperator",
+        "inputs": [
+          {
+            "name": "operator",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ERC721InvalidOperator revert condition (erc721 invalid operator) with operator. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x5b08ba18"
+    },
+    {
+      "signature": "ERC721InvalidOwner(address)",
+      "declaration": "error ERC721InvalidOwner(address owner)",
+      "abi": {
+        "type": "error",
+        "name": "ERC721InvalidOwner",
+        "inputs": [
+          {
+            "name": "owner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ERC721InvalidOwner revert condition (erc721 invalid owner) with owner. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x89c62b64"
+    },
+    {
+      "signature": "ERC721InvalidReceiver(address)",
+      "declaration": "error ERC721InvalidReceiver(address receiver)",
+      "abi": {
+        "type": "error",
+        "name": "ERC721InvalidReceiver",
+        "inputs": [
+          {
+            "name": "receiver",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ERC721InvalidReceiver revert condition (erc721 invalid receiver) with receiver. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x64a0ae92"
+    },
+    {
+      "signature": "ERC721InvalidSender(address)",
+      "declaration": "error ERC721InvalidSender(address sender)",
+      "abi": {
+        "type": "error",
+        "name": "ERC721InvalidSender",
+        "inputs": [
+          {
+            "name": "sender",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ERC721InvalidSender revert condition (erc721 invalid sender) with sender. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x73c6ac6e"
+    },
+    {
+      "signature": "ERC721NonexistentToken(uint256)",
+      "declaration": "error ERC721NonexistentToken(uint256 tokenId)",
+      "abi": {
+        "type": "error",
+        "name": "ERC721NonexistentToken",
+        "inputs": [
+          {
+            "name": "tokenId",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ERC721NonexistentToken revert condition (erc721 nonexistent token) with tokenId. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x7e273289"
+    },
+    {
+      "signature": "NotCentralBank()",
+      "declaration": "error NotCentralBank()",
+      "abi": {
+        "type": "error",
+        "name": "NotCentralBank",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the NotCentralBank revert condition (not central bank) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x8398b324"
+    },
+    {
+      "signature": "OwnableInvalidOwner(address)",
+      "declaration": "error OwnableInvalidOwner(address owner)",
+      "abi": {
+        "type": "error",
+        "name": "OwnableInvalidOwner",
+        "inputs": [
+          {
+            "name": "owner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the OwnableInvalidOwner revert condition (ownable invalid owner) with owner. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x1e4fbdf7"
+    },
+    {
+      "signature": "OwnableUnauthorizedAccount(address)",
+      "declaration": "error OwnableUnauthorizedAccount(address account)",
+      "abi": {
+        "type": "error",
+        "name": "OwnableUnauthorizedAccount",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the OwnableUnauthorizedAccount revert condition (ownable unauthorized account) with account. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x118cdaa7"
+    },
+    {
+      "signature": "TransfersDisabled()",
+      "declaration": "error TransfersDisabled()",
+      "abi": {
+        "type": "error",
+        "name": "TransfersDisabled",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the TransfersDisabled revert condition (transfers disabled) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x8574adcf"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 """Offline consumer-visible regressions for optional bundled helpers.
 
 Run with `python3 -B research/check-research.py` from the skill source checkout.
-Fixtures are fictional, never retrieved chain data. No transport or ABI decoding.
+Fixtures and decoded examples are fictional, never retrieved chain data. No transport.
 """
 
 from copy import deepcopy
@@ -13,6 +13,10 @@ import subprocess
 import sys
 import tempfile
 import unittest
+try:
+    from jsonschema import Draft202012Validator, FormatChecker
+except ImportError:
+    Draft202012Validator = FormatChecker = None
 
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
@@ -22,6 +26,7 @@ from calculations import (estimate_workload, gap_to_floor_scenario,
 
 
 FIXTURE = Path(__file__).with_name("fixtures") / "round-v1.json"
+EXAMPLE = SCRIPTS.parent / "assets/examples/research-evidence-v1.json"
 
 
 class AccountingChecks(unittest.TestCase):
@@ -215,6 +220,111 @@ class EvidenceChecks(unittest.TestCase):
         self.document["events"] = []
         result = summarize_rounds(self.document)
         self.assertEqual(result["rounds"], [])
+
+
+class InstalledExampleChecks(unittest.TestCase):
+    """The installed example is the fixture; do not maintain a second copy."""
+
+    def setUp(self):
+        self.document = json.loads(EXAMPLE.read_text(encoding="utf-8"))
+
+    def test_indexed_ids_and_nonindexed_quantity_price_decode(self):
+        expected = {
+            "sale-a": (41, 7, 2, 105, 2), "sale-b": (42, 7, 3, 99, 7),
+            "sale-c": (43, 7, 1, 101, 4), "removed": (44, 7, 9, 90, 5),
+            "conflict-a": (45, 7, 4, 90, 9), "conflict-b": (45, 7, 5, 90, 9),
+            "reorg-a": (46, 7, 8, 80, 3), "reorg-b": (46, 7, 10, 80, 3),
+            "sale-d": (47, 7, 1, 98, 6), "incomplete": (48, 7, 6, 95, None),
+        }
+        events = {event["raw_log_ref"]: event for event in self.document["events"]}
+        for observation in self.document["extensions"]["example"]["raw_logs"]:
+            with self.subTest(record=observation["id"]):
+                raw = observation["log"]
+                self.assertEqual(raw["topics"][0],
+                                 "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5")
+                self.assertEqual(len(raw["topics"]), 3)
+                data = bytes.fromhex(raw["data"][2:])
+                self.assertEqual(len(data), 64)
+                charter, day = (int(topic, 16) for topic in raw["topics"][1:])
+                quantity = int.from_bytes(data[:32], "big")
+                unit_price = int.from_bytes(data[32:], "big")
+                index = int(raw["logIndex"], 16) if "logIndex" in raw else None
+                self.assertEqual((charter, day, quantity, unit_price, index),
+                                 expected[observation["id"]])
+                event = events[observation["id"]]
+                self.assertEqual(event["decoded"], {
+                    "event_name": "LicensesPurchased", "charter_id": str(charter),
+                    "round_id": str(day), "quantity": str(quantity),
+                    "unit_price_raw": str(unit_price)})
+                self.assertEqual(event["log_index"], "unknown" if index is None else str(index))
+                for normalized, original in (("block_number", "blockNumber"),
+                                             ("transaction_index", "transactionIndex")):
+                    self.assertEqual(event[normalized], str(int(raw[original], 16)))
+
+    def test_conflicts_removal_incomplete_totals_and_exact_duration(self):
+        result = summarize_rounds(self.document)
+        group, = result["rounds"]
+        self.assertEqual(group["key"], (999999, "0x" + "11" * 20, 7, "FICTIONAL_PAYMENT", 2))
+        self.assertEqual(group["uncontested_totals"], {
+            "quantity": 7, "consideration_raw": 706, "average_raw": Fraction(706, 7),
+            "quotient_raw": 100, "remainder": 6})
+        self.assertEqual(group["uncontested_minimum_unit_price_raw"], 98)
+        self.assertEqual([(item["event"]["id"], item["timestamp"]) for item in group["first_observed"]],
+                         [("sale-a", "1000")])
+        self.assertEqual([(item["event"]["id"], item["timestamp"]) for item in group["last_observed"]],
+                         [("sale-d", "1127")])
+        self.assertEqual(group["observed_span_seconds"], 127)
+        self.assertEqual(divmod(group["observed_span_seconds"], 60), (2, 7))
+        self.assertEqual([[row["id"] for row in item["variants"]] for item in result["conflicts"]],
+                         [["conflict-a", "conflict-b"]])
+        self.assertEqual({row["id"] for item in result["disputed_events"] for row in item["variants"]},
+                         {"reorg-a", "reorg-b"})
+        self.assertEqual([row["id"] for row in result["removed_events"]], ["removed"])
+        self.assertEqual([item["event"]["id"] for item in result["deferred_events"]], ["incomplete"])
+
+    def test_recovered_identity_allows_accounting_but_not_unknown_endpoint_time(self):
+        partial = next(row for row in self.document["events"] if row["id"] == "incomplete")
+        partial["log_index"] = "8"  # Hypothetical newly supplied block-global identity.
+        result = summarize_rounds(self.document)
+        group, = result["rounds"]
+        self.assertEqual(result["deferred_events"], [])
+        self.assertEqual(group["uncontested_totals"]["quantity"], 13)
+        self.assertEqual(group["uncontested_totals"]["consideration_raw"], 1276)
+        self.assertEqual(group["last_observed"][0]["event"]["id"], "incomplete")
+        self.assertEqual(group["last_observed"][0]["timestamp"], "unknown")
+        self.assertIsNone(group["observed_span_seconds"])
+
+    def test_reorg_reconciliation_and_receipt_scope_are_distinct(self):
+        alternative = next(row for row in self.document["events"] if row["id"] == "reorg-b")
+        self.document["headers"][alternative["header_ref"]]["canonicality"] = "noncanonical"
+        result = summarize_rounds(self.document)
+        group, = result["rounds"]
+        self.assertEqual(group["uncontested_totals"]["quantity"], 15)
+        self.assertEqual(group["uncontested_totals"]["consideration_raw"], 1346)
+        self.assertEqual({row["id"] for item in result["disputed_events"] for row in item["variants"]},
+                         {"reorg-b"})
+        # Receipt matching does not promote discovery, failed ranges or unknown canonicality.
+        self.assertEqual(result["coverage"]["receipt_checks"][0]["status"], "partial")
+        self.assertEqual(result["coverage"]["failed"][0]["from_block"], "108")
+        self.assertEqual(result["coverage"]["unsearched"][0]["to_block"], "110")
+
+    @unittest.skipIf(Draft202012Validator is None, "optional source-only jsonschema is unavailable")
+    def test_installed_example_schema_shape(self):
+        schema = json.loads((SCRIPTS.parent / "assets/schemas/research-evidence-v1.json").read_text())
+        Draft202012Validator(schema, format_checker=FormatChecker()).validate(self.document)
+
+    def test_installed_file_cli_from_unrelated_working_directory(self):
+        with tempfile.TemporaryDirectory() as directory:
+            process = subprocess.run(
+                [sys.executable, "-I", "-B", str(SCRIPTS / "research.py"), "rounds",
+                 "--input", str(EXAMPLE)], cwd=directory, capture_output=True, text=True, timeout=15)
+        self.assertEqual(process.returncode, 0, process.stderr)
+        group, = json.loads(process.stdout)["rounds"]
+        totals = group["uncontested_totals"]
+        self.assertEqual((totals["quantity"], totals["consideration_raw"]), ("7", "706"))
+        self.assertEqual(totals["average_raw"], {"numerator": "706", "denominator": "7"})
+        self.assertEqual((totals["quotient_raw"], totals["remainder"]), ("100", "6"))
+        self.assertEqual(group["observed_span_seconds"], "127")
 
 
 class WorkloadChecks(unittest.TestCase):

@@ -30,6 +30,8 @@ Establish types, strict decoding, scales and relevant proxy/module relationships
 
 Reuse anchored observations; batch compatible reads and bound pages/calls/bytes/time. Never substitute latest for unavailable history. Failures and incomplete enumeration are unknown, not zero. Order IDs need authenticated mapping to charters; bids/fillability are not purchases.
 
+Current getters establish current anchored state, not the purchases or flows that produced it. Historical state corroboration requires archive access at the relevant historical anchor and authenticated counter/configuration semantics; logs and receipts have separate coverage and do not themselves require archive-state access. If event totals and comparable state counters disagree, reconcile scope, boundaries, resets, quantities and canonicality before asserting a total—events are not automatically authoritative. Reuse external evidence with [scoped refresh and overlap reconciliation](auction-history.md#optional-incremental-evidence-reuse), not a required full-history refresh.
+
 ### Units and financial interpretation
 
 Preserve raw integer amounts and their exact scale-derived display strings through the final answer; optional rounding must be labelled and retain the exact value. Use [exact accounting](research-workflow.md#compute-with-explicit-units). Distinguish the **ledger balance** recorded or accrued to a charter, the **spendable balance** allowed for a particular action after encumbrances/gates, and the **withdrawable net amount** after retirement/fees and other applicable conditions. Wallet tokens, branch counts and gas funds are separate.

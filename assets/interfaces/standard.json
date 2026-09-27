@@ -1,0 +1,1748 @@
+{
+  "schema_version": 1,
+  "id": "standard",
+  "role": "standard",
+  "generation": "original",
+  "review_id": "publisher-protocol-interfaces-2026-09-27",
+  "coverage": {
+    "kind": "complete_literal",
+    "source_definition_complete": true,
+    "deployed_implementation_complete": false,
+    "source_locator": "Vs",
+    "source_fragment": {
+      "bytes": 8432,
+      "sha256": "627044911b1a8d3a45168249198aa6d3b85e7d38fb703d07fade92697c9f9763",
+      "start_utf8_byte": 486814,
+      "end_utf8_byte": 495246
+    },
+    "entry_counts": {
+      "constructor": 1,
+      "error": 15,
+      "event": 8,
+      "fallback": 0,
+      "function": 31,
+      "receive": 0
+    },
+    "abi_sha256": "2be5343f90274acde2b14a9bb7bdcdc29d99364798c062ba02d4073e2832a7d1"
+  },
+  "entries": [
+    {
+      "signature": "constructor(address,address,address)",
+      "declaration": "constructor(address centralBank_, address registry_, address poolManager_) nonpayable",
+      "abi": {
+        "type": "constructor",
+        "inputs": [
+          {
+            "name": "centralBank_",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "registry_",
+            "type": "address",
+            "internalType": "contract AddressRegistry"
+          },
+          {
+            "name": "poolManager_",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares deployment arguments for standard: centralBank_, registry_, poolManager_. This layout does not prove any deployed constructor values or source/bytecode correspondence.",
+      "units": "Addresses are identities; payable value is native wei. Other constructor numeric scales are not established solely by these types.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ]
+    },
+    {
+      "signature": "HARD_CAP()",
+      "declaration": "function HARD_CAP() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "HARD_CAP",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the hard cap named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x3a03171c"
+    },
+    {
+      "signature": "LAUNCH_HOLDING_CAP()",
+      "declaration": "function LAUNCH_HOLDING_CAP() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "LAUNCH_HOLDING_CAP",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the launch holding cap named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x361d0f10"
+    },
+    {
+      "signature": "allowance(address,address)",
+      "declaration": "function allowance(address owner, address spender) view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "allowance",
+        "inputs": [
+          {
+            "name": "owner",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "spender",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports ERC20 spending approval from owner to spender, not license-window allowance.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xdd62ed3e"
+    },
+    {
+      "signature": "approve(address,uint256)",
+      "declaration": "function approve(address spender, uint256 value) nonpayable returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "approve",
+        "inputs": [
+          {
+            "name": "spender",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "value",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names approval for the spender or selected NFT recipient/token ID according to this role; approval is not a completed transfer.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x095ea7b3"
+    },
+    {
+      "signature": "authorizePoolManagerTransfer(bool,uint256)",
+      "declaration": "function authorizePoolManagerTransfer(bool inbound, uint256 amount) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "authorizePoolManagerTransfer",
+        "inputs": [
+          {
+            "name": "inbound",
+            "type": "bool",
+            "internalType": "bool"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names a direction/amount transfer-budget authorization operation; ABI presence does not grant authority.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xd738ee8c"
+    },
+    {
+      "signature": "balanceOf(address)",
+      "declaration": "function balanceOf(address account) view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "balanceOf",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the selected account balance in this role; distinguish NFT count from fungible token units and bank pending ledger.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x70a08231"
+    },
+    {
+      "signature": "blockedVenue(address)",
+      "declaration": "function blockedVenue(address venue) view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "blockedVenue",
+        "inputs": [
+          {
+            "name": "venue",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the supplied venue block flag; it is separate from the PoolManager gate and holding-cap result.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x34285c47"
+    },
+    {
+      "signature": "burn(uint256)",
+      "declaration": "function burn(uint256 amount) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "burn",
+        "inputs": [
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names burning of tokens or a charter NFT according to the role; do not conflate NFT destruction with permanent STANDARD ceiling reduction.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x42966c68"
+    },
+    {
+      "signature": "burnFrom(address,uint256)",
+      "declaration": "function burnFrom(address account, uint256 amount) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "burnFrom",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names burning STANDARD from a supplied account; allowances/permissions must be authenticated separately.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x79cc6790"
+    },
+    {
+      "signature": "burnedForever()",
+      "declaration": "function burnedForever() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "burnedForever",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports permanent token-burn accounting, which reduces the ceiling in the separately source-reviewed STANDARD mechanics.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x1ac4a8b5"
+    },
+    {
+      "signature": "centralBank()",
+      "declaration": "function centralBank() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "centralBank",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the central bank dependency address for this role. An address observation is not current authorization, code equivalence or permission to call the dependency.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x9a4a0fb2"
+    },
+    {
+      "signature": "convertFrom(address,uint256)",
+      "declaration": "function convertFrom(address from, uint256 amount) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "convertFrom",
+        "inputs": [
+          {
+            "name": "from",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names STANDARD conversion burning; separately reviewed token source distinguishes this from permanent ceiling reduction.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x724091e0"
+    },
+    {
+      "signature": "decimals()",
+      "declaration": "function decimals() view returns (uint8)",
+      "abi": {
+        "type": "function",
+        "name": "decimals",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint8",
+            "internalType": "uint8"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the fungible token decimal count; preserve integer raw amounts and apply scale only for presentation.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x313ce567"
+    },
+    {
+      "signature": "launchHoldingCapActive()",
+      "declaration": "function launchHoldingCapActive() view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "launchHoldingCapActive",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the resolved holding-cap result; dated STANDARD source additionally resolves the Registry TaxHook launch schedule.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x0b204113"
+    },
+    {
+      "signature": "launchHoldingCapEnabled()",
+      "declaration": "function launchHoldingCapEnabled() view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "launchHoldingCapEnabled",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the holding-cap configuration switch, not the separately resolved active result.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x7f196059"
+    },
+    {
+      "signature": "ledgerRetired()",
+      "declaration": "function ledgerRetired() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "ledgerRetired",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports ledger-retirement accounting, which reduces the ceiling without token-balance movement in the separately reviewed STANDARD source.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x5741ab0d"
+    },
+    {
+      "signature": "maxSupply()",
+      "declaration": "function maxSupply() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "maxSupply",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the token ceiling field, distinct from current totalSupply.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xd5abeb01"
+    },
+    {
+      "signature": "mint(address,uint256)",
+      "declaration": "function mint(address to, uint256 amount) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "mint",
+        "inputs": [
+          {
+            "name": "to",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names role-specific minting to a recipient; a declared interface is not minting authority.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x40c10f19"
+    },
+    {
+      "signature": "name()",
+      "declaration": "function name() view returns (string)",
+      "abi": {
+        "type": "function",
+        "name": "name",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "string",
+            "internalType": "string"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports token/NFT display name, not authenticated deployment identity.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x06fdde03"
+    },
+    {
+      "signature": "poolManager()",
+      "declaration": "function poolManager() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "poolManager",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the pool manager dependency address for this role. An address observation is not current authorization, code equivalence or permission to call the dependency.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xdc4c90d3"
+    },
+    {
+      "signature": "poolManagerGateEnabled()",
+      "declaration": "function poolManagerGateEnabled() view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "poolManagerGateEnabled",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the independent PoolManager gate switch; it does not prove any particular transfer succeeds.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x52451a9c"
+    },
+    {
+      "signature": "poolManagerTransferBudget(bool)",
+      "declaration": "function poolManagerTransferBudget(bool inbound) view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "poolManagerTransferBudget",
+        "inputs": [
+          {
+            "name": "inbound",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the direction-selected PoolManager transfer-budget field; lifecycle and transient-budget consumption require source/deployment correspondence.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x7f86303c"
+    },
+    {
+      "signature": "registry()",
+      "declaration": "function registry() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "registry",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "contract AddressRegistry"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the registry dependency address for this role. An address observation is not current authorization, code equivalence or permission to call the dependency.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x7b103999"
+    },
+    {
+      "signature": "retire(uint256)",
+      "declaration": "function retire(uint256 amount) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "retire",
+        "inputs": [
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names STANDARD ledger retirement; separately reviewed token source distinguishes ceiling reduction from token movement.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x3790cf57"
+    },
+    {
+      "signature": "setBlockedVenue(address,bool)",
+      "declaration": "function setBlockedVenue(address venue, bool blocked) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "setBlockedVenue",
+        "inputs": [
+          {
+            "name": "venue",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "blocked",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the blocked venue configuration operation with inputs venue, blocked. The ABI does not prove caller permissions, effective timing or dependent state changes.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x5b511161"
+    },
+    {
+      "signature": "setLaunchHoldingCap(bool)",
+      "declaration": "function setLaunchHoldingCap(bool enabled) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "setLaunchHoldingCap",
+        "inputs": [
+          {
+            "name": "enabled",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the launch holding cap configuration operation with inputs enabled. The ABI does not prove caller permissions, effective timing or dependent state changes.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x4c2c1f89"
+    },
+    {
+      "signature": "setPoolManagerGate(bool)",
+      "declaration": "function setPoolManagerGate(bool enabled) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "setPoolManagerGate",
+        "inputs": [
+          {
+            "name": "enabled",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the pool manager gate configuration operation with inputs enabled. The ABI does not prove caller permissions, effective timing or dependent state changes.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x9123ddb9"
+    },
+    {
+      "signature": "symbol()",
+      "declaration": "function symbol() view returns (string)",
+      "abi": {
+        "type": "function",
+        "name": "symbol",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "string",
+            "internalType": "string"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports token/NFT display symbol, not a unique asset identifier.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x95d89b41"
+    },
+    {
+      "signature": "totalSupply()",
+      "declaration": "function totalSupply() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "totalSupply",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports token supply; conversion burns, permanent burns and maximum supply are distinct accounting concepts.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x18160ddd"
+    },
+    {
+      "signature": "transfer(address,uint256)",
+      "declaration": "function transfer(address to, uint256 value) nonpayable returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "transfer",
+        "inputs": [
+          {
+            "name": "to",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "value",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names an ERC20 transfer; source restrictions and sufficient balance/authorization remain independent.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xa9059cbb"
+    },
+    {
+      "signature": "transferFrom(address,address,uint256)",
+      "declaration": "function transferFrom(address from, address to, uint256 value) nonpayable returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "transferFrom",
+        "inputs": [
+          {
+            "name": "from",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "to",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "value",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names a delegated fungible or NFT transfer according to this role; a successful historic decode does not prove present authority.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x23b872dd"
+    },
+    {
+      "signature": "Approval(address,address,uint256)",
+      "declaration": "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "abi": {
+        "type": "event",
+        "name": "Approval",
+        "inputs": [
+          {
+            "name": "owner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "spender",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "value",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports role-specific approval; NFT tokenId is indexed while ERC20 value is not. Authenticate the emitter before decoding.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "owner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "spender",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 2,
+            "name": "value",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "BurnedForever(address,uint256,uint256)",
+      "declaration": "event BurnedForever(address indexed from, uint256 amount, uint256 newMaxSupply)",
+      "abi": {
+        "type": "event",
+        "name": "BurnedForever",
+        "inputs": [
+          {
+            "name": "from",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "newMaxSupply",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports permanent token burn and resulting ceiling; not every transfer to zero has this meaning.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x19ca53334e436c3b55a7161dc5b0d70a5f814b5098baf60ac6fb41a85582ea3d",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 2,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "from",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "amount",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 2,
+            "name": "newMaxSupply",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "LaunchHoldingCapSet(bool)",
+      "declaration": "event LaunchHoldingCapSet(bool enabled)",
+      "abi": {
+        "type": "event",
+        "name": "LaunchHoldingCapSet",
+        "inputs": [
+          {
+            "name": "enabled",
+            "type": "bool",
+            "indexed": false,
+            "internalType": "bool"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the holding-cap enabled switch, not resolved active state.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xe486ec022aa94b4444afa9cfff693655ac8840d659e7a1a1eacf12ef173df82b",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "enabled",
+            "canonical_type": "bool",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "LedgerRetired(uint256,uint256)",
+      "declaration": "event LedgerRetired(uint256 amount, uint256 newMaxSupply)",
+      "abi": {
+        "type": "event",
+        "name": "LedgerRetired",
+        "inputs": [
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "newMaxSupply",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports ceiling retirement without token-balance movement in the separately reviewed STANDARD source.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x518e3c9b8c7465a08beed0ced51ff01865ae7cf9bf3e8de0b692e66bc63bb0d7",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 2,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "amount",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 1,
+            "name": "newMaxSupply",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "PoolManagerGateSet(bool)",
+      "declaration": "event PoolManagerGateSet(bool enabled)",
+      "abi": {
+        "type": "event",
+        "name": "PoolManagerGateSet",
+        "inputs": [
+          {
+            "name": "enabled",
+            "type": "bool",
+            "indexed": false,
+            "internalType": "bool"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the separate PoolManager gate configuration switch.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xce66cada62b6758a1ac69cf281abb44d6521166b1d9c394031dd7944c74622cd",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "enabled",
+            "canonical_type": "bool",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "PoolManagerTransferAuthorized(bool,uint256)",
+      "declaration": "event PoolManagerTransferAuthorized(bool inbound, uint256 amount)",
+      "abi": {
+        "type": "event",
+        "name": "PoolManagerTransferAuthorized",
+        "inputs": [
+          {
+            "name": "inbound",
+            "type": "bool",
+            "indexed": false,
+            "internalType": "bool"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports direction/amount transfer-budget authorization, not a completed transfer.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x993ceb6b66fc492e377ba2a814ae84deec73cb558c3205029f59e26d288f2277",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 2,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "inbound",
+            "canonical_type": "bool",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 1,
+            "name": "amount",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "Transfer(address,address,uint256)",
+      "declaration": "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "abi": {
+        "type": "event",
+        "name": "Transfer",
+        "inputs": [
+          {
+            "name": "from",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "to",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "value",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports role-specific token movement; NFT tokenId is indexed topic3 while ERC20 value is in data despite identical signature/topic0.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "from",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "to",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 2,
+            "name": "value",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "VenueBlocked(address,bool)",
+      "declaration": "event VenueBlocked(address indexed venue, bool blocked)",
+      "abi": {
+        "type": "event",
+        "name": "VenueBlocked",
+        "inputs": [
+          {
+            "name": "venue",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "blocked",
+            "type": "bool",
+            "indexed": false,
+            "internalType": "bool"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports a venue block-flag change, separate from holding-cap and gate restrictions.",
+      "units": "STANDARD monetary amounts use the separately authenticated 18-decimal token scale; decimals() itself is a uint8 count. Flags, directions and addresses have no token denomination.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xa7e413129a49d7a6b358ccb288eac793b40c378fb9f573a656aa8fb43828cce8",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "venue",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "blocked",
+            "canonical_type": "bool",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "BlockedVenue(address)",
+      "declaration": "error BlockedVenue(address venue)",
+      "abi": {
+        "type": "error",
+        "name": "BlockedVenue",
+        "inputs": [
+          {
+            "name": "venue",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the BlockedVenue revert condition (blocked venue) with venue. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x931597bf"
+    },
+    {
+      "signature": "ERC20InsufficientAllowance(address,uint256,uint256)",
+      "declaration": "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "abi": {
+        "type": "error",
+        "name": "ERC20InsufficientAllowance",
+        "inputs": [
+          {
+            "name": "spender",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "allowance",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "needed",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ERC20InsufficientAllowance revert condition (erc20 insufficient allowance) with spender, allowance, needed. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xfb8f41b2"
+    },
+    {
+      "signature": "ERC20InsufficientBalance(address,uint256,uint256)",
+      "declaration": "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "abi": {
+        "type": "error",
+        "name": "ERC20InsufficientBalance",
+        "inputs": [
+          {
+            "name": "sender",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "balance",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "needed",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ERC20InsufficientBalance revert condition (erc20 insufficient balance) with sender, balance, needed. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xe450d38c"
+    },
+    {
+      "signature": "ERC20InvalidApprover(address)",
+      "declaration": "error ERC20InvalidApprover(address approver)",
+      "abi": {
+        "type": "error",
+        "name": "ERC20InvalidApprover",
+        "inputs": [
+          {
+            "name": "approver",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ERC20InvalidApprover revert condition (erc20 invalid approver) with approver. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xe602df05"
+    },
+    {
+      "signature": "ERC20InvalidReceiver(address)",
+      "declaration": "error ERC20InvalidReceiver(address receiver)",
+      "abi": {
+        "type": "error",
+        "name": "ERC20InvalidReceiver",
+        "inputs": [
+          {
+            "name": "receiver",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ERC20InvalidReceiver revert condition (erc20 invalid receiver) with receiver. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xec442f05"
+    },
+    {
+      "signature": "ERC20InvalidSender(address)",
+      "declaration": "error ERC20InvalidSender(address sender)",
+      "abi": {
+        "type": "error",
+        "name": "ERC20InvalidSender",
+        "inputs": [
+          {
+            "name": "sender",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ERC20InvalidSender revert condition (erc20 invalid sender) with sender. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x96c6fd1e"
+    },
+    {
+      "signature": "ERC20InvalidSpender(address)",
+      "declaration": "error ERC20InvalidSpender(address spender)",
+      "abi": {
+        "type": "error",
+        "name": "ERC20InvalidSpender",
+        "inputs": [
+          {
+            "name": "spender",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ERC20InvalidSpender revert condition (erc20 invalid spender) with spender. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x94280d62"
+    },
+    {
+      "signature": "HardCapExceeded()",
+      "declaration": "error HardCapExceeded()",
+      "abi": {
+        "type": "error",
+        "name": "HardCapExceeded",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the HardCapExceeded revert condition (hard cap exceeded) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x3895e792"
+    },
+    {
+      "signature": "InvalidVenue()",
+      "declaration": "error InvalidVenue()",
+      "abi": {
+        "type": "error",
+        "name": "InvalidVenue",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the InvalidVenue revert condition (invalid venue) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xa721d2ba"
+    },
+    {
+      "signature": "LaunchHoldingCapExceeded(address,uint256)",
+      "declaration": "error LaunchHoldingCapExceeded(address wallet, uint256 balanceAfter)",
+      "abi": {
+        "type": "error",
+        "name": "LaunchHoldingCapExceeded",
+        "inputs": [
+          {
+            "name": "wallet",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "balanceAfter",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the LaunchHoldingCapExceeded revert condition (launch holding cap exceeded) with wallet, balanceAfter. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xc3333c1c"
+    },
+    {
+      "signature": "NotBankOwner()",
+      "declaration": "error NotBankOwner()",
+      "abi": {
+        "type": "error",
+        "name": "NotBankOwner",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the NotBankOwner revert condition (not bank owner) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x64913f69"
+    },
+    {
+      "signature": "NotCanonicalHook()",
+      "declaration": "error NotCanonicalHook()",
+      "abi": {
+        "type": "error",
+        "name": "NotCanonicalHook",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the NotCanonicalHook revert condition (not canonical hook) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x67373552"
+    },
+    {
+      "signature": "NotCentralBank()",
+      "declaration": "error NotCentralBank()",
+      "abi": {
+        "type": "error",
+        "name": "NotCentralBank",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the NotCentralBank revert condition (not central bank) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x8398b324"
+    },
+    {
+      "signature": "UnauthorizedPoolManagerTransfer(bool,uint256,uint256)",
+      "declaration": "error UnauthorizedPoolManagerTransfer(bool inbound, uint256 amount, uint256 authorized)",
+      "abi": {
+        "type": "error",
+        "name": "UnauthorizedPoolManagerTransfer",
+        "inputs": [
+          {
+            "name": "inbound",
+            "type": "bool",
+            "internalType": "bool"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "authorized",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the UnauthorizedPoolManagerTransfer revert condition (unauthorized pool manager transfer) with inbound, amount, authorized. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x206e5f37"
+    },
+    {
+      "signature": "ZeroPoolManager()",
+      "declaration": "error ZeroPoolManager()",
+      "abi": {
+        "type": "error",
+        "name": "ZeroPoolManager",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ZeroPoolManager revert condition (zero pool manager) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xbbb5d5a3"
+    }
+  ]
+}

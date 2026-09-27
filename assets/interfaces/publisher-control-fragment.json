@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "id": "publisher-control-fragment",
+  "role": "publisher_control",
+  "generation": "publisher-2026-09-27-fragment",
+  "review_id": "publisher-protocol-interfaces-2026-09-27",
+  "coverage": {
+    "kind": "selective_fragment",
+    "source_definition_complete": false,
+    "deployed_implementation_complete": false,
+    "source_locator": "qu",
+    "source_fragment": {
+      "bytes": 153,
+      "sha256": "38cce35d1c78d9f478e021a0c667c4f97112203ae5aac188c5f9bd7ec3f66560",
+      "start_utf8_byte": 669593,
+      "end_utf8_byte": 669746
+    },
+    "entry_counts": {
+      "constructor": 0,
+      "error": 0,
+      "event": 0,
+      "fallback": 0,
+      "function": 3,
+      "receive": 0
+    },
+    "abi_sha256": "b32fdbc7d271e7283834beece434c309d7e73b4e3e8d8c01737bc4a8cca634f4"
+  },
+  "entries": [
+    {
+      "signature": "owner()",
+      "declaration": "function owner() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "owner",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "publisher-2026-09-27-fragment",
+      "explanation": "Reports the module administrator, not a charter holder or proof of every permission.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x8da5cb5b"
+    },
+    {
+      "signature": "pendingOwner()",
+      "declaration": "function pendingOwner() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "pendingOwner",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "publisher-2026-09-27-fragment",
+      "explanation": "Reports the proposed administrator in the ownership handoff; proposal is not acceptance.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xe30c3978"
+    },
+    {
+      "signature": "executionPermissionless()",
+      "declaration": "function executionPermissionless() view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "executionPermissionless",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "publisher-2026-09-27-fragment",
+      "explanation": "Reports the registry execution-policy flag; the publisher binds this read to Registry only, not every administered module.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x36ddec7e"
+    }
+  ]
+}

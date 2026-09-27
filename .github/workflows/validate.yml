@@ -35,6 +35,10 @@ jobs:
         run: python3 -B maintenance/package.py verify
       - name: Check packaging and reviewed-commit export
         run: python3 -B maintenance/check-package.py
+      - name: Check reviewed inventory and capability consistency
+        run: python3 -B maintenance/check-inventory.py
+      - name: Install source-only example schema validator
+        run: python3 -m pip install --disable-pip-version-check jsonschema==4.25.1
       - name: Check optional offline research calculations
         run: python3 -B research/check-research.py
       - name: Check deterministic runtime archive

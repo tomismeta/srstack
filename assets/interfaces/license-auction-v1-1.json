@@ -1,0 +1,2053 @@
+{
+  "schema_version": 1,
+  "id": "license-auction-v1-1",
+  "role": "license_auction",
+  "generation": "v1.1",
+  "review_id": "publisher-protocol-interfaces-2026-09-27",
+  "coverage": {
+    "kind": "complete_adaptation",
+    "source_definition_complete": true,
+    "deployed_implementation_complete": false,
+    "source_locator": "b_",
+    "source_fragment": {
+      "bytes": 537,
+      "sha256": "865ef9e5399851fcb5ce2fcd4d453f22f82c89922cf650624891a251edfde3f2",
+      "start_utf8_byte": 485901,
+      "end_utf8_byte": 486438
+    },
+    "entry_counts": {
+      "constructor": 0,
+      "error": 19,
+      "event": 11,
+      "fallback": 0,
+      "function": 43,
+      "receive": 0
+    },
+    "abi_sha256": "4e2ec2077b100363cf6dd9888134c5f4ea58481843a141cab305eaccb08bad4e",
+    "adaptation": {
+      "base_interface_id": "license-auction-original",
+      "removed_names": [
+        "AUCTION_DAY",
+        "DECAY_HALF_LIFE_MAX",
+        "MAX_PER_CHARTER_PER_DAY",
+        "purchasedOnDay",
+        "CharterDailyCapExceeded"
+      ],
+      "constructor_removed": true,
+      "added_signatures": [
+        "auctionPeriod()",
+        "capWindow()",
+        "capWindowIndex()",
+        "MAX_PER_CHARTER_PER_WINDOW()",
+        "purchasedInWindow(uint256,uint256)",
+        "remainingForCharter(uint256)",
+        "CharterWindowCapExceeded()",
+        "InvalidCapWindow()",
+        "InvalidPeriod()"
+      ],
+      "removal_set_fragment": {
+        "bytes": 115,
+        "sha256": "f33cc7da9e7f2bc0f63c701df5a7526c1159d18a98bdeaf04009f102a9091788",
+        "start_utf8_byte": 485782,
+        "end_utf8_byte": 485897
+      }
+    }
+  },
+  "entries": [
+    {
+      "signature": "FLOOR_PAYBACK_DAYS_MAX()",
+      "declaration": "function FLOOR_PAYBACK_DAYS_MAX() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "FLOOR_PAYBACK_DAYS_MAX",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the floor payback days max named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x3821c603"
+    },
+    {
+      "signature": "FLOOR_PAYBACK_DAYS_MIN()",
+      "declaration": "function FLOOR_PAYBACK_DAYS_MIN() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "FLOOR_PAYBACK_DAYS_MIN",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the floor payback days min named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x505ea8d5"
+    },
+    {
+      "signature": "LICENSES_PER_DAY_MAX()",
+      "declaration": "function LICENSES_PER_DAY_MAX() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "LICENSES_PER_DAY_MAX",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the licenses per day max named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x0b83ee8d"
+    },
+    {
+      "signature": "acceptOwnership()",
+      "declaration": "function acceptOwnership() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "acceptOwnership",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Names the ownership-acceptance operation, separate from proposing a new owner.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x79ba5097"
+    },
+    {
+      "signature": "auctionAnchor()",
+      "declaration": "function auctionAnchor() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "auctionAnchor",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the family-specific auction schedule anchor used in publisher clock arithmetic; a roll log timestamp is not this anchor.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xf08fb30f"
+    },
+    {
+      "signature": "bank()",
+      "declaration": "function bank() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "bank",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "contract CentralBank"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the bank dependency address for this role. An address observation is not current authorization, code equivalence or permission to call the dependency.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x76cdb03b"
+    },
+    {
+      "signature": "buyLicenses(uint256,uint256,uint256)",
+      "declaration": "function buyLicenses(uint256 charterId, uint256 count, uint256 maxUnitPrice) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "buyLicenses",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "count",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "maxUnitPrice",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Names a branch-license purchase for an existing charter with quantity and maximum unit price, not a new-charter ETH purchase.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x6d11c8ec"
+    },
+    {
+      "signature": "currentDay()",
+      "declaration": "function currentDay() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "currentDay",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the auction round identifier, not a human calendar day or complete historical round enumeration.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x5c9302c9"
+    },
+    {
+      "signature": "currentPrice()",
+      "declaration": "function currentPrice() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "currentPrice",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports this auction family price-function output; sold-out inventory, allowance or eligibility can still prevent purchase.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x9d1b464a"
+    },
+    {
+      "signature": "dayCap()",
+      "declaration": "function dayCap() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "dayCap",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the stored round supply-cap field for the selected auction family.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xfea8c07c"
+    },
+    {
+      "signature": "dayFloorPrice()",
+      "declaration": "function dayFloorPrice() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "dayFloorPrice",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the stored round floor-price field, separate from last executed sale price.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x55d92de0"
+    },
+    {
+      "signature": "dayHalfLife()",
+      "declaration": "function dayHalfLife() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "dayHalfLife",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the stored round decay-half-life field, potentially distinct from configured decayHalfLife.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x7b314af7"
+    },
+    {
+      "signature": "dayStartPrice()",
+      "declaration": "function dayStartPrice() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "dayStartPrice",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the stored round opening-price field, not an arbitrary past round price.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x28db9dd5"
+    },
+    {
+      "signature": "decayHalfLife()",
+      "declaration": "function decayHalfLife() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "decayHalfLife",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports configured price-decay half-life, separate from stored dayHalfLife and historical effective settings.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x9813048a"
+    },
+    {
+      "signature": "enable(uint256)",
+      "declaration": "function enable(uint256 startPrice) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "enable",
+        "inputs": [
+          {
+            "name": "startPrice",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Names the auction enable/start operation; implementation evidence is required for timing, initialization and authorization.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x87dc7c37"
+    },
+    {
+      "signature": "floorPaybackDays()",
+      "declaration": "function floorPaybackDays() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "floorPaybackDays",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the license floor-model policy input, not a guarantee of realized financial payback.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x56fa6aae"
+    },
+    {
+      "signature": "lastSaleDay()",
+      "declaration": "function lastSaleDay() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "lastSaleDay",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the last-sale round identifier, not a full round sales history.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x5bb3ae5c"
+    },
+    {
+      "signature": "lastSalePrice()",
+      "declaration": "function lastSalePrice() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "lastSalePrice",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the last-sale price field; authenticate the corresponding receipt before claiming a verified execution.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x86f5960f"
+    },
+    {
+      "signature": "licensesPerDay()",
+      "declaration": "function licensesPerDay() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "licensesPerDay",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports configured per-round license supply; the retained getter name is not evidence of 24-hour inventory.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x92453404"
+    },
+    {
+      "signature": "owner()",
+      "declaration": "function owner() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "owner",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the module administrator, not a charter holder or proof of every permission.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x8da5cb5b"
+    },
+    {
+      "signature": "pause()",
+      "declaration": "function pause() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "pause",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Names the pause operation; exact guardian/owner permissions require separate evidence.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x8456cb59"
+    },
+    {
+      "signature": "paused()",
+      "declaration": "function paused() view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "paused",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the module pause flag; other eligibility and permission conditions remain independent.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x5c975abb"
+    },
+    {
+      "signature": "pendingOwner()",
+      "declaration": "function pendingOwner() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "pendingOwner",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the proposed administrator in the ownership handoff; proposal is not acceptance.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xe30c3978"
+    },
+    {
+      "signature": "quote(uint256)",
+      "declaration": "function quote(uint256 count) view returns (uint256 unitPrice, uint256 total)",
+      "abi": {
+        "type": "function",
+        "name": "quote",
+        "inputs": [
+          {
+            "name": "count",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "unitPrice",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "total",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Returns license unitPrice and total for supplied count; curve output is not proof of buyable inventory, funds or execution.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xed1bd76c"
+    },
+    {
+      "signature": "registry()",
+      "declaration": "function registry() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "registry",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "contract AddressRegistry"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the registry dependency address for this role. An address observation is not current authorization, code equivalence or permission to call the dependency.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x7b103999"
+    },
+    {
+      "signature": "remainingToday()",
+      "declaration": "function remainingToday() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "remainingToday",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports round inventory; it does not establish funds, charter capacity, eligibility, or a guaranteed fill.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xfc3c5515"
+    },
+    {
+      "signature": "renounceOwnership()",
+      "declaration": "function renounceOwnership() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "renounceOwnership",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Names the ownership-renunciation operation; resulting authority of other modules is a separate question.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x715018a6"
+    },
+    {
+      "signature": "setDecayHalfLife(uint256)",
+      "declaration": "function setDecayHalfLife(uint256 halfLife) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "setDecayHalfLife",
+        "inputs": [
+          {
+            "name": "halfLife",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Names the decay half life configuration operation with inputs halfLife. The ABI does not prove caller permissions, effective timing or dependent state changes.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x541e26a9"
+    },
+    {
+      "signature": "setFloorPaybackDays(uint256)",
+      "declaration": "function setFloorPaybackDays(uint256 dayCount) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "setFloorPaybackDays",
+        "inputs": [
+          {
+            "name": "dayCount",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Names the floor payback days configuration operation with inputs dayCount. The ABI does not prove caller permissions, effective timing or dependent state changes.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x211b62ba"
+    },
+    {
+      "signature": "setLicensesPerDay(uint256)",
+      "declaration": "function setLicensesPerDay(uint256 count) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "setLicensesPerDay",
+        "inputs": [
+          {
+            "name": "count",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Names the licenses per day configuration operation with inputs count. The ABI does not prove caller permissions, effective timing or dependent state changes.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xccae6d89"
+    },
+    {
+      "signature": "setSupplyController(address)",
+      "declaration": "function setSupplyController(address controller) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "setSupplyController",
+        "inputs": [
+          {
+            "name": "controller",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Names the supply controller configuration operation with inputs controller. The ABI does not prove caller permissions, effective timing or dependent state changes.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x52875bc3"
+    },
+    {
+      "signature": "soldToday()",
+      "declaration": "function soldToday() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "soldToday",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the stored round sold-count field; the legacy name does not imply rolling 24-hour volume.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xa08c6922"
+    },
+    {
+      "signature": "startMultiplier()",
+      "declaration": "function startMultiplier() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "startMultiplier",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the opening-price multiplier used directly as an integer in publisher pricing, not multiplierWad.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x6d9c3033"
+    },
+    {
+      "signature": "started()",
+      "declaration": "function started() view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "started",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the auction start flag, distinct from pause status, inventory and purchase eligibility.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x1f2698ab"
+    },
+    {
+      "signature": "supplyController()",
+      "declaration": "function supplyController() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "supplyController",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the auction supply-controller address; it does not itself authenticate effective control or mandate activation.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xe7ba1012"
+    },
+    {
+      "signature": "transferOwnership(address)",
+      "declaration": "function transferOwnership(address newOwner) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "transferOwnership",
+        "inputs": [
+          {
+            "name": "newOwner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Names the administrator-handoff proposal with the supplied new owner; does not itself prove acceptance.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xf2fde38b"
+    },
+    {
+      "signature": "unpause()",
+      "declaration": "function unpause() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "unpause",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Names the unpause operation; a declared operation does not prove the caller may execute it.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x3f4ba83a"
+    },
+    {
+      "signature": "AuctionStarted(uint256,uint256)",
+      "declaration": "event AuctionStarted(uint256 indexed day, uint256 startPrice)",
+      "abi": {
+        "type": "event",
+        "name": "AuctionStarted",
+        "inputs": [
+          {
+            "name": "day",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "startPrice",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the family-specific auction start round and opening price; no timestamp field is present.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xf8910119ddbef5440c54532457dfe8250a10ed39e583292818f44724b9e1344c",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "day",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "startPrice",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "DayRolled(uint256,uint256,uint256,uint256)",
+      "declaration": "event DayRolled(uint256 indexed day, uint256 startPrice, uint256 floorPrice, uint256 cap)",
+      "abi": {
+        "type": "event",
+        "name": "DayRolled",
+        "inputs": [
+          {
+            "name": "day",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "startPrice",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "floorPrice",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "cap",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports family-specific round, start price, floor price and cap; no timestamp, duration, end reason or guaranteed replenishment time is encoded.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xfe150722db0c02a69373b1d32f7d153b415b253b5bce66b95e7b1f5d9ce65c3f",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 3,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "day",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "startPrice",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 2,
+            "name": "floorPrice",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 3,
+            "name": "cap",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 2,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "DecayHalfLifeSet(uint256)",
+      "declaration": "event DecayHalfLifeSet(uint256 halfLife)",
+      "abi": {
+        "type": "event",
+        "name": "DecayHalfLifeSet",
+        "inputs": [
+          {
+            "name": "halfLife",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports decay half life set with ordered fields halfLife. This configuration/relationship observation is not proof of present effective policy; use the event block and authenticated emitter.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x3491d4ab69d4f73c3d81521a7c13c6f4299f2216ed9b9cc044949888cf5824f2",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "halfLife",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "FloorPaybackDaysSet(uint256)",
+      "declaration": "event FloorPaybackDaysSet(uint256 dayCount)",
+      "abi": {
+        "type": "event",
+        "name": "FloorPaybackDaysSet",
+        "inputs": [
+          {
+            "name": "dayCount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports floor payback days set with ordered fields dayCount. This configuration/relationship observation is not proof of present effective policy; use the event block and authenticated emitter.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x691f93bd194840bb74533b5aed16bbd924ff2bc0ec442c57dd485756bca7f809",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "dayCount",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "GuardianPaused(address)",
+      "declaration": "event GuardianPaused(address indexed guardian)",
+      "abi": {
+        "type": "event",
+        "name": "GuardianPaused",
+        "inputs": [
+          {
+            "name": "guardian",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports indexed guardian on pause; a pause log does not prove the module remains paused now.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xd5354f32595d4786b7a234166bc1e34f4ee58f9e9d534b0fc5abd8e122f25fd5",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "guardian",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "GuardianUnpaused()",
+      "declaration": "event GuardianUnpaused()",
+      "abi": {
+        "type": "event",
+        "name": "GuardianUnpaused",
+        "inputs": [],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports unpause with no fields; topic-only data is valid.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x984d636c2614e303400b04f078fb33065fa357cbc6859737a5e4528627f4fa18",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 0,
+        "fields": []
+      }
+    },
+    {
+      "signature": "LicensesPerDaySet(uint256)",
+      "declaration": "event LicensesPerDaySet(uint256 count)",
+      "abi": {
+        "type": "event",
+        "name": "LicensesPerDaySet",
+        "inputs": [
+          {
+            "name": "count",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports licenses per day set with ordered fields count. This configuration/relationship observation is not proof of present effective policy; use the event block and authenticated emitter.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xffd007b9d15a275ab5c27e6639f90191a9e16b633d8452c70b199dd4366dc6b7",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "count",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "LicensesPurchased(uint256,uint256,uint256,uint256)",
+      "declaration": "event LicensesPurchased(uint256 indexed charterId, uint256 indexed day, uint256 count, uint256 unitPrice)",
+      "abi": {
+        "type": "event",
+        "name": "LicensesPurchased",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "day",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "count",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "unitPrice",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports licenses for an existing charter with indexed charterId/day and data count/unitPrice; multiply count by unitPrice for reported consideration.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 2,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "charterId",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "day",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 2,
+            "name": "count",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 3,
+            "name": "unitPrice",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "OwnershipTransferStarted(address,address)",
+      "declaration": "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "abi": {
+        "type": "event",
+        "name": "OwnershipTransferStarted",
+        "inputs": [
+          {
+            "name": "previousOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "newOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports proposed administrator handoff; both addresses are indexed and data is empty, distinct from completed acceptance.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x38d16b8cac22d99fc7c124b9cd0de2d3fa1faef420bfe791d8c362d765e22700",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "previousOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "newOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "OwnershipTransferred(address,address)",
+      "declaration": "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "abi": {
+        "type": "event",
+        "name": "OwnershipTransferred",
+        "inputs": [
+          {
+            "name": "previousOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "newOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports administrator ownership transfer; it is not a charter ownership log or proof of every control permission.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "previousOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "newOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "SupplyControllerSet(address)",
+      "declaration": "event SupplyControllerSet(address controller)",
+      "abi": {
+        "type": "event",
+        "name": "SupplyControllerSet",
+        "inputs": [
+          {
+            "name": "controller",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the controller address in data, not in a topic; current authority still requires corroboration.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x915d8b94cdcbf4fa1b4c768b15f63b99aee21096b9d04fe1938f45833036106d",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "controller",
+            "canonical_type": "address",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "AlreadyStarted()",
+      "declaration": "error AlreadyStarted()",
+      "abi": {
+        "type": "error",
+        "name": "AlreadyStarted",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the AlreadyStarted revert condition (already started) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x1fbde445"
+    },
+    {
+      "signature": "ContractPaused()",
+      "declaration": "error ContractPaused()",
+      "abi": {
+        "type": "error",
+        "name": "ContractPaused",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the ContractPaused revert condition (contract paused) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xab35696f"
+    },
+    {
+      "signature": "DailyCapExceeded()",
+      "declaration": "error DailyCapExceeded()",
+      "abi": {
+        "type": "error",
+        "name": "DailyCapExceeded",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the DailyCapExceeded revert condition (daily cap exceeded) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xcc70389d"
+    },
+    {
+      "signature": "EmissionsNotStarted()",
+      "declaration": "error EmissionsNotStarted()",
+      "abi": {
+        "type": "error",
+        "name": "EmissionsNotStarted",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the EmissionsNotStarted revert condition (emissions not started) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x8f984041"
+    },
+    {
+      "signature": "InvalidCount()",
+      "declaration": "error InvalidCount()",
+      "abi": {
+        "type": "error",
+        "name": "InvalidCount",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the InvalidCount revert condition (invalid count) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x3492aef6"
+    },
+    {
+      "signature": "InvalidHalfLife()",
+      "declaration": "error InvalidHalfLife()",
+      "abi": {
+        "type": "error",
+        "name": "InvalidHalfLife",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the InvalidHalfLife revert condition (invalid half life) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xacaeb5b6"
+    },
+    {
+      "signature": "NotCharterOwner()",
+      "declaration": "error NotCharterOwner()",
+      "abi": {
+        "type": "error",
+        "name": "NotCharterOwner",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the NotCharterOwner revert condition (not charter owner) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x64e788a5"
+    },
+    {
+      "signature": "NotGuardian()",
+      "declaration": "error NotGuardian()",
+      "abi": {
+        "type": "error",
+        "name": "NotGuardian",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the NotGuardian revert condition (not guardian) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xef6d0f02"
+    },
+    {
+      "signature": "NotPaused()",
+      "declaration": "error NotPaused()",
+      "abi": {
+        "type": "error",
+        "name": "NotPaused",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the NotPaused revert condition (not paused) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x6cd60201"
+    },
+    {
+      "signature": "NotStarted()",
+      "declaration": "error NotStarted()",
+      "abi": {
+        "type": "error",
+        "name": "NotStarted",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the NotStarted revert condition (not started) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x6f312cbd"
+    },
+    {
+      "signature": "NotSupplyAuthority()",
+      "declaration": "error NotSupplyAuthority()",
+      "abi": {
+        "type": "error",
+        "name": "NotSupplyAuthority",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the NotSupplyAuthority revert condition (not supply authority) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x1729edd2"
+    },
+    {
+      "signature": "OutOfBounds()",
+      "declaration": "error OutOfBounds()",
+      "abi": {
+        "type": "error",
+        "name": "OutOfBounds",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the OutOfBounds revert condition (out of bounds) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xb4120f14"
+    },
+    {
+      "signature": "OwnableInvalidOwner(address)",
+      "declaration": "error OwnableInvalidOwner(address owner)",
+      "abi": {
+        "type": "error",
+        "name": "OwnableInvalidOwner",
+        "inputs": [
+          {
+            "name": "owner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the OwnableInvalidOwner revert condition (ownable invalid owner) with owner. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x1e4fbdf7"
+    },
+    {
+      "signature": "OwnableUnauthorizedAccount(address)",
+      "declaration": "error OwnableUnauthorizedAccount(address account)",
+      "abi": {
+        "type": "error",
+        "name": "OwnableUnauthorizedAccount",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the OwnableUnauthorizedAccount revert condition (ownable unauthorized account) with account. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x118cdaa7"
+    },
+    {
+      "signature": "PriceAboveMax()",
+      "declaration": "error PriceAboveMax()",
+      "abi": {
+        "type": "error",
+        "name": "PriceAboveMax",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the PriceAboveMax revert condition (price above max) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xf2e3adf8"
+    },
+    {
+      "signature": "ReentrancyGuardReentrantCall()",
+      "declaration": "error ReentrancyGuardReentrantCall()",
+      "abi": {
+        "type": "error",
+        "name": "ReentrancyGuardReentrantCall",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the ReentrancyGuardReentrantCall revert condition (reentrancy guard reentrant call) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x3ee5aeb5"
+    },
+    {
+      "signature": "auctionPeriod()",
+      "declaration": "function auctionPeriod() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "auctionPeriod",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the generation-specific auction period, distinct from license capWindow and a rolling calendar day.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x0cccfc58"
+    },
+    {
+      "signature": "capWindow()",
+      "declaration": "function capWindow() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "capWindow",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the license allowance-window duration, separate from auctionPeriod.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xe5de0416"
+    },
+    {
+      "signature": "capWindowIndex()",
+      "declaration": "function capWindowIndex() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "capWindowIndex",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the license allowance-window identifier; it is not necessarily the auction round ID.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x030adf57"
+    },
+    {
+      "signature": "MAX_PER_CHARTER_PER_WINDOW()",
+      "declaration": "function MAX_PER_CHARTER_PER_WINDOW() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "MAX_PER_CHARTER_PER_WINDOW",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports the max per charter per window named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x3a379145"
+    },
+    {
+      "signature": "purchasedInWindow(uint256,uint256)",
+      "declaration": "function purchasedInWindow(uint256 charterId, uint256 window) view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "purchasedInWindow",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256"
+          },
+          {
+            "name": "window",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports usage for an explicit charter ID and allowance-window ID. This is not aggregate round sales, and its retention/reset semantics remain unverified.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xf66181f4"
+    },
+    {
+      "signature": "remainingForCharter(uint256)",
+      "declaration": "function remainingForCharter(uint256 charterId) view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "remainingForCharter",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Reports remaining license allowance for one charter, not affordable quantity, branch capacity or global inventory.",
+      "units": "Publisher price/consideration display: STANDARD with 18 decimals. Auction anchor/period/half-life and cap-window display use seconds; day/window/charter identifiers and counts are unscaled. startMultiplier is an integer, not WAD. Other bounds/scales require semantic evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xd80fc366"
+    },
+    {
+      "signature": "CharterWindowCapExceeded()",
+      "declaration": "error CharterWindowCapExceeded()",
+      "abi": {
+        "type": "error",
+        "name": "CharterWindowCapExceeded",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the CharterWindowCapExceeded revert condition (charter window cap exceeded) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x6cb15583"
+    },
+    {
+      "signature": "InvalidCapWindow()",
+      "declaration": "error InvalidCapWindow()",
+      "abi": {
+        "type": "error",
+        "name": "InvalidCapWindow",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the InvalidCapWindow revert condition (invalid cap window) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x29abddb8"
+    },
+    {
+      "signature": "InvalidPeriod()",
+      "declaration": "error InvalidPeriod()",
+      "abi": {
+        "type": "error",
+        "name": "InvalidPeriod",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "v1.1",
+      "explanation": "Declares the InvalidPeriod revert condition (invalid period) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x17479ac8"
+    }
+  ]
+}

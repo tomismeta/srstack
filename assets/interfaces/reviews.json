@@ -1,0 +1,503 @@
+{
+  "schema_version": 1,
+  "reviews": [
+    {
+      "id": "publisher-protocol-interfaces-2026-09-27",
+      "reviewed_at": "2026-09-27",
+      "source_ids": [
+        "sr-complete-interface-inventory-2026-09-27",
+        "sr-question-interface-2026-09-27"
+      ],
+      "source_chain": [
+        {
+          "url": "https://www.standardreserve.xyz/app/",
+          "bytes": 6652,
+          "sha256": "553bcb2d2980a0347854c2f58a212cfd4573a7899370c2b520b64dccccbf6977",
+          "relationship": "Official application HTML explicitly links the module URL"
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-z6PyBslD.js",
+          "bytes": 860946,
+          "sha256": "8e2178e9e11adc78288afeb0a95bf1c62e7ac118ba08986b3033c2d740cdbd31",
+          "relationship": "Complete HTTP body parsed as data; downloaded JavaScript was not executed"
+        }
+      ],
+      "method": "Acorn 8.18.0 ECMAScript AST parse of the complete UTF-8 source. Recursively read literal arrays/objects/strings/booleans only. Enumerate ABI-shaped literal arrays, literal sa declarations and role-bound call sites; manually resolve explicit b_ filtering/additions without evaluating JavaScript. Review all entries, exact indexed layouts, role mappings and generation overlays.",
+      "hash_convention": "SHA-256 over complete UTF-8 body or exact AST literal/expression byte range; byte offsets are zero-based half-open. ABI digest uses UTF-8 JSON sorted keys, compact separators and source entry order; includes full names, internalType, tuple components and indexed flags.",
+      "interfaces": {
+        "central-bank": {
+          "kind": "complete_literal",
+          "source_definition_complete": true,
+          "deployed_implementation_complete": false,
+          "source_locator": "Ne",
+          "source_fragment": {
+            "bytes": 16000,
+            "sha256": "8ddcb419c0bbbfd02a03ae08548e67be7fe27ef74fc9bf755d614eda755a8a5b",
+            "start_utf8_byte": 393065,
+            "end_utf8_byte": 409065
+          },
+          "entry_counts": {
+            "constructor": 1,
+            "error": 18,
+            "event": 14,
+            "fallback": 0,
+            "function": 79,
+            "receive": 0
+          },
+          "abi_sha256": "29f32a3ab353ce57b8701cf1302dca157597168e938127c5377396cf3db65f86"
+        },
+        "charter-nft": {
+          "kind": "complete_literal",
+          "source_definition_complete": true,
+          "deployed_implementation_complete": false,
+          "source_locator": "Rn",
+          "source_fragment": {
+            "bytes": 7379,
+            "sha256": "cbbc2a893a9cca20bcd333d3fb085c5ccb635f9e8954857833bcca3293466c53",
+            "start_utf8_byte": 409069,
+            "end_utf8_byte": 416448
+          },
+          "entry_counts": {
+            "constructor": 1,
+            "error": 13,
+            "event": 7,
+            "fallback": 0,
+            "function": 26,
+            "receive": 0
+          },
+          "abi_sha256": "75395fdcc95f99fe09679c9c27c7a9b41138b9c2771fd46c59f4f3c1c2a3a6b1"
+        },
+        "standard": {
+          "kind": "complete_literal",
+          "source_definition_complete": true,
+          "deployed_implementation_complete": false,
+          "source_locator": "Vs",
+          "source_fragment": {
+            "bytes": 8432,
+            "sha256": "627044911b1a8d3a45168249198aa6d3b85e7d38fb703d07fade92697c9f9763",
+            "start_utf8_byte": 486814,
+            "end_utf8_byte": 495246
+          },
+          "entry_counts": {
+            "constructor": 1,
+            "error": 15,
+            "event": 8,
+            "fallback": 0,
+            "function": 31,
+            "receive": 0
+          },
+          "abi_sha256": "2be5343f90274acde2b14a9bb7bdcdc29d99364798c062ba02d4073e2832a7d1"
+        },
+        "tax-hook": {
+          "kind": "complete_literal",
+          "source_definition_complete": true,
+          "deployed_implementation_complete": false,
+          "source_locator": "As",
+          "source_fragment": {
+            "bytes": 15901,
+            "sha256": "257a9449d5407b2ad1b664cc0415e65319db8b73912f048238105e09ef8f6456",
+            "start_utf8_byte": 495250,
+            "end_utf8_byte": 511151
+          },
+          "entry_counts": {
+            "constructor": 1,
+            "error": 16,
+            "event": 9,
+            "fallback": 0,
+            "function": 53,
+            "receive": 1
+          },
+          "abi_sha256": "640bab21bfa5ee1e0db72047a41095b8695d3d47fa0dc3eb40103e764931538b"
+        },
+        "contraction-vault": {
+          "kind": "complete_literal",
+          "source_definition_complete": true,
+          "deployed_implementation_complete": false,
+          "source_locator": "d_",
+          "source_fragment": {
+            "bytes": 7932,
+            "sha256": "d77c4a7de40ba1c45e170f1f733c3b78a5969b04109691477bbf6b6f5a08193c",
+            "start_utf8_byte": 418652,
+            "end_utf8_byte": 426584
+          },
+          "entry_counts": {
+            "constructor": 1,
+            "error": 19,
+            "event": 10,
+            "fallback": 0,
+            "function": 35,
+            "receive": 1
+          },
+          "abi_sha256": "cc4bd4cab82b0ca5913fb168444c94c4a92bccb39733ffea849a66eee8186f5d"
+        },
+        "expansion-vault": {
+          "kind": "complete_literal",
+          "source_definition_complete": true,
+          "deployed_implementation_complete": false,
+          "source_locator": "p_",
+          "source_fragment": {
+            "bytes": 6140,
+            "sha256": "6c129620d62a571dc2ccd1f2133b24ec5d53e5348a1e3cfc38956d7748354b45",
+            "start_utf8_byte": 426588,
+            "end_utf8_byte": 432728
+          },
+          "entry_counts": {
+            "constructor": 1,
+            "error": 17,
+            "event": 8,
+            "fallback": 0,
+            "function": 18,
+            "receive": 1
+          },
+          "abi_sha256": "f4edf28e10259aafed08d6ad936e82f560e570abcdb3e3100e08b11afcb6323d"
+        },
+        "fee-splitter": {
+          "kind": "complete_literal",
+          "source_definition_complete": true,
+          "deployed_implementation_complete": false,
+          "source_locator": "f_",
+          "source_fragment": {
+            "bytes": 5109,
+            "sha256": "762de54519a7123e40beaaa37ae06c02340b06676a72247446677cd47e7e7653",
+            "start_utf8_byte": 432732,
+            "end_utf8_byte": 437841
+          },
+          "entry_counts": {
+            "constructor": 1,
+            "error": 8,
+            "event": 9,
+            "fallback": 0,
+            "function": 19,
+            "receive": 1
+          },
+          "abi_sha256": "6ea409bc1a23412c491a095f39dc4237bc3f009fe05e04aa39c2f6789cf2245c"
+        },
+        "genesis-minter": {
+          "kind": "complete_literal",
+          "source_definition_complete": true,
+          "deployed_implementation_complete": false,
+          "source_locator": "tn",
+          "source_fragment": {
+            "bytes": 11598,
+            "sha256": "65228965da68951ee5aefb8d4ac60b5327cd4ffd7cdd208f95db6730011117f2",
+            "start_utf8_byte": 437845,
+            "end_utf8_byte": 449443
+          },
+          "entry_counts": {
+            "constructor": 1,
+            "error": 31,
+            "event": 10,
+            "fallback": 0,
+            "function": 49,
+            "receive": 0
+          },
+          "abi_sha256": "a21ce9c4690b6e81ac35266b2c09f09bd8f45e0f588f0c3e6a3104c2e2b654c9"
+        },
+        "license-auction-original": {
+          "kind": "complete_literal",
+          "source_definition_complete": true,
+          "deployed_implementation_complete": false,
+          "source_locator": "jc",
+          "source_fragment": {
+            "bytes": 8685,
+            "sha256": "450722c7dedeebf97aad2af8a53d86990a5fd03e900dab950b924f9b982ed4b4",
+            "start_utf8_byte": 465464,
+            "end_utf8_byte": 474149
+          },
+          "entry_counts": {
+            "constructor": 1,
+            "error": 17,
+            "event": 11,
+            "fallback": 0,
+            "function": 41,
+            "receive": 0
+          },
+          "abi_sha256": "b6c0242f320cbd53ce9db0e752c348bb077309053c43d56bfee8880dd2f0ff99"
+        },
+        "license-auction-v1-1": {
+          "kind": "complete_adaptation",
+          "source_definition_complete": true,
+          "deployed_implementation_complete": false,
+          "source_locator": "b_",
+          "source_fragment": {
+            "bytes": 537,
+            "sha256": "865ef9e5399851fcb5ce2fcd4d453f22f82c89922cf650624891a251edfde3f2",
+            "start_utf8_byte": 485901,
+            "end_utf8_byte": 486438
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 19,
+            "event": 11,
+            "fallback": 0,
+            "function": 43,
+            "receive": 0
+          },
+          "abi_sha256": "4e2ec2077b100363cf6dd9888134c5f4ea58481843a141cab305eaccb08bad4e",
+          "adaptation": {
+            "base_interface_id": "license-auction-original",
+            "removed_names": [
+              "AUCTION_DAY",
+              "DECAY_HALF_LIFE_MAX",
+              "MAX_PER_CHARTER_PER_DAY",
+              "purchasedOnDay",
+              "CharterDailyCapExceeded"
+            ],
+            "constructor_removed": true,
+            "added_signatures": [
+              "auctionPeriod()",
+              "capWindow()",
+              "capWindowIndex()",
+              "MAX_PER_CHARTER_PER_WINDOW()",
+              "purchasedInWindow(uint256,uint256)",
+              "remainingForCharter(uint256)",
+              "CharterWindowCapExceeded()",
+              "InvalidCapWindow()",
+              "InvalidPeriod()"
+            ],
+            "removal_set_fragment": {
+              "bytes": 115,
+              "sha256": "f33cc7da9e7f2bc0f63c701df5a7526c1159d18a98bdeaf04009f102a9091788",
+              "start_utf8_byte": 485782,
+              "end_utf8_byte": 485897
+            }
+          }
+        },
+        "license-auction-v1-2": {
+          "kind": "complete_literal",
+          "source_definition_complete": true,
+          "deployed_implementation_complete": false,
+          "source_locator": "vw",
+          "source_fragment": {
+            "bytes": 11625,
+            "sha256": "d6e13394240b028717741f2185110a2f2bb746e80cf37a37c48a7a56b2b984d6",
+            "start_utf8_byte": 474153,
+            "end_utf8_byte": 485778
+          },
+          "entry_counts": {
+            "constructor": 1,
+            "error": 22,
+            "event": 14,
+            "fallback": 0,
+            "function": 51,
+            "receive": 0
+          },
+          "abi_sha256": "7638e47f8742df74892706bec6b44dea819b8dad80e690e4b3fcc948cc4fb066"
+        },
+        "charter-auction-original": {
+          "kind": "complete_literal",
+          "source_definition_complete": true,
+          "deployed_implementation_complete": false,
+          "source_locator": "Ci",
+          "source_fragment": {
+            "bytes": 7926,
+            "sha256": "e342b41397f04aef441422e8a6d634114d0f82d1532914ffedcab5eb65b5225f",
+            "start_utf8_byte": 449447,
+            "end_utf8_byte": 457373
+          },
+          "entry_counts": {
+            "constructor": 1,
+            "error": 19,
+            "event": 11,
+            "fallback": 0,
+            "function": 36,
+            "receive": 0
+          },
+          "abi_sha256": "68706425c5593a98cc06e1a9c3182ce3bfa38c0313b24cd0cfeb38e530555924"
+        },
+        "charter-auction-v1-2": {
+          "kind": "complete_literal",
+          "source_definition_complete": true,
+          "deployed_implementation_complete": false,
+          "source_locator": "h_",
+          "source_fragment": {
+            "bytes": 7900,
+            "sha256": "308ee26f3043e56a015d934d134f9694c5c7dcdf53e33ff7bee91a4513ec6dd0",
+            "start_utf8_byte": 457377,
+            "end_utf8_byte": 465277
+          },
+          "entry_counts": {
+            "constructor": 1,
+            "error": 20,
+            "event": 11,
+            "fallback": 0,
+            "function": 35,
+            "receive": 0
+          },
+          "abi_sha256": "11309937a08372b67dcd732456b108dc65a1d34123e054dd52c1b82c1b88c447"
+        },
+        "publisher-control-fragment": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "qu",
+          "source_fragment": {
+            "bytes": 153,
+            "sha256": "38cce35d1c78d9f478e021a0c667c4f97112203ae5aac188c5f9bd7ec3f66560",
+            "start_utf8_byte": 669593,
+            "end_utf8_byte": 669746
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 0,
+            "event": 0,
+            "fallback": 0,
+            "function": 3,
+            "receive": 0
+          },
+          "abi_sha256": "b32fdbc7d271e7283834beece434c309d7e73b4e3e8d8c01737bc4a8cca634f4"
+        },
+        "multicall3-fragment": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "Nt",
+          "source_fragment": {
+            "bytes": 620,
+            "sha256": "517d3c0b4a0962cf76b241b33f5113e90c6009804ca92e93167c42630c49120c",
+            "start_utf8_byte": 46410,
+            "end_utf8_byte": 47030
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 0,
+            "event": 0,
+            "fallback": 0,
+            "function": 3,
+            "receive": 0
+          },
+          "abi_sha256": "c6f4776ac74f2322a67088ebada476e442e999379081f75f401b8451b8b6b84d"
+        }
+      },
+      "binding_fragments": {
+        "VP": {
+          "bytes": 802,
+          "sha256": "a04b44d074668e9a8077af4e1a224a8152d1f4217a5620bbbd29942a7d826689",
+          "start_utf8_byte": 377469,
+          "end_utf8_byte": 378271
+        },
+        "GP": {
+          "bytes": 307,
+          "sha256": "cd6888961baeaae96b040a12b134591a5043bbf618f0007cee218f6c2373d8c6",
+          "start_utf8_byte": 378275,
+          "end_utf8_byte": 378582
+        },
+        "YP": {
+          "bytes": 320,
+          "sha256": "5e838c85151ce28b2fbcb99ea24e637fcdb7512efcf037c5e635adb111e05eeb",
+          "start_utf8_byte": 378586,
+          "end_utf8_byte": 378906
+        },
+        "_M": {
+          "bytes": 1879,
+          "sha256": "5e3a677be1a2b044e6ea5e10c05feeaa6fc98f18678ea0421aa236b5883718df",
+          "start_utf8_byte": 667710,
+          "end_utf8_byte": 669589
+        }
+      },
+      "scan": {
+        "literal_abi_arrays": 24,
+        "named_literal_abi_arrays": 21,
+        "excluded_inline_abi_arrays": [
+          "tokenURI(uint256): SDK ERC721 metadata lookup",
+          "uri(uint256): SDK ERC1155 metadata lookup",
+          "findResolver(bytes): SDK ENS lookup"
+        ],
+        "excluded_composed_definitions": [
+          "d0: l0 SDK errors plus resolveWithGateways(bytes,bytes,string[])",
+          "e6: l0 SDK errors plus reverseWithGateways(bytes,uint256,string[])"
+        ],
+        "included_protocol_literal_arrays": 12,
+        "included_infrastructure_fragments": 1,
+        "explicit_adaptations": 1,
+        "selective_control_fragments": 1,
+        "excluded_arrays": [
+          {
+            "literal": "yl",
+            "entry_count": 2,
+            "reason": "SDK ENS/DNS/signature/domain utility ABI, not a publisher protocol-role binding"
+          },
+          {
+            "literal": "l0",
+            "entry_count": 10,
+            "reason": "SDK ENS/DNS/signature/domain utility ABI, not a publisher protocol-role binding"
+          },
+          {
+            "literal": "qf",
+            "entry_count": 1,
+            "reason": "SDK ENS/DNS/signature/domain utility ABI, not a publisher protocol-role binding"
+          },
+          {
+            "literal": "p0",
+            "entry_count": 2,
+            "reason": "SDK ENS/DNS/signature/domain utility ABI, not a publisher protocol-role binding"
+          },
+          {
+            "literal": "f0",
+            "entry_count": 1,
+            "reason": "SDK ENS/DNS/signature/domain utility ABI, not a publisher protocol-role binding"
+          },
+          {
+            "literal": "zf",
+            "entry_count": 2,
+            "reason": "SDK ENS/DNS/signature/domain utility ABI, not a publisher protocol-role binding"
+          },
+          {
+            "literal": "Lt",
+            "entry_count": 11,
+            "reason": "Generic SDK ERC20 ABI without a protocol-role binding in this module"
+          },
+          {
+            "literal": "zS",
+            "entry_count": 1,
+            "reason": "SDK ENS/DNS/signature/domain utility ABI, not a publisher protocol-role binding"
+          }
+        ],
+        "other_declarations": [
+          "Gp and yC are event-only subscription subsets whose layouts agree with the complete role literals, not additional deployed interfaces.",
+          "Two sa constructor declarations are generic SDK counterfactual/deployless-call helpers, not protocol constructors.",
+          "Inline ENS/NFT metadata SDK interfaces do not establish protocol-role bindings."
+        ],
+        "binding_evidence": [
+          "Gw/Gn binds Ne,Rn,Vs,As,d_,p_,f_,tn to centralBank,charterNFT,standard,taxHook,contractionVault,expansionVault,feeSplitter,genesisMinter respectively.",
+          "Sw/rn select jc,b_,vw by separate original/v1.1/v1.2 license mapping; zp selects Ci/h_ for separate charter generation.",
+          "CM binds qu owner/pendingOwner to _M owned directory roles; executionPermissionless is explicitly called on registry only.",
+          "Nt is bound to contracts.multicall3 for getCurrentBlockTimestamp; its other two declarations are shared infrastructure, not project-authored protocol code."
+        ],
+        "uncovered_roles": [
+          {
+            "role": "registry",
+            "coverage": "selective_control_reads_only",
+            "gap": "No complete role ABI bound in this module; broader functions/events/errors remain unknown."
+          },
+          {
+            "role": "polManager",
+            "coverage": "selective_control_reads_only",
+            "gap": "No complete role ABI bound in this module; broader functions/events/errors remain unknown."
+          },
+          {
+            "role": "polBuyback",
+            "coverage": "selective_control_reads_only",
+            "gap": "No complete role ABI bound in this module; broader functions/events/errors remain unknown."
+          },
+          {
+            "role": "incentivesVault",
+            "coverage": "selective_control_reads_only",
+            "gap": "No complete role ABI bound in this module; broader functions/events/errors remain unknown."
+          },
+          {
+            "role": "poolManager",
+            "coverage": "no_bound_abi",
+            "gap": "Shared infrastructure identity is present, but no complete PoolManager ABI is bound."
+          }
+        ]
+      },
+      "limits": [
+        "Complete publisher-definition coverage is not complete deployed-bytecode/source coverage or a proof that absent capabilities do not exist on chain.",
+        "The v1.1 adapter removes the constructor; deployment constructor coverage is unknown, not an invented inherited constructor.",
+        "Unresolved imported/chunk-specific interfaces and historical modules outside this complete module remain outside this inventory; no whole-website or all-time deployment completeness claim.",
+        "No downloaded code execution, live monetary-state cache, fixed current router, source-equivalence proof, signing or submission authority."
+      ]
+    }
+  ]
+}

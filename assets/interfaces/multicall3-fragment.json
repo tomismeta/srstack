@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "id": "multicall3-fragment",
+  "role": "multicall3",
+  "generation": "publisher-2026-09-27-fragment",
+  "review_id": "publisher-protocol-interfaces-2026-09-27",
+  "coverage": {
+    "kind": "selective_fragment",
+    "source_definition_complete": false,
+    "deployed_implementation_complete": false,
+    "source_locator": "Nt",
+    "source_fragment": {
+      "bytes": 620,
+      "sha256": "517d3c0b4a0962cf76b241b33f5113e90c6009804ca92e93167c42630c49120c",
+      "start_utf8_byte": 46410,
+      "end_utf8_byte": 47030
+    },
+    "entry_counts": {
+      "constructor": 0,
+      "error": 0,
+      "event": 0,
+      "fallback": 0,
+      "function": 3,
+      "receive": 0
+    },
+    "abi_sha256": "c6f4776ac74f2322a67088ebada476e442e999379081f75f401b8451b8b6b84d"
+  },
+  "entries": [
+    {
+      "signature": "aggregate3((address,bool,bytes)[])",
+      "declaration": "function aggregate3((address,bool,bytes)[] calls) view returns ((bool,bytes)[] returnData)",
+      "abi": {
+        "inputs": [
+          {
+            "components": [
+              {
+                "name": "target",
+                "type": "address"
+              },
+              {
+                "name": "allowFailure",
+                "type": "bool"
+              },
+              {
+                "name": "callData",
+                "type": "bytes"
+              }
+            ],
+            "name": "calls",
+            "type": "tuple[]"
+          }
+        ],
+        "name": "aggregate3",
+        "outputs": [
+          {
+            "components": [
+              {
+                "name": "success",
+                "type": "bool"
+              },
+              {
+                "name": "returnData",
+                "type": "bytes"
+              }
+            ],
+            "name": "returnData",
+            "type": "tuple[]"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "publisher-2026-09-27-fragment",
+      "explanation": "Declares batched target/callData/allowFailure tuples and success/returnData tuples; use only independently authorized reads, not arbitrary untrusted batch execution.",
+      "units": "Native balances are wei; block timestamp is Unix seconds; batched calldata/returnData are uninterpreted ABI bytes until each target interface is authenticated.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x82ad56cb"
+    },
+    {
+      "signature": "getEthBalance(address)",
+      "declaration": "function getEthBalance(address addr) view returns (uint256 balance)",
+      "abi": {
+        "inputs": [
+          {
+            "name": "addr",
+            "type": "address"
+          }
+        ],
+        "name": "getEthBalance",
+        "outputs": [
+          {
+            "name": "balance",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "publisher-2026-09-27-fragment",
+      "explanation": "Reports native balance for the supplied address through shared Multicall infrastructure; this is not protocol-authored economic accounting.",
+      "units": "Native balances are wei; block timestamp is Unix seconds; batched calldata/returnData are uninterpreted ABI bytes until each target interface is authenticated.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x4d2301cc"
+    },
+    {
+      "signature": "getCurrentBlockTimestamp()",
+      "declaration": "function getCurrentBlockTimestamp() view returns (uint256 timestamp)",
+      "abi": {
+        "inputs": [],
+        "name": "getCurrentBlockTimestamp",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "publisher-2026-09-27-fragment",
+      "explanation": "Reports the block timestamp through shared Multicall infrastructure; it must share the observation block to anchor other reads.",
+      "units": "Native balances are wei; block timestamp is Unix seconds; batched calldata/returnData are uninterpreted ABI bytes until each target interface is authenticated.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x0f28c97d"
+    }
+  ]
+}

@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import io
+import importlib.util
 import json
 import os
 import re
@@ -19,6 +20,10 @@ VERSION = "0.3.0"
 CORPUS_FILES = {"assets/sources.json", "assets/parameters.json"}
 RESEARCH_FILES = {
     "scripts/calculations.py", "scripts/research.py", "assets/schemas/research-evidence-v1.json",
+}
+INVENTORY_FILES = {
+    "assets/entities/contracts.json", "assets/interfaces/reviews.json",
+    "assets/interfaces/capabilities.json", "assets/examples/research-evidence-v1.json",
 }
 TOP_FILES = {"SKILL.md", "README.md", "LICENSE", MANIFEST}
 REPOSITORY_DIRS = {"maintenance", "research", ".github", ".git", "dist"}
@@ -39,11 +44,11 @@ def runtime_path(path):
             or any(part in CACHE_DIRS for part in parts)
             or parts[-1] == ".DS_Store" or PurePosixPath(path).suffix in {".pyc", ".pyo", ".pyd"}):
         return False
-    if path in TOP_FILES | CORPUS_FILES | RESEARCH_FILES:
+    if path in TOP_FILES | CORPUS_FILES | RESEARCH_FILES | INVENTORY_FILES:
         return True
     if len(parts) == 2 and parts[0] == "references" and PurePosixPath(path).suffix == ".md":
         return True
-    if (len(parts) == 3 and parts[0] == "assets" and parts[1] in {"sources", "parameters"}
+    if (len(parts) == 3 and parts[0] == "assets" and parts[1] in {"sources", "parameters", "interfaces"}
             and PurePosixPath(path).suffix == ".json"):
         return True
     raise ValueError(f"Unexpected runtime file: {path}")
@@ -53,7 +58,7 @@ def require_runtime(files):
     for path in files:
         if not runtime_path(path):
             raise ValueError(f"Repository-only path in runtime: {path}")
-    for required in (TOP_FILES - {MANIFEST}) | CORPUS_FILES | RESEARCH_FILES:
+    for required in (TOP_FILES - {MANIFEST}) | CORPUS_FILES | RESEARCH_FILES | INVENTORY_FILES:
         if required not in files:
             raise ValueError(f"Missing {required}")
 
@@ -69,7 +74,7 @@ def package_files(root=None):
         raise ValueError("Package root and ancestors must be real directories")
     files = {}
     allowed_dirs = {"assets", "assets/sources", "assets/parameters", "assets/schemas",
-                    "references", "scripts"}
+                    "assets/interfaces", "assets/entities", "assets/examples", "references", "scripts"}
 
     def scan_error(error):
         raise error
@@ -198,14 +203,19 @@ def verify_content(files):
         raise ValueError("Parameter index group membership mismatch")
     if len({r["id"] for r in records}) != len(records):
         raise ValueError("Duplicate parameter IDs")
+    spec = importlib.util.spec_from_file_location(
+        "srstack_inventory", Path(__file__).with_name("inventory.py"))
+    inventory = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(inventory)
+    inventory_report = inventory.validate_inventory(files)
     return {"files": len(files), "sources": len(source_ids), "parameters": len(records),
-            "max_file_bytes": max(map(len, files.values()))}
+            "max_file_bytes": max(map(len, files.values())), **inventory_report}
 
 
 def make_manifest(files):
     return {
         "schema_version": 1, "name": "srstack", "version": VERSION,
-        "scope": "Documentation, dated source/parameter corpus, optional research calculation code and evidence schema; excludes manifest, source-only research tests/fixtures, repository maintenance, CI, Git metadata, and build/cache artifacts",
+        "scope": "Documentation, dated source/parameter corpus, reviewed contract/interface/capability inventories, optional calculation code and evidence schema, and explicitly synthetic worked example; excludes manifest, source-only regression machinery, repository maintenance, CI, Git metadata, and build/cache artifacts",
         "digest_convention": "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest",
         **fingerprints(files),
     }

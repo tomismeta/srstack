@@ -1,0 +1,3387 @@
+{
+  "schema_version": 1,
+  "id": "central-bank",
+  "role": "central_bank",
+  "generation": "original",
+  "review_id": "publisher-protocol-interfaces-2026-09-27",
+  "coverage": {
+    "kind": "complete_literal",
+    "source_definition_complete": true,
+    "deployed_implementation_complete": false,
+    "source_locator": "Ne",
+    "source_fragment": {
+      "bytes": 16000,
+      "sha256": "8ddcb419c0bbbfd02a03ae08548e67be7fe27ef74fc9bf755d614eda755a8a5b",
+      "start_utf8_byte": 393065,
+      "end_utf8_byte": 409065
+    },
+    "entry_counts": {
+      "constructor": 1,
+      "error": 18,
+      "event": 14,
+      "fallback": 0,
+      "function": 79,
+      "receive": 0
+    },
+    "abi_sha256": "29f32a3ab353ce57b8701cf1302dca157597168e938127c5377396cf3db65f86"
+  },
+  "entries": [
+    {
+      "signature": "constructor(address,address,address)",
+      "declaration": "constructor(address initialOwner, address registry_, address poolManager_) nonpayable",
+      "abi": {
+        "type": "constructor",
+        "inputs": [
+          {
+            "name": "initialOwner",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "registry_",
+            "type": "address",
+            "internalType": "contract AddressRegistry"
+          },
+          {
+            "name": "poolManager_",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares deployment arguments for central bank: initialOwner, registry_, poolManager_. This layout does not prove any deployed constructor values or source/bytecode correspondence.",
+      "units": "Addresses are identities; payable value is native wei. Other constructor numeric scales are not established solely by these types.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ]
+    },
+    {
+      "signature": "BASE_ISSUANCE_PER_DAY_MIN()",
+      "declaration": "function BASE_ISSUANCE_PER_DAY_MIN() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "BASE_ISSUANCE_PER_DAY_MIN",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the base issuance per day min named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x2698a8f7"
+    },
+    {
+      "signature": "BOUNTY_CAP_MAX()",
+      "declaration": "function BOUNTY_CAP_MAX() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "BOUNTY_CAP_MAX",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the bounty cap max named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xf20c7c7a"
+    },
+    {
+      "signature": "BOUNTY_PCT_WAD()",
+      "declaration": "function BOUNTY_PCT_WAD() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "BOUNTY_PCT_WAD",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the bounty pct wad named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "WAD-labelled ratio fields denote 18-decimal scale intent; publisher multiplierWad display corroborates its scale. A ratio is not a token amount; exact arithmetic remains separate. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xc8c27f08"
+    },
+    {
+      "signature": "DORMANCY_PERIOD()",
+      "declaration": "function DORMANCY_PERIOD() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "DORMANCY_PERIOD",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the dormancy period named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xdd296585"
+    },
+    {
+      "signature": "FOUNDING_CHARTER_CAP()",
+      "declaration": "function FOUNDING_CHARTER_CAP() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "FOUNDING_CHARTER_CAP",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the founding charter cap named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x510ee686"
+    },
+    {
+      "signature": "GENESIS_LIQUIDITY()",
+      "declaration": "function GENESIS_LIQUIDITY() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "GENESIS_LIQUIDITY",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the genesis liquidity named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x20efa35f"
+    },
+    {
+      "signature": "INITIAL_BASE_ISSUANCE_PER_DAY()",
+      "declaration": "function INITIAL_BASE_ISSUANCE_PER_DAY() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "INITIAL_BASE_ISSUANCE_PER_DAY",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the initial base issuance per day named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xb94843f5"
+    },
+    {
+      "signature": "ISSUANCE_BUDGET()",
+      "declaration": "function ISSUANCE_BUDGET() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "ISSUANCE_BUDGET",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the issuance budget named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xef0062a0"
+    },
+    {
+      "signature": "MAX_BRANCHES()",
+      "declaration": "function MAX_BRANCHES() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "MAX_BRANCHES",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the max branches named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xe5301bf6"
+    },
+    {
+      "signature": "M_MAX_WAD()",
+      "declaration": "function M_MAX_WAD() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "M_MAX_WAD",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the m max wad named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "WAD-labelled ratio fields denote 18-decimal scale intent; publisher multiplierWad display corroborates its scale. A ratio is not a token amount; exact arithmetic remains separate. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x5b8a1c38"
+    },
+    {
+      "signature": "M_MIN_WAD()",
+      "declaration": "function M_MIN_WAD() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "M_MIN_WAD",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the m min wad named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "WAD-labelled ratio fields denote 18-decimal scale intent; publisher multiplierWad display corroborates its scale. A ratio is not a token amount; exact arithmetic remains separate. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xbe34cb50"
+    },
+    {
+      "signature": "M_START_WAD()",
+      "declaration": "function M_START_WAD() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "M_START_WAD",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the m start wad named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "WAD-labelled ratio fields denote 18-decimal scale intent; publisher multiplierWad display corroborates its scale. A ratio is not a token amount; exact arithmetic remains separate. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x634e5ccb"
+    },
+    {
+      "signature": "M_STEP_DOWN_WAD()",
+      "declaration": "function M_STEP_DOWN_WAD() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "M_STEP_DOWN_WAD",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the m step down wad named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "WAD-labelled ratio fields denote 18-decimal scale intent; publisher multiplierWad display corroborates its scale. A ratio is not a token amount; exact arithmetic remains separate. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xd84792b6"
+    },
+    {
+      "signature": "M_STEP_UP_WAD()",
+      "declaration": "function M_STEP_UP_WAD() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "M_STEP_UP_WAD",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the m step up wad named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "WAD-labelled ratio fields denote 18-decimal scale intent; publisher multiplierWad display corroborates its scale. A ratio is not a token amount; exact arithmetic remains separate. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x4021c56f"
+    },
+    {
+      "signature": "PRESSURE_DENOMINATOR_FLOOR()",
+      "declaration": "function PRESSURE_DENOMINATOR_FLOOR() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "PRESSURE_DENOMINATOR_FLOOR",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the pressure denominator floor named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xac3fd582"
+    },
+    {
+      "signature": "PRESSURE_SATURATION_WAD()",
+      "declaration": "function PRESSURE_SATURATION_WAD() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "PRESSURE_SATURATION_WAD",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the pressure saturation wad named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "WAD-labelled ratio fields denote 18-decimal scale intent; publisher multiplierWad display corroborates its scale. A ratio is not a token amount; exact arithmetic remains separate. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x0b2a542e"
+    },
+    {
+      "signature": "RESOLUTION_FEE_MAX_WAD()",
+      "declaration": "function RESOLUTION_FEE_MAX_WAD() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "RESOLUTION_FEE_MAX_WAD",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the resolution fee max wad named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "WAD-labelled ratio fields denote 18-decimal scale intent; publisher multiplierWad display corroborates its scale. A ratio is not a token amount; exact arithmetic remains separate. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xb9cfe805"
+    },
+    {
+      "signature": "RESOLUTION_FEE_MIN_WAD()",
+      "declaration": "function RESOLUTION_FEE_MIN_WAD() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "RESOLUTION_FEE_MIN_WAD",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the resolution fee min wad named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "WAD-labelled ratio fields denote 18-decimal scale intent; publisher multiplierWad display corroborates its scale. A ratio is not a token amount; exact arithmetic remains separate. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x62feb307"
+    },
+    {
+      "signature": "REVOCATION_FEE_WAD()",
+      "declaration": "function REVOCATION_FEE_WAD() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "REVOCATION_FEE_WAD",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the revocation fee wad named policy bound or constant for this role/generation. Read the value at the authenticated target; ABI spelling alone proves neither enforcement, scale nor an active setting.",
+      "units": "WAD-labelled ratio fields denote 18-decimal scale intent; publisher multiplierWad display corroborates its scale. A ratio is not a token amount; exact arithmetic remains separate. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xcb892625"
+    },
+    {
+      "signature": "accPerBranch()",
+      "declaration": "function accPerBranch() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "accPerBranch",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Exposes the per-branch accumulator field; denominator, fixed-point scale and checkpoint update order remain unverified.",
+      "units": "Preserve raw internal integers: exact accumulator/rate/counter scaling and rounding are not proved by this ABI; branchCount and charterId are unscaled counts/IDs.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x100513c6"
+    },
+    {
+      "signature": "acceptOwnership()",
+      "declaration": "function acceptOwnership() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "acceptOwnership",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the ownership-acceptance operation, separate from proposing a new owner.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x79ba5097"
+    },
+    {
+      "signature": "baseIssuancePerDay()",
+      "declaration": "function baseIssuancePerDay() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "baseIssuancePerDay",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the active base issuance policy input; a policy label is not a complete accrual formula.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x17388786"
+    },
+    {
+      "signature": "bountyCap()",
+      "declaration": "function bountyCap() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "bountyCap",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the revocation bounty-cap policy input; actual entitlement and fee ordering remain unverified.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xfb1161f1"
+    },
+    {
+      "signature": "branchCountOf(uint256)",
+      "declaration": "function branchCountOf(uint256 charterId) view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "branchCountOf",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports branch count for the supplied charter ID; distinguish current ownership and auction unsold inventory.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xe1b8a032"
+    },
+    {
+      "signature": "charterNFT()",
+      "declaration": "function charterNFT() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "charterNFT",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "contract CharterNFT"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the charter nft dependency address for this role. An address observation is not current authorization, code equivalence or permission to call the dependency.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x9488f538"
+    },
+    {
+      "signature": "charters(uint256)",
+      "declaration": "function charters(uint256 charterId) view returns (uint256 branchCount, uint256 storedPending, uint256 rewardDebt)",
+      "abi": {
+        "type": "function",
+        "name": "charters",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "branchCount",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "storedPending",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "rewardDebt",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Returns the ordered stored charter checkpoint fields branchCount, storedPending and rewardDebt; the last two do not certify accumulator scaling or rounding.",
+      "units": "Preserve raw internal integers: exact accumulator/rate/counter scaling and rounding are not proved by this ABI; branchCount and charterId are unscaled counts/IDs.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xd27211a6"
+    },
+    {
+      "signature": "checkIn()",
+      "declaration": "function checkIn() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "checkIn",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the wallet check-in operation; its ABI does not establish eligibility, reset rules or transaction success.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x183ff085"
+    },
+    {
+      "signature": "createCharter(address)",
+      "declaration": "function createCharter(address to) nonpayable returns (uint256 id)",
+      "abi": {
+        "type": "function",
+        "name": "createCharter",
+        "inputs": [
+          {
+            "name": "to",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "id",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names creation of a charter with the supplied recipient and branch count; authorization and state effects require bank implementation evidence.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xfe2afffb"
+    },
+    {
+      "signature": "cumulativeIssued()",
+      "declaration": "function cumulativeIssued() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "cumulativeIssued",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports cumulative issuance accounting; reconcile with supply and conversion mechanics before interpreting circulation.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xf9e02c89"
+    },
+    {
+      "signature": "cumulativeRecycled()",
+      "declaration": "function cumulativeRecycled() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "cumulativeRecycled",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports cumulative recycling accounting; it is not automatically attributable to a specific charter or funding origin.",
+      "units": "Preserve raw internal integers: exact accumulator/rate/counter scaling and rounding are not proved by this ABI; branchCount and charterId are unscaled counts/IDs.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x2c55305f"
+    },
+    {
+      "signature": "currentStreamRatePerSecond()",
+      "declaration": "function currentStreamRatePerSecond() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "currentStreamRatePerSecond",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the stream-rate field; exact component composition and scaling are not established by the ABI or a frontend earnings model.",
+      "units": "Preserve raw internal integers: exact accumulator/rate/counter scaling and rounding are not proved by this ABI; branchCount and charterId are unscaled counts/IDs.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x708a0dd0"
+    },
+    {
+      "signature": "deposit(uint256,uint256)",
+      "declaration": "function deposit(uint256 charterId, uint256 amount) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "deposit",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names a charter-ledger deposit of the supplied amount, separate from token approval and from earned emissions.",
+      "units": "Publisher pending/deposit/license ledger display uses STANDARD with 18 decimals; charter IDs and branch quantities are unscaled. Display scale does not prove earned origin.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xe2bbb158"
+    },
+    {
+      "signature": "emissionsStarted()",
+      "declaration": "function emissionsStarted() view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "emissionsStarted",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the bank emissions-start flag; it does not by itself establish charter eligibility or a currently active stream.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x5adf0021"
+    },
+    {
+      "signature": "epochDays()",
+      "declaration": "function epochDays() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "epochDays",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the epoch-length policy input; authenticate conversion and effective settings before interval arithmetic.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x63652bd1"
+    },
+    {
+      "signature": "epochEnd()",
+      "declaration": "function epochEnd() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "epochEnd",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the bank epoch-end field, a boundary distinct from issuanceEnd.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x4bb6b58f"
+    },
+    {
+      "signature": "epochNumber()",
+      "declaration": "function epochNumber() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "epochNumber",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the epoch identifier, not a timestamp or auction round.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xf4145a83"
+    },
+    {
+      "signature": "epochStart()",
+      "declaration": "function epochStart() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "epochStart",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the bank epoch-start field; effective historical transitions require anchored evidence.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x15e5a1e5"
+    },
+    {
+      "signature": "epochsSettled()",
+      "declaration": "function epochsSettled() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "epochsSettled",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the settled-epoch counter; it does not independently prove complete covered epoch history.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x8770180f"
+    },
+    {
+      "signature": "feeWindowDays()",
+      "declaration": "function feeWindowDays() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "feeWindowDays",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the fee-window policy input, distinct from auction and allowance windows.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x85ca1b9f"
+    },
+    {
+      "signature": "foundingMinted()",
+      "declaration": "function foundingMinted() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "foundingMinted",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the bank founding-mint counter, separate from ongoing auction supply.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x2536da0f"
+    },
+    {
+      "signature": "genesisLiquidityMinted()",
+      "declaration": "function genesisLiquidityMinted() view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "genesisLiquidityMinted",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the genesis-liquidity mint status; it is not a current liquidity position valuation.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xb4747027"
+    },
+    {
+      "signature": "genesisTime()",
+      "declaration": "function genesisTime() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "genesisTime",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the recorded bank genesis-time field, distinct from source retrieval and contract creation time.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x42c6498a"
+    },
+    {
+      "signature": "issuanceEnd()",
+      "declaration": "function issuanceEnd() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "issuanceEnd",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the issuance endpoint field, distinct from the bank epoch boundary.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x79b5fd86"
+    },
+    {
+      "signature": "issuanceRate()",
+      "declaration": "function issuanceRate() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "issuanceRate",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the issuance-stream rate field, separate from recycleRate; precise deployed accrual and rounding remain unverified.",
+      "units": "Preserve raw internal integers: exact accumulator/rate/counter scaling and rounding are not proved by this ABI; branchCount and charterId are unscaled counts/IDs.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x3c9ae2ba"
+    },
+    {
+      "signature": "issuanceStreamed()",
+      "declaration": "function issuanceStreamed() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "issuanceStreamed",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the internal streamed-issuance counter, not independently reconciled circulating token issuance.",
+      "units": "Preserve raw internal integers: exact accumulator/rate/counter scaling and rounding are not proved by this ABI; branchCount and charterId are unscaled counts/IDs.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x2751708f"
+    },
+    {
+      "signature": "lastAccrual()",
+      "declaration": "function lastAccrual() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "lastAccrual",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Exposes the recorded accrual checkpoint input; no complete checkpoint algorithm follows from this value.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x7b3baab4"
+    },
+    {
+      "signature": "lastActive(address)",
+      "declaration": "function lastActive(address wallet) view returns (uint256 timestamp)",
+      "abi": {
+        "type": "function",
+        "name": "lastActive",
+        "inputs": [
+          {
+            "name": "wallet",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "timestamp",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports activity for the supplied wallet, not specifically its last check-in or a proved dormancy deadline.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xc2ec28d6"
+    },
+    {
+      "signature": "mintGenesisLiquidity(address)",
+      "declaration": "function mintGenesisLiquidity(address polManager) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "mintGenesisLiquidity",
+        "inputs": [
+          {
+            "name": "polManager",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the bank operation for genesis liquidity minting; this is not permission to mint or proof of current availability.",
+      "units": "Pool currencies/hooks are addresses; fee is a raw uint24 fee/flag field, not automatically basis points; tickSpacing/ticks are signed tick units. Other deltas/amounts need currency-specific scale evidence.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xb4f6cff6"
+    },
+    {
+      "signature": "multiplierWad()",
+      "declaration": "function multiplierWad() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "multiplierWad",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the multiplier field displayed by the publisher at 18-decimal scale; exact application and rounding require implementation evidence.",
+      "units": "WAD-labelled ratio fields denote 18-decimal scale intent; publisher multiplierWad display corroborates its scale. A ratio is not a token amount; exact arithmetic remains separate. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x47481b0b"
+    },
+    {
+      "signature": "openBranches(uint256,uint256,uint256)",
+      "declaration": "function openBranches(uint256 charterId, uint256 count, uint256 cost) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "openBranches",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "count",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "cost",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names charter branch expansion with explicit count and cost; the cost input is not a verified quote or earned-only spend.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xe5f06261"
+    },
+    {
+      "signature": "owner()",
+      "declaration": "function owner() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "owner",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the module administrator, not a charter holder or proof of every permission.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x8da5cb5b"
+    },
+    {
+      "signature": "pendingOf(uint256)",
+      "declaration": "function pendingOf(uint256 charterId) view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "pendingOf",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports a selected charter pending ledger observation, not earned-origin attribution, wallet tokens, or guaranteed withdrawable funds.",
+      "units": "Publisher pending/deposit/license ledger display uses STANDARD with 18 decimals; charter IDs and branch quantities are unscaled. Display scale does not prove earned origin.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x7e7feaa7"
+    },
+    {
+      "signature": "pendingOwner()",
+      "declaration": "function pendingOwner() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "pendingOwner",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the proposed administrator in the ownership handoff; proposal is not acceptance.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xe30c3978"
+    },
+    {
+      "signature": "positiveSignalStreak()",
+      "declaration": "function positiveSignalStreak() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "positiveSignalStreak",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the positive-signal streak counter used as a policy research input, not an independently proved multiplier transition.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xd47391ce"
+    },
+    {
+      "signature": "previewResolutionFeeWad(uint256)",
+      "declaration": "function previewResolutionFeeWad(uint256 gross) view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "previewResolutionFeeWad",
+        "inputs": [
+          {
+            "name": "gross",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Returns a fee preview for supplied gross; it is not a complete withdrawal quote or execution guarantee.",
+      "units": "WAD-labelled ratio fields denote 18-decimal scale intent; publisher multiplierWad display corroborates its scale. A ratio is not a token amount; exact arithmetic remains separate. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x01e275a7"
+    },
+    {
+      "signature": "previousEpochFlow()",
+      "declaration": "function previousEpochFlow() view returns (int256)",
+      "abi": {
+        "type": "function",
+        "name": "previousEpochFlow",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "int256",
+            "internalType": "int256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the previous epoch flow field; preserve signed raw value until flow composition and scale are authenticated.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xad0afd72"
+    },
+    {
+      "signature": "queuedBaseIssuancePerDay()",
+      "declaration": "function queuedBaseIssuancePerDay() view returns (uint256 value, bool pending)",
+      "abi": {
+        "type": "function",
+        "name": "queuedBaseIssuancePerDay",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "value",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "pending",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports queued base issuance per day and its pending flag; a proposed value is not the active setting and does not establish when it will apply.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xa3cdd9d4"
+    },
+    {
+      "signature": "queuedBountyCap()",
+      "declaration": "function queuedBountyCap() view returns (uint256 value, bool pending)",
+      "abi": {
+        "type": "function",
+        "name": "queuedBountyCap",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "value",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "pending",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports queued bounty cap and its pending flag; a proposed value is not the active setting and does not establish when it will apply.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xd95ae60f"
+    },
+    {
+      "signature": "queuedEpochDays()",
+      "declaration": "function queuedEpochDays() view returns (uint256 value, bool pending)",
+      "abi": {
+        "type": "function",
+        "name": "queuedEpochDays",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "value",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "pending",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports queued epoch days and its pending flag; a proposed value is not the active setting and does not establish when it will apply.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x41b3e64b"
+    },
+    {
+      "signature": "queuedFeeWindowDays()",
+      "declaration": "function queuedFeeWindowDays() view returns (uint256 value, bool pending)",
+      "abi": {
+        "type": "function",
+        "name": "queuedFeeWindowDays",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "value",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "pending",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports queued fee window days and its pending flag; a proposed value is not the active setting and does not establish when it will apply.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x0ca26d68"
+    },
+    {
+      "signature": "recycleBuffer()",
+      "declaration": "function recycleBuffer() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "recycleBuffer",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the bank recycling-buffer field; it is not a wallet balance or immediately earned pending.",
+      "units": "Preserve raw internal integers: exact accumulator/rate/counter scaling and rounding are not proved by this ABI; branchCount and charterId are unscaled counts/IDs.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x8a71d992"
+    },
+    {
+      "signature": "recycleRate()",
+      "declaration": "function recycleRate() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "recycleRate",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the recycling-stream rate field, separate from issuanceRate; precise deployed accrual and rounding remain unverified.",
+      "units": "Preserve raw internal integers: exact accumulator/rate/counter scaling and rounding are not proved by this ABI; branchCount and charterId are unscaled counts/IDs.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xb55795e3"
+    },
+    {
+      "signature": "recycleStreamed()",
+      "declaration": "function recycleStreamed() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "recycleStreamed",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the internal streamed-recycling counter, not a transfer-reconciled earnings amount.",
+      "units": "Preserve raw internal integers: exact accumulator/rate/counter scaling and rounding are not proved by this ABI; branchCount and charterId are unscaled counts/IDs.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x73a7cd78"
+    },
+    {
+      "signature": "registry()",
+      "declaration": "function registry() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "registry",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "contract AddressRegistry"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the registry dependency address for this role. An address observation is not current authorization, code equivalence or permission to call the dependency.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x7b103999"
+    },
+    {
+      "signature": "renounceOwnership()",
+      "declaration": "function renounceOwnership() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "renounceOwnership",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the ownership-renunciation operation; resulting authority of other modules is a separate question.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x715018a6"
+    },
+    {
+      "signature": "revoke(uint256)",
+      "declaration": "function revoke(uint256 charterId) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "revoke",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names charter revocation; eligibility, authorization, branch retirement and recipient accounting require separate implementation evidence.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x20c5429b"
+    },
+    {
+      "signature": "rollover()",
+      "declaration": "function rollover() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "rollover",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the bank rollover operation; transition conditions, effective epoch policy and checkpoint arithmetic are unverified.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xb056b49a"
+    },
+    {
+      "signature": "setBaseIssuancePerDay(uint256)",
+      "declaration": "function setBaseIssuancePerDay(uint256 value) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "setBaseIssuancePerDay",
+        "inputs": [
+          {
+            "name": "value",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the base issuance per day configuration operation with inputs value. The ABI does not prove caller permissions, effective timing or dependent state changes.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x2a06dca7"
+    },
+    {
+      "signature": "setBountyCap(uint256)",
+      "declaration": "function setBountyCap(uint256 value) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "setBountyCap",
+        "inputs": [
+          {
+            "name": "value",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the bounty cap configuration operation with inputs value. The ABI does not prove caller permissions, effective timing or dependent state changes.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x5f6b855a"
+    },
+    {
+      "signature": "setEpochDays(uint256)",
+      "declaration": "function setEpochDays(uint256 value) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "setEpochDays",
+        "inputs": [
+          {
+            "name": "value",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the epoch days configuration operation with inputs value. The ABI does not prove caller permissions, effective timing or dependent state changes.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x8a66918b"
+    },
+    {
+      "signature": "setFeeWindowDays(uint256)",
+      "declaration": "function setFeeWindowDays(uint256 value) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "setFeeWindowDays",
+        "inputs": [
+          {
+            "name": "value",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the fee window days configuration operation with inputs value. The ABI does not prove caller permissions, effective timing or dependent state changes.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x7c7f4e4f"
+    },
+    {
+      "signature": "standard()",
+      "declaration": "function standard() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "standard",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "contract Standard"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the standard dependency address for this role. An address observation is not current authorization, code equivalence or permission to call the dependency.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x5a3b7e42"
+    },
+    {
+      "signature": "startEmissions()",
+      "declaration": "function startEmissions() nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "startEmissions",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the emissions-start operation; caller authority and start conditions are not certified by the ABI.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0x1b02f845"
+    },
+    {
+      "signature": "totalBranches()",
+      "declaration": "function totalBranches() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "totalBranches",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports protocol branch count, not remaining licenses for sale.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x95c90089"
+    },
+    {
+      "signature": "totalPending()",
+      "declaration": "function totalPending() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "totalPending",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the stored aggregate pending field, distinct from the live aggregate preview and wallet supply.",
+      "units": "Preserve raw internal integers: exact accumulator/rate/counter scaling and rounding are not proved by this ABI; branchCount and charterId are unscaled counts/IDs.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x3f90916a"
+    },
+    {
+      "signature": "totalPendingLive()",
+      "declaration": "function totalPendingLive() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "totalPendingLive",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports the live aggregate pending preview; do not assume its accounting equals stored totalPending or sum of earned-origin budgets.",
+      "units": "Preserve raw internal integers: exact accumulator/rate/counter scaling and rounding are not proved by this ABI; branchCount and charterId are unscaled counts/IDs.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x31b337ea"
+    },
+    {
+      "signature": "transferOwnership(address)",
+      "declaration": "function transferOwnership(address newOwner) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "transferOwnership",
+        "inputs": [
+          {
+            "name": "newOwner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names the administrator-handoff proposal with the supplied new owner; does not itself prove acceptance.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xf2fde38b"
+    },
+    {
+      "signature": "withdraw(uint256,uint256,uint256)",
+      "declaration": "function withdraw(uint256 charterId, uint256 count, uint256 maxFeeWad) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "withdraw",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "count",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "maxFeeWad",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Names withdrawal with charter ID, branch count and fee ceiling; count is not an amount of tokens and the call is not a net proceeds guarantee.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit.",
+        "State-changing/payable ABI is for historical decoding or host-authorized unsigned preparation, not a packaged execution permission."
+      ],
+      "selector": "0xa41fe49f"
+    },
+    {
+      "signature": "withdrawnOnDay(uint256)",
+      "declaration": "function withdrawnOnDay(uint256 day) view returns (uint256 amount)",
+      "abi": {
+        "type": "function",
+        "name": "withdrawnOnDay",
+        "inputs": [
+          {
+            "name": "day",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Exposes a day-keyed withdrawal observation; retention, day boundary and accounting effects are not established by the ABI.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xc26cb528"
+    },
+    {
+      "signature": "BranchesOpened(uint256,uint256,uint256)",
+      "declaration": "event BranchesOpened(uint256 indexed charterId, uint256 count, uint256 cost)",
+      "abi": {
+        "type": "event",
+        "name": "BranchesOpened",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "count",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "cost",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports charter branch count added and total ledger cost; do not double-count with a supporting license-purchase log.",
+      "units": "Publisher pending/deposit/license ledger display uses STANDARD with 18 decimals; charter IDs and branch quantities are unscaled. Display scale does not prove earned origin.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xfca0d4c142a1e3085d891c92cde8193ccd316ff4ba9bb3f6b439136681115856",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 2,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "charterId",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "count",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 2,
+            "name": "cost",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "CharterCreated(uint256,address)",
+      "declaration": "event CharterCreated(uint256 indexed charterId, address indexed to)",
+      "abi": {
+        "type": "event",
+        "name": "CharterCreated",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "to",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports charter ID and recipient; both fields are indexed and event data is empty.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xa07694e6f3d67919253eb27a138a6aa6b5e10c316a4be927b34b93b97942d2c5",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "charterId",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "to",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "CheckedIn(address)",
+      "declaration": "event CheckedIn(address indexed wallet)",
+      "abi": {
+        "type": "event",
+        "name": "CheckedIn",
+        "inputs": [
+          {
+            "name": "wallet",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports wallet activity through a check-in event; the wallet is indexed and event data is empty; it does not certify a future dormancy deadline.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x591c0e1d11c1207ddcaf435e99150cb7d9c849a2c6d5eae9547cd518cef6a8cd",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "wallet",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "Deposited(uint256,address,uint256)",
+      "declaration": "event Deposited(uint256 indexed charterId, address indexed from, uint256 amount)",
+      "abi": {
+        "type": "event",
+        "name": "Deposited",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "from",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports an external charter-ledger inflow, not proof of earned emissions.",
+      "units": "Publisher pending/deposit/license ledger display uses STANDARD with 18 decimals; charter IDs and branch quantities are unscaled. Display scale does not prove earned origin.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x1599c0fcf897af5babc2bfcf707f5dc050f841b044d97c3251ecec35b9abf80b",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "charterId",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "from",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 2,
+            "name": "amount",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "EmissionsStarted(uint256,uint256,uint256)",
+      "declaration": "event EmissionsStarted(uint256 indexed genesisTime, uint256 indexed firstEpochEnd, uint256 foundingMinted)",
+      "abi": {
+        "type": "event",
+        "name": "EmissionsStarted",
+        "inputs": [
+          {
+            "name": "genesisTime",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "firstEpochEnd",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "foundingMinted",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports genesis time, first epoch endpoint and founding minted count; the two time fields are indexed, not in data.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xa5070e99edd98e4038d988d53032ab30c5ab97ca9dbe3f4e1dc5013e9eb16cf4",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "genesisTime",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "firstEpochEnd",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 2,
+            "name": "foundingMinted",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "EpochSettled(uint256,int256,uint256)",
+      "declaration": "event EpochSettled(uint256 indexed epoch, int256 netFlow, uint256 multiplierWad)",
+      "abi": {
+        "type": "event",
+        "name": "EpochSettled",
+        "inputs": [
+          {
+            "name": "epoch",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "netFlow",
+            "type": "int256",
+            "indexed": false,
+            "internalType": "int256"
+          },
+          {
+            "name": "multiplierWad",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports epoch, signed netFlow and multiplierWad; the flow is not itself per-charter earnings.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x2d8f8db7fbfa12fe7bf24542012ebba583e95870e8bcd9e170829fb8817fda12",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 2,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "epoch",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "netFlow",
+            "canonical_type": "int256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 2,
+            "name": "multiplierWad",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "FeesRecycled(uint256,uint256)",
+      "declaration": "event FeesRecycled(uint256 indexed epoch, uint256 amount)",
+      "abi": {
+        "type": "event",
+        "name": "FeesRecycled",
+        "inputs": [
+          {
+            "name": "epoch",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports epoch-tagged recycled amount; raw event accounting alone does not establish earned-origin attribution.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0xee894dd54fd65a2c69a3247565cfcf3f64c9e468076fe25a53b9510e2b22fb44",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "epoch",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "amount",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "IssuanceDistributed(uint256,uint256)",
+      "declaration": "event IssuanceDistributed(uint256 indexed epoch, uint256 amount)",
+      "abi": {
+        "type": "event",
+        "name": "IssuanceDistributed",
+        "inputs": [
+          {
+            "name": "epoch",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports epoch-tagged distribution amount; reconcile internal accounting and actual supply effects separately.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x2042733f30f10cce285e8815ec0b038aac71e397bffa1c75879d7f19087307fe",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "epoch",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "amount",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "OwnershipTransferStarted(address,address)",
+      "declaration": "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "abi": {
+        "type": "event",
+        "name": "OwnershipTransferStarted",
+        "inputs": [
+          {
+            "name": "previousOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "newOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports proposed administrator handoff; both addresses are indexed and data is empty, distinct from completed acceptance.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x38d16b8cac22d99fc7c124b9cd0de2d3fa1faef420bfe791d8c362d765e22700",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "previousOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "newOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "OwnershipTransferred(address,address)",
+      "declaration": "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "abi": {
+        "type": "event",
+        "name": "OwnershipTransferred",
+        "inputs": [
+          {
+            "name": "previousOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "newOwner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports administrator ownership transfer; it is not a charter ownership log or proof of every control permission.",
+      "units": "Addresses/bytes are identities or payloads; booleans are flags, not monetary quantities. Strings/arrays retain standard dynamic ABI encoding.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "previousOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "newOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "ParamApplied(bytes32,uint256)",
+      "declaration": "event ParamApplied(bytes32 indexed param, uint256 value)",
+      "abi": {
+        "type": "event",
+        "name": "ParamApplied",
+        "inputs": [
+          {
+            "name": "param",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "value",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports an opaque bytes32 parameter key and applied value; do not guess policy meaning from a display label.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x05a58552de4812137f36bf3cb999e5874ee36b1470a3f6fef12f39d56fce60de",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "param",
+            "canonical_type": "bytes32",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "value",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "ParamQueued(bytes32,uint256)",
+      "declaration": "event ParamQueued(bytes32 indexed param, uint256 value)",
+      "abi": {
+        "type": "event",
+        "name": "ParamQueued",
+        "inputs": [
+          {
+            "name": "param",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "value",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports an opaque bytes32 parameter key and proposed value; key-to-policy mapping and activation remain separate evidence.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x6744f301e3b4719cfc5e0cb3052c6b55620d7365a5f402f6873d1ab664a6a9e4",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "param",
+            "canonical_type": "bytes32",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "value",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "Revoked(uint256,address,address,uint256,uint256,uint256)",
+      "declaration": "event Revoked(uint256 indexed charterId, address indexed owner, address indexed informant, uint256 gross, uint256 bounty, uint256 ownerNet)",
+      "abi": {
+        "type": "event",
+        "name": "Revoked",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "owner",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "informant",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "gross",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "bounty",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "ownerNet",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports charter, owner, informant and gross/bounty/ownerNet accounting; branch retirement and actual transfers require reconciliation.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x5b0e4c8ef83b965c0909af73beae99d4f828ad85638330683305c9f010d4ad78",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 4,
+        "data_parameter_count": 3,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "charterId",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "owner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 2,
+            "name": "informant",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 3,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 3,
+            "name": "gross",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 4,
+            "name": "bounty",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 5,
+            "name": "ownerNet",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 2,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "Withdrawn(uint256,address,uint256,uint256,uint256,uint256)",
+      "declaration": "event Withdrawn(uint256 indexed charterId, address indexed to, uint256 branchesDestroyed, uint256 gross, uint256 feeWad, uint256 net)",
+      "abi": {
+        "type": "event",
+        "name": "Withdrawn",
+        "inputs": [
+          {
+            "name": "charterId",
+            "type": "uint256",
+            "indexed": true,
+            "internalType": "uint256"
+          },
+          {
+            "name": "to",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "branchesDestroyed",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "gross",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "feeWad",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "net",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Reports charter withdrawal with separate destroyed-branch count, gross, feeWad and net; these are not interchangeable token amounts.",
+      "units": "Raw ABI units unless separately evidenced; numeric widths do not establish monetary scale, clock unit, denominator or economic interpretation. Addresses/bytes are identities or raw payloads; IDs/counts are unscaled; unspecified numeric fields retain raw ABI integers.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "topic0": "0x34b356a06378218b842d641adfef56661747ff542e604819d252280127354123",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 4,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "charterId",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "to",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 2,
+            "name": "branchesDestroyed",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 3,
+            "name": "gross",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 4,
+            "name": "feeWad",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 2,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 5,
+            "name": "net",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 3,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "AlreadyMinted()",
+      "declaration": "error AlreadyMinted()",
+      "abi": {
+        "type": "error",
+        "name": "AlreadyMinted",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the AlreadyMinted revert condition (already minted) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xddefae28"
+    },
+    {
+      "signature": "BaseIssuanceNotDecreasing()",
+      "declaration": "error BaseIssuanceNotDecreasing()",
+      "abi": {
+        "type": "error",
+        "name": "BaseIssuanceNotDecreasing",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the BaseIssuanceNotDecreasing revert condition (base issuance not decreasing) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x3946b538"
+    },
+    {
+      "signature": "BranchCapExceeded()",
+      "declaration": "error BranchCapExceeded()",
+      "abi": {
+        "type": "error",
+        "name": "BranchCapExceeded",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the BranchCapExceeded revert condition (branch cap exceeded) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x8f2f9268"
+    },
+    {
+      "signature": "EmissionsAlreadyStarted()",
+      "declaration": "error EmissionsAlreadyStarted()",
+      "abi": {
+        "type": "error",
+        "name": "EmissionsAlreadyStarted",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the EmissionsAlreadyStarted revert condition (emissions already started) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x71d27b7a"
+    },
+    {
+      "signature": "EmissionsNotStarted()",
+      "declaration": "error EmissionsNotStarted()",
+      "abi": {
+        "type": "error",
+        "name": "EmissionsNotStarted",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the EmissionsNotStarted revert condition (emissions not started) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x8f984041"
+    },
+    {
+      "signature": "FeeExceedsMax()",
+      "declaration": "error FeeExceedsMax()",
+      "abi": {
+        "type": "error",
+        "name": "FeeExceedsMax",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the FeeExceedsMax revert condition (fee exceeds max) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x5ff85e3f"
+    },
+    {
+      "signature": "FoundingCapReached()",
+      "declaration": "error FoundingCapReached()",
+      "abi": {
+        "type": "error",
+        "name": "FoundingCapReached",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the FoundingCapReached revert condition (founding cap reached) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xaa315840"
+    },
+    {
+      "signature": "GenesisClosed()",
+      "declaration": "error GenesisClosed()",
+      "abi": {
+        "type": "error",
+        "name": "GenesisClosed",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the GenesisClosed revert condition (genesis closed) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x1bf9fd3e"
+    },
+    {
+      "signature": "InsufficientPending()",
+      "declaration": "error InsufficientPending()",
+      "abi": {
+        "type": "error",
+        "name": "InsufficientPending",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the InsufficientPending revert condition (insufficient pending) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xeed47552"
+    },
+    {
+      "signature": "InvalidCount()",
+      "declaration": "error InvalidCount()",
+      "abi": {
+        "type": "error",
+        "name": "InvalidCount",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the InvalidCount revert condition (invalid count) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x3492aef6"
+    },
+    {
+      "signature": "NotCharterOwner()",
+      "declaration": "error NotCharterOwner()",
+      "abi": {
+        "type": "error",
+        "name": "NotCharterOwner",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the NotCharterOwner revert condition (not charter owner) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x64e788a5"
+    },
+    {
+      "signature": "OutOfBounds()",
+      "declaration": "error OutOfBounds()",
+      "abi": {
+        "type": "error",
+        "name": "OutOfBounds",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the OutOfBounds revert condition (out of bounds) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xb4120f14"
+    },
+    {
+      "signature": "OwnableInvalidOwner(address)",
+      "declaration": "error OwnableInvalidOwner(address owner)",
+      "abi": {
+        "type": "error",
+        "name": "OwnableInvalidOwner",
+        "inputs": [
+          {
+            "name": "owner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the OwnableInvalidOwner revert condition (ownable invalid owner) with owner. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x1e4fbdf7"
+    },
+    {
+      "signature": "OwnableUnauthorizedAccount(address)",
+      "declaration": "error OwnableUnauthorizedAccount(address account)",
+      "abi": {
+        "type": "error",
+        "name": "OwnableUnauthorizedAccount",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the OwnableUnauthorizedAccount revert condition (ownable unauthorized account) with account. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x118cdaa7"
+    },
+    {
+      "signature": "ReentrancyGuardReentrantCall()",
+      "declaration": "error ReentrancyGuardReentrantCall()",
+      "abi": {
+        "type": "error",
+        "name": "ReentrancyGuardReentrantCall",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ReentrancyGuardReentrantCall revert condition (reentrancy guard reentrant call) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x3ee5aeb5"
+    },
+    {
+      "signature": "StillActive()",
+      "declaration": "error StillActive()",
+      "abi": {
+        "type": "error",
+        "name": "StillActive",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the StillActive revert condition (still active) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0xf0b778da"
+    },
+    {
+      "signature": "Unauthorized()",
+      "declaration": "error Unauthorized()",
+      "abi": {
+        "type": "error",
+        "name": "Unauthorized",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the Unauthorized revert condition (unauthorized) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x82b42900"
+    },
+    {
+      "signature": "ZeroAmount()",
+      "declaration": "error ZeroAmount()",
+      "abi": {
+        "type": "error",
+        "name": "ZeroAmount",
+        "inputs": []
+      },
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "generation": "original",
+      "explanation": "Declares the ZeroAmount revert condition (zero amount) with no encoded fields. Use only to decode an authenticated revert; its name does not establish every triggering path or prove that a reverted operation changed state.",
+      "units": "ABI-typed revert fields only; numeric economic units are not established by an error name.",
+      "limitations": [
+        "Publisher interface evidence, not independent implementation/source-bytecode correspondence, current target selection or authority to sign/submit."
+      ],
+      "selector": "0x1f2a2005"
+    }
+  ]
+}

@@ -1,0 +1,381 @@
+{
+  "schema_version": 1,
+  "purpose": "Dated chain/address/role/generation/interface evidence, never active aliases, defaults, target routing or execution permission. Token bindings are opt-in historical evidence, not runtime token pins.",
+  "bindings": [
+    {
+      "id": "original-registry",
+      "chain_id": 4663,
+      "address": "0x855C294dD019E9e0d84C058cFF7404f5F2dDCa4b",
+      "role": "registry",
+      "generation": "original",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "VP.registry",
+      "interface_ids": [
+        "publisher-control-fragment"
+      ],
+      "interface_status": "selective_fragment",
+      "limits": [
+        "Dated publisher binding only; no active alias, deployment-code equivalence, current Registry role or authority claim.",
+        "No complete role ABI found in the reviewed module; these control reads are selective publisher declarations, not exhaustive role capability."
+      ],
+      "selected_functions": {
+        "publisher-control-fragment": [
+          "owner()",
+          "pendingOwner()",
+          "executionPermissionless()"
+        ]
+      }
+    },
+    {
+      "id": "original-central-bank",
+      "chain_id": 4663,
+      "address": "0x5977B25419f9c0dDcB2F89fE204955622f4F57ea",
+      "role": "centralBank",
+      "generation": "original",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "VP.centralBank",
+      "interface_ids": [
+        "central-bank"
+      ],
+      "interface_status": "complete_publisher_definition",
+      "limits": [
+        "Dated publisher binding only; no active alias, deployment-code equivalence, current Registry role or authority claim."
+      ]
+    },
+    {
+      "id": "original-standard",
+      "chain_id": 4663,
+      "address": "0x88ad8DdF1E3898412146a534538d418c6F8A9062",
+      "role": "standard",
+      "generation": "original",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "VP.standard",
+      "interface_ids": [
+        "standard"
+      ],
+      "interface_status": "complete_publisher_definition",
+      "limits": [
+        "Dated publisher binding only; no active alias, deployment-code equivalence, current Registry role or authority claim."
+      ]
+    },
+    {
+      "id": "original-charter-n-f-t",
+      "chain_id": 4663,
+      "address": "0x69101f92427376FA80476A997d024cf9dC3EaE39",
+      "role": "charterNFT",
+      "generation": "original",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "VP.charterNFT",
+      "interface_ids": [
+        "charter-nft"
+      ],
+      "interface_status": "complete_publisher_definition",
+      "limits": [
+        "Dated publisher binding only; no active alias, deployment-code equivalence, current Registry role or authority claim."
+      ]
+    },
+    {
+      "id": "original-tax-hook",
+      "chain_id": 4663,
+      "address": "0xF1eE073811B14359D850825E48d200483200eDcd",
+      "role": "taxHook",
+      "generation": "original",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "VP.taxHook",
+      "interface_ids": [
+        "tax-hook"
+      ],
+      "interface_status": "complete_publisher_definition",
+      "limits": [
+        "Dated publisher binding only; no active alias, deployment-code equivalence, current Registry role or authority claim."
+      ]
+    },
+    {
+      "id": "original-pol-manager",
+      "chain_id": 4663,
+      "address": "0x242F3e67BEf43470C2434d95E7D618E19f87c8f8",
+      "role": "polManager",
+      "generation": "original",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "VP.polManager",
+      "interface_ids": [
+        "publisher-control-fragment"
+      ],
+      "interface_status": "selective_fragment",
+      "limits": [
+        "Dated publisher binding only; no active alias, deployment-code equivalence, current Registry role or authority claim.",
+        "No complete role ABI found in the reviewed module; these control reads are selective publisher declarations, not exhaustive role capability."
+      ],
+      "selected_functions": {
+        "publisher-control-fragment": [
+          "owner()",
+          "pendingOwner()"
+        ]
+      }
+    },
+    {
+      "id": "original-fee-splitter",
+      "chain_id": 4663,
+      "address": "0xaa12DEda4aC19233A315777b17ff6ff5029D01b2",
+      "role": "feeSplitter",
+      "generation": "original",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "VP.feeSplitter",
+      "interface_ids": [
+        "fee-splitter"
+      ],
+      "interface_status": "complete_publisher_definition",
+      "limits": [
+        "Dated publisher binding only; no active alias, deployment-code equivalence, current Registry role or authority claim."
+      ]
+    },
+    {
+      "id": "original-contraction-vault",
+      "chain_id": 4663,
+      "address": "0x796e80E8ABcedc30c700A9587F7933d3342B8946",
+      "role": "contractionVault",
+      "generation": "original",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "VP.contractionVault",
+      "interface_ids": [
+        "contraction-vault"
+      ],
+      "interface_status": "complete_publisher_definition",
+      "limits": [
+        "Dated publisher binding only; no active alias, deployment-code equivalence, current Registry role or authority claim."
+      ]
+    },
+    {
+      "id": "original-expansion-vault",
+      "chain_id": 4663,
+      "address": "0x6f457765035958725367a1D4C1f6064b047DAdB3",
+      "role": "expansionVault",
+      "generation": "original",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "VP.expansionVault",
+      "interface_ids": [
+        "expansion-vault"
+      ],
+      "interface_status": "complete_publisher_definition",
+      "limits": [
+        "Dated publisher binding only; no active alias, deployment-code equivalence, current Registry role or authority claim."
+      ]
+    },
+    {
+      "id": "original-license-auction",
+      "chain_id": 4663,
+      "address": "0xA45CE49303EEd5846F841BFd4bAC6aE8C805EC05",
+      "role": "licenseAuction",
+      "generation": "original",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "VP.licenseAuction",
+      "interface_ids": [
+        "license-auction-original"
+      ],
+      "interface_status": "complete_publisher_definition",
+      "limits": [
+        "Dated publisher binding only; no active alias, deployment-code equivalence, current Registry role or authority claim."
+      ]
+    },
+    {
+      "id": "original-charter-auction",
+      "chain_id": 4663,
+      "address": "0x65B4f85b4A64424F6bA0fFe0C535100bc6888892",
+      "role": "charterAuction",
+      "generation": "original",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "VP.charterAuction",
+      "interface_ids": [
+        "charter-auction-original"
+      ],
+      "interface_status": "complete_publisher_definition",
+      "limits": [
+        "Dated publisher binding only; no active alias, deployment-code equivalence, current Registry role or authority claim."
+      ]
+    },
+    {
+      "id": "original-genesis-minter",
+      "chain_id": 4663,
+      "address": "0xF54B589EADC2aaE98b96DaD58d89BCBF27503e46",
+      "role": "genesisMinter",
+      "generation": "original",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "VP.genesisMinter",
+      "interface_ids": [
+        "genesis-minter"
+      ],
+      "interface_status": "complete_publisher_definition",
+      "limits": [
+        "Dated publisher binding only; no active alias, deployment-code equivalence, current Registry role or authority claim."
+      ]
+    },
+    {
+      "id": "original-pool-manager",
+      "chain_id": 4663,
+      "address": "0x8366a39CC670B4001A1121B8F6A443A643e40951",
+      "role": "poolManager",
+      "generation": "original",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "VP.poolManager",
+      "interface_ids": [],
+      "interface_status": "unknown",
+      "limits": [
+        "Dated publisher binding only; no active alias, deployment-code equivalence, current Registry role or authority claim.",
+        "Shared Uniswap infrastructure identity; no PoolManager ABI is bound in this module. Hook callbacks do not supply a PoolManager implementation ABI."
+      ]
+    },
+    {
+      "id": "original-multicall3",
+      "chain_id": 4663,
+      "address": "0xca11bde05977b3631167028862be2a173976ca11",
+      "role": "multicall3",
+      "generation": "original",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "VP.multicall3",
+      "interface_ids": [
+        "multicall3-fragment"
+      ],
+      "interface_status": "selective_fragment",
+      "limits": [
+        "Dated publisher binding only; no active alias, deployment-code equivalence, current Registry role or authority claim."
+      ]
+    },
+    {
+      "id": "v1-1-license-auction",
+      "chain_id": 4663,
+      "address": "0x44731EFf9da8fDD30003AA7C0B324368B3DfFE5e",
+      "role": "licenseAuction",
+      "generation": "v1.1",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "GP.licenseAuction",
+      "interface_ids": [
+        "license-auction-v1-1"
+      ],
+      "interface_status": "complete_publisher_definition",
+      "publisher_contracts_commit": "2f227a6269effe6ed512d95e0b08313dde901be9",
+      "limits": [
+        "Dated publisher attribution; constructor creation, activation, live routing and full permissions require separate corroboration."
+      ],
+      "publisher_activation": {
+        "block": "69222157",
+        "timestamp": "1790036371",
+        "basis": "publisher metadata, not independently proved Registry activation"
+      }
+    },
+    {
+      "id": "v1-1-pol-buyback",
+      "chain_id": 4663,
+      "address": "0x50e4C444f71dF2Db8593c6c8ba4d493De618E147",
+      "role": "polBuyback",
+      "generation": "v1.1",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "GP.polBuyback",
+      "interface_ids": [
+        "publisher-control-fragment"
+      ],
+      "interface_status": "selective_fragment",
+      "publisher_contracts_commit": "2f227a6269effe6ed512d95e0b08313dde901be9",
+      "limits": [
+        "Dated publisher attribution; constructor creation, activation, live routing and full permissions require separate corroboration.",
+        "No complete role ABI found in the reviewed module; executionPermissionless is not attributed to this role."
+      ],
+      "selected_functions": {
+        "publisher-control-fragment": [
+          "owner()",
+          "pendingOwner()"
+        ]
+      }
+    },
+    {
+      "id": "v1-1-incentives-vault",
+      "chain_id": 4663,
+      "address": "0x9481404d30C296e57C93f05A49934A901719bbA9",
+      "role": "incentivesVault",
+      "generation": "v1.1",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "GP.incentivesVault",
+      "interface_ids": [
+        "publisher-control-fragment"
+      ],
+      "interface_status": "selective_fragment",
+      "publisher_contracts_commit": "2f227a6269effe6ed512d95e0b08313dde901be9",
+      "limits": [
+        "Dated publisher attribution; constructor creation, activation, live routing and full permissions require separate corroboration.",
+        "No complete role ABI found in the reviewed module; executionPermissionless is not attributed to this role."
+      ],
+      "selected_functions": {
+        "publisher-control-fragment": [
+          "owner()",
+          "pendingOwner()"
+        ]
+      }
+    },
+    {
+      "id": "v1-2-license-auction",
+      "chain_id": 4663,
+      "address": "0x7CD3c6ec047B1A21ea65AF64D7c850e6f6049015",
+      "role": "licenseAuction",
+      "generation": "v1.2",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "YP.licenseAuction",
+      "interface_ids": [
+        "license-auction-v1-2"
+      ],
+      "interface_status": "complete_publisher_definition",
+      "publisher_contracts_commit": "aba72a3e0bc6125ad6e176493802f7bfeef0206f",
+      "limits": [
+        "Dated publisher attribution; constructor creation, activation, live routing and full permissions require separate corroboration."
+      ],
+      "publisher_activation": {
+        "block": "73474626",
+        "timestamp": "1790465135",
+        "basis": "publisher metadata, not independently proved Registry activation"
+      }
+    },
+    {
+      "id": "v1-2-charter-auction",
+      "chain_id": 4663,
+      "address": "0x1E369e5977e1d90D9A1Ec52aC72a124346E622E4",
+      "role": "charterAuction",
+      "generation": "v1.2",
+      "as_of": "2026-09-27",
+      "review_id": "publisher-protocol-interfaces-2026-09-27",
+      "source_locator": "YP.charterAuction",
+      "interface_ids": [
+        "charter-auction-v1-2"
+      ],
+      "interface_status": "complete_publisher_definition",
+      "publisher_contracts_commit": "aba72a3e0bc6125ad6e176493802f7bfeef0206f",
+      "limits": [
+        "Dated publisher attribution; constructor creation, activation, live routing and full permissions require separate corroboration."
+      ],
+      "publisher_activation": {
+        "block": "73474626",
+        "timestamp": "1790465135",
+        "basis": "publisher metadata, not independently proved Registry activation"
+      }
+    }
+  ],
+  "generation_gaps": [
+    "GP maps a v1.1 license replacement but no separate v1.1 charter replacement; original charter evidence is retained, not a fabricated v1.1 deployment.",
+    "Original polManager is labelled Genesis Liquidity Manager in the reviewed directory; later POL acquisition and incentives roles have only selective control-read declarations here."
+  ]
+}

@@ -1,0 +1,282 @@
+{
+  "schema_version": 1,
+  "scope": "Optional planning knowledge, not a router, allowlist or mandatory workflow. Available means exposed by the cited reviewed publisher interface; it does not certify present deployment or semantics. Negative claims are scoped to those complete source definitions. Unknown is not absence.",
+  "capabilities": [
+    {
+      "id": "branches-and-pending",
+      "question": "How many branches are open, and what is this charter's pending ledger value?",
+      "status": "available",
+      "interface_ids": ["central-bank"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [
+        {"interface_id": "central-bank", "signature": "totalBranches()"},
+        {"interface_id": "central-bank", "signature": "branchCountOf(uint256)"},
+        {"interface_id": "central-bank", "signature": "pendingOf(uint256)"},
+        {"interface_id": "central-bank", "signature": "charters(uint256)"}
+      ],
+      "absent_signatures": [],
+      "explanation": "These expose protocol branch count, selected charter branches, pending ledger and stored checkpoint fields at the selected block. Branches are not unsold licenses; pending is not automatically earned, spendable or withdrawable. Stored accumulator units and checkpoint arithmetic need separate evidence.",
+      "alternative_evidence": "Use authenticated same-block reads rather than reconstructing an available current count. For a past state, use an archive-capable provider at the relevant block when supported; history and flow attribution are separate questions."
+    },
+    {
+      "id": "charter-ownership",
+      "question": "Who owns this charter at the observation block?",
+      "status": "available",
+      "interface_ids": ["charter-nft"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [{"interface_id": "charter-nft", "signature": "ownerOf(uint256)"}],
+      "absent_signatures": [],
+      "explanation": "ownerOf identifies NFT ownership for the queried charter and block, not the module administrator, sale-time buyer, or current owner at a later block.",
+      "alternative_evidence": "For ownership transitions, inspect authenticated NFT Transfer logs with tokenId indexed, or corroborate historical ownerOf through supported archive-state reads."
+    },
+    {
+      "id": "current-license-status",
+      "question": "Is the branch-license auction available now, and what does its price function return?",
+      "status": "available",
+      "interface_ids": ["license-auction-original", "license-auction-v1-1", "license-auction-v1-2"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [
+        {"interface_id": "license-auction-original", "signature": "remainingToday()"},
+        {"interface_id": "license-auction-original", "signature": "currentDay()"},
+        {"interface_id": "license-auction-original", "signature": "quote(uint256)"},
+        {"interface_id": "license-auction-v1-1", "signature": "remainingToday()"},
+        {"interface_id": "license-auction-v1-1", "signature": "currentDay()"},
+        {"interface_id": "license-auction-v1-1", "signature": "quote(uint256)"},
+        {"interface_id": "license-auction-v1-2", "signature": "remainingToday()"},
+        {"interface_id": "license-auction-v1-2", "signature": "currentDay()"},
+        {"interface_id": "license-auction-v1-2", "signature": "quote(uint256)"}
+      ],
+      "absent_signatures": [],
+      "explanation": "The matching generation exposes round/inventory and quantity-price reads. Reconcile its anchor/period, started/paused state and materialized counters before interpreting availability. A curve output is not a buyable ask when effective inventory is zero; funding, ownership, allowance and capacity remain independent constraints.",
+      "alternative_evidence": "Use the relevant same-block getter set before collecting history. Investigate inconsistent counters with effective configuration, code/semantics and scoped logs; neither events nor getters automatically wins."
+    },
+    {
+      "id": "current-charter-status",
+      "question": "What are the new-charter auction's current inventory and price inputs?",
+      "status": "available",
+      "interface_ids": ["charter-auction-original", "charter-auction-v1-2"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [
+        {"interface_id": "charter-auction-original", "signature": "remainingToday()"},
+        {"interface_id": "charter-auction-original", "signature": "currentPrice()"},
+        {"interface_id": "charter-auction-original", "signature": "chartersPerDay()"},
+        {"interface_id": "charter-auction-v1-2", "signature": "remainingToday()"},
+        {"interface_id": "charter-auction-v1-2", "signature": "currentPrice()"},
+        {"interface_id": "charter-auction-v1-2", "signature": "chartersPerDay()"}
+      ],
+      "absent_signatures": [],
+      "explanation": "These are new-charter inventory/price reads, with publisher ETH-wei denomination. Do not import branch-license payment, allowance, floor or timing semantics. Configured quantity is not a purchase guarantee and stored state may require round reconciliation.",
+      "alternative_evidence": "Use the charter generation's own anchor and duration. CharterPurchased records executed charter price; transaction value, gas and independently evidenced refunds are different amounts."
+    },
+    {
+      "id": "original-charter-day-usage",
+      "question": "Does the original license interface expose usage for a particular charter and day?",
+      "status": "available",
+      "interface_ids": ["license-auction-original"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [{"interface_id": "license-auction-original", "signature": "purchasedOnDay(uint256,uint256)"}],
+      "absent_signatures": [],
+      "explanation": "The original interface exposes charterId/day keyed usage. This is a useful direct-read candidate, not an aggregate sold-count, per-sale price series or proof of historical storage retention. Authenticate the queried generation, day interpretation and state semantics.",
+      "alternative_evidence": "Use relevant purchase logs or historical-state reads to corroborate the narrow usage claim where necessary; do not claim every historical question requires a whole-history reconstruction."
+    },
+    {
+      "id": "window-usage-and-allowance",
+      "question": "What usage or remaining allowance does the newer license interface expose for this charter?",
+      "status": "available",
+      "interface_ids": ["license-auction-v1-1", "license-auction-v1-2"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [
+        {"interface_id": "license-auction-v1-1", "signature": "purchasedInWindow(uint256,uint256)"},
+        {"interface_id": "license-auction-v1-1", "signature": "remainingForCharter(uint256)"},
+        {"interface_id": "license-auction-v1-2", "signature": "purchasedInWindow(uint256,uint256)"},
+        {"interface_id": "license-auction-v1-2", "signature": "remainingForCharter(uint256)"}
+      ],
+      "absent_signatures": [],
+      "explanation": "The ABI exposes charterId/window keyed usage and reported remaining charter allowance. Window IDs are not automatically auction-day IDs or rolling 24-hour intervals; use authenticated capWindow/capWindowIndex and effective semantics. Allowance does not establish funds or inventory.",
+      "alternative_evidence": "Corroborate effective reset boundaries, prior usage and state retention as needed; keep historical query scope narrow rather than discarding these keyed getters."
+    },
+    {
+      "id": "historical-aggregate-day-series",
+      "question": "Can a day-parameter getter return an arbitrary auction round's aggregate sold count or sale-price history?",
+      "status": "not_exposed",
+      "interface_ids": ["license-auction-original", "license-auction-v1-1", "license-auction-v1-2", "charter-auction-original", "charter-auction-v1-2"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [],
+      "absent_signatures": ["daySold(uint256)", "dayPrice(uint256)"],
+      "explanation": "These complete reviewed publisher definitions do not expose the requested aggregate per-day sold/price series. The negative claim is not universal deployed-code absence. Original purchasedOnDay and newer purchasedInWindow are narrower charter-usage lookups and remain useful; current/materialized-day getters and last-sale getters are not a complete round history.",
+      "alternative_evidence": "Discover relevant generations and bounded emitter purchase logs, preserving coverage and exact raw consideration. Archive-state calls at historical blocks can corroborate counters/configuration where supported, but do not by themselves enumerate every execution."
+    },
+    {
+      "id": "auction-anchor-not-day-anchor",
+      "question": "Is dayAnchorTime() the reviewed schedule getter?",
+      "status": "not_exposed",
+      "interface_ids": ["license-auction-original", "license-auction-v1-1", "license-auction-v1-2", "charter-auction-original", "charter-auction-v1-2"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [],
+      "absent_signatures": ["dayAnchorTime()"],
+      "explanation": "dayAnchorTime() is absent from these reviewed publisher definitions. Their schedule input is auctionAnchor(), combined with AUCTION_DAY() for original interfaces or auctionPeriod() for newer interfaces. A scheduled boundary is neither the lazy roll transaction nor the first observed purchase.",
+      "alternative_evidence": "Use the authenticated generation's anchor/duration and historical effective settings. Do not probe guessed selectors or substitute a fixed 12-hour or 24-hour duration."
+    },
+    {
+      "id": "orders-and-fillability",
+      "question": "What orderbook and fillability reads are exposed by v1.2 licenses?",
+      "status": "available",
+      "interface_ids": ["license-auction-v1-2"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [
+        {"interface_id": "license-auction-v1-2", "signature": "openBidCount()"},
+        {"interface_id": "license-auction-v1-2", "signature": "openBids(uint256,uint256)"},
+        {"interface_id": "license-auction-v1-2", "signature": "bids(uint256)"},
+        {"interface_id": "license-auction-v1-2", "signature": "fillable(uint256)"}
+      ],
+      "absent_signatures": [],
+      "explanation": "Count and bounded pages expose raw IDs; bids/fillable name charterId inputs. The raw page-ID-to-charter mapping and stable page order remain unproved. A bidder need not be the current owner, a limit is not an executed price, and fillable is not a promised fill.",
+      "alternative_evidence": "Read a separately authenticated charter ID or establish the page-ID join before enrichment. Use bid/purchase events for observed transitions, with pagination, receipts and discovery coverage separately qualified."
+    },
+    {
+      "id": "earned-origin-and-accrual",
+      "question": "Does pendingOf or a stream-rate getter prove attributable earnings and future spendable income?",
+      "status": "unknown",
+      "interface_ids": ["central-bank"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [
+        {"interface_id": "central-bank", "signature": "pendingOf(uint256)"},
+        {"interface_id": "central-bank", "signature": "currentStreamRatePerSecond()"}
+      ],
+      "absent_signatures": [],
+      "explanation": "These getter layouts are known, but complete accrued-origin attribution, accumulator scaling/checkpoint/rounding, eligibility and future continuation are not established by the ABI. Unknown semantics is not a missing-getter claim.",
+      "alternative_evidence": "Reconcile flows, ownership and effective branch/epoch changes with source correspondence and relevant history. Independently useful pending-delta pace or hypothetical dilution remains explicitly unattributed/conditional, not proved earned income."
+    },
+    {
+      "id": "token-balance-and-scale",
+      "question": "What are this wallet's STANDARD balance, token decimals and ERC20 allowance?",
+      "status": "available",
+      "interface_ids": ["standard"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [
+        {"interface_id": "standard", "signature": "balanceOf(address)"},
+        {"interface_id": "standard", "signature": "decimals()"},
+        {"interface_id": "standard", "signature": "allowance(address,address)"}
+      ],
+      "absent_signatures": [],
+      "explanation": "These expose wallet balance, decimals and token-spender allowance at the selected block. Token allowance is not a license-purchase window allowance; wallet tokens are not the charter's pending ledger or fiat proceeds.",
+      "alternative_evidence": "Authenticate token identity and current restriction state separately; a balance or allowance does not guarantee a particular transfer succeeds."
+    },
+    {
+      "id": "launch-restriction-state",
+      "question": "Which reads distinguish enabled restrictions from currently active launch state?",
+      "status": "available",
+      "interface_ids": ["standard", "tax-hook"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [
+        {"interface_id": "standard", "signature": "launchHoldingCapEnabled()"},
+        {"interface_id": "standard", "signature": "launchHoldingCapActive()"},
+        {"interface_id": "standard", "signature": "poolManagerGateEnabled()"},
+        {"interface_id": "tax-hook", "signature": "launchScheduleActive()"},
+        {"interface_id": "tax-hook", "signature": "currentTaxBps(bool)"}
+      ],
+      "absent_signatures": [],
+      "explanation": "Configuration enabled, resolved active state, the separate pool-manager gate and directional tax basis points are distinct. Authenticate the token's actually resolved hook relationship before combining their reads.",
+      "alternative_evidence": "Use applicable implementation/dependency evidence for a specific transfer question. Flags are not universal transfer-success or transaction-safety guarantees."
+    },
+    {
+      "id": "first-round-exhaustion",
+      "question": "Does the final observed purchase prove first-round sellout?",
+      "status": "unknown",
+      "interface_ids": ["license-auction-original", "license-auction-v1-1", "license-auction-v1-2", "charter-auction-original", "charter-auction-v1-2"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [],
+      "absent_signatures": [],
+      "explanation": "The reviewed AuctionStarted layout provides round and start price, not first-round allocation; a later DayRolled cap belongs to that later round. Matching observed quantity to a later/current configured supply does not establish earlier exhaustion. Minimum equalling last observed price is consistent with decay, not proof of the deployed rule.",
+      "alternative_evidence": "Establish historically effective allocation, relevant changes/reopenings and complete ordered scope. Supported archive-state reads can corroborate cap/inventory; receipts corroborate logs but cannot supply omitted discovery. Otherwise say last observed, not closing sale."
+    },
+    {
+      "id": "charter-refund-amount",
+      "question": "Does transaction value minus CharterPurchased price prove an ETH refund?",
+      "status": "unknown",
+      "interface_ids": ["charter-auction-original", "charter-auction-v1-2"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [],
+      "absent_signatures": [],
+      "explanation": "Event sale price, supplied transaction value, gas and independently observed refunds are different. Their difference alone does not establish an internal ETH refund or net purchase cost; ABI entries do not prove settlement behavior.",
+      "alternative_evidence": "Use supported traces, independently reconciled transfers/balances and implementation evidence within their limits. If unavailable, report the sale price, value and gas separately and leave the refund unproved."
+    },
+    {
+      "id": "contraction-pool-and-controls",
+      "question": "What pool-depth and buyback-control inputs can the Contraction Vault expose directly?",
+      "status": "available",
+      "interface_ids": ["contraction-vault"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [
+        {"interface_id": "contraction-vault", "signature": "poolEthDepth()"},
+        {"interface_id": "contraction-vault", "signature": "polManagerCount()"},
+        {"interface_id": "contraction-vault", "signature": "polManagers(uint256)"},
+        {"interface_id": "contraction-vault", "signature": "effectiveTickPoolPctBps()"},
+        {"interface_id": "contraction-vault", "signature": "effectiveTwapDeviationTicks()"}
+      ],
+      "absent_signatures": [],
+      "explanation": "These expose publisher ETH-denominated pool depth, manager enumeration and BPS/tick-labelled control inputs. Authenticate pool/manager identity and effective semantics; ABI names do not establish executable buyback size, burn outcomes or source correspondence.",
+      "alternative_evidence": "Use bounded same-block reads rather than reconstructing available control values. Execution history, asset flows and historically effective control changes need their own evidence."
+    },
+    {
+      "id": "selected-reserve-holdings",
+      "question": "Can the Expansion Vault report holdings and pool metadata for an identified reserve asset?",
+      "status": "available",
+      "interface_ids": ["expansion-vault"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [
+        {"interface_id": "expansion-vault", "signature": "holdingsOf(address)"},
+        {"interface_id": "expansion-vault", "signature": "isReserveAsset(address)"},
+        {"interface_id": "expansion-vault", "signature": "reservePool(address)"}
+      ],
+      "absent_signatures": [],
+      "explanation": "These are selected-asset queries, not a complete reserve-asset census. Holdings remain raw asset units until identity/decimals are authenticated; pool metadata is not a market quote, liquidity guarantee or withdrawal entitlement.",
+      "alternative_evidence": "Discover the relevant asset universe independently when completeness is requested, and use time-qualified market evidence for valuation. Do not sum unlike raw units."
+    },
+    {
+      "id": "current-versus-queued-fees",
+      "question": "What fee shares, queued changes and team liability does FeeSplitter expose?",
+      "status": "available",
+      "interface_ids": ["fee-splitter"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [
+        {"interface_id": "fee-splitter", "signature": "teamOwed()"},
+        {"interface_id": "fee-splitter", "signature": "teamShareBps()"},
+        {"interface_id": "fee-splitter", "signature": "polShareBps()"},
+        {"interface_id": "fee-splitter", "signature": "queuedShares()"},
+        {"interface_id": "fee-splitter", "signature": "teamWallet()"}
+      ],
+      "absent_signatures": [],
+      "explanation": "Current BPS-labelled shares, a queued tuple with a pending flag, the team wallet and publisher ETH-denominated team liability are distinct observations. Queued is not effective; a team liability is not token-holder entitlement or proof of payment.",
+      "alternative_evidence": "Read the current and pending state together at one block. Use application/transfer evidence for effective historical changes and settled payments."
+    },
+    {
+      "id": "founding-sale-state",
+      "question": "What state can be read directly for the founding sale?",
+      "status": "available",
+      "interface_ids": ["genesis-minter"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [
+        {"interface_id": "genesis-minter", "signature": "opened()"},
+        {"interface_id": "genesis-minter", "signature": "finalized()"},
+        {"interface_id": "genesis-minter", "signature": "totalMinted()"},
+        {"interface_id": "genesis-minter", "signature": "totalProceeds()"},
+        {"interface_id": "genesis-minter", "signature": "currentPublicPrice()"}
+      ],
+      "absent_signatures": [],
+      "explanation": "Founding-sale flags, minted count and publisher ETH-denominated proceeds/price are not the ongoing charter auction's state. Flags and totals do not by themselves prove refund eligibility, finalization flows or a currently executable purchase.",
+      "alternative_evidence": "Authenticate the founding generation and effective conditions; use specific mint/finalization/refund evidence for historical settlement questions rather than borrowing ongoing-auction semantics."
+    },
+    {
+      "id": "incompletely-reviewed-control-roles",
+      "question": "Does this package contain complete registry, liquidity-manager, POL-buyback and incentives-vault interfaces?",
+      "status": "unknown",
+      "interface_ids": ["publisher-control-fragment"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [],
+      "absent_signatures": [],
+      "explanation": "The publisher control fragment is not a complete role ABI. Its owner/pendingOwner declarations are selected administration leads; executionPermissionless is specifically bound to registry reads, not every owned role. Other interface capabilities for these roles remain uncovered, not absent.",
+      "alternative_evidence": "Follow dated contract/dependency leads and obtain relevant authenticated ABI/source evidence when the question needs it. Do not guess registry keys, transfer the permissionless flag to another contract, or turn missing coverage into a prohibition."
+    }
+  ]
+}

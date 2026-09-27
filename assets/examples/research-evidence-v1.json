@@ -1,0 +1,880 @@
+{
+  "schema_version": "1",
+  "sources": [
+    {
+      "id": "fictional-logs",
+      "identity": "urn:srstack:fictional:worked-example:logs",
+      "retrieved_at": "unknown",
+      "observed_at": "unknown",
+      "kind": "synthetic",
+      "details": "All logs, addresses, chain id, hashes, values and observations are fabricated offline, not deployment defaults or chain evidence."
+    },
+    {
+      "id": "fictional-headers",
+      "identity": "urn:srstack:fictional:worked-example:headers",
+      "retrieved_at": "unknown",
+      "observed_at": "unknown",
+      "kind": "synthetic"
+    },
+    {
+      "id": "fictional-receipts",
+      "identity": "urn:srstack:fictional:worked-example:receipts",
+      "retrieved_at": "unknown",
+      "observed_at": "unknown",
+      "kind": "synthetic"
+    }
+  ],
+  "headers": {
+    "999999:0x0000000000000000000000000000000000000000000000000000000000000064": {
+      "chain_id": "999999",
+      "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000064",
+      "block_number": "100",
+      "timestamp": "1000",
+      "canonicality": "unknown",
+      "checked_at": "unknown",
+      "source_refs": [
+        "fictional-headers"
+      ]
+    },
+    "999999:0x0000000000000000000000000000000000000000000000000000000000000065": {
+      "chain_id": "999999",
+      "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000065",
+      "block_number": "101",
+      "timestamp": "1031",
+      "canonicality": "unknown",
+      "checked_at": "unknown",
+      "source_refs": [
+        "fictional-headers"
+      ]
+    },
+    "999999:0x0000000000000000000000000000000000000000000000000000000000000066": {
+      "chain_id": "999999",
+      "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000066",
+      "block_number": "102",
+      "timestamp": "1063",
+      "canonicality": "unknown",
+      "checked_at": "unknown",
+      "source_refs": [
+        "fictional-headers"
+      ]
+    },
+    "999999:0x0000000000000000000000000000000000000000000000000000000000000067": {
+      "chain_id": "999999",
+      "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000067",
+      "block_number": "103",
+      "timestamp": "1070",
+      "canonicality": "unknown",
+      "checked_at": "unknown",
+      "source_refs": [
+        "fictional-headers"
+      ]
+    },
+    "999999:0x0000000000000000000000000000000000000000000000000000000000000068": {
+      "chain_id": "999999",
+      "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000068",
+      "block_number": "104",
+      "timestamp": "1080",
+      "canonicality": "unknown",
+      "checked_at": "unknown",
+      "source_refs": [
+        "fictional-headers"
+      ]
+    },
+    "999999:0x0000000000000000000000000000000000000000000000000000000000000069": {
+      "chain_id": "999999",
+      "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000069",
+      "block_number": "105",
+      "timestamp": "1090",
+      "canonicality": "unknown",
+      "checked_at": "unknown",
+      "source_refs": [
+        "fictional-headers"
+      ]
+    },
+    "999999:0x00000000000000000000000000000000000000000000000000000000000000cd": {
+      "chain_id": "999999",
+      "block_hash": "0x00000000000000000000000000000000000000000000000000000000000000cd",
+      "block_number": "105",
+      "timestamp": "unknown",
+      "canonicality": "unknown",
+      "checked_at": "unknown",
+      "source_refs": [
+        "fictional-headers"
+      ]
+    },
+    "999999:0x000000000000000000000000000000000000000000000000000000000000006a": {
+      "chain_id": "999999",
+      "block_hash": "0x000000000000000000000000000000000000000000000000000000000000006a",
+      "block_number": "106",
+      "timestamp": "1127",
+      "canonicality": "unknown",
+      "checked_at": "unknown",
+      "source_refs": [
+        "fictional-headers"
+      ]
+    },
+    "999999:0x000000000000000000000000000000000000000000000000000000000000006b": {
+      "chain_id": "999999",
+      "block_hash": "0x000000000000000000000000000000000000000000000000000000000000006b",
+      "block_number": "107",
+      "timestamp": "unknown",
+      "canonicality": "unknown",
+      "checked_at": "unknown",
+      "source_refs": [
+        "fictional-headers"
+      ]
+    }
+  },
+  "events": [
+    {
+      "id": "sale-a",
+      "raw_log_ref": "sale-a",
+      "chain_id": "999999",
+      "emitter": "0x1111111111111111111111111111111111111111",
+      "generation": "fictional-license-example",
+      "block_number": "100",
+      "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000064",
+      "transaction_hash": "0x00000000000000000000000000000000000000000000000000000000000003e9",
+      "transaction_index": "1",
+      "log_index": "2",
+      "removed": false,
+      "header_ref": "999999:0x0000000000000000000000000000000000000000000000000000000000000064",
+      "topics": [
+        "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+        "0x0000000000000000000000000000000000000000000000000000000000000029",
+        "0x0000000000000000000000000000000000000000000000000000000000000007"
+      ],
+      "data": "0x00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000069",
+      "decoded": {
+        "event_name": "LicensesPurchased",
+        "charter_id": "41",
+        "round_id": "7",
+        "quantity": "2",
+        "unit_price_raw": "105"
+      },
+      "denomination": {
+        "asset": "FICTIONAL_PAYMENT",
+        "decimals": "2"
+      },
+      "source_refs": [
+        "fictional-logs"
+      ],
+      "retrieved_at": "unknown",
+      "observed_at": "unknown",
+      "receipt_checks": [
+        {
+          "status": "matched",
+          "transaction_status": "success",
+          "checked_at": "unknown",
+          "source_refs": [
+            "fictional-receipts"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sale-b",
+      "raw_log_ref": "sale-b",
+      "chain_id": "999999",
+      "emitter": "0x1111111111111111111111111111111111111111",
+      "generation": "fictional-license-example",
+      "block_number": "101",
+      "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000065",
+      "transaction_hash": "0x00000000000000000000000000000000000000000000000000000000000003ea",
+      "transaction_index": "1",
+      "log_index": "7",
+      "removed": false,
+      "header_ref": "999999:0x0000000000000000000000000000000000000000000000000000000000000065",
+      "topics": [
+        "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+        "0x000000000000000000000000000000000000000000000000000000000000002a",
+        "0x0000000000000000000000000000000000000000000000000000000000000007"
+      ],
+      "data": "0x00000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000063",
+      "decoded": {
+        "event_name": "LicensesPurchased",
+        "charter_id": "42",
+        "round_id": "7",
+        "quantity": "3",
+        "unit_price_raw": "99"
+      },
+      "denomination": {
+        "asset": "FICTIONAL_PAYMENT",
+        "decimals": "2"
+      },
+      "source_refs": [
+        "fictional-logs"
+      ],
+      "retrieved_at": "unknown",
+      "observed_at": "unknown",
+      "receipt_checks": [
+        {
+          "status": "not_checked",
+          "transaction_status": "unknown",
+          "checked_at": "unknown",
+          "source_refs": []
+        }
+      ]
+    },
+    {
+      "id": "sale-c",
+      "raw_log_ref": "sale-c",
+      "chain_id": "999999",
+      "emitter": "0x1111111111111111111111111111111111111111",
+      "generation": "fictional-license-example",
+      "block_number": "102",
+      "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000066",
+      "transaction_hash": "0x00000000000000000000000000000000000000000000000000000000000003eb",
+      "transaction_index": "1",
+      "log_index": "4",
+      "removed": false,
+      "header_ref": "999999:0x0000000000000000000000000000000000000000000000000000000000000066",
+      "topics": [
+        "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+        "0x000000000000000000000000000000000000000000000000000000000000002b",
+        "0x0000000000000000000000000000000000000000000000000000000000000007"
+      ],
+      "data": "0x00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000065",
+      "decoded": {
+        "event_name": "LicensesPurchased",
+        "charter_id": "43",
+        "round_id": "7",
+        "quantity": "1",
+        "unit_price_raw": "101"
+      },
+      "denomination": {
+        "asset": "FICTIONAL_PAYMENT",
+        "decimals": "2"
+      },
+      "source_refs": [
+        "fictional-logs"
+      ],
+      "retrieved_at": "unknown",
+      "observed_at": "unknown",
+      "receipt_checks": [
+        {
+          "status": "not_checked",
+          "transaction_status": "unknown",
+          "checked_at": "unknown",
+          "source_refs": []
+        }
+      ]
+    },
+    {
+      "id": "removed",
+      "raw_log_ref": "removed",
+      "chain_id": "999999",
+      "emitter": "0x1111111111111111111111111111111111111111",
+      "generation": "fictional-license-example",
+      "block_number": "103",
+      "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000067",
+      "transaction_hash": "0x00000000000000000000000000000000000000000000000000000000000003ec",
+      "transaction_index": "1",
+      "log_index": "5",
+      "removed": true,
+      "header_ref": "999999:0x0000000000000000000000000000000000000000000000000000000000000067",
+      "topics": [
+        "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+        "0x000000000000000000000000000000000000000000000000000000000000002c",
+        "0x0000000000000000000000000000000000000000000000000000000000000007"
+      ],
+      "data": "0x0000000000000000000000000000000000000000000000000000000000000009000000000000000000000000000000000000000000000000000000000000005a",
+      "decoded": {
+        "event_name": "LicensesPurchased",
+        "charter_id": "44",
+        "round_id": "7",
+        "quantity": "9",
+        "unit_price_raw": "90"
+      },
+      "denomination": {
+        "asset": "FICTIONAL_PAYMENT",
+        "decimals": "2"
+      },
+      "source_refs": [
+        "fictional-logs"
+      ],
+      "retrieved_at": "unknown",
+      "observed_at": "unknown",
+      "receipt_checks": [
+        {
+          "status": "not_checked",
+          "transaction_status": "unknown",
+          "checked_at": "unknown",
+          "source_refs": []
+        }
+      ]
+    },
+    {
+      "id": "conflict-a",
+      "raw_log_ref": "conflict-a",
+      "chain_id": "999999",
+      "emitter": "0x1111111111111111111111111111111111111111",
+      "generation": "fictional-license-example",
+      "block_number": "104",
+      "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000068",
+      "transaction_hash": "0x00000000000000000000000000000000000000000000000000000000000003ed",
+      "transaction_index": "1",
+      "log_index": "9",
+      "removed": false,
+      "header_ref": "999999:0x0000000000000000000000000000000000000000000000000000000000000068",
+      "topics": [
+        "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+        "0x000000000000000000000000000000000000000000000000000000000000002d",
+        "0x0000000000000000000000000000000000000000000000000000000000000007"
+      ],
+      "data": "0x0000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000005a",
+      "decoded": {
+        "event_name": "LicensesPurchased",
+        "charter_id": "45",
+        "round_id": "7",
+        "quantity": "4",
+        "unit_price_raw": "90"
+      },
+      "denomination": {
+        "asset": "FICTIONAL_PAYMENT",
+        "decimals": "2"
+      },
+      "source_refs": [
+        "fictional-logs"
+      ],
+      "retrieved_at": "unknown",
+      "observed_at": "unknown",
+      "receipt_checks": [
+        {
+          "status": "not_checked",
+          "transaction_status": "unknown",
+          "checked_at": "unknown",
+          "source_refs": []
+        }
+      ]
+    },
+    {
+      "id": "conflict-b",
+      "raw_log_ref": "conflict-b",
+      "chain_id": "999999",
+      "emitter": "0x1111111111111111111111111111111111111111",
+      "generation": "fictional-license-example",
+      "block_number": "104",
+      "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000068",
+      "transaction_hash": "0x00000000000000000000000000000000000000000000000000000000000003ed",
+      "transaction_index": "1",
+      "log_index": "9",
+      "removed": false,
+      "header_ref": "999999:0x0000000000000000000000000000000000000000000000000000000000000068",
+      "topics": [
+        "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+        "0x000000000000000000000000000000000000000000000000000000000000002d",
+        "0x0000000000000000000000000000000000000000000000000000000000000007"
+      ],
+      "data": "0x0000000000000000000000000000000000000000000000000000000000000005000000000000000000000000000000000000000000000000000000000000005a",
+      "decoded": {
+        "event_name": "LicensesPurchased",
+        "charter_id": "45",
+        "round_id": "7",
+        "quantity": "5",
+        "unit_price_raw": "90"
+      },
+      "denomination": {
+        "asset": "FICTIONAL_PAYMENT",
+        "decimals": "2"
+      },
+      "source_refs": [
+        "fictional-logs"
+      ],
+      "retrieved_at": "unknown",
+      "observed_at": "unknown",
+      "receipt_checks": [
+        {
+          "status": "not_checked",
+          "transaction_status": "unknown",
+          "checked_at": "unknown",
+          "source_refs": []
+        }
+      ]
+    },
+    {
+      "id": "reorg-a",
+      "raw_log_ref": "reorg-a",
+      "chain_id": "999999",
+      "emitter": "0x1111111111111111111111111111111111111111",
+      "generation": "fictional-license-example",
+      "block_number": "105",
+      "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000069",
+      "transaction_hash": "0x00000000000000000000000000000000000000000000000000000000000003ee",
+      "transaction_index": "1",
+      "log_index": "3",
+      "removed": false,
+      "header_ref": "999999:0x0000000000000000000000000000000000000000000000000000000000000069",
+      "topics": [
+        "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+        "0x000000000000000000000000000000000000000000000000000000000000002e",
+        "0x0000000000000000000000000000000000000000000000000000000000000007"
+      ],
+      "data": "0x00000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000050",
+      "decoded": {
+        "event_name": "LicensesPurchased",
+        "charter_id": "46",
+        "round_id": "7",
+        "quantity": "8",
+        "unit_price_raw": "80"
+      },
+      "denomination": {
+        "asset": "FICTIONAL_PAYMENT",
+        "decimals": "2"
+      },
+      "source_refs": [
+        "fictional-logs"
+      ],
+      "retrieved_at": "unknown",
+      "observed_at": "unknown",
+      "receipt_checks": [
+        {
+          "status": "not_checked",
+          "transaction_status": "unknown",
+          "checked_at": "unknown",
+          "source_refs": []
+        }
+      ]
+    },
+    {
+      "id": "reorg-b",
+      "raw_log_ref": "reorg-b",
+      "chain_id": "999999",
+      "emitter": "0x1111111111111111111111111111111111111111",
+      "generation": "fictional-license-example",
+      "block_number": "105",
+      "block_hash": "0x00000000000000000000000000000000000000000000000000000000000000cd",
+      "transaction_hash": "0x00000000000000000000000000000000000000000000000000000000000003ef",
+      "transaction_index": "1",
+      "log_index": "3",
+      "removed": false,
+      "header_ref": "999999:0x00000000000000000000000000000000000000000000000000000000000000cd",
+      "topics": [
+        "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+        "0x000000000000000000000000000000000000000000000000000000000000002e",
+        "0x0000000000000000000000000000000000000000000000000000000000000007"
+      ],
+      "data": "0x000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000050",
+      "decoded": {
+        "event_name": "LicensesPurchased",
+        "charter_id": "46",
+        "round_id": "7",
+        "quantity": "10",
+        "unit_price_raw": "80"
+      },
+      "denomination": {
+        "asset": "FICTIONAL_PAYMENT",
+        "decimals": "2"
+      },
+      "source_refs": [
+        "fictional-logs"
+      ],
+      "retrieved_at": "unknown",
+      "observed_at": "unknown",
+      "receipt_checks": [
+        {
+          "status": "not_checked",
+          "transaction_status": "unknown",
+          "checked_at": "unknown",
+          "source_refs": []
+        }
+      ]
+    },
+    {
+      "id": "sale-d",
+      "raw_log_ref": "sale-d",
+      "chain_id": "999999",
+      "emitter": "0x1111111111111111111111111111111111111111",
+      "generation": "fictional-license-example",
+      "block_number": "106",
+      "block_hash": "0x000000000000000000000000000000000000000000000000000000000000006a",
+      "transaction_hash": "0x00000000000000000000000000000000000000000000000000000000000003f0",
+      "transaction_index": "1",
+      "log_index": "6",
+      "removed": false,
+      "header_ref": "999999:0x000000000000000000000000000000000000000000000000000000000000006a",
+      "topics": [
+        "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+        "0x000000000000000000000000000000000000000000000000000000000000002f",
+        "0x0000000000000000000000000000000000000000000000000000000000000007"
+      ],
+      "data": "0x00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000062",
+      "decoded": {
+        "event_name": "LicensesPurchased",
+        "charter_id": "47",
+        "round_id": "7",
+        "quantity": "1",
+        "unit_price_raw": "98"
+      },
+      "denomination": {
+        "asset": "FICTIONAL_PAYMENT",
+        "decimals": "2"
+      },
+      "source_refs": [
+        "fictional-logs"
+      ],
+      "retrieved_at": "unknown",
+      "observed_at": "unknown",
+      "receipt_checks": [
+        {
+          "status": "not_checked",
+          "transaction_status": "unknown",
+          "checked_at": "unknown",
+          "source_refs": []
+        }
+      ]
+    },
+    {
+      "id": "incomplete",
+      "raw_log_ref": "incomplete",
+      "chain_id": "999999",
+      "emitter": "0x1111111111111111111111111111111111111111",
+      "generation": "fictional-license-example",
+      "block_number": "107",
+      "block_hash": "0x000000000000000000000000000000000000000000000000000000000000006b",
+      "transaction_hash": "0x00000000000000000000000000000000000000000000000000000000000003f1",
+      "transaction_index": "1",
+      "log_index": "unknown",
+      "removed": false,
+      "header_ref": "999999:0x000000000000000000000000000000000000000000000000000000000000006b",
+      "topics": [
+        "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+        "0x0000000000000000000000000000000000000000000000000000000000000030",
+        "0x0000000000000000000000000000000000000000000000000000000000000007"
+      ],
+      "data": "0x0000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000005f",
+      "decoded": {
+        "event_name": "LicensesPurchased",
+        "charter_id": "48",
+        "round_id": "7",
+        "quantity": "6",
+        "unit_price_raw": "95"
+      },
+      "denomination": {
+        "asset": "FICTIONAL_PAYMENT",
+        "decimals": "2"
+      },
+      "source_refs": [
+        "fictional-logs"
+      ],
+      "retrieved_at": "unknown",
+      "observed_at": "unknown",
+      "receipt_checks": [
+        {
+          "status": "not_checked",
+          "transaction_status": "unknown",
+          "checked_at": "unknown",
+          "source_refs": []
+        }
+      ],
+      "details": "The fictional raw export omits the block-global logIndex. Obtain the corresponding full log or matched receipt, anchored to this chain/transaction/block hash, to recover that index; do not substitute a transaction-local event ordinal. Header timestamp is also unknown but is not required for quantity accounting."
+    }
+  ],
+  "coverage": {
+    "requested": [
+      {
+        "chain_id": "999999",
+        "emitter": "0x1111111111111111111111111111111111111111",
+        "generation": "fictional-license-example",
+        "from_block": "100",
+        "to_block": "110",
+        "filters": {
+          "topics": [
+            "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5"
+          ]
+        },
+        "source_refs": [
+          "fictional-logs"
+        ]
+      }
+    ],
+    "scanned": [
+      {
+        "chain_id": "999999",
+        "emitter": "0x1111111111111111111111111111111111111111",
+        "generation": "fictional-license-example",
+        "from_block": "100",
+        "to_block": "107",
+        "filters": {
+          "topics": [
+            "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5"
+          ]
+        },
+        "source_refs": [
+          "fictional-logs"
+        ]
+      }
+    ],
+    "failed": [
+      {
+        "chain_id": "999999",
+        "emitter": "0x1111111111111111111111111111111111111111",
+        "generation": "fictional-license-example",
+        "from_block": "108",
+        "to_block": "108",
+        "filters": {
+          "topics": [
+            "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5"
+          ]
+        },
+        "source_refs": [
+          "fictional-logs"
+        ]
+      }
+    ],
+    "unsearched": [
+      {
+        "chain_id": "999999",
+        "emitter": "0x1111111111111111111111111111111111111111",
+        "generation": "fictional-license-example",
+        "from_block": "109",
+        "to_block": "110",
+        "filters": {
+          "topics": [
+            "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5"
+          ]
+        },
+        "source_refs": [
+          "fictional-logs"
+        ]
+      }
+    ],
+    "discovery_checks": [
+      {
+        "claim": "Full deployment/generation discovery",
+        "status": "not_checked",
+        "source_refs": []
+      }
+    ],
+    "receipt_checks": [
+      {
+        "claim": "Supplied observation receipt matching",
+        "status": "partial",
+        "source_refs": [
+          "fictional-receipts"
+        ],
+        "details": "Only sale-a has a synthetic matched-success receipt check. This does not authenticate any real receipt or imply complete discovery."
+      }
+    ],
+    "header_checks": [
+      {
+        "claim": "Current canonicality",
+        "status": "unknown",
+        "source_refs": [
+          "fictional-headers"
+        ],
+        "details": "Competing hashes at height 105 are intentionally unresolved."
+      }
+    ],
+    "counts": {
+      "supplied_records": "10",
+      "receipt_matched_records": "1"
+    },
+    "stopping_reason": "Synthetic exercise ends with block 108 failed and 109-110 unsearched; no coverage or close certificate.",
+    "details": "Scanned means these illustrative observations were supplied for 100-107, not proved exhaustive retrieval. Duplicate/conflict/reorg alternatives are retained."
+  },
+  "assumptions": [
+    {
+      "label": "FICTIONAL ONLY",
+      "details": "Chain 999999 and all addresses/hashes are invented. FICTIONAL_PAYMENT has two decimal places only in this example. Purchased quantity is an unscaled count; unit_price_raw is raw payment per purchased unit. No real asset, ABI-emitter authentication, supply, scheduled opening or sellout is claimed."
+    }
+  ],
+  "extensions": {
+    "example": {
+      "label": "Fictional license-purchase evidence worked example",
+      "event_signature": "LicensesPurchased(uint256,uint256,uint256,uint256)",
+      "topic0": "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+      "layout": {
+        "indexed": [
+          "charterId",
+          "day"
+        ],
+        "data": [
+          "count",
+          "unitPrice"
+        ]
+      },
+      "raw_logs": [
+        {
+          "id": "sale-a",
+          "log": {
+            "address": "0x1111111111111111111111111111111111111111",
+            "blockNumber": "0x64",
+            "blockHash": "0x0000000000000000000000000000000000000000000000000000000000000064",
+            "transactionHash": "0x00000000000000000000000000000000000000000000000000000000000003e9",
+            "transactionIndex": "0x1",
+            "topics": [
+              "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+              "0x0000000000000000000000000000000000000000000000000000000000000029",
+              "0x0000000000000000000000000000000000000000000000000000000000000007"
+            ],
+            "data": "0x00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000069",
+            "removed": false,
+            "logIndex": "0x2"
+          }
+        },
+        {
+          "id": "sale-b",
+          "log": {
+            "address": "0x1111111111111111111111111111111111111111",
+            "blockNumber": "0x65",
+            "blockHash": "0x0000000000000000000000000000000000000000000000000000000000000065",
+            "transactionHash": "0x00000000000000000000000000000000000000000000000000000000000003ea",
+            "transactionIndex": "0x1",
+            "topics": [
+              "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+              "0x000000000000000000000000000000000000000000000000000000000000002a",
+              "0x0000000000000000000000000000000000000000000000000000000000000007"
+            ],
+            "data": "0x00000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000063",
+            "removed": false,
+            "logIndex": "0x7"
+          }
+        },
+        {
+          "id": "sale-c",
+          "log": {
+            "address": "0x1111111111111111111111111111111111111111",
+            "blockNumber": "0x66",
+            "blockHash": "0x0000000000000000000000000000000000000000000000000000000000000066",
+            "transactionHash": "0x00000000000000000000000000000000000000000000000000000000000003eb",
+            "transactionIndex": "0x1",
+            "topics": [
+              "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+              "0x000000000000000000000000000000000000000000000000000000000000002b",
+              "0x0000000000000000000000000000000000000000000000000000000000000007"
+            ],
+            "data": "0x00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000065",
+            "removed": false,
+            "logIndex": "0x4"
+          }
+        },
+        {
+          "id": "removed",
+          "log": {
+            "address": "0x1111111111111111111111111111111111111111",
+            "blockNumber": "0x67",
+            "blockHash": "0x0000000000000000000000000000000000000000000000000000000000000067",
+            "transactionHash": "0x00000000000000000000000000000000000000000000000000000000000003ec",
+            "transactionIndex": "0x1",
+            "topics": [
+              "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+              "0x000000000000000000000000000000000000000000000000000000000000002c",
+              "0x0000000000000000000000000000000000000000000000000000000000000007"
+            ],
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000009000000000000000000000000000000000000000000000000000000000000005a",
+            "removed": true,
+            "logIndex": "0x5"
+          }
+        },
+        {
+          "id": "conflict-a",
+          "log": {
+            "address": "0x1111111111111111111111111111111111111111",
+            "blockNumber": "0x68",
+            "blockHash": "0x0000000000000000000000000000000000000000000000000000000000000068",
+            "transactionHash": "0x00000000000000000000000000000000000000000000000000000000000003ed",
+            "transactionIndex": "0x1",
+            "topics": [
+              "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+              "0x000000000000000000000000000000000000000000000000000000000000002d",
+              "0x0000000000000000000000000000000000000000000000000000000000000007"
+            ],
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000005a",
+            "removed": false,
+            "logIndex": "0x9"
+          }
+        },
+        {
+          "id": "conflict-b",
+          "log": {
+            "address": "0x1111111111111111111111111111111111111111",
+            "blockNumber": "0x68",
+            "blockHash": "0x0000000000000000000000000000000000000000000000000000000000000068",
+            "transactionHash": "0x00000000000000000000000000000000000000000000000000000000000003ed",
+            "transactionIndex": "0x1",
+            "topics": [
+              "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+              "0x000000000000000000000000000000000000000000000000000000000000002d",
+              "0x0000000000000000000000000000000000000000000000000000000000000007"
+            ],
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000005000000000000000000000000000000000000000000000000000000000000005a",
+            "removed": false,
+            "logIndex": "0x9"
+          }
+        },
+        {
+          "id": "reorg-a",
+          "log": {
+            "address": "0x1111111111111111111111111111111111111111",
+            "blockNumber": "0x69",
+            "blockHash": "0x0000000000000000000000000000000000000000000000000000000000000069",
+            "transactionHash": "0x00000000000000000000000000000000000000000000000000000000000003ee",
+            "transactionIndex": "0x1",
+            "topics": [
+              "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+              "0x000000000000000000000000000000000000000000000000000000000000002e",
+              "0x0000000000000000000000000000000000000000000000000000000000000007"
+            ],
+            "data": "0x00000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000050",
+            "removed": false,
+            "logIndex": "0x3"
+          }
+        },
+        {
+          "id": "reorg-b",
+          "log": {
+            "address": "0x1111111111111111111111111111111111111111",
+            "blockNumber": "0x69",
+            "blockHash": "0x00000000000000000000000000000000000000000000000000000000000000cd",
+            "transactionHash": "0x00000000000000000000000000000000000000000000000000000000000003ef",
+            "transactionIndex": "0x1",
+            "topics": [
+              "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+              "0x000000000000000000000000000000000000000000000000000000000000002e",
+              "0x0000000000000000000000000000000000000000000000000000000000000007"
+            ],
+            "data": "0x000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000050",
+            "removed": false,
+            "logIndex": "0x3"
+          }
+        },
+        {
+          "id": "sale-d",
+          "log": {
+            "address": "0x1111111111111111111111111111111111111111",
+            "blockNumber": "0x6a",
+            "blockHash": "0x000000000000000000000000000000000000000000000000000000000000006a",
+            "transactionHash": "0x00000000000000000000000000000000000000000000000000000000000003f0",
+            "transactionIndex": "0x1",
+            "topics": [
+              "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+              "0x000000000000000000000000000000000000000000000000000000000000002f",
+              "0x0000000000000000000000000000000000000000000000000000000000000007"
+            ],
+            "data": "0x00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000062",
+            "removed": false,
+            "logIndex": "0x6"
+          }
+        },
+        {
+          "id": "incomplete",
+          "log": {
+            "address": "0x1111111111111111111111111111111111111111",
+            "blockNumber": "0x6b",
+            "blockHash": "0x000000000000000000000000000000000000000000000000000000000000006b",
+            "transactionHash": "0x00000000000000000000000000000000000000000000000000000000000003f1",
+            "transactionIndex": "0x1",
+            "topics": [
+              "0x01862d9110233f6709760be3b1cc45660f4b8b0698777de996e5a7d262638fb5",
+              "0x0000000000000000000000000000000000000000000000000000000000000030",
+              "0x0000000000000000000000000000000000000000000000000000000000000007"
+            ],
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000005f",
+            "removed": false
+          }
+        }
+      ]
+    }
+  }
+}
