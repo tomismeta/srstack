@@ -141,6 +141,7 @@ class PackageChecks(unittest.TestCase):
                     path.rmdir()
         for relative in ("README.md", "scripts/calculations.py", "scripts/research.py",
                          "assets/schemas/research-evidence-v1.json",
+                         "assets/schemas/round-dataset-v1.json", "assets/examples/projection-evidence-v1.json",
                          "assets/entities/contracts.json", "assets/interfaces/reviews.json",
                          "assets/interfaces/capabilities.json", "assets/examples/research-evidence-v1.json"):
             with self.subTest(path=relative):
@@ -178,7 +179,10 @@ class PackageChecks(unittest.TestCase):
             self.package.verify_installation(self.commit, self.destination)
 
     def test_build_verify_and_deterministic_archive_exclude_repository_files(self):
-        (self.root / "README.md").write_bytes(self.runtime["README.md"] + b"\nReviewed update.\n")
+        (self.root / "README.md").write_bytes(
+            self.runtime["README.md"] + b"\nReviewed update.\n"
+            b"\n```python\napi['recipe'](not_a_link)\n````\n"
+            b"\n~~~python\napi['recipe'](also_not_a_link)\n~~~\n")
         self.assertNotEqual(0, self.invoke("verify").returncode)
         for action in ("build", "verify", "archive"):
             result = self.invoke(action)
@@ -194,6 +198,9 @@ class PackageChecks(unittest.TestCase):
         result = self.invoke("archive")
         self.assertEqual(0, result.returncode, result.stderr.decode())
         self.assertEqual(first, archive.read_bytes())
+        expected["README.md"] += b"\n[Broken resource](references/not-a-file.md)\n"
+        with self.assertRaises(ValueError):
+            self.package.verify_content(expected)
 
     def test_build_rejects_ambiguous_or_excessive_paths(self):
         for relative in ("assets/control\x7f.json", "assets/" + "deep/" * 7 + "bad.json",

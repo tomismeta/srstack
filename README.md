@@ -35,6 +35,8 @@ The agent may use inspectable local calculation code when needed under host perm
 
 The installed [optional offline research aids](references/research-tools.md) provide `scripts/calculations.py`, the thin `scripts/research.py` CLI and `assets/schemas/research-evidence-v1.json`. Python 3.10+ and its standard library are needed only when choosing these helpers. Regression machinery stays source-only; the explicitly fictional installed [example](references/research-example.md) is instructional data reused by tests, not a live dataset. Agents may use, adapt or ignore these aids, choose another language/store, or write an independent solution. No helper, schema or checkout is required for an answer. Installation does not run code or grant execution permission; no transport, default deployment or automatic code download is added.
 
+For next-round price questions, the [projection guidance](references/auctions.md) starts from the latest relevant [curated round history](references/round-datasets.md), not the policy opening. Six [offline recipes](references/calculations.md), a round-dataset schema and a separate fictional projection example distinguish empirical close forecasts, policy openings, inventory-conditional quotes, last sold and floors. Live research stays outside the installed runtime.
+
 Live support is capability-based, not a blanket host-brand promise: the host needs authorized public reads, applicable ABI/Keccak encoding/decoding and exact calculation; historical questions additionally need adequate event/index/receipt coverage. Below that baseline, dated explanations and conditional reasoning remain useful, but blocked live checks cannot be counted as successful live acceptance. No particular language, client or RPC provider is required.
 
 ## Install a reviewed release
@@ -89,11 +91,21 @@ After deliberate content changes, regenerate the manifest with `python3 -B maint
 
 Every future contract, generation or interface addition follows the [inventory methodology](references/inventory-methodology.md): shared immutable review provenance, complete enumeration of the stated source scope, exact indexed layouts, qualified explanations/units, dated role bindings, and corresponding positive/negative/unknown capability entries. Packaging invokes the source-only inventory consistency validator; CI also exercises its semantic regressions. These checks maintain the package, not a runtime permission gate.
 
-CI installs `jsonschema==4.25.1` only to validate the instructional example against Draft 2020-12. Local research regressions explicitly skip that optional check if it is unavailable; use a separate maintenance environment to include it. Loading, using and exporting the skill remain standard-library-only and never install dependencies automatically.
+CI installs `jsonschema==4.25.1` only to validate the instructional examples against Draft 2020-12. Local research regressions explicitly skip those optional checks if it is unavailable; use a separate maintenance environment to include them. Loading, using and exporting the skill remain standard-library-only and never install dependencies automatically.
 
 This host-native cutover removes the previous fixed snapshot, price, history and diagnostic clients and their execution catalogs. There are no compatibility commands or retired helper aliases. Existing host-native research tools replace them; any automatic discovery, checkpointing or batching must actually be supported or implemented by the host agent before being claimed.
 
 The installed optional calculation toolkit does not restore the retired protocol clients. Specialized references own exact accounting, round dating, allowance windows, order-ID caveats and history coverage. Stale host workshop/install prompts need explicit host-maintainer cleanup outside this repository; package installation does not rewrite other skills, credentials or global instructions.
+
+### History-first projection correction (0.3.0, unreleased)
+
+Next-close forecasts now report both a trailing last-sold linear trend and a structural estimate from the policy opening times recent sellout close/open ratios, with a descriptive ±1 sample-standard-deviation band. Policy is the mechanism, not a market-close prediction. Continued sellout and comparable cohorts are explicit assumptions; the future floor remains unknown. Four price shapes and the scheduled round lifecycle remain distinct, including the `remainingToday == 0` phantom-price tripwire.
+
+Six standard-library helpers retain exact rational fits/statistics and bounded Decimal evaluation where roots or decay are generally irrational. A strict round-dataset schema preserves partial observations, actual header timestamps, coverage and provenance; curation guidance covers durable external storage, events/archive reconstruction, freshness and sample verification. Six new derived-analysis capability records bring the inventory to 25 without inventing forecast getters or new ABI reviews. The six-round installed fixture is fictional, not a live seed.
+
+Review-clone checks passed all 20 package, 14 inventory and 29 existing research regressions plus 12 projection regressions, including both optional schema validations. All six documented recipes executed from a standalone 72-file runtime without changing its bytes. Packaging now distinguishes fenced code from Markdown links, so executable recipes do not create false missing-link errors. Three new source-only fresh-session gates cover next-close forecasting, sold-out current price and ambiguous price requests; passing these synthetic gates does not establish live history completeness.
+
+The reported 19-round `license-auction-history.json` was not available for migration or node-backed sample verification. No seed was invented or replaced with a differently scoped history. **0.3.0 remains on hold**, with prior live-evidence blockers unchanged. This correction adds no runtime dependency, RPC client, endpoint, token inventory, router, wallet authority or transport-policy change.
 
 ### Release-readiness acceptance (unreleased, 2026-09-27)
 

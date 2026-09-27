@@ -21,12 +21,15 @@ except ImportError:
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
-from calculations import (estimate_workload, gap_to_floor_scenario,
-                          pending_delta_pace, summarize_rounds, weighted_price)
+from calculations import (auction_curve_quote, close_trend_projection,
+                          estimate_workload, floor_trend_context, gap_to_floor_scenario,
+                          pending_delta_pace, project_next_close, sellout_ratio_summary,
+                          structural_close_projection, summarize_rounds, weighted_price)
 
 
 FIXTURE = Path(__file__).with_name("fixtures") / "round-v1.json"
 EXAMPLE = SCRIPTS.parent / "assets/examples/research-evidence-v1.json"
+PROJECTION_EXAMPLE = SCRIPTS.parent / "assets/examples/projection-evidence-v1.json"
 
 
 class AccountingChecks(unittest.TestCase):
@@ -381,6 +384,165 @@ class ScenarioChecks(unittest.TestCase):
         for precision in (15, 201, True, 32.0):
             with self.subTest(precision=precision), self.assertRaises(ValueError):
                 gap_to_floor_scenario(10, 0, 1, 1, precision=precision)
+
+
+class ProjectionChecks(unittest.TestCase):
+    """Consumer-visible forecast and unavailable-quote boundaries."""
+
+    def setUp(self):
+        self.document = json.loads(PROJECTION_EXAMPLE.read_text())
+        self.dataset = self.document["dataset"]
+        self.rounds = self.dataset["rounds"]
+
+    def test_incident_projects_market_close_not_policy_open(self):
+        original = deepcopy(self.document)
+        result = project_next_close(self.dataset, **self.document["projection_request"])
+        self.assertEqual(result["trend"]["slope_raw_per_round"], Fraction(-39900))
+        self.assertEqual(result["trend"]["next_raw"], Fraction(600600))
+        self.assertEqual(result["policy_open"]["value_raw"], Fraction(1281000))
+        self.assertFalse(result["policy_open"]["is_expected_transaction_price"])
+        self.assertLess(result["trend"]["next_raw"], result["policy_open"]["value_raw"])
+        self.assertGreater(result["structural"]["central_raw"], 590000)
+        self.assertLess(result["structural"]["central_raw"], 630000)
+        self.assertIsNone(result["future_floor_raw"])
+        self.assertEqual(self.document, original)
+
+    def test_ratio_sample_dispersion_and_structural_band(self):
+        rows = deepcopy(self.rounds[:3])
+        for row, close in zip(rows, (500, 250, 750)):
+            row.update(start_price_raw="1000", last_sale_price_raw=str(close), floor_price_raw="0")
+        ratio = sellout_ratio_summary(rows, trailing=3, precision=32)
+        self.assertEqual(ratio["mean"], Fraction(1, 2))
+        self.assertEqual(ratio["sample_variance"], Fraction(1, 16))
+        self.assertEqual(ratio["sample_sd"]["value"], Decimal("0.25"))
+        result = structural_close_projection("100", ratio, precision=32)
+        self.assertEqual(result["central_raw"], Fraction(50))
+        self.assertEqual(result["band_raw"]["lower"]["value"], Decimal(25))
+        self.assertEqual(result["band_raw"]["upper"]["value"], Decimal(75))
+
+    def test_irrational_dispersion_enclosure_is_context_independent(self):
+        rows = deepcopy(self.rounds[:2])
+        for row, opening, close in zip(rows, (2, 3), (1, 1)):
+            row.update(start_price_raw=str(opening), last_sale_price_raw=str(close),
+                       floor_price_raw="0")
+        result = sellout_ratio_summary(rows, trailing=2, precision=32)
+        self.assertEqual(result["mean"], Fraction(5, 12))
+        self.assertEqual(result["sample_variance"], Fraction(1, 72))
+        context = Context(prec=100)
+        reference = context.divide(Decimal(1), context.sqrt(Decimal(72)))
+        self.assertLessEqual(result["sample_sd"]["lower_bound"], reference)
+        self.assertGreaterEqual(result["sample_sd"]["upper_bound"], reference)
+        with localcontext() as ambient:
+            ambient.prec = 3
+            ambient.rounding = ROUND_DOWN
+            self.assertEqual(result, sellout_ratio_summary(rows, trailing=2, precision=32))
+
+    def test_trend_uses_chronology_across_generation_resets(self):
+        rows = deepcopy(self.rounds)
+        for index, row in enumerate(rows):
+            row["generation"] = "first" if index < 3 else "second"
+            row["contract"] = "0x" + ("1" if index < 3 else "2") * 40
+            row["day"] = str(index % 3)
+        rows.reverse()
+        result = close_trend_projection(rows, trailing=6)
+        self.assertEqual(result["slope_raw_per_round"], Fraction(-39900))
+        self.assertEqual(result["next_raw"], Fraction(600600))
+
+    def test_trend_preserves_raw_unit_changes_above_float_precision(self):
+        rows = deepcopy(self.rounds[:3])
+        base = 10 ** 30
+        for row, increment in zip(rows, (3, 2, 1)):
+            row["last_sale_price_raw"] = str(base + increment)
+        result = close_trend_projection(rows, trailing=3)
+        self.assertEqual(result["slope_raw_per_round"], Fraction(-1))
+        self.assertEqual(result["next_raw"], Fraction(base))
+
+    def test_negative_trend_is_not_clipped_to_stored_floor(self):
+        rows = deepcopy(self.rounds[:3])
+        for row, close in zip(rows, (500, 300, 100)):
+            row.update(start_price_raw="1000", last_sale_price_raw=str(close), floor_price_raw="0")
+        result = close_trend_projection(rows, trailing=3)
+        self.assertEqual(result["slope_raw_per_round"], Fraction(-200))
+        self.assertEqual(result["next_raw"], Fraction(-100))
+
+    def test_current_floor_history_never_becomes_a_known_future_floor(self):
+        result = floor_trend_context(self.rounds, trailing=6)
+        self.assertEqual(result["slope_raw_per_round"], Fraction(-26600))
+        self.assertIsNone(result["future_floor_raw"])
+        rows = deepcopy(self.rounds)
+        rows[-1]["floor_price_raw"] = None
+        result = floor_trend_context(rows, trailing=6)
+        self.assertIsNone(result["series"][-1]["floor_price_raw"])
+        self.assertIsNone(result["future_floor_raw"])
+
+    def test_zero_remaining_blocks_a_quote_even_with_positive_curve_output(self):
+        result = auction_curve_quote(**self.document["phantom_request"])
+        self.assertEqual(result["status"], "phantom_not_buyable")
+        self.assertIsNone(result["buyable_price_raw"])
+        self.assertGreater(result["diagnostic_curve"]["value"], 0)
+        self.assertLess(result["diagnostic_curve"]["value"], int(self.rounds[-1]["last_sale_price_raw"]))
+        available = auction_curve_quote(110, 10, 7, 14, remaining_today=1, precision=32)
+        self.assertEqual(available["buyable_price_raw"], Decimal(35))
+        self.assertFalse(available["is_guaranteed_fill"])
+        exhausted = auction_curve_quote(110, 10, 7, 14, remaining_today=0, precision=32)
+        self.assertIsNone(exhausted["buyable_price_raw"])
+        unknown = auction_curve_quote(110, 10, 7, 14, remaining_today=None, precision=32)
+        self.assertEqual(unknown["status"], "availability_unknown")
+        self.assertIsNone(unknown["buyable_price_raw"])
+
+    def test_unqualified_latest_round_cannot_be_silently_skipped(self):
+        for patch in ("partial", "unknown-sale", "zero-allocation"):
+            with self.subTest(patch=patch):
+                document = deepcopy(self.dataset)
+                newest = deepcopy(document["rounds"][-1])
+                newest["day"] = "6"
+                newest["scheduled_window"] = {"start_unix": "7000", "end_unix": "8000"}
+                newest["provenance"]["head_timestamp"] = "7900"
+                newest["provenance"]["head_block"] = "220"
+                newest["first_sale"] = {"block": "201", "ts": "7100"}
+                newest["last_sale"] = {"block": "210", "ts": "7800"}
+                if patch == "partial":
+                    newest["provenance"]["coverage"] = "partial"
+                elif patch == "unknown-sale":
+                    newest["last_sale_price_raw"] = None
+                    newest["sellout"] = None
+                else:
+                    newest.update(sold="0", round_cap="0", sellout=False,
+                                  first_sale=None, last_sale=None, last_sale_price_raw=None)
+                document["rounds"].append(newest)
+                with self.assertRaises(ValueError):
+                    project_next_close(document, **self.document["projection_request"])
+
+    def test_sale_beyond_observation_head_cannot_supply_a_close(self):
+        for anchor_field, head_field in (("block", "head_block"), ("ts", "head_timestamp")):
+            with self.subTest(anchor_field=anchor_field):
+                document = deepcopy(self.dataset)
+                newest = document["rounds"][-1]
+                newest["last_sale"][anchor_field] = str(int(newest["provenance"][head_field]) + 1)
+                with self.assertRaises(ValueError):
+                    project_next_close(document, **self.document["projection_request"])
+
+    def test_duplicate_round_identity_cannot_weight_the_fit_twice(self):
+        rows = deepcopy(self.rounds)
+        rows.append(deepcopy(rows[-1]))
+        with self.assertRaises(ValueError):
+            close_trend_projection(rows, trailing=6)
+
+    @unittest.skipIf(Draft202012Validator is None, "optional source-only jsonschema is unavailable")
+    def test_projection_dataset_schema_preserves_unknowns_but_rejects_floats(self):
+        schema = json.loads((SCRIPTS.parent / "assets/schemas/round-dataset-v1.json").read_text())
+        Draft202012Validator.check_schema(schema)
+        validator = Draft202012Validator(schema, format_checker=FormatChecker())
+        validator.validate(self.dataset)
+        partial = deepcopy(self.dataset)
+        partial["rounds"][-1].update(last_sale_price_raw=None, sellout=None, last_sale=None)
+        partial["rounds"][-1]["provenance"]["coverage"] = "partial"
+        validator.validate(partial)
+        for invalid_price in (640500.0, "640500\n", "0640500"):
+            with self.subTest(invalid_price=invalid_price):
+                invalid = deepcopy(self.dataset)
+                invalid["rounds"][-1]["last_sale_price_raw"] = invalid_price
+                self.assertTrue(list(validator.iter_errors(invalid)))
 
 
 class CommandChecks(unittest.TestCase):

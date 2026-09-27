@@ -8,6 +8,8 @@ The installed skill includes `scripts/calculations.py`, the thin `scripts/resear
 
 Choose to run the reviewed installed code only under existing [host permissions](safety.md#public-retrieval-and-calls), or use another language, host tool or independent calculation. Bundling code grants no execution, retrieval or storage permission. Nothing here permits signing, transactions, wallet-secret access or a change to the existing wallet boundary. These tools calculate supplied inputs; they neither collect evidence nor execute protocol actions.
 
+For next-close forecasts, consult the latest relevant [curated round dataset](round-datasets.md) before policy derivation. Six additional direct-library [calculation recipes](calculations.md) provide exact close/open statistics and ordinal trends, bounded descriptive dispersion, historical floor context with unknown future floor, a composed conditional forecast, and an inventory-gated curve quote. `assets/schemas/round-dataset-v1.json` and the explicitly fictional `assets/examples/projection-evidence-v1.json` support those recipes. They add no CLI command; the existing bare `curve` command remains a mathematical diagnostic, not an inventory-aware executable quote.
+
 ### CLI inputs and exact JSON output
 
 Use `python3 -I -B /absolute/path/to/installed/srstack/scripts/research.py COMMAND`. Supply one JSON object on stdin, or select a UTF-8 file with `COMMAND --input /absolute/path/to/input.json`; the file replaces stdin. Resolve the script path from the actual loaded installation, not the working directory. `-I -B` is supported: isolated Python execution does not require a source checkout, `PYTHONPATH` or bytecode writes.

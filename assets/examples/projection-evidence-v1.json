@@ -1,0 +1,294 @@
+{
+  "schema_version": "1",
+  "synthetic": true,
+  "description": "Six fictional license rounds for an offline projection scenario. All identities, prices, inventory, block hashes and header-shaped timestamps are invented. Complete coverage and sellout are stipulated scenario inputs, not verified chain observations. No live seed or live forecast default is included.",
+  "dataset": {
+    "schema_version": "1",
+    "chain_id": "999999",
+    "auction_family": "license",
+    "price_unit": {
+      "label": "FICTIONAL_PAYMENT",
+      "decimals": "2"
+    },
+    "curated_at": "1970-01-01T01:55:00Z",
+    "synthetic": true,
+    "sources": [
+      {
+        "id": "synthetic-history",
+        "identity": "Fictional six-round arithmetic construction in this example",
+        "kind": "synthetic",
+        "retrieved_at": null,
+        "observed_at": null,
+        "notes": "The scenario stipulates ordered purchases exhausting each positive 40-unit cap with no capacity change or reopening through the synthetic head. Block-header-shaped anchors are fabricated inputs, not data retrieved from a node. No real source, receipt or canonicality verification is claimed."
+      }
+    ],
+    "notes": "Raw prices use the single fictional two-decimal denomination. Policy openings follow an assumed 2x prior close, with a fictional prior raw close of 879900. Floors and sale timing follow the explicitly assumed gap-to-floor curve. Generation/day IDs have no deployment meaning.",
+    "rounds": [
+      {
+        "generation": "fictional-v1",
+        "contract": "0x1111111111111111111111111111111111111111",
+        "day": "0",
+        "scheduled_window": {
+          "start_unix": "1000",
+          "end_unix": "2000"
+        },
+        "start_price_raw": "1759800",
+        "last_sale_price_raw": "840000",
+        "floor_price_raw": "533400",
+        "sold": "40",
+        "round_cap": "40",
+        "sellout": true,
+        "first_sale": {
+          "block": "100",
+          "ts": "1100",
+          "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000064"
+        },
+        "last_sale": {
+          "block": "109",
+          "ts": "1800",
+          "block_hash": "0x000000000000000000000000000000000000000000000000000000000000006d"
+        },
+        "provenance": {
+          "method": "events",
+          "head_block": "200",
+          "head_timestamp": "6900",
+          "head_block_hash": "0x00000000000000000000000000000000000000000000000000000000000000c8",
+          "reconstructed_at": "1970-01-01T01:55:00Z",
+          "coverage": "complete",
+          "timestamp_basis": "block_headers",
+          "source_refs": [
+            "synthetic-history"
+          ],
+          "evidence_refs": [
+            "synthetic-history"
+          ],
+          "sellout_basis": "Fictional scenario stipulates complete ordered purchases of all 40 positively allocated units, with no capacity changes or reopening through the synthetic head; not a verified live sellout.",
+          "notes": "All header-shaped anchors and complete-history assertions are explicitly fictional."
+        }
+      },
+      {
+        "generation": "fictional-v1",
+        "contract": "0x1111111111111111111111111111111111111111",
+        "day": "1",
+        "scheduled_window": {
+          "start_unix": "2000",
+          "end_unix": "3000"
+        },
+        "start_price_raw": "1680000",
+        "last_sale_price_raw": "800100",
+        "floor_price_raw": "506800",
+        "sold": "40",
+        "round_cap": "40",
+        "sellout": true,
+        "first_sale": {
+          "block": "110",
+          "ts": "2100",
+          "block_hash": "0x000000000000000000000000000000000000000000000000000000000000006e"
+        },
+        "last_sale": {
+          "block": "119",
+          "ts": "2800",
+          "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000077"
+        },
+        "provenance": {
+          "method": "events",
+          "head_block": "200",
+          "head_timestamp": "6900",
+          "head_block_hash": "0x00000000000000000000000000000000000000000000000000000000000000c8",
+          "reconstructed_at": "1970-01-01T01:55:00Z",
+          "coverage": "complete",
+          "timestamp_basis": "block_headers",
+          "source_refs": [
+            "synthetic-history"
+          ],
+          "evidence_refs": [
+            "synthetic-history"
+          ],
+          "sellout_basis": "Fictional scenario stipulates complete ordered purchases of all 40 positively allocated units, with no capacity changes or reopening through the synthetic head; not a verified live sellout.",
+          "notes": "All header-shaped anchors and complete-history assertions are explicitly fictional."
+        }
+      },
+      {
+        "generation": "fictional-v1",
+        "contract": "0x1111111111111111111111111111111111111111",
+        "day": "2",
+        "scheduled_window": {
+          "start_unix": "3000",
+          "end_unix": "4000"
+        },
+        "start_price_raw": "1600200",
+        "last_sale_price_raw": "760200",
+        "floor_price_raw": "480200",
+        "sold": "40",
+        "round_cap": "40",
+        "sellout": true,
+        "first_sale": {
+          "block": "120",
+          "ts": "3100",
+          "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000078"
+        },
+        "last_sale": {
+          "block": "129",
+          "ts": "3800",
+          "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000081"
+        },
+        "provenance": {
+          "method": "events",
+          "head_block": "200",
+          "head_timestamp": "6900",
+          "head_block_hash": "0x00000000000000000000000000000000000000000000000000000000000000c8",
+          "reconstructed_at": "1970-01-01T01:55:00Z",
+          "coverage": "complete",
+          "timestamp_basis": "block_headers",
+          "source_refs": [
+            "synthetic-history"
+          ],
+          "evidence_refs": [
+            "synthetic-history"
+          ],
+          "sellout_basis": "Fictional scenario stipulates complete ordered purchases of all 40 positively allocated units, with no capacity changes or reopening through the synthetic head; not a verified live sellout.",
+          "notes": "All header-shaped anchors and complete-history assertions are explicitly fictional."
+        }
+      },
+      {
+        "generation": "fictional-v1",
+        "contract": "0x1111111111111111111111111111111111111111",
+        "day": "3",
+        "scheduled_window": {
+          "start_unix": "4000",
+          "end_unix": "5000"
+        },
+        "start_price_raw": "1520400",
+        "last_sale_price_raw": "720300",
+        "floor_price_raw": "453600",
+        "sold": "40",
+        "round_cap": "40",
+        "sellout": true,
+        "first_sale": {
+          "block": "130",
+          "ts": "4100",
+          "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000082"
+        },
+        "last_sale": {
+          "block": "139",
+          "ts": "4800",
+          "block_hash": "0x000000000000000000000000000000000000000000000000000000000000008b"
+        },
+        "provenance": {
+          "method": "events",
+          "head_block": "200",
+          "head_timestamp": "6900",
+          "head_block_hash": "0x00000000000000000000000000000000000000000000000000000000000000c8",
+          "reconstructed_at": "1970-01-01T01:55:00Z",
+          "coverage": "complete",
+          "timestamp_basis": "block_headers",
+          "source_refs": [
+            "synthetic-history"
+          ],
+          "evidence_refs": [
+            "synthetic-history"
+          ],
+          "sellout_basis": "Fictional scenario stipulates complete ordered purchases of all 40 positively allocated units, with no capacity changes or reopening through the synthetic head; not a verified live sellout.",
+          "notes": "All header-shaped anchors and complete-history assertions are explicitly fictional."
+        }
+      },
+      {
+        "generation": "fictional-v1",
+        "contract": "0x1111111111111111111111111111111111111111",
+        "day": "4",
+        "scheduled_window": {
+          "start_unix": "5000",
+          "end_unix": "6000"
+        },
+        "start_price_raw": "1440600",
+        "last_sale_price_raw": "680400",
+        "floor_price_raw": "427000",
+        "sold": "40",
+        "round_cap": "40",
+        "sellout": true,
+        "first_sale": {
+          "block": "140",
+          "ts": "5100",
+          "block_hash": "0x000000000000000000000000000000000000000000000000000000000000008c"
+        },
+        "last_sale": {
+          "block": "149",
+          "ts": "5800",
+          "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000095"
+        },
+        "provenance": {
+          "method": "events",
+          "head_block": "200",
+          "head_timestamp": "6900",
+          "head_block_hash": "0x00000000000000000000000000000000000000000000000000000000000000c8",
+          "reconstructed_at": "1970-01-01T01:55:00Z",
+          "coverage": "complete",
+          "timestamp_basis": "block_headers",
+          "source_refs": [
+            "synthetic-history"
+          ],
+          "evidence_refs": [
+            "synthetic-history"
+          ],
+          "sellout_basis": "Fictional scenario stipulates complete ordered purchases of all 40 positively allocated units, with no capacity changes or reopening through the synthetic head; not a verified live sellout.",
+          "notes": "All header-shaped anchors and complete-history assertions are explicitly fictional."
+        }
+      },
+      {
+        "generation": "fictional-v1",
+        "contract": "0x1111111111111111111111111111111111111111",
+        "day": "5",
+        "scheduled_window": {
+          "start_unix": "6000",
+          "end_unix": "7000"
+        },
+        "start_price_raw": "1360800",
+        "last_sale_price_raw": "640500",
+        "floor_price_raw": "400400",
+        "sold": "40",
+        "round_cap": "40",
+        "sellout": true,
+        "first_sale": {
+          "block": "150",
+          "ts": "6100",
+          "block_hash": "0x0000000000000000000000000000000000000000000000000000000000000096"
+        },
+        "last_sale": {
+          "block": "159",
+          "ts": "6800",
+          "block_hash": "0x000000000000000000000000000000000000000000000000000000000000009f"
+        },
+        "provenance": {
+          "method": "events",
+          "head_block": "200",
+          "head_timestamp": "6900",
+          "head_block_hash": "0x00000000000000000000000000000000000000000000000000000000000000c8",
+          "reconstructed_at": "1970-01-01T01:55:00Z",
+          "coverage": "complete",
+          "timestamp_basis": "block_headers",
+          "source_refs": [
+            "synthetic-history"
+          ],
+          "evidence_refs": [
+            "synthetic-history"
+          ],
+          "sellout_basis": "Fictional scenario stipulates complete ordered purchases of all 40 positively allocated units, with no capacity changes or reopening through the synthetic head; not a verified live sellout.",
+          "notes": "All header-shaped anchors and complete-history assertions are explicitly fictional."
+        }
+      }
+    ]
+  },
+  "projection_request": {
+    "trailing": 6,
+    "policy_multiplier": "2",
+    "precision": 32
+  },
+  "phantom_request": {
+    "opening": "1360800",
+    "floor": "400400",
+    "half_life": "400",
+    "elapsed": "900",
+    "remaining_today": "0",
+    "precision": 32
+  }
+}

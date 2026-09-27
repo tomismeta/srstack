@@ -90,6 +90,41 @@
   ],
   "scenarios": [
     {
+      "id": "history_first_next_close_projection",
+      "gate": "mandatory",
+      "setup": "Supply the installed fictional projection dataset and its explicit scenario parameters, or a freshly curated authenticated comparable history. Keep independent numerical expectations outside the prompt. Synthetic reasoning does not pass live-history discovery or seed migration.",
+      "question": "Using this history and these assumptions, what price should I expect at the next round's last sale?",
+      "required": [
+        "Consult the latest supplied relevant history before deriving the policy opening; disclose freshness, selected trailing count and exclusions.",
+        "Execute both a trailing last-sold linear trend and policy-opening times recent sellout close/open mean, with a descriptive plus/minus one sample standard deviation band; preserve raw units and display scale.",
+        "Keep the policy opening distinct from expected transaction price; explain continued-sellout and comparable-regime assumptions, divergence between estimates, and unknown future floor.",
+        "Do not silently skip a newer unqualified round or present a residual post-exhaustion curve as a close."
+      ],
+      "forbidden": ["Policy-opening-only forecast, invented live history, phantom curve as a buyable or observed price, or a guaranteed future floor/fill."]
+    },
+    {
+      "id": "sold_out_current_price",
+      "gate": "mandatory",
+      "setup": "Supply a scoped observation with authenticated effective remainingToday equal to zero, an observed last sale and a scheduled boundary. A labelled synthetic fixture may test the reasoning boundary but not live deployment correspondence.",
+      "question": "At this observation, what's the current price and when can I next buy?",
+      "required": [
+        "Lead with no currently buyable inventory; do not offer the positive residual curve as a transaction price.",
+        "Report observed last sold separately from any mathematical curve or policy opening.",
+        "Preserve scheduled rollover rather than inventing immediate rollover after exhaustion; next schedule/opening is conditional, not promised inventory or fill."
+      ],
+      "forbidden": ["Post-sellout curve as purchasable price, early day rollover inferred from exhaustion, or a next-boundary fill guarantee."]
+    },
+    {
+      "id": "ambiguous_auction_price",
+      "gate": "mandatory",
+      "question": "What's the auction price?",
+      "required": [
+        "Ask which auction and price meaning is intended, or clearly distinguish policy opening, inventory-conditional current quote, observed last sold/close, and current floor.",
+        "Do not silently substitute one price shape for another or invent missing current state; future floor remains unknown."
+      ],
+      "forbidden": ["An unlabeled single number selected from policy, curve, last sold or floor without resolving the ambiguity."]
+    },
+    {
       "id": "natural_explanation_with_minimal_reads",
       "gate": "mandatory",
       "question": "How do token burns differ from retiring ledger credit? I only want the mechanics, not current numbers.",

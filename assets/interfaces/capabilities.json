@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "scope": "Optional planning knowledge, not a router, allowlist or mandatory workflow. Available means exposed by the cited reviewed publisher interface; it does not certify present deployment or semantics. Negative claims are scoped to those complete source definitions. Unknown is not absence.",
+  "scope": "Optional planning knowledge, not a router, allowlist or mandatory workflow. For ABI-read records, available means exposed by the cited reviewed publisher interface. For kind:derived_analysis, available means a conditional analysis recipe exists; functions are reviewed input reads, not forecast getters. review_ids attest ABI-input review only, not model, policy, live dataset or implementation verification. Negative claims are scoped to complete source definitions. Unknown is not absence.",
   "capabilities": [
     {
       "id": "branches-and-pending",
@@ -266,6 +266,139 @@
       "absent_signatures": [],
       "explanation": "Founding-sale flags, minted count and publisher ETH-denominated proceeds/price are not the ongoing charter auction's state. Flags and totals do not by themselves prove refund eligibility, finalization flows or a currently executable purchase.",
       "alternative_evidence": "Authenticate the founding generation and effective conditions; use specific mint/finalization/refund evidence for historical settlement questions rather than borrowing ongoing-auction semantics."
+    },
+    {
+      "id": "next-round-policy-open",
+      "question": "What is the conditional next-round policy opening, distinct from the expected transaction price?",
+      "status": "available",
+      "kind": "derived_analysis",
+      "interface_ids": ["license-auction-original", "license-auction-v1-1", "license-auction-v1-2", "charter-auction-original", "charter-auction-v1-2"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [
+        {"interface_id": "license-auction-original", "signature": "lastSalePrice()"},
+        {"interface_id": "license-auction-v1-1", "signature": "lastSalePrice()"},
+        {"interface_id": "license-auction-v1-2", "signature": "lastSalePrice()"},
+        {"interface_id": "charter-auction-original", "signature": "lastSalePrice()"},
+        {"interface_id": "charter-auction-v1-2", "signature": "lastSalePrice()"},
+        {"interface_id": "license-auction-v1-2", "signature": "dayStartPrice()"},
+        {"interface_id": "charter-auction-v1-2", "signature": "dayStartPrice()"}
+      ],
+      "absent_signatures": [],
+      "calculation_recipes": ["project_next_close"],
+      "references": ["references/auctions.md#next-license-opening-documented-policy-estimate", "references/auctions.md#protocol-v12-limit-orders-and-charter-cadence", "references/round-datasets.md", "references/calculations.md"],
+      "explanation": "Derived policy scenario, not a forecast ABI read: an explicitly supplied family multiplier applied to a qualified prior close. Publisher license 2x and charter 3x rules and the user-reported 2026-09-27 day 0-to-1 transitions support scoped conditional scenarios, not universal implementation proof. Consult latest relevant curated history before deriving an opening for a market forecast. Mark the opening as not an expected transaction price; future floor/reset effects remain unknown.",
+      "alternative_evidence": "Authenticate prior-round identity, complete purchase coverage and effective capacity/exhaustion before calling a last print an exhausted close. Retained lastSalePrice may describe an older round. Preserve transition observations with their contract/block scope; no-sale fallbacks need separate policy and effective-setting evidence."
+    },
+    {
+      "id": "next-close-trend",
+      "question": "What does recent comparable last-sold history imply for the next market closing price?",
+      "status": "available",
+      "kind": "derived_analysis",
+      "interface_ids": ["license-auction-original", "license-auction-v1-1", "license-auction-v1-2", "charter-auction-original", "charter-auction-v1-2"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [
+        {"interface_id": "license-auction-original", "signature": "lastSalePrice()"},
+        {"interface_id": "license-auction-v1-1", "signature": "lastSalePrice()"},
+        {"interface_id": "license-auction-v1-2", "signature": "lastSalePrice()"},
+        {"interface_id": "charter-auction-original", "signature": "lastSalePrice()"},
+        {"interface_id": "charter-auction-v1-2", "signature": "lastSalePrice()"}
+      ],
+      "absent_signatures": [],
+      "calculation_recipes": ["close_trend_projection", "project_next_close"],
+      "references": ["references/round-datasets.md", "references/calculations.md", "references/auctions.md#four-price-shapes-and-history-first-forecasts"],
+      "explanation": "Derived chronological trailing-sample analysis, not a getter of future price. Consult the latest relevant curated history, pinned observation head, coverage and intervening settings first. Select comparable family/unit records and disclose identities, sample size, exclusions and ordinal chronology across generation resets. Last observed is not automatically a proved close; a policy opening is a different price shape. No fixed live trend decrement.",
+      "alternative_evidence": "Use scoped execution history and supported archive-state corroboration to refresh an authorized durable dataset. Missing, partial or stale evidence cannot justify an invented numeric close forecast. Report a negative fit as a model limitation, not a clipped plausible price; disclose assumptions instead of adding an endpoint or collection router."
+    },
+    {
+      "id": "sellout-close-open-ratio",
+      "question": "What close/open ratios and empirical dispersion are evidenced by the selected sellout rounds?",
+      "status": "available",
+      "kind": "derived_analysis",
+      "interface_ids": ["license-auction-original", "license-auction-v1-1", "license-auction-v1-2", "charter-auction-original", "charter-auction-v1-2"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [
+        {"interface_id": "license-auction-original", "signature": "dayStartPrice()"},
+        {"interface_id": "license-auction-original", "signature": "lastSalePrice()"},
+        {"interface_id": "license-auction-v1-1", "signature": "dayStartPrice()"},
+        {"interface_id": "license-auction-v1-1", "signature": "lastSalePrice()"},
+        {"interface_id": "license-auction-v1-2", "signature": "dayStartPrice()"},
+        {"interface_id": "license-auction-v1-2", "signature": "lastSalePrice()"},
+        {"interface_id": "charter-auction-original", "signature": "dayStartPrice()"},
+        {"interface_id": "charter-auction-original", "signature": "lastSalePrice()"},
+        {"interface_id": "charter-auction-v1-2", "signature": "dayStartPrice()"},
+        {"interface_id": "charter-auction-v1-2", "signature": "lastSalePrice()"}
+      ],
+      "absent_signatures": [],
+      "calculation_recipes": ["sellout_ratio_summary"],
+      "references": ["references/round-datasets.md", "references/calculations.md"],
+      "explanation": "Derived distribution from an explicit qualified trailing sellout cohort with positive openings, evidenced historical capacity/exhaustion and complete coverage. Preserve exact ratios, mean and sample variance; bound numerical standard-deviation error separately from empirical dispersion. Disclose selected identities/count and exclusions. There is no fixed live ratio; current inventory zero or a final print alone does not prove historical sellout.",
+      "alternative_evidence": "Reconcile opening and sale evidence with historical configuration and node-header timestamps. Unknown, no-sale and incompletely covered records remain explicit rather than silently becoming zero or sold-out rows. Insufficient qualified observations limit statistics; they do not justify fabricating a sample."
+    },
+    {
+      "id": "next-close-structural",
+      "question": "What next market close follows conditionally from the policy opening and observed sellout ratios?",
+      "status": "available",
+      "kind": "derived_analysis",
+      "interface_ids": ["license-auction-original", "license-auction-v1-1", "license-auction-v1-2", "charter-auction-original", "charter-auction-v1-2"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [
+        {"interface_id": "license-auction-original", "signature": "dayStartPrice()"},
+        {"interface_id": "license-auction-v1-1", "signature": "dayStartPrice()"},
+        {"interface_id": "license-auction-v1-2", "signature": "dayStartPrice()"},
+        {"interface_id": "charter-auction-original", "signature": "dayStartPrice()"},
+        {"interface_id": "charter-auction-v1-2", "signature": "dayStartPrice()"}
+      ],
+      "absent_signatures": [],
+      "calculation_recipes": ["structural_close_projection", "project_next_close"],
+      "references": ["references/round-datasets.md", "references/calculations.md", "references/auctions.md#four-price-shapes-and-history-first-forecasts"],
+      "explanation": "Derived policy opening times observed close/open mean, with an empirical one-sample-standard-deviation band, compared with the historical last-sold trend. This is conditional on sellout continuing and comparable settings/inventory, not a confidence interval, expected opening transaction, executable quote or future-floor claim. Functions are reviewed inputs only; the ratio cohort and policy evidence supply the model.",
+      "alternative_evidence": "Consult latest relevant curated history before calculating the policy opening; preserve exact values and explicit precision/error bounds. Disclose sample scope, exclusions, family multiplier and unknown floor/reset effects. An unavailable qualified cohort supports a stated evidence gap, not an invented market-close forecast."
+    },
+    {
+      "id": "future-floor-context",
+      "question": "What historical floor context is available, and is the next-round floor known?",
+      "status": "unknown",
+      "kind": "derived_analysis",
+      "interface_ids": ["license-auction-original", "license-auction-v1-1", "license-auction-v1-2", "charter-auction-original", "charter-auction-v1-2"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [
+        {"interface_id": "license-auction-original", "signature": "dayFloorPrice()"},
+        {"interface_id": "license-auction-v1-1", "signature": "dayFloorPrice()"},
+        {"interface_id": "license-auction-v1-2", "signature": "dayFloorPrice()"},
+        {"interface_id": "charter-auction-original", "signature": "dayFloorPrice()"},
+        {"interface_id": "charter-auction-original", "signature": "charterReservePrice()"},
+        {"interface_id": "charter-auction-v1-2", "signature": "dayFloorPrice()"},
+        {"interface_id": "charter-auction-v1-2", "signature": "charterReservePrice()"}
+      ],
+      "absent_signatures": [],
+      "calculation_recipes": ["floor_trend_context"],
+      "references": ["references/round-datasets.md", "references/calculations.md"],
+      "explanation": "Future floor is unknown, not a missing-ABI signature claim. Current/materialized floor and charter reserve reads expose observations/settings at a selected block, not an authenticated next-round floor. Historical floor series and slope context can be derived while future_floor_raw remains null; missing observations remain explicit.",
+      "alternative_evidence": "Establish effective settings, update timing and underlying inputs for any separately labelled scenario. Do not silently substitute today's floor, a historical trend fit or a policy formula for the future floor, and do not treat the current floor as promised inventory or a fill."
+    },
+    {
+      "id": "inventory-conditional-curve",
+      "question": "What does the curve imply under explicit inputs, and is its value inventory-conditional or phantom?",
+      "status": "available",
+      "kind": "derived_analysis",
+      "interface_ids": ["license-auction-original", "license-auction-v1-1", "license-auction-v1-2", "charter-auction-original", "charter-auction-v1-2"],
+      "review_ids": ["publisher-protocol-interfaces-2026-09-27"],
+      "functions": [
+        {"interface_id": "license-auction-original", "signature": "remainingToday()"},
+        {"interface_id": "license-auction-v1-1", "signature": "remainingToday()"},
+        {"interface_id": "license-auction-v1-2", "signature": "remainingToday()"},
+        {"interface_id": "license-auction-v1-2", "signature": "currentPrice()"},
+        {"interface_id": "license-auction-v1-2", "signature": "dayHalfLife()"},
+        {"interface_id": "charter-auction-original", "signature": "remainingToday()"},
+        {"interface_id": "charter-auction-v1-2", "signature": "remainingToday()"},
+        {"interface_id": "charter-auction-v1-2", "signature": "currentPrice()"},
+        {"interface_id": "charter-auction-v1-2", "signature": "dayHalfLife()"}
+      ],
+      "absent_signatures": [],
+      "calculation_recipes": ["auction_curve_quote"],
+      "references": ["references/calculations.md", "references/auctions.md#qualified-round-lifecycle"],
+      "explanation": "Derived gap-to-floor scenario with explicit opening, floor, half-life, elapsed time and effective remaining inventory. remainingToday()==0 is the zero-inventory tripwire: a continuing curve is diagnostic phantom output and buyable price is null. Positive inventory permits only an inventory-conditional quote, not proof of all purchase constraints or a guaranteed fill. Unknown availability is not positive inventory.",
+      "alternative_evidence": "Authenticate same-block generation-specific inputs and effective round; reconcile materialized counters and getter/event mismatches. Use effective anchor/period for scheduled windows, not an assumed early sellout roll or a late materialization transaction. The scoped 2026-09-27 report of continuing decay and unchanged currentDay until the boundary is not a universal deployment certificate."
     },
     {
       "id": "incompletely-reviewed-control-roles",

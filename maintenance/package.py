@@ -20,6 +20,7 @@ VERSION = "0.3.0"
 CORPUS_FILES = {"assets/sources.json", "assets/parameters.json"}
 RESEARCH_FILES = {
     "scripts/calculations.py", "scripts/research.py", "assets/schemas/research-evidence-v1.json",
+    "assets/schemas/round-dataset-v1.json", "assets/examples/projection-evidence-v1.json",
 }
 INVENTORY_FILES = {
     "assets/entities/contracts.json", "assets/interfaces/reviews.json",
@@ -184,7 +185,19 @@ def verify_content(files):
     for owner, content in files.items():
         if not owner.endswith(".md"):
             continue
-        for target in re.findall(r"\]\(([^)]+)\)", content.decode()):
+        prose, fence = [], None
+        for line in content.decode().splitlines():
+            marker = re.match(r"^ {0,3}(`{3,}|~{3,})(.*)$", line)
+            if fence is not None:
+                if (marker and marker[1][0] == fence[0]
+                        and len(marker[1]) >= len(fence) and not marker[2].strip()):
+                    fence = None
+                continue
+            if marker:
+                fence = marker[1]
+            else:
+                prose.append(line)
+        for target in re.findall(r"\]\(([^)]+)\)", "\n".join(prose)):
             local_target(owner, target, files)
     records = []
     parameter_paths = set()

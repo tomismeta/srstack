@@ -6,9 +6,11 @@ The [contract inventory](contracts.md) identifies roles/generations and dated le
 
 ## Read the status precisely
 
-- **Available:** the cited reviewed publisher interface exposes the named read. Authenticate deployment, block, units and semantics before interpreting the result.
+- **Available:** for an ABI-read record, the cited reviewed publisher interface exposes the named read. For a record with `kind: "derived_analysis"`, the analysis is available conditionally from supplied evidence; its listed functions are reviewed **input reads**, not forecast getters. Authenticate deployment, block, units and semantics before interpreting either.
 - **Not exposed:** the stated capability is absent from the identified complete reviewed source definitions. This is not proof that no other deployed interface, historical-state query or future generation can answer it.
 - **Unknown:** interface coverage or economic/implementation evidence is insufficient. Missing evidence is not a negative capability and does not forbid further authorized research.
+
+Derived records also link optional calculation recipes and evidence guidance. Their `review_ids` attest the scope of the cited ABI inputs only, not the model, policy assumptions, dataset freshness or deployed behavior. Missing future information is **unknown**, not an invented missing-ABI signature. An available recipe does not make an unsupported live numeric forecast available.
 
 ## Planning map
 
@@ -30,6 +32,12 @@ The record ID is a lookup key in the capability records, not a command or addres
 | Enabled versus active launch restrictions / `launch-restriction-state` | Available: [STANDARD](../assets/interfaces/standard.json), [TaxHook](../assets/interfaces/tax-hook.json) | Read enabled, resolved active and separate gate/schedule/tax inputs; authenticate the actually linked hook. No universal transfer-success conclusion. |
 | First-round sellout / `first-round-exhaustion` | Unknown from final observed purchase alone | `AuctionStarted` contains no first-round allocation; a later `DayRolled.cap` belongs to that later round. Establish effective capacity, changes and complete relevant scope; otherwise say last observed. |
 | Charter refund / `charter-refund-amount` | Unknown settlement: reviewed charter interfaces | Sale event price, transaction value and gas are independently reportable. Their difference is not proof of a refund; use appropriate trace/transfer/balance and implementation evidence. |
+| Next-round policy opening / `next-round-policy-open` | Available derived analysis: reviewed auction start/last-sale inputs | Qualified prior close plus explicit family policy multiplier (license 2× or charter 3× as a conditional publisher scenario), with unknown future floor/reset effects disclosed. Never an expected transaction price. |
+| Next market last-sold trend / `next-close-trend` | Available derived analysis: reviewed auction last-sale inputs | Latest relevant curated comparable history, chronological trailing sample and exact trend; last observed is not automatically a proved close. No live decline constant. |
+| Sellout close/open distribution / `sellout-close-open-ratio` | Available derived analysis: reviewed auction start/last-sale inputs | Qualified sellout sample, exact ratios/mean/sample variance and bounded sample standard deviation; report sample identities and exclusions. No fixed live ratio or universal sellout assumption. |
+| Structural next close / `next-close-structural` | Available derived analysis: reviewed auction start/last-sale inputs | Explicit policy opening × observed close/open distribution, compared with the trend; conditional on sellout continuing and comparable settings. Empirical dispersion is not a confidence interval. |
+| Future floor / `future-floor-context` | Unknown future value; historical context can be derived from reviewed floor inputs | Current `dayFloorPrice()` or charter reserve settings do not establish next-round floor. Historical floor series/trend can be reported; future floor stays unknown, not “not exposed.” |
+| Inventory-guarded curve scenario / `inventory-conditional-curve` | Available derived analysis: reviewed price/half-life/inventory inputs | Explicit opening/floor/half-life/elapsed inputs; `remainingToday() == 0` makes the curve diagnostic only with no buyable price. Positive inventory remains conditional, not guaranteed fill. |
 | Buyback depth/control inputs / `contraction-pool-and-controls` | Available: [Contraction Vault](../assets/interfaces/contraction-vault.json) | Pool ETH depth, bounded manager enumeration and effective BPS/tick-labelled inputs. These are not executable size, burn-outcome or implementation proofs. |
 | Selected reserve holdings / `selected-reserve-holdings` | Available: [Expansion Vault](../assets/interfaces/expansion-vault.json) | `holdingsOf(asset)`, `isReserveAsset`, `reservePool` for identified assets; not a complete portfolio census, common raw unit or executable market quote. |
 | Fee shares and liability / `current-versus-queued-fees` | Available: [FeeSplitter](../assets/interfaces/fee-splitter.json) | Current shares, queued shares/pending flag, team wallet and owed ETH. Queued is not effective; liability is not settled payment or holder entitlement. |
@@ -43,6 +51,12 @@ A current getter answers state at its selected block. A capable archive provider
 Logs answer observed executions and transitions. Discover by emitting contract and authenticated event layout, not only `transaction.to`: internal calls can emit auction events. `eth_getLogs` supplies full log identity/order; headers supply timestamps and canonicality observations; receipts separately corroborate inclusion and transaction success. Coverage and identity/receipt checks remain distinct. See [history collection and reuse](auction-history.md) and the [worked example](research-example.md).
 
 An available getter can narrow discovery without answering the entire question. Counter/log disagreement is a reconciliation problem; neither automatically wins. A complete inventory of a publisher ABI is not complete deployed behavior, discovered history, supported access or economic interpretation. Listing writes is documentation only: [wallet and preparation boundaries](safety.md#preparation-and-wallet-boundary) are unchanged.
+
+## Forecast planning
+
+Apply the [four price shapes and history-first principle](auctions.md#four-price-shapes-and-history-first-forecasts): policy opening, current inventory-conditional quote, observed last sold/qualified close, and current floor with future floor unknown. For a market forecast, consult the latest relevant [curated round dataset](round-datasets.md) before deriving policy opening; inspect observation head, coverage, generation scope and intervening changes. Missing, partial or stale history does not license an invented close forecast.
+
+Use the [optional calculation recipes](calculations.md) for close trend, sellout-ratio distribution, structural comparison, floor context and inventory-guarded curve arithmetic. All input sample sizes, multipliers and precision are explicit; the synthetic fixture is not a live default. The [scoped 2026-09-27 lifecycle observation](auctions.md#qualified-round-lifecycle) supports conditional scenarios, not universal implementation or historical-exhaustion claims. The helpers add no endpoint, client, routing or authorization capability.
 
 ## Future additions
 
