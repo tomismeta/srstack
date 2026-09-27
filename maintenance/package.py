@@ -18,7 +18,7 @@ MANIFEST = "release-manifest.json"
 VERSION = "0.3.0"
 CORPUS_FILES = {"assets/sources.json", "assets/parameters.json"}
 TOP_FILES = {"SKILL.md", "README.md", "LICENSE", MANIFEST}
-REPOSITORY_DIRS = {"maintenance", ".github", ".git", "dist"}
+REPOSITORY_DIRS = {"maintenance", "research", ".github", ".git", "dist"}
 CACHE_DIRS = {"__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache"}
 REPOSITORY_FILES = {".gitignore", ".git"}
 

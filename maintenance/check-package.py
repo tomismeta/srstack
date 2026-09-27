@@ -48,6 +48,7 @@ class PackageChecks(unittest.TestCase):
         self.script.parent.mkdir()
         shutil.copyfile(SCRIPT, self.script)
         for name in ("maintenance/private.json", ".github/workflows/validate.yml", ".gitignore",
+                     "research/calculations.py", "research/evidence.schema.json",
                      "dist/old.zip", "maintenance/__pycache__/package.pyc", ".DS_Store"):
             target = self.root / name
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -111,6 +112,7 @@ class PackageChecks(unittest.TestCase):
         self.package.export_package(self.commit, self.destination)
         for extra in ("references/unreviewed.md", ".DS_Store", "maintenance/private.json",
                       "scripts/verify.py", "assets/entities/obsolete.json",
+                      "research/calculations.py", "research/evidence.schema.json",
                       "assets/__pycache__/untrusted.pyc"):
             with self.subTest(extra=extra):
                 path = self.destination / extra

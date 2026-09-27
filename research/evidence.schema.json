@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Optional SRStack external research evidence interchange, version 1",
+  "description": "An optional, extensible interchange for host-authorized external evidence, not an authoritative dataset, storage policy, required workflow, or completeness certificate. Never include credentials, secret URLs, provider API keys, or wallet secrets. Schema validity establishes shape only; it does not authenticate sources, validate arithmetic, reconcile references, or prove coverage. Unknown and partial observations remain useful. Retain conflicting observations and reorg alternatives rather than overwriting them.",
+  "type": "object",
+  "required": ["schema_version", "sources", "headers", "events", "coverage"],
+  "properties": {
+    "schema_version": {"const": "1"},
+    "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}},
+    "headers": {
+      "type": "object",
+      "description": "Reusable header observations keyed by decimal chain_id + ':' + block_hash. Values must agree with their keys; cross-field consistency requires a consumer check. Keep competing block hashes at the same height. Canonicality is an observation at a stated check time, not a permanent property. Reuse a fetched header per distinct hash; recheck canonicality and refetch when reorgs or conflicting evidence warrant it.",
+      "propertyNames": {"pattern": "^(0|[1-9][0-9]*):0x[0-9a-fA-F]{64}$"},
+      "additionalProperties": {"$ref": "#/$defs/header"}
+    },
+    "unresolved_headers": {
+      "type": "array",
+      "description": "Optional partial header observations that do not yet have a usable chain/hash cache key.",
+      "items": {"$ref": "#/$defs/headerObservation"}
+    },
+    "events": {"type": "array", "description": "Raw observations, including removed records and conflicting duplicates. Not an already reconciled purchase ledger.", "items": {"$ref": "#/$defs/event"}},
+    "coverage": {"$ref": "#/$defs/coverage"},
+    "assumptions": {"type": "array", "description": "User choices, mathematical scenarios, attribution conventions and unproved semantics; keep separate from observations.", "items": {"type": "object", "additionalProperties": true}},
+    "results": {"type": "array", "description": "Derived outputs with their input references, formulas, units and qualifications; not new source observations. Preserve exact integers/rationals as strings.", "items": {"type": "object", "additionalProperties": true}},
+    "extensions": {"type": "object", "additionalProperties": true}
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "decimal": {"type": "string", "pattern": "^(0|[1-9][0-9]*)$", "description": "Nonnegative integer encoded without binary-floating-point conversion."},
+    "decimalOrUnknown": {"anyOf": [{"$ref": "#/$defs/decimal"}, {"const": "unknown"}]},
+    "hashOrUnknown": {"anyOf": [{"type": "string", "pattern": "^0x[0-9a-fA-F]{64}$"}, {"const": "unknown"}]},
+    "timestamp": {"anyOf": [{"type": "string", "format": "date-time"}, {"const": "unknown"}], "description": "Source observation/retrieval/check time. This is not the chain header timestamp. Format checking depends on the chosen validator."},
+    "identity": {"type": "string", "minLength": 1},
+    "sourceRefs": {"type": "array", "items": {"$ref": "#/$defs/identity"}, "description": "References to source ids. Unknown provenance can use an empty list; consumers check that supplied references resolve."},
+    "source": {
+      "type": "object",
+      "required": ["id", "identity", "retrieved_at", "observed_at"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identity"},
+        "identity": {"$ref": "#/$defs/identity", "description": "Original public source identity, such as a document URL, index/export identity or RPC method and public provider label. Remove credentials and secret query parameters; do not store an access token as provenance."},
+        "retrieved_at": {"$ref": "#/$defs/timestamp"},
+        "observed_at": {"$ref": "#/$defs/timestamp"},
+        "published_at": {"$ref": "#/$defs/timestamp"},
+        "kind": {"type": "string"},
+        "query": {"type": "object", "description": "Optional public filters, block anchors, pagination and method parameters, never secrets.", "additionalProperties": true},
+        "content_digest": {"type": "string"},
+        "details": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "headerObservation": {
+      "type": "object",
+      "required": ["chain_id", "block_hash", "block_number", "timestamp"],
+      "properties": {
+        "chain_id": {"$ref": "#/$defs/decimalOrUnknown"},
+        "block_hash": {"$ref": "#/$defs/hashOrUnknown"},
+        "block_number": {"$ref": "#/$defs/decimalOrUnknown"},
+        "timestamp": {"$ref": "#/$defs/decimalOrUnknown", "description": "Header Unix timestamp in integer seconds, or unknown. Never substitute retrieval time or an estimated block time."},
+        "parent_hash": {"$ref": "#/$defs/hashOrUnknown"},
+        "canonicality": {"enum": ["canonical", "noncanonical", "unknown", "conflicting"]},
+        "checked_at": {"$ref": "#/$defs/timestamp"},
+        "source_refs": {"$ref": "#/$defs/sourceRefs"},
+        "details": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "header": {
+      "allOf": [{"$ref": "#/$defs/headerObservation"}],
+      "properties": {
+        "alternatives": {"type": "array", "description": "Conflicting or earlier observations for this same chain/hash. Reorg replacement hashes occupy their own cache entries.", "items": {"$ref": "#/$defs/headerObservation"}}
+      }
+    },
+    "denomination": {
+      "anyOf": [
+        {"const": "unknown"},
+        {"type": "object", "required": ["asset", "decimals"], "properties": {"asset": {"$ref": "#/$defs/identity", "description": "Authenticated asset identity, not a ticker assumed to mean USD. A fictional fixture must label it fictional."}, "decimals": {"$ref": "#/$defs/decimal"}}, "additionalProperties": true}
+      ]
+    },
+    "receiptCheck": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {"enum": ["matched", "mismatched", "unavailable", "not_checked", "unknown"], "description": "Whether this observation matched a checked receipt log, not whether discovery is complete or a refund is proved."},
+        "transaction_status": {"enum": ["success", "reverted", "unknown"]},
+        "block_hash": {"$ref": "#/$defs/hashOrUnknown"},
+        "transaction_hash": {"$ref": "#/$defs/hashOrUnknown"},
+        "source_refs": {"$ref": "#/$defs/sourceRefs"},
+        "checked_at": {"$ref": "#/$defs/timestamp"},
+        "details": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "verificationCheck": {
+      "type": "object",
+      "required": ["claim", "status"],
+      "properties": {
+        "claim": {"$ref": "#/$defs/identity"},
+        "status": {"enum": ["supported", "contradicted", "partial", "unavailable", "not_checked", "unknown"]},
+        "source_refs": {"$ref": "#/$defs/sourceRefs"},
+        "checked_at": {"$ref": "#/$defs/timestamp"},
+        "details": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "event": {
+      "type": "object",
+      "required": ["chain_id", "emitter", "block_number", "block_hash", "transaction_hash", "transaction_index", "log_index", "removed", "decoded", "denomination"],
+      "properties": {
+        "chain_id": {"$ref": "#/$defs/decimalOrUnknown"},
+        "emitter": {"$ref": "#/$defs/identity"},
+        "generation": {"$ref": "#/$defs/identity", "description": "Authenticated generation identity or unknown; same round number across emitters is not the same round."},
+        "block_number": {"$ref": "#/$defs/decimalOrUnknown"},
+        "block_hash": {"$ref": "#/$defs/hashOrUnknown"},
+        "transaction_hash": {"$ref": "#/$defs/hashOrUnknown"},
+        "transaction_index": {"$ref": "#/$defs/decimalOrUnknown"},
+        "log_index": {"$ref": "#/$defs/decimalOrUnknown", "description": "Ethereum block-global log index, not a transaction-local event counter."},
+        "removed": {"type": "boolean", "description": "The source's removed flag, not independent proof of present canonicality."},
+        "header_ref": {"type": "string", "description": "Optional explicit chain_id:block_hash key into headers; consumers check consistency with event identity."},
+        "topics": {"type": "array", "items": {"type": "string", "pattern": "^0x[0-9a-fA-F]{64}$"}},
+        "data": {"type": "string", "pattern": "^0x([0-9a-fA-F]{2})*$"},
+        "decoded": {
+          "type": "object",
+          "description": "Decoded observations only; missing fields or unknown values do not mean zero. Event ABI meaning and price/quantity semantics need separate authentication.",
+          "properties": {
+            "event_name": {"$ref": "#/$defs/identity"},
+            "charter_id": {"$ref": "#/$defs/decimalOrUnknown"},
+            "round_id": {"$ref": "#/$defs/decimalOrUnknown"},
+            "quantity": {"$ref": "#/$defs/decimalOrUnknown"},
+            "unit_price_raw": {"$ref": "#/$defs/decimalOrUnknown"}
+          },
+          "additionalProperties": true
+        },
+        "denomination": {"$ref": "#/$defs/denomination"},
+        "source_refs": {"$ref": "#/$defs/sourceRefs"},
+        "retrieved_at": {"$ref": "#/$defs/timestamp"},
+        "observed_at": {"$ref": "#/$defs/timestamp"},
+        "receipt_checks": {"type": "array", "items": {"$ref": "#/$defs/receiptCheck"}},
+        "verification_checks": {"type": "array", "items": {"$ref": "#/$defs/verificationCheck"}},
+        "details": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "range": {
+      "type": "object",
+      "required": ["chain_id", "from_block", "to_block"],
+      "properties": {
+        "chain_id": {"$ref": "#/$defs/decimalOrUnknown"},
+        "emitter": {"$ref": "#/$defs/identity"},
+        "generation": {"$ref": "#/$defs/identity"},
+        "from_block": {"$ref": "#/$defs/decimalOrUnknown"},
+        "to_block": {"$ref": "#/$defs/decimalOrUnknown"},
+        "anchor_hash": {"$ref": "#/$defs/hashOrUnknown"},
+        "filters": {"type": "object", "additionalProperties": true},
+        "source_refs": {"$ref": "#/$defs/sourceRefs"},
+        "pagination": {"type": "object", "description": "Optional cursor/page/exhaustion observations; an exhausted list proves only its supported scope.", "additionalProperties": true},
+        "details": {"type": "string"}
+      },
+      "description": "Inclusive block interval in the stated chain/emitter/generation/filter scope. Unknown bounds stay unknown. Consumers check ordering and overlap; JSON Schema cannot establish range union or semantic completeness.",
+      "additionalProperties": true
+    },
+    "coverage": {
+      "type": "object",
+      "required": ["requested", "scanned", "failed", "unsearched"],
+      "properties": {
+        "requested": {"type": "array", "items": {"$ref": "#/$defs/range"}},
+        "scanned": {"type": "array", "items": {"$ref": "#/$defs/range"}},
+        "failed": {"type": "array", "items": {"$ref": "#/$defs/range"}},
+        "unsearched": {"type": "array", "items": {"$ref": "#/$defs/range"}},
+        "discovery_checks": {"type": "array", "items": {"$ref": "#/$defs/verificationCheck"}},
+        "header_checks": {"type": "array", "items": {"$ref": "#/$defs/verificationCheck"}},
+        "receipt_checks": {"type": "array", "items": {"$ref": "#/$defs/verificationCheck"}},
+        "counts": {"type": "object", "description": "Descriptive work/record counts only, never a completeness proof.", "additionalProperties": {"$ref": "#/$defs/decimal"}},
+        "stopping_reason": {"type": "string"},
+        "details": {"type": "string"}
+      },
+      "description": "Discovery, log/index scan scope, receipt matching, header canonicality and historical-close claims are distinct. Empty arrays mean no supplied range evidence, not complete coverage or zero events. Overlaps/conflicts and gaps may be retained; a caller must reconcile them for its specific claim. No closed-world census is required to exchange useful partial evidence.",
+      "additionalProperties": true
+    }
+  }
+}

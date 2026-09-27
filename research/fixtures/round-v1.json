@@ -1,0 +1,59 @@
+{
+  "schema_version": "1",
+  "sources": [{"id": "synthetic", "identity": "Fictional arithmetic fixture; not chain evidence or a real 39-event dataset", "retrieved_at": "unknown", "observed_at": "unknown", "kind": "synthetic"}],
+  "headers": {
+    "999999:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa": {"chain_id": "999999", "block_hash": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "block_number": "100", "timestamp": "1000", "canonicality": "unknown", "source_refs": ["synthetic"]},
+    "999999:0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb": {"chain_id": "999999", "block_hash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "block_number": "101", "timestamp": "unknown", "canonicality": "unknown", "source_refs": ["synthetic"]}
+  },
+  "events": [
+    {
+      "chain_id": "999999", "emitter": "fictional-auction-a", "generation": "fictional",
+      "block_number": "101", "block_hash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "transaction_hash": "0x3333333333333333333333333333333333333333333333333333333333333333", "transaction_index": "0", "log_index": "0", "removed": false,
+      "decoded": {"event_name": "FictionalSale", "charter_id": "10", "round_id": "7", "quantity": "1", "unit_price_raw": "1000000000000000002"},
+      "denomination": {"asset": "fictional-payment-a", "decimals": "18"},
+      "source_refs": ["synthetic"], "receipt_checks": [{"status": "not_checked"}]
+    },
+    {
+      "chain_id": "999999", "emitter": "fictional-auction-a", "generation": "fictional",
+      "block_number": "100", "block_hash": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "transaction_hash": "0x1111111111111111111111111111111111111111111111111111111111111111", "transaction_index": "0", "log_index": "0", "removed": false,
+      "decoded": {"event_name": "FictionalSale", "charter_id": "10", "round_id": "7", "quantity": "2", "unit_price_raw": "1000000000000000001"},
+      "denomination": {"asset": "fictional-payment-a", "decimals": "18"},
+      "transaction": {"to": "fictional-router", "routing": "synthetic internal call; transaction destination is not the sale emitter"},
+      "source_refs": ["synthetic"], "receipt_checks": [{"status": "matched", "source_refs": ["synthetic"], "details": "Fictional receipt match for this event only; not a discovery census"}]
+    },
+    {
+      "chain_id": "999999", "emitter": "fictional-auction-b", "generation": "fictional",
+      "block_number": "100", "block_hash": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "transaction_hash": "0x2222222222222222222222222222222222222222222222222222222222222222", "transaction_index": "1", "log_index": "1", "removed": false,
+      "decoded": {"event_name": "FictionalSale", "charter_id": "20", "round_id": "7", "quantity": "4", "unit_price_raw": "2000000000000000000"},
+      "denomination": {"asset": "fictional-payment-a", "decimals": "18"},
+      "source_refs": ["synthetic"], "receipt_checks": [{"status": "unavailable"}]
+    },
+    {
+      "chain_id": "999999", "emitter": "fictional-auction-a", "generation": "fictional",
+      "block_number": "100", "block_hash": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "transaction_hash": "0x4444444444444444444444444444444444444444444444444444444444444444", "transaction_index": "2", "log_index": "2", "removed": false,
+      "decoded": {"event_name": "FictionalSale", "charter_id": "10", "round_id": "7", "quantity": "1", "unit_price_raw": "3000001"},
+      "denomination": {"asset": "fictional-payment-b", "decimals": "6"},
+      "source_refs": ["synthetic"], "receipt_checks": [{"status": "not_checked"}]
+    },
+    {
+      "chain_id": "999999", "emitter": "fictional-auction-a", "generation": "fictional",
+      "block_number": "101", "block_hash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "transaction_hash": "0x5555555555555555555555555555555555555555555555555555555555555555", "transaction_index": "1", "log_index": "1", "removed": true,
+      "decoded": {"event_name": "FictionalSale", "charter_id": "10", "round_id": "7", "quantity": "100", "unit_price_raw": "9999999999999999999"},
+      "denomination": {"asset": "fictional-payment-a", "decimals": "18"},
+      "source_refs": ["synthetic"], "receipt_checks": [{"status": "unknown"}]
+    }
+  ],
+  "coverage": {
+    "requested": [{"chain_id": "999999", "from_block": "100", "to_block": "103"}],
+    "scanned": [{"chain_id": "999999", "from_block": "100", "to_block": "101", "source_refs": ["synthetic"]}],
+    "failed": [{"chain_id": "999999", "from_block": "102", "to_block": "102", "details": "Synthetic missing range"}],
+    "unsearched": [{"chain_id": "999999", "from_block": "103", "to_block": "103"}],
+    "receipt_checks": [{"claim": "receipt matching across requested range", "status": "partial", "details": "Only one fictional event matched; unchecked and unavailable receipts remain"}],
+    "stopping_reason": "Synthetic fixture ends with deliberately incomplete coverage"
+  }
+}

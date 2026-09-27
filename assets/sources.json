@@ -15,6 +15,7 @@
       "id": "live-interface",
       "path": "assets/sources/live-interface.json",
       "record_ids": [
+        "sr-offline-research-evidence-2026-09-27",
         "sr-question-interface-2026-09-27",
         "sr-core-accrual-correspondence-2026-09-27",
         "sr-charter-activity-read-interface",

@@ -24,6 +24,8 @@ Check the relevant invariants in the chosen method: each economic flow counted o
 
 Repeatability concerns identical evidence and assumptions, not identical tool calls or wording. Fresh blocks and changed assumptions legitimately change answers. If tools cannot execute, show the formula or a clearly labelled unexecuted illustration and its limits; do not pretend a calculation ran. When a user requests reproducibility, retain inputs, assumptions, calculation and check results in an authorized external artifact; ordinary questions do not require persistence or a diagnostic dump.
 
+Optional [research aids](research-tools.md) offer pure offline calculations and a versioned evidence format in the reviewed source checkout, not the installed runtime. Use, adapt or ignore them; an independent method is equally valid, and neither tool availability nor schema conformance is an answer gate. The functions compute supplied inputs, not source authentication, current contract configuration or a certified economic model. Any argument checks protect that function's arithmetic contract, not the agent's choice of solution.
+
 ### Supply and holdings
 
 Define supply/holdings categories and exclusions; avoid double-counting underlying and receipt assets. Establish ownership, liabilities and encumbrances. Gross, redeemable and net value differ; partial holdings are not a portfolio total.

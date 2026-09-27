@@ -3,6 +3,38 @@
   "scope": "Dated publisher interface and deployment provenance. Addresses, method locators and excerpt hashes describe reviewed sources, not current execution bindings, a full ABI catalog or runtime allowlists. The selected method/event guide is generation-scoped encoding evidence. No saved monetary state or runtime defaults.",
   "records": [
     {
+      "id": "sr-offline-research-evidence-2026-09-27",
+      "url": "https://www.standardreserve.xyz/app/protocol/live/",
+      "publisher": "The Standard Reserve official application and whitepaper",
+      "published_at": null,
+      "retrieved_at": "2026-09-27",
+      "review_depth": "Fresh official page-to-module discovery, complete module retrieval as data, selected role/version bindings and auction getter layouts, whitepaper price/withdrawal rules, plus a bounded canonical-block public-RPC check of core and separate auction code and cross-references. Live inputs and the detailed verification artifact remain outside the installed skill.",
+      "claim_stage": "dated publisher and scoped read evidence for optional arithmetic inputs, not a certified contract model or current configuration",
+      "source_urls": [
+        "https://www.standardreserve.xyz/app/protocol/whitepaper/",
+        "https://www.standardreserve.xyz/app/protocol/live/",
+        "https://www.standardreserve.xyz/assets/mountApp-z6PyBslD.js",
+        "https://rpc.mainnet.chain.robinhood.com"
+      ],
+      "complete_asset_bytes": 860946,
+      "complete_asset_sha256": "8e2178e9e11adc78288afeb0a95bf1c62e7ac118ba08986b3033c2d740cdbd31",
+      "locators": [
+        "VP core/original bindings, GP v1.1 and YP v1.2 auction overrides; Ne core ABI and separate current license/charter ABIs.",
+        "Bank charterNFT/registry and each auction bank/registry references; code presence independently checked at the same block, with the header hash rechecked.",
+        "Each auction's own auctionAnchor, auctionPeriod, dayHalfLife, decayHalfLife, dayStartPrice, dayFloorPrice, currentPrice, currentDay and remainingToday were read as separate inputs, not inherited from whitepaper defaults.",
+        "Whitepaper sections7-8 describe exponential decay of the gap to the floor, not exponential decay of the whole opening price. The optional mathematical scenario requires all its inputs explicitly and does not certify deployed fixed-point rounding."
+      ],
+      "summary": "Fresh source and contract input checks support keeping exact aggregation separate from assumed economic models. No active address, price, floor, rate, cap, branch count, epoch endpoint or auction timing is a calculation default. The source-only tools do no discovery or authentication.",
+      "fingerprint_convention": "Hash complete UTF-8 bytes. This retrieval measured860946bytes and860338JavaScript string code units with the same SHA-256 as the prior reviewed body; these different length measures do not imply source drift. A dated fingerprint is provenance, never a future live-source allowlist.",
+      "limits": [
+        "Code presence and cross-references do not prove Registry role authorization, historical configuration or complete implementation correspondence.",
+        "The whitepaper remains a design overview and retains superseded no-bids and charter-clock wording; published defaults are not current configuration.",
+        "No new matching source/compiler reproduction, accrual/checkpoint proof, actual keeper-priority guarantee or exit-expiry semantics.",
+        "The gap-to-floor helper is an explicitly selected mathematical scenario, not a deployed-price oracle. Getter outputs do not prove inventory or a fill.",
+        "No social-timeline sweep, persisted live financial observations, third-party dashboard implementation or mandatory research sequence."
+      ]
+    },
+    {
       "id": "sr-question-interface-2026-09-27",
       "url": "https://www.standardreserve.xyz/assets/mountApp-z6PyBslD.js",
       "publisher": "The Standard Reserve official application",

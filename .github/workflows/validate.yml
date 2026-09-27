@@ -35,6 +35,8 @@ jobs:
         run: python3 -B maintenance/package.py verify
       - name: Check packaging and reviewed-commit export
         run: python3 -B maintenance/check-package.py
+      - name: Check optional offline research calculations
+        run: python3 -B research/check-research.py
       - name: Check deterministic runtime archive
         shell: python
         run: |

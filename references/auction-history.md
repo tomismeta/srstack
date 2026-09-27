@@ -54,6 +54,8 @@ Use authenticated consideration and exact raw totals: average is the rational `s
 
 For aggregation, use the [calculation guidance](research-workflow.md#compute-with-explicit-units). Order executions by block, transaction and log position, not index arrival order. Deduplicate by chain/transaction hash/log index after canonical reconciliation; conflicting duplicates are evidence gaps, not an arbitrary first-row choice. Reconcile raw quantity and consideration totals per denomination; preserve exact weighted averages until display. These checks do not turn incomplete discovery into complete history.
 
+For an optional worked reconstruction and external evidence shape, see [research aids](research-tools.md). Preserve block timestamps with their chain and block hash when collected, reuse the header across events, and revalidate if canonicality changes; “fetch once” is not “never recheck.” Existing host stores or another schema remain valid. A calculation helper can summarize observed rows and their stated coverage, but cannot discover omitted purchases, certify receipts or promote the last observed event into a closing sale.
+
 Reconcile event totals against independently meaningful counters or supporting flows only when their scope and semantics match. A discrepancy remains explicit until explained: check interval endpoints, generations, multiple purchases per transaction, quantities versus event/transaction counts, canonical replacements and counter meaning. Do not force a residual into a missing sale or declare a getter broken. Failed transactions are attempts, not purchases.
 
 ### Historical license comparators

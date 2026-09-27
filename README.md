@@ -33,6 +33,8 @@ The [object and contract map](references/object-map.md) defines economic objects
 
 The agent may use inspectable local calculation code when needed under host permissions. That is not a bundled protocol client or permission to execute downloaded code. No Python dependency is required to load the skill; live access and exact arithmetic depend on actual host capabilities.
 
+The reviewed source checkout also offers [optional offline research aids](references/research-tools.md): pure calculation functions, a versioned evidence interchange schema and synthetic regression fixtures under `research/`. None is installed. Agents may use, adapt or ignore them, choose another language/store, or write a different solution. No helper invocation, dataset format or checkout is a prerequisite for answering; arithmetic input checks are not agent workflow controls. There is no transport client, live-data bundle, default deployment or automatic code download.
+
 Live support is capability-based, not a blanket host-brand promise: the host needs authorized public reads, applicable ABI/Keccak encoding/decoding and exact calculation; historical questions additionally need adequate event/index/receipt coverage. Below that baseline, dated explanations and conditional reasoning remain useful, but blocked live checks cannot be counted as successful live acceptance. No particular language, client or RPC provider is required.
 
 ## Install a reviewed release
@@ -79,13 +81,14 @@ From a reviewed source checkout with Python 3.10+:
 ```sh
 python3 -B maintenance/package.py verify
 python3 -B maintenance/check-package.py
+python3 -B research/check-research.py
 ```
 
 After deliberate content changes, regenerate the manifest with `python3 -B maintenance/package.py build`. The maintenance tool also exports reviewed commits and creates deterministic archives. These tools are not installed with the skill. Update source provenance and affected references together; ordinary research never rewrites the package.
 
 This host-native cutover removes the previous fixed snapshot, price, history and diagnostic clients and their execution catalogs. There are no compatibility commands or retired helper aliases. Existing host-native research tools replace them; any automatic discovery, checkpointing or batching must actually be supported or implemented by the host agent before being claimed.
 
-This revision restores bounded interface knowledge, not the retired clients. Specialized references own exact accounting, round dating, allowance windows, order-ID caveats and history coverage. Stale host workshop/install prompts need explicit host-maintainer cleanup outside this repository; package installation does not rewrite other skills, credentials or global instructions.
+The source-only calculation toolkit does not restore the retired protocol clients. Specialized references own exact accounting, round dating, allowance windows, order-ID caveats and history coverage. Stale host workshop/install prompts need explicit host-maintainer cleanup outside this repository; package installation does not rewrite other skills, credentials or global instructions.
 
 ### Earlier interface-revision verification
 
@@ -106,6 +109,16 @@ The other exercised an explicitly fictional packet: sold-out/next-window reasoni
 Source reconciliation reread seven website page bodies and ten known social posts, recording fourteen full-body website/module fingerprints. It established no complete social-timeline interval. The current charter guide's 12-hour wording still conflicts with the whitepaper's daily/24-hour wording; S-Bill design copy and an inert sample UI do not authenticate a launch. Coverage and unresolved conflicts are recorded in the source records and [updates](references/updates.md), not summarized as universal synchronization.
 
 Matching source/compiler correspondence and complete accrual/ledger-origin semantics remain unestablished. Bounded runtime-path research was retained outside the package and was not promoted into new certified onchain semantics. A real attributable earned-only 24-hour scenario remains blocked; empirical and explicitly assumed calculations have their own successful, narrower evidence. This unreleased development revision does not claim every mandatory release gate passed.
+
+### Optional research-aids revision (2026-09-27)
+
+Added source-only exact weighted accounting, observed round reconstruction, signed pending-delta pace, inclusive-range workload estimates and a separately named, fully parameterized gap-to-floor mathematical scenario. The optional version1 evidence schema retains raw observations, hash-keyed headers/timestamps, separate receipt checks and coverage gaps. Only the guidance and fictional worked explanation enter the installed skill; library, schema, tests and synthetic fixtures remain excluded. No transport, live dataset, protocol defaults or new wallet capability was added.
+
+Verification passed 20 offline research regressions and 19 packaging/export regressions, including exclusion of the entire research directory from installs. The documented reconstruction example ran against the fictional fixture: exact weighted totals retained their remainder, missing timestamps stayed unknown and partial receipt coverage stayed partial. Competing transaction/log slots, active/removed variants and unresolved reorg alternatives were exercised without inflating uncontested totals. A temporary standards-based Draft2020-12 validator accepted the schema, fixture and partial/extended evidence; it is not a library or runtime dependency. An independent JavaScript BigInt calculation with a different input format reproduced the accounting result without the helper or schema.
+
+Fresh official publication and bounded same-block core/auction code, dependency and getter checks are recorded by `sr-offline-research-evidence-2026-09-27` in [interface provenance](assets/sources/live-interface.json). Dynamic inputs remain external, not defaults. The complete publisher module measured860946UTF-8bytes versus860338JavaScript string units with the same prior SHA-256; mixed length measures were not source drift. Fingerprints identify reviewed evidence, not allowed future deployments or sources. No new matching compiler/source correspondence or full release acceptance is claimed.
+
+Agent freedom is explicit in the entrypoint and research guidance: use, adapt or ignore these aids, choose another language, dependencies, evidence format or independent solution under existing host permissions. Missing tooling or schema nonconformance is not an answer gate. Arithmetic argument checks belong only to the selected function; they do not prescribe the research process. Existing wallet/signing/submission boundaries are unchanged.
 
 ## License
 
