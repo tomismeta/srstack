@@ -4,9 +4,9 @@
 
 Ask about protocol mechanics, live positions, historical auctions or what earned accrual could buy. The agent chooses the evidence and calculations the question needs, using its existing host-authorized tools. No topic command, calculator wizard or fixed sequence is required.
 
-Independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product. **Candidate version 0.4.0; published stable v0.3.0.** [Installation](references/installation.md) defaults to the stable tag; candidate installs require an explicit reviewed commit.
+Independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product. **Version 0.4.0.** [Installation](references/installation.md) resolves the reviewed release tag or an explicitly supplied full commit.
 
-## New in 0.4.0 (candidate)
+## New in 0.4.0
 
 - **Live S-Bill research:** [rates, amount quotes, deposits and position reads](references/sbills.md), with authenticated launch-interface evidence rather than the historical preview as a standing status answer.
 - **Maturity-day planning:** count bills and sum exact principal by stored maturity, deployment and explicit timezone; distinguish active maturities from payments and disclose discovery gaps.
@@ -58,16 +58,16 @@ srstack uses the Agent Skills format rather than a host-specific client. Install
 
 | Agent | Recorded compatibility |
 | --- | --- |
-| **Hermes** | Native loading, resource-byte, guard and temporary-install checks passed during the 0.3.0 review. |
-| **OpenClaw** | Pinned native loader, eligibility, official validation and packaging checks passed during the 0.3.0 review. |
-| **Muse** | User-reported v0.2.2 installation and integrity checks passed. End-to-end network helper execution was unavailable in that sandbox; no v0.3.0 Muse verification is claimed. |
+| **Hermes** | Pinned native loading, resource-byte, guard, default-preprocessing and temporary-install checks passed during the 0.4.0 review; four medium guard warnings retained. |
+| **OpenClaw** | Pinned native-source loader, eligibility, official validation and packaging checks passed during the 0.4.0 review. |
+| **Muse** | User-reported v0.2.2 installation and integrity checks passed. End-to-end network helper execution was unavailable in that sandbox; no v0.4.0 Muse verification is claimed. |
 | **Other Agent Skills hosts** | Use the complete runtime and verify loading, resource access and the capabilities needed for the question. Compatibility is not assumed from the format alone. |
 
-See [host installation and capabilities](references/installation.md#host-loading-and-sessions). These checks are scoped evidence, not universal live-access or safety guarantees; Muse support is recorded at its reported version rather than presented as a newly tested 0.3.0 integration.
+See [host installation and capabilities](references/installation.md#host-loading-and-sessions). These checks are scoped evidence, not fresh-session acceptance or universal live-access/safety guarantees; Muse support remains recorded at its reported version.
 
 ## Install a reviewed release
 
-The reviewed release tag is `v0.3.0`. Follow [reviewed installation](references/installation.md#reviewed-installation): resolve the tag or supplied full commit before review, export only its runtime files and clean-replace the old skill root. Do not overlay an older installation and leave retired scripts behind.
+The reviewed release tag is `v0.4.0`. Follow [reviewed installation](references/installation.md#reviewed-installation): resolve the tag or supplied full commit before review, export only its runtime files and clean-replace the old skill root. Do not overlay an older installation and leave retired scripts behind.
 
 Maintenance verification runs from the reviewed repository outside the installed skill. Keep the source pin and recovery record outside the hashed runtime. Host loading and session refresh are host-dependent; no forced restart or automatic update is included.
 
@@ -86,13 +86,15 @@ Record what the host actually read, calculated and answered. A package integrity
 
 For dogfooding, judge correctness, coverage, observed RPC cost and repeatability—not tool choice or a prescribed sequence. Count RPC methods separately from batch requests and index pages when the host exposes them; unknown counts stay unknown. Keep review records outside the skill. Missing live access is a blocked live check, not a failed installation.
 
-### Release acceptance and 0.3.0 scope
+### Release acceptance and bounded release scope
 
 A release candidate must be exercised in a fresh session using only its exported runtime—not a previous install, retired catalog/helper or stale workshop prompt. Record installation/loading, authorized host capability, provider/evidence coverage, reasoning/decoding and final answer separately as pass, fail, blocked or not run.
 
 The acceptance suite covers direct pinned state; exact purchase-event/receipt verification; auction inventory/order/allowance interpretation; source-grounded accrual and an attributable real earned-only scenario; fixed-window/epoch boundaries; cross-generation history; evidence reuse; and correct failure classification. Include adverse cases for mixed-origin funds, precision, dynamic arrays and internally invoked purchases missed by direct-transaction discovery. A correct unknown passes uncertainty handling, not the unavailable numerical or completeness gate. The source-checkout acceptance file defines the detailed cases; these are review checks, not an intake wizard for ordinary users.
 
 For **0.3.0 only**, the owner approved a bounded release based on retained dogfooding, security/native-host checks and calculation verification without first closing every outstanding live-evidence gate. Those gaps remain disclosed, not passed: no blanket claim of certified deployed accrual/reset mechanics, attributable earned-only funding, refund/flow attribution or complete canonical history is made. ClawHub publication and hosted approval are deferred; MIT remains unchanged. The hardened release commit, exact export and CI were verified before [publication](https://github.com/tomismeta/srstack/releases/tag/v0.3.0). This exception does not weaken ordinary evidence or wallet-safety rules.
+
+For **0.4.0**, the owner separately approved a bounded repository/runtime release using retained existing-host S-Bill dogfooding, adversarial review, security/native-host checks, exact calculations and final export/CI verification. Fresh-session isolation and all mandatory scenario/profile combinations are not established; incomplete and wrong-pin claims remain unpassed. Scanner warnings and adjudicated public-identifier false positives remain disclosed. ClawHub publication, hosted approval and license-term acceptance remain deferred; MIT is unchanged. This approval does not certify deployed accounting, complete history, execution eligibility or received proceeds.
 
 **Deterministic results, flexible agents:** nontrivial arithmetic should use inspectable exact calculations with relevant reconciliation checks. Agents remain free to choose or write tools, investigate beyond the references and answer conditional questions without an execution facility. No required language, script, question menu, fixed call budget or permanent output artifact. Identical evidence and assumptions should reproduce identical numbers, not identical wording or tool calls.
 
@@ -125,17 +127,17 @@ This host-native cutover removes the previous fixed snapshot, price, history and
 
 The installed optional calculation toolkit does not restore the retired protocol clients. Specialized references own exact accounting, round dating, allowance windows, order-ID caveats and history coverage. Stale host workshop/install prompts need explicit host-maintainer cleanup outside this repository; package installation does not rewrite other skills, credentials or global instructions.
 
-### S-Bill research and maturity cohorts (0.4.0, unreleased)
+### S-Bill research and maturity cohorts (0.4.0)
 
 Adds a [canonical S-Bill guide](references/sbills.md), dated launch binding and selected frontend interface, question-scoped read guidance and optional offline cohort arithmetic. Calendar-day answers preserve bill identity, stored maturity, timezone boundaries, exact principal, settlement state and discovery coverage; they are not wallet counts or paid-out totals. Current frontend manual roll supersedes the older auto-roll explanation for frontend guidance. Historical preview and planned-audit sources remain dated provenance.
 
-Active deployment is established in the dated S-Bill evidence; refresh current state for current answers. Security reviews are completed per user-reported developer confirmation, not independently mapped public reports or source/bytecode correspondence. This revision adds acceptance criteria, not claims that those gates passed. It adds no signing, submission, wallet connection, RPC client, transport permission or installed live-state fallback. The 0.3.0 release exception below remains version-scoped and does not automatically authorize 0.4.0 release.
+Active deployment is established in the dated S-Bill evidence; refresh current state for current answers. Security reviews are completed per user-reported developer confirmation, not independently mapped public reports or source/bytecode correspondence. Acceptance criteria are not claims that every gate passed; the separately approved bounded 0.4.0 scope is stated above. No signing, submission, wallet connection, RPC client, transport permission or installed live-state fallback is added.
 
-Explicit installation pins now validate and fetch the exact commit from the trusted repository before detaching, rather than assuming a stable-tag-only clone contains it. The default remains published stable `v0.3.0`; this candidate is not a released tag. Unavailable pins fail without branch/tag substitution.
+Explicit installation pins validate and fetch the exact commit from the trusted repository before detaching, rather than assuming a stable-tag-only clone contains it. The release default is `v0.4.0`. Unavailable pins fail without branch/tag substitution.
 
 Earlier review follow-through includes multi-review inventory support, explicit parent-artifact bounds for new source fragments, attributed nonpublic confirmations without invented URLs, and rejection of malformed weighted-price rows. Existing auction forecasting and historical-event reconciliation behavior is otherwise unchanged.
 
-Scoped verification: 18 inventory and 21 packaging regressions passed; the research suite passed 46 checks with two optional JSON Schema checks skipped because `jsonschema` was unavailable. A temporary standalone runtime resolved the S-Bill binding/interface/capability and exercised a known bill's maturity plus a synthetic 23-hour DST interval; malformed weighted rows now exit2. The documented acquisition procedure selected an explicit commit outside the stable tag and rejected malformed/unavailable pins against an isolated local remote. These are packaging, arithmetic and acquisition checks—not fresh-host acceptance, complete live cohort coverage or a published release.
+Initial candidate verification: 18 inventory and 21 packaging regressions passed; the research suite passed 46 checks with two optional JSON Schema checks skipped because `jsonschema` was unavailable locally. A temporary standalone runtime resolved the S-Bill binding/interface/capability and exercised a known bill's maturity plus a synthetic 23-hour DST interval; malformed weighted rows now exit2. The documented acquisition procedure selected an explicit commit outside the stable tag and rejected malformed/unavailable pins against an isolated local remote. Subsequent exact-candidate CI passed with the schema dependency installed. These are packaging, arithmetic and acquisition checks—not fresh-host acceptance or complete live cohort coverage.
 
 Dogfood follow-through makes existing creation bounds directly discoverable, documents separately qualified log/archive provider paths and anchor reconciliation, and adds a same-block `totalPrincipal` cross-check for comparable deployment-wide bill sums. It makes STANDARD/USD valuation explicit: STANDARD book amounts remain separate from fresh indicative USD marks, with no implicit $1 conversion. A dated STANDARD/native-ETH pool lead, provider disagreement rules and compact report recipe connect the existing market-price resources. Current provider responses and exact mark arithmetic were exercised; prices remain outside the installed defaults. New agent acceptance criteria are not claimed as executed passes.
 
