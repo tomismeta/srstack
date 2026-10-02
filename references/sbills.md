@@ -31,6 +31,8 @@ Use exact signatures/layouts from the selected interface; this table is a questi
 
 **Selector collision:** S-Bill `quote(uint256)` and license-auction `quote(uint256)` both select `0xed1bd76c`, but S-Bills returns **three words**, the license quote **two**. Decode by authenticated role/target/interface, never selector alone. Do not import auction 12-hour clocks, prices, allowance windows or limit-order behavior.
 
+**Exit-pressure window:** the [reviewed publisher frontend](../assets/sources/sbills.json) queries `min(d + 1, w)` buckets descending from program day `d`, where `w = exitWindowDays`. For pinned analysis, use the same block's header timestamp and `startTime`: `d = floor((timestamp - startTime) / 86400)`. When `d >= 0` and `w > 0`, the inclusive range is `max(0, d - (w - 1))` through `d`; day 0 includes only bucket 0, not future buckets. Before program start or with a zero window, there are no buckets under this interpretation—not evidence of zero lifetime exits. Sum only successfully read buckets; missing reads remain unknown. This is frontend-derived indexing, not verified deployed pressure arithmetic or unlimited historical retention. Future-bucket probes are not elapsed-window observations; unexpected values require investigation, not an invented explanation.
+
 ## Rates, amounts and action meanings
 
 - **Rate:** WAD ratio (`raw / 10^18`); percent is `raw × 100 / 10^18`. A per-term rate is not annualized. If requested, label simple annualization as a scenario using the stated term/year convention; compounding additionally assumes successful future rolls and rates, not automatic renewal.

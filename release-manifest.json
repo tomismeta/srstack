@@ -76,10 +76,10 @@
     "references/risks.md": "18cb069858f9ebcb6457fe73168f445b3c53cb23fc02d83cc071671f5ff2c8ff",
     "references/round-datasets.md": "ef75e04959534f29595f2e0e35a3b95d92d3ace5a5ace5b649d7e9fd9c7765ea",
     "references/safety.md": "592aed8adeb39d3caea207b70d237d24e37f2947be853e77524438fc5637a303",
-    "references/sbills.md": "31a6fd40941751202ba390dd5b76e45b388a7ad4ff76e9969829a0fd5c2734e4",
+    "references/sbills.md": "472ee1bdcf970a60147f2b7c24c1fb8da5491ec0e132bb30945ec92729def851",
     "references/updates.md": "8ff753c583ee8d2f655ab3c3a8403fa5f949669383cace1fd33c401aa0fdea4c",
     "scripts/calculations.py": "219de444c54eaa513f8c93063b98e970f8866e8d312a51444ac815ff2a6606f3",
     "scripts/research.py": "18b3ac0070b2cbe827d7a031c74456f0b6cdab9b125121af2e15e0e27c00016f"
   },
-  "content_sha256": "b99f1daa3be6c3e5ebe6b32478522df0ea644b6d1796dbd5cfaa24c58ddb6fea"
+  "content_sha256": "3defda94c4ed0c2af1962267cc4472352642dd4b89bc9c5a4a45ea5566d88455"
 }
