@@ -39,11 +39,15 @@ Policy rules describe the mechanism that sets an opening; observed history descr
 
 The optional [calculation recipes](calculations.md) expose `close_trend_projection`, `sellout_ratio_summary`, `structural_close_projection`, `floor_trend_context` and `project_next_close`. Choose and disclose the trailing sample and policy multiplier; there is no fixed live ratio or per-round decrement. Sample standard deviation describes empirical dispersion, not a confidence interval or contractual regularity. Keep numerical error bounds separate. Future floor remains unknown, and a negative extrapolation must be reported as model failure rather than clipped into a plausible price. If history is unavailable, partial, stale or insufficiently qualified, explain the precise limit rather than inventing a numeric market-close forecast or confusing the policy opening with one.
 
+For alternative forecast assumptions, [collect once and calculate locally](collection-efficiency.md#where-this-applies): reuse the qualified history and anchor rather than rerunning retrieval per scenario. A changed evidence scope or requested refresh remains a separately identified collection.
+
 If demand breaks, a round may not sell out and its last print can occur anywhere down to its applicable floor; a no-sale round has no last-sold price. The future floor itself remains unknown. “Every capped round sold out” must identify the covered historical sample, not become a perpetual demand assumption.
 
 ## Current license availability and next opportunity
 
 For “can I buy now?”, establish the relevant availability gate before interpreting a price. Use authenticated generation-specific state at one pinned block and [discover the current deployment/interface](contracts.md); query only what the question needs. An authenticated effective `remainingToday() == 0` means **not buyable now**, regardless of a positive `currentPrice()` or `quote(...)`: that output can be a leftover curve value, not an executable ask. Unavailable or sold-out is not zero-cost; missing state stays unknown, never an announcement default.
+
+Use the [shared collection recipe](collection-efficiency.md) for independent same-pin availability, allowance, capacity and configuration reads. Resolve target/clock dependencies first and collect only what the question requires; a supported batch is not a reason to continue an unrelated full snapshot after a binding constraint is known.
 
 Distinguish open protocol branches (`totalBranches()`), per-round license allocation/cap, effective remaining inventory, per-charter purchase allowance and open orders. The [dated interface guide](interface-guide.md) supplies generation-qualified leads, not active targets. `openBidCount()` counts orders, not licenses; a bid may request multiple units. A historical allocation does not override live state. Authenticate denomination before displaying prices.
 

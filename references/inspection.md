@@ -30,6 +30,8 @@ Establish types, strict decoding, scales and relevant proxy/module relationships
 
 Reuse anchored observations; batch compatible reads and bound pages/calls/bytes/time. Never substitute latest for unavailable history. Failures and incomplete enumeration are unknown, not zero. Order IDs need authenticated mapping to charters; bids/fillability are not purchases.
 
+Use the [shared collection recipe](collection-efficiency.md) for independent charter/auction/position getters after authenticating their dependencies. Batch the relevant same-pin balance, allowance, capacity and configuration reads; stop collecting unrelated state once a binding constraint answers the question. Enumeration cursors and other dependent stages remain ordered.
+
 Current getters establish current anchored state, not the purchases or flows that produced it. Historical state corroboration requires archive access at the relevant historical anchor and authenticated counter/configuration semantics; logs and receipts have separate coverage and do not themselves require archive-state access. If event totals and comparable state counters disagree, reconcile scope, boundaries, resets, quantities and canonicality before asserting a total—events are not automatically authoritative. Reuse external evidence with [scoped refresh and overlap reconciliation](auction-history.md#optional-incremental-evidence-reuse), not a required full-history refresh.
 
 ### Units and financial interpretation
@@ -45,6 +47,8 @@ Distinguish burns, ledger retirement, conversion, cap reduction, issuance budget
 ## Anchor any price separately
 
 Authenticate asset/market identity, units and methodology. Retain provider/retrieval time; quote time stays unknown unless supplied. Cache/trade/creation timestamps are not quote times. State and prices need not be atomic. Missing denominations remain unavailable; conversions need evidenced rates or labelled assumptions. Indicative price is not executable proceeds.
+
+Independent market-provider observations may be fetched concurrently under the [same collection principle](collection-efficiency.md#where-this-applies), where authorized and supported. This is not JSON-RPC batching or an atomic market snapshot: retain each provider's identity, retrieval/quote time and disagreement rather than blending or averaging automatically.
 
 For STANDARD holdings, “STANDARD/USD”, “USD”, “value”, “worth” or “mark” requires a current [market-price source](../assets/sources/market-price.json), unless the user explicitly requests STANDARD book amounts only or supplies a hypothetical price. Historical valuation requires appropriately dated price evidence. Report token amounts and USD marks separately; **STANDARD is not assumed to equal $1**. Missing price evidence leaves USD unavailable, not zero or par. A booked S-Bill premium is STANDARD-denominated until explicitly marked to market.
 

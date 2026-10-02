@@ -49,6 +49,8 @@ Use the dated `sr-standard-native-market-2026-10-02` pool lead in [market source
 
 **Summary recipe:** discover relevant `Deposited` IDs (or wallet pages), read `bills(id)` at the pinned head, count active/settled/inactive states independently, and sum principal/booked premium for the stated scope. For a day, filter stored maturity first. If USD is requested, multiply each exact STANDARD amount by the selected provider's USD-per-STANDARD quote. Report provider disagreement separately; do not silently average or mix one provider's native price with another's conversion. An explicitly requested blended mark must label its inputs and method.
 
+Use the [shared collection recipe](collection-efficiency.md) for independent bill reads, relevant counters and requested deposit-size quotes. Discover IDs first; refresh each scoped bill at the same pin in supported bounded batches, rather than launching a CLI per bill. Keep full discovery and reuse this one collection for STANDARD/USD/par presentations. Quote alternatives are not consecutive deposits. Reconciliation uses exact raw active principal, not cent-rounded equality; missing reads or an unexplained residual prevent a complete-census claim without discarding useful partial evidence.
+
 Compact output:
 - Active bills: **N**, with deployment/wallet/date scope and discovery/state coverage.
 - Principal: **X STANDARD**; indicative market mark **~$Y**.

@@ -16,7 +16,7 @@ from pathlib import Path, PurePosixPath
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT
 MANIFEST = "release-manifest.json"
-VERSION = "0.4.0"
+VERSION = "0.4.1"
 CORPUS_FILES = {"assets/sources.json", "assets/parameters.json"}
 RESEARCH_FILES = {
     "scripts/calculations.py", "scripts/research.py", "assets/schemas/research-evidence-v1.json",

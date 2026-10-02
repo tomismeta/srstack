@@ -4,7 +4,14 @@
 
 Ask about protocol mechanics, live positions, historical auctions or what earned accrual could buy. The agent chooses the evidence and calculations the question needs, using its existing host-authorized tools. No topic command, calculator wizard or fixed sequence is required.
 
-Independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product. **Version 0.4.0.** [Installation](references/installation.md) resolves the reviewed release tag or an explicitly supplied full commit.
+Independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product. **Candidate version 0.4.1; published stable v0.4.0.** [Installation](references/installation.md) defaults to the stable tag; candidate installs require an explicit reviewed full commit.
+
+## New in 0.4.1 (candidate)
+
+- One [shared collection-efficiency recipe](references/collection-efficiency.md) for S-Bill censuses and quote comparisons, auction receipts/headers, charter/auction snapshots, local scenarios and concurrent market cross-checks.
+- Deduplicate before batching, preserve pinned raw results and per-request outcomes, and reuse one collection rather than spawning a CLI per item or repeating discovery for presentation.
+- Optional executable offline request-planning/response-matching functions and a single-batch example using an already authorized host client. No bundled RPC client, provider defaults, incremental discovery state or runtime dependency is added.
+- Dogfood must establish exact-result equivalence, failure handling and host-specific timing; no universal latency improvement or 0.4.1 release approval is claimed.
 
 ## New in 0.4.0
 
@@ -126,6 +133,12 @@ CI installs `jsonschema==4.25.1` only to validate the instructional examples aga
 This host-native cutover removes the previous fixed snapshot, price, history and diagnostic clients and their execution catalogs. There are no compatibility commands or retired helper aliases. Existing host-native research tools replace them; any automatic discovery, checkpointing or batching must actually be supported or implemented by the host agent before being claimed.
 
 The installed optional calculation toolkit does not restore the retired protocol clients. Specialized references own exact accounting, round dating, allowance windows, order-ID caveats and history coverage. Stale host workshop/install prompts need explicit host-maintainer cleanup outside this repository; package installation does not rewrite other skills, credentials or global instructions.
+
+### Shared collection efficiency (0.4.1, unreleased)
+
+Turns existing batching/reuse guidance into one optional host-tool recipe, linked from all six applicable question paths. Independent calls use bounded batches and response IDs; dependent discovery stays staged, local scenarios reuse evidence and market cross-checks retain separate provider timestamps. Missing/error/ambiguous responses remain explicit, and completeness requires the existing domain-specific checks. Its offline functions do not decode ABIs, discover deployments or issue RPC; the optional curl invocation uses an existing approved host profile under normal permissions. Calculation/output contracts are unchanged. The 0.4.0 bounded-release approval is historical and does not authorize this candidate's release.
+
+Candidate smoke checks exercised 102 synthetic unique reads with repeated consumers, shuffled responses, missing/error/null/invalid outcomes and ambiguous-ID rejection. The documented host-client invocation also returned five public same-pin reads byte-identical to sequential reads, with matching decoded words and a stable header recheck. This is bounded recipe evidence, not a 100-bill census benchmark, full discovery proof or fresh-host acceptance; those remain dogfood checks.
 
 ### S-Bill research and maturity cohorts (0.4.0)
 

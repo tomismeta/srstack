@@ -26,6 +26,8 @@ For large histories, prefer a suitable independently authorized wide-range log s
 
 At ingestion, retain the full identity and ordering already supplied by `eth_getLogs`: emitter/address, block number and hash, transaction hash and index, log index, removed flag, and raw topics/data, together with the known chain and source context. Retain decoded fields with their ABI/generation and unit provenance. Do not discard these fields pending a receipt request or treat their presence as receipt verification. Fetch relevant receipts once per collection pass when needed to verify matching logs and transaction success; record those checks separately. Reuse headers by chain/hash for timestamps and canonical checks. Batch compatible calls and use bounded logs for gaps or when better suited; disclose actual stopping bounds.
 
+Apply the [shared collection recipe](collection-efficiency.md) after log discovery: deduplicate transaction hashes for receipts and chain/block hashes for headers, then batch supported independent lookups. Several purchase events can share one transaction/block; preserve their separate event identities while reusing the receipt/header. Do not replace an unsuitable tiny-window log scan with a larger batch of the same excessive work.
+
 If a source supplies only partial identity, ordering or decoded fields, preserve that source-scoped degraded observation with unknowns and limitations rather than inventing values, dropping the observation or calling it zero. It may support a narrower claim without qualifying for deduplicated, ordered, uncontested totals. See [schema versus calculation requirements](research-tools.md#optional-external-evidence-interchange).
 
 ### Range-limited providers and degraded discovery

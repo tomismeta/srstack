@@ -381,6 +381,34 @@
       "forbidden": ["Numerical drift for identical inputs, new live inputs silently replacing the packet, fabricated execution claims or a prescribed workflow/language."]
     },
     {
+      "id": "efficient_multi_read_collection",
+      "gate": "mandatory",
+      "setup": "Supply a finite authenticated read set and ordinary host capabilities, with repeated consumers of identical requests, separate chain/provider/anchor contexts, and explicit dependencies. Include labelled shuffled, missing, duplicate/unknown-ID, malformed-envelope, null-result and per-member-error responses; an interrupted later chunk; and an authorization-denial premise. Also ask about quote alternatives, snapshots, reused forecast inputs and independent market providers. Synthetic packets test reasoning, not live performance.",
+      "question": "Collect the evidence for [scoped question] efficiently using these available capabilities, and explain which results and totals are supported.",
+      "required": [
+        "Resolve discovery/cursor dependencies first; deduplicate identical complete requests only within compatible evidence contexts and retain each consumer's mapping. Do not deduplicate economic events merely because they share a receipt/header.",
+        "Use supported bounded batches for independent reads without requiring a particular client or batch size. Avoid a subprocess per member when an authorized batch facility is available; count RPC members separately from HTTP/process overhead when observable.",
+        "Associate responses by unique ID, not order; preserve raw quantities, individual failures and completed earlier chunks. Missing, null, duplicate/unknown IDs, malformed envelopes and HTTP-successful RPC errors cannot become zero or a complete result.",
+        "Keep same-pin quote alternatives distinct from sequential simulated deposits; collect only relevant snapshot getters, reuse fixed evidence for scenario changes, and preserve independent market-provider times/disagreement without averaging.",
+        "Respect host/provider permissions, total time/response limits and throttling; no automatic fallback, retry amplification or credential disclosure. Incomplete evidence limits affected claims rather than erasing all useful observations."
+      ],
+      "forbidden": ["Batching latest calls presented as one pinned snapshot; cross-context deduplication; response-position matching; repeated production census for formatting; denied batch retried through a different client; a new required transport or schema."]
+    },
+    {
+      "id": "sbill_batch_equivalence_and_timing",
+      "gate": "mandatory_live",
+      "setup": "Choose a finite S-Bill review fixture, authenticated deployment/interface and canonical pin under ordinary host authorization. Compare every batched bill result against sequential reads at the same pin once for review, not repeatedly in production. For a performance target, name the provider/access profile, discovery interval, bill count, bounds and timed stages; a 100-bill under-30-second target is scoped to that environment, never universal. No expected totals or prescribed transport are supplied to the answering agent.",
+      "question": "Summarize all S-Bills in [explicit scope] at [pin], with principal, booked premium and evidence coverage. Then show a STANDARD-only view and an explicitly hypothetical USD mark using the same collected evidence.",
+      "required": [
+        "Preserve full scoped discovery before batched state refreshes; no max-ID/contiguous-ID inference, new-only refresh or unverified incremental checkpoint.",
+        "Retain exact raw returns and decoded bill identities/fields; independently compare every record with the same-pin sequential baseline, not only sampled or rounded summary totals.",
+        "Compare the all-refreshed-active-principal raw sum with same-block totalPrincipal only where accounting scopes agree, before any date filter. Preserve total/locked distinctions, independent flags, residuals and missing-state coverage.",
+        "Report discovery, state-read, decode/reconciliation and end-to-end timing separately with request/HTTP/process counts where observed. Record inaccessible capabilities and unknown timing rather than promising seconds from a prior host report.",
+        "Reuse the first collection for follow-up presentations and local scenario arithmetic; successful numerical equality does not by itself prove complete discovery or fresh-session acceptance."
+      ],
+      "forbidden": ["Cent-rounded equality promoted to raw reconciliation; only total/sample comparison described as full equivalence; hidden discovery narrowing; timing claims without an exercised named environment; new release approval inferred from historical 0.4.0 exception."]
+    },
+    {
       "id": "failure_classification_and_secret_boundaries",
       "gate": "mandatory",
       "setup": "Review separate cases of user/host authorization denial, provider access denial, transport failure, unsupported method, range/page limit, unavailable index, unavailable archive and an evidence gap after successful reads. Use actual recorded diagnostics when available; otherwise use clearly labelled hypothetical premises. Include a permitted independent public source in one provider-denial case, a separately established provider-supported access context after a different client's denial, and an underlying host prohibition in another. Do not provoke or repeat known failures.",
