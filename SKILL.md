@@ -25,6 +25,7 @@ Use direct reads when they answer the question. Current/materialized state, arch
 - Open branches are not unsold licenses. Pending ledger value is not proved earnings, spendable funds or net withdrawable value; a sampled rate is not interval income.
 - New-charter auctions and branch-license auctions have separate generations, payment assets, clocks, inventory and constraints. Authenticate each independently.
 - S-Bills are separate STANDARD deposit positions: quoted rate, booked premium, maturity, settlement and realized receipts differ. Use [S-Bills](references/sbills.md) for scoped reads and calendar-day cohorts, not Bank exit or auction rules.
+- For STANDARD/USD, USD value, worth or mark, obtain an appropriately dated [market quote](references/inspection.md#anchor-any-price-separately) and separate STANDARD book amounts from USD marks. Never assume STANDARD=$1; explicit book-only or supplied-price hypothetical requests are different.
 - Funds-affordable is not necessarily permitted or executable. A sold-out round's remaining curve output is not a buyable ask; stored counters can describe a prior materialized round.
 - Scheduled windows, actual rolls and first-to-last observed sale spans differ. Last observed is not a sold-out close without evidenced exhaustion and complete relevant coverage.
 - Preserve raw quantities and consideration. Repeatedly averaging or reusing rounded prices loses information. Keep ETH, token units, ledger amounts, branches and fiat values distinct; round only for labelled display.

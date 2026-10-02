@@ -41,6 +41,66 @@
       "alternative_evidence": "Pin quote and config to one block. For booked premium use authenticated bill state/Deposited; for realized proceeds use successful receipt and reconciled transfers, not a local floating-point frontend approximation."
     },
     {
+      "id": "sbills-rate-mechanics",
+      "question": "What rate checkpoint, drift and deposit-impact inputs explain the current S-Bill rate?",
+      "status": "available",
+      "interface_ids": ["sbills-launch-2026-10-01"],
+      "review_ids": ["publisher-sbills-2026-10-02"],
+      "functions": [
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "rate()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "rateUpdatedAt()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "drifting()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "driftPerSecond()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "impactScale()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "floor()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "ceiling()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "currentRate()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "quote(uint256)"}
+      ],
+      "absent_signatures": [],
+      "explanation": "Read stored WAD term-rate checkpoint, timestamp, drift flag/speed, amount-impact input and bounds at one block. Stored rate, current rate and amount-specific average/post-deposit rates differ. impactScale is a publisher STANDARD18 curve input, not cap or liquidity.",
+      "alternative_evidence": "Use currentRate and quote(amount) for observed results. Historical changes need earlier anchored state and relevant execution/configuration evidence; current tuning inputs alone do not establish causation, future rates or exact Solidity curve/rounding. Do not substitute the frontend approximation for a contract quote.",
+      "references": ["references/interface-inventory-sbills.md", "references/sbills.md"]
+    },
+    {
+      "id": "sbills-exit-pressure",
+      "question": "What are the exit-fee inputs and how much principal exited in the relevant pressure window?",
+      "status": "available",
+      "interface_ids": ["sbills-launch-2026-10-01"],
+      "review_ids": ["publisher-sbills-2026-10-02"],
+      "functions": [
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "startTime()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "exitFloorBps()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "exitCapBps()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "exitWindowDays()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "exitPressureFloor()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "exitedOnDay(uint256)"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "lockedPrincipal()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "quoteExit(uint256)"}
+      ],
+      "absent_signatures": [],
+      "explanation": "Fee bounds are BPS; pressure-floor, locked principal and exitedOnDay amounts are publisher STANDARD18. startTime and exitWindowDays inform the frontend's program-relative 86400-second buckets, not UTC calendar days, auction rounds, bill terms or a waiting period. Window interpretation and historical retention need evidence.",
+      "alternative_evidence": "Establish bucket indexing from the authenticated model and header time before bounded day reads; do not query a negative/pre-start day or infer unlimited historical retention. Sum only evidenced buckets with explicit coverage, corroborating Exited records where needed. Use quoteExit(id) for the actual bill-specific fee/payout preview; these inputs do not prove the deployed pressure equation, rounding or fee destinations.",
+      "references": ["references/interface-inventory-sbills.md", "references/sbills.md"]
+    },
+    {
+      "id": "sbills-bonus-accounting",
+      "question": "What bonus-accounting inputs and bonus settlement previews are exposed for this bill?",
+      "status": "available",
+      "interface_ids": ["sbills-launch-2026-10-01"],
+      "review_ids": ["publisher-sbills-2026-10-02"],
+      "functions": [
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "bonusPerPrincipal()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "bills(uint256)"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "quoteRedeem(uint256)"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "quoteExit(uint256)"}
+      ],
+      "absent_signatures": [],
+      "explanation": "bonusPerPrincipal and the bill's bonusDebt are accounting inputs; neither is a token balance or directly claimable bonus. The frontend uses a WAD accumulator interpretation, not independently verified Solidity checkpoint/rounding semantics. Preserve principal, booked premium, active and settled separately.",
+      "alternative_evidence": "Prefer quoteRedeem's bonus/payout or quoteExit's forfeitedBonus/payout at the same block for the appropriate question. A pre-maturity redemption revert or unavailable quote does not establish zero bonus. Never add a forfeited bonus to payout; realized bonus needs attributable successful settlement/transfer evidence.",
+      "references": ["references/interface-inventory-sbills.md", "references/sbills.md"]
+    },
+    {
       "id": "sbills-wallet-bills",
       "question": "Which bills belong to this wallet at the observation block?",
       "status": "available",
@@ -102,16 +162,18 @@
       "functions": [
         {"interface_id": "sbills-launch-2026-10-01", "signature": "bills(uint256)"},
         {"interface_id": "sbills-launch-2026-10-01", "signature": "billCount(address)"},
-        {"interface_id": "sbills-launch-2026-10-01", "signature": "billsOf(address,uint256,uint256)"}
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "billsOf(address,uint256,uint256)"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "totalPrincipal()"}
       ],
       "events": [
         {"interface_id": "sbills-launch-2026-10-01", "signature": "Deposited(uint256,address,uint256,uint256,uint256,uint64)"},
         {"interface_id": "sbills-launch-2026-10-01", "signature": "Exited(uint256,address,uint256,uint256,uint256,uint256)"}
       ],
       "absent_signatures": [],
-      "explanation": "Conditional evidence-backed cohort analysis, not an invented maturity-day getter. Filter each stored maturity into explicit timezone [start,end), stating UTC if defaulted. Deduplicate chain+contract+id, retain ID0, distinguish active/settled and sum exact booked amounts. Report discovery coverage separately from arithmetic.",
-      "alternative_evidence": "Wallet scope uses pinned complete pages. Global completeness requires authenticated full ID discovery, bounded Deposited log coverage and pinned per-ID bills state, with rollover/reuse/settlement semantics reconciled. Only Deposited/Exited are selected; a 30-day indexer window or partial event ABI cannot establish complete lifecycle discovery. Otherwise report observed subset, never zero/full counts.",
-      "references": ["references/sbills.md", "references/calculations.md"]
+      "explanation": "Conditional evidence-backed cohort analysis, not an invented maturity-day getter. Filter stored maturity into explicit timezone [start,end), defaulting explicitly to UTC. Deduplicate chain+contract+id, retain ID0, distinguish active/settled and sum exact STANDARD book amounts. Reconcile comparable deployment-wide principal against same-block totalPrincipal before date filtering; equality corroborates, not proves completeness. USD/value/worth/mark requests require a separately anchored market quote unless explicitly book-only or hypothetical par, never an implicit $1 conversion.",
+      "alternative_evidence": "Reuse sr-sbills-deployment-2026-10-02 creation.block_number/transaction_hash for log bounds. Wallet scope uses pinned pages; global discovery requires bounded Deposited coverage and pinned bills state with creation-path limits. Distinct authorized providers may serve logs and archive state; compare their anchor hashes. Neither a30day index nor partial ABI proves full lifecycle discovery. Report partial scope and counter residuals; wallet/day subtotals are not whole-contract counters.",
+      "source_ids": ["sr-sbills-deployment-2026-10-02", "sr-standard-native-market-2026-10-02"],
+      "references": ["references/sbills.md", "references/calculations.md", "references/inspection.md", "assets/sources/market-price.json"]
     },
     {
       "id": "sbills-admin-and-lifecycle-scope",

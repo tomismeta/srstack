@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "scope": "Fixed public market-price provider contracts and routing; no stored quotes or balances",
+  "scope": "Public market-price provider interfaces and dated market-identity discovery leads; no stored quotes, balances or permanent preferred-pool routing",
   "records": [
     {
       "id": "dexscreener-api",
@@ -46,6 +46,44 @@
         "Requested cross-checks report disagreement without averaging prices or mixing denominations. Derived models must identify their inputs and method.",
         "CoinGecko onchain data belongs to the same provider family, not an independent third corroborating source.",
         "Provider selection and requested historical reuse remain subject to host/provider access rules; never bypass an access restriction or label an old quote as current."
+      ]
+    },
+    {
+      "id": "sr-standard-native-market-2026-10-02",
+      "url": "https://api.dexscreener.com/tokens/v1/robinhood/0x88ad8DdF1E3898412146a534538d418c6F8A9062",
+      "publisher": "DEX Screener and GeckoTerminal provider-reported market identities",
+      "published_at": null,
+      "retrieved_at": "2026-10-02",
+      "as_of": "2026-10-02",
+      "review_depth": "Retrieved the token-pairs response and matching GeckoTerminal pool response; checked chain, v4 pool identifier, base/quote token identities and liquidity fields. No market prices retained as defaults.",
+      "claim_stage": "dated provider market binding and discovery lead, not onchain pool verification or executable pricing",
+      "source_ids": ["dexscreener-api", "geckoterminal-api"],
+      "source_urls": [
+        "https://api.dexscreener.com/tokens/v1/robinhood/0x88ad8DdF1E3898412146a534538d418c6F8A9062",
+        "https://api.dexscreener.com/latest/dex/pairs/robinhood/0xc73f3cd3fb68288e63f008e08ef69caa0437224e420963c6aeb4526178e87ad9",
+        "https://api.geckoterminal.com/api/v2/networks/robinhood/pools/0xc73f3cd3fb68288e63f008e08ef69caa0437224e420963c6aeb4526178e87ad9"
+      ],
+      "binding": {
+        "chain_id": 4663,
+        "provider_network": "robinhood",
+        "dex": "uniswap-v4",
+        "provider_pool_id": "0xc73f3cd3fb68288e63f008e08ef69caa0437224e420963c6aeb4526178e87ad9",
+        "base_token": "0x88ad8DdF1E3898412146a534538d418c6F8A9062",
+        "quote_token": "0x0000000000000000000000000000000000000000",
+        "quote_asset": "native ETH; GeckoTerminal display name says WETH but relationship uses zero address",
+        "limits": "The 32-byte provider pool identifier is not a 20-byte ERC20 or PoolManager contract address. Refresh identity before applying a quote."
+      },
+      "locators": [
+        "DEX Screener token response: chainId, pairAddress, baseToken.address, quoteToken.address, priceUsd, liquidity.usd.",
+        "GeckoTerminal pool response: data.id, attributes.address, relationships.base_token/quote_token/dex, base_token_price_usd, reserve_in_usd."
+      ],
+      "summary": "Both responses identified the same STANDARD/native-ETH v4 market and reported substantial liquidity. Use it as a first discovery candidate for routine STANDARD marks, subject to current identity and liquidity checks; never as a stored quote or mandatory target.",
+      "limits": [
+        "The token response returned one pool in this retrieval; it is not an exhaustive all-market census or proof of permanently greatest liquidity.",
+        "No USDG pool binding was authenticated by this review. A thin USDG market, if discovered, is a separately assessed cross-check, not a $1 STANDARD peg.",
+        "Provider USD/native fields and liquidity estimates differed. Use the selected provider's explicit USD-per-STANDARD field, retain attribution/time, and report disagreement rather than silently average or combine conversion legs.",
+        "No quote-observation timestamp was established. Retrieval time is not price time; current marks applied to historical book amounts must be labelled as such.",
+        "Indicative gross market marks exclude fees, taxes, slippage and gas and do not establish funding eligibility or guaranteed proceeds."
       ]
     }
   ]

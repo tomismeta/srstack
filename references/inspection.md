@@ -46,6 +46,10 @@ Distinguish burns, ledger retirement, conversion, cap reduction, issuance budget
 
 Authenticate asset/market identity, units and methodology. Retain provider/retrieval time; quote time stays unknown unless supplied. Cache/trade/creation timestamps are not quote times. State and prices need not be atomic. Missing denominations remain unavailable; conversions need evidenced rates or labelled assumptions. Indicative price is not executable proceeds.
 
+For STANDARD holdings, “STANDARD/USD”, “USD”, “value”, “worth” or “mark” requires a current [market-price source](../assets/sources/market-price.json), unless the user explicitly requests STANDARD book amounts only or supplies a hypothetical price. Historical valuation requires appropriately dated price evidence. Report token amounts and USD marks separately; **STANDARD is not assumed to equal $1**. Missing price evidence leaves USD unavailable, not zero or par. A booked S-Bill premium is STANDARD-denominated until explicitly marked to market.
+
+The dated `sr-standard-native-market-2026-10-02` record identifies a STANDARD/native-ETH pool candidate and both provider routes. Refresh token/pool identity, liquidity and the explicit USD-per-STANDARD field. Native ETH and a WETH display name are not interchangeable identity evidence. Prefer a suitably liquid authenticated market; use thin alternative/USDG pools only as labelled cross-checks unless the user requests that market. Disclose provider disagreement without silent averaging; label any expressly requested blended methodology. A current mark of historical holdings is not a historical price or a forecast of redemption proceeds.
+
 ### Auction interpretation
 
 Disambiguate **new-charter auctions** from **branch-license auctions** using the question's context; ask only if material ambiguity remains. Authenticate role/generation separately: charter price/payment is ETH in the reviewed interface, license unit price/payment is STANDARD ledger-denominated. Do not inherit one family's schedule, floor/multiplier, cap, inventory or payment asset from the other. Their [event layouts](interface-guide.md#auction-events) and quantities differ.

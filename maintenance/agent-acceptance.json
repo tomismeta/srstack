@@ -447,6 +447,8 @@
       "question": "Protocol-wide, how many S-Bills and how much active principal mature on [date]?",
       "required": [
         "Use authenticated full ID discovery for the requested deployments, such as bounded canonical Deposited logs plus pinned bills state, with filters/ranges/pages and creation-path limits recorded. Do not assume the selected ABI proves every creation path.",
+        "Find the packaged creation.block_number and creation.transaction_hash before rediscovering deployment by code search. Treat the publisher RPC as a dated authorized discovery lead, not a guarantee of log range or archive support.",
+        "Programmatically reconcile decimal/hex block tags, hash and timestamp across transports. Before day filtering, compare comparable all-bill principal with same-block totalPrincipal; disclose residuals and unknown accounting scope. Never compare a wallet/day subtotal directly with the whole-contract total or promote equality to proof of all creation paths.",
         "Do not substitute wallet enumeration, contiguous observed IDs or a30day index for global completeness; keep relevant older/replacement deployments in scope.",
         "Report ID-discovery and refreshed-state coverage separately. Complete deposit observations with missing bill state can support an observed deposit schedule, not a complete current active count/principal total. Unknown fields are not zero.",
         "Estimate finite provider-appropriate collection work, retain partial observations and populated checkpoints for unavailable pages/ranges/state, and avoid unbounded retries or genesis scans.",
@@ -467,6 +469,21 @@
         "Keep read-only investigation useful without requiring a public audit report as a blanket gate, and preserve existing unsigned-preparation/signing/submission boundaries."
       ],
       "forbidden": ["Historical preview as current status, review completion denied or inflated to mapped public audit proof, budget equated with solvency or no-risk guarantee."]
+    },
+    {
+      "id": "sbill_book_amounts_and_usd_marks",
+      "gate": "mandatory_live",
+      "setup": "Use evidenced S-Bill records and current authenticated market responses. Separately exercise labelled fixtures with disagreeing providers, native ETH described as WETH, a thin alternative USDG pool, unavailable price, and a historical-state/current-mark request. Do not supply or imply a $1 token price.",
+      "question": "How many active S-Bills are there, and what are their total principal and booked premium worth in STANDARD/USD?",
+      "follow_up": "Now show only STANDARD book amounts, then an explicitly hypothetical STANDARD=$1 par scenario.",
+      "required": [
+        "Use scoped discovered IDs and pinned bill state; distinguish active, settled and inactive counts and preserve exact principal/premium sums. Booked premium is a STANDARD-denominated claim/schedule component, not realized USD earnings.",
+        "For USD/value/worth/mark, obtain a fresh appropriately identified provider quote rather than assume $1. Follow the dated market lead but recheck pool/token identities and liquidity; the native zero-address quote is not authenticated WETH merely because of its display name.",
+        "Report principal, booked premium and their book sum in STANDARD and separately marked USD; show provider, pool, quote, retrieval time, state anchor and unknown quote-observation time. The book sum excludes unquoted bonus and is not a redemption/exit payout or executable proceeds.",
+        "Disclose provider/pool disagreement without silently averaging or mixing conversion legs. A thin USDG pool is not a STANDARD peg. Label any explicitly requested blend or par scenario independently.",
+        "If price retrieval fails, retain supported STANDARD results with USD unavailable. Do not fetch an unnecessary mark for the explicit STANDARD-only follow-up. A current mark of historical holdings is neither a historical price nor a promised future value."
+      ],
+      "forbidden": ["STANDARD implicitly equals $1; USD premium without market marking; missing price replaced by zero/par; day/wallet principal compared directly with global principal; provider prices silently averaged."]
     },
     {
       "id": "informational_and_unsigned_action_boundary",

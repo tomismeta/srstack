@@ -17,9 +17,10 @@
       "path": "assets/sources/market-price.json",
       "record_ids": [
         "dexscreener-api",
-        "geckoterminal-api"
+        "geckoterminal-api",
+        "sr-standard-native-market-2026-10-02"
       ],
-      "scope": "Fixed public market-price provider contracts; no stored quotes"
+      "scope": "Public market-price provider interfaces and dated STANDARD/native-ETH pool discovery evidence; no stored quotes or permanent routing"
     },
     {
       "id": "live-interface",
