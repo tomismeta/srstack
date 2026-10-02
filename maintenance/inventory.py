@@ -167,9 +167,17 @@ def _validate_inventory(files):
         require(type(coverage["source_definition_complete"]) is bool, f"Missing completeness flag: {identity}")
         require(coverage["kind"] in {"complete_literal", "complete_adaptation", "selective_fragment"}, f"Unknown coverage kind: {identity}")
         require(coverage["source_definition_complete"] == (coverage["kind"] != "selective_fragment"), f"Inconsistent completeness: {identity}")
+        require(type(coverage.get("deployed_implementation_complete")) is bool, f"Missing deployed completeness flag: {identity}")
+        require(coverage["source_definition_complete"] or not coverage["deployed_implementation_complete"], f"Partial interface claims deployed completeness: {identity}")
         fragment = coverage["source_fragment"]
         require(coverage.get("source_locator") and re.fullmatch(r"[0-9a-f]{64}", fragment.get("sha256", "")), f"Missing source fragment provenance: {identity}")
         require(type(fragment.get("bytes")) is int and fragment["bytes"] > 0 and type(fragment.get("start_utf8_byte")) is int and type(fragment.get("end_utf8_byte")) is int and fragment["start_utf8_byte"] >= 0 and fragment["end_utf8_byte"] - fragment["start_utf8_byte"] == fragment["bytes"], f"Invalid source fragment byte range: {identity}")
+        if "artifact_url" in fragment or "artifact_sha256" in fragment:
+            parents = [artifact for artifact in review.get("source_chain", [])
+                       if artifact.get("url") == fragment.get("artifact_url")
+                       and artifact.get("sha256") == fragment.get("artifact_sha256")]
+            require(len(parents) == 1, f"Unknown or ambiguous fragment parent: {identity}")
+            require(fragment["end_utf8_byte"] <= parents[0]["bytes"], f"Source fragment exceeds parent artifact: {identity}")
         abis = [entry["abi"] for entry in item["entries"]]
         require(bool(abis), f"Empty reviewed interface: {identity}")
         digest, counts = abi_digest(abis), entry_counts(abis)
@@ -234,6 +242,12 @@ def _validate_inventory(files):
             if "complete_asset_sha256" in record:
                 recorded.append({"sha256": record["complete_asset_sha256"], "bytes": record.get("complete_asset_bytes")})
         require(any(artifact["sha256"] == record.get("sha256") and artifact["bytes"] == record.get("bytes") for artifact in artifacts for record in recorded), "Review artifact does not match source record")
+        if any("artifact_url" in coverage["source_fragment"] for coverage in review["interfaces"].values()):
+            require(all(any(artifact["url"] == record.get("url")
+                            and artifact["sha256"] == record.get("sha256")
+                            and artifact["bytes"] == record.get("bytes")
+                            for record in recorded) for artifact in artifacts),
+                    f"Review artifact does not match source record: {review['id']}")
         for identity in review["interfaces"]:
             require(identity in interfaces and interfaces[identity]["review_id"] == review["id"], f"Dangling review interface: {identity}")
             reviewed_ids.add(identity)
@@ -277,6 +291,10 @@ def _validate_inventory(files):
                 require(function["interface_id"] in ids, "Capability function outside scope")
                 available = {entry["signature"] for entry in interfaces[function["interface_id"]]["entries"] if entry["abi"]["type"] == "function"}
                 require(function["signature"] in available, f"Missing capability function: {function['signature']}")
+            for event in row.get("events", []):
+                require(event["interface_id"] in ids, "Capability event outside scope")
+                available = {entry["signature"] for entry in interfaces[event["interface_id"]]["entries"] if entry["abi"]["type"] == "event"}
+                require(event["signature"] in available, f"Missing capability event: {event['signature']}")
             absent = row.get("absent_signatures", [])
             if row["status"] == "not_exposed" or absent:
                 require(all(interfaces[i]["coverage"]["source_definition_complete"] for i in ids), f"Incomplete negative capability claim: {row['id']}")

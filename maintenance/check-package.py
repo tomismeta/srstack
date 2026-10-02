@@ -87,6 +87,21 @@ class PackageChecks(unittest.TestCase):
         self.assertFalse(os.path.lexists(self.destination))
         self.assertEqual([], list(self.work.glob(".srstack-export-*")))
 
+    def test_nonpublic_confirmation_requires_explicit_attribution(self):
+        path = "assets/sources/sbills.json"
+        self.package.verify_content(self.runtime)
+        for patch in ({"attribution": ""}, {"source_kind": None},
+                      {"url": "https://example.invalid/report"}):
+            with self.subTest(patch=patch):
+                document = json.loads(self.runtime[path])
+                record = next(row for row in document["records"]
+                              if row.get("source_kind") == "user_reported")
+                record.update(patch)
+                files = dict(self.runtime)
+                files[path] = json.dumps(document).encode()
+                with self.assertRaises(ValueError):
+                    self.package.verify_content(files)
+
     def test_export_matches_committed_manifest_not_dirty_worktree(self):
         (self.root / "README.md").write_text("invalid uncommitted runtime\n")
         (self.root / "assets/untracked.json").write_text("not valid JSON")

@@ -8,7 +8,7 @@ Publisher rules and selected v1.1/v1.2 announcements reconciled on **2026-09-27*
 
 STANDARD describes an ERC-20 currency, an ETH ↔ $STANDARD hooked Uniswap v4 pool, an issuing central bank, charter NFTs, branches within those charters, and expansion/contraction vaults. Traders need no charter. A branch represents a share of issuance, not a reserve-redemption claim. The protocol owns liquidity and reserve assets; the bank/company analogy is not a legal bank account or customer deposit product. [sr-whitepaper-v1: introduction, entities, disclaimer]
 
-The [object and contract map](object-map.md) separates economic objects from contracts and distinguishes ownership, ledger records, funding and control relationships. An NFT ID, branch count, wallet token balance, pending ledger amount, auction bid and S-Bill preview are not interchangeable forms of ownership or income.
+The [object and contract map](object-map.md) separates economic objects from contracts and distinguishes ownership, ledger records, funding and control relationships. An NFT ID, branch count, wallet token balance, pending ledger amount, auction bid and S-Bill position are not interchangeable forms of ownership or income.
 
 Trading generates fees and pool-flow measurements; issuance credits branch balances pro rata; retiring branches releases accrued value through withdrawal minting. The whitepaper describes expansion-license payments as permanent ledger removal; that reference is not a verified v1.1 proceeds split. Token deposits convert wallet tokens into re-mintable ledger value. Post-genesis charter auction ETH enters the ongoing fee engine; founding proceeds have a separate allocation and escrow/finalization sequence. [sr-whitepaper-v1: entities, currency, charters, reserves]
 
@@ -18,11 +18,14 @@ The historical [v1.1 update](updates.md#protocol-v11-announced-changes) announce
 
 The later [v1.2 update](updates.md#protocol-v12-announced-changes) announced branch limit orders with FCFS best-attempt keeper execution and charter auctions at branch cadence. Its initial 5.5 ETH opening and subsequent 3× clearing-price rule are dated policy, not current prices or guaranteed fills. Authenticate current deployments; retain earlier generations for historical scope. This auction release and its review claim establish neither S-Bill launch nor completed S-Bill audit.
 
+[S-Bills](sbills.md) are a separately deployed STANDARD deposit product with dedicated launch-interface evidence. Their term rates, principal/premium accounting, maturity and exit rules do not inherit charter issuance, auction cadence or Bank retirement fees. Security reviews are completed per user-reported developer confirmation; public report mapping and deployed-source correspondence remain separate.
+
 ## Read only the needed mechanics
 
 - [Supply and policy](protocol-policy.md): supply identities, deposit conversions, flow signals, published multiplier recurrence and conditional models; [monetary parameters](../assets/parameters/monetary.json).
 - [Charters](charters.md): branches, founding entry, auctions, exits and dormancy; [participation parameters](../assets/parameters/participation.json).
 - [Reserves](reserves.md): separate founding/ongoing allocations, ownership and buybacks; [reserve parameters](../assets/parameters/reserves.json).
+- [S-Bills](sbills.md): rates, amount quotes, positions, maturity cohorts and exit/redemption/roll distinctions.
 - [Launch trading](launch-trading.md): finalization, tax gaps and activation; [launch parameters](../assets/parameters/launch.json).
 - [Risks](risks.md): non-upgradeability does not eliminate owner discretion or the optional guardian.
 

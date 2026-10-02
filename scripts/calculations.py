@@ -43,7 +43,10 @@ def weighted_price(rows):
     remainder. Empty or zero-quantity observations have no average, not zero.
     """
     quantity = consideration = 0
-    for count, price in rows:
+    for row in rows:
+        if not isinstance(row, (list, tuple)) or len(row) != 2:
+            raise ValueError("each row must be a quantity/raw price pair")
+        count, price = row
         count = _integer(count, "quantity")
         price = _integer(price, "unit_price_raw")
         quantity += count
@@ -52,6 +55,70 @@ def weighted_price(rows):
     return {"quantity": quantity, "consideration_raw": consideration,
             "average_raw": Fraction(consideration, quantity) if quantity else None,
             "quotient_raw": quotient, "remainder": remainder}
+
+
+def sbill_maturity_cohort(bills, *, chain_id, contract, start_timestamp,
+                          end_timestamp, as_of_timestamp):
+    """Exact scheduled maturities in supplied pinned records, not full discovery.
+
+    Bounds are caller-resolved integer timestamps, [start, end). Active and
+    settled are independent observed flags, not execution eligibility. Sums
+    are principal and booked premium only, never bonus or actual payouts.
+    Flags describe the as-of observation, not historical active-at-maturity
+    population for a past interval. Future intervals are allowed.
+    """
+    chain_id = _integer(chain_id, "chain_id")
+    if not chain_id:
+        raise ValueError("chain_id must be positive")
+    if not isinstance(contract, str) or not re.fullmatch(r"0x[0-9a-fA-F]{40}", contract):
+        raise ValueError("contract must be a 20-byte hex address")
+    start = _integer(start_timestamp, "start_timestamp")
+    end = _integer(end_timestamp, "end_timestamp")
+    as_of = _integer(as_of_timestamp, "as_of_timestamp")
+    if end <= start:
+        raise ValueError("end_timestamp must exceed start_timestamp")
+    unique = {}
+    for bill in bills:
+        row = {name: _integer(bill[name], name) for name in
+               ("bill_id", "principal_raw", "premium_raw", "term_start", "maturity")}
+        owner = bill["owner"]
+        if not isinstance(owner, str) or not re.fullmatch(r"0x[0-9a-fA-F]{40}", owner):
+            raise ValueError("owner must be a 20-byte hex address")
+        row["owner"] = owner.lower()
+        for name in ("active", "settled"):
+            if type(bill[name]) is not bool:
+                raise ValueError(f"{name} must be a boolean")
+            row[name] = bill[name]
+        if row["term_start"] > row["maturity"]:
+            raise ValueError("term_start must not exceed maturity")
+        bill_id = row["bill_id"]
+        if bill_id in unique and unique[bill_id] != row:
+            raise ValueError(f"conflicting records for bill_id {bill_id}")
+        unique[bill_id] = row
+    matched = [unique[bill_id] for bill_id in sorted(unique)
+               if start <= unique[bill_id]["maturity"] < end]
+    states = dict.fromkeys(("active_unsettled", "active_settled",
+                            "inactive_unsettled", "inactive_settled"), 0)
+    active_count = principal = premium = matured = settled = 0
+    for row in matched:
+        state = ("active" if row["active"] else "inactive")
+        state += "_settled" if row["settled"] else "_unsettled"
+        states[state] += 1
+        settled += row["settled"]
+        if row["active"]:
+            active_count += 1
+            principal += row["principal_raw"]
+            premium += row["premium_raw"]
+            matured += row["maturity"] <= as_of
+    return {"chain_id": chain_id, "contract": contract.lower(),
+            "start_timestamp": start, "end_timestamp": end, "as_of_timestamp": as_of,
+            "scope": "supplied records; flags at as_of_timestamp, not historical active-at-maturity",
+            "matched_bills": matched, "matched_bill_ids": [row["bill_id"] for row in matched],
+            "matched_count": len(matched), "active_count": active_count,
+            "inactive_count": len(matched) - active_count, "settled_count": settled,
+            "state_counts": states, "active_principal_raw": principal,
+            "active_premium_raw": premium, "active_matured_by_asof_count": matured,
+            "active_upcoming_count": active_count - matured}
 
 
 def _serialized(value):

@@ -1,6 +1,44 @@
-# Optional close-projection calculations
+# Optional offline calculations
 
-These six pure Python 3.10+ helpers in `scripts/calculations.py` are optional, offline and standard-library-only. They add no CLI mode, network client, dependencies, live data, wallet action or protocol defaults. Existing calculation helpers and the five `research.py` modes are unchanged. Permission and evidence rules in [safety](safety.md), [auction history](auction-history.md), and [round datasets](round-datasets.md) still apply.
+These pure Python 3.10+ helpers in `scripts/calculations.py` are optional, offline and standard-library-only. The S-Bill cohort helper and six close-projection helpers add no CLI mode, network client, dependencies, live data, wallet action or protocol defaults. The five `research.py` modes remain unchanged. Permission and evidence rules in [safety](safety.md), [S-Bills](sbills.md), [auction history](auction-history.md), and [round datasets](round-datasets.md) still apply.
+
+## S-Bill maturity cohort
+
+`sbill_maturity_cohort(bills, *, chain_id, contract, start_timestamp, end_timestamp, as_of_timestamp)` summarizes **supplied records at one pinned observation**, not complete discovery or automatic redemption. Each row supplies `bill_id`, `owner`, `principal_raw`, `premium_raw`, `term_start`, `maturity`, `active`, and `settled`. Numeric inputs accept nonnegative integers or canonical decimal strings, not booleans or binary floats; flags must be booleans. Chain ID must be positive, owner/contract must be 20-byte hex addresses (case normalized), `term_start <= maturity`, and `end_timestamp > start_timestamp`. Retain block hash, source links and discovery coverage alongside the input/output; this arithmetic API does not authenticate or carry provenance metadata.
+
+Selection uses each bill's **stored maturity** in `[start_timestamp,end_timestamp)`, never today's configured term. The chain and contract scope all rows; bill ID `0` is valid. Identical normalized records deduplicate by ID; conflicting records raise `ValueError`, including conflicts outside the selected interval. Extra row fields are not part of the calculation or duplicate comparison. Results are deterministic by numeric bill ID:
+
+- `matched_bills`, `matched_bill_ids`, and `matched_count` include active and inactive matching records.
+- `active_count` and `inactive_count` distinguish scheduled active positions from historical inactive records. `settled_count` and `state_counts` (`active_unsettled`, `active_settled`, `inactive_unsettled`, `inactive_settled`) preserve the flags independently: active-settled rows are **not silently excluded**.
+- `active_principal_raw` and `active_premium_raw` sum exact active principal and **booked** premium. These are not current rate quotes, exit proceeds, bonuses, actual payouts or realized receipts.
+- `active_matured_by_asof_count` counts active matching rows with `maturity <= as_of_timestamp`; `active_upcoming_count` counts the rest. Neither is a redemption-eligibility check. Scope, interval and as-of timestamp are returned too.
+
+Calendar boundaries belong to the caller. State the timezone explicitly; if unspecified, say that UTC is being used. Construct each local midnight independently with `zoneinfo`, rather than adding 86,400 seconds. This fictional example uses a 23-hour New York calendar day; change the named zone to `UTC` for a UTC day. It is not live evidence:
+
+```python
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+from calculations import sbill_maturity_cohort
+
+zone = ZoneInfo("America/New_York")
+epoch = datetime(1970, 1, 1, tzinfo=timezone.utc)
+def unix_seconds(local):
+    delta = local.astimezone(timezone.utc) - epoch
+    return delta.days * 86400 + delta.seconds
+
+start = unix_seconds(datetime(2026, 3, 8, tzinfo=zone))
+end = unix_seconds(datetime(2026, 3, 9, tzinfo=zone))
+result = sbill_maturity_cohort(
+    [dict(bill_id=0, owner="0x" + "22" * 20,
+          principal_raw="1000000000000000001", premium_raw="200000000000000003",
+          term_start=start - 100, maturity=start, active=True, settled=False)],
+    chain_id=999999, contract="0x" + "11" * 20,
+    start_timestamp=start, end_timestamp=end, as_of_timestamp=start)
+```
+
+Here the supplied active count is `1`, principal is exactly `1000000000000000001` raw, and booked premium is `200000000000000003` raw. `ZoneInfo` uses the host timezone database; the helper itself only needs integer timestamps. A global total requires authenticated complete ID discovery and pinned bill state, not merely all rows returned by an indexer's lookback.
+
+Flags describe the supplied **as-of observation**, not the historical active-at-maturity population for a past interval. This caveat is also returned in `scope`. Future intervals are allowed; `as_of_timestamp` does not cap the interval.
 
 ## Before projecting
 

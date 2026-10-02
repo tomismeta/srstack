@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "scope": "Dated S-Bills publisher/interface, launch and scoped chain provenance; never a current state dataset or runtime defaults. Earlier September27 evidence remains unchanged.",
+  "records": [
+    {
+      "id": "sr-sbills-interface-2026-10-02",
+      "url": "https://www.standardreserve.xyz/assets/StakePage-UZsAeyx4.js",
+      "publisher": "The Standard Reserve official application",
+      "published_at": null,
+      "retrieved_at": "2026-10-02",
+      "review_id": "publisher-sbills-2026-10-02",
+      "review_depth": "Complete linked HTML, main module and staking chunk retrieved as data; selected ABI array fully transcribed, including source Bill struct and exact event indexing. No downloaded code executed.",
+      "claim_stage": "complete selected frontend array, partial contract interface; no verified Solidity correspondence",
+      "source_urls": [
+        "https://www.standardreserve.xyz/app/staking/",
+        "https://www.standardreserve.xyz/assets/mountApp-CRx6ba2l.js",
+        "https://www.standardreserve.xyz/assets/StakePage-UZsAeyx4.js"
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.standardreserve.xyz/app/staking/",
+          "bytes": 6652,
+          "sha256": "d1083521e1199654ed10d221d4c61aaf5e49e26239eb393e04680f6436ab468a",
+          "relationship": "Official staking HTML explicitly links mountApp-CRx6ba2l.js"
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-CRx6ba2l.js",
+          "bytes": 863138,
+          "sha256": "8921717a644cb4e67499a42e180767ac64dea88949da2afbc15bd7b32947633c",
+          "relationship": "Complete module binds WP.sbills and references StakePage-UZsAeyx4.js"
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/StakePage-UZsAeyx4.js",
+          "bytes": 37814,
+          "sha256": "ef30d95dcbdde92c9f2ef443f892b80e89991a80df904796b11c323ab7403160",
+          "relationship": "Complete imported staking chunk; X=Ze([...]) holds selected human-readable ABI; un/pn bind X to contracts.sbills"
+        }
+      ],
+      "source_fragment": {
+        "bytes": 2831,
+        "sha256": "7ddd8d09e620b41176d8306ca0f9d4b63aed25f736576734eae09f0a01188d26",
+        "start_utf8_byte": 29000,
+        "end_utf8_byte": 31831,
+        "artifact_url": "https://www.standardreserve.xyz/assets/StakePage-UZsAeyx4.js",
+        "artifact_sha256": "ef30d95dcbdde92c9f2ef443f892b80e89991a80df904796b11c323ab7403160"
+      },
+      "binding_fragment": {
+        "locator": "sbills:\"0x163B36fD07622486CB889fEEf97BfBe2c1D7c05B\"",
+        "start_utf8_byte": 376055,
+        "end_utf8_byte": 376106,
+        "bytes": 51,
+        "sha256": "e2c0fa4b3cd547e33ed449a587852d1c2c93d9f0ec72341d866fbf6af7e64db8"
+      },
+      "locators": [
+        "Official /app/staking/ HTML links mountApp-CRx6ba2l.js; its dependency map names StakePage-UZsAeyx4.js.",
+        "Main WP.sbills binds S-Bills; EP=\"4663\" is the publisher chain ID; WP.standard binds the token.",
+        "StakePage X=Ze([...]) contains 51 declaration strings: Bill struct, 36 functions, 2 events, 12 errors. un/pn use X with W=z()?.contracts.sbills.",
+        "J=Number(Y(value,16)) renders WAD rate fractions as percentages; C=Number(Y(value,18)) displays token amounts; exit fees divide BPS by100 for percentage display. Retain exact integers, not frontend Number conversions.",
+        "Frontend pn.roll reads quoteRedeem(id) payout, then quote(payout), then explicitly invokes roll(id,minRate); no automatic renewal.",
+        "wn uses x=i?.book??Gt when live reads are unavailable. Gt/sample history and local Ae/Dt arithmetic must never supply live defaults.",
+        "Deposited and Exited are the only selected events. No Redeemed/Rolled events or complete lifecycle discovery are established."
+      ],
+      "summary": "Authenticates the launch S-Bills selected read/quote/action decoding surface and role binding independently of the older staking preview. ABI signatures and successful reads do not establish economic implementation, permissions or complete event coverage.",
+      "limits": [
+        "Source-definition-complete and deployed-implementation-complete are both false.",
+        "Selector 0xed1bd76c quote(uint256) collides across role interfaces: license returns two words, S-Bills three.",
+        "bonusPerPrincipal/bonusDebt and exit-day models are frontend evidence, not source/compiler or rounding proof."
+      ]
+    },
+    {
+      "id": "sr-sbills-deployment-2026-10-02",
+      "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0x163B36fD07622486CB889fEEf97BfBe2c1D7c05B",
+      "publisher": "Official frontend binding, Blockscout creation evidence and scoped Robinhood Chain RPC evidence",
+      "published_at": null,
+      "retrieved_at": "2026-10-02",
+      "review_depth": "Dated creation, successful deposit and pinned public-read evidence from the scoped investigation supplied to this implementation; publisher artifacts independently reacquired for this review.",
+      "claim_stage": "active deployment confirmed as of the pinned observation; not a perpetual activation alias or complete implementation proof",
+      "source_urls": [
+        "https://www.standardreserve.xyz/app/staking/",
+        "https://www.standardreserve.xyz/assets/mountApp-CRx6ba2l.js",
+        "https://rpc.mainnet.chain.robinhood.com",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x163B36fD07622486CB889fEEf97BfBe2c1D7c05B",
+        "https://robinhoodchain.blockscout.com/tx/0x1b1f346add53958f593a7edc2b576dc89fff8511ecf45de4569d90f978ebf3ac",
+        "https://robinhoodchain.blockscout.com/tx/0xb021e1e190908675f532b3a829c4728ff0e7007cf4c66a7cf088d91069b31ec3"
+      ],
+      "chain_id": 4663,
+      "contract": "0x163B36fD07622486CB889fEEf97BfBe2c1D7c05B",
+      "generation": "launch-2026-10-01",
+      "token": {
+        "address": "0x88ad8DdF1E3898412146a534538d418c6F8A9062",
+        "decimals": 18
+      },
+      "creation": {
+        "provider_url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0x163B36fD07622486CB889fEEf97BfBe2c1D7c05B",
+        "block_number": 77727505,
+        "transaction_hash": "0x1b1f346add53958f593a7edc2b576dc89fff8511ecf45de4569d90f978ebf3ac"
+      },
+      "deposit_evidence": {
+        "provider_url": "https://rpc.mainnet.chain.robinhood.com",
+        "method": "eth_getTransactionReceipt with transaction/header corroboration",
+        "block_number": 77762834,
+        "block_timestamp": 1790896743,
+        "transaction_hash": "0xb021e1e190908675f532b3a829c4728ff0e7007cf4c66a7cf088d91069b31ec3",
+        "receipt_status": 1,
+        "bill_id": "0",
+        "principal_raw": "5419000000000000000000",
+        "premium_raw": "135571400624555995330",
+        "rate_paid_wad": "25017789375264070",
+        "maturity": 1792192743,
+        "observed_term_seconds": 1296000
+      },
+      "pinned_observation": {
+        "provider_url": "https://rpc.mainnet.chain.robinhood.com",
+        "block_number": 78459437,
+        "block_hash": "0x656d332e52271e8accc7a53f83d38b3f03e078681330503d0e20b736b0daa49e",
+        "timestamp_utc": "2026-10-02T18:51:33Z",
+        "term_seconds": 1296000,
+        "min_deposit_standard": "1000",
+        "wallet_cap_standard": "1000000",
+        "total_cap_standard": "30000000",
+        "total_principal_standard": "4419106",
+        "budget_standard": "1419176.125479611121469747",
+        "floor_wad": "10000000000000000",
+        "ceiling_wad": "70000000000000000",
+        "exit_floor_bps": 200,
+        "exit_cap_bps": 1500,
+        "exit_window_days": 7,
+        "paused": false,
+        "closed": false,
+        "owner": "0x5c19F925E1e0D54E34681A6CB70d55c90b12A68c",
+        "owner_kind": "Safe; powers not established"
+      },
+      "summary": "Creation and a successful ID-zero deposit establish launched activity, not merely a preview or deployed-code presence. The sampled stored deposit interval and pinned term both equal15days. Preserve the original source dates and treat these exact observations solely as dated provenance.",
+      "limits": [
+        "No current numeric defaults: fetch new same-block observations for current questions.",
+        "owner() observation is separately scoped RPC evidence, not an invented addition to the selected frontend ABI; Safe ownership does not establish parameter, pause, sweep or upgrade powers.",
+        "Creation, publisher launch label, successful activity and Registry authorization are distinct claims."
+      ]
+    },
+    {
+      "id": "sr-sbills-security-review-confirmation-2026-10-02",
+      "url": null,
+      "source_kind": "user_reported",
+      "attribution": "The user reports that the developer confirmed completed security reviews in the S-Bill implementation request.",
+      "publisher": "User-reported developer confirmation",
+      "published_at": null,
+      "retrieved_at": "2026-10-02",
+      "review_depth": "User explicitly reports security reviews completed and confirmed by the developer. No public report was supplied or acquired for this claim.",
+      "claim_stage": "user-reported developer confirmation, not public audit or source correspondence",
+      "source_urls": [],
+      "summary": "Security reviews completed and developer-confirmed, as reported by the user during this implementation. This attribution is retained without inventing a report URL, reviewer identity, reviewed commit or deployed-code match.",
+      "limits": [
+        "Does not prove audit scope, findings, remediation, bytecode correspondence, safety or transaction success.",
+        "Does not change runtime safety or authorize signing/submission."
+      ]
+    }
+  ]
+}

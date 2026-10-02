@@ -4,6 +4,8 @@ Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-bou
 
 Published policy: `sr-protocol-v1-2-announcement`, earlier `sr-protocol-v1-1-announcement`, and `sr-whitepaper-v1` §§6–8. Relevant website material and known posts were freshly reviewed on **2026-09-27**; this was not complete account-timeline coverage. The whitepaper retains superseded charter and direct-purchase descriptions; [the conflict below](#protocol-v12-limit-orders-and-charter-cadence) is explicit. [Participation parameters](../assets/parameters/participation.json) hold dated reference rules, not current settings. These post-genesis auctions are not the [founding sale](launch-mint.md).
 
+[S-Bill](sbills.md) term rates and deposits are a separate product. Do not import these auctions' 12-hour rounds, price curves, limit-order queues or branch/charter identifiers into S-Bill answers.
+
 ## Two different auctions
 
 | Dimension | Charter auction | Branch-license auction |

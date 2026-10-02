@@ -2,6 +2,8 @@
 
 Publisher design freshly reviewed on **2026-09-27**: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1` §§9–10,12–13 and scoped reconciliation `sr-source-reconciliation-2026-09-27`. Dated reference settings: [participation parameters](../assets/parameters/participation.json), not current configuration or exhaustive social-timeline coverage.
 
+**Bank/charter scope only:** these retirement, resolution-fee, dormancy and transfer rules do not govern [S-Bills](sbills.md). In particular, the Bank's 2%–60% fee curve, no-withdrawal-pause claim and charter transfer rules are not S-Bill exit, redemption or roll semantics.
+
 ## Earning, withdrawal and resolution fees — §9
 
 For accrued balance A and b branches before retirement, retiring k branches releases A × k/b before the resolution fee and removes that earning capacity. Tokens are minted to the wallet net of the fee. Retiring every branch burns the charter. This pro-rata relation is a source description, not an implementation rounding/settlement algorithm. In source-rule scenarios preserve exact raw amounts and the rational A × k/b until display; a repeating quotient is not permission to invent deployed rounding. A charter's ledger amount may have mixed origins; a retirement payout is not proof that all released funds were earned. [sr-whitepaper-v1: exits]

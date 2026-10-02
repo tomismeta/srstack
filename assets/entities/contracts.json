@@ -3,6 +3,35 @@
   "purpose": "Dated chain/address/role/generation/interface evidence, never active aliases, defaults, target routing or execution permission. Token bindings are opt-in historical evidence, not runtime token pins.",
   "bindings": [
     {
+      "id": "sbills-launch-2026-10-01",
+      "chain_id": 4663,
+      "address": "0x163B36fD07622486CB889fEEf97BfBe2c1D7c05B",
+      "role": "sbills",
+      "generation": "launch-2026-10-01",
+      "as_of": "2026-10-02",
+      "review_id": "publisher-sbills-2026-10-02",
+      "source_locator": "mountApp-CRx6ba2l.js WP.sbills; StakePage-UZsAeyx4.js X=Ze([...]), un/pn use contracts.sbills",
+      "source_ids": [
+        "sr-sbills-interface-2026-10-02",
+        "sr-sbills-deployment-2026-10-02"
+      ],
+      "interface_ids": ["sbills-launch-2026-10-01"],
+      "interface_status": "selective_fragment",
+      "dependencies": [
+        {
+          "role": "standard",
+          "address": "0x88ad8DdF1E3898412146a534538d418c6F8A9062",
+          "source_locator": "WP.standard; S-Bills token() corroboration retained in dated source evidence"
+        }
+      ],
+      "limits": [
+        "Launch-2026-10-01 identifies dated deployment evidence, not a Solidity version or current routing alias.",
+        "Every selected frontend ABI entry is inventoried; full source definition, administrative permissions and event completeness remain unknown.",
+        "Active deployment is evidenced by creation and successful activity as of the dated source observations, not inferred solely from a frontend binding.",
+        "Completed developer-confirmed security reviews are user-reported confirmation, not public report or deployed-source equivalence."
+      ]
+    },
+    {
       "id": "original-registry",
       "chain_id": 4663,
       "address": "0x855C294dD019E9e0d84C058cFF7404f5F2dDCa4b",

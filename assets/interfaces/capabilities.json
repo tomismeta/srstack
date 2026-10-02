@@ -3,6 +3,128 @@
   "scope": "Optional planning knowledge, not a router, allowlist or mandatory workflow. For ABI-read records, available means exposed by the cited reviewed publisher interface. For kind:derived_analysis, available means a conditional analysis recipe exists; functions are reviewed input reads, not forecast getters. review_ids attest ABI-input review only, not model, policy, live dataset or implementation verification. Negative claims are scoped to complete source definitions. Unknown is not absence.",
   "capabilities": [
     {
+      "id": "sbills-config",
+      "question": "What configuration and availability inputs does S-Bills expose?",
+      "status": "available",
+      "interface_ids": ["sbills-launch-2026-10-01"],
+      "review_ids": ["publisher-sbills-2026-10-02"],
+      "functions": [
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "token()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "term()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "minDeposit()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "walletCap()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "totalCap()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "totalPrincipal()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "lockedPrincipal()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "budget()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "floor()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "ceiling()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "paused()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "closed()"}
+      ],
+      "absent_signatures": [],
+      "explanation": "Same-block configuration and reported aggregates are directly readable in the selected frontend interface. Token amounts are STANDARD18, rate bounds are WAD term fractions, term is seconds. They do not establish transaction eligibility or replace per-bill maturity.",
+      "alternative_evidence": "Authenticate token identity/decimals, deployment and block; add wallet balance/allowance, principalOf and amount-specific quotes as needed. Never substitute publisher sample-book fallback values when reads fail."
+    },
+    {
+      "id": "sbills-entry-quote",
+      "question": "What rate and premium does this S-Bills deposit amount currently quote?",
+      "status": "available",
+      "interface_ids": ["sbills-launch-2026-10-01"],
+      "review_ids": ["publisher-sbills-2026-10-02"],
+      "functions": [
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "currentRate()"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "quote(uint256)"}
+      ],
+      "absent_signatures": [],
+      "explanation": "currentRate is distinct from amount-specific ratePaid,premium,rateAfter. S-Bills quote returns three words despite sharing selector0xed1bd76c with the two-word license quote. Rates are WAD term fractions; premium is STANDARD18, not APR or realized earnings.",
+      "alternative_evidence": "Pin quote and config to one block. For booked premium use authenticated bill state/Deposited; for realized proceeds use successful receipt and reconciled transfers, not a local floating-point frontend approximation."
+    },
+    {
+      "id": "sbills-wallet-bills",
+      "question": "Which bills belong to this wallet at the observation block?",
+      "status": "available",
+      "interface_ids": ["sbills-launch-2026-10-01"],
+      "review_ids": ["publisher-sbills-2026-10-02"],
+      "functions": [
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "principalOf(address)"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "billCount(address)"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "billsOf(address,uint256,uint256)"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "bills(uint256)"}
+      ],
+      "absent_signatures": [],
+      "explanation": "Owner count and bounded pages discover wallet-scoped IDs for individual reads. Namespace IDs by chain and contract; zero is valid. Preserve active and settled separately and do not silently filter them during discovery.",
+      "alternative_evidence": "Pin every count/page/read to one block, reconcile pagination and retain coverage. Wallet enumeration is not a complete global bill census; authenticated logs and broader discovery are needed for global claims."
+    },
+    {
+      "id": "sbills-individual-bill",
+      "question": "What are this bill's owner, state, principal, booked premium and stored maturity?",
+      "status": "available",
+      "interface_ids": ["sbills-launch-2026-10-01"],
+      "review_ids": ["publisher-sbills-2026-10-02"],
+      "functions": [{"interface_id": "sbills-launch-2026-10-01", "signature": "bills(uint256)"}],
+      "absent_signatures": [],
+      "explanation": "Eight flat outputs preserve owner,settled,active,principal,premium,termStart,maturity,bonusDebt. Principal/premium are STANDARD18; time fields are Unix seconds. Current term does not reconstruct a bill's stored maturity.",
+      "alternative_evidence": "Use quoteExit/quoteRedeem for point-in-time payout previews and successful receipts/transfers for realized outcomes. A decoded zero/default record alone does not authenticate bill existence."
+    },
+    {
+      "id": "sbills-exit-quote",
+      "question": "What does this bill currently quote for early exit?",
+      "status": "available",
+      "interface_ids": ["sbills-launch-2026-10-01"],
+      "review_ids": ["publisher-sbills-2026-10-02"],
+      "functions": [{"interface_id": "sbills-launch-2026-10-01", "signature": "quoteExit(uint256)"}],
+      "absent_signatures": [],
+      "explanation": "Returns feeBps,fee,vested,forfeitedBonus,payout in that order. BPS is separate from STANDARD18; forfeited fields are not added to payout. This is not Bank resolution/exit semantics.",
+      "alternative_evidence": "Authenticate bill activity and timing at the same block. Exited supplies observed fee/forfeiture fields; reconcile successful receipt and actual token transfers before calling a payout realized."
+    },
+    {
+      "id": "sbills-redeem-quote",
+      "question": "What does this bill currently quote for redemption?",
+      "status": "available",
+      "interface_ids": ["sbills-launch-2026-10-01"],
+      "review_ids": ["publisher-sbills-2026-10-02"],
+      "functions": [
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "quoteRedeem(uint256)"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "bills(uint256)"}
+      ],
+      "absent_signatures": [],
+      "explanation": "Returns principal,premium,bonus,payout in STANDARD18. Stored maturity and active/settled state remain separate. Maturity does not itself execute redemption or automatic rollover.",
+      "alternative_evidence": "Read same-block state and quote; validate settlement with receipt/transfer evidence. The selected ABI does not establish complete redemption/roll event coverage or administrative powers."
+    },
+    {
+      "id": "sbills-maturity-cohort",
+      "kind": "derived_analysis",
+      "question": "How many evidenced bills mature on a chosen calendar day, and what principal/premium is booked?",
+      "status": "available",
+      "interface_ids": ["sbills-launch-2026-10-01"],
+      "review_ids": ["publisher-sbills-2026-10-02"],
+      "functions": [
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "bills(uint256)"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "billCount(address)"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "billsOf(address,uint256,uint256)"}
+      ],
+      "events": [
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "Deposited(uint256,address,uint256,uint256,uint256,uint64)"},
+        {"interface_id": "sbills-launch-2026-10-01", "signature": "Exited(uint256,address,uint256,uint256,uint256,uint256)"}
+      ],
+      "absent_signatures": [],
+      "explanation": "Conditional evidence-backed cohort analysis, not an invented maturity-day getter. Filter each stored maturity into explicit timezone [start,end), stating UTC if defaulted. Deduplicate chain+contract+id, retain ID0, distinguish active/settled and sum exact booked amounts. Report discovery coverage separately from arithmetic.",
+      "alternative_evidence": "Wallet scope uses pinned complete pages. Global completeness requires authenticated full ID discovery, bounded Deposited log coverage and pinned per-ID bills state, with rollover/reuse/settlement semantics reconciled. Only Deposited/Exited are selected; a 30-day indexer window or partial event ABI cannot establish complete lifecycle discovery. Otherwise report observed subset, never zero/full counts.",
+      "references": ["references/sbills.md", "references/calculations.md"]
+    },
+    {
+      "id": "sbills-admin-and-lifecycle-scope",
+      "question": "Are all S-Bills administrative powers and lifecycle events known?",
+      "status": "unknown",
+      "interface_ids": ["sbills-launch-2026-10-01"],
+      "review_ids": ["publisher-sbills-2026-10-02"],
+      "functions": [],
+      "absent_signatures": [],
+      "explanation": "The entire selected frontend array is represented, but it is partial contract evidence. Safe ownership and user-reported developer-confirmed reviews do not establish upgrade, parameter, pause, sweep, reward-funding or complete lifecycle powers.",
+      "alternative_evidence": "Obtain authenticated implementation/admin ABI and source/runtime correspondence with effective controls; acquire public review scope/report if needed. Do not invent Redeemed/Rolled events or infer absence from this fragment."
+    },
+    {
       "id": "branches-and-pending",
       "question": "How many branches are open, and what is this charter's pending ledger value?",
       "status": "available",

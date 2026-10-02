@@ -1,0 +1,1490 @@
+{
+  "schema_version": 1,
+  "id": "sbills-launch-2026-10-01",
+  "role": "sbills",
+  "generation": "launch-2026-10-01",
+  "review_id": "publisher-sbills-2026-10-02",
+  "coverage": {
+    "kind": "selective_fragment",
+    "source_definition_complete": false,
+    "deployed_implementation_complete": false,
+    "source_locator": "StakePage-UZsAeyx4.js: X=Ze([...]); entire selected declaration array including Bill struct",
+    "source_fragment": {
+      "bytes": 2831,
+      "sha256": "7ddd8d09e620b41176d8306ca0f9d4b63aed25f736576734eae09f0a01188d26",
+      "start_utf8_byte": 29000,
+      "end_utf8_byte": 31831,
+      "artifact_url": "https://www.standardreserve.xyz/assets/StakePage-UZsAeyx4.js",
+      "artifact_sha256": "ef30d95dcbdde92c9f2ef443f892b80e89991a80df904796b11c323ab7403160"
+    },
+    "entry_counts": {
+      "constructor": 0,
+      "error": 12,
+      "event": 2,
+      "fallback": 0,
+      "function": 36,
+      "receive": 0
+    },
+    "abi_sha256": "e20af8fde70a92a5f978f2133537331b3986c1c7fa95be890cdca1d27dff4c5a"
+  },
+  "source_structs": [
+    {
+      "name": "Bill",
+      "declaration": "struct Bill { address owner; bool settled; bool active; uint128 principal; uint128 premium; uint64 termStart; uint64 maturity; uint256 bonusDebt; }",
+      "components": [
+        {
+          "type": "address",
+          "name": "owner"
+        },
+        {
+          "type": "bool",
+          "name": "settled"
+        },
+        {
+          "type": "bool",
+          "name": "active"
+        },
+        {
+          "type": "uint128",
+          "name": "principal"
+        },
+        {
+          "type": "uint128",
+          "name": "premium"
+        },
+        {
+          "type": "uint64",
+          "name": "termStart"
+        },
+        {
+          "type": "uint64",
+          "name": "maturity"
+        },
+        {
+          "type": "uint256",
+          "name": "bonusDebt"
+        }
+      ],
+      "usage": "Preserved source-only struct declaration; bills(uint256) returns eight flat outputs, not a dynamic tuple wrapper."
+    }
+  ],
+  "entries": [
+    {
+      "signature": "token()",
+      "declaration": "function token() view returns (address)",
+      "abi": {
+        "type": "function",
+        "name": "token",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "address",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Underlying token address; corroborate chain-specific STANDARD identity and decimals.",
+      "units": "Address, not a token amount.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0xfc0c546a"
+    },
+    {
+      "signature": "startTime()",
+      "declaration": "function startTime() view returns (uint64)",
+      "abi": {
+        "type": "function",
+        "name": "startTime",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint64",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Program start anchor used by the frontend for exit-day indexing; not each bill start.",
+      "units": "Unix seconds.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x78e97925"
+    },
+    {
+      "signature": "term()",
+      "declaration": "function term() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "term",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Configured term for new activity at the observation block; existing bills retain their own stored maturity.",
+      "units": "Seconds, not an APR or calendar-month count.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0xa10ffbed"
+    },
+    {
+      "signature": "rate()",
+      "declaration": "function rate() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "rate",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Stored term-rate checkpoint; not necessarily the time-adjusted current rate or amount quote.",
+      "units": "WAD term-rate fraction (1e18 = 100% per term).",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x2c4e722e"
+    },
+    {
+      "signature": "rateUpdatedAt()",
+      "declaration": "function rateUpdatedAt() view returns (uint64)",
+      "abi": {
+        "type": "function",
+        "name": "rateUpdatedAt",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint64",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Timestamp of the stored rate checkpoint.",
+      "units": "Unix seconds.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x2675398b"
+    },
+    {
+      "signature": "drifting()",
+      "declaration": "function drifting() view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "drifting",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "bool",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported rate-drift state; combine with rate checkpoint and effective configuration.",
+      "units": "Boolean.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x64dab071"
+    },
+    {
+      "signature": "driftPerSecond()",
+      "declaration": "function driftPerSecond() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "driftPerSecond",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported rate-drift input; frontend extrapolation is not verified Solidity arithmetic.",
+      "units": "WAD term-rate fraction per second.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0xef3e1830"
+    },
+    {
+      "signature": "impactScale()",
+      "declaration": "function impactScale() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "impactScale",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Amount-impact input used by the frontend entry-rate curve; not a deposit limit.",
+      "units": "STANDARD raw units, publisher 18-decimal display.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x305ba74b"
+    },
+    {
+      "signature": "floor()",
+      "declaration": "function floor() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "floor",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported term-rate floor; not an auction price floor.",
+      "units": "WAD term-rate fraction.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x40695363"
+    },
+    {
+      "signature": "ceiling()",
+      "declaration": "function ceiling() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "ceiling",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported term-rate ceiling; not a guaranteed entry rate.",
+      "units": "WAD term-rate fraction.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x753ed1bd"
+    },
+    {
+      "signature": "totalPrincipal()",
+      "declaration": "function totalPrincipal() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "totalPrincipal",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported aggregate principal accounting at the selected block; distinct from lockedPrincipal.",
+      "units": "STANDARD raw units, 18 decimals.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x4b1533b2"
+    },
+    {
+      "signature": "lockedPrincipal()",
+      "declaration": "function lockedPrincipal() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "lockedPrincipal",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported locked-principal aggregate used by the frontend exit-pressure model.",
+      "units": "STANDARD raw units, 18 decimals.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0xbfe50788"
+    },
+    {
+      "signature": "bonusPerPrincipal()",
+      "declaration": "function bonusPerPrincipal() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "bonusPerPrincipal",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported bonus accumulator; frontend computes principal times accumulator-minus-bonusDebt divided by 1e18. Prefer quoteRedeem for payout.",
+      "units": "Frontend WAD accumulator interpretation only; deployed checkpoint/rounding not proved.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x1c079fe1"
+    },
+    {
+      "signature": "exitFloorBps()",
+      "declaration": "function exitFloorBps() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "exitFloorBps",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported lower bound for early-exit fee inputs, not Bank resolution fees.",
+      "units": "Basis points; 10000 = 100%.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x03985743"
+    },
+    {
+      "signature": "exitCapBps()",
+      "declaration": "function exitCapBps() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "exitCapBps",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported upper bound for early-exit fee inputs; actual fee comes from quoteExit.",
+      "units": "Basis points; 10000 = 100%.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0xa25be9f2"
+    },
+    {
+      "signature": "exitWindowDays()",
+      "declaration": "function exitWindowDays() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "exitWindowDays",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Number of start-relative exit-day buckets read by the frontend; not a bill maturity term.",
+      "units": "Integer count of 86400-second buckets in the frontend model.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x2e2928e5"
+    },
+    {
+      "signature": "exitPressureFloor()",
+      "declaration": "function exitPressureFloor() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "exitPressureFloor",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported denominator floor in the frontend exit-pressure model; not a minimum payout.",
+      "units": "STANDARD raw units, 18 decimals.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x16a20fbc"
+    },
+    {
+      "signature": "exitedOnDay(uint256)",
+      "declaration": "function exitedOnDay(uint256 day) view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "exitedOnDay",
+        "inputs": [
+          {
+            "type": "uint256",
+            "name": "day"
+          }
+        ],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported exited amount keyed by program-relative day; frontend uses floor((time-startTime)/86400). Not a maturity-date cohort getter.",
+      "units": "day is an unscaled program-relative index; result STANDARD18.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x0fe60ebe"
+    },
+    {
+      "signature": "totalCap()",
+      "declaration": "function totalCap() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "totalCap",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported aggregate principal cap; not remaining capacity by itself.",
+      "units": "STANDARD18.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x16450092"
+    },
+    {
+      "signature": "walletCap()",
+      "declaration": "function walletCap() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "walletCap",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported per-wallet principal cap; compare same-block principalOf.",
+      "units": "STANDARD18.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x58950c22"
+    },
+    {
+      "signature": "minDeposit()",
+      "declaration": "function minDeposit() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "minDeposit",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported minimum deposit input; not proof a deposit is admissible.",
+      "units": "STANDARD18.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x41b3d185"
+    },
+    {
+      "signature": "paused()",
+      "declaration": "function paused() view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "paused",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "bool",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported pause flag at the selected block; permissions and exact affected paths need implementation evidence.",
+      "units": "Boolean.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x5c975abb"
+    },
+    {
+      "signature": "closed()",
+      "declaration": "function closed() view returns (bool)",
+      "abi": {
+        "type": "function",
+        "name": "closed",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "bool",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported closed-for-business flag; not proof existing bills are settled.",
+      "units": "Boolean.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x597e1fb5"
+    },
+    {
+      "signature": "budget()",
+      "declaration": "function budget() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "budget",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported premium budget at the selected block; not wallet principal or promised realizable yield.",
+      "units": "STANDARD18.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0xed01bf29"
+    },
+    {
+      "signature": "currentRate()",
+      "declaration": "function currentRate() view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "currentRate",
+        "inputs": [],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Current term-rate read, separate from stored rate and amount-dependent quote.",
+      "units": "WAD term-rate fraction; annualization requires explicit term and convention.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0xf9f8bdb7"
+    },
+    {
+      "signature": "principalOf(address)",
+      "declaration": "function principalOf(address wallet) view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "principalOf",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "wallet"
+          }
+        ],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported wallet principal at the observation block; not token balance or number of bills.",
+      "units": "Address input; STANDARD18 output.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x61e20a1c"
+    },
+    {
+      "signature": "bills(uint256)",
+      "declaration": "function bills(uint256 id) view returns (address owner, bool settled, bool active, uint128 principal, uint128 premium, uint64 termStart, uint64 maturity, uint256 bonusDebt)",
+      "abi": {
+        "type": "function",
+        "name": "bills",
+        "inputs": [
+          {
+            "type": "uint256",
+            "name": "id"
+          }
+        ],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "address",
+            "name": "owner"
+          },
+          {
+            "type": "bool",
+            "name": "settled"
+          },
+          {
+            "type": "bool",
+            "name": "active"
+          },
+          {
+            "type": "uint128",
+            "name": "principal"
+          },
+          {
+            "type": "uint128",
+            "name": "premium"
+          },
+          {
+            "type": "uint64",
+            "name": "termStart"
+          },
+          {
+            "type": "uint64",
+            "name": "maturity"
+          },
+          {
+            "type": "uint256",
+            "name": "bonusDebt"
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Individual bill state in exact owner,settled,active,principal,premium,termStart,maturity,bonusDebt order. ID zero is valid. Preserve active and settled independently; use stored maturity for cohorts.",
+      "units": "ID is unscaled and namespaced by chain+contract; principal/premium STANDARD18; timestamps Unix seconds; bonusDebt frontend WAD accumulator checkpoint.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x28bdcde8"
+    },
+    {
+      "signature": "billCount(address)",
+      "declaration": "function billCount(address owner) view returns (uint256)",
+      "abi": {
+        "type": "function",
+        "name": "billCount",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "owner"
+          }
+        ],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Reported owner-scoped count for bill enumeration; not a global count or assumed active-only count.",
+      "units": "Address input; unscaled count output.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x833e3890"
+    },
+    {
+      "signature": "billsOf(address,uint256,uint256)",
+      "declaration": "function billsOf(address owner, uint256 start, uint256 count) view returns (uint256[] ids)",
+      "abi": {
+        "type": "function",
+        "name": "billsOf",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "owner"
+          },
+          {
+            "type": "uint256",
+            "name": "start"
+          },
+          {
+            "type": "uint256",
+            "name": "count"
+          }
+        ],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256[]",
+            "name": "ids"
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Owner-scoped bounded page of bill IDs. Pin pages and billCount to one block and retain coverage; no global discovery guarantee.",
+      "units": "start/count and returned IDs are integers; dynamic uint256[] ABI offset and length are not IDs.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0xec2d0903"
+    },
+    {
+      "signature": "quote(uint256)",
+      "declaration": "function quote(uint256 amount) view returns (uint256 ratePaid, uint256 premium, uint256 rateAfter)",
+      "abi": {
+        "type": "function",
+        "name": "quote",
+        "inputs": [
+          {
+            "type": "uint256",
+            "name": "amount"
+          }
+        ],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": "ratePaid"
+          },
+          {
+            "type": "uint256",
+            "name": "premium"
+          },
+          {
+            "type": "uint256",
+            "name": "rateAfter"
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Amount-dependent entry quote returns ratePaid,premium,rateAfter. Selector matches license quote but this role returns THREE words, not two. A preview is not booked or realized premium.",
+      "units": "amount/premium STANDARD18; ratePaid/rateAfter WAD term-rate fractions.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0xed1bd76c"
+    },
+    {
+      "signature": "quoteExit(uint256)",
+      "declaration": "function quoteExit(uint256 id) view returns (uint256 feeBps, uint256 fee, uint256 vested, uint256 forfeitedBonus, uint256 payout)",
+      "abi": {
+        "type": "function",
+        "name": "quoteExit",
+        "inputs": [
+          {
+            "type": "uint256",
+            "name": "id"
+          }
+        ],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": "feeBps"
+          },
+          {
+            "type": "uint256",
+            "name": "fee"
+          },
+          {
+            "type": "uint256",
+            "name": "vested"
+          },
+          {
+            "type": "uint256",
+            "name": "forfeitedBonus"
+          },
+          {
+            "type": "uint256",
+            "name": "payout"
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Per-bill exit quote returns feeBps,fee,vested,forfeitedBonus,payout; vested and bonus fields describe forfeiture, not additional payout. Preview is not receipt.",
+      "units": "ID integer; feeBps basis points; other outputs STANDARD18.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x2e31deba"
+    },
+    {
+      "signature": "quoteRedeem(uint256)",
+      "declaration": "function quoteRedeem(uint256 id) view returns (uint256 principal, uint256 premium, uint256 bonus, uint256 payout)",
+      "abi": {
+        "type": "function",
+        "name": "quoteRedeem",
+        "inputs": [
+          {
+            "type": "uint256",
+            "name": "id"
+          }
+        ],
+        "stateMutability": "view",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": "principal"
+          },
+          {
+            "type": "uint256",
+            "name": "premium"
+          },
+          {
+            "type": "uint256",
+            "name": "bonus"
+          },
+          {
+            "type": "uint256",
+            "name": "payout"
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Per-bill redemption quote returns principal,premium,bonus,payout. Keep quoted eligibility/amount separate from executed redemption and realized transfers.",
+      "units": "ID integer; all outputs STANDARD18.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x2711be44"
+    },
+    {
+      "signature": "deposit(uint256,uint256)",
+      "declaration": "function deposit(uint256 amount, uint256 minRate) nonpayable returns (uint256 id)",
+      "abi": {
+        "type": "function",
+        "name": "deposit",
+        "inputs": [
+          {
+            "type": "uint256",
+            "name": "amount"
+          },
+          {
+            "type": "uint256",
+            "name": "minRate"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": "id"
+          }
+        ]
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Documented entry transaction with minimum rate protection; frontend first checks STANDARD allowance. Listing is not permission to prepare, sign or submit.",
+      "units": "amount STANDARD18; minRate WAD term-rate fraction; returned id integer including zero.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0xe2bbb158"
+    },
+    {
+      "signature": "redeem(uint256)",
+      "declaration": "function redeem(uint256 id) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "redeem",
+        "inputs": [
+          {
+            "type": "uint256",
+            "name": "id"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "outputs": []
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Documented explicit redemption transaction for a bill; not an automatic transfer at maturity.",
+      "units": "ID integer; no ABI return values.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0xdb006a75"
+    },
+    {
+      "signature": "exitEarly(uint256,uint256)",
+      "declaration": "function exitEarly(uint256 id, uint256 maxFeeBps) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "exitEarly",
+        "inputs": [
+          {
+            "type": "uint256",
+            "name": "id"
+          },
+          {
+            "type": "uint256",
+            "name": "maxFeeBps"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "outputs": []
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Documented early exit with maximum-fee protection; distinct from Bank exit.",
+      "units": "ID integer; maxFeeBps basis points; no return values.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x9dcedb6e"
+    },
+    {
+      "signature": "roll(uint256,uint256)",
+      "declaration": "function roll(uint256 id, uint256 minRate) nonpayable returns ()",
+      "abi": {
+        "type": "function",
+        "name": "roll",
+        "inputs": [
+          {
+            "type": "uint256",
+            "name": "id"
+          },
+          {
+            "type": "uint256",
+            "name": "minRate"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "outputs": []
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Documented explicit manual rollover with minimum rate protection; not automatic renewal. Frontend quotes redemption payout then a new entry amount.",
+      "units": "ID integer; minRate WAD term-rate fraction; no return values.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x6ec9b897"
+    },
+    {
+      "signature": "Deposited(uint256,address,uint256,uint256,uint256,uint64)",
+      "declaration": "event Deposited(uint256 indexed id, address indexed owner, uint256 principal, uint256 premium, uint256 ratePaid, uint64 maturity)",
+      "abi": {
+        "type": "event",
+        "name": "Deposited",
+        "inputs": [
+          {
+            "type": "uint256",
+            "name": "id",
+            "indexed": true
+          },
+          {
+            "type": "address",
+            "name": "owner",
+            "indexed": true
+          },
+          {
+            "type": "uint256",
+            "name": "principal",
+            "indexed": false
+          },
+          {
+            "type": "uint256",
+            "name": "premium",
+            "indexed": false
+          },
+          {
+            "type": "uint256",
+            "name": "ratePaid",
+            "indexed": false
+          },
+          {
+            "type": "uint64",
+            "name": "maturity",
+            "indexed": false
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Selected deposit event supplies bill id/owner and booked principal,premium,ratePaid,maturity. Authenticate successful receipt/emitter; not complete lifecycle discovery by itself.",
+      "units": "id integer; principal/premium STANDARD18; ratePaid WAD term-rate fraction; maturity Unix seconds.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "topic0": "0xa1bcc5914538343f62e1b25ca5180ab2fafb9d72801a4bd99ddcb4b233998b6e",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 4,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "id",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "owner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 2,
+            "name": "principal",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 3,
+            "name": "premium",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 4,
+            "name": "ratePaid",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 2,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 5,
+            "name": "maturity",
+            "canonical_type": "uint64",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 3,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "Exited(uint256,address,uint256,uint256,uint256,uint256)",
+      "declaration": "event Exited(uint256 indexed id, address indexed owner, uint256 principal, uint256 fee, uint256 vestedForfeited, uint256 bonusForfeited)",
+      "abi": {
+        "type": "event",
+        "name": "Exited",
+        "inputs": [
+          {
+            "type": "uint256",
+            "name": "id",
+            "indexed": true
+          },
+          {
+            "type": "address",
+            "name": "owner",
+            "indexed": true
+          },
+          {
+            "type": "uint256",
+            "name": "principal",
+            "indexed": false
+          },
+          {
+            "type": "uint256",
+            "name": "fee",
+            "indexed": false
+          },
+          {
+            "type": "uint256",
+            "name": "vestedForfeited",
+            "indexed": false
+          },
+          {
+            "type": "uint256",
+            "name": "bonusForfeited",
+            "indexed": false
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Selected early-exit event reports principal,fee,vestedForfeited,bonusForfeited. Reconcile actual transfers for realized payout; not a redemption event.",
+      "units": "id integer; all nonindexed fields STANDARD18.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "topic0": "0x56ce7c93a318ffc9c7422f4b8f2f3c724b6fb7179070b7336939e03abe10c17d",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 4,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "id",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "owner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 2,
+            "name": "principal",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 3,
+            "name": "fee",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 4,
+            "name": "vestedForfeited",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 2,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 5,
+            "name": "bonusForfeited",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 3,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "BelowMinDeposit()",
+      "declaration": "error BelowMinDeposit()",
+      "abi": {
+        "type": "error",
+        "name": "BelowMinDeposit",
+        "inputs": []
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Name-derived error meaning: deposit amount below minimum. Exact guard paths and caller permissions are not proved by the selected ABI.",
+      "units": "No encoded arguments.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x96ec8e54"
+    },
+    {
+      "signature": "WalletCapExceeded()",
+      "declaration": "error WalletCapExceeded()",
+      "abi": {
+        "type": "error",
+        "name": "WalletCapExceeded",
+        "inputs": []
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Name-derived error meaning: wallet cap constraint. Exact guard paths and caller permissions are not proved by the selected ABI.",
+      "units": "No encoded arguments.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x83ebf0b2"
+    },
+    {
+      "signature": "TotalCapExceeded()",
+      "declaration": "error TotalCapExceeded()",
+      "abi": {
+        "type": "error",
+        "name": "TotalCapExceeded",
+        "inputs": []
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Name-derived error meaning: aggregate cap constraint. Exact guard paths and caller permissions are not proved by the selected ABI.",
+      "units": "No encoded arguments.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0xda551d93"
+    },
+    {
+      "signature": "InsufficientBudget()",
+      "declaration": "error InsufficientBudget()",
+      "abi": {
+        "type": "error",
+        "name": "InsufficientBudget",
+        "inputs": []
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Name-derived error meaning: premium budget constraint. Exact guard paths and caller permissions are not proved by the selected ABI.",
+      "units": "No encoded arguments.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x4dd23c8b"
+    },
+    {
+      "signature": "NotBillOwner()",
+      "declaration": "error NotBillOwner()",
+      "abi": {
+        "type": "error",
+        "name": "NotBillOwner",
+        "inputs": []
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Name-derived error meaning: bill ownership constraint. Exact guard paths and caller permissions are not proved by the selected ABI.",
+      "units": "No encoded arguments.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x171f2a3e"
+    },
+    {
+      "signature": "BillInactive()",
+      "declaration": "error BillInactive()",
+      "abi": {
+        "type": "error",
+        "name": "BillInactive",
+        "inputs": []
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Name-derived error meaning: bill activity constraint. Exact guard paths and caller permissions are not proved by the selected ABI.",
+      "units": "No encoded arguments.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0xe11ef02c"
+    },
+    {
+      "signature": "NotMatured()",
+      "declaration": "error NotMatured()",
+      "abi": {
+        "type": "error",
+        "name": "NotMatured",
+        "inputs": []
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Name-derived error meaning: maturity not reached. Exact guard paths and caller permissions are not proved by the selected ABI.",
+      "units": "No encoded arguments.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x111c4409"
+    },
+    {
+      "signature": "AlreadyMatured()",
+      "declaration": "error AlreadyMatured()",
+      "abi": {
+        "type": "error",
+        "name": "AlreadyMatured",
+        "inputs": []
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Name-derived error meaning: maturity already reached. Exact guard paths and caller permissions are not proved by the selected ABI.",
+      "units": "No encoded arguments.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0xb453c220"
+    },
+    {
+      "signature": "ClosedForBusiness()",
+      "declaration": "error ClosedForBusiness()",
+      "abi": {
+        "type": "error",
+        "name": "ClosedForBusiness",
+        "inputs": []
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Name-derived error meaning: closed entry state. Exact guard paths and caller permissions are not proved by the selected ABI.",
+      "units": "No encoded arguments.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x25957bac"
+    },
+    {
+      "signature": "RateBelowMin()",
+      "declaration": "error RateBelowMin()",
+      "abi": {
+        "type": "error",
+        "name": "RateBelowMin",
+        "inputs": []
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Name-derived error meaning: minimum rate protection. Exact guard paths and caller permissions are not proved by the selected ABI.",
+      "units": "No encoded arguments.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x1c006846"
+    },
+    {
+      "signature": "FeeAboveMax()",
+      "declaration": "error FeeAboveMax()",
+      "abi": {
+        "type": "error",
+        "name": "FeeAboveMax",
+        "inputs": []
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Name-derived error meaning: maximum exit fee protection. Exact guard paths and caller permissions are not proved by the selected ABI.",
+      "units": "No encoded arguments.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0x76a3f95d"
+    },
+    {
+      "signature": "ContractPaused()",
+      "declaration": "error ContractPaused()",
+      "abi": {
+        "type": "error",
+        "name": "ContractPaused",
+        "inputs": []
+      },
+      "review_id": "publisher-sbills-2026-10-02",
+      "generation": "launch-2026-10-01",
+      "explanation": "Name-derived error meaning: pause constraint. Exact guard paths and caller permissions are not proved by the selected ABI.",
+      "units": "No encoded arguments.",
+      "limitations": [
+        "Selected publisher frontend ABI, not verified Solidity or complete deployed/admin/event coverage. Values require authenticated chain, contract and observation block; no signing/submission authority."
+      ],
+      "selector": "0xab35696f"
+    }
+  ]
+}

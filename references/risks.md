@@ -4,6 +4,8 @@ Apply the [preparation and wallet boundary](safety.md#preparation-and-wallet-bou
 
 Documented limits, not vulnerability findings or an audit. Publisher sources reviewed through **2026-09-26**: [v1 sources](../assets/sources/website-v1.json), `sr-whitepaper-v1`; these are dated policy evidence, not current configuration.
 
+The whitepaper Bank/charter controls and fee limits below do not transfer to [S-Bills](sbills.md). S-Bill security reviews are completed per user-reported developer confirmation; the public report/reviewer/revision/deployment mapping remains unestablished, not evidence that review did not occur. The selected frontend ABI is not verified Solidity, and an owner/Safe observation alone does not prove privileged powers or custody safety.
+
 ## Publisher disclaimer — §16
 
 STANDARD is described as experimental, not a bank or regulated financial institution, with no customer funds/accounts and no investment advice. Reserves are protocol property and not redeemable (`reserve-redemption-policy`). Token-to-ledger deposit conversion does not create a reserve-redemption entitlement. [sr-whitepaper-v1: currency, disclaimer]

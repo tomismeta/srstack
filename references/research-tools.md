@@ -10,6 +10,10 @@ Choose to run the reviewed installed code only under existing [host permissions]
 
 For next-close forecasts, consult the latest relevant [curated round dataset](round-datasets.md) before policy derivation. Six additional direct-library [calculation recipes](calculations.md) provide exact close/open statistics and ordinal trends, bounded descriptive dispersion, historical floor context with unknown future floor, a composed conditional forecast, and an inventory-gated curve quote. `assets/schemas/round-dataset-v1.json` and the explicitly fictional `assets/examples/projection-evidence-v1.json` support those recipes. They add no CLI command; the existing bare `curve` command remains a mathematical diagnostic, not an inventory-aware executable quote.
 
+For S-Bill scheduled maturities, the direct-library [`sbill_maturity_cohort` recipe](calculations.md#s-bill-maturity-cohort) counts supplied pinned bill records in an explicit timezone-resolved `[start,end)` interval and sums active principal/booked premium exactly. Active and settled remain independent; duplicate IDs cannot double count. It does not discover bills, establish historical activity or redemption eligibility, calculate bonuses/actual payouts, or add a CLI mode or schema. See [S-Bill evidence boundaries](sbills.md).
+
+`weighted-price` rows must each be a two-element list/tuple pair; strings or dictionaries are not pairs. Direct-library callers may still supply an outer iterator of valid pairs.
+
 ### CLI inputs and exact JSON output
 
 Use `python3 -I -B /absolute/path/to/installed/srstack/scripts/research.py COMMAND`. Supply one JSON object on stdin, or select a UTF-8 file with `COMMAND --input /absolute/path/to/input.json`; the file replaces stdin. Resolve the script path from the actual loaded installation, not the working directory. `-I -B` is supported: isolated Python execution does not require a source checkout, `PYTHONPATH` or bytecode writes.

@@ -3,7 +3,7 @@ name: srstack
 description: Standard Reserve contracts, state, history and calculations.
 license: MIT
 metadata:
-  version: "0.3.0"
+  version: "0.4.0"
 ---
 
 # srstack
@@ -24,6 +24,7 @@ Use direct reads when they answer the question. Current/materialized state, arch
 
 - Open branches are not unsold licenses. Pending ledger value is not proved earnings, spendable funds or net withdrawable value; a sampled rate is not interval income.
 - New-charter auctions and branch-license auctions have separate generations, payment assets, clocks, inventory and constraints. Authenticate each independently.
+- S-Bills are separate STANDARD deposit positions: quoted rate, booked premium, maturity, settlement and realized receipts differ. Use [S-Bills](references/sbills.md) for scoped reads and calendar-day cohorts, not Bank exit or auction rules.
 - Funds-affordable is not necessarily permitted or executable. A sold-out round's remaining curve output is not a buyable ask; stored counters can describe a prior materialized round.
 - Scheduled windows, actual rolls and first-to-last observed sale spans differ. Last observed is not a sold-out close without evidenced exhaustion and complete relevant coverage.
 - Preserve raw quantities and consideration. Repeatedly averaging or reusing rounded prices loses information. Keep ETH, token units, ledger amounts, branches and fiat values distinct; round only for labelled display.
@@ -42,6 +43,7 @@ The zero-inventory tripwire is authenticated effective `remainingToday() == 0`, 
 | --- | --- |
 | Objects and published mechanics | [Object map](references/object-map.md), [protocol](references/protocol.md), [charters](references/charters.md), [reserves](references/reserves.md), [auctions](references/auctions.md) |
 | Live inspection and interpretation | [Inspection](references/inspection.md); [activity and exits](references/exits.md) |
+| S-Bill rates, deposits, own bills and maturity-day totals | [S-Bills](references/sbills.md) |
 | Historical discovery, reconciliation and reuse | [Auction history](references/auction-history.md) |
 | Market close forecasts, sample qualification and floor context | [Round datasets](references/round-datasets.md), [calculation recipes](references/calculations.md), [four price shapes](references/auctions.md#four-price-shapes-and-history-first-forecasts) |
 | Accrual, affordability and conditional projections | [Research guidance](references/research-workflow.md) |

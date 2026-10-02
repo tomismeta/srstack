@@ -3,6 +3,16 @@
   "purpose": "Canonical source routing for published rules, v1.2/v1.1 changes, historical identity/cutover evidence and explicitly scoped proposals; no saved live state or competing current catalogs.",
   "groups": [
     {
+      "id": "sbills",
+      "path": "assets/sources/sbills.json",
+      "record_ids": [
+        "sr-sbills-interface-2026-10-02",
+        "sr-sbills-deployment-2026-10-02",
+        "sr-sbills-security-review-confirmation-2026-10-02"
+      ],
+      "scope": "Dated launch S-Bills identity, selected frontend ABI, scoped deployment/deposit/parameter provenance and user-reported developer-confirmed security review status; no current state defaults or source-bytecode correspondence."
+    },
+    {
       "id": "market-price",
       "path": "assets/sources/market-price.json",
       "record_ids": [

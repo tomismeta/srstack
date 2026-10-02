@@ -4,15 +4,15 @@
 
 Ask about protocol mechanics, live positions, historical auctions or what earned accrual could buy. The agent chooses the evidence and calculations the question needs, using its existing host-authorized tools. No topic command, calculator wizard or fixed sequence is required.
 
-Independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product. **Version 0.3.0.**
+Independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product. **Candidate version 0.4.0; published stable v0.3.0.** [Installation](references/installation.md) defaults to the stable tag; candidate installs require an explicit reviewed commit.
 
-## New in 0.3.0
+## New in 0.4.0 (candidate)
 
-- **Protocol v1.1/v1.2 auction changes:** understand branch limit orders, charter-auction cadence and opening-price policy, with [announcements, interfaces and live state kept distinct](references/updates.md#protocol-v12-announced-changes).
-- **S-Bills explained:** explore buyback-funded premiums, maturity, auto-roll and early-exit mechanics. [Published product design](references/updates.md#s-bills-reviewed-product-description-and-preview) is not proof of a live deployment, available position reads or enforceable returns.
-- **Buybacks and the Incentives Vault:** follow [bid-side POL acquisitions and token destinations](references/reserves.md), distinguishing retained incentives from burns and holder entitlements.
-- **History-first auction forecasts:** use recent comparable sellouts to [estimate the next close](references/calculations.md), not merely repeat the policy opening. Keep observed closes, inventory-conditional quotes and unknown future floors separate.
-- **Deeper contract knowledge:** navigate [19 dated contract bindings](references/contracts.md), [15 reviewed interfaces with 905 ABI entries](references/interface-inventory.md) and [25 scoped research capabilities](references/capabilities.md), using the agent's own authorized tools rather than bundled protocol clients.
+- **Live S-Bill research:** [rates, amount quotes, deposits and position reads](references/sbills.md), with authenticated launch-interface evidence rather than the historical preview as a standing status answer.
+- **Maturity-day planning:** count bills and sum exact principal by stored maturity, deployment and explicit timezone; distinguish active maturities from payments and disclose discovery gaps.
+- **Separate economic meanings:** current rates, booked premiums, early-exit estimates, redemption and manual roll are not interchangeable. No automatic renewal, sample-book fallback or inherited Bank/auction rules.
+- **Review provenance:** security reviews are completed per user-reported developer confirmation; public report/revision/deployment mapping remains a separate evidence question.
+- Existing [auction forecasts](references/calculations.md), [contract/interface inventories](references/contracts.md) and [question-driven capabilities](references/capabilities.md) remain available through host-authorized tools, without bundled protocol clients.
 
 ## What you can ask
 
@@ -23,7 +23,8 @@ Independent [Agent Skill](https://agentskills.io/specification), not an official
 - “What changes if I buy more branches, and when would they affect accrual?”
 - “What does the Second Mandate say, and what is actually deployed?”
 - “What changed in the v1.1/v1.2 auctions, and how do limit orders work?”
-- “How are S-Bill premiums, maturity and early exits meant to work?”
+- “What is the S-Bill rate, what would this deposit quote, and which of my bills mature on a given day?”
+- “How much S-Bill principal matures protocol-wide that day, and is the discovery complete?”
 - “Where do POL buybacks go, and what actually gets burned?”
 - “What does recent sellout history suggest for the next auction close?”
 
@@ -123,6 +124,18 @@ CI installs `jsonschema==4.25.1` only to validate the instructional examples aga
 This host-native cutover removes the previous fixed snapshot, price, history and diagnostic clients and their execution catalogs. There are no compatibility commands or retired helper aliases. Existing host-native research tools replace them; any automatic discovery, checkpointing or batching must actually be supported or implemented by the host agent before being claimed.
 
 The installed optional calculation toolkit does not restore the retired protocol clients. Specialized references own exact accounting, round dating, allowance windows, order-ID caveats and history coverage. Stale host workshop/install prompts need explicit host-maintainer cleanup outside this repository; package installation does not rewrite other skills, credentials or global instructions.
+
+### S-Bill research and maturity cohorts (0.4.0, unreleased)
+
+Adds a [canonical S-Bill guide](references/sbills.md), dated launch binding and selected frontend interface, question-scoped read guidance and optional offline cohort arithmetic. Calendar-day answers preserve bill identity, stored maturity, timezone boundaries, exact principal, settlement state and discovery coverage; they are not wallet counts or paid-out totals. Current frontend manual roll supersedes the older auto-roll explanation for frontend guidance. Historical preview and planned-audit sources remain dated provenance.
+
+Active deployment is established in the dated S-Bill evidence; refresh current state for current answers. Security reviews are completed per user-reported developer confirmation, not independently mapped public reports or source/bytecode correspondence. This revision adds acceptance criteria, not claims that those gates passed. It adds no signing, submission, wallet connection, RPC client, transport permission or installed live-state fallback. The 0.3.0 release exception below remains version-scoped and does not automatically authorize 0.4.0 release.
+
+Explicit installation pins now validate and fetch the exact commit from the trusted repository before detaching, rather than assuming a stable-tag-only clone contains it. The default remains published stable `v0.3.0`; this candidate is not a released tag. Unavailable pins fail without branch/tag substitution.
+
+Earlier review follow-through includes multi-review inventory support, explicit parent-artifact bounds for new source fragments, attributed nonpublic confirmations without invented URLs, and rejection of malformed weighted-price rows. Existing auction forecasting and historical-event reconciliation behavior is otherwise unchanged.
+
+Scoped verification: 18 inventory and 21 packaging regressions passed; the research suite passed 46 checks with two optional JSON Schema checks skipped because `jsonschema` was unavailable. A temporary standalone runtime resolved the S-Bill binding/interface/capability and exercised a known bill's maturity plus a synthetic 23-hour DST interval; malformed weighted rows now exit2. The documented acquisition procedure selected an explicit commit outside the stable tag and rejected malformed/unavailable pins against an isolated local remote. These are packaging, arithmetic and acquisition checks—not fresh-host acceptance, complete live cohort coverage or a published release.
 
 ### Pre-release security and portability hardening (0.3.0, unreleased)
 

@@ -17,7 +17,7 @@ A conceptual map, not a current deployment router, complete ABI or verified impl
 | Allowance window | The interval over which the applicable license-purchase limit is consumed/reset; alignment and prior usage require evidence. | ERC20 allowance, auction round, rolling 24-hour horizon or a replenishment of funds. |
 | Issuance epoch | A policy/accrual interval with associated settings and settlement state. Active and queued settings differ. | An auction round or proof that today's rate continues through its boundary. |
 | Reserve asset / LP position | Protocol-held property or liquidity exposure; identity, custody, holdings and rights need their own evidence. | A charter holder's redeemable assets or proof that an illustrative website portfolio exists. |
-| S-Bill | A separately announced product described as STANDARD deposits with buyback-funded premiums. Current deployment, position identity and terms require dedicated discovery. | A charter, branch, proven live position, sample UI bill or guaranteed yield. See [status and evidence limits](updates.md#s-bills-reviewed-product-description-and-preview). |
+| S-Bill | A STANDARD deposit position recorded by the separately deployed `sbills` role, with principal, booked premium, stored maturity and settlement state. Identity is `(chain, contract, bill ID)`; ID zero is valid. | A charter, branch, wallet balance, sample UI bill or guaranteed yield. See [S-Bills](sbills.md); no NFT or transferability inference. |
 
 ## Ownership and record relationships
 
@@ -63,6 +63,7 @@ These arrows identify different relationships, not legal ownership of every conn
 | Genesis Liquidity Manager | Historical founding liquidity management and continuing fee collection described by the publisher. | Actual positions, custody and current responsibilities; an old frontend `polManager` label is not today's registry destination. |
 | POL Buyback | Announced incremental market purchases directed to the Incentives Vault. | Current route, purchase execution and receiving vault; not the Contraction Vault's buyback-and-burn path. |
 | Incentives Vault | Holds acquired tokens for the announced incentive purpose. | Holdings, permissions and actual distribution terms; retained tokens are neither burned nor automatically owed to token/charter holders. |
+| S-Bills | Deposit bills, rate/amount quotes, premium budget and exit/redemption/roll interfaces. | STANDARD token, deployment/generation, bill owner and stored terms; funding transfers and administrative powers need separate evidence. See [S-Bills](sbills.md). |
 | Administrator / guardian / Safe dependencies | Control relationships, not economic participation positions. Reviewed administrative infrastructure includes Safe dependencies; scope varies by module. | Accepted versus pending owner, guardian powers, supply controllers and relevant Safe configuration. An administrative proxy does not prove every monetary module is upgradeable. |
 
 Published fee-flow relationships are described in [reserves](reserves.md); their percentages and destinations must not be copied into current execution accounting without evidence. Asset migration, role replacement and code upgrade are different operations. An ABI name proves neither permission nor successful migration.

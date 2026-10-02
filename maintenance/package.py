@@ -16,7 +16,7 @@ from pathlib import Path, PurePosixPath
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT
 MANIFEST = "release-manifest.json"
-VERSION = "0.3.0"
+VERSION = "0.4.0"
 CORPUS_FILES = {"assets/sources.json", "assets/parameters.json"}
 RESEARCH_FILES = {
     "scripts/calculations.py", "scripts/research.py", "assets/schemas/research-evidence-v1.json",
@@ -165,7 +165,12 @@ def verify_content(files):
             if record["id"] in source_ids:
                 raise ValueError(f"Duplicate source ID: {record['id']}")
             source_ids.add(record["id"])
-            for field in ["url", "publisher", "retrieved_at", "review_depth", "claim_stage"]:
+            if record.get("source_kind") == "user_reported":
+                if record.get("url") is not None or not record.get("attribution"):
+                    raise ValueError(f"User-reported source requires attribution and no public URL: {record['id']}")
+            elif not record.get("url"):
+                raise ValueError(f"Missing source url: {record['id']}")
+            for field in ["publisher", "retrieved_at", "review_depth", "claim_stage"]:
                 if not record.get(field):
                     raise ValueError(f"Missing source {field}: {record['id']}")
     if source_paths != {path for path in parsed if path.startswith("assets/sources/")}:

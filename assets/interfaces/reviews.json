@@ -498,6 +498,69 @@
         "Unresolved imported/chunk-specific interfaces and historical modules outside this complete module remain outside this inventory; no whole-website or all-time deployment completeness claim.",
         "No downloaded code execution, live monetary-state cache, fixed current router, source-equivalence proof, signing or submission authority."
       ]
+    },
+    {
+      "id": "publisher-sbills-2026-10-02",
+      "reviewed_at": "2026-10-02",
+      "source_ids": [
+        "sr-sbills-interface-2026-10-02",
+        "sr-sbills-deployment-2026-10-02",
+        "sr-sbills-security-review-confirmation-2026-10-02"
+      ],
+      "source_chain": [
+        {
+          "url": "https://www.standardreserve.xyz/app/staking/",
+          "bytes": 6652,
+          "sha256": "d1083521e1199654ed10d221d4c61aaf5e49e26239eb393e04680f6436ab468a",
+          "relationship": "Official staking HTML explicitly links mountApp-CRx6ba2l.js"
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-CRx6ba2l.js",
+          "bytes": 863138,
+          "sha256": "8921717a644cb4e67499a42e180767ac64dea88949da2afbc15bd7b32947633c",
+          "relationship": "Complete module binds WP.sbills and references StakePage-UZsAeyx4.js"
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/StakePage-UZsAeyx4.js",
+          "bytes": 37814,
+          "sha256": "ef30d95dcbdde92c9f2ef443f892b80e89991a80df904796b11c323ab7403160",
+          "relationship": "Complete staking chunk: X=Ze([...]) selected declarations, un/pn bind X to contracts.sbills"
+        }
+      ],
+      "method": "Complete HTTP bodies acquired as data with curl. JSONDecoder reads the exact JSON-compatible string array at X=Ze([...]); anchored declaration grammar transcribes every function/event/error and expands the Bill fields without evaluating JavaScript. All 51 source strings are retained as 50 ABI entries plus the source-only Bill struct. un/pn role bindings, units and fallback behavior were reviewed separately. No downloaded JavaScript executed.",
+      "hash_convention": "SHA-256 over exact HTTP body UTF-8 bytes or exact source array bytes; zero-based half-open UTF-8 byte offsets. ABI digest uses sorted-key compact UTF-8 JSON in source entry order, preserving names, types, outputs and indexing. Fragment artifact_url/artifact_sha256 identify its parent chunk, not the main module.",
+      "interfaces": {
+        "sbills-launch-2026-10-01": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "StakePage-UZsAeyx4.js: X=Ze([...]); entire selected declaration array including Bill struct",
+          "source_fragment": {
+            "bytes": 2831,
+            "sha256": "7ddd8d09e620b41176d8306ca0f9d4b63aed25f736576734eae09f0a01188d26",
+            "start_utf8_byte": 29000,
+            "end_utf8_byte": 31831,
+            "artifact_url": "https://www.standardreserve.xyz/assets/StakePage-UZsAeyx4.js",
+            "artifact_sha256": "ef30d95dcbdde92c9f2ef443f892b80e89991a80df904796b11c323ab7403160"
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 12,
+            "event": 2,
+            "fallback": 0,
+            "function": 36,
+            "receive": 0
+          },
+          "abi_sha256": "e20af8fde70a92a5f978f2133537331b3986c1c7fa95be890cdca1d27dff4c5a"
+        }
+      },
+      "limits": [
+        "Every entry of the selected frontend array is represented, but full contract/source definition, constructors, administration, other errors and lifecycle events remain unknown.",
+        "Generation launch-2026-10-01 is a dated deployment identifier, not a claimed Solidity version.",
+        "Developer-confirmed completed security reviews are user-reported developer confirmation, not an acquired public report, audited commit identification or source/runtime correspondence.",
+        "Publisher fallback sample books and local floating-point models are not live defaults or verified Solidity calculations.",
+        "Dated deployment and parameter observations are provenance only; no current router, live dataset, signing or submission authority."
+      ]
     }
   ]
 }

@@ -166,8 +166,60 @@ class InventoryChecks(unittest.TestCase):
         review = document["reviews"][0]
         review["source_chain"] = [artifact for artifact in review["source_chain"] if artifact["url"].endswith(".js")]
         report = INVENTORY.validate_inventory(self.changed(path, document))
-        self.assertEqual(len(review["interfaces"]), report["interfaces"])
+        self.assertEqual(sum(len(item["interfaces"]) for item in document["reviews"]), report["interfaces"])
+        self.assertEqual(len(document["reviews"]), report["reviews"])
         review["source_chain"][0]["sha256"] = "0" * 64
+        with self.assertRaises(ValueError):
+            INVENTORY.validate_inventory(self.changed(path, document))
+
+    def test_explicit_fragment_parent_bounds_and_artifact_provenance(self):
+        path = "assets/interfaces/sbills-launch-2026-10-01.json"
+        reviews_path = "assets/interfaces/reviews.json"
+        for mutation in ("outside-parent", "unknown-parent", "unrecorded-artifact"):
+            with self.subTest(mutation=mutation):
+                document = self.document(path)
+                reviews = self.document(reviews_path)
+                review = next(item for item in reviews["reviews"] if item["id"] == document["review_id"])
+                fragment = document["coverage"]["source_fragment"]
+                if mutation == "outside-parent":
+                    parent = next(item for item in review["source_chain"] if item["url"] == fragment["artifact_url"])
+                    fragment["start_utf8_byte"] = parent["bytes"]
+                    fragment["end_utf8_byte"] = parent["bytes"] + fragment["bytes"]
+                elif mutation == "unknown-parent":
+                    fragment["artifact_sha256"] = "0" * 64
+                else:
+                    review["source_chain"][0]["sha256"] = "0" * 64
+                review["interfaces"][document["id"]] = document["coverage"]
+                changed = self.changed(path, document)
+                changed[reviews_path] = json.dumps(reviews).encode()
+                with self.assertRaises(ValueError):
+                    INVENTORY.validate_inventory(changed)
+
+    def test_partial_interface_cannot_claim_deployed_completeness(self):
+        path = "assets/interfaces/sbills-launch-2026-10-01.json"
+        document = self.document(path)
+        document["coverage"]["deployed_implementation_complete"] = True
+        reviews_path = "assets/interfaces/reviews.json"
+        reviews = self.document(reviews_path)
+        review = next(item for item in reviews["reviews"] if item["id"] == document["review_id"])
+        review["interfaces"][document["id"]] = document["coverage"]
+        changed = self.changed(path, document)
+        changed[reviews_path] = json.dumps(reviews).encode()
+        with self.assertRaises(ValueError):
+            INVENTORY.validate_inventory(changed)
+
+    def test_same_quote_selector_does_not_share_role_return_layout(self):
+        license_quote = self.entry("license-auction-v1-2", "quote(uint256)")
+        sbills_quote = self.entry("sbills-launch-2026-10-01", "quote(uint256)")
+        self.assertEqual(license_quote["selector"], sbills_quote["selector"])
+        self.assertEqual(2, len(license_quote["abi"]["outputs"]))
+        self.assertEqual(3, len(sbills_quote["abi"]["outputs"]))
+
+    def test_capability_cannot_invent_lifecycle_event(self):
+        path = "assets/interfaces/capabilities.json"
+        document = self.document(path)
+        row = next(item for item in document["capabilities"] if item["id"] == "sbills-maturity-cohort")
+        row["events"][0]["signature"] = "Redeemed(uint256)"
         with self.assertRaises(ValueError):
             INVENTORY.validate_inventory(self.changed(path, document))
 

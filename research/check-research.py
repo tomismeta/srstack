@@ -24,7 +24,8 @@ sys.path.insert(0, str(SCRIPTS))
 from calculations import (auction_curve_quote, close_trend_projection,
                           estimate_workload, floor_trend_context, gap_to_floor_scenario,
                           pending_delta_pace, project_next_close, sellout_ratio_summary,
-                          structural_close_projection, summarize_rounds, weighted_price)
+                          sbill_maturity_cohort, structural_close_projection,
+                          summarize_rounds, weighted_price)
 
 
 FIXTURE = Path(__file__).with_name("fixtures") / "round-v1.json"
@@ -53,6 +54,12 @@ class AccountingChecks(unittest.TestCase):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 weighted_price([(value, 2)])
 
+    def test_weighted_rows_require_pairs_but_outer_iterator_is_valid(self):
+        for row in ("12", {"1": 2, "3": 4}, [], [1], [1, 2, 3]):
+            with self.subTest(row=row), self.assertRaises(ValueError):
+                weighted_price([row])
+        self.assertEqual(weighted_price(iter([(1, 2), [3, 4]]))["consideration_raw"], 14)
+
     def test_signed_observed_pace_and_compatible_scale(self):
         kwargs = dict(opening_asset="fictional-a", closing_asset="fictional-a",
                       opening_scale=100, closing_scale=100, period_seconds=60)
@@ -70,6 +77,91 @@ class AccountingChecks(unittest.TestCase):
         for start, end in ((100, 100), (101, 100), ("unknown", 100)):
             with self.subTest(start=start, end=end), self.assertRaises(ValueError):
                 pending_delta_pace(1000, 850, start, end, **kwargs)
+
+
+class SBillCohortChecks(unittest.TestCase):
+    def setUp(self):
+        self.scope = dict(chain_id=4663, contract="0x" + "Ab" * 20,
+                          start_timestamp=100, end_timestamp=200, as_of_timestamp=150)
+        self.bill = dict(bill_id=0, owner="0x" + "Cd" * 20,
+                         principal_raw="1000000000000000001",
+                         premium_raw="200000000000000003", term_start=50,
+                         maturity=100, active=True, settled=False)
+
+    def cohort(self, rows, **bounds):
+        return sbill_maturity_cohort(rows, **(self.scope | bounds))
+
+    def test_half_open_boundaries_zero_id_and_exact_amounts(self):
+        rows = [self.bill | {"bill_id": i, "maturity": maturity}
+                for i, maturity in ((0, 100), (1, 99), (2, 199), (3, 200))]
+        result = self.cohort(reversed(rows))
+        self.assertEqual(result["matched_bill_ids"], [0, 2])
+        self.assertEqual(result["matched_count"], 2)
+        self.assertEqual(result["active_principal_raw"], 2000000000000000002)
+        self.assertEqual(result["active_premium_raw"], 400000000000000006)
+        self.assertEqual(result["active_matured_by_asof_count"], 1)
+        self.assertEqual(result["active_upcoming_count"], 1)
+        self.assertEqual(result["chain_id"], 4663)
+        self.assertEqual(result["contract"], self.scope["contract"].lower())
+        self.assertEqual(self.bill["owner"], "0x" + "Cd" * 20)
+
+    def test_non_24_hour_interval_and_maturity_equals_asof(self):
+        end = 100 + 23 * 3600
+        rows = [self.bill | {"bill_id": i, "maturity": maturity}
+                for i, maturity in ((0, end - 1), (1, end), (2, end + 3599))]
+        result = self.cohort(rows, end_timestamp=end, as_of_timestamp=end - 1)
+        self.assertEqual(result["matched_bill_ids"], [0])
+        self.assertEqual(result["active_matured_by_asof_count"], 1)
+        self.assertEqual(result["active_upcoming_count"], 0)
+
+    def test_normalized_duplicates_dedup_and_conflicts_raise(self):
+        duplicate = self.bill | {"bill_id": "0", "principal_raw": 1000000000000000001,
+                                 "owner": self.bill["owner"].lower()}
+        self.assertEqual(self.cohort([self.bill, duplicate])["matched_count"], 1)
+        for patch in ({"premium_raw": 1}, {"settled": True}, {"owner": "0x" + "ef" * 20},
+                      {"maturity": 200}, {"active": False}):
+            with self.subTest(patch=patch), self.assertRaisesRegex(ValueError, "conflicting.*0"):
+                self.cohort([self.bill, self.bill | patch])
+        with self.assertRaisesRegex(ValueError, "conflicting"):
+            self.cohort([self.bill | {"maturity": 300},
+                         self.bill | {"maturity": 301}])
+
+    def test_active_and_settled_are_independent_observed_states(self):
+        rows = [self.bill | {"bill_id": i, "active": active, "settled": settled}
+                for i, (active, settled) in enumerate(
+                    ((True, False), (True, True), (False, False), (False, True)))]
+        result = self.cohort(rows)
+        self.assertEqual(result["active_count"], 2)
+        self.assertEqual(result["inactive_count"], 2)
+        self.assertEqual(result["settled_count"], 2)
+        self.assertEqual(result["state_counts"], dict(active_unsettled=1, active_settled=1,
+                                                     inactive_unsettled=1, inactive_settled=1))
+        self.assertEqual(result["active_principal_raw"], 2000000000000000002)
+        self.assertEqual(result["active_premium_raw"], 400000000000000006)
+        self.assertTrue(result["matched_bills"][1]["settled"])
+        self.assertTrue(result["matched_bills"][1]["active"])
+
+    def test_invalid_numbers_flags_addresses_and_bounds(self):
+        for field in ("bill_id", "principal_raw", "premium_raw", "term_start", "maturity"):
+            for value in (True, 1.0, -1, "01", "1.5"):
+                with self.subTest(field=field, value=value), self.assertRaises(ValueError):
+                    self.cohort([self.bill | {field: value}])
+        for field in ("chain_id", "start_timestamp", "end_timestamp", "as_of_timestamp"):
+            for value in (True, 1.0, -1, "01"):
+                with self.subTest(field=field, value=value), self.assertRaises(ValueError):
+                    self.cohort([], **{field: value})
+        for patch in ({"term_start": 101}, {"active": 1}, {"settled": "false"},
+                      {"owner": "OwnerLabel"}):
+            with self.subTest(patch=patch), self.assertRaises(ValueError):
+                self.cohort([self.bill | patch])
+        for bounds in ({"end_timestamp": 100}, {"end_timestamp": 99},
+                       {"chain_id": 0}, {"contract": "ContractLabel"}):
+            with self.subTest(bounds=bounds), self.assertRaises(ValueError):
+                self.cohort([], **bounds)
+        result = self.cohort([], start_timestamp="100", end_timestamp="200")
+        self.assertEqual(result["matched_bill_ids"], [])
+        self.assertEqual(result["active_principal_raw"], 0)
+        self.assertEqual(result["active_upcoming_count"], 0)
 
 
 class EvidenceChecks(unittest.TestCase):
@@ -602,7 +694,8 @@ class CommandChecks(unittest.TestCase):
 
     def test_ambiguous_or_invalid_input_emits_no_calculation(self):
         for document in ('{"rows":[],"rows":[[1,2]]}', '{"rows":[[NaN,2]]}',
-                         '{"rows":[[1.0,2]]}', '{"rows":[[true,2]]}', '[]', '{"rows":'):
+                         '{"rows":[[1.0,2]]}', '{"rows":[[true,2]]}', '[]', '{"rows":',
+                         '{"rows":["12"]}', '{"rows":[{"1":2,"3":4}]}'):
             with self.subTest(document=document):
                 process = self.invoke("weighted-price", document)
                 self.assertEqual(process.returncode, 2)
