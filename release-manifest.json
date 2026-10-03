@@ -6,7 +6,7 @@
   "digest_convention": "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest",
   "content_files": {
     "LICENSE": "14b82531e814378b84e97596f68a98c70becee3251b206c545d4f07d73105af3",
-    "README.md": "d373be4e59650a509c7b154b6307aa61dd067d0381dd07529c654b350b834846",
+    "README.md": "204fb9b10c779b198309df979e56da47c871a1fbad7e15cdb0e4951ad990466e",
     "SKILL.md": "e596ba059595045309973465cc7ba57b5849bc742822eb9c30bbc233ee4c3825",
     "assets/entities/contracts.json": "b8d585e79056408e13aaa468ff51a8063d9bd804f420dd562772d9452d6f3de8",
     "assets/examples/projection-evidence-v1.json": "e85be438240f977252c1406113458a837c7e3dce4a2e9758a33e524f36740f48",
@@ -47,7 +47,7 @@
     "references/calculations.md": "01111e10807796a401bf8439aa9e3fd8e73381c53a55156db23b7e276da51964",
     "references/capabilities.md": "099ee7843d570e60c63a147f5b50c59613acab4ed46636ebdd4a1a75966e6568",
     "references/charters.md": "6e6e581b89807b1b39a444eebe535964426aadd6e548cc8251f25b872473ac8e",
-    "references/collection-efficiency.md": "ee0928ca5c7d332b9b43072f34cf0dfefa325b1badda0bf7198e9edefcf109c0",
+    "references/collection-efficiency.md": "41db9a427571084a6a87efcc8180a855ec870cebdecb27043658b24d00c06a01",
     "references/contracts.md": "243a1818a03ab561cf14f9fb8739422099a4769cd5c41304123831b57259b47e",
     "references/documents.md": "2db799706f98b0e4d0ef371d78b3ef61726420b6aa8488c0913a8df8e4c06594",
     "references/execution.md": "df18e6a6414c7908450c942f631ce471e61582048ad3a63b6b424c0571ddc89f",
@@ -82,5 +82,5 @@
     "scripts/calculations.py": "219de444c54eaa513f8c93063b98e970f8866e8d312a51444ac815ff2a6606f3",
     "scripts/research.py": "18b3ac0070b2cbe827d7a031c74456f0b6cdab9b125121af2e15e0e27c00016f"
   },
-  "content_sha256": "37c30bf5e061c5453d911dfa910416147cd460c9e23de7fce13cd836fc5c9604"
+  "content_sha256": "f38658f203745096617f150b3bd7a434a19d7d92ab60aaac2f4f2dc10c3bff4d"
 }

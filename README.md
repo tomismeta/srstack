@@ -145,6 +145,8 @@ Dogfood follow-up clarifies optional raw request/response retention, derived att
 
 A follow-up synthetic smoke persisted and reloaded both raw comparison sides using the documented matcher, preserved repeated-consumer bindings, kept a null receipt unverified and accounted for retry/recapture work without double counting. This exercises a possible host evidence workflow, not a required runtime service or fresh-agent acceptance.
 
+Native-host follow-up distinguishes generic throttling from an evidenced batch cap and recommends capturing safe status/header/body/timing diagnostics before parsing. This adds no required archive, fixed delay, client or approval gate. An offline synthetic failure-path smoke retained a 429 with Retry-After, rejected malformed JSON and duplicate/unknown IDs, classified missing replies, and preserved earlier successful evidence. No live host rerun or improved native-agent compliance is claimed for this clarification.
+
 ### S-Bill research and maturity cohorts (0.4.0)
 
 Adds a [canonical S-Bill guide](references/sbills.md), dated launch binding and selected frontend interface, question-scoped read guidance and optional offline cohort arithmetic. Calendar-day answers preserve bill identity, stored maturity, timezone boundaries, exact principal, settlement state and discovery coverage; they are not wallet counts or paid-out totals. Current frontend manual roll supersedes the older auto-roll explanation for frontend guidance. Historical preview and planned-audit sources remain dated provenance.
