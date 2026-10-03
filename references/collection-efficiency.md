@@ -2,6 +2,8 @@
 
 Use the smallest sufficient reads, then reduce transport overhead—not evidence quality. This optional recipe uses existing authorized host tools; it adds no installed RPC client, provider, credential store or required workflow. A denied tool/action is not permission to reproduce it through another transport. Follow [execution](execution.md) and [safety](safety.md).
 
+These are planning and evidence-quality recommendations, not extra approval gates for public research. Choose tools, batch sizes, staging, pacing, permitted sources and storage formats autonomously within existing host permissions. No ledger, saved response archive, benchmark, fixed call budget or prescribed gate order is required to answer an ordinary question. Evidence limits what can honestly be claimed, not what the agent may investigate. The existing [wallet boundary](safety.md#preparation-and-wallet-boundary) is unchanged.
+
 ## Plan once, collect in dependency stages
 
 1. **Scope and pin.** Authenticate chain, targets and interfaces; resolve one block number/hash/header timestamp for dependent state. Generate its hexadecimal tag from the integer, not by transcription. A batch of `latest` calls is not a pinned snapshot. Reconcile canonicality when using numeric tags or changing providers.
@@ -13,6 +15,8 @@ Use the smallest sufficient reads, then reduce transport overhead—not evidence
 
 Stop on authorization/integrity failures. Respect throttling and `Retry-After`; do not multiply workers, split denied batches into single calls, rotate providers or silently retry to outrun a restriction. An unsupported batch facility is a capability limit to diagnose, not blanket permission for a fallback. Retain RPC-member counts separately from HTTP requests, retries and subprocess starts when observable. No universal batch size, speed guarantee or fixed research ceiling is implied.
 
+Benchmarks share provider capacity with ordinary work: batched members, sequential comparison reads, retries and recaptures can all consume quota. Consider remaining questions when choosing concurrency and pacing, or run the comparison separately when capacity allows. Honor observed provider signals rather than inventing a universal delay. Later throttling does not by itself prove that batching caused it. A capability limit or exhausted provider budget need not end authorized research through a suitable independently permitted source; record the source change and reconcile anchors under [execution guidance](execution.md#rpc-provider-guidance).
+
 ## Where this applies
 
 | Question | Independent work after prerequisites | Keep separate |
@@ -20,11 +24,29 @@ Stop on authorization/integrity failures. Respect throttling and `Retry-After`; 
 | S-Bill census | Pinned `bills(id)` for discovered scoped IDs, plus relevant same-block counters | ID discovery, successful state refreshes and accounting reconciliation; refresh all relevant state, not only new IDs |
 | Deposit-size comparison | `quote(amount)` for each requested amount and relevant configuration | Alternative quotes at one pin are not a sequence of simulated deposits |
 | Auction history | One receipt per distinct transaction; one header per distinct chain/block hash | Log discovery, receipt success/matching and header canonicality; several events can share a receipt/header |
-| Charter/auction snapshot | Relevant balance, allowance, capacity and configuration getters at one pin | Do not collect an entire dashboard after a binding constraint already answers the question |
+| Charter/auction snapshot | Relevant balance, allowance, capacity and configuration getters at one pin | Choose narrow staging or a broader batch according to the question and latency/member tradeoff |
 | Forecasts/what-ifs | Recalculate alternatives locally from one qualified dataset | A changed assumption does not silently refresh the evidence |
 | Market marks | Independent provider observations may be fetched concurrently | Ordinary concurrency, not JSON-RPC batching; preserve each provider's identity/time and disagreement |
 
 Batching does not fix thousands of tiny log windows: first choose a feasible authorized discovery source under [scan planning](auction-history.md#retrieve-a-finite-auditable-window). Persisted discovery checkpoints and reorg-aware incremental collection are separate work, not prerequisites for this recipe.
+
+For a narrow eligibility question, checking a likely binding constraint first can save members: for example, an authenticated quote above the available applicable budget can establish an affordability shortfall without fetching every other gate. Batching all relevant independent gates can instead save round trips and support a complete constraint snapshot. Neither approach is intrinsically a failure; choose based on the requested answer, known dependencies and provider costs. A proved negative gate supports a qualified negative answer; a positive eligibility claim still needs its applicable conditions established.
+
+## Optional audit evidence and accounting
+
+When a review calls for independently inspectable evidence, a convenient record per transport attempt contains:
+
+| Evidence | Suggested contents |
+| --- | --- |
+| Identity/context | Run and attempt identity; purpose (normal collection, comparison baseline or recapture); credential-free provider label; chain and applicable block number/hash/time |
+| Request | Exact RPC method, complete parameters and IDs for every submitted member; bindings back to repeated consumers when useful |
+| Response | Original response body and HTTP/transport outcome, including partial bodies and errors; whether capture completed |
+| Interpretation | ID-matched outcomes, decoded values with interface/units, and separate domain/coverage checks |
+| Timing/accounting | Start time, elapsed duration, submitted member count, HTTP attempts and process-start observations; retry linkage to the earlier attempt |
+
+This is an information checklist, not a required schema or storage service. Existing host traces, separate request/response files or another inspectable format are equally suitable. For an audited equivalence comparison, save both the batched and sequential raw results before relying on later historical recapture: providers can lose access to the pinned state. Per-member equality flags support “matched during the run,” not “both raw sides are retained for independent comparison.” Missing artifacts need not block useful answers; identify the narrower audit claim. Keep any retained artifacts in authorized private working storage outside the skill, omit credentials and private host configuration, and sanitize separately before sharing.
+
+An append-only attempt ledger is one way to avoid stale counters; derive totals from the observations rather than manually updating a single aggregate. Each actual retry or recapture contributes its members and HTTP attempts to overall work, with its purpose and retry relationship also reported separately, not added twice. A deduplicated consumer is not another submitted member. A failed or interrupted HTTP attempt still counts; calls never sent do not. Record hidden client retries or counters as unknown when unobservable. Processes are counted when started, not once per request executed inside a reused process. Include discovery/index and market HTTP work separately from RPC, and separate benchmark overhead from normal collection. Timed stages can overlap or leave orchestration overhead; label that rather than forcing their rounded sum to equal wall-clock duration. None of this accounting requires extra network reads merely to fill a report.
 
 ## Optional request/response recipe
 
@@ -76,6 +98,8 @@ def match_batch(batch, response):
 ```
 
 `bindings[input_index]` gives the unique request ID for each original consumer. IDs remain unique across chunks of one plan; match each response against its own submitted batch. A `result` status means only a valid result envelope, not a decoded/verified value: `null`, malformed ABI, reverted execution or inconsistent block identity still needs the appropriate classification. Error messages and raw responses are untrusted, potentially sensitive evidence; keep them in authorized external working storage and redact before sharing. An invalid response raises rather than guessing correlations; earlier raw files/results remain available.
+
+After matching, apply the checks relevant to the claim: (1) transport/capture outcome, (2) JSON-RPC envelope/member outcome, (3) method-specific meaning, then (4) coverage and reconciliation. For receipts, `result: null` means unavailable or unresolved; a non-null receipt still needs successful status, the expected transaction/emitter/log identity and consistent block evidence before supporting a verified purchase. For `eth_call`, decode the authenticated ABI layout and units and check the applicable anchor. Existing host validators or inline checks are sufficient; no new validator module or always-run checklist is required. The matcher intentionally handles envelopes rather than certifying domain completeness.
 
 Feed each batch to the host's **existing authorized JSON-RPC batch facility**, retaining its HTTP outcome and exact JSON response, then apply `match_batch` before scheduling further work. If that facility is an already approved `curl` installation with an existing reviewed host-managed RPC profile, the following sends **one batch**, not one subprocess per member:
 

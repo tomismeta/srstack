@@ -11,6 +11,7 @@ Independent [Agent Skill](https://agentskills.io/specification), not an official
 - One [shared collection-efficiency recipe](references/collection-efficiency.md) for S-Bill censuses and quote comparisons, auction receipts/headers, charter/auction snapshots, local scenarios and concurrent market cross-checks.
 - Deduplicate before batching, preserve pinned raw results and per-request outcomes, and reuse one collection rather than spawning a CLI per item or repeating discovery for presentation.
 - Optional executable offline request-planning/response-matching functions and a single-batch example using an already authorized host client. No bundled RPC client, provider defaults, incremental discovery state or runtime dependency is added.
+- Optional audit-evidence and attempt-accounting guidance keeps raw comparison artifacts, domain validation and benchmark overhead distinct without imposing a schema, storage backend, read order or extra approval gate on public research.
 - Dogfood must establish exact-result equivalence, failure handling and host-specific timing; no universal latency improvement or 0.4.1 release approval is claimed.
 
 ## New in 0.4.0
@@ -139,6 +140,10 @@ The installed optional calculation toolkit does not restore the retired protocol
 Turns existing batching/reuse guidance into one optional host-tool recipe, linked from all six applicable question paths. Independent calls use bounded batches and response IDs; dependent discovery stays staged, local scenarios reuse evidence and market cross-checks retain separate provider timestamps. Missing/error/ambiguous responses remain explicit, and completeness requires the existing domain-specific checks. Its offline functions do not decode ABIs, discover deployments or issue RPC; the optional curl invocation uses an existing approved host profile under normal permissions. Calculation/output contracts are unchanged. The 0.4.0 bounded-release approval is historical and does not authorize this candidate's release.
 
 Candidate smoke checks exercised 102 synthetic unique reads with repeated consumers, shuffled responses, missing/error/null/invalid outcomes and ambiguous-ID rejection. The documented host-client invocation also returned five public same-pin reads byte-identical to sequential reads, with matching decoded words and a stable header recheck. This is bounded recipe evidence, not a 100-bill census benchmark, full discovery proof or fresh-host acceptance; those remain dogfood checks.
+
+Dogfood follow-up clarifies optional raw request/response retention, derived attempt counts, cumulative provider budgets and the member-versus-latency tradeoff when staging eligibility reads. History guidance points directly to reviewed event topics. Agents retain discretion over authorized tools, sources, pacing and evidence formats; existing wallet and host-permission boundaries are unchanged. No historical activity dataset or universal performance claim is added.
+
+A follow-up synthetic smoke persisted and reloaded both raw comparison sides using the documented matcher, preserved repeated-consumer bindings, kept a null receipt unverified and accounted for retry/recapture work without double counting. This exercises a possible host evidence workflow, not a required runtime service or fresh-agent acceptance.
 
 ### S-Bill research and maturity cohorts (0.4.0)
 

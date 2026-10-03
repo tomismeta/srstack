@@ -4,6 +4,8 @@ Current availability is state; purchases and realized totals need execution evid
 
 Choose and label the auction family explicitly. **Charter auctions** emit `CharterPurchased` with a per-charter ETH price; **branch-license auctions** emit `LicensesPurchased` with branch quantity and a STANDARD-denominated unit price. Authenticate the emitting generation and scales in the [interface guide](interface-guide.md). Keep family/chain/address/round identity and denominations separate; do not transfer a license schedule, price rule or allowance to charter history merely because getter names or round IDs match.
 
+Look up the selected generation's exact event signature, precomputed `topic0` and indexed-field layout in its reviewed [interface record](interface-inventory.md) before constructing filters or decoding logs. Prefer the recorded topic over hand-rolling a guessed signature. If a needed topic is absent, derive Ethereum Keccak-256 from the authenticated exact signature with a suitable host tool; NIST SHA3-256 is not interchangeable.
+
 ## Question to window
 
 Resolve dates/timezone or rounds to a finite scope and pinned upper block/hash/time. For each emitter, intersect the requested interval with its evidenced creation/deployment-through-anchor interval before retrieving logs: `start = max(requested start, creation block)`, `end = min(requested end, observation anchor)`. Empty intersections need no log scan; an unknown deployment bound is not an empty intersection. Retain any explicit inclusive-block versus half-open-time boundary conversion. Use indexed timestamps checked against boundary headers or bounded header search, never average block-time estimates. Ongoing intervals end at the anchor, labelled through-observation.
