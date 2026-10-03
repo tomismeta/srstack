@@ -4,15 +4,15 @@
 
 Ask about protocol mechanics, live positions, historical auctions or what earned accrual could buy. The agent chooses the evidence and calculations the question needs, using its existing host-authorized tools. No topic command, calculator wizard or fixed sequence is required.
 
-Independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product. **Candidate version 0.4.1; published stable v0.4.0.** [Installation](references/installation.md) defaults to the stable tag; candidate installs require an explicit reviewed full commit.
+Independent [Agent Skill](https://agentskills.io/specification), not an official Standard Reserve product. **Version 0.4.1.** [Installation](references/installation.md) defaults to the reviewed release tag; explicit reviewed full commits are also supported.
 
-## New in 0.4.1 (candidate)
+## New in 0.4.1
 
 - One [shared collection-efficiency recipe](references/collection-efficiency.md) for S-Bill censuses and quote comparisons, auction receipts/headers, charter/auction snapshots, local scenarios and concurrent market cross-checks.
 - Deduplicate before batching, preserve pinned raw results and per-request outcomes, and reuse one collection rather than spawning a CLI per item or repeating discovery for presentation.
 - Optional executable offline request-planning/response-matching functions and a single-batch example using an already authorized host client. No bundled RPC client, provider defaults, incremental discovery state or runtime dependency is added.
 - Optional audit-evidence and attempt-accounting guidance keeps raw comparison artifacts, domain validation and benchmark overhead distinct without imposing a schema, storage backend, read order or extra approval gate on public research.
-- Dogfood must establish exact-result equivalence, failure handling and host-specific timing; no universal latency improvement or 0.4.1 release approval is claimed.
+- Scoped dogfood demonstrated exact-result equivalence and evidence reuse; collector timings are not end-to-end agent latency or a universal speed guarantee. The bounded release scope and retained acceptance limits are recorded below.
 
 ## New in 0.4.0
 
@@ -66,16 +66,16 @@ srstack uses the Agent Skills format rather than a host-specific client. Install
 
 | Agent | Recorded compatibility |
 | --- | --- |
-| **Hermes** | Pinned native loading, resource-byte, guard, default-preprocessing and temporary-install checks passed during the 0.4.0 review; four medium guard warnings retained. |
-| **OpenClaw** | Pinned native-source loader, eligibility, official validation and packaging checks passed during the 0.4.0 review. |
-| **Muse** | User-reported v0.2.2 installation and integrity checks passed. End-to-end network helper execution was unavailable in that sandbox; no v0.4.0 Muse verification is claimed. |
+| **Hermes** | Pinned native loading, resource-byte, guard, default-preprocessing and temporary-install checks passed during the 0.4.1 review; four medium guard warnings retained. |
+| **OpenClaw** | Pinned native-source loader, eligibility, official validation and packaging checks passed during the 0.4.1 review. |
+| **Muse** | User-reported v0.2.2 installation and integrity checks passed. End-to-end network helper execution was unavailable in that sandbox; no v0.4.1 Muse verification is claimed. |
 | **Other Agent Skills hosts** | Use the complete runtime and verify loading, resource access and the capabilities needed for the question. Compatibility is not assumed from the format alone. |
 
 See [host installation and capabilities](references/installation.md#host-loading-and-sessions). These checks are scoped evidence, not fresh-session acceptance or universal live-access/safety guarantees; Muse support remains recorded at its reported version.
 
 ## Install a reviewed release
 
-The reviewed release tag is `v0.4.0`. Follow [reviewed installation](references/installation.md#reviewed-installation): resolve the tag or supplied full commit before review, export only its runtime files and clean-replace the old skill root. Do not overlay an older installation and leave retired scripts behind.
+The reviewed release tag is `v0.4.1`. Follow [reviewed installation](references/installation.md#reviewed-installation): resolve the tag or supplied full commit before review, export only its runtime files and clean-replace the old skill root. Do not overlay an older installation and leave retired scripts behind.
 
 Maintenance verification runs from the reviewed repository outside the installed skill. Keep the source pin and recovery record outside the hashed runtime. Host loading and session refresh are host-dependent; no forced restart or automatic update is included.
 
@@ -103,6 +103,8 @@ The acceptance suite covers direct pinned state; exact purchase-event/receipt ve
 For **0.3.0 only**, the owner approved a bounded release based on retained dogfooding, security/native-host checks and calculation verification without first closing every outstanding live-evidence gate. Those gaps remain disclosed, not passed: no blanket claim of certified deployed accrual/reset mechanics, attributable earned-only funding, refund/flow attribution or complete canonical history is made. ClawHub publication and hosted approval are deferred; MIT remains unchanged. The hardened release commit, exact export and CI were verified before [publication](https://github.com/tomismeta/srstack/releases/tag/v0.3.0). This exception does not weaken ordinary evidence or wallet-safety rules.
 
 For **0.4.0**, the owner separately approved a bounded repository/runtime release using retained existing-host S-Bill dogfooding, adversarial review, security/native-host checks, exact calculations and final export/CI verification. Fresh-session isolation and all mandatory scenario/profile combinations are not established; incomplete and wrong-pin claims remain unpassed. Scanner warnings and adjudicated public-identifier false positives remain disclosed. ClawHub publication, hosted approval and license-term acceptance remain deferred; MIT is unchanged. This approval does not certify deployed accounting, complete history, execution eligibility or received proceeds.
+
+For **0.4.1**, the owner separately approved a bounded repository/runtime release after reviewing adversarial/security checks, native compatibility, scoped live dogfood, exact-input verification and privacy-reviewed assets. Native runs demonstrated batching, raw-result equivalence and zero-retrieval follow-ups, but shared profiles, incomplete artifact/timing retention and unsupported recovery interpretations prevent blanket fresh-session acceptance. Later diagnostic guidance was checked offline, not proved to improve live-agent compliance. Failed, blocked and unexercised claims remain so; scanner advisories and false positives remain disclosed. No universal performance, deployed-accounting or complete-history certification is claimed. Wallet/host boundaries and MIT are unchanged; ClawHub publication and terms acceptance remain deferred.
 
 **Deterministic results, flexible agents:** nontrivial arithmetic should use inspectable exact calculations with relevant reconciliation checks. Agents remain free to choose or write tools, investigate beyond the references and answer conditional questions without an execution facility. No required language, script, question menu, fixed call budget or permanent output artifact. Identical evidence and assumptions should reproduce identical numbers, not identical wording or tool calls.
 
@@ -135,9 +137,9 @@ This host-native cutover removes the previous fixed snapshot, price, history and
 
 The installed optional calculation toolkit does not restore the retired protocol clients. Specialized references own exact accounting, round dating, allowance windows, order-ID caveats and history coverage. Stale host workshop/install prompts need explicit host-maintainer cleanup outside this repository; package installation does not rewrite other skills, credentials or global instructions.
 
-### Shared collection efficiency (0.4.1, unreleased)
+### Shared collection efficiency (0.4.1)
 
-Turns existing batching/reuse guidance into one optional host-tool recipe, linked from all six applicable question paths. Independent calls use bounded batches and response IDs; dependent discovery stays staged, local scenarios reuse evidence and market cross-checks retain separate provider timestamps. Missing/error/ambiguous responses remain explicit, and completeness requires the existing domain-specific checks. Its offline functions do not decode ABIs, discover deployments or issue RPC; the optional curl invocation uses an existing approved host profile under normal permissions. Calculation/output contracts are unchanged. The 0.4.0 bounded-release approval is historical and does not authorize this candidate's release.
+Turns existing batching/reuse guidance into one optional host-tool recipe, linked from all six applicable question paths. Independent calls use bounded batches and response IDs; dependent discovery stays staged, local scenarios reuse evidence and market cross-checks retain separate provider timestamps. Missing/error/ambiguous responses remain explicit, and completeness requires the existing domain-specific checks. Its offline functions do not decode ABIs, discover deployments or issue RPC; the optional curl invocation uses an existing approved host profile under normal permissions. Calculation/output contracts are unchanged. The separate 0.4.1 bounded-release approval and its retained limits are recorded above.
 
 Candidate smoke checks exercised 102 synthetic unique reads with repeated consumers, shuffled responses, missing/error/null/invalid outcomes and ambiguous-ID rejection. The documented host-client invocation also returned five public same-pin reads byte-identical to sequential reads, with matching decoded words and a stable header recheck. This is bounded recipe evidence, not a 100-bill census benchmark, full discovery proof or fresh-host acceptance; those remain dogfood checks.
 
@@ -153,7 +155,7 @@ Adds a [canonical S-Bill guide](references/sbills.md), dated launch binding and 
 
 Active deployment is established in the dated S-Bill evidence; refresh current state for current answers. Security reviews are completed per user-reported developer confirmation, not independently mapped public reports or source/bytecode correspondence. Acceptance criteria are not claims that every gate passed; the separately approved bounded 0.4.0 scope is stated above. No signing, submission, wallet connection, RPC client, transport permission or installed live-state fallback is added.
 
-Explicit installation pins validate and fetch the exact commit from the trusted repository before detaching, rather than assuming a stable-tag-only clone contains it. The release default is `v0.4.0`. Unavailable pins fail without branch/tag substitution.
+Explicit installation pins validate and fetch the exact commit from the trusted repository before detaching, rather than assuming a stable-tag-only clone contains it. That release default was `v0.4.0`; the current release selection is documented above. Unavailable pins fail without branch/tag substitution.
 
 Earlier review follow-through includes multi-review inventory support, explicit parent-artifact bounds for new source fragments, attributed nonpublic confirmations without invented URLs, and rejection of malformed weighted-price rows. Existing auction forecasting and historical-event reconciliation behavior is otherwise unchanged.
 

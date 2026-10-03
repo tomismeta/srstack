@@ -2,11 +2,11 @@
 
 Install/update only when requested and under normal host approval. Repository maintenance uses Git and Python 3.10+ on a supported POSIX host. Neither is needed to load the skill; Python 3.10+ is needed only if choosing its optional standard-library calculation helpers. Review the exporter (`maintenance/package.py`), its source-only inventory validator (`maintenance/inventory.py`), runtime and [safety rules](safety.md) before executing code; integrity verification is not publisher authentication. Export/verification remain standard-library-only; optional CI schema-validation dependencies are not installation requirements.
 
-**Identity:** the published stable release tag is `v0.4.0`; the 0.4.1 candidate requires an explicitly supplied reviewed full commit. The full reviewed commit identifies the installed package; retain it outside the hashed runtime, never inside its own files. Installation and bug reports need the loaded path and recorded SHA. Ordinary charter/auction answers do not need revision ceremony.
+**Identity:** the reviewed release tag is `v0.4.1`. The full reviewed commit identifies the installed package; retain it outside the hashed runtime, never inside its own files. Installation and bug reports need the loaded path and recorded SHA. Ordinary charter/auction answers do not need revision ceremony.
 
 ## Reviewed installation
 
-The default below resolves `refs/tags/v0.4.0` to a detached full commit **before review**. For a supplied pin, set `SRSTACK_COMMIT` to its full lowercase 40-hex SHA first; that path validates and fetches the exact commit from the trusted repository, independently of the stable tag. Never replace a requested pin with the tag or a branch tip. Unavailable pins fail; explicit tag resolution fails if the release tag is absent, even when a same-named branch exists.
+The default below resolves `refs/tags/v0.4.1` to a detached full commit **before review**. For a supplied pin, set `SRSTACK_COMMIT` to its full lowercase 40-hex SHA first; that path validates and fetches the exact commit from the trusted repository, independently of the release tag. Never replace a requested pin with the tag or a branch tip. Unavailable pins fail; explicit tag resolution fails if the release tag is absent, even when a same-named branch exists.
 
 ### 1. Select paths and pin the commit
 
@@ -30,9 +30,9 @@ if test -n "${SRSTACK_COMMIT:-}"; then
   git -C "$REVIEW_ROOT" fetch --no-tags origin "$SRSTACK_COMMIT" &&
   REVIEWED_COMMIT="$(git -C "$REVIEW_ROOT" rev-parse --verify --end-of-options "${SRSTACK_COMMIT}^{commit}")"
 else
-  git clone --single-branch --branch v0.4.0 \
+  git clone --single-branch --branch v0.4.1 \
     https://github.com/tomismeta/srstack.git "$REVIEW_ROOT" &&
-  REVIEWED_COMMIT="$(git -C "$REVIEW_ROOT" rev-parse --verify --end-of-options 'refs/tags/v0.4.0^{commit}')"
+  REVIEWED_COMMIT="$(git -C "$REVIEW_ROOT" rev-parse --verify --end-of-options 'refs/tags/v0.4.1^{commit}')"
 fi &&
 { test -z "${SRSTACK_COMMIT:-}" || test "$SRSTACK_COMMIT" = "$REVIEWED_COMMIT"; } &&
 git -C "$REVIEW_ROOT" checkout --detach "$REVIEWED_COMMIT" &&
