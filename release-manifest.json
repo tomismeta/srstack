@@ -6,7 +6,7 @@
   "digest_convention": "SHA-256 of lexicographically sorted UTF-8 POSIX path + NUL + exact file bytes; excludes manifest",
   "content_files": {
     "LICENSE": "14b82531e814378b84e97596f68a98c70becee3251b206c545d4f07d73105af3",
-    "README.md": "6a62edb87fdfdb9064fab36a387d434dcac9e275523de4dc12037c21dc8c3b2a",
+    "README.md": "378f83ed92c6fef0559875cc720fec1f8c9cc115e8a78c62b46f579a6a22624f",
     "SKILL.md": "dee340525a17338118ac722ebecce4ac504d9f210f52485aa8743a0ddbd7cb58",
     "assets/entities/contracts.json": "e4401f58e3774ca341afe628b8fb9a96a7f84b4cc7867a05e7d7eacdd14ba472",
     "assets/examples/projection-evidence-v1.json": "e85be438240f977252c1406113458a837c7e3dce4a2e9758a33e524f36740f48",
@@ -78,7 +78,7 @@
     "references/exits.md": "cf3e906906dd67510ae184c23954aee403c1c47791267f3fd0dce447df174be9",
     "references/genesis.md": "0577a17c49d7923143990b0ddba56881521f7370fe534980746b313eb9eba6d4",
     "references/inspection.md": "3a0cb74e9f4133f6c41bf614f41bc7b23d87c703a4bd10b7e9df17db0993e5bc",
-    "references/installation.md": "310a9c205b88388fc53a61ac0b50e566118da3dc7e9db774714f27ae1f37b8df",
+    "references/installation.md": "7a4de067ee7ad9de5bca748f797ca1a0ac424371e45d0041fd8b0c1ee399341a",
     "references/interface-guide.md": "6fb25bc13df2fe509cd9cf7b8f643c511b7f65c369cb2313b56326d22f0f77f0",
     "references/interface-inventory-auctions.md": "338c895b181f4838c47c54f2f222b158d1cb0d2c690db36d19d6ede05ff106ec",
     "references/interface-inventory-charter-distributions.md": "5824fab7e32ff93e13b76bc4c6b22261d6e296607b6a3b9492e1e1437f80ff75",
@@ -112,5 +112,5 @@
     "scripts/calculations.py": "219de444c54eaa513f8c93063b98e970f8866e8d312a51444ac815ff2a6606f3",
     "scripts/research.py": "18b3ac0070b2cbe827d7a031c74456f0b6cdab9b125121af2e15e0e27c00016f"
   },
-  "content_sha256": "f5f787ef441d9df75d613c7063f20a0fe1ba88ae760f18b8d8ef0f21e5b3ea17"
+  "content_sha256": "8044408eb86e154593e80a330a1c6c9b933e5966ce816bd8e05d53f24097b307"
 }
