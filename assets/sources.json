@@ -3,6 +3,55 @@
   "purpose": "Canonical source routing for published rules, v1.2/v1.1 changes, historical identity/cutover evidence and explicitly scoped proposals; no saved live state or competing current catalogs.",
   "groups": [
     {
+      "id": "launchpad",
+      "path": "assets/sources/launchpad.json",
+      "record_ids": [
+        "sr-launchpad-docs-2026-10-19",
+        "sr-launchpad-bindings-2026-10-19",
+        "sr-launchpad-creations-2026-10-19",
+        "sr-launchpad-verified-abis-2026-10-19",
+        "sr-launchpad-selected-abis-2026-10-19",
+        "sr-urc5-specification-2026-10-19",
+        "sr-urc5-announcement-2026-10-19"
+      ],
+      "scope": "Dated two-generation launchpad documentation, publisher identity and selected-interface provenance, attributed creation history, URC5 specification and announcements; no current state defaults or implementation certificate."
+    },
+    {
+      "id": "stock-pools",
+      "path": "assets/sources/stock-pools.json",
+      "record_ids": [
+        "sr-stock-pool-docs-2026-10-19",
+        "sr-stock-pool-identities-2026-10-19",
+        "sr-stock-hook-verified-abi-2026-10-19",
+        "sr-stock-fee-change-2026-10-19",
+        "sr-stock-fee-announcement-2026-10-19"
+      ],
+      "scope": "Dated stock-pool identity, publisher economics, historical fee changes and explicit missing explorer ABI evidence; no current fee table, issuer-backing or realized-income certificate."
+    },
+    {
+      "id": "market-pilot",
+      "path": "assets/sources/market-pilot.json",
+      "record_ids": [
+        "sr-market-pilot-announcements-2026-10-19",
+        "sr-market-pilot-rules-2026-10-19",
+        "sr-market-pilot-rewards-ui-2026-10-19",
+        "sr-market-pilot-indexer-2026-10-19"
+      ],
+      "scope": "Bounded pilot announcements, conflicting publisher rules, rendered mixed-asset reward explanation and public indexer discovery; no stored points, token list, balances or exact entitlement formula."
+    },
+    {
+      "id": "charter-distributions",
+      "path": "assets/sources/charter-distributions.json",
+      "record_ids": [
+        "sr-charter-stimulus-announcement-2026-10-19",
+        "sr-charter-burn-compensation-2026-10-19",
+        "sr-charter-claims-bindings-2026-10-19",
+        "sr-charter-claims-selected-abis-2026-10-19",
+        "sr-charter-check-in-update-2026-10-19"
+      ],
+      "scope": "Separate protocol-surplus stimulus/top-up, developer-attributed burn compensation and check-in updates, plus authenticated selected claim encoding surfaces; not universal entitlement or recurring issuance."
+    },
+    {
       "id": "sbills",
       "path": "assets/sources/sbills.json",
       "record_ids": [

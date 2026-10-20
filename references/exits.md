@@ -28,6 +28,8 @@ Qualifying wallet-clock resets are explicitly listed: creating a charter, buying
 
 The [official v1.1 reply](https://x.com/standard_rsv/status/2102200074810036373), refreshed in the September 27 known-post review, announced a forthcoming free website check-in button. The separately dated publisher-bundle review found a “Check in now” action; this is frontend source evidence, not an exercised wallet flow or a saved current UI status. Neither establishes free network gas or adds buying/holding STANDARD to the documented clock-reset actions. [sr-protocol-v1-1-announcement; sr-owner-check-in-frontend]
 
+The **October 15, 2026** [developer update](https://x.com/0xbeans/status/2110703147824136526) publishes a persistent check-in display and stronger inactivity warning; the [later clarification](https://x.com/0xbeans/status/2110774295161168278) says check-in can be used anytime to restart the timer. Earlier conditional button-visibility descriptions remain historical UI evidence, not a timeless eligibility rule. No connected-wallet flow was exercised. The 30-day dormancy rule remains; [burn compensation and launch-token drops](charter-distributions.md) have separate funding and conditions, not charter restoration or removal of dormancy. [October source record](../assets/sources/charter-distributions.json)
+
 `dormancy-clock-reset-actions` and `dormancy-transfer-grace` preserve those separate rules. `withdrawal-retirement-rule` and `withdrawal-availability` record the withdrawal claims without supplying a verified settlement algorithm.
 
 ### Inspect one charter's activity

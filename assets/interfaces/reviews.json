@@ -561,6 +561,452 @@
         "Publisher fallback sample books and local floating-point models are not live defaults or verified Solidity calculations.",
         "Dated deployment and parameter observations are provenance only; no current router, live dataset, signing or submission authority."
       ]
+    },
+    {
+      "id": "publisher-ecosystem-2026-10-19",
+      "reviewed_at": "2026-10-19",
+      "source_ids": [
+        "sr-launchpad-bindings-2026-10-19",
+        "sr-launchpad-selected-abis-2026-10-19",
+        "sr-stock-pool-identities-2026-10-19",
+        "sr-market-pilot-rules-2026-10-19",
+        "sr-charter-claims-bindings-2026-10-19",
+        "sr-charter-claims-selected-abis-2026-10-19",
+        "sr-launchpad-creations-2026-10-19"
+      ],
+      "source_chain": [
+        {
+          "url": "https://www.standardreserve.xyz/",
+          "bytes": 7026,
+          "sha256": "2a8f030906ff0bd4fdcabb134894c701896a4dbf7c8e82dea8774b695a8db57d",
+          "relationship": "Official root HTML links the imported application module; downloaded content handled as data."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "bytes": 1139855,
+          "sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "relationship": "Complete imported publisher module: dated role literals, selected declaration arrays and static tuple/spread dependencies."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js",
+          "bytes": 21354,
+          "sha256": "814cec3b9d08c126662241aeeb17a31833298cbadb513e4a19b81d5b3ccea262",
+          "relationship": "Root-linked launchpad documentation import corroborates generation-qualified published role identities."
+        }
+      ],
+      "method": "Acorn static AST + whitelisted literal/template/identifier/spread resolver; installed abitype parseAbi converts human-readable declarations; downloaded JS never imported/evaluated. Primary role arrays remain separate. Two generation-bound supplemental interfaces retain only the exact ps curveOfToken declaration, with FR/di/OR dispatch fingerprints, never the incompatible full ps launch/config/event layouts. ABI default anonymous/indexed=false and omitted empty parameter names are explicitly materialized; selectors/layouts/digests use maintenance/inventory.py.",
+      "hash_convention": "SHA-256 over exact UTF-8 bodies and zero-based half-open fragment ranges. ABI digest uses inventory.abi_digest over complete normalized entries in source order.",
+      "shared_declarations_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 610000,
+        "end_utf8_byte": 635000,
+        "bytes": 25000,
+        "sha256": "e9282e471487d341012473cb54318c67b6f7e3ce459a75eefd51400e44afb9df",
+        "locator": "Bounded publisher launchpad declaration block, including tuple and spread dependencies; region boundaries are not claimed syntax boundaries."
+      },
+      "interfaces": {
+        "launch-factory-association-2026-10-14": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "mountApp-RNywHOZ_.js ps single curveOfToken declaration; FR(e)/di()/OR(q) use over both dated factory generations, without other ps methods",
+          "source_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 621837,
+            "end_utf8_byte": 621898,
+            "bytes": 61,
+            "sha256": "55abd542344ae7d913cffa1e1e53ffb1bc5e869ab792c45feed983dfea9b1c82",
+            "locator": "Complete single curveOfToken declaration inside ps; other ps entries excluded"
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 0,
+            "event": 0,
+            "fallback": 0,
+            "function": 1,
+            "receive": 0
+          },
+          "abi_sha256": "552c8a1b672300cfbf0622c9dd3131bdf32f3b0b6d4c9d8bdffb767321e3d9f9"
+        },
+        "launch-factory-association-2026-10-19": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "mountApp-RNywHOZ_.js ps single curveOfToken declaration; FR(e)/di()/OR(q) use over both dated factory generations, without other ps methods",
+          "source_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 621837,
+            "end_utf8_byte": 621898,
+            "bytes": 61,
+            "sha256": "55abd542344ae7d913cffa1e1e53ffb1bc5e869ab792c45feed983dfea9b1c82",
+            "locator": "Complete single curveOfToken declaration inside ps; other ps entries excluded"
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 0,
+            "event": 0,
+            "fallback": 0,
+            "function": 1,
+            "receive": 0
+          },
+          "abi_sha256": "552c8a1b672300cfbf0622c9dd3131bdf32f3b0b6d4c9d8bdffb767321e3d9f9"
+        },
+        "launch-factory-2026-10-19": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "mountApp-RNywHOZ_.js zo; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+          "source_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 613317,
+            "end_utf8_byte": 613813,
+            "bytes": 496,
+            "sha256": "c4661275359da436be113e4ca2051d726582bae9a8927193c6ff1ba9f44f50dc"
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 9,
+            "event": 1,
+            "fallback": 0,
+            "function": 2,
+            "receive": 0
+          },
+          "abi_sha256": "43177bb66ccb5c0b6f1edb6add663fe13762bca94c33fb8adc5061694a1803dc"
+        },
+        "launch-router-2026-10-19": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "mountApp-RNywHOZ_.js q2; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+          "source_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 624060,
+            "end_utf8_byte": 624488,
+            "bytes": 428,
+            "sha256": "3238175868e51783b9753c0cc4d591ff76a5ec07f4bfcbaafb0fc210b56a3b83"
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 24,
+            "event": 0,
+            "fallback": 0,
+            "function": 2,
+            "receive": 0
+          },
+          "abi_sha256": "1d29bc1817fbaf79ef8c814d829facd5ebb16608930561abd8bdd846cb24321e"
+        },
+        "launch-hook-2026-10-19": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "mountApp-RNywHOZ_.js qa; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+          "source_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 615961,
+            "end_utf8_byte": 616570,
+            "bytes": 609,
+            "sha256": "639f9eebb44b8f03f86e01ba4411d18c68613bc15a690ca5d64079af73b560a3"
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 15,
+            "event": 0,
+            "fallback": 0,
+            "function": 8,
+            "receive": 0
+          },
+          "abi_sha256": "cc776563737719686525308491e2b1a3b4959f353255b2de5202d55a4231fa9f"
+        },
+        "launch-factory-2026-10-14": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "mountApp-RNywHOZ_.js Wr; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+          "source_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 632735,
+            "end_utf8_byte": 633775,
+            "bytes": 1040,
+            "sha256": "67158920ab76a1f449f5ffe1c14a062d4b8f1ba62c6fe94c02cae7ede354b102"
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 24,
+            "event": 2,
+            "fallback": 0,
+            "function": 3,
+            "receive": 0
+          },
+          "abi_sha256": "f84c78fa2d9dacf439a82098bd0af82233f0d88fd802996fdde84280d242a20e"
+        },
+        "launch-router-2026-10-14": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "mountApp-RNywHOZ_.js q2; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+          "source_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 624060,
+            "end_utf8_byte": 624488,
+            "bytes": 428,
+            "sha256": "3238175868e51783b9753c0cc4d591ff76a5ec07f4bfcbaafb0fc210b56a3b83"
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 24,
+            "event": 0,
+            "fallback": 0,
+            "function": 2,
+            "receive": 0
+          },
+          "abi_sha256": "1d29bc1817fbaf79ef8c814d829facd5ebb16608930561abd8bdd846cb24321e"
+        },
+        "launch-config-2026-10-19": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "mountApp-RNywHOZ_.js L2; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+          "source_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 615033,
+            "end_utf8_byte": 615369,
+            "bytes": 336,
+            "sha256": "22146a26292d7f4274d6bc7b6d135b3828cf9be7734badecaf113a94a7ec5708"
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 0,
+            "event": 0,
+            "fallback": 0,
+            "function": 2,
+            "receive": 0
+          },
+          "abi_sha256": "7fb9ccece4b0e61ee6717d84e70a24ce3110e547690c265f1279c337d329b3eb"
+        },
+        "creator-fee-escrow-2026-10-19": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "mountApp-RNywHOZ_.js dR; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+          "source_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 624496,
+            "end_utf8_byte": 624619,
+            "bytes": 123,
+            "sha256": "0067281f0da3839f7882dbb9680e8bf59e4aece33eac7d6b9f3c6166b9c984aa"
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 24,
+            "event": 0,
+            "fallback": 0,
+            "function": 2,
+            "receive": 0
+          },
+          "abi_sha256": "7eae5226589db9d797382b156cd81f5ca98bbe79b662d64230df5473b0d20eff"
+        },
+        "charter-drop-2026-10-19": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "mountApp-RNywHOZ_.js D2; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+          "source_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 613821,
+            "end_utf8_byte": 614072,
+            "bytes": 251,
+            "sha256": "d8a7bb374f58a1d9ada92adf7b338e0a51846be1e187fd39c0980b02a8fb7674"
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 1,
+            "event": 0,
+            "fallback": 0,
+            "function": 2,
+            "receive": 0
+          },
+          "abi_sha256": "723f9f50158aefdf321e741c732631729f2400d67c68ff6bf81ed957386b484d"
+        },
+        "branch-claim-2026-10-11": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "mountApp-RNywHOZ_.js FO; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+          "source_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 653553,
+            "end_utf8_byte": 654971,
+            "bytes": 1418,
+            "sha256": "ab0724f1042d314e308dd45cd0b0dee9d5e62dac1ffe57f9a0065025dc20d687"
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 4,
+            "event": 4,
+            "fallback": 0,
+            "function": 19,
+            "receive": 0
+          },
+          "abi_sha256": "7821af5159c5ff68134aa39a3f84add6024384c12b015f0a2d27048f9eed1486"
+        },
+        "branch-top-up-2026-10-11": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "mountApp-RNywHOZ_.js f5; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+          "source_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 652585,
+            "end_utf8_byte": 653545,
+            "bytes": 960,
+            "sha256": "ddccf962bcb5dc281b3433e385520a7a1805f43be090438e054c4646b5ecb09a"
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 4,
+            "event": 4,
+            "fallback": 0,
+            "function": 12,
+            "receive": 0
+          },
+          "abi_sha256": "bc0531ea06554a2257ef1dcf3d3dcb0cff53349c1c1239e063fdbeb2ecfa280a"
+        },
+        "charter-refund-claim-2026-10-15": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "mountApp-RNywHOZ_.js bb; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+          "source_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 668941,
+            "end_utf8_byte": 669629,
+            "bytes": 688,
+            "sha256": "70a78e0f7599e2d5aa2d0c66e6b02d4d166e62b6f68f5aee28b6198b67faef06"
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 3,
+            "event": 1,
+            "fallback": 0,
+            "function": 11,
+            "receive": 0
+          },
+          "abi_sha256": "ad177c6055b9b65be142488108b37ce628a33f9bb638175d2c63de87e32f4fba"
+        },
+        "bonding-curve-2026-10-19": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "mountApp-RNywHOZ_.js Ah; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+          "source_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 614080,
+            "end_utf8_byte": 614306,
+            "bytes": 226,
+            "sha256": "e17521002f4918ee77b54952f4c141e98909b65e3f9c98f20924b3e3b6447590"
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 0,
+            "event": 0,
+            "fallback": 0,
+            "function": 5,
+            "receive": 0
+          },
+          "abi_sha256": "224d2395faf270e9c9542a1193ead935f2f8ba31664bd02477b99dafb50161c9"
+        },
+        "bonding-curve-2026-10-14": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "mountApp-RNywHOZ_.js ui; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+          "source_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 622757,
+            "end_utf8_byte": 623436,
+            "bytes": 679,
+            "sha256": "eeb7a75ae830060900211ce84324c924205af08e12b55c22e88dc24799b8c167"
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 24,
+            "event": 0,
+            "fallback": 0,
+            "function": 14,
+            "receive": 0
+          },
+          "abi_sha256": "1d8a99a60aec30139884381b057d7c27122ceff74d5e686221404a9e5ed00f76"
+        },
+        "creator-fee-escrow-2026-10-14": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "mountApp-RNywHOZ_.js dR; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+          "source_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 624496,
+            "end_utf8_byte": 624619,
+            "bytes": 123,
+            "sha256": "0067281f0da3839f7882dbb9680e8bf59e4aece33eac7d6b9f3c6166b9c984aa"
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 24,
+            "event": 0,
+            "fallback": 0,
+            "function": 2,
+            "receive": 0
+          },
+          "abi_sha256": "7eae5226589db9d797382b156cd81f5ca98bbe79b662d64230df5473b0d20eff"
+        },
+        "charter-drop-2026-10-14": {
+          "kind": "selective_fragment",
+          "source_definition_complete": false,
+          "deployed_implementation_complete": false,
+          "source_locator": "mountApp-RNywHOZ_.js fn; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+          "source_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 633783,
+            "end_utf8_byte": 634702,
+            "bytes": 919,
+            "sha256": "c5730dd60273b63f819881648e4017c78dcc7c80fd9ad388c722009a77b98cef"
+          },
+          "entry_counts": {
+            "constructor": 0,
+            "error": 29,
+            "event": 0,
+            "fallback": 0,
+            "function": 9,
+            "receive": 0
+          },
+          "abi_sha256": "2d71234237a1e645a3290f7aa1780e0ea74a86bdf3c75845909debeef575fb15"
+        }
+      },
+      "limits": [
+        "All twenty metadata and twenty source/ABI explorer requests were denied; no explorer ABI or explorer review is installed.",
+        "Complete primary selected arrays and two explicitly bounded single-declaration association fragments are preserved; source-definition-complete and deployed-implementation-complete remain false.",
+        "Bindings with no acquired ABI retain unknown status and empty interface IDs. Historical factory-dependency/creation observations remain attributed research, not fresh explorer authentication.",
+        "Common frontend arrays with incompatible tuple/event/launch layouts are not merged into the generation-specific primary interfaces; this inventory is not every frontend call.",
+        "Sending EOA, deterministic creator, factory, fee recipient, owner and pending owner are distinct roles. No user token, sample wallet, module template or unclassified creation is promoted to an activated product binding."
+      ]
     }
   ]
 }

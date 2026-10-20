@@ -1,0 +1,158 @@
+# srstack review and release history
+
+Source-only record moved from the runtime README during structural simplification. Entries retain their original revision scope, evidence attribution, counts and unresolved qualifications; “current,” “now,” “above” and “unreleased” describe the recorded revision, not new verification. No historical result is promoted to acceptance of a later pin. The current candidate is 0.5.0 (unreleased); current runtime membership, installation and limitations are described in the [runtime README](../README.md).
+
+## 0.5.0 ecosystem integration (unreleased dogfood candidate)
+
+- Includes all post-0.4.1 structural navigation work recorded below, plus canonical liquidity/stock-market, launchpad, market-pilot and charter-distribution guidance.
+- Adds dated source records, generation-specific interfaces and bindings, capability coverage, parameter provenance and corresponding acceptance scenarios. Preserves the existing core and S-Bill evidence.
+- Keeps changing holdings, quotes, fees and entitlement outside the runtime. No RPC client, wallet connector, background service or reward estimator is introduced.
+- Prepared for immutable-commit dogfooding on `feature/0.5.0-ecosystem-dogfood`, not a tagged release or automatic host update. Historical release approvals and host compatibility evidence do not extend to this candidate.
+- Prior integration verification included package and inventory regressions, research regressions with two optional-schema skips, scoped native research and an independent architectural review. Those observations precede the 0.5.0 metadata change; they are not fresh-host acceptance of this commit.
+- Retained limitations include unavailable exact stock fees, an observed auction-answer evidence-lookup miss, incomplete live acceptance and a validator gap for cross-generation binding applicability. The principal-review recommendations remain unapplied; these are disclosed dogfood limits, not passed gates.
+
+
+## Structural navigation revision (unreleased)
+
+This documentation-only working-tree revision keeps version 0.4.1; it is not a new release or an extension of the historical release approvals below.
+
+- Added direct task-shape routing for broad research and a short procedure linking scope, capability selection, authentication, collection, calculation and reporting.
+- Made the capability map the question/evidence-family index, contracts the detailed identity procedure, and the interface guide the encoding/decoding reference. Consolidated competing question maps and repeated authentication guidance without changing interface metadata or economic rules.
+- Placed inspection authentication and collection before specialized interpretation; separated optional request/response examples from review-only accounting. Moved detailed release/review narrative out of the runtime README while retaining current limitations there.
+- Extended existing source-only acceptance review guidance to distinguish missing, buried, unused and mechanically enforceable instructions, and to compare structural variants using organic questions and observed behavior rather than self-report.
+
+Observed local verification: manifest build and verification passed; package regressions ran 21 tests, inventory regressions 18, and research regressions 48 with two skips. A temporary standalone candidate passed manifest validation and navigation smoke checks for known-position lookup, broad research and collection; the lookup resolved the CentralBank capability to its actual signatures, selectors and review IDs. Source-only history links and acceptance JSON also validated. Temporary smoke resources were removed.
+
+Verified runtime content digest: `dfa23548686483e6589078bc471699ddaa5f7e6361e8861069e37de746f4bc4d`. This records the uncommitted candidate bytes, not a reviewed commit, installed host revision or published artifact. No fresh-session live-agent comparison, live RPC acceptance or end-to-end speed improvement was established by these checks.
+
+
+## Recorded release highlights
+
+### New in 0.4.1
+
+- One [shared collection-efficiency recipe](../references/collection-efficiency.md) for S-Bill censuses and quote comparisons, auction receipts/headers, charter/auction snapshots, local scenarios and concurrent market cross-checks.
+- Deduplicate before batching, preserve pinned raw results and per-request outcomes, and reuse one collection rather than spawning a CLI per item or repeating discovery for presentation.
+- Optional executable offline request-planning/response-matching functions and a single-batch example using an already authorized host client. No bundled RPC client, provider defaults, incremental discovery state or runtime dependency is added.
+- Optional audit-evidence and attempt-accounting guidance keeps raw comparison artifacts, domain validation and benchmark overhead distinct without imposing a schema, storage backend, read order or extra approval gate on public research.
+- Scoped dogfood demonstrated exact-result equivalence and evidence reuse; collector timings are not end-to-end agent latency or a universal speed guarantee. The bounded release scope and retained acceptance limits are recorded below.
+
+### New in 0.4.0
+
+- **Live S-Bill research:** [rates, amount quotes, deposits and position reads](../references/sbills.md), with authenticated launch-interface evidence rather than the historical preview as a standing status answer.
+- **Maturity-day planning:** count bills and sum exact principal by stored maturity, deployment and explicit timezone; distinguish active maturities from payments and disclose discovery gaps.
+- **Separate economic meanings:** current rates, booked premiums, early-exit estimates, redemption and manual roll are not interchangeable. No automatic renewal, sample-book fallback or inherited Bank/auction rules.
+- **Review provenance:** security reviews are completed per user-reported developer confirmation; public report/revision/deployment mapping remains a separate evidence question.
+- Existing [auction forecasts](../references/calculations.md), [contract/interface inventories](../references/contracts.md) and [question-driven capabilities](../references/capabilities.md) remain available through host-authorized tools, without bundled protocol clients.
+
+
+## Recorded bounded-release decisions
+
+For **0.3.0 only**, the owner approved a bounded release based on retained dogfooding, security/native-host checks and calculation verification without first closing every outstanding live-evidence gate. Those gaps remain disclosed, not passed: no blanket claim of certified deployed accrual/reset mechanics, attributable earned-only funding, refund/flow attribution or complete canonical history is made. ClawHub publication and hosted approval are deferred; MIT remains unchanged. The hardened release commit, exact export and CI were verified before [publication](https://github.com/tomismeta/srstack/releases/tag/v0.3.0). This exception does not weaken ordinary evidence or wallet-safety rules.
+
+For **0.4.0**, the owner separately approved a bounded repository/runtime release using retained existing-host S-Bill dogfooding, adversarial review, security/native-host checks, exact calculations and final export/CI verification. Fresh-session isolation and all mandatory scenario/profile combinations are not established; incomplete and wrong-pin claims remain unpassed. Scanner warnings and adjudicated public-identifier false positives remain disclosed. ClawHub publication, hosted approval and license-term acceptance remain deferred; MIT is unchanged. This approval does not certify deployed accounting, complete history, execution eligibility or received proceeds.
+
+For **0.4.1**, the owner separately approved a bounded repository/runtime release after reviewing adversarial/security checks, native compatibility, scoped live dogfood, exact-input verification and privacy-reviewed assets. Native runs demonstrated batching, raw-result equivalence and zero-retrieval follow-ups, but shared profiles, incomplete artifact/timing retention and unsupported recovery interpretations prevent blanket fresh-session acceptance. Later diagnostic guidance was checked offline, not proved to improve live-agent compliance. Failed, blocked and unexercised claims remain so; scanner advisories and false positives remain disclosed. No universal performance, deployed-accounting or complete-history certification is claimed. Wallet/host boundaries and MIT are unchanged; ClawHub publication and terms acceptance remain deferred.
+
+
+## Detailed historical review narrative
+
+### Shared collection efficiency (0.4.1)
+
+Turns existing batching/reuse guidance into one optional host-tool recipe, linked from all six applicable question paths. Independent calls use bounded batches and response IDs; dependent discovery stays staged, local scenarios reuse evidence and market cross-checks retain separate provider timestamps. Missing/error/ambiguous responses remain explicit, and completeness requires the existing domain-specific checks. Its offline functions do not decode ABIs, discover deployments or issue RPC; the optional curl invocation uses an existing approved host profile under normal permissions. Calculation/output contracts are unchanged. The separate 0.4.1 bounded-release approval and its retained limits are recorded above.
+
+Candidate smoke checks exercised 102 synthetic unique reads with repeated consumers, shuffled responses, missing/error/null/invalid outcomes and ambiguous-ID rejection. The documented host-client invocation also returned five public same-pin reads byte-identical to sequential reads, with matching decoded words and a stable header recheck. This is bounded recipe evidence, not a 100-bill census benchmark, full discovery proof or fresh-host acceptance; those remain dogfood checks.
+
+Dogfood follow-up clarifies optional raw request/response retention, derived attempt counts, cumulative provider budgets and the member-versus-latency tradeoff when staging eligibility reads. History guidance points directly to reviewed event topics. Agents retain discretion over authorized tools, sources, pacing and evidence formats; existing wallet and host-permission boundaries are unchanged. No historical activity dataset or universal performance claim is added.
+
+A follow-up synthetic smoke persisted and reloaded both raw comparison sides using the documented matcher, preserved repeated-consumer bindings, kept a null receipt unverified and accounted for retry/recapture work without double counting. This exercises a possible host evidence workflow, not a required runtime service or fresh-agent acceptance.
+
+Native-host follow-up distinguishes generic throttling from an evidenced batch cap and recommends capturing safe status/header/body/timing diagnostics before parsing. This adds no required archive, fixed delay, client or approval gate. An offline synthetic failure-path smoke retained a 429 with Retry-After, rejected malformed JSON and duplicate/unknown IDs, classified missing replies, and preserved earlier successful evidence. No live host rerun or improved native-agent compliance is claimed for this clarification.
+
+### S-Bill research and maturity cohorts (0.4.0)
+
+Adds a [canonical S-Bill guide](../references/sbills.md), dated launch binding and selected frontend interface, question-scoped read guidance and optional offline cohort arithmetic. Calendar-day answers preserve bill identity, stored maturity, timezone boundaries, exact principal, settlement state and discovery coverage; they are not wallet counts or paid-out totals. Current frontend manual roll supersedes the older auto-roll explanation for frontend guidance. Historical preview and planned-audit sources remain dated provenance.
+
+Active deployment is established in the dated S-Bill evidence; refresh current state for current answers. Security reviews are completed per user-reported developer confirmation, not independently mapped public reports or source/bytecode correspondence. Acceptance criteria are not claims that every gate passed; the separately approved bounded 0.4.0 scope is stated above. No signing, submission, wallet connection, RPC client, transport permission or installed live-state fallback is added.
+
+Explicit installation pins validate and fetch the exact commit from the trusted repository before detaching, rather than assuming a stable-tag-only clone contains it. That release default was `v0.4.0`; the current release selection is documented above. Unavailable pins fail without branch/tag substitution.
+
+Earlier review follow-through includes multi-review inventory support, explicit parent-artifact bounds for new source fragments, attributed nonpublic confirmations without invented URLs, and rejection of malformed weighted-price rows. Existing auction forecasting and historical-event reconciliation behavior is otherwise unchanged.
+
+Initial candidate verification: 18 inventory and 21 packaging regressions passed; the research suite passed 46 checks with two optional JSON Schema checks skipped because `jsonschema` was unavailable locally. A temporary standalone runtime resolved the S-Bill binding/interface/capability and exercised a known bill's maturity plus a synthetic 23-hour DST interval; malformed weighted rows now exit2. The documented acquisition procedure selected an explicit commit outside the stable tag and rejected malformed/unavailable pins against an isolated local remote. Subsequent exact-candidate CI passed with the schema dependency installed. These are packaging, arithmetic and acquisition checks—not fresh-host acceptance or complete live cohort coverage.
+
+Dogfood follow-through makes existing creation bounds directly discoverable, documents separately qualified log/archive provider paths and anchor reconciliation, and adds a same-block `totalPrincipal` cross-check for comparable deployment-wide bill sums. It makes STANDARD/USD valuation explicit: STANDARD book amounts remain separate from fresh indicative USD marks, with no implicit $1 conversion. A dated STANDARD/native-ETH pool lead, provider disagreement rules and compact report recipe connect the existing market-price resources. Current provider responses and exact mark arithmetic were exercised; prices remain outside the installed defaults. New agent acceptance criteria are not claimed as executed passes.
+
+Three compact capability paths now expose rate checkpoint/drift/impact inputs, exit-pressure/day observations and bonus accounting. All 32 reads in the selected S-Bill interface have question-capability references; the four writes remain explanatory only. This closes read discoverability, not the separately unknown full deployed-contract surface, and adds no reconstructed pricing/bonus formulas or runtime client.
+
+### Pre-release security and portability hardening (0.3.0, unreleased)
+
+Decimal/scientific inputs now receive the existing magnitude check before rational exponent expansion. This fixes compact out-of-range inputs consuming excessive CPU before rejection; zero-valued scientific inputs retain exact zero without expanding their exponent. The optional helpers remain local calculations, not an input-size or execution sandbox. A CPU-limited CLI regression covers both exponent signs and zero handling.
+
+The entry description fits Hermes' 60-character routing budget. Host/registry installation must preserve the complete runtime-only export; a generic source-repository import is not equivalent. The package remains MIT licensed. ClawHub's current MIT-0 publication requirement needs an explicit rights/distribution decision, and local reviews are not hosted registry approval. No new runtime dependency or wallet/network authority is introduced.
+
+### History-first projection correction (0.3.0, unreleased)
+
+Next-close forecasts now report both a trailing last-sold linear trend and a structural estimate from the policy opening times recent sellout close/open ratios, with a descriptive ±1 sample-standard-deviation band. Policy is the mechanism, not a market-close prediction. Continued sellout and comparable cohorts are explicit assumptions; the future floor remains unknown. Four price shapes and the scheduled round lifecycle remain distinct, including the `remainingToday == 0` phantom-price tripwire.
+
+Six standard-library helpers retain exact rational fits/statistics and bounded Decimal evaluation where roots or decay are generally irrational. A strict round-dataset schema preserves partial observations, actual header timestamps, coverage and provenance; curation guidance covers durable external storage, events/archive reconstruction, freshness and sample verification. Six new derived-analysis capability records bring the inventory to 25 without inventing forecast getters or new ABI reviews. The six-round installed fixture is fictional, not a live seed.
+
+Review-clone checks passed all 20 package, 14 inventory and 29 existing research regressions plus 12 projection regressions, including both optional schema validations. All six documented recipes executed from a standalone 72-file runtime without changing its bytes. Packaging now distinguishes fenced code from Markdown links, so executable recipes do not create false missing-link errors. Three new source-only fresh-session gates cover next-close forecasting, sold-out current price and ambiguous price requests; passing these synthetic gates does not establish live history completeness.
+
+At the initial correction review, the reported 19-round `license-auction-history.json` was unavailable; no seed was invented or substituted. Subsequent user-reported host verification migrated all 19 rounds, sample-checked 10/19 rounds with 44 archive/header checks, and checked a six-round forecasting cohort with a separate 42-check archive/header matrix. These support their stated observations, not complete interior event discovery/order; purchase-event anchor checks remain outstanding. The owner-approved bounded release scope above accepts these disclosed gaps without marking them passed. This correction adds no runtime dependency, RPC client, endpoint, token inventory, router, wallet authority or transport-policy change.
+
+### Release-readiness acceptance (unreleased, 2026-09-27)
+
+The frozen `df4174500928e724b6aa67c1337e37d5dfae3a7a` runtime was exercised through fresh OMP 18.3.1 sessions using the observed `opencode-go/gpt-6-luna` model. All 20 scenarios and 88 required criteria were assessed: nine scenarios passed, three failed, and eight remained blocked. Runtime loading was observed with automatic discovery disabled and instruction-scoped isolation—not an OS sandbox or a claim about other host profiles. A separate real-host exercise clean-replaced the previous 39-file runtime, loaded the 68-file candidate, and restored the previous bytes exactly; no primary installation was changed.
+
+The three failures were an unauthenticated cross-role getter probe and incomplete request-bound/checkpoint plans. The correction makes exact selected-interface authentication explicit before encoding, requires concrete question-scoped retry limits, and requires populated checkpoint values rather than a field checklist. Fresh runs of the same three natural questions against that uncommitted correction passed all 16 affected criteria; the original failures remain in external evidence. No router, fixed call budget, provider dependency, mandatory tool sequence or wallet authority was added.
+
+**That review held release under the then-current all-gates policy.** Corresponding deployed accrual/lazy-roll/reset paths, attributable earned funding, required historical state and complete canonical history/flow coverage remain unestablished. Saved-public-evidence replays reproduced exact receipt accounting and 13 observed history rows, but assisted arithmetic is not unassisted discovery or complete live acceptance. Provider/client denials, unsupported tracing and throttling are recorded separately. Results, raw observations and transcripts remain outside the installed runtime; no live values become package defaults. The later owner-approved 0.3.0 scope exception changes the release decision, not those evidence statuses or the absence of a fresh complete acceptance pass for a later pin.
+
+### Reviewed capabilities and worked evidence (unreleased)
+
+The current revision adds 19 dated contract bindings, 19 provenance-scoped capability records, and 15 interface inventories: 13 complete reviewed publisher definitions/adaptations and two explicit selective fragments. Their 905 ABI entries include 522 functions, 133 events, 234 errors, 12 constructors and four receive entries. Every entry retains exact layouts, indexed fields where applicable, generation/review context and qualified explanations/units. Registry and other incompletely exposed roles remain explicit gaps, not negative capability claims. Complete publisher-interface coverage is not complete deployed behavior.
+
+The smaller entrypoint points into the capability guide before needless discovery/indexing, without requiring that workflow. Keyed charter/day and charter/window usage reads remain available; negative aggregate-history claims are narrower. Future additions follow the documented inventory methodology and source-only consistency checks. The collection guidance separates log identity from receipt verification, makes canonicality/reuse triggers concrete, explains schema-versus-summary admission, and prevents rounded-average reconstruction. A single installed synthetic ten-observation example demonstrates raw indexed logs, conflicts, reorg alternatives, removal, deferred identity and exact table/duration formatting. No transport client, new input mode or wallet authority was added.
+
+Verification passed 14 inventory regressions, 20 packaging/export regressions and 29 research/example regressions, including the optional Draft 2020-12 check in a disposable maintenance environment. Independent PyCryptodome 3.23.0 verification matched all 889 function/error selectors and event topics and eight Keccak padding cases. All inventory source byte ranges/hashes and parsed ABI entries matched the retained complete publisher data. The package contains 68 runtime files; its installed example produced exact raw average `706/7`, remainder `6`, and `2m7s`, retaining conflicts, disputed, removed and deferred observations.
+
+Direct CLI/library and capability/event lookups ran from a standalone runtime candidate in another working directory with checkout reads and network access denied by a Python audit hook. The documented decoder and table recipes also ran from that installed tree; installed bytes remained unchanged. This is scoped offline execution, source-layout and packaging evidence, not a production sandbox, fresh isolated host acceptance, live financial observation, source/bytecode correspondence or all-generation history PASS.
+
+### Bundled research execution (unreleased)
+
+The earlier bundled-execution revision installed the optional offline library, five-command JSON CLI (`weighted-price`, `rounds`, `pace`, `workload`, `curve`) and evidence-v1 schema, with exact JSON serialization and no source-checkout dependency. At that revision tests and fictional fixtures stayed outside the runtime; the current revision deliberately adds one labelled instructional example. No transport, protocol defaults, automatic execution, dependency installation or wallet capability was added.
+
+Verification passed 23 calculation/CLI regressions and 20 packaging/export regressions, including execution after deleting the isolated source-checkout fixture and unchanged installed bytes afterward. All five documented CLI examples, file-input reconstruction and a direct library import ran from a standalone 39-file runtime candidate in another working directory, with checkout reads and network access denied by a Python audit hook. Exact rational values and unknown timestamps remained intact. This is offline execution and packaging evidence, not live-provider acceptance, a production sandbox or a claim that every release gate passed. The dated results below describe earlier revisions.
+
+### Earlier interface-revision verification
+
+Interface-revision verification: 19 packaging regression tests passed, and a clean isolated export passed exact runtime byte verification. Every published selector/topic was independently checked with Ethereum Keccak: 84 function signatures and 31 unique event signatures. Live canonical-block reads exercised scalar, flat-tuple and dynamic-array decoding, including separate charter and branch-license prices. The public provider served current pinned state and historical logs/receipts but later reported an older state unavailable; these are different capabilities.
+
+A bounded license-history investigation reconciled emitter logs against successful receipts and canonical block headers, including an internally invoked purchase whose transaction destination was not the auction. Direct-to-auction transaction discovery would omit that purchase. Executed exact-arithmetic checks covered mixed-origin bounds, reservation replacement, precision beyond binary floating-point integers, price sensitivity, rounding-order counterexamples, fixed-window prior use/reset and epoch stopping. Synthetic mechanics are labelled scenarios, not proof of deployed Solidity behavior.
+
+Two fresh tool-enabled dogfood sessions loaded only an isolated exported runtime and public evidence, without retired resources; isolation was instruction-scoped, not an OS sandbox. They exercised pinned public state, exact accounting replay, dynamic order-page decoding, charter consideration/refund/gas separation, and a bounded three-generation license-history query with 89 purchase events and 92 successful receipts including supporting creation/start/charter transactions. The history session needed an explicitly supplied, already-established permitted browser transport context after another client was denied; this is recorded host assistance, not unassisted transport discovery. A focused instruction replay additionally checked scoped-client access, broader host denial, prohibited spoofing and unavailable historical state.
+
+### Feedback-revision verification (2026-09-27)
+
+The updated package passed 19 packaging regression tests and exact-byte verification of a clean 35-file runtime export. The repository acceptance specification now has 20 scenarios; this is a definition of release gates, not a claim that all 20 passed.
+
+Two new tool-enabled agents loaded only that exported runtime, without source-checkout context, prior sessions, retired helpers or backups. Isolation was instruction-scoped, not an OS sandbox. One freshly discovered publisher-declared roles, corroborated code and dependencies at a pinned block, discovered token identity dynamically, calculated exact pending-ledger pace from two actual headers, queried a bounded contamination interval and correctly stopped the live buying answer at zero effective inventory. Current Registry authorization, complete internal-flow coverage and earned origin were not proved. Its established permitted browser transport was supplied as host capability, not protocol addresses or expected answers.
+
+The other exercised an explicitly fictional packet: sold-out/next-window reasoning, conditional opening and unsold-curve affordability, epoch clipping, bounded dilution, cross-generation quantity-weighted prices, exact receipt amounts with unproved refund/net cost, and stopping an infeasible tiny-range/429 scan. Independent exact calculations reconciled the numerical results. These are conditional/replay checks, not live history completeness, deployed formula verification or proof of a future fill. Observations and worked financial values remain outside the installed package.
+
+Source reconciliation reread seven website page bodies and ten known social posts, recording fourteen full-body website/module fingerprints. It established no complete social-timeline interval. The current charter guide's 12-hour wording still conflicts with the whitepaper's daily/24-hour wording; S-Bill design copy and an inert sample UI do not authenticate a launch. Coverage and unresolved conflicts are recorded in the source records and [updates](../references/updates.md), not summarized as universal synchronization.
+
+Matching source/compiler correspondence and complete accrual/ledger-origin semantics remain unestablished. Bounded runtime-path research was retained outside the package and was not promoted into new certified onchain semantics. A real attributable earned-only 24-hour scenario remains blocked; empirical and explicitly assumed calculations have their own successful, narrower evidence. This unreleased development revision does not claim every mandatory release gate passed.
+
+### Earlier source-only research-aids revision (2026-09-27)
+
+This historical entry records the pre-bundling distribution and its verification; the current installed membership is described above.
+
+Added source-only exact weighted accounting, observed round reconstruction, signed pending-delta pace, inclusive-range workload estimates and a separately named, fully parameterized gap-to-floor mathematical scenario. The optional version1 evidence schema retains raw observations, hash-keyed headers/timestamps, separate receipt checks and coverage gaps. Only the guidance and fictional worked explanation enter the installed skill; library, schema, tests and synthetic fixtures remain excluded. No transport, live dataset, protocol defaults or new wallet capability was added.
+
+Verification passed 20 offline research regressions and 19 packaging/export regressions, including exclusion of the entire research directory from installs. The documented reconstruction example ran against the fictional fixture: exact weighted totals retained their remainder, missing timestamps stayed unknown and partial receipt coverage stayed partial. Competing transaction/log slots, active/removed variants and unresolved reorg alternatives were exercised without inflating uncontested totals. A temporary standards-based Draft2020-12 validator accepted the schema, fixture and partial/extended evidence; it is not a library or runtime dependency. An independent JavaScript BigInt calculation with a different input format reproduced the accounting result without the helper or schema.
+
+Fresh official publication and bounded same-block core/auction code, dependency and getter checks are recorded by `sr-offline-research-evidence-2026-09-27` in [interface provenance](../assets/sources/live-interface.json). Dynamic inputs remain external, not defaults. The complete publisher module measured860946UTF-8bytes versus860338JavaScript string units with the same prior SHA-256; mixed length measures were not source drift. Fingerprints identify reviewed evidence, not allowed future deployments or sources. No new matching compiler/source correspondence or full release acceptance is claimed.
+
+Agent freedom is explicit in the entrypoint and research guidance: use, adapt or ignore these aids, choose another language, dependencies, evidence format or independent solution under existing host permissions. Missing tooling or schema nonconformance is not an answer gate. Arithmetic argument checks belong only to the selected function; they do not prescribe the research process. Existing wallet/signing/submission boundaries are unchanged.
+

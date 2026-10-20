@@ -14,6 +14,8 @@ Trading generates fees and pool-flow measurements; issuance credits branch balan
 
 The official [Second Mandate](updates.md#second-mandate-liquidity-for-tokenized-stocks) adds an announced direction: an open liquidity engine for tokenized stocks, not another stock issuer. Creating or approving markets, seeding liquidity and recycling trading fees into the Reserve is a stated strategy, not a replacement for the documented monetary mechanics below or evidence of their implementation. [sr-second-mandate-announcement; sr-second-mandate-manifesto]
 
+That historical strategy boundary is distinct from the **October 19, 2026 product review**, which authenticates publisher launchpad/stock-market bindings and selected interfaces while retaining implementation, custody and reward-accounting gaps. It does not re-review the whitepaper monetary mechanics or create holder revenue rights.
+
 The historical [v1.1 update](updates.md#protocol-v11-announced-changes) announced 12-hour license rounds of 50 branches, three per charter per 24-hour cap window, a two-hour license-auction half-life, and bid-side-only POL sending acquisitions to the Incentives Vault. **50 is not the current v1.2 allocation:** fresh per-round supply, cap and remaining-inventory getters govern current answers. These historical published references never override live settings; the earlier proposed 50/50 branch-payment split is not confirmed. POL Buyback and Incentives Vault do not replace Contraction Vault burn accounting or automatically change charter schedules.
 
 The later [v1.2 update](updates.md#protocol-v12-announced-changes) announced branch limit orders with FCFS best-attempt keeper execution and charter auctions at branch cadence. Its initial 5.5 ETH opening and subsequent 3× clearing-price rule are dated policy, not current prices or guaranteed fills. Authenticate current deployments; retain earlier generations for historical scope. This auction release and its review claim establish neither S-Bill launch nor completed S-Bill audit.
@@ -26,8 +28,12 @@ The later [v1.2 update](updates.md#protocol-v12-announced-changes) announced bra
 - [Charters](charters.md): branches, founding entry, auctions, exits and dormancy; [participation parameters](../assets/parameters/participation.json).
 - [Reserves](reserves.md): separate founding/ongoing allocations, ownership and buybacks; [reserve parameters](../assets/parameters/reserves.json).
 - [S-Bills](sbills.md): rates, amount quotes, positions, maturity cohorts and exit/redemption/roll distinctions.
-- [Launch trading](launch-trading.md): finalization, tax gaps and activation; [launch parameters](../assets/parameters/launch.json).
+- [STANDARD founding trading and taxes](launch-trading.md): finalization, tax gaps and activation, distinct from third-party launchpad tokens; [launch parameters](../assets/parameters/launch.json).
 - [Risks](risks.md): non-upgradeability does not eliminate owner discretion or the optional guardian.
+- [Stock liquidity](liquidity-markets.md): pool identity, effective fees and LP evidence.
+- [Launchpad](launchpad.md): coexisting generations, graduation, creator controls and venue policy.
+- [Market pilot](market-pilot.md): points, conflicting published rules and reward funding.
+- [Charter distributions](charter-distributions.md): stimulus, compensation and third-party drops.
 
 ## Publisher's feedback-loop thesis — §14
 

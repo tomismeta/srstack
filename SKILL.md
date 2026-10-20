@@ -3,7 +3,7 @@ name: srstack
 description: Standard Reserve contracts, state, history and calculations.
 license: MIT
 metadata:
-  version: "0.4.1"
+  version: "0.5.0"
 ---
 
 # srstack
@@ -40,14 +40,18 @@ The zero-inventory tripwire is authenticated effective `remainingToday() == 0`, 
 
 ## Load the relevant detail
 
-| Need | Reference |
+| Task | Start here |
 | --- | --- |
-| Objects and published mechanics | [Object map](references/object-map.md), [protocol](references/protocol.md), [charters](references/charters.md), [reserves](references/reserves.md), [auctions](references/auctions.md) |
-| Live inspection and interpretation | [Inspection](references/inspection.md); [activity and exits](references/exits.md) |
+| Explain objects or published mechanics | [Object map](references/object-map.md), [protocol](references/protocol.md), [charters](references/charters.md), [reserves](references/reserves.md), [auctions](references/auctions.md) |
+| Inspect a known position, address or current state | [Inspection procedure](references/inspection.md#common-question-paths); [activity and exits](references/exits.md); [charter claims and drops](references/charter-distributions.md) |
+| Research a broad current-state question across relevant roles | [Research procedure](references/research-workflow.md#start-with-the-question) |
 | S-Bill rates, deposits, own bills and maturity-day totals | [S-Bills](references/sbills.md) |
-| Efficient multi-read collection, historical discovery and reuse | [Collection recipe](references/collection-efficiency.md), [auction history](references/auction-history.md) |
+| Stock liquidity, pool identity and LP fees | [Liquidity markets](references/liquidity-markets.md) |
+| Launch tokens, generations and creator controls | [Launchpad](references/launchpad.md) |
+| King of the Markets points and rewards | [Market pilot](references/market-pilot.md) |
+| Collect independent reads, discover history or reuse evidence | [Collection procedure](references/collection-efficiency.md#plan-once-collect-in-dependency-stages), [auction history](references/auction-history.md) |
 | Market close forecasts, sample qualification and floor context | [Round datasets](references/round-datasets.md), [calculation recipes](references/calculations.md), [four price shapes](references/auctions.md#four-price-shapes-and-history-first-forecasts) |
-| Accrual, affordability and conditional projections | [Research guidance](references/research-workflow.md) |
+| Analyze accrual, affordability or conditional projections | [Exact accounting](references/research-workflow.md#compute-with-explicit-units), [earned-only projections](references/research-workflow.md#earned-only-projections-and-reinvestment) |
 | Optional exact calculations and worked evidence | [Research tools](references/research-tools.md) |
 | Publications, host access or installation | [Updates](references/updates.md), [documents](references/documents.md), [execution](references/execution.md), [installation](references/installation.md) |
 

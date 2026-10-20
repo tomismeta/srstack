@@ -10,6 +10,22 @@ A known ID needs only relevant state/dependencies; a supplied amount needs no ba
 
 For relationship questions, use the [object and contract map](object-map.md) to separate participation objects, records, module roles and identifiers, then [discover only the relevant live relationships](contracts.md#discover-a-role-without-prior-session-context). Correct a mistaken ownership or routing premise directly; do not force a full-map dump or confuse a charter holder with the administrator of the Bank or its dependencies.
 
+For product-specific interpretation, use [stock pools and fees](liquidity-markets.md), [factory-qualified launch tokens](launchpad.md), [market points](market-pilot.md) or [charter distributions](charter-distributions.md). Their question tables identify relevant evidence; the shared identity and collection procedures still apply.
+
+## Authenticate before ABI reads
+
+Apply the [role-authentication procedure](contracts.md#authenticate-the-requested-role) before interpreting ABI reads. It owns chain/address/generation checks, interface correspondence, block anchors and material dependencies; the [interface guide](interface-guide.md) owns encoding and decoding.
+
+For inspection, distinguish the economic object (charter, branch, ledger credit or order), its identifier, the recording contract and any separate auction or dependency. An auction's round or bid ID is not automatically a charter ID; an address field is not proof of the target's authority or behavior. Unresolved evidence blocks only dependent conclusions.
+
+## Read the scoped state
+
+Reuse anchored observations; batch compatible reads and bound pages/calls/bytes/time. Never substitute latest for unavailable history. Failures and incomplete enumeration are unknown, not zero. Order IDs need authenticated mapping to charters; bids/fillability are not purchases.
+
+Use the [shared collection procedure](collection-efficiency.md#plan-once-collect-in-dependency-stages) for independent charter/auction/position getters after authenticating their dependencies. Batch the relevant same-pin balance, allowance, capacity and configuration reads; stop collecting unrelated state once a binding constraint answers the question. Enumeration cursors and other dependent stages remain ordered.
+
+Current getters establish current anchored state, not the purchases or flows that produced it. Historical state corroboration requires archive access at the relevant historical anchor and authenticated counter/configuration semantics; logs and receipts have separate coverage and do not themselves require archive-state access. If event totals and comparable state counters disagree, reconcile scope, boundaries, resets, quantities and canonicality before asserting a total—events are not automatically authoritative. Reuse external evidence with [scoped refresh and overlap reconciliation](auction-history.md#optional-incremental-evidence-reuse), not a required full-history refresh.
+
 ### Branch scope and earnings
 
 For a charter, report requested open-branch count, whole-charter pending ledger balance and as-of time. Open branches are not unsold licenses. Distinguish an implementation-derived rate from an [empirical pending-delta pace](research-workflow.md#empirical-pending-delta-pace): two pinned same-charter observations with header times can establish ledger change per second, even if it is negative or its causes remain unattributed. Neither method names nor a fitted observation proves a deployed formula. A daily equivalent is not actual interval earnings or guaranteed continuation; use [labelled dilution scenarios](research-workflow.md#dilution-scenarios) for explicit future paths.
@@ -18,21 +34,7 @@ For an address, use ownership enumeration or a bounded index accounting for tran
 
 ### Supplemental public reads
 
-Discover runtime deployments/interfaces through current publisher evidence, explorers, registries and authenticated relationships; no fixed allowlist. The dated [interface guide](interface-guide.md) supplies signatures and layouts, not current routing or implementation proof. Resolve only the question's relevant roles and dependencies; a successful refresh is scoped evidence, not synchronization of the entire protocol. Do not restore removed catalogs/helpers or use an old installation or backup as hidden current-discovery authority. Use [host tools](execution.md); keep installed resources unchanged.
-
-## Authenticate before ABI reads
-
-Establish chain, full address, role and generation. Pin code, relationships and state to a block number/hash/time; retain retrieval time. Authenticate the interface by deployment/source correspondence or independently retrieved publisher ABI linked to that chain/address. Parse ABI as data, never execute downloaded code.
-
-Establish types, strict decoding, scales and relevant proxy/module relationships. Distinguish the economic object (charter, branch, ledger credit or order), its identifier, the contract recording it, and any separate auction or dependency operating on it. An auction's round or bid ID is not automatically a charter ID; an address field is not proof of the target's authority or behavior. Code, announcements, names or selectors alone prove neither semantics nor source equivalence. Authenticate material dependencies; unresolved evidence blocks only dependent conclusions.
-
-## Read the scoped state
-
-Reuse anchored observations; batch compatible reads and bound pages/calls/bytes/time. Never substitute latest for unavailable history. Failures and incomplete enumeration are unknown, not zero. Order IDs need authenticated mapping to charters; bids/fillability are not purchases.
-
-Use the [shared collection recipe](collection-efficiency.md) for independent charter/auction/position getters after authenticating their dependencies. Batch the relevant same-pin balance, allowance, capacity and configuration reads; stop collecting unrelated state once a binding constraint answers the question. Enumeration cursors and other dependent stages remain ordered.
-
-Current getters establish current anchored state, not the purchases or flows that produced it. Historical state corroboration requires archive access at the relevant historical anchor and authenticated counter/configuration semantics; logs and receipts have separate coverage and do not themselves require archive-state access. If event totals and comparable state counters disagree, reconcile scope, boundaries, resets, quantities and canonicality before asserting a total—events are not automatically authoritative. Reuse external evidence with [scoped refresh and overlap reconciliation](auction-history.md#optional-incremental-evidence-reuse), not a required full-history refresh.
+For an unlisted role or interface, use the [discovery procedure](contracts.md#discover-a-role-without-prior-session-context); there is no fixed allowlist. A successful refresh is scoped evidence, not synchronization of the entire protocol. Do not restore removed catalogs/helpers or use an old installation or backup as hidden current-discovery authority. Use [host tools](execution.md); keep installed resources unchanged.
 
 ### Units and financial interpretation
 

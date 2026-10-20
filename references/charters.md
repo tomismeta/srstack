@@ -27,6 +27,7 @@ Earned-only branch-license affordability uses verified unspent earned accrual pl
 - [Genesis entry](genesis.md): paid whitelist/public entry, escrow and common accrual start at finalization. [Launch mint](launch-mint.md) summarizes founding terms and scheduling gaps.
 - [Ongoing auctions](auctions.md): branch limit orders, announced charter cadence, observed clocks/capacity and scoped published price rules.
 - [Exits and dormancy](exits.md): retirement, published fee formula, qualifying activity, transfer grace and unresolved bounty ordering.
+- [Charter distributions](charter-distributions.md): separate stimulus/top-up, burned-charter compensation and generation-specific launch-token drops; allocation is not recurring issuance or immediately spendable income.
 - [Reserves](reserves.md): founding versus ongoing routing, and assets owned by the protocol rather than bankers.
 - [Risks](risks.md): owner controls and optional guardian despite non-upgradeability.
 

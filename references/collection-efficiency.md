@@ -4,6 +4,8 @@ Use the smallest sufficient reads, then reduce transport overhead—not evidence
 
 These are planning and evidence-quality recommendations, not extra approval gates for public research. Choose tools, batch sizes, staging, pacing, permitted sources and storage formats autonomously within existing host permissions. No ledger, saved response archive, benchmark, fixed call budget or prescribed gate order is required to answer an ordinary question. Evidence limits what can honestly be claimed, not what the agent may investigate. The existing [wallet boundary](safety.md#preparation-and-wallet-boundary) is unchanged.
 
+For ordinary research, start with the [collection procedure](#plan-once-collect-in-dependency-stages) and [applicable question](#where-this-applies). The [request/response example](#optional-requestresponse-recipe) is optional; [audit accounting](#optional-audit-evidence-and-accounting) and [optimization comparisons](#check-an-optimization-without-weakening-the-answer) are for reviews, not answer-time requirements.
+
 ## Plan once, collect in dependency stages
 
 1. **Scope and pin.** Authenticate chain, targets and interfaces; resolve one block number/hash/header timestamp for dependent state. Generate its hexadecimal tag from the integer, not by transcription. A batch of `latest` calls is not a pinned snapshot. Reconcile canonicality when using numeric tags or changing providers.
@@ -33,22 +35,6 @@ Benchmarks share provider capacity with ordinary work: batched members, sequenti
 Batching does not fix thousands of tiny log windows: first choose a feasible authorized discovery source under [scan planning](auction-history.md#retrieve-a-finite-auditable-window). Persisted discovery checkpoints and reorg-aware incremental collection are separate work, not prerequisites for this recipe.
 
 For a narrow eligibility question, checking a likely binding constraint first can save members: for example, an authenticated quote above the available applicable budget can establish an affordability shortfall without fetching every other gate. Batching all relevant independent gates can instead save round trips and support a complete constraint snapshot. Neither approach is intrinsically a failure; choose based on the requested answer, known dependencies and provider costs. A proved negative gate supports a qualified negative answer; a positive eligibility claim still needs its applicable conditions established.
-
-## Optional audit evidence and accounting
-
-When a review calls for independently inspectable evidence, a convenient record per transport attempt contains:
-
-| Evidence | Suggested contents |
-| --- | --- |
-| Identity/context | Run and attempt identity; purpose (normal collection, comparison baseline or recapture); credential-free provider label; chain and applicable block number/hash/time |
-| Request | Exact RPC method, complete parameters and IDs for every submitted member; bindings back to repeated consumers when useful |
-| Response | Original response body and HTTP/transport outcome, including partial bodies and errors; whether capture completed |
-| Interpretation | ID-matched outcomes, decoded values with interface/units, and separate domain/coverage checks |
-| Timing/accounting | Start time, elapsed duration, submitted member count, HTTP attempts and process-start observations; retry linkage to the earlier attempt |
-
-This is an information checklist, not a required schema or storage service. Existing host traces, separate request/response files or another inspectable format are equally suitable. For an audited equivalence comparison, save both the batched and sequential raw results before relying on later historical recapture: providers can lose access to the pinned state. Per-member equality flags support “matched during the run,” not “both raw sides are retained for independent comparison.” Missing artifacts need not block useful answers; identify the narrower audit claim. Keep any retained artifacts in authorized private working storage outside the skill, omit credentials and private host configuration, and sanitize separately before sharing.
-
-An append-only attempt ledger is one way to avoid stale counters; derive totals from the observations rather than manually updating a single aggregate. Each actual retry or recapture contributes its members and HTTP attempts to overall work, with its purpose and retry relationship also reported separately, not added twice. A deduplicated consumer is not another submitted member. A failed or interrupted HTTP attempt still counts; calls never sent do not. Record hidden client retries or counters as unknown when unobservable. Processes are counted when started, not once per request executed inside a reused process. Include discovery/index and market HTTP work separately from RPC, and separate benchmark overhead from normal collection. Timed stages can overlap or leave orchestration overhead; label that rather than forcing their rounded sum to equal wall-clock duration. None of this accounting requires extra network reads merely to fill a report.
 
 ## Optional request/response recipe
 
@@ -124,6 +110,22 @@ esac
 Use this only where the host already permits that client/profile and supports these flags; it is not a reason to install a transport, expose an authenticated URL on the command line, or bypass a denied CLI. The profile stays host-managed and is never copied into the skill. Check remaining overall time and response/member outcomes between chunks; this single-request example intentionally provides no automatic retries, provider switching or collection loop. Missing/null/error/invalid results remain explicit; stop and diagnose before deciding any further authorized reads. Other host clients are equally valid.
 
 For [S-Bills](sbills.md#calendar-day-maturity-planning), use the authenticated `bills(uint256)` encoding for the discovered IDs and the exact pinned tag on every state request. Decode all eight fields from the selected layout; retain bill ID and independent active/settled flags. Compare the **all-refreshed-active-principal raw sum** with same-block `totalPrincipal()` only when scopes agree, before day filtering. Do not substitute `lockedPrincipal()`, force a mismatch to zero, or call cent-rounded equality exact. Keep full discovery; batching alone does not require persistent cursors or a max-ID assumption.
+
+## Optional audit evidence and accounting
+
+When a review calls for independently inspectable evidence, a convenient record per transport attempt contains:
+
+| Evidence | Suggested contents |
+| --- | --- |
+| Identity/context | Run and attempt identity; purpose (normal collection, comparison baseline or recapture); credential-free provider label; chain and applicable block number/hash/time |
+| Request | Exact RPC method, complete parameters and IDs for every submitted member; bindings back to repeated consumers when useful |
+| Response | Original response body and HTTP/transport outcome, including partial bodies and errors; whether capture completed |
+| Interpretation | ID-matched outcomes, decoded values with interface/units, and separate domain/coverage checks |
+| Timing/accounting | Start time, elapsed duration, submitted member count, HTTP attempts and process-start observations; retry linkage to the earlier attempt |
+
+This is an information checklist, not a required schema or storage service. Existing host traces, separate request/response files or another inspectable format are equally suitable. For an audited equivalence comparison, save both the batched and sequential raw results before relying on later historical recapture: providers can lose access to the pinned state. Per-member equality flags support “matched during the run,” not “both raw sides are retained for independent comparison.” Missing artifacts need not block useful answers; identify the narrower audit claim. Keep any retained artifacts in authorized private working storage outside the skill, omit credentials and private host configuration, and sanitize separately before sharing.
+
+An append-only attempt ledger is one way to avoid stale counters; derive totals from the observations rather than manually updating a single aggregate. Each actual retry or recapture contributes its members and HTTP attempts to overall work, with its purpose and retry relationship also reported separately, not added twice. A deduplicated consumer is not another submitted member. A failed or interrupted HTTP attempt still counts; calls never sent do not. Record hidden client retries or counters as unknown when unobservable. Processes are counted when started, not once per request executed inside a reused process. Include discovery/index and market HTTP work separately from RPC, and separate benchmark overhead from normal collection. Timed stages can overlap or leave orchestration overhead; label that rather than forcing their rounded sum to equal wall-clock duration. None of this accounting requires extra network reads merely to fill a report.
 
 ## Check an optimization without weakening the answer
 

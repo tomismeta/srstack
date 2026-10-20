@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-19",
+  "scope": "Dated stock-pool identity, publisher economics, historical fee changes and explicit missing explorer ABI evidence; no current fee table, issuer-backing or realized-income certificate.",
+  "records": [
+    {
+      "id": "sr-stock-pool-docs-2026-10-19",
+      "url": "https://www.standardreserve.xyz/docs/stock-tokens/",
+      "publisher": "The Standard Reserve official publisher",
+      "published_at": null,
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Complete acquired publisher bodies inspected as text/data; relevant declarations and claims scoped below. Downloaded code not executed.",
+      "claim_stage": "Dated publisher evidence; not an independent implementation, funding or safety certificate.",
+      "source_urls": [
+        "https://www.standardreserve.xyz/docs/stock-tokens/",
+        "https://www.standardreserve.xyz/",
+        "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "https://www.standardreserve.xyz/assets/StockTokensDoc-B4V8OYnu.js"
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.standardreserve.xyz/",
+          "bytes": 7026,
+          "sha256": "2a8f030906ff0bd4fdcabb134894c701896a4dbf7c8e82dea8774b695a8db57d",
+          "relationship": "Official root redirects to /liquidity/ and explicitly links mountApp-RNywHOZ_.js."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "bytes": 1139855,
+          "sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "relationship": "Root-linked complete application module; imports three product doc chunks and contains role bindings and selected ABI declarations."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/StockTokensDoc-B4V8OYnu.js",
+          "bytes": 5101,
+          "sha256": "93151b40cd7c88c8c99cbd4fb87c071e9697c42dabc888b530d0a4bddfac03a9",
+          "relationship": "Complete explicitly imported StockTokensDoc for /docs/stock-tokens/."
+        }
+      ],
+      "locators": [
+        "Stock Tokens; swaps and fee classes; New York session/time/holiday discussion; two-minute decrease ramp and instant increases."
+      ],
+      "summary": "Publisher stock-pool mechanics separate reserve stock/USDG liquidity from launch-token markets, with session/class-aware dynamic fees and a public liquidity route.",
+      "limits": [
+        "Retrieval dates identify reviewed artifacts, not freshness of mutable contract state.",
+        "Publisher descriptions and selected ABI encodings do not prove permissions, deployed implementation completeness, current fee settings, funding or execution.",
+        "Published legal/issuer/custody/holder-rights backing is not established by pool activity.",
+        "This acquired doc links /liquidity/markets/ for LP access; the earlier catch-up described a direct Uniswap link. A link or visible LP UI is not executed liquidity provision.",
+        "Stock-route copy saying launch tokens accept only stocks is not a universal restriction after explicit ETH/WETH support in launchpad docs.",
+        "Do not transfer STANDARD TaxHook or old POL fee economics to SessionFeeHook."
+      ]
+    },
+    {
+      "id": "sr-stock-pool-identities-2026-10-19",
+      "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+      "publisher": "The Standard Reserve official publisher",
+      "published_at": null,
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Complete acquired publisher bodies inspected as text/data; relevant declarations and claims scoped below. Downloaded code not executed.",
+      "claim_stage": "Dated publisher evidence; not an independent implementation, funding or safety certificate.",
+      "source_urls": [
+        "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "https://www.standardreserve.xyz/",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0xC15b155a3094934171A15625d1a80Aba267B6080"
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.standardreserve.xyz/",
+          "bytes": 7026,
+          "sha256": "2a8f030906ff0bd4fdcabb134894c701896a4dbf7c8e82dea8774b695a8db57d",
+          "relationship": "Official root redirects to /liquidity/ and explicitly links mountApp-RNywHOZ_.js."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "bytes": 1139855,
+          "sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "relationship": "Root-linked complete application module; imports three product doc chunks and contains role bindings and selected ABI declarations."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0xC15b155a3094934171A15625d1a80Aba267B6080",
+          "bytes": 5671,
+          "sha256": "ad3da483252187e6709580d96ec5adf0f098733d9d4eda66fdf28d2cb13d4229",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        }
+      ],
+      "locators": [
+        "Main application stocks.us/stocks.cn/stocks.kr token, poolId, fee8388608 dynamic flag, tickSpacing60, hooks; the dynamic flag is not a static fee."
+      ],
+      "summary": "Dated publisher maps US/SPCX, China/BABA and Korea/SKHY stock/USDG pool keys and stock hook, distinct from launch-token pools and shared PoolManager.",
+      "limits": [
+        "Retrieval dates identify reviewed artifacts, not freshness of mutable contract state.",
+        "Publisher descriptions and selected ABI encodings do not prove permissions, deployed implementation completeness, current fee settings, funding or execution.",
+        "Token names and pair identities do not establish legal stock ownership, custody, redeemability or holder rights.",
+        "A singleton PoolManager address is not an individual PoolKey/PoolId or user LP position. Authenticate decimals and the full key for actual reads.",
+        "Fresh stock-hook explorer identity request denied; earlier creation/control observations remain attributed report facts."
+      ],
+      "binding_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 394491,
+          "end_utf8_byte": 394793,
+          "bytes": 302,
+          "sha256": "b80d2f3df3d22d6e709103a525e20eba61b76ffd0130d05ee12507dcc567d6a2",
+          "locator": "0xC15b155a3094934171A15625d1a80Aba267B6080"
+        }
+      ]
+    },
+    {
+      "id": "sr-stock-hook-verified-abi-2026-10-19",
+      "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xC15b155a3094934171A15625d1a80Aba267B6080",
+      "publisher": "Blockscout public explorer, access denied",
+      "published_at": null,
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Single bounded request stopped after403; no retry or bypass.",
+      "claim_stage": "Missing-interface evidence only",
+      "source_urls": [
+        "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xC15b155a3094934171A15625d1a80Aba267B6080"
+      ],
+      "artifacts": [
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xC15b155a3094934171A15625d1a80Aba267B6080",
+          "bytes": 5710,
+          "sha256": "c0b270e0de4e5bf71d06b875c3cd416db1ee25d4e1229d753696bacaa0893c1f",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        }
+      ],
+      "locators": [
+        "/api/v2/smart-contracts/0xC15b155a3094934171A15625d1a80Aba267B6080 denial response."
+      ],
+      "summary": "Fresh SessionFeeHook source/ABI request returned403; no actual stock-hook ABI was acquired and this record supports no new interface file.",
+      "limits": [
+        "The prior report selectively inspected verified SessionFeeHook source and fee units; its narrative is not a substitute for original ABI bytes.",
+        "Stock fee capability remains unknown in this acquisition unless separately authenticated exact encoding evidence becomes available."
+      ]
+    },
+    {
+      "id": "sr-stock-fee-change-2026-10-19",
+      "url": "https://robinhoodchain.blockscout.com/tx/0xcb01424a9ada387fa13bf33c90c3445ffe72566a6cccf28239dcf3c380036197",
+      "publisher": "Attributed October19 Blockscout transaction research with publisher pool identity",
+      "published_at": "2026-10-19",
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Prior full contract report reviewed; fresh publisher pool identity reacquired; explorer transaction retrieval unavailable.",
+      "claim_stage": "Attributed dated change event, not current fee state",
+      "source_urls": [
+        "https://robinhoodchain.blockscout.com/tx/0xc39e7a83bb67cff8bc203bf044f575ff162fd01c945b9f024c1611c527104a97",
+        "https://robinhoodchain.blockscout.com/tx/0x9f06b53d3385b4c4740b7558dbe829ecf02cf404c518b8551873e2fa8b892fea",
+        "https://robinhoodchain.blockscout.com/tx/0x7087bdb427517ed1cd4a33bdc705acd8104b121dbe0bb6630e01e43d6863c50e",
+        "https://robinhoodchain.blockscout.com/tx/0xcb01424a9ada387fa13bf33c90c3445ffe72566a6cccf28239dcf3c380036197",
+        "https://robinhoodchain.blockscout.com/tx/0xfa11862647074eec78c1499368f82e0d3cd0f0869b503836ae0d9d3bc7486e6e",
+        "https://robinhoodchain.blockscout.com/tx/0x570b3f9dae4d07f1ed9f142c0e901ed12aded51442790cc6dd002ccd253668e6"
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "bytes": 1139855,
+          "sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "relationship": "Root-linked complete application module; imports three product doc chunks and contains role bindings and selected ABI declarations."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/StockTokensDoc-B4V8OYnu.js",
+          "bytes": 5101,
+          "sha256": "93151b40cd7c88c8c99cbd4fb87c071e9697c42dabc888b530d0a4bddfac03a9",
+          "relationship": "Complete response body retrieved as data on 2026-10-19."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0xC15b155a3094934171A15625d1a80Aba267B6080",
+          "bytes": 5671,
+          "sha256": "ad3da483252187e6709580d96ec5adf0f098733d9d4eda66fdf28d2cb13d4229",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        }
+      ],
+      "locators": [
+        "Prior October19 contract report: class updates at09:53:48–09:53:54UTC; pool reassignments09:53:58–09:54:05UTC.",
+        "Prior source inspection establishes Uniswap fee unit hundredths of one basis point; no fresh implementation certificate."
+      ],
+      "summary": "October19 prior contract research records stock fee-class updates and pool reassignment after the October16 announcement; the old numeric schedule is historical, not a current fallback.",
+      "limits": [
+        "Retrieval dates identify reviewed artifacts, not freshness of mutable contract state.",
+        "Publisher descriptions and selected ABI encodings do not prove permissions, deployed implementation completeness, current fee settings, funding or execution.",
+        "Exact live table, pinned sample sender quotes and balances remain outside runtime.",
+        "Transaction bodies were not reacquired after explorer denials; this source record explicitly attributes dated changes to supplied prior contract research.",
+        "Effective fees require pool, sender and time plus class/global/pool overrides and exemptions."
+      ]
+    },
+    {
+      "id": "sr-stock-fee-announcement-2026-10-19",
+      "url": "https://x.com/0xbeans/status/2111055118808555612",
+      "publisher": "@0xbeans on original X",
+      "published_at": "2026-10-16T11:22:00Z",
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Complete acquired publisher bodies inspected as text/data; relevant declarations and claims scoped below. Downloaded code not executed.",
+      "claim_stage": "Dated publisher evidence; not an independent implementation, funding or safety certificate.",
+      "source_urls": [
+        "https://x.com/0xbeans/status/2111055118808555612"
+      ],
+      "artifacts": [
+        {
+          "url": "https://x.com/0xbeans/status/2111055118808555612",
+          "bytes": 124474,
+          "sha256": "1bb066a5d957a72a45192fb6605aa3d72489c1b170f56960a9f56609cce53c92",
+          "relationship": "Complete original X HTML; full fee post text acquired."
+        }
+      ],
+      "locators": [
+        "Original post2111055118808555612 published October16 11:22UTC."
+      ],
+      "summary": "October16 developer announcement described NYSE-session fees30/60/150/300bps and short-interval fee annualization; later October19 reported configuration changes supersede it as current fee guidance.",
+      "limits": [
+        "Historical publisher schedule only, not a current default or a guarantee of realized LP income.",
+        "Annualization after44hours does not establish sustainable APR, custody safety or an individual LP return."
+      ]
+    }
+  ]
+}

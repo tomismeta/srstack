@@ -1,0 +1,589 @@
+{
+  "schema_version": 1,
+  "id": "launch-factory-2026-10-19",
+  "role": "launch_factory",
+  "generation": "urc5-2026-10-19",
+  "review_id": "publisher-ecosystem-2026-10-19",
+  "coverage": {
+    "kind": "selective_fragment",
+    "source_definition_complete": false,
+    "deployed_implementation_complete": false,
+    "source_locator": "mountApp-RNywHOZ_.js zo; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+    "source_fragment": {
+      "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+      "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+      "start_utf8_byte": 613317,
+      "end_utf8_byte": 613813,
+      "bytes": 496,
+      "sha256": "c4661275359da436be113e4ca2051d726582bae9a8927193c6ff1ba9f44f50dc"
+    },
+    "entry_counts": {
+      "constructor": 0,
+      "error": 9,
+      "event": 1,
+      "fallback": 0,
+      "function": 2,
+      "receive": 0
+    },
+    "abi_sha256": "43177bb66ccb5c0b6f1edb6add663fe13762bca94c33fb8adc5061694a1803dc"
+  },
+  "entries": [
+    {
+      "signature": "Launched(address,address,address,(address,address,address,address,address,(address,address,uint24,int24,address),bytes32,string,string,string,uint64,uint128,uint256,uint256,uint256,uint256,uint16,uint16,bool,uint16[],uint256,uint16,uint256,address,uint8,address,bool))",
+      "declaration": "event Launched(address indexed token, address indexed curve, address indexed creator, (address,address,address,address,address,(address,address,uint24,int24,address),bytes32,string,string,string,uint64,uint128,uint256,uint256,uint256,uint256,uint16,uint16,bool,uint16[],uint256,uint16,uint256,address,uint8,address,bool) info)",
+      "abi": {
+        "name": "Launched",
+        "type": "event",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "token",
+            "indexed": true
+          },
+          {
+            "type": "address",
+            "name": "curve",
+            "indexed": true
+          },
+          {
+            "type": "address",
+            "name": "creator",
+            "indexed": true
+          },
+          {
+            "type": "tuple",
+            "name": "info",
+            "components": [
+              {
+                "type": "address",
+                "name": "token"
+              },
+              {
+                "type": "address",
+                "name": "curve"
+              },
+              {
+                "type": "address",
+                "name": "stock"
+              },
+              {
+                "type": "address",
+                "name": "creator"
+              },
+              {
+                "type": "address",
+                "name": "referrer"
+              },
+              {
+                "type": "tuple",
+                "name": "futurePoolKey",
+                "components": [
+                  {
+                    "type": "address",
+                    "name": "currency0"
+                  },
+                  {
+                    "type": "address",
+                    "name": "currency1"
+                  },
+                  {
+                    "type": "uint24",
+                    "name": "fee"
+                  },
+                  {
+                    "type": "int24",
+                    "name": "tickSpacing"
+                  },
+                  {
+                    "type": "address",
+                    "name": "hooks"
+                  }
+                ]
+              },
+              {
+                "type": "bytes32",
+                "name": "futurePoolId"
+              },
+              {
+                "type": "string",
+                "name": "name"
+              },
+              {
+                "type": "string",
+                "name": "symbol"
+              },
+              {
+                "type": "string",
+                "name": "metadataURI"
+              },
+              {
+                "type": "uint64",
+                "name": "launchTime"
+              },
+              {
+                "type": "uint128",
+                "name": "phantomReserve"
+              },
+              {
+                "type": "uint256",
+                "name": "virtualTokens"
+              },
+              {
+                "type": "uint256",
+                "name": "endVirtualTokens"
+              },
+              {
+                "type": "uint256",
+                "name": "curveSupply"
+              },
+              {
+                "type": "uint256",
+                "name": "poolSupply"
+              },
+              {
+                "type": "uint16",
+                "name": "baseFeeBps"
+              },
+              {
+                "type": "uint16",
+                "name": "creatorShareOfBaseBps"
+              },
+              {
+                "type": "bool",
+                "name": "snipeTaxOn"
+              },
+              {
+                "type": "uint16[]",
+                "name": "snipeScheduleBps"
+              },
+              {
+                "type": "uint256",
+                "name": "creatorBuyCap"
+              },
+              {
+                "type": "uint16",
+                "name": "charterDropBps"
+              },
+              {
+                "type": "uint256",
+                "name": "charterDropAmount"
+              },
+              {
+                "type": "address",
+                "name": "charterDrop"
+              },
+              {
+                "type": "uint8",
+                "name": "dropMode"
+              },
+              {
+                "type": "address",
+                "name": "module"
+              },
+              {
+                "type": "bool",
+                "name": "enforced"
+              }
+            ],
+            "indexed": false
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the factory launch record linking token, curve and creator with its generation-specific dynamic info tuple; a log is not complete global discovery or proof of deployed implementation equivalence.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Nested currency/token/stock fields are addresses. An ordinary PoolKey fee uses hundredths of one basis point (1000000 = 100%); dynamic-fee flag/sentinel values are not numeric fee rates; tickSpacing is signed ticks. Trading-rate BPS use 10000 = 100%; creator-buy/drop caps concern supply and trading fees concern pair-asset-side amounts. creatorShareOfBaseBps concerns a share of the base fee, not trade value, but its raw denominator is not established by its name or this ABI: do not automatically divide it by 10000 or equate it to a published percentage. Confirm source arithmetic or publisher use before scaling fee-share and other undocumented ratio fields. Raw token/pair/native-value units remain distinct; authenticate asset decimals. Time fields are seconds; byte/gas bounds are not fees. sqrtPriceRunWad is a publisher WAD-labelled curve input, not a live market price; do not infer deployed arithmetic or gross/net ordering.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "topic0": "0x93e9aed10a0259070dbc9cbe242cfd7dfde85172011e531fff069983bfeb470f",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 4,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "token",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "curve",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 2,
+            "name": "creator",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 3,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 3,
+            "name": "info",
+            "canonical_type": "(address,address,address,address,address,(address,address,uint24,int24,address),bytes32,string,string,string,uint64,uint128,uint256,uint256,uint256,uint256,uint16,uint16,bool,uint16[],uint256,uint16,uint256,address,uint8,address,bool)",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "config()",
+      "declaration": "function config() view returns (address)",
+      "abi": {
+        "name": "config",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "address",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Read the configured Config address; this is not evidence that the factory can replace its immutable Config address or that Config contents are immutable.",
+      "units": "EVM address, not an amount or proof of ownership authority.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x79502c55"
+    },
+    {
+      "signature": "launch((address,string,string,string,bool,address,uint16,uint8,address,bool),(address,uint256,uint256,uint256))",
+      "declaration": "function launch((address,string,string,string,bool,address,uint16,uint8,address,bool) p, (address,uint256,uint256,uint256) b) payable returns (address token, address curve, uint256 tokensBought)",
+      "abi": {
+        "name": "launch",
+        "type": "function",
+        "stateMutability": "payable",
+        "inputs": [
+          {
+            "type": "tuple",
+            "name": "p",
+            "components": [
+              {
+                "type": "address",
+                "name": "stock"
+              },
+              {
+                "type": "string",
+                "name": "name"
+              },
+              {
+                "type": "string",
+                "name": "symbol"
+              },
+              {
+                "type": "string",
+                "name": "metadataURI"
+              },
+              {
+                "type": "bool",
+                "name": "snipeTaxOn"
+              },
+              {
+                "type": "address",
+                "name": "referrer"
+              },
+              {
+                "type": "uint16",
+                "name": "charterDropBps"
+              },
+              {
+                "type": "uint8",
+                "name": "dropMode"
+              },
+              {
+                "type": "address",
+                "name": "module"
+              },
+              {
+                "type": "bool",
+                "name": "enforced"
+              }
+            ]
+          },
+          {
+            "type": "tuple",
+            "name": "b",
+            "components": [
+              {
+                "type": "address",
+                "name": "payAsset"
+              },
+              {
+                "type": "uint256",
+                "name": "amountIn"
+              },
+              {
+                "type": "uint256",
+                "name": "minStockOut"
+              },
+              {
+                "type": "uint256",
+                "name": "minTokensOut"
+              }
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "type": "address",
+            "name": "token"
+          },
+          {
+            "type": "address",
+            "name": "curve"
+          },
+          {
+            "type": "uint256",
+            "name": "tokensBought"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Document the generation-specific payable creation call and returned token/curve/bought amount; this is not an authorized launch or proof of actual cost/refund.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Nested currency/token/stock fields are addresses. An ordinary PoolKey fee uses hundredths of one basis point (1000000 = 100%); dynamic-fee flag/sentinel values are not numeric fee rates; tickSpacing is signed ticks. Trading-rate BPS use 10000 = 100%; creator-buy/drop caps concern supply and trading fees concern pair-asset-side amounts. creatorShareOfBaseBps concerns a share of the base fee, not trade value, but its raw denominator is not established by its name or this ABI: do not automatically divide it by 10000 or equate it to a published percentage. Confirm source arithmetic or publisher use before scaling fee-share and other undocumented ratio fields. Raw token/pair/native-value units remain distinct; authenticate asset decimals. Time fields are seconds; byte/gas bounds are not fees. sqrtPriceRunWad is a publisher WAD-labelled curve input, not a live market price; do not infer deployed arithmetic or gross/net ordering.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x404a2508"
+    },
+    {
+      "signature": "InvalidDropMode()",
+      "declaration": "error InvalidDropMode()",
+      "abi": {
+        "name": "InvalidDropMode",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared invalid drop mode guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xa55897b0"
+    },
+    {
+      "signature": "CannotGraduate()",
+      "declaration": "error CannotGraduate()",
+      "abi": {
+        "name": "CannotGraduate",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared cannot graduate guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x2967f2a9"
+    },
+    {
+      "signature": "InvalidCharterDrop()",
+      "declaration": "error InvalidCharterDrop()",
+      "abi": {
+        "name": "InvalidCharterDrop",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared invalid charter drop guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xffa34bfd"
+    },
+    {
+      "signature": "CharterDropDisabled()",
+      "declaration": "error CharterDropDisabled()",
+      "abi": {
+        "name": "CharterDropDisabled",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared charter drop disabled guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x7d35540b"
+    },
+    {
+      "signature": "SnipeOptOutDisabled()",
+      "declaration": "error SnipeOptOutDisabled()",
+      "abi": {
+        "name": "SnipeOptOutDisabled",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared snipe opt out disabled guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xa22500c7"
+    },
+    {
+      "signature": "MetadataTooLong()",
+      "declaration": "error MetadataTooLong()",
+      "abi": {
+        "name": "MetadataTooLong",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared metadata too long guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x85b8e2f4"
+    },
+    {
+      "signature": "EmptyNameOrSymbol()",
+      "declaration": "error EmptyNameOrSymbol()",
+      "abi": {
+        "name": "EmptyNameOrSymbol",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared empty name or symbol guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x94322419"
+    },
+    {
+      "signature": "LaunchesPaused()",
+      "declaration": "error LaunchesPaused()",
+      "abi": {
+        "name": "LaunchesPaused",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared launches paused guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x07b3e48e"
+    },
+    {
+      "signature": "PairAssetDisabled()",
+      "declaration": "error PairAssetDisabled()",
+      "abi": {
+        "name": "PairAssetDisabled",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared pair asset disabled guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x60e5f0a4"
+    }
+  ],
+  "role_usage_fragments": [
+    {
+      "symbol": "zo",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 635030,
+        "end_utf8_byte": 635078,
+        "bytes": 48,
+        "sha256": "eae187242dc8ae10985590ae0194e71df1a4d77171a37d061fd72809e2775058",
+        "locator": "Static ABI zo object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 634940,
+        "end_utf8_byte": 635111,
+        "bytes": 171,
+        "sha256": "afc18c7350bcedccb424e7e714f4cc52759b313614cc818ca7b26ccd4d4699c9",
+        "locator": "Static ABI zo enclosing_function"
+      }
+    },
+    {
+      "symbol": "zo",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 701491,
+        "end_utf8_byte": 701531,
+        "bytes": 40,
+        "sha256": "9dfd2c38fb7036a4ce3d62303ddc5edbc9d9828ba883e239003a45fc4b4a1e91",
+        "locator": "Static ABI zo object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 701377,
+        "end_utf8_byte": 702117,
+        "bytes": 740,
+        "sha256": "81d7df19b60bb3e29b7ba0cccd257e5daf90b0459e124c98e6693a8ee76c6273",
+        "locator": "Static ABI zo enclosing_function"
+      }
+    },
+    {
+      "symbol": "zo",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 929704,
+        "end_utf8_byte": 929827,
+        "bytes": 123,
+        "sha256": "ed4d0344c7f931ad708023e68297d3ab809733463d6da81ddff97f084a800ca2",
+        "locator": "Static ABI zo object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 929047,
+        "end_utf8_byte": 930216,
+        "bytes": 1169,
+        "sha256": "561ebc9b2881064e54e4182fcca449eed928374d3e635ef2a41a241506988111",
+        "locator": "Static ABI zo enclosing_function"
+      }
+    }
+  ]
+}

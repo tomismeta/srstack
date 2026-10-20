@@ -1,0 +1,800 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-19",
+  "scope": "Dated two-generation launchpad documentation, publisher identity and selected-interface provenance, attributed creation history, URC5 specification and announcements; no current state defaults or implementation certificate.",
+  "records": [
+    {
+      "id": "sr-launchpad-docs-2026-10-19",
+      "url": "https://www.standardreserve.xyz/docs/launchpad/",
+      "publisher": "The Standard Reserve official publisher",
+      "published_at": null,
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Complete acquired publisher bodies inspected as text/data; relevant declarations and claims scoped below. Downloaded code not executed.",
+      "claim_stage": "Dated publisher evidence; not an independent implementation, funding or safety certificate.",
+      "source_urls": [
+        "https://www.standardreserve.xyz/docs/launchpad/",
+        "https://www.standardreserve.xyz/",
+        "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js"
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.standardreserve.xyz/",
+          "bytes": 7026,
+          "sha256": "2a8f030906ff0bd4fdcabb134894c701896a4dbf7c8e82dea8774b695a8db57d",
+          "relationship": "Official root redirects to /liquidity/ and explicitly links mountApp-RNywHOZ_.js."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "bytes": 1139855,
+          "sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "relationship": "Root-linked complete application module; imports three product doc chunks and contains role bindings and selected ABI declarations."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/docs/launchpad/",
+          "bytes": 6750,
+          "sha256": "67e678b4043bc487327c1f0d627f5d6fb229a6d50ae8b5151df6ca736b210979",
+          "relationship": "Route HTML imports the root application; substantive content is the imported doc chunk."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js",
+          "bytes": 21354,
+          "sha256": "814cec3b9d08c126662241aeeb17a31833298cbadb513e4a19b81d5b3ccea262",
+          "relationship": "Explicitly imported LaunchpadDoc; substantive /docs/launchpad/ publisher text and six new-generation named role addresses."
+        }
+      ],
+      "locators": [
+        "LaunchpadDoc comparison of earlier and new tokens; curve, supply, fees, modules, Integrator fees, charter drops, contract table."
+      ],
+      "summary": "Two coexisting factory-qualified launchpad generations; scoped supply, curve/graduation, creator fees, module controls, venue policy and charter-drop publisher mechanics.",
+      "limits": [
+        "Retrieval dates identify reviewed artifacts, not freshness of mutable contract state.",
+        "Publisher descriptions and selected ABI encodings do not prove permissions, deployed implementation completeness, current fee settings, funding or execution.",
+        "Current tokens are not identified by ticker or latest UI; earlier tokens retain their original rules.",
+        "Reacquired Integrator fees section says up to1%; the earlier catch-up report said2%. Prefer the fingerprinted document for this review without claiming deployed cap correspondence.",
+        "Factory immutable Config reference and mutable Config contents are different; current documentation is not independent code correspondence."
+      ],
+      "source_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js",
+        "artifact_sha256": "814cec3b9d08c126662241aeeb17a31833298cbadb513e4a19b81d5b3ccea262",
+        "start_utf8_byte": 0,
+        "end_utf8_byte": 21354,
+        "bytes": 21354,
+        "sha256": "814cec3b9d08c126662241aeeb17a31833298cbadb513e4a19b81d5b3ccea262",
+        "locator": "Complete imported documentation module."
+      }
+    },
+    {
+      "id": "sr-launchpad-bindings-2026-10-19",
+      "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+      "publisher": "The Standard Reserve official publisher",
+      "published_at": null,
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Complete acquired publisher bodies inspected as text/data; relevant declarations and claims scoped below. Downloaded code not executed.",
+      "claim_stage": "Dated publisher evidence; not an independent implementation, funding or safety certificate.",
+      "source_urls": [
+        "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x3D69104Da2518f4833D71444D6611310F2D685f2",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x3c7476e8Be0efd5b9667421448a99E217B806E80",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x963fE3e549308734048E42Dbe751150eF1C425cC",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x3D6Ea4e97B8AB9E1A1B4943fEBfFe22D8c920091",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x190B452D16e12e3bEeDd76a030EA991fE3856c33",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x048F2DC8a71A0321B5e119Cd577c56d0190920cc",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0xc3A9aA44542Cd5dCe85f297E75c04727213f964F",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x479B2997a7283f7d3baacc984558fe4e1D7467af",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0xb8748E02f07dd80F1DB99A49F92546B2210D844d",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x203e8d19F2aeb84c26ffA1De9eace7D30fF9f7E6",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0xE9D178cBaad7109Acb0DBc629EEA1C1a3B17e5DA",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x0D6Fd6F0f07c1b6cAEC7150966a801B7D5a991e3",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0xf47e03BEa56C4dE656DC7423ebF66E503f84f7be",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0xcbC8f65EF158c829379472DEe771cF3E7741440E",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0xff4639d2369b7411e666C9B4a44DBFB2b51BA1E1"
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.standardreserve.xyz/",
+          "bytes": 7026,
+          "sha256": "2a8f030906ff0bd4fdcabb134894c701896a4dbf7c8e82dea8774b695a8db57d",
+          "relationship": "Official root redirects to /liquidity/ and explicitly links mountApp-RNywHOZ_.js."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "bytes": 1139855,
+          "sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "relationship": "Root-linked complete application module; imports three product doc chunks and contains role bindings and selected ABI declarations."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js",
+          "bytes": 21354,
+          "sha256": "814cec3b9d08c126662241aeeb17a31833298cbadb513e4a19b81d5b3ccea262",
+          "relationship": "Explicitly imported LaunchpadDoc; substantive /docs/launchpad/ publisher text and six new-generation named role addresses."
+        }
+      ],
+      "locators": [
+        "Main factory/router/hook and earlierLaunchpads[]; LaunchpadDoc named contract table.",
+        "Prior report factory getter association is attributed evidence, not fabricated original response bytes."
+      ],
+      "summary": "Publisher bindings distinguish earlier and URC5 factories/routers/hooks; new Config, fee escrow and charter drop are named by the imported launchpad document. Implementation/token-deployer and earlier escrow/drop associations remain attributed prior getter evidence.",
+      "limits": [
+        "Retrieval dates identify reviewed artifacts, not freshness of mutable contract state.",
+        "Publisher descriptions and selected ABI encodings do not prove permissions, deployed implementation completeness, current fee settings, funding or execution.",
+        "No new metadata was obtained: all twenty explorer identity requests returned403 and were not retried.",
+        "Six role identities absent as fresh literals rely on the supplied October19 bounded contract report: two curve implementations, two token deployers, earlier escrow and earlier drop. Refresh factory dependencies for current use.",
+        "Sending EOA, deterministic creator, factory, fee recipient and owner are different roles."
+      ],
+      "binding_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 393810,
+          "end_utf8_byte": 394112,
+          "bytes": 302,
+          "sha256": "31209ce41821900df86944b83115dfd23da63eb17a73fc1ba6977c9efffdb502",
+          "locator": "0x3D69104Da2518f4833D71444D6611310F2D685f2"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js",
+          "artifact_sha256": "814cec3b9d08c126662241aeeb17a31833298cbadb513e4a19b81d5b3ccea262",
+          "start_utf8_byte": 189,
+          "end_utf8_byte": 491,
+          "bytes": 302,
+          "sha256": "60e14cee79475c2719c131ad48b4c55eca8f2cfb5cb36dda53509da9f9d6697c",
+          "locator": "0x3D69104Da2518f4833D71444D6611310F2D685f2"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 393864,
+          "end_utf8_byte": 394166,
+          "bytes": 302,
+          "sha256": "53b0c9af28813cd206122d57e530a4fe594e5e3e3a16013a558b296241f735b8",
+          "locator": "0x3c7476e8Be0efd5b9667421448a99E217B806E80"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js",
+          "artifact_sha256": "814cec3b9d08c126662241aeeb17a31833298cbadb513e4a19b81d5b3ccea262",
+          "start_utf8_byte": 245,
+          "end_utf8_byte": 547,
+          "bytes": 302,
+          "sha256": "fc22c25b782490bb54ae40ed46f7d2626eb7f185b34b1f94a737c9d9f7bbddf0",
+          "locator": "0x3c7476e8Be0efd5b9667421448a99E217B806E80"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 393916,
+          "end_utf8_byte": 394218,
+          "bytes": 302,
+          "sha256": "bacd88a79859156525fc7faf9f3607bf9b45be0f2a249a4c864f5a1c35c8788c",
+          "locator": "0x963fE3e549308734048E42Dbe751150eF1C425cC"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js",
+          "artifact_sha256": "814cec3b9d08c126662241aeeb17a31833298cbadb513e4a19b81d5b3ccea262",
+          "start_utf8_byte": 306,
+          "end_utf8_byte": 608,
+          "bytes": 302,
+          "sha256": "5a0e1f9db5ec5aa04a2f8e8eb56661c06878c6336126ac3c396489271d354cc7",
+          "locator": "0x963fE3e549308734048E42Dbe751150eF1C425cC"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 393993,
+          "end_utf8_byte": 394295,
+          "bytes": 302,
+          "sha256": "5ccda4a78efb12d84852344b15d11b712a60147148b2233f03425ddc870f4c48",
+          "locator": "0x3D6Ea4e97B8AB9E1A1B4943fEBfFe22D8c920091"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 394047,
+          "end_utf8_byte": 394349,
+          "bytes": 302,
+          "sha256": "97dd1a5ea746b67e9677e81bfd4ee37147e9d476e8bbafbacce4a752b5be73bb",
+          "locator": "0x190B452D16e12e3bEeDd76a030EA991fE3856c33"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 394099,
+          "end_utf8_byte": 394401,
+          "bytes": 302,
+          "sha256": "d40fc7a603ecca20a3ccf775bc4f78ab86ff57c6100efe0d3bc7d05d8233f875",
+          "locator": "0x048F2DC8a71A0321B5e119Cd577c56d0190920cc"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js",
+          "artifact_sha256": "814cec3b9d08c126662241aeeb17a31833298cbadb513e4a19b81d5b3ccea262",
+          "start_utf8_byte": 362,
+          "end_utf8_byte": 664,
+          "bytes": 302,
+          "sha256": "1a3060997e209dac036ec8871777807d3d13bd14ed06884ac49c699bc7515351",
+          "locator": "0xc3A9aA44542Cd5dCe85f297E75c04727213f964F"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js",
+          "artifact_sha256": "814cec3b9d08c126662241aeeb17a31833298cbadb513e4a19b81d5b3ccea262",
+          "start_utf8_byte": 422,
+          "end_utf8_byte": 724,
+          "bytes": 302,
+          "sha256": "e8174349c57902ebf9540a3a4d5a587471ec9cf3562a88347147f4bd5673e8b5",
+          "locator": "0x479B2997a7283f7d3baacc984558fe4e1D7467af"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js",
+          "artifact_sha256": "814cec3b9d08c126662241aeeb17a31833298cbadb513e4a19b81d5b3ccea262",
+          "start_utf8_byte": 484,
+          "end_utf8_byte": 786,
+          "bytes": 302,
+          "sha256": "66dabb6c084af80a6bb5eecbd1f3397645e17e749763bf94fb054f4b98eb5ba9",
+          "locator": "0xb8748E02f07dd80F1DB99A49F92546B2210D844d"
+        }
+      ]
+    },
+    {
+      "id": "sr-launchpad-creations-2026-10-19",
+      "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0x3D69104Da2518f4833D71444D6611310F2D685f2",
+      "publisher": "Official publisher identity with attributed prior Blockscout research; fresh explorer access denied",
+      "published_at": null,
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Existing full contract report reviewed; exact fresh403 response bytes retained; no metadata body or creation transaction response acquired.",
+      "claim_stage": "Attributed historical creation provenance; fresh independent confirmation unavailable",
+      "source_urls": [
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x3D69104Da2518f4833D71444D6611310F2D685f2",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x3c7476e8Be0efd5b9667421448a99E217B806E80",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x963fE3e549308734048E42Dbe751150eF1C425cC",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x3D6Ea4e97B8AB9E1A1B4943fEBfFe22D8c920091",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x190B452D16e12e3bEeDd76a030EA991fE3856c33",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x048F2DC8a71A0321B5e119Cd577c56d0190920cc",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0xc3A9aA44542Cd5dCe85f297E75c04727213f964F",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x479B2997a7283f7d3baacc984558fe4e1D7467af",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0xb8748E02f07dd80F1DB99A49F92546B2210D844d",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x203e8d19F2aeb84c26ffA1De9eace7D30fF9f7E6",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0xE9D178cBaad7109Acb0DBc629EEA1C1a3B17e5DA",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x0D6Fd6F0f07c1b6cAEC7150966a801B7D5a991e3",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0xf47e03BEa56C4dE656DC7423ebF66E503f84f7be",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0xcbC8f65EF158c829379472DEe771cF3E7741440E",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0xff4639d2369b7411e666C9B4a44DBFB2b51BA1E1",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0xe104323f5afd65994bb0b100ba5ceaf76a58b15129d09a643c7dafe51071cd55",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0xbda6a7bb312e2033dd243ff69e0ce02292002ec08eda263d7d480823bada44fc",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0x4a41162f7d404c95f1acfd7db183eb5b8423d87644e7530b860783474980aff6",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0x80ccef53089dbd3670b27fe95315ea3ffb711e87a3ad3aba24354e74b18cb7f1",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0x939c559aedd92fe2864104b344791e9c0485e34a2ab84c98473bd8b44927f978",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0x3fe7946a6535da29ff7654bda4fcb6563e0c592146d184282c1fb3d0bf515d77",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0xd0ca847800cfdb61334555326324cfafd5896e949e65ec7c5a89b08e1890fa2e",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0x6052433339080d078b634262b137c15c8a62f29b8cf9e3f69ac025b6ff12df57",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0xaa2dd093209728f3ad8930d3a6c5621563aaa7da88f7ab303e9627b61b1875f0",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0xd0fb3359e07f96404925f9d2b4d2b62184b0a0a5ecc8f8af3c849afd9d4a9c45",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0x9a1d04f342b83fdd63d1b10788c3beeb2116ed297c70d44b5d8875a11e833048",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0x52cb5fd068f127edec5f87ced3a4a535190c7d7a4f1387a7f80e7439b8f1498f",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0x5abd72cb78a1ed5237bc928e598bfa8e3e627b0402075cd850313d8b7bd69650",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0xcabd433a36b245f17a0e850500920a171ab457c8f0b1db0716564c41694d5b06",
+        "https://robinhoodchain.blockscout.com/api/v2/transactions/0x846630ea3e12b9002ac88efacb7e6e770c4ae81918b8558841dc44eb209e4cdd"
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.standardreserve.xyz/",
+          "bytes": 7026,
+          "sha256": "2a8f030906ff0bd4fdcabb134894c701896a4dbf7c8e82dea8774b695a8db57d",
+          "relationship": "Official root redirects to /liquidity/ and explicitly links mountApp-RNywHOZ_.js."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "bytes": 1139855,
+          "sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "relationship": "Root-linked complete application module; imports three product doc chunks and contains role bindings and selected ABI declarations."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0x3D69104Da2518f4833D71444D6611310F2D685f2",
+          "bytes": 5671,
+          "sha256": "de14b7e44c344b07856bf5d63694ea311ae134d4690a13b060798dc15ffbb093",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0x3c7476e8Be0efd5b9667421448a99E217B806E80",
+          "bytes": 5671,
+          "sha256": "14e04f2f3f40bf536a1bde23609b3a50beb6da44e00ff0df4d852bbe0168906b",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0x963fE3e549308734048E42Dbe751150eF1C425cC",
+          "bytes": 5671,
+          "sha256": "181d8d5363ffc400405546fcfd8f7d45fbb9c8e6c426bef8e24fc8ad2e82d2de",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0x3D6Ea4e97B8AB9E1A1B4943fEBfFe22D8c920091",
+          "bytes": 5671,
+          "sha256": "584e5279196e88087a8f2cf363a12dc3df5cc498da068b1fdd230d331bdb8878",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0x190B452D16e12e3bEeDd76a030EA991fE3856c33",
+          "bytes": 5671,
+          "sha256": "599f09cd3a1272accf448210944167d1795a4b67cbedfded8228a961f7fce369",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0x048F2DC8a71A0321B5e119Cd577c56d0190920cc",
+          "bytes": 5671,
+          "sha256": "20fb59e387819bef2852d056df31470ea906ccaf0282b0b32488844bc5471c4c",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0xc3A9aA44542Cd5dCe85f297E75c04727213f964F",
+          "bytes": 5671,
+          "sha256": "4a66ab58785895991038596ea98c706e6eea336164b17e52a995e5b38a94c09f",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0x479B2997a7283f7d3baacc984558fe4e1D7467af",
+          "bytes": 5671,
+          "sha256": "52c55c9d46014d0cea297471c323184569d75a29a6d5d248d3cd910db585b699",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0xb8748E02f07dd80F1DB99A49F92546B2210D844d",
+          "bytes": 5671,
+          "sha256": "fa73e66c868f51ccdd1736df013dbfc08463b04310931b84d718f87f8c1254af",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0x203e8d19F2aeb84c26ffA1De9eace7D30fF9f7E6",
+          "bytes": 5671,
+          "sha256": "06c8278916c270c960f711dfdb0b327f0832e113883ea4bd167ddb3d81b22d97",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0xE9D178cBaad7109Acb0DBc629EEA1C1a3B17e5DA",
+          "bytes": 5671,
+          "sha256": "ce1467c889af5a335dd13e1c08327879ad1507e61e9cec65f712746791bb4657",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0x0D6Fd6F0f07c1b6cAEC7150966a801B7D5a991e3",
+          "bytes": 5671,
+          "sha256": "b88d9e172a1e1419b524352e36e39e72d4fb50983bce2bfe7e8b7ad905ad8bea",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0xf47e03BEa56C4dE656DC7423ebF66E503f84f7be",
+          "bytes": 5671,
+          "sha256": "a3cf2a03c3c2d69fa626956996f9e7cc29ed79ec7ca6646ccbc1c10f32e7b46a",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0xcbC8f65EF158c829379472DEe771cF3E7741440E",
+          "bytes": 5671,
+          "sha256": "72dd45d6cded87d9991f5e9365c3387b6d31b79be876d74138d88d0e09988941",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0xff4639d2369b7411e666C9B4a44DBFB2b51BA1E1",
+          "bytes": 5671,
+          "sha256": "7a79bf9a147c083b9cc4af24800ec29159e6ad811220ef4ea6b7d16cdb76bd0a",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        }
+      ],
+      "locators": [
+        "Prior October19 report twenty-address creation table and bounded outgoing-history coverage; not a fresh genesis/factory census."
+      ],
+      "summary": "Bounded October19 prior contract research records deployment provenance for the two launchpad families and three distinct sending EOAs. Fresh explorer retrieval was denied; no original creation response is reconstructed.",
+      "limits": [
+        "Retrieval dates identify reviewed artifacts, not freshness of mutable contract state.",
+        "Publisher descriptions and selected ABI encodings do not prove permissions, deployed implementation completeness, current fee settings, funding or execution.",
+        "All20 role metadata requests returned403 in this acquisition. Creation block/time/hash facts are attributed to the supplied October19 report, not independently reacquired JSON.",
+        "Already identified transactions were not requested after explorer denials. Creation and activation are separate; the unbound D0 creation0x4ddF854ECf42fEA49eEC5323998C323ad2562a7e remains an unclassified lead.",
+        "Hooks actual creator is the deterministic deployer0x4e59b44847b379578588920cA78FbF26c0B4956C per prior report; sending EOAs are not creators in those cases."
+      ]
+    },
+    {
+      "id": "sr-launchpad-verified-abis-2026-10-19",
+      "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x3D69104Da2518f4833D71444D6611310F2D685f2",
+      "publisher": "Blockscout public explorer, access denied",
+      "published_at": null,
+      "retrieved_at": "2026-10-19",
+      "review_depth": "One request per role; denied requests stopped without retry or bypass.",
+      "claim_stage": "Missing-interface evidence only; no verified ABI acquired",
+      "source_urls": [
+        "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x3D69104Da2518f4833D71444D6611310F2D685f2",
+        "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x3c7476e8Be0efd5b9667421448a99E217B806E80",
+        "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x963fE3e549308734048E42Dbe751150eF1C425cC",
+        "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x3D6Ea4e97B8AB9E1A1B4943fEBfFe22D8c920091",
+        "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x190B452D16e12e3bEeDd76a030EA991fE3856c33",
+        "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x048F2DC8a71A0321B5e119Cd577c56d0190920cc",
+        "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xc3A9aA44542Cd5dCe85f297E75c04727213f964F",
+        "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x479B2997a7283f7d3baacc984558fe4e1D7467af",
+        "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xb8748E02f07dd80F1DB99A49F92546B2210D844d",
+        "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x203e8d19F2aeb84c26ffA1De9eace7D30fF9f7E6",
+        "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xE9D178cBaad7109Acb0DBc629EEA1C1a3B17e5DA",
+        "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x0D6Fd6F0f07c1b6cAEC7150966a801B7D5a991e3",
+        "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xf47e03BEa56C4dE656DC7423ebF66E503f84f7be",
+        "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xcbC8f65EF158c829379472DEe771cF3E7741440E",
+        "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xff4639d2369b7411e666C9B4a44DBFB2b51BA1E1"
+      ],
+      "artifacts": [
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x3D69104Da2518f4833D71444D6611310F2D685f2",
+          "bytes": 5710,
+          "sha256": "222242c26adfcf57459c65f42b85018f0cd611327b19a9accc8a0c0855e73166",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x3c7476e8Be0efd5b9667421448a99E217B806E80",
+          "bytes": 5710,
+          "sha256": "5c81eff3458f5333f75f1b484049820c3d8c8495bedbcbb88bd22b5d216cfa5c",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x963fE3e549308734048E42Dbe751150eF1C425cC",
+          "bytes": 5710,
+          "sha256": "8aabe0c1b59ad15f647f0b4909b8987d929b219fceb8a830e156686665c2075b",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x3D6Ea4e97B8AB9E1A1B4943fEBfFe22D8c920091",
+          "bytes": 5710,
+          "sha256": "3ba28c894382d1bbb7bff78197d0535831a2c5f04299cd787a625564e61ef463",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x190B452D16e12e3bEeDd76a030EA991fE3856c33",
+          "bytes": 5710,
+          "sha256": "e71168be82bde6ab8db504beebbb311c67a554111a8cb6e031ef0b1e7ed7a542",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x048F2DC8a71A0321B5e119Cd577c56d0190920cc",
+          "bytes": 5710,
+          "sha256": "81667db0a37e7c09130c714fad4fc95b7b1ff51a897d674321f4fac2fb0fc74e",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xc3A9aA44542Cd5dCe85f297E75c04727213f964F",
+          "bytes": 5710,
+          "sha256": "e4b9d612e94cdf2f3d9fca30df7992852ac21f8a41df133c23bb6ad07aef9b7e",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x479B2997a7283f7d3baacc984558fe4e1D7467af",
+          "bytes": 5710,
+          "sha256": "b8f96d5f25929c7c0f93e809e50b705c06bf9f0c3eab40292a1d23add4293943",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xb8748E02f07dd80F1DB99A49F92546B2210D844d",
+          "bytes": 5710,
+          "sha256": "b905986c33c7f04f52a9ba17911060f6bf1fc5d01d2ccbfd31d6c5ef825bcd26",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x203e8d19F2aeb84c26ffA1De9eace7D30fF9f7E6",
+          "bytes": 5710,
+          "sha256": "1facd1fce896efb0a5ea1bb1a2fcae0816739657491d63ce77320785680e7547",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xE9D178cBaad7109Acb0DBc629EEA1C1a3B17e5DA",
+          "bytes": 5710,
+          "sha256": "4f4b252a392a1713e2021f26dbdebc0db4cda454ddbdce77fc91846db1ed646a",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0x0D6Fd6F0f07c1b6cAEC7150966a801B7D5a991e3",
+          "bytes": 5710,
+          "sha256": "454ea43ae801d655e1e3145f15e4ba1da863ad8a56b1885ec34b3e8aa52d8c50",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xf47e03BEa56C4dE656DC7423ebF66E503f84f7be",
+          "bytes": 5710,
+          "sha256": "c60fcf50f13b208e26e5b2e16a02e1480b9e25626da05350e9c3a141609cd09e",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xcbC8f65EF158c829379472DEe771cF3E7741440E",
+          "bytes": 5710,
+          "sha256": "7715e0f97032630e8b1ca6e489e5660c4515d3029ed64ce66fe24cd7ebb88f02",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xff4639d2369b7411e666C9B4a44DBFB2b51BA1E1",
+          "bytes": 5710,
+          "sha256": "7d6653e37d5af5a5c7c37b6bf3fa72c511df1b092db1cc38566cc67ac7351f3b",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        }
+      ],
+      "locators": [
+        "Exact requested /api/v2/smart-contracts/<address> endpoints;403 denial bodies only."
+      ],
+      "summary": "Explorer source/ABI retrieval unavailable for all launchpad roles in this review; this record supports no interface file.",
+      "limits": [
+        "Every listed source request returned403. No actual explorer ABI or Solidity body acquired; prior report verification labels cannot be converted to complete interface evidence.",
+        "Use actually extracted publisher arrays where role-bound, otherwise interface_status unknown."
+      ]
+    },
+    {
+      "id": "sr-launchpad-selected-abis-2026-10-19",
+      "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+      "publisher": "The Standard Reserve official publisher",
+      "published_at": null,
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Complete acquired publisher bodies inspected as text/data; relevant declarations and claims scoped below. Downloaded code not executed.",
+      "claim_stage": "Dated publisher evidence; not an independent implementation, funding or safety certificate.",
+      "source_urls": [
+        "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "https://www.standardreserve.xyz/",
+        "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js"
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.standardreserve.xyz/",
+          "bytes": 7026,
+          "sha256": "2a8f030906ff0bd4fdcabb134894c701896a4dbf7c8e82dea8774b695a8db57d",
+          "relationship": "Official root redirects to /liquidity/ and explicitly links mountApp-RNywHOZ_.js."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "bytes": 1139855,
+          "sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "relationship": "Root-linked complete application module; imports three product doc chunks and contains role bindings and selected ABI declarations."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js",
+          "bytes": 21354,
+          "sha256": "814cec3b9d08c126662241aeeb17a31833298cbadb513e4a19b81d5b3ccea262",
+          "relationship": "Explicitly imported LaunchpadDoc; substantive /docs/launchpad/ publisher text and six new-generation named role addresses."
+        }
+      ],
+      "locators": [
+        "Static Acorn AST parsing resolves only literal arrays, tuple string constants, string templates and spreads; installed abitype parses human-readable declarations as data.",
+        "zo new factory12; Wr earlier factory29; ps common/legacy factory31; ui curve38; Ah new curve5; L2 Config2; qa new hook23; q2 router26; dR escrow26; fn earlier/common drop38; D2 new drop3.",
+        "The ps curveOfToken(address token) declaration alone at bytes[621837,621898) is installed in two generation-bound association fragments; FR(e) at[631660,631875) and OR/di dispatch at[631399,631660) authenticate use over current and earlier factories.",
+        "Q1 module and gj token venue-control arrays are unbound reference surfaces, not additional authenticated deployments."
+      ],
+      "summary": "Complete primary selected publisher arrays plus a separately selected curveOfToken declaration are retained without executing downloaded JS. The single declaration has explicit role-use and generation-dispatch fingerprints; it does not import other common-array methods. All role interfaces remain partial.",
+      "limits": [
+        "Retrieval dates identify reviewed artifacts, not freshness of mutable contract state.",
+        "Publisher descriptions and selected ABI encodings do not prove permissions, deployed implementation completeness, current fee settings, funding or execution.",
+        "No full explorer ABI was acquired. source_definition_complete=false and deployed_implementation_complete=false.",
+        "ps legacy launch/config/event declarations differ from Wr and zo; do not union them into a fictitious factory. fn drops() has eight outputs, D2 has nine including mode.",
+        "ui common curve reads and Ah new-only reads target individual curves; implementation address correspondence depends on separately qualified factory evidence.",
+        "No selected role ABI established for earlier launch hook, either token deployer or reward Safe; no module-template deployment is authenticated."
+      ],
+      "source_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 621837,
+          "end_utf8_byte": 621898,
+          "bytes": 61,
+          "sha256": "55abd542344ae7d913cffa1e1e53ffb1bc5e869ab792c45feed983dfea9b1c82",
+          "locator": "Complete single curveOfToken declaration inside ps; other ps entries excluded"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 631660,
+          "end_utf8_byte": 631875,
+          "bytes": 215,
+          "sha256": "2752540399e0b4980455710ad34761cec0ac252dfabab32145814221a8296c2e",
+          "locator": "FR(e) queries the selected token against every factory returned by di()"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 631399,
+          "end_utf8_byte": 631660,
+          "bytes": 261,
+          "sha256": "32cad508229d9714867f240b5f5884d95ba1830d81d7b4f7e637b21235e3b9bd",
+          "locator": "OR(q) and di() enumerate current factory plus earlierLaunchpads; DR selection helper is adjacent"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 613317,
+          "end_utf8_byte": 613813,
+          "bytes": 496,
+          "sha256": "c4661275359da436be113e4ca2051d726582bae9a8927193c6ff1ba9f44f50dc"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 613821,
+          "end_utf8_byte": 614072,
+          "bytes": 251,
+          "sha256": "d8a7bb374f58a1d9ada92adf7b338e0a51846be1e187fd39c0980b02a8fb7674"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 614080,
+          "end_utf8_byte": 614306,
+          "bytes": 226,
+          "sha256": "e17521002f4918ee77b54952f4c141e98909b65e3f9c98f20924b3e3b6447590"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 615033,
+          "end_utf8_byte": 615369,
+          "bytes": 336,
+          "sha256": "22146a26292d7f4274d6bc7b6d135b3828cf9be7734badecaf113a94a7ec5708"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 615961,
+          "end_utf8_byte": 616570,
+          "bytes": 609,
+          "sha256": "639f9eebb44b8f03f86e01ba4411d18c68613bc15a690ca5d64079af73b560a3"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 616578,
+          "end_utf8_byte": 616820,
+          "bytes": 242,
+          "sha256": "d275bef92648797bf840703346c82b6d8a8aa6a6773b77a9568b3daf1aaa89b4"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 621644,
+          "end_utf8_byte": 622749,
+          "bytes": 1105,
+          "sha256": "67a327b2f43287d274affcdfa947510ca38e2088765648e2964adfbdebbc97f3"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 622757,
+          "end_utf8_byte": 623436,
+          "bytes": 679,
+          "sha256": "eeb7a75ae830060900211ce84324c924205af08e12b55c22e88dc24799b8c167"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 624060,
+          "end_utf8_byte": 624488,
+          "bytes": 428,
+          "sha256": "3238175868e51783b9753c0cc4d591ff76a5ec07f4bfcbaafb0fc210b56a3b83"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 624496,
+          "end_utf8_byte": 624619,
+          "bytes": 123,
+          "sha256": "0067281f0da3839f7882dbb9680e8bf59e4aece33eac7d6b9f3c6166b9c984aa"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 632735,
+          "end_utf8_byte": 633775,
+          "bytes": 1040,
+          "sha256": "67158920ab76a1f449f5ffe1c14a062d4b8f1ba62c6fe94c02cae7ede354b102"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 633783,
+          "end_utf8_byte": 634702,
+          "bytes": 919,
+          "sha256": "c5730dd60273b63f819881648e4017c78dcc7c80fd9ad388c722009a77b98cef"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 1032995,
+          "end_utf8_byte": 1033177,
+          "bytes": 182,
+          "sha256": "f0ab1e7c9a1d2aa84cf29903ce774b667d61f99533572fe0e0bfb4446e2bdabe"
+        }
+      ],
+      "definition_context": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 610000,
+        "end_utf8_byte": 635000,
+        "bytes": 25000,
+        "sha256": "e9282e471487d341012473cb54318c67b6f7e3ce459a75eefd51400e44afb9df",
+        "locator": "Bounded publisher launchpad declaration block, including tuple and spread dependencies; region boundaries are not claimed syntax boundaries."
+      }
+    },
+    {
+      "id": "sr-urc5-specification-2026-10-19",
+      "url": "https://raw.githubusercontent.com/Uniswap/URCs/863af9cddaf7eb9c3a40fdc9c8fa616c5945bea4/URCs/urc-5.md",
+      "publisher": "Uniswap URCs repository and URC5 promotional site",
+      "published_at": "2026-10-18",
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Complete acquired publisher bodies inspected as text/data; relevant declarations and claims scoped below. Downloaded code not executed.",
+      "claim_stage": "Dated publisher evidence; not an independent implementation, funding or safety certificate.",
+      "source_urls": [
+        "https://raw.githubusercontent.com/Uniswap/URCs/863af9cddaf7eb9c3a40fdc9c8fa616c5945bea4/URCs/urc-5.md",
+        "https://github.com/Uniswap/URCs/pull/20",
+        "https://urc5.org/"
+      ],
+      "artifacts": [
+        {
+          "url": "https://raw.githubusercontent.com/Uniswap/URCs/863af9cddaf7eb9c3a40fdc9c8fa616c5945bea4/URCs/urc-5.md",
+          "bytes": 41343,
+          "sha256": "d0b220b18635d33bee198cd838c12bb3d718890eb69417919b4a15acc3f95715",
+          "relationship": "Complete immutable commit-pinned canonical Markdown specification."
+        },
+        {
+          "url": "https://github.com/Uniswap/URCs/pull/20",
+          "bytes": 443873,
+          "sha256": "d2eeb7713f59fafca12fc0cf91e183d3256dda1ec8b2ed33d93fee1327bd2818",
+          "relationship": "Complete original PR HTML; merge evidence remains separate from specification status."
+        },
+        {
+          "url": "https://urc5.org/",
+          "bytes": 9929,
+          "sha256": "78718242587cd82afcb711c4a9d46eff6d817b7b6f679f06b12ac2cac1262f87",
+          "relationship": "Promotional publisher page; Final label conflicts with pinned canonical Draft."
+        }
+      ],
+      "locators": [
+        "YAML status: Draft; Definitions; externalVenuePermissions; net-zero intermediate-hop discussion; Reference Implementation."
+      ],
+      "summary": "Merged URC5 Token Venue Policy specification defines token-declared canonical venues, Preferred/Enforced modes and directional permissions, with explicit execution and net-zero observation limits.",
+      "limits": [
+        "Canonical pinned specification status is Draft; promotional urc5.org says Final. Merge is not universal adoption, an audit or deployed-token conformance.",
+        "Reference implementation omits enforcement; a true permission is not execution success; net-zero intermediate hops need not cross a token transfer boundary.",
+        "Specification is not a deployment-bound ABI for any launch token."
+      ],
+      "source_fragment": {
+        "artifact_url": "https://raw.githubusercontent.com/Uniswap/URCs/863af9cddaf7eb9c3a40fdc9c8fa616c5945bea4/URCs/urc-5.md",
+        "artifact_sha256": "d0b220b18635d33bee198cd838c12bb3d718890eb69417919b4a15acc3f95715",
+        "start_utf8_byte": 0,
+        "end_utf8_byte": 41343,
+        "bytes": 41343,
+        "sha256": "d0b220b18635d33bee198cd838c12bb3d718890eb69417919b4a15acc3f95715",
+        "locator": "Complete pinned specification UTF-8 body."
+      }
+    },
+    {
+      "id": "sr-urc5-announcement-2026-10-19",
+      "url": "https://x.com/standard_rsv/status/2112221351759286660",
+      "publisher": "@standard_rsv and @0xbeans on original X",
+      "published_at": "2026-10-19",
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Complete acquired publisher bodies inspected as text/data; relevant declarations and claims scoped below. Downloaded code not executed.",
+      "claim_stage": "Dated publisher evidence; not an independent implementation, funding or safety certificate.",
+      "source_urls": [
+        "https://x.com/standard_rsv/status/2112221351759286660",
+        "https://x.com/0xbeans/status/2112221543929713122"
+      ],
+      "artifacts": [
+        {
+          "url": "https://x.com/standard_rsv/status/2112221351759286660",
+          "bytes": 192457,
+          "sha256": "84292bc1026ad5e1b5f81c892fa974bc406a01ac0f095b4ce4f07973437ca402",
+          "relationship": "Complete original X HTML; substantive thread/post body acquired as data."
+        },
+        {
+          "url": "https://x.com/0xbeans/status/2112221543929713122",
+          "bytes": 148436,
+          "sha256": "b4d9aae6a06ce3894c8b01fd05b9429ed33586d25430549db59ae2ad7f4f5ea1",
+          "relationship": "Complete original X HTML; substantive thread/post body acquired as data."
+        }
+      ],
+      "locators": [
+        "Official seven-post thread starting2112221351759286660; developer2112221543929713122 full body."
+      ],
+      "summary": "October19 official URC5 thread and developer announcement describe launchpad venue-policy availability and one-week competition extension; these are attributed publisher claims.",
+      "limits": [
+        "Retrieval dates identify reviewed artifacts, not freshness of mutable contract state.",
+        "Publisher descriptions and selected ABI encodings do not prove permissions, deployed implementation completeness, current fee settings, funding or execution.",
+        "No universal router adoption, perfect copy-pool prevention or deployment conformance proved by announcement.",
+        "Developer additional100k statement does not specify currency or prove funding."
+      ]
+    }
+  ]
+}

@@ -18,6 +18,11 @@ A conceptual map, not a current deployment router, complete ABI or verified impl
 | Issuance epoch | A policy/accrual interval with associated settings and settlement state. Active and queued settings differ. | An auction round or proof that today's rate continues through its boundary. |
 | Reserve asset / LP position | Protocol-held property or liquidity exposure; identity, custody, holdings and rights need their own evidence. | A charter holder's redeemable assets or proof that an illustrative website portfolio exists. |
 | S-Bill | A STANDARD deposit position recorded by the separately deployed `sbills` role, with principal, booked premium, stored maturity and settlement state. Identity is `(chain, contract, bill ID)`; ID zero is valid. | A charter, branch, wallet balance, sample UI bill or guaranteed yield. See [S-Bills](sbills.md); no NFT or transferability inference. |
+| Stock token / underlying pool / LP position | [Stock-token liquidity](liquidity-markets.md) connects a tokenized exposure to a stock/USDG pool and separately owned liquidity positions. | Legal shares, issuer custody, a shared PoolManager address or a launched-token pool. |
+| Launch token / curve / graduated pool | A [factory-qualified launch](launchpad.md) sells against its pair asset on a token-specific curve before a generation-specific pool lifecycle. | STANDARD's founding launch, an automatically migrated token or a protocol-endorsed ticker. |
+| Fee stream / hook module / venue policy | Separate recipient rights, swap decisions and token-declared venue permissions. | Token ownership, a guaranteed execution path or authority over another token. |
+| Pilot season / points / reward allocation | [Market-pilot](market-pilot.md) team and wallet records distinguish offchain scores, published allocation rules and actual payouts. | Wallet tokens, branch shares or proved funded entitlement. |
+| Claim / charter drop | A [distribution](charter-distributions.md) records an asset-specific historical entitlement or frozen allocation under its own conditions. | Recurring issuance, current-owner entitlement, reserve redemption or immediately spendable funds. |
 
 ## Ownership and record relationships
 
@@ -43,6 +48,10 @@ Branch-license auction
 
 These arrows identify different relationships, not legal ownership of every connected object. A charter owner does not thereby administer the bank, own its reserves or control its auctions. A charter transfer does not by itself establish who earned the transferred ledger balance. New-charter ETH funding and branch-expansion ledger funding require separate accounting; conversion between them cannot be assumed.
 
+### Product relationships
+
+Reserve-seeded stock/USDG liquidity can support conversion into a launch token's stock pair; a WETH-paired launch follows a different asset route. Each generation's factory associates tokens with curves and eventual pools, while separate escrow/module/policy roles govern fee streams and controls. Trade/referral records can feed offchain pilot points, not automatic payout rights. A launch may reserve third-party tokens for a charter snapshot and later branch/exit-conditioned release; those allocations do not merge with Bank pending STANDARD, protocol-surplus stimulus or team compensation.
+
 ## Contract roles and dependencies
 
 | Role | What it records or does in the reviewed design | Relationship to authenticate |
@@ -65,6 +74,11 @@ These arrows identify different relationships, not legal ownership of every conn
 | Incentives Vault | Holds acquired tokens for the announced incentive purpose. | Holdings, permissions and actual distribution terms; retained tokens are neither burned nor automatically owed to token/charter holders. |
 | S-Bills | Deposit bills, rate/amount quotes, premium budget and exit/redemption/roll interfaces. | STANDARD token, deployment/generation, bill owner and stored terms; funding transfers and administrative powers need separate evidence. See [S-Bills](sbills.md). |
 | Administrator / guardian / Safe dependencies | Control relationships, not economic participation positions. Reviewed administrative infrastructure includes Safe dependencies; scope varies by module. | Accepted versus pending owner, guardian powers, supply controllers and relevant Safe configuration. An administrative proxy does not prove every monetary module is upgradeable. |
+| Launch factory / token deployer / curve / router | Creates or associates generation-qualified launch tokens, records curve state and routes trades. | Factory-child identity, implementation/proxy, pair asset and role-specific dependencies; creator EOA, deterministic creator and owner are distinct. |
+| Launch hook / Config / fee escrow | Hook decisions, mutable configuration contents and recipient-scoped accumulated fees. | Actual linked roles and control rights; immutable dependency address does not imply immutable settings. |
+| Stock session hook | Stock-pool class/session/effective-fee machinery, distinct from STANDARD TaxHook. | Full pool key, sender/time context, overrides/exemptions and independently authenticated interface coverage. |
+| Claim / top-up / refund / charter drop | Distinct beneficiary entries, claim state or graduation snapshots. | Contract/generation, asset, historical beneficiary and payout mode; no universal holder claim. |
+| Pilot reward Safe / publisher index | Custody attribution versus offchain scoring/discovery. | Assets, liabilities and settlement independently; a Safe is not a dedicated rewards distributor. |
 
 Published fee-flow relationships are described in [reserves](reserves.md); their percentages and destinations must not be copied into current execution accounting without evidence. Asset migration, role replacement and code upgrade are different operations. An ABI name proves neither permission nor successful migration.
 
@@ -74,8 +88,10 @@ Preserve the domain of every identifier: chain ID, address, charter ID, raw orde
 
 For historical questions retain `(chain, role/family, generation, address, object ID)` as applicable. A replacement auction does not create a new CentralBank or migrate every object by implication. Distinguish deployment, activation, registry cutover and observed last activity. An old generation remains in the discovery scope until the requested evidence justifies excluding its activity.
 
+For launch objects retain `(chain, factory, token, curve)` and the full pool key/ID; for positions add their own identifier/range. Pilot records need season, team/country and wallet scope. Drop/claim identifiers belong to their recording contract and snapshot. Points, branches, wallet tokens and claims do not become interchangeable merely because a UI displays them together.
+
 ## Evidence status and freshness
 
 Use claim-level labels: **published design**, **developer proposal**, **official announcement**, **publisher interface/deployment attribution**, **observed onchain relationship**, or **implementation-established behavior**. These are not interchangeable stages, and a later post does not automatically outrank deployed evidence for a current-state question.
 
-[Updates](updates.md) and the [source index](../assets/sources.json) retain review dates, conflicts and coverage limits. The map does not certify that every website paragraph, tweet, contract or product has been freshly reviewed. Do not invent modules for an announced strategy such as the Second Mandate, or assume a product is deployed because a preview has buttons or sample positions.
+[Updates](updates.md) and the [source index](../assets/sources.json) retain review dates, conflicts and coverage limits. The September Second Mandate and October 7 scan were strategy/announcement evidence, not deployment authentication. The October 19 review separately expands authenticated publisher coverage through [stock markets](liquidity-markets.md), [both launchpad generations](launchpad.md), [pilot rules](market-pilot.md) and [distributions](charter-distributions.md), with explicit interface and implementation gaps. Neither boundary certifies every publication or turns sample positions into holdings.

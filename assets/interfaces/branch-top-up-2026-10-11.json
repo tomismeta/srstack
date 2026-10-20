@@ -1,0 +1,682 @@
+{
+  "schema_version": 1,
+  "id": "branch-top-up-2026-10-11",
+  "role": "branch_top_up",
+  "generation": "stimulus-2026-10-11",
+  "review_id": "publisher-ecosystem-2026-10-19",
+  "coverage": {
+    "kind": "selective_fragment",
+    "source_definition_complete": false,
+    "deployed_implementation_complete": false,
+    "source_locator": "mountApp-RNywHOZ_.js f5; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+    "source_fragment": {
+      "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+      "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+      "start_utf8_byte": 652585,
+      "end_utf8_byte": 653545,
+      "bytes": 960,
+      "sha256": "ddccf962bcb5dc281b3433e385520a7a1805f43be090438e054c4646b5ecb09a"
+    },
+    "entry_counts": {
+      "constructor": 0,
+      "error": 4,
+      "event": 4,
+      "fallback": 0,
+      "function": 12,
+      "receive": 0
+    },
+    "abi_sha256": "bc0531ea06554a2257ef1dcf3d3dcb0cff53349c1c1239e063fdbeb2ecfa280a"
+  },
+  "entries": [
+    {
+      "signature": "token()",
+      "declaration": "function token() view returns (address)",
+      "abi": {
+        "name": "token",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "address",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Read the distribution asset address; authenticate its decimals rather than assuming STANDARD, USDG or a dollar peg.",
+      "units": "EVM address, not an amount or proof of ownership authority.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xfc0c546a"
+    },
+    {
+      "signature": "charterNFT()",
+      "declaration": "function charterNFT() view returns (address)",
+      "abi": {
+        "name": "charterNFT",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "address",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Read the linked charter NFT identity; token ownership alone does not replace historical eligibility.",
+      "units": "EVM address, not an amount or proof of ownership authority.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x9488f538"
+    },
+    {
+      "signature": "refund()",
+      "declaration": "function refund() view returns (address)",
+      "abi": {
+        "name": "refund",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "address",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Read the configured refund destination, not a beneficiary’s refund amount.",
+      "units": "EVM address, not an amount or proof of ownership authority.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x590e1ae3"
+    },
+    {
+      "signature": "deadline()",
+      "declaration": "function deadline() view returns (uint64)",
+      "abi": {
+        "name": "deadline",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "uint64",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Read the claim deadline timestamp; sealed/loading/claimed state remains independently relevant.",
+      "units": "Unix timestamp in seconds; not a block number or duration.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x29dcb0cf"
+    },
+    {
+      "signature": "isSealed()",
+      "declaration": "function isSealed() view returns (bool)",
+      "abi": {
+        "name": "isSealed",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "bool",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Read the allocation sealing flag; unsealed/loading state is not a zero-entitlement result.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Remaining numeric fields retain ABI widths and names; any undocumented scale, enum meaning or economic denominator remains unknown.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x631f9852"
+    },
+    {
+      "signature": "totalAllocated()",
+      "declaration": "function totalAllocated() view returns (uint256)",
+      "abi": {
+        "name": "totalAllocated",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Read the distribution’s allocated token accounting aggregate, not a current wallet balance, fiat valuation or independently proved funding source.",
+      "units": "Raw distribution-token units (perBranch: raw token units per counted branch); authenticate token() and decimals. Not fiat value, percentage or recurring issuance.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x45f7f249"
+    },
+    {
+      "signature": "totalClaimed()",
+      "declaration": "function totalClaimed() view returns (uint256)",
+      "abi": {
+        "name": "totalClaimed",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Read the distribution’s claimed token accounting aggregate, not a current wallet balance, fiat valuation or independently proved funding source.",
+      "units": "Raw distribution-token units (perBranch: raw token units per counted branch); authenticate token() and decimals. Not fiat value, percentage or recurring issuance.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xd54ad2a1"
+    },
+    {
+      "signature": "allocation(uint256)",
+      "declaration": "function allocation(uint256 charterId) view returns (uint256)",
+      "abi": {
+        "name": "allocation",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [
+          {
+            "type": "uint256",
+            "name": "charterId"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Read the top-up allocation for a charter ID; not an automatically recurring or universal holder benefit.",
+      "units": "Raw distribution-token units (perBranch: raw token units per counted branch); authenticate token() and decimals. Not fiat value, percentage or recurring issuance.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x850bad94"
+    },
+    {
+      "signature": "claimable(uint256)",
+      "declaration": "function claimable(uint256 charterId) view returns (uint256)",
+      "abi": {
+        "name": "claimable",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [
+          {
+            "type": "uint256",
+            "name": "charterId"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Read the contract’s scoped entitlement preview using its exact account/charter/token keys; unavailable/reverting reads are unknown, not zero.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Distribution amounts/perBranch use raw authenticated distribution-token units (launched-token drops publish 18 decimals); branch/charter counts and snapshot blocks are unscaled integers; timestamp fields use Unix seconds. Snapshot cursor IDs are not token amounts. Mode is an enum requiring generation-specific meaning.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xd1d58b25"
+    },
+    {
+      "signature": "unclaimed()",
+      "declaration": "function unclaimed() view returns (uint256)",
+      "abi": {
+        "name": "unclaimed",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Read the distribution’s remaining allocation accounting; not an independently reconstructed custody balance.",
+      "units": "Raw distribution-token units (perBranch: raw token units per counted branch); authenticate token() and decimals. Not fiat value, percentage or recurring issuance.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x669416b8"
+    },
+    {
+      "signature": "claim(uint256[])",
+      "declaration": "function claim(uint256[] charterIds) nonpayable returns (uint256 amount)",
+      "abi": {
+        "name": "claim",
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "inputs": [
+          {
+            "type": "uint256[]",
+            "name": "charterIds"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": "amount"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Document the role-specific explicit claim transaction; a preview or successful simulation is not settled transfer evidence.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Distribution amounts/perBranch use raw authenticated distribution-token units (launched-token drops publish 18 decimals); branch/charter counts and snapshot blocks are unscaled integers; timestamp fields use Unix seconds. Snapshot cursor IDs are not token amounts. Mode is an enum requiring generation-specific meaning.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x6ba4c138"
+    },
+    {
+      "signature": "sweep()",
+      "declaration": "function sweep() nonpayable returns (uint256 amount)",
+      "abi": {
+        "name": "sweep",
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": "amount"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Document the explicit recovery transaction; deadline, recipient and authorization require separate evidence.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Distribution amounts/perBranch use raw authenticated distribution-token units (launched-token drops publish 18 decimals); branch/charter counts and snapshot blocks are unscaled integers; timestamp fields use Unix seconds. Snapshot cursor IDs are not token amounts. Mode is an enum requiring generation-specific meaning.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x35faa416"
+    },
+    {
+      "signature": "AllocationsLoaded(uint256,uint256,uint256)",
+      "declaration": "event AllocationsLoaded(uint256 count, uint256 total, uint256 snapshotBlock)",
+      "abi": {
+        "name": "AllocationsLoaded",
+        "type": "event",
+        "inputs": [
+          {
+            "type": "uint256",
+            "name": "count",
+            "indexed": false
+          },
+          {
+            "type": "uint256",
+            "name": "total",
+            "indexed": false
+          },
+          {
+            "type": "uint256",
+            "name": "snapshotBlock",
+            "indexed": false
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Decode the reported allocation-loading count, total and snapshot block; this does not identify every beneficiary without entry evidence.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Distribution amounts/perBranch use raw authenticated distribution-token units (launched-token drops publish 18 decimals); branch/charter counts and snapshot blocks are unscaled integers; timestamp fields use Unix seconds. Snapshot cursor IDs are not token amounts. Mode is an enum requiring generation-specific meaning.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "topic0": "0x0bad8a5cc2ea2023075629782eb37198e20a480befb5b9842ae92bfe5c0645be",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 3,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "count",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 1,
+            "name": "total",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 2,
+            "name": "snapshotBlock",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 2,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "Sealed(uint256)",
+      "declaration": "event Sealed(uint256 totalAllocated)",
+      "abi": {
+        "name": "Sealed",
+        "type": "event",
+        "inputs": [
+          {
+            "type": "uint256",
+            "name": "totalAllocated",
+            "indexed": false
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Decode the role-specific allocation sealing record; emitted funding/accounting is not independent funding provenance.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Distribution amounts/perBranch use raw authenticated distribution-token units (launched-token drops publish 18 decimals); branch/charter counts and snapshot blocks are unscaled integers; timestamp fields use Unix seconds. Snapshot cursor IDs are not token amounts. Mode is an enum requiring generation-specific meaning.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "topic0": "0xba34121df90b0e77cf350d3550142d4cd66df49d5ac6c50c9560399f8820a061",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "totalAllocated",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "Claimed(uint256,address,uint256)",
+      "declaration": "event Claimed(uint256 indexed charterId, address indexed owner, uint256 amount)",
+      "abi": {
+        "name": "Claimed",
+        "type": "event",
+        "inputs": [
+          {
+            "type": "uint256",
+            "name": "charterId",
+            "indexed": true
+          },
+          {
+            "type": "address",
+            "name": "owner",
+            "indexed": true
+          },
+          {
+            "type": "uint256",
+            "name": "amount",
+            "indexed": false
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Decode the role-specific claim record with its exact indexed beneficiary/key fields; corroborate successful receipt and asset transfers.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Distribution amounts/perBranch use raw authenticated distribution-token units (launched-token drops publish 18 decimals); branch/charter counts and snapshot blocks are unscaled integers; timestamp fields use Unix seconds. Snapshot cursor IDs are not token amounts. Mode is an enum requiring generation-specific meaning.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "topic0": "0x4ec90e965519d92681267467f775ada5bd214aa92c0dc93d90a5e880ce9ed026",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "charterId",
+            "canonical_type": "uint256",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "owner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 2,
+            "name": "amount",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "Swept(address,uint256)",
+      "declaration": "event Swept(address indexed to, uint256 amount)",
+      "abi": {
+        "name": "Swept",
+        "type": "event",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "to",
+            "indexed": true
+          },
+          {
+            "type": "uint256",
+            "name": "amount",
+            "indexed": false
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Decode recorded recovery destination and amount; a recovery event is not a beneficiary payment.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Distribution amounts/perBranch use raw authenticated distribution-token units (launched-token drops publish 18 decimals); branch/charter counts and snapshot blocks are unscaled integers; timestamp fields use Unix seconds. Snapshot cursor IDs are not token amounts. Mode is an enum requiring generation-specific meaning.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "topic0": "0xc36b5179cb9c303b200074996eab2b3473eac370fdd7eba3bec636fe35109696",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "to",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "amount",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "NotSealed()",
+      "declaration": "error NotSealed()",
+      "abi": {
+        "name": "NotSealed",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Decode the declared not sealed guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xc1f31ec9"
+    },
+    {
+      "signature": "ClaimClosed()",
+      "declaration": "error ClaimClosed()",
+      "abi": {
+        "name": "ClaimClosed",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Decode the declared claim closed guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xf6e85041"
+    },
+    {
+      "signature": "NotCharterOwner(uint256)",
+      "declaration": "error NotCharterOwner(uint256 charterId)",
+      "abi": {
+        "name": "NotCharterOwner",
+        "type": "error",
+        "inputs": [
+          {
+            "type": "uint256",
+            "name": "charterId"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Decode the declared not charter owner guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x87c76a8d"
+    },
+    {
+      "signature": "NothingToClaim()",
+      "declaration": "error NothingToClaim()",
+      "abi": {
+        "name": "NothingToClaim",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "stimulus-2026-10-11",
+      "explanation": "Decode the declared nothing to claim guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x969bf728"
+    }
+  ],
+  "role_usage_fragments": [
+    {
+      "symbol": "f5",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 655883,
+        "end_utf8_byte": 655935,
+        "bytes": 52,
+        "sha256": "6857c282ec1116b025245f97e2428b33213908e7419634f81c2d94c903da5c6e",
+        "locator": "Static ABI f5 object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 655879,
+        "end_utf8_byte": 655936,
+        "bytes": 57,
+        "sha256": "0896d935f4e8f3450f1b8fa1101a0743843d4f5db9a2792f8e462b94096967a9",
+        "locator": "Static ABI f5 enclosing_function"
+      }
+    },
+    {
+      "symbol": "f5",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 657293,
+        "end_utf8_byte": 657351,
+        "bytes": 58,
+        "sha256": "1c9aab229b3e2aa2b9fa58048db535534cab996802c79aedafe84a73e42d573a",
+        "locator": "Static ABI f5 object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 656868,
+        "end_utf8_byte": 657522,
+        "bytes": 654,
+        "sha256": "3d8aded8ad50de6c0853ecb6e0d0be1d6321770edacc2b9998540747e615520a",
+        "locator": "Static ABI f5 enclosing_function"
+      }
+    }
+  ]
+}

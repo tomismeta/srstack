@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "id": "launch-factory-association-2026-10-19",
+  "role": "launch_factory",
+  "generation": "urc5-2026-10-19",
+  "review_id": "publisher-ecosystem-2026-10-19",
+  "coverage": {
+    "kind": "selective_fragment",
+    "source_definition_complete": false,
+    "deployed_implementation_complete": false,
+    "source_locator": "mountApp-RNywHOZ_.js ps single curveOfToken declaration; FR(e)/di()/OR(q) use over both dated factory generations, without other ps methods",
+    "source_fragment": {
+      "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+      "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+      "start_utf8_byte": 621837,
+      "end_utf8_byte": 621898,
+      "bytes": 61,
+      "sha256": "55abd542344ae7d913cffa1e1e53ffb1bc5e869ab792c45feed983dfea9b1c82",
+      "locator": "Complete single curveOfToken declaration inside ps; other ps entries excluded"
+    },
+    "entry_counts": {
+      "constructor": 0,
+      "error": 0,
+      "event": 0,
+      "fallback": 0,
+      "function": 1,
+      "receive": 0
+    },
+    "abi_sha256": "552c8a1b672300cfbf0622c9dd3131bdf32f3b0b6d4c9d8bdffb767321e3d9f9"
+  },
+  "entries": [
+    {
+      "signature": "curveOfToken(address)",
+      "declaration": "function curveOfToken(address token) view returns (address)",
+      "abi": {
+        "name": "curveOfToken",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "token"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "address",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Read this factory’s registered curve for a supplied token. The publisher FR(e) queries both factory generations and treats a zero address as no association in that factory. Corroborate returned child code/proxy identity before reading child state.",
+      "units": "Input token and output curve are EVM addresses; output is one ABI word, not a balance or global token count.",
+      "limitations": [
+        "Exactly one authenticated common-array declaration, separately generation-bound. No isCurve declaration, lifecycle getter, launch/config/event layout or full ps ABI is implied.",
+        "Dated publisher role-use evidence is not deployed source correspondence. Refresh relevant target identity and pin state; query all relevant factories rather than assume the latest generation."
+      ],
+      "selector": "0x923f533f"
+    }
+  ],
+  "role_usage_fragments": [
+    {
+      "symbol": "ps",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 631739,
+        "end_utf8_byte": 631802,
+        "bytes": 63,
+        "sha256": "c4b850ba51574e718c8187d4539a439ddd1a3b7877bd441118a46e4a08e8c688",
+        "locator": "Static ABI ps object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 631660,
+        "end_utf8_byte": 631875,
+        "bytes": 215,
+        "sha256": "2752540399e0b4980455710ad34761cec0ac252dfabab32145814221a8296c2e",
+        "locator": "FR(e) queries the selected token against every factory returned by di()"
+      },
+      "generation_dispatch_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 631399,
+        "end_utf8_byte": 631660,
+        "bytes": 261,
+        "sha256": "32cad508229d9714867f240b5f5884d95ba1830d81d7b4f7e637b21235e3b9bd",
+        "locator": "OR(q) and di() enumerate current factory plus earlierLaunchpads; DR selection helper is adjacent"
+      }
+    }
+  ]
+}

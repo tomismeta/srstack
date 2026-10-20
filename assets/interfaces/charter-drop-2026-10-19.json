@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "id": "charter-drop-2026-10-19",
+  "role": "charter_drop",
+  "generation": "urc5-2026-10-19",
+  "review_id": "publisher-ecosystem-2026-10-19",
+  "coverage": {
+    "kind": "selective_fragment",
+    "source_definition_complete": false,
+    "deployed_implementation_complete": false,
+    "source_locator": "mountApp-RNywHOZ_.js D2; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+    "source_fragment": {
+      "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+      "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+      "start_utf8_byte": 613821,
+      "end_utf8_byte": 614072,
+      "bytes": 251,
+      "sha256": "d8a7bb374f58a1d9ada92adf7b338e0a51846be1e187fd39c0980b02a8fb7674"
+    },
+    "entry_counts": {
+      "constructor": 0,
+      "error": 1,
+      "event": 0,
+      "fallback": 0,
+      "function": 2,
+      "receive": 0
+    },
+    "abi_sha256": "723f9f50158aefdf321e741c732631729f2400d67c68ff6bf81ed957386b484d"
+  },
+  "entries": [
+    {
+      "signature": "drops(address)",
+      "declaration": "function drops(address token) view returns (uint128 amount, uint128 perBranch, uint64 registeredAt, uint32 lastId, uint32 nextId, uint64 branches, uint128 claimed, bool recovered, uint8 mode)",
+      "abi": {
+        "name": "drops",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "token"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "uint128",
+            "name": "amount"
+          },
+          {
+            "type": "uint128",
+            "name": "perBranch"
+          },
+          {
+            "type": "uint64",
+            "name": "registeredAt"
+          },
+          {
+            "type": "uint32",
+            "name": "lastId"
+          },
+          {
+            "type": "uint32",
+            "name": "nextId"
+          },
+          {
+            "type": "uint64",
+            "name": "branches"
+          },
+          {
+            "type": "uint128",
+            "name": "claimed"
+          },
+          {
+            "type": "bool",
+            "name": "recovered"
+          },
+          {
+            "type": "uint8",
+            "name": "mode"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Read the token-keyed drop snapshot/accounting record. Earlier generation returns eight flat values; URC5 returns nine including mode. Neither is a current-wallet entitlement by itself.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Distribution amounts/perBranch use raw authenticated distribution-token units (launched-token drops publish 18 decimals); branch/charter counts and snapshot blocks are unscaled integers; timestamp fields use Unix seconds. Snapshot cursor IDs are not token amounts. Mode is an enum requiring generation-specific meaning.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x4c19eb68"
+    },
+    {
+      "signature": "snapshot(address)",
+      "declaration": "function snapshot(address token) nonpayable returns ()",
+      "abi": {
+        "name": "snapshot",
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "token"
+          }
+        ],
+        "outputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Document snapshot advancement, not immediate payout; completion and frozen branch eligibility require separate state evidence.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Remaining numeric fields retain ABI widths and names; any undocumented scale, enum meaning or economic denominator remains unknown.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x26512160"
+    },
+    {
+      "signature": "NoProgress()",
+      "declaration": "error NoProgress()",
+      "abi": {
+        "name": "NoProgress",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared no progress guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x8b1075b9"
+    }
+  ],
+  "role_usage_fragments": [
+    {
+      "symbol": "D2",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 1073877,
+        "end_utf8_byte": 1073913,
+        "bytes": 36,
+        "sha256": "473ed4d2e9284534a6e36439ebfd7dafc372a51704db466ca0c551ea22a35b64",
+        "locator": "Static ABI D2 object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 1073718,
+        "end_utf8_byte": 1074170,
+        "bytes": 452,
+        "sha256": "bbc4559cb684640e049d569f15c98044a5804f9da7f624583d1a6a7f9b95bd2d",
+        "locator": "Static ABI D2 enclosing_function"
+      }
+    },
+    {
+      "symbol": "D2",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 1074575,
+        "end_utf8_byte": 1074636,
+        "bytes": 61,
+        "sha256": "a687ca41315f054ce62d13758155a2fa77aa7dec379165d6f156af615c7f9f78",
+        "locator": "Static ABI D2 object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 1074433,
+        "end_utf8_byte": 1074639,
+        "bytes": 206,
+        "sha256": "9ba05a451054758974e17d1c272c2c1793a6e923baf11beb8e01314217cc786b",
+        "locator": "Static ABI D2 enclosing_function"
+      }
+    }
+  ]
+}

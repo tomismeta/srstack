@@ -594,6 +594,530 @@
       "absent_signatures": [],
       "explanation": "The publisher control fragment is not a complete role ABI. Its owner/pendingOwner declarations are selected administration leads; executionPermissionless is specifically bound to registry reads, not every owned role. Other interface capabilities for these roles remain uncovered, not absent.",
       "alternative_evidence": "Follow dated contract/dependency leads and obtain relevant authenticated ABI/source evidence when the question needs it. Do not guess registry keys, transfer the permissionless flag to another contract, or turn missing coverage into a prohibition."
+    },
+    {
+      "id": "launchpad-generation-and-state",
+      "question": "Which authenticated factory, curve generation and dependencies describe this token?",
+      "status": "available",
+      "interface_ids": [
+        "launch-factory-2026-10-14",
+        "launch-factory-2026-10-19",
+        "launch-factory-association-2026-10-14",
+        "launch-factory-association-2026-10-19",
+        "bonding-curve-2026-10-14",
+        "bonding-curve-2026-10-19",
+        "launch-hook-2026-10-19"
+      ],
+      "review_ids": [
+        "publisher-ecosystem-2026-10-19"
+      ],
+      "functions": [
+        {
+          "interface_id": "launch-factory-association-2026-10-14",
+          "signature": "curveOfToken(address)"
+        },
+        {
+          "interface_id": "launch-factory-association-2026-10-19",
+          "signature": "curveOfToken(address)"
+        },
+        {
+          "interface_id": "launch-factory-2026-10-14",
+          "signature": "charterDrop()"
+        },
+        {
+          "interface_id": "launch-factory-2026-10-19",
+          "signature": "config()"
+        },
+        {
+          "interface_id": "bonding-curve-2026-10-14",
+          "signature": "graduated()"
+        },
+        {
+          "interface_id": "bonding-curve-2026-10-14",
+          "signature": "stock()"
+        },
+        {
+          "interface_id": "bonding-curve-2026-10-14",
+          "signature": "poolKey()"
+        },
+        {
+          "interface_id": "bonding-curve-2026-10-19",
+          "signature": "config()"
+        },
+        {
+          "interface_id": "bonding-curve-2026-10-19",
+          "signature": "module()"
+        },
+        {
+          "interface_id": "bonding-curve-2026-10-19",
+          "signature": "dropMode()"
+        },
+        {
+          "interface_id": "bonding-curve-2026-10-19",
+          "signature": "enforced()"
+        },
+        {
+          "interface_id": "launch-hook-2026-10-19",
+          "signature": "pools(bytes32)"
+        }
+      ],
+      "events": [
+        {
+          "interface_id": "launch-factory-2026-10-14",
+          "signature": "Launched(address,address,address,(address,address,address,address,address,(address,address,uint24,int24,address),bytes32,bool,string,string,string,uint64,uint128,uint256,uint256,uint256,uint256,uint16,uint16,uint16,bool,uint16[],uint256,uint16,uint256,address))"
+        },
+        {
+          "interface_id": "launch-factory-2026-10-14",
+          "signature": "Graduated(address,address,bytes32,(bytes32,uint256,uint256,uint256,uint256,uint128,uint256,address,bool))"
+        },
+        {
+          "interface_id": "launch-factory-2026-10-19",
+          "signature": "Launched(address,address,address,(address,address,address,address,address,(address,address,uint24,int24,address),bytes32,string,string,string,uint64,uint128,uint256,uint256,uint256,uint256,uint16,uint16,bool,uint16[],uint256,uint16,uint256,address,uint8,address,bool))"
+        }
+      ],
+      "absent_signatures": [],
+      "explanation": "Generation-bound supplemental fragments expose the actual curveOfToken(address) point read for each factory. Primary arrays expose scoped dependencies/child-state reads and generation-specific Launched events. Implementation-template addresses are not child curve state; do not infer generation from ticker, age or latest UI.",
+      "alternative_evidence": "Authenticate each relevant factory, then use its bound association fragment and corroborate returned child code/proxy target. The single ps declaration has FR/di/OR role-use provenance; no incompatible ps launch/event/config layout or isCurve getter is installed. Event history, if needed, requires bounded deployment/time discovery plus receipt/canonicality coverage; a point association is not a global census."
+    },
+    {
+      "id": "launchpad-quotes-and-graduation",
+      "question": "What lifecycle and quote evidence establishes cost, refund and graduation?",
+      "status": "unknown",
+      "interface_ids": [
+        "bonding-curve-2026-10-14",
+        "bonding-curve-2026-10-19",
+        "launch-factory-2026-10-14",
+        "launch-factory-2026-10-19",
+        "launch-router-2026-10-14",
+        "launch-router-2026-10-19"
+      ],
+      "review_ids": [
+        "publisher-ecosystem-2026-10-19"
+      ],
+      "functions": [],
+      "events": [],
+      "absent_signatures": [],
+      "explanation": "No read-only quote interface was acquired for either generation. The cited curve/factory interfaces expose lifecycle inputs and the older graduation event, not cost/refund quotes; those observations remain available through launchpad-generation-and-state and the interface inventories. Router buy/sell entries are transactions, not quote getters.",
+      "alternative_evidence": "Authenticate the exact quote or simulation interface and path, pair asset/scale, direction, fees and deployed rounding. Frontend curve arithmetic is illustrative unless independently qualified. Reconcile final partial buy, refund transfers and same-buy graduation with receipt and asset evidence; missing quote evidence remains unknown."
+    },
+    {
+      "id": "launchpad-fees-and-controls",
+      "question": "Which fees, module controls and fee-recipient accounting are readable?",
+      "status": "available",
+      "interface_ids": [
+        "bonding-curve-2026-10-14",
+        "bonding-curve-2026-10-19",
+        "launch-config-2026-10-19",
+        "launch-hook-2026-10-19",
+        "creator-fee-escrow-2026-10-14",
+        "creator-fee-escrow-2026-10-19",
+        "launch-factory-2026-10-14"
+      ],
+      "review_ids": [
+        "publisher-ecosystem-2026-10-19"
+      ],
+      "functions": [
+        {
+          "interface_id": "bonding-curve-2026-10-14",
+          "signature": "creatorTaxBps()"
+        },
+        {
+          "interface_id": "bonding-curve-2026-10-14",
+          "signature": "baseFeeBps()"
+        },
+        {
+          "interface_id": "bonding-curve-2026-10-14",
+          "signature": "launchTime()"
+        },
+        {
+          "interface_id": "bonding-curve-2026-10-14",
+          "signature": "currentSnipeTaxBps()"
+        },
+        {
+          "interface_id": "bonding-curve-2026-10-14",
+          "signature": "snipeSchedule()"
+        },
+        {
+          "interface_id": "bonding-curve-2026-10-14",
+          "signature": "feeRecipient()"
+        },
+        {
+          "interface_id": "bonding-curve-2026-10-19",
+          "signature": "config()"
+        },
+        {
+          "interface_id": "bonding-curve-2026-10-19",
+          "signature": "module()"
+        },
+        {
+          "interface_id": "launch-config-2026-10-19",
+          "signature": "get()"
+        },
+        {
+          "interface_id": "launch-config-2026-10-19",
+          "signature": "hookConfig()"
+        },
+        {
+          "interface_id": "launch-hook-2026-10-19",
+          "signature": "poolOf(address)"
+        },
+        {
+          "interface_id": "launch-hook-2026-10-19",
+          "signature": "moduleOf(bytes32)"
+        },
+        {
+          "interface_id": "launch-hook-2026-10-19",
+          "signature": "disabled(address)"
+        },
+        {
+          "interface_id": "launch-hook-2026-10-19",
+          "signature": "swapIndex(bytes32)"
+        },
+        {
+          "interface_id": "launch-hook-2026-10-19",
+          "signature": "pools(bytes32)"
+        },
+        {
+          "interface_id": "creator-fee-escrow-2026-10-14",
+          "signature": "balanceOf(address)"
+        },
+        {
+          "interface_id": "creator-fee-escrow-2026-10-19",
+          "signature": "balanceOf(address)"
+        },
+        {
+          "interface_id": "launch-factory-2026-10-14",
+          "signature": "launchConfig()"
+        }
+      ],
+      "events": [],
+      "absent_signatures": [],
+      "explanation": "Selected older-curve fee/recipient reads, newer Config/hook/module state and both escrow accounting reads are available. BPS, pair-asset amounts and base-fee-share denominators differ; mutable settings/accumulated creator fees are not holder revenue or complete permission proof.",
+      "alternative_evidence": "Authenticate child curve and pair-asset scale; compare module identity, disable state, fee recipient, accepted control and actual source correspondence. Published Tier1/failure behavior remains publisher evidence, not a universal guarantee. Config address immutability does not make Config contents immutable."
+    },
+    {
+      "id": "launchpad-venue-policy",
+      "question": "Which deployment-bound venue-policy state is exposed?",
+      "status": "unknown",
+      "interface_ids": [
+        "bonding-curve-2026-10-19",
+        "launch-hook-2026-10-19"
+      ],
+      "review_ids": [
+        "publisher-ecosystem-2026-10-19"
+      ],
+      "functions": [],
+      "events": [],
+      "absent_signatures": [],
+      "explanation": "No deployed token canonical-set or inbound/outbound permission interface was acquired. The cited curve/hook expose enforced flags and associations only; those reads remain scoped inputs in launchpad-generation-and-state, not token permission answers. Preferred/Enforced semantics, ordinary transfers and execution success remain distinct.",
+      "alternative_evidence": "Authenticate the particular token’s policy ABI and authority before reading its permissions; the URC5 reference spec is not bound as a deployed token interface. A true permission is not execution success, and net-zero intermediate hops can escape transfer observation. See launchpad.md for merged PR/Draft/Final scope."
+    },
+    {
+      "id": "stock-pool-fees",
+      "question": "What effective stock-pool fee applies to this pool, sender and time?",
+      "status": "unknown",
+      "interface_ids": [
+        "launch-factory-2026-10-14",
+        "launch-factory-2026-10-19"
+      ],
+      "review_ids": [
+        "publisher-ecosystem-2026-10-19"
+      ],
+      "functions": [],
+      "events": [],
+      "absent_signatures": [],
+      "explanation": "No SessionFeeHook ABI was acquired. The cited factory arrays are only neighboring launched-token/stock pool identity/configuration evidence; they do not implement stock-pool session, class, exemption or effective-fee reads. No stock-hook selectors are guessed.",
+      "alternative_evidence": "Acquire an address-authenticated SessionFeeHook interface; authenticate full stock/USDG PoolKeys, class/global/pool overrides, exemptions and sender/time at a pinned block. Numeric hook rates use hundredths of a basis point; a dynamic-fee sentinel is not a rate. The October16 schedule is historical, not a failed-read fallback. Optional publisher index observations are separately bounded in liquidity-markets.md."
+    },
+    {
+      "id": "stock-pool-backing-and-income",
+      "question": "What proves stock backing, reserve custody or realized LP income?",
+      "status": "unknown",
+      "interface_ids": [
+        "launch-factory-2026-10-14",
+        "launch-factory-2026-10-19"
+      ],
+      "review_ids": [
+        "publisher-ecosystem-2026-10-19"
+      ],
+      "functions": [],
+      "events": [],
+      "absent_signatures": [],
+      "explanation": "Nearest reviewed factories identify launched-token/stock relationships only, not issuer backing, Reserve stock/USDG positions or income. No stock hook interface, whole-portfolio accounting or realized LP income is established by these arrays.",
+      "alternative_evidence": "Use issuer/legal/custody evidence, authenticated full pool/position identities, fee growth, ownership, asset balances, receipts and bounded flows. Separate gross protocol fees, LP share, annualized short intervals and settled user income. A publisher stock symbol or shared PoolManager is insufficient."
+    },
+    {
+      "id": "charter-distribution-state",
+      "question": "What stimulus, top-up, refund and earlier-generation drop claim state is exposed?",
+      "status": "available",
+      "interface_ids": [
+        "branch-claim-2026-10-11",
+        "branch-top-up-2026-10-11",
+        "charter-refund-claim-2026-10-15",
+        "charter-drop-2026-10-14"
+      ],
+      "review_ids": [
+        "publisher-ecosystem-2026-10-19"
+      ],
+      "functions": [
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "token()"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "charterNFT()"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "bank()"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "refund()"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "deadline()"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "ownerBranchCap()"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "isSealed()"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "totalBranches()"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "perBranch()"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "totalClaimed()"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "totalAllocated()"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "entries(uint256)"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "countedFor(address)"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "claimable(uint256)"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "counted(uint256)"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "loaded(uint256)"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "claimed(uint256)"
+        },
+        {
+          "interface_id": "branch-top-up-2026-10-11",
+          "signature": "token()"
+        },
+        {
+          "interface_id": "branch-top-up-2026-10-11",
+          "signature": "charterNFT()"
+        },
+        {
+          "interface_id": "branch-top-up-2026-10-11",
+          "signature": "refund()"
+        },
+        {
+          "interface_id": "branch-top-up-2026-10-11",
+          "signature": "deadline()"
+        },
+        {
+          "interface_id": "branch-top-up-2026-10-11",
+          "signature": "isSealed()"
+        },
+        {
+          "interface_id": "branch-top-up-2026-10-11",
+          "signature": "totalAllocated()"
+        },
+        {
+          "interface_id": "branch-top-up-2026-10-11",
+          "signature": "totalClaimed()"
+        },
+        {
+          "interface_id": "branch-top-up-2026-10-11",
+          "signature": "allocation(uint256)"
+        },
+        {
+          "interface_id": "branch-top-up-2026-10-11",
+          "signature": "claimable(uint256)"
+        },
+        {
+          "interface_id": "branch-top-up-2026-10-11",
+          "signature": "unclaimed()"
+        },
+        {
+          "interface_id": "charter-refund-claim-2026-10-15",
+          "signature": "token()"
+        },
+        {
+          "interface_id": "charter-refund-claim-2026-10-15",
+          "signature": "refund()"
+        },
+        {
+          "interface_id": "charter-refund-claim-2026-10-15",
+          "signature": "deadline()"
+        },
+        {
+          "interface_id": "charter-refund-claim-2026-10-15",
+          "signature": "isSealed()"
+        },
+        {
+          "interface_id": "charter-refund-claim-2026-10-15",
+          "signature": "totalOwed()"
+        },
+        {
+          "interface_id": "charter-refund-claim-2026-10-15",
+          "signature": "totalClaimed()"
+        },
+        {
+          "interface_id": "charter-refund-claim-2026-10-15",
+          "signature": "entries(address)"
+        },
+        {
+          "interface_id": "charter-refund-claim-2026-10-15",
+          "signature": "claimable(address)"
+        },
+        {
+          "interface_id": "charter-refund-claim-2026-10-15",
+          "signature": "owed(address)"
+        },
+        {
+          "interface_id": "charter-refund-claim-2026-10-15",
+          "signature": "claimed(address)"
+        },
+        {
+          "interface_id": "charter-drop-2026-10-14",
+          "signature": "drops(address)"
+        },
+        {
+          "interface_id": "charter-drop-2026-10-14",
+          "signature": "frozenBranches(address,uint256)"
+        },
+        {
+          "interface_id": "charter-drop-2026-10-14",
+          "signature": "claimedBranches(address,uint256)"
+        },
+        {
+          "interface_id": "charter-drop-2026-10-14",
+          "signature": "claimable(address,uint256)"
+        },
+        {
+          "interface_id": "charter-drop-2026-10-14",
+          "signature": "ownerNotes(uint256)"
+        },
+        {
+          "interface_id": "charter-drop-2026-10-14",
+          "signature": "charterNFT()"
+        }
+      ],
+      "events": [
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "Loaded(uint256,uint256,uint256)"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "Sealed(uint256,uint256,uint256)"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "Claimed(uint256,address,uint256,uint256)"
+        },
+        {
+          "interface_id": "branch-claim-2026-10-11",
+          "signature": "Swept(address,uint256)"
+        },
+        {
+          "interface_id": "branch-top-up-2026-10-11",
+          "signature": "AllocationsLoaded(uint256,uint256,uint256)"
+        },
+        {
+          "interface_id": "branch-top-up-2026-10-11",
+          "signature": "Sealed(uint256)"
+        },
+        {
+          "interface_id": "branch-top-up-2026-10-11",
+          "signature": "Claimed(uint256,address,uint256)"
+        },
+        {
+          "interface_id": "branch-top-up-2026-10-11",
+          "signature": "Swept(address,uint256)"
+        },
+        {
+          "interface_id": "charter-refund-claim-2026-10-15",
+          "signature": "Claimed(address,uint256)"
+        }
+      ],
+      "absent_signatures": [],
+      "explanation": "Selected stimulus/top-up/refund and earlier-generation drop reads expose role-specific beneficiary, claim and snapshot state. Earlier drops return eight flat fields. This record excludes newer-generation drop entitlement; use launchpad-drop-snapshot-state for its available snapshot and launchpad-drop-entitlement for the missing claim scope.",
+      "alternative_evidence": "Authenticate asset/scale, historical charter/account entry, loading/sealed state, deadline, snapshot progress and claimed state where exposed. Current ownership, a button, preview sample or empty API list is not entitlement evidence. Add successful receipt/asset evidence for settlements."
+    },
+    {
+      "id": "launchpad-drop-snapshot-state",
+      "question": "What aggregate snapshot state is exposed for a newer-generation launch-token drop?",
+      "status": "available",
+      "interface_ids": ["charter-drop-2026-10-19"],
+      "review_ids": ["publisher-ecosystem-2026-10-19"],
+      "functions": [
+        {"interface_id": "charter-drop-2026-10-19", "signature": "drops(address)"}
+      ],
+      "events": [],
+      "absent_signatures": [],
+      "explanation": "The selected newer-generation drops(address) read returns nine flat snapshot/accounting fields including mode. It does not expose a particular charter's frozen or closed count, prior claims or collectable amount.",
+      "alternative_evidence": "Authenticate token/drop/generation and snapshot completion at the selected block. Use launchpad-drop-entitlement for the missing per-charter claim scope; reserved, allocated, collectable and received remain different states."
+    },
+    {
+      "id": "launchpad-drop-entitlement",
+      "question": "How much can a particular charter collect from a newer-generation launch-token drop?",
+      "status": "unknown",
+      "interface_ids": ["charter-drop-2026-10-19"],
+      "review_ids": ["publisher-ecosystem-2026-10-19"],
+      "functions": [],
+      "events": [],
+      "absent_signatures": [],
+      "explanation": "The selected newer-generation drop interface exposes aggregate snapshot accounting, not complete per-charter entitlement, closed-count or claimed-state reads. Neither its drops(address) tuple nor current charter ownership determines a collectable amount.",
+      "alternative_evidence": "Acquire the exact generation-bound claim interface and evidence for frozen allocation, relevant closures or complete exit, prior payouts and deadline. Successful receipt and attributable token movements are needed for received funds; do not substitute the earlier drop's ABI or preview data."
+    },
+    {
+      "id": "market-pilot-entitlement",
+      "question": "Do the reviewed contracts establish exact pilot points, reward entitlement, funding and settlement?",
+      "status": "unknown",
+      "interface_ids": [
+        "launch-factory-2026-10-14",
+        "launch-factory-2026-10-19",
+        "launch-config-2026-10-19"
+      ],
+      "review_ids": [
+        "publisher-ecosystem-2026-10-19"
+      ],
+      "functions": [],
+      "events": [],
+      "absent_signatures": [],
+      "explanation": "Launchpad factory/Config fee context is reviewed, not a rewards-distributor interface. The reward Safe has identity-only evidence. Offchain point fields and conflicting published accounting do not establish an exact payout formula, sufficient funding or settled entitlement.",
+      "alternative_evidence": "Use dated source-attributed docs/API/reward-page rules, point coverage, season/timezone, mixed-asset holdings and liabilities plus actual distribution receipts. Preserve docs4.3/API5, referral5%/referrerBps1000 and contribution-wording conflicts; fields do not prove applied accounting. Supported point observations or labelled user-rule scenarios remain useful; see market-pilot.md."
     }
   ]
 }

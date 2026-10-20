@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-27",
-  "scope": "Published v1.2/v1.1 rules and scoped launch settings, with superseded whitepaper design explicitly retained as historical provenance; never live configuration.",
+  "reviewed_at": "2026-10-19",
+  "scope": "Published v1.2/v1.1 rules and scoped launch settings, with superseded whitepaper design explicitly retained as historical provenance; October19 additions cover publisher launchpad mechanics and October11 auction provenance only, never live configuration.",
   "notes": [
     "Announcement/reference values are not saved RPC settings or a current-state fallback. Read each record scope/source; current dynamic values must be fetched live.",
     "Live snapshot observations are separate from documented design settings; remaining budget and supply have different accounting bases.",
@@ -153,7 +153,25 @@
         "charter-auction-cadence",
         "charters-per-round",
         "charter-initial-opening",
-        "branch-limit-order-execution"
+        "branch-limit-order-execution",
+        "licenses-per-round-october-11-announcement"
+      ]
+    },
+    {
+      "id": "launchpad",
+      "path": "assets/parameters/launchpad.json",
+      "record_ids": [
+        "launchpad-token-supply",
+        "launchpad-token-decimals",
+        "launchpad-curve-m",
+        "launchpad-creator-buy-cap",
+        "launchpad-base-fee",
+        "launchpad-base-fee-creator-share",
+        "launchpad-base-fee-pilot-share",
+        "launchpad-base-fee-protocol-share",
+        "launchpad-module-extra-fee-cap",
+        "launchpad-earlier-charter-drop-cap",
+        "launchpad-urc5-charter-drop-cap"
       ]
     }
   ]

@@ -401,6 +401,1871 @@
         "timestamp": "1790465135",
         "basis": "publisher metadata, not independently proved Registry activation"
       }
+    },
+    {
+      "id": "launch-factory-2026-10-19",
+      "chain_id": 4663,
+      "address": "0x3D69104Da2518f4833D71444D6611310F2D685f2",
+      "role": "launch_factory",
+      "generation": "urc5-2026-10-19",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "mountApp-RNywHOZ_.js / LaunchpadDoc-j28NPSkX.js dated role literal; primary zo array plus separately bound ps curveOfToken-only interface with FR/di/OR dispatch fingerprints; no full ps union",
+      "source_ids": [
+        "sr-launchpad-bindings-2026-10-19",
+        "sr-launchpad-selected-abis-2026-10-19"
+      ],
+      "interface_ids": [
+        "launch-factory-2026-10-19",
+        "launch-factory-association-2026-10-19"
+      ],
+      "interface_status": "selective_fragment",
+      "identity_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 393810,
+          "end_utf8_byte": 394112,
+          "bytes": 302,
+          "sha256": "31209ce41821900df86944b83115dfd23da63eb17a73fc1ba6977c9efffdb502",
+          "locator": "0x3D69104Da2518f4833D71444D6611310F2D685f2"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js",
+          "artifact_sha256": "814cec3b9d08c126662241aeeb17a31833298cbadb513e4a19b81d5b3ccea262",
+          "start_utf8_byte": 189,
+          "end_utf8_byte": 491,
+          "bytes": 302,
+          "sha256": "60e14cee79475c2719c131ad48b4c55eca8f2cfb5cb36dda53509da9f9d6697c",
+          "locator": "0x3D69104Da2518f4833D71444D6611310F2D685f2"
+        }
+      ],
+      "limits": [
+        "Fresh publisher literal establishes dated role identity; creation evidence remains attributed prior report because explorer denied.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority.",
+        "Only ps curveOfToken(address) is installed as a separate generation-bound association fragment. Other common declarations, including incompatible launch/config/events, are not unioned into the primary factory interface."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0xe104323f5afd65994bb0b100ba5ceaf76a58b15129d09a643c7dafe51071cd55",
+        "reported_at_and_block": "2026-10-19T13:30:17Z / 92651082",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0xDAFf80AAdF44305FE95768de1aAD1d8861C9F908",
+        "creator": "0xDAFf80AAdF44305FE95768de1aAD1d8861C9F908"
+      },
+      "dependencies": [
+        {
+          "role": "bonding_curve",
+          "address": "0x203e8d19F2aeb84c26ffA1De9eace7D30fF9f7E6",
+          "binding_id": "bonding-curve-2026-10-19",
+          "source_locator": "Attributed October19 report same-block factory curveImplementation(); not a newly acquired ABI declaration or refreshed state"
+        },
+        {
+          "role": "launch_token_deployer",
+          "address": "0xE9D178cBaad7109Acb0DBc629EEA1C1a3B17e5DA",
+          "binding_id": "launch-token-deployer-2026-10-19",
+          "source_locator": "Attributed October19 report same-block factory tokenDeployer(); not a newly acquired ABI declaration or refreshed state"
+        },
+        {
+          "role": "launch_router",
+          "address": "0x3c7476e8Be0efd5b9667421448a99E217B806E80",
+          "binding_id": "launch-router-2026-10-19",
+          "source_locator": "Attributed October19 report same-block factory router(); not a newly acquired ABI declaration or refreshed state"
+        },
+        {
+          "role": "charter_drop",
+          "address": "0xb8748E02f07dd80F1DB99A49F92546B2210D844d",
+          "binding_id": "charter-drop-2026-10-19",
+          "source_locator": "Attributed October19 report same-block factory charterDrop(); not a newly acquired ABI declaration or refreshed state"
+        },
+        {
+          "role": "launch_config",
+          "address": "0xc3A9aA44542Cd5dCe85f297E75c04727213f964F",
+          "binding_id": "launch-config-2026-10-19",
+          "source_locator": "Attributed October19 report same-block factory config(); not a newly acquired ABI declaration or refreshed state"
+        },
+        {
+          "role": "poolManager",
+          "address": "0x8366a39CC670B4001A1121B8F6A443A643e40951",
+          "source_locator": "Attributed October19 report factory poolManager(); reuse existing shared-infrastructure binding, not an individual pool"
+        }
+      ],
+      "abi_usage_fragments": [
+        {
+          "symbol": "zo",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 635030,
+            "end_utf8_byte": 635078,
+            "bytes": 48,
+            "sha256": "eae187242dc8ae10985590ae0194e71df1a4d77171a37d061fd72809e2775058",
+            "locator": "Static ABI zo object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 634940,
+            "end_utf8_byte": 635111,
+            "bytes": 171,
+            "sha256": "afc18c7350bcedccb424e7e714f4cc52759b313614cc818ca7b26ccd4d4699c9",
+            "locator": "Static ABI zo enclosing_function"
+          }
+        },
+        {
+          "symbol": "zo",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 701491,
+            "end_utf8_byte": 701531,
+            "bytes": 40,
+            "sha256": "9dfd2c38fb7036a4ce3d62303ddc5edbc9d9828ba883e239003a45fc4b4a1e91",
+            "locator": "Static ABI zo object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 701377,
+            "end_utf8_byte": 702117,
+            "bytes": 740,
+            "sha256": "81d7df19b60bb3e29b7ba0cccd257e5daf90b0459e124c98e6693a8ee76c6273",
+            "locator": "Static ABI zo enclosing_function"
+          }
+        },
+        {
+          "symbol": "zo",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 929704,
+            "end_utf8_byte": 929827,
+            "bytes": 123,
+            "sha256": "ed4d0344c7f931ad708023e68297d3ab809733463d6da81ddff97f084a800ca2",
+            "locator": "Static ABI zo object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 929047,
+            "end_utf8_byte": 930216,
+            "bytes": 1169,
+            "sha256": "561ebc9b2881064e54e4182fcca449eed928374d3e635ef2a41a241506988111",
+            "locator": "Static ABI zo enclosing_function"
+          }
+        }
+      ]
+    },
+    {
+      "id": "launch-router-2026-10-19",
+      "chain_id": 4663,
+      "address": "0x3c7476e8Be0efd5b9667421448a99E217B806E80",
+      "role": "launch_router",
+      "generation": "urc5-2026-10-19",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "mountApp-RNywHOZ_.js / LaunchpadDoc-j28NPSkX.js dated role literal; selected q2 array; role-bound callsite object and enclosing-function fingerprints retained in abi_usage_fragments",
+      "source_ids": [
+        "sr-launchpad-bindings-2026-10-19",
+        "sr-launchpad-selected-abis-2026-10-19"
+      ],
+      "interface_ids": [
+        "launch-router-2026-10-19"
+      ],
+      "interface_status": "selective_fragment",
+      "identity_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 393864,
+          "end_utf8_byte": 394166,
+          "bytes": 302,
+          "sha256": "53b0c9af28813cd206122d57e530a4fe594e5e3e3a16013a558b296241f735b8",
+          "locator": "0x3c7476e8Be0efd5b9667421448a99E217B806E80"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js",
+          "artifact_sha256": "814cec3b9d08c126662241aeeb17a31833298cbadb513e4a19b81d5b3ccea262",
+          "start_utf8_byte": 245,
+          "end_utf8_byte": 547,
+          "bytes": 302,
+          "sha256": "fc22c25b782490bb54ae40ed46f7d2626eb7f185b34b1f94a737c9d9f7bbddf0",
+          "locator": "0x3c7476e8Be0efd5b9667421448a99E217B806E80"
+        }
+      ],
+      "limits": [
+        "Fresh publisher literal establishes dated role identity; creation evidence remains attributed prior report because explorer denied.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0xbda6a7bb312e2033dd243ff69e0ce02292002ec08eda263d7d480823bada44fc",
+        "reported_at_and_block": "2026-10-19T13:30:19Z / 92651105",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0xDAFf80AAdF44305FE95768de1aAD1d8861C9F908",
+        "creator": "0xDAFf80AAdF44305FE95768de1aAD1d8861C9F908"
+      },
+      "abi_usage_fragments": [
+        {
+          "symbol": "q2",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 648164,
+            "end_utf8_byte": 648278,
+            "bytes": 114,
+            "sha256": "7abfaabc47e4cf07730bcfd11ef450a42ecea15a5aafef96b2c913913415eb07",
+            "locator": "Static ABI q2 object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 648016,
+            "end_utf8_byte": 648327,
+            "bytes": 311,
+            "sha256": "28ddd143446a01ee9c91f56bead56d0f243545f80c5b52e7c46d72bd3b579c24",
+            "locator": "Static ABI q2 enclosing_function"
+          }
+        },
+        {
+          "symbol": "q2",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 648635,
+            "end_utf8_byte": 648739,
+            "bytes": 104,
+            "sha256": "030bdb5faa3401b7bc88e2d13d38ac1e8847518243f4e9a3a7b9434f0e77d424",
+            "locator": "Static ABI q2 object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 648409,
+            "end_utf8_byte": 648742,
+            "bytes": 333,
+            "sha256": "0e5af889cc7d21c5e3a4d4d68239233df63c8f189b3587864364fd3655e5d809",
+            "locator": "Static ABI q2 enclosing_function"
+          }
+        }
+      ]
+    },
+    {
+      "id": "launch-hook-2026-10-19",
+      "chain_id": 4663,
+      "address": "0x963fE3e549308734048E42Dbe751150eF1C425cC",
+      "role": "launch_hook",
+      "generation": "urc5-2026-10-19",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "mountApp-RNywHOZ_.js / LaunchpadDoc-j28NPSkX.js dated role literal; selected qa array; role-bound callsite object and enclosing-function fingerprints retained in abi_usage_fragments",
+      "source_ids": [
+        "sr-launchpad-bindings-2026-10-19",
+        "sr-launchpad-selected-abis-2026-10-19"
+      ],
+      "interface_ids": [
+        "launch-hook-2026-10-19"
+      ],
+      "interface_status": "selective_fragment",
+      "identity_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 393916,
+          "end_utf8_byte": 394218,
+          "bytes": 302,
+          "sha256": "bacd88a79859156525fc7faf9f3607bf9b45be0f2a249a4c864f5a1c35c8788c",
+          "locator": "0x963fE3e549308734048E42Dbe751150eF1C425cC"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js",
+          "artifact_sha256": "814cec3b9d08c126662241aeeb17a31833298cbadb513e4a19b81d5b3ccea262",
+          "start_utf8_byte": 306,
+          "end_utf8_byte": 608,
+          "bytes": 302,
+          "sha256": "5a0e1f9db5ec5aa04a2f8e8eb56661c06878c6336126ac3c396489271d354cc7",
+          "locator": "0x963fE3e549308734048E42Dbe751150eF1C425cC"
+        }
+      ],
+      "limits": [
+        "Fresh publisher literal establishes dated role identity; creation evidence remains attributed prior report because explorer denied.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0x4a41162f7d404c95f1acfd7db183eb5b8423d87644e7530b860783474980aff6",
+        "reported_at_and_block": "2026-10-19T13:30:17Z / 92651076",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0xDAFf80AAdF44305FE95768de1aAD1d8861C9F908",
+        "creator": "0x4e59b44847b379578588920cA78FbF26c0B4956C"
+      },
+      "abi_usage_fragments": [
+        {
+          "symbol": "qa",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 635376,
+            "end_utf8_byte": 635432,
+            "bytes": 56,
+            "sha256": "45b89cdd73cbf19a14a86763fd1c8f7bfc153408b67c9ef3edafd20ec8a736b9",
+            "locator": "Static ABI qa object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 635111,
+            "end_utf8_byte": 635882,
+            "bytes": 771,
+            "sha256": "58c8f3177c0579764b1e3ebd9da7a85b8a10e77b12064739ef8fb44d22de701d",
+            "locator": "Static ABI qa enclosing_function"
+          }
+        },
+        {
+          "symbol": "qa",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 635694,
+            "end_utf8_byte": 635747,
+            "bytes": 53,
+            "sha256": "843393a1b425a59ef42d23dadaf2ad22490ac17f8b8c94749d4566c602fceaba",
+            "locator": "Static ABI qa object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 635111,
+            "end_utf8_byte": 635882,
+            "bytes": 771,
+            "sha256": "58c8f3177c0579764b1e3ebd9da7a85b8a10e77b12064739ef8fb44d22de701d",
+            "locator": "Static ABI qa enclosing_function"
+          }
+        },
+        {
+          "symbol": "qa",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 933779,
+            "end_utf8_byte": 933849,
+            "bytes": 70,
+            "sha256": "41280ccaffe6070cc38aa963802acbfdde00530db4203b8782f5b9002f7a69fa",
+            "locator": "Static ABI qa object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 933541,
+            "end_utf8_byte": 933953,
+            "bytes": 412,
+            "sha256": "8209467f43383e73658e48e9255a711c640c44d644ab0d2587e76cfd2b690401",
+            "locator": "Static ABI qa enclosing_function"
+          }
+        },
+        {
+          "symbol": "qa",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 933976,
+            "end_utf8_byte": 934052,
+            "bytes": 76,
+            "sha256": "40e1f6d0609d0ca3a1fd61b93f8767e2486be0e550db00be0d315031b5ff49e9",
+            "locator": "Static ABI qa object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 933962,
+            "end_utf8_byte": 934053,
+            "bytes": 91,
+            "sha256": "9bebca69572eed4edad4cd15300dfb9a284b4f300469b57488e72ad053073a07",
+            "locator": "Static ABI qa enclosing_function"
+          }
+        },
+        {
+          "symbol": "qa",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 934069,
+            "end_utf8_byte": 934145,
+            "bytes": 76,
+            "sha256": "06606e0c1d59d87295e6387a43ad18b36e032440cfce8c4309df9aee05d9c7fe",
+            "locator": "Static ABI qa object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 934057,
+            "end_utf8_byte": 934146,
+            "bytes": 89,
+            "sha256": "5466b911fcf74d3e353e5bf7581073b29a630a9d1b740843f87b09ad0ba57287",
+            "locator": "Static ABI qa enclosing_function"
+          }
+        },
+        {
+          "symbol": "qa",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 999026,
+            "end_utf8_byte": 999100,
+            "bytes": 74,
+            "sha256": "8a19c7a40d12f657ef9e47f7c1605bd0501828ca931c804f8b235e92ea8b25ad",
+            "locator": "Static ABI qa object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 998951,
+            "end_utf8_byte": 999444,
+            "bytes": 493,
+            "sha256": "f30b89aca525873c49da362662cdf7de8e76a4dba7709a1785eb3fe018c1e3f0",
+            "locator": "Static ABI qa enclosing_function"
+          }
+        }
+      ]
+    },
+    {
+      "id": "launch-factory-2026-10-14",
+      "chain_id": 4663,
+      "address": "0x3D6Ea4e97B8AB9E1A1B4943fEBfFe22D8c920091",
+      "role": "launch_factory",
+      "generation": "launch-2026-10-14",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "mountApp-RNywHOZ_.js dated role literal; primary Wr array plus separately bound ps curveOfToken-only interface with FR/di/OR dispatch fingerprints; no full ps union",
+      "source_ids": [
+        "sr-launchpad-bindings-2026-10-19",
+        "sr-launchpad-selected-abis-2026-10-19"
+      ],
+      "interface_ids": [
+        "launch-factory-2026-10-14",
+        "launch-factory-association-2026-10-14"
+      ],
+      "interface_status": "selective_fragment",
+      "identity_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 393993,
+          "end_utf8_byte": 394295,
+          "bytes": 302,
+          "sha256": "5ccda4a78efb12d84852344b15d11b712a60147148b2233f03425ddc870f4c48",
+          "locator": "0x3D6Ea4e97B8AB9E1A1B4943fEBfFe22D8c920091"
+        }
+      ],
+      "limits": [
+        "Fresh publisher literal establishes dated role identity; creation evidence remains attributed prior report because explorer denied.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority.",
+        "Only ps curveOfToken(address) is installed as a separate generation-bound association fragment. Other common declarations, including incompatible launch/config/events, are not unioned into the primary factory interface."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0x80ccef53089dbd3670b27fe95315ea3ffb711e87a3ad3aba24354e74b18cb7f1",
+        "reported_at_and_block": "2026-10-14T12:17:32Z / 88360332",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0xb1748f1857bef8De020982aA33f6F9cC1b9aD3c1",
+        "creator": "0xb1748f1857bef8De020982aA33f6F9cC1b9aD3c1"
+      },
+      "dependencies": [
+        {
+          "role": "bonding_curve",
+          "address": "0x0D6Fd6F0f07c1b6cAEC7150966a801B7D5a991e3",
+          "binding_id": "bonding-curve-2026-10-14",
+          "source_locator": "Attributed October19 report same-block factory curveImplementation(); not a newly acquired ABI declaration or refreshed state"
+        },
+        {
+          "role": "launch_token_deployer",
+          "address": "0xf47e03BEa56C4dE656DC7423ebF66E503f84f7be",
+          "binding_id": "launch-token-deployer-2026-10-14",
+          "source_locator": "Attributed October19 report same-block factory tokenDeployer(); not a newly acquired ABI declaration or refreshed state"
+        },
+        {
+          "role": "launch_router",
+          "address": "0x190B452D16e12e3bEeDd76a030EA991fE3856c33",
+          "binding_id": "launch-router-2026-10-14",
+          "source_locator": "Attributed October19 report same-block factory router(); not a newly acquired ABI declaration or refreshed state"
+        },
+        {
+          "role": "charter_drop",
+          "address": "0xff4639d2369b7411e666C9B4a44DBFB2b51BA1E1",
+          "binding_id": "charter-drop-2026-10-14",
+          "source_locator": "Attributed October19 report same-block factory charterDrop(); not a newly acquired ABI declaration or refreshed state"
+        },
+        {
+          "role": "poolManager",
+          "address": "0x8366a39CC670B4001A1121B8F6A443A643e40951",
+          "source_locator": "Attributed October19 report factory poolManager(); reuse existing shared-infrastructure binding, not an individual pool"
+        }
+      ],
+      "abi_usage_fragments": [
+        {
+          "symbol": "Wr",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 645478,
+            "end_utf8_byte": 645541,
+            "bytes": 63,
+            "sha256": "c2b3f001359bf2f0c7158feb6a7c238bfd7c838cc5febd47664ec3d2adea2102",
+            "locator": "Static ABI Wr object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 645101,
+            "end_utf8_byte": 645759,
+            "bytes": 658,
+            "sha256": "c30f5db65e5945ef58b2214559e33c9b087aedcc8880edabbab45850b6a241c7",
+            "locator": "Static ABI Wr enclosing_function"
+          }
+        },
+        {
+          "symbol": "Wr",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 701145,
+            "end_utf8_byte": 701198,
+            "bytes": 53,
+            "sha256": "5043bbabe11521540cd9da62ca190e25e4a6bd8c5caa5775ad3594bcde6d6626",
+            "locator": "Static ABI Wr object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 701103,
+            "end_utf8_byte": 701377,
+            "bytes": 274,
+            "sha256": "16e0be6d9cfa8db3e2573cd1256e4cc317de15c767b2e470798d9c177bfbba5d",
+            "locator": "Static ABI Wr enclosing_function"
+          }
+        },
+        {
+          "symbol": "Wr",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 701917,
+            "end_utf8_byte": 701963,
+            "bytes": 46,
+            "sha256": "0bcfd2b3fa27805ea3556729c45f7b539d8ce185a5cf4e6e70847a1fb81c4ad2",
+            "locator": "Static ABI Wr object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 701377,
+            "end_utf8_byte": 702117,
+            "bytes": 740,
+            "sha256": "81d7df19b60bb3e29b7ba0cccd257e5daf90b0459e124c98e6693a8ee76c6273",
+            "locator": "Static ABI Wr enclosing_function"
+          }
+        },
+        {
+          "symbol": "Wr",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 929830,
+            "end_utf8_byte": 929886,
+            "bytes": 56,
+            "sha256": "adcf78e6d5dbe7492ac0055ca78cc2fc4bfa7a25d8ec5f31d729c006b763a6a5",
+            "locator": "Static ABI Wr object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 929047,
+            "end_utf8_byte": 930216,
+            "bytes": 1169,
+            "sha256": "561ebc9b2881064e54e4182fcca449eed928374d3e635ef2a41a241506988111",
+            "locator": "Static ABI Wr enclosing_function"
+          }
+        },
+        {
+          "symbol": "Wr",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1073583,
+            "end_utf8_byte": 1073636,
+            "bytes": 53,
+            "sha256": "544e3d30d68c4697f6e365ef76a4c606163bd69dead39e5ba582e73140ffa10b",
+            "locator": "Static ABI Wr object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1073564,
+            "end_utf8_byte": 1073651,
+            "bytes": 87,
+            "sha256": "fa7edf9e457bc2fecdb8303852ba29402749ce7f82e6876b23ee803a469724c2",
+            "locator": "Static ABI Wr enclosing_function"
+          }
+        }
+      ]
+    },
+    {
+      "id": "launch-router-2026-10-14",
+      "chain_id": 4663,
+      "address": "0x190B452D16e12e3bEeDd76a030EA991fE3856c33",
+      "role": "launch_router",
+      "generation": "launch-2026-10-14",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "mountApp-RNywHOZ_.js / LaunchpadDoc-j28NPSkX.js dated role literal; selected q2 array; role-bound callsite object and enclosing-function fingerprints retained in abi_usage_fragments",
+      "source_ids": [
+        "sr-launchpad-bindings-2026-10-19",
+        "sr-launchpad-selected-abis-2026-10-19"
+      ],
+      "interface_ids": [
+        "launch-router-2026-10-14"
+      ],
+      "interface_status": "selective_fragment",
+      "identity_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 394047,
+          "end_utf8_byte": 394349,
+          "bytes": 302,
+          "sha256": "97dd1a5ea746b67e9677e81bfd4ee37147e9d476e8bbafbacce4a752b5be73bb",
+          "locator": "0x190B452D16e12e3bEeDd76a030EA991fE3856c33"
+        }
+      ],
+      "limits": [
+        "Fresh publisher literal establishes dated role identity; creation evidence remains attributed prior report because explorer denied.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0x939c559aedd92fe2864104b344791e9c0485e34a2ab84c98473bd8b44927f978",
+        "reported_at_and_block": "2026-10-14T12:17:32Z / 88360332",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0xb1748f1857bef8De020982aA33f6F9cC1b9aD3c1",
+        "creator": "0xb1748f1857bef8De020982aA33f6F9cC1b9aD3c1"
+      },
+      "abi_usage_fragments": [
+        {
+          "symbol": "q2",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 648164,
+            "end_utf8_byte": 648278,
+            "bytes": 114,
+            "sha256": "7abfaabc47e4cf07730bcfd11ef450a42ecea15a5aafef96b2c913913415eb07",
+            "locator": "Static ABI q2 object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 648016,
+            "end_utf8_byte": 648327,
+            "bytes": 311,
+            "sha256": "28ddd143446a01ee9c91f56bead56d0f243545f80c5b52e7c46d72bd3b579c24",
+            "locator": "Static ABI q2 enclosing_function"
+          }
+        },
+        {
+          "symbol": "q2",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 648635,
+            "end_utf8_byte": 648739,
+            "bytes": 104,
+            "sha256": "030bdb5faa3401b7bc88e2d13d38ac1e8847518243f4e9a3a7b9434f0e77d424",
+            "locator": "Static ABI q2 object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 648409,
+            "end_utf8_byte": 648742,
+            "bytes": 333,
+            "sha256": "0e5af889cc7d21c5e3a4d4d68239233df63c8f189b3587864364fd3655e5d809",
+            "locator": "Static ABI q2 enclosing_function"
+          }
+        }
+      ]
+    },
+    {
+      "id": "launch-hook-2026-10-14",
+      "chain_id": 4663,
+      "address": "0x048F2DC8a71A0321B5e119Cd577c56d0190920cc",
+      "role": "launch_hook",
+      "generation": "launch-2026-10-14",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "mountApp-RNywHOZ_.js / LaunchpadDoc-j28NPSkX.js dated role literal; no acquired role ABI",
+      "source_ids": [
+        "sr-launchpad-bindings-2026-10-19"
+      ],
+      "interface_ids": [],
+      "interface_status": "unknown",
+      "identity_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 394099,
+          "end_utf8_byte": 394401,
+          "bytes": 302,
+          "sha256": "d40fc7a603ecca20a3ccf775bc4f78ab86ff57c6100efe0d3bc7d05d8233f875",
+          "locator": "0x048F2DC8a71A0321B5e119Cd577c56d0190920cc"
+        }
+      ],
+      "limits": [
+        "Fresh publisher literal establishes dated role identity; creation evidence remains attributed prior report because explorer denied.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "No role-authenticated selected ABI was acquired; interface unknown, not absent. No empty ABI or guessed selector is supplied."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0x3fe7946a6535da29ff7654bda4fcb6563e0c592146d184282c1fb3d0bf515d77",
+        "reported_at_and_block": "2026-10-14T12:17:32Z / 88360331",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0xb1748f1857bef8De020982aA33f6F9cC1b9aD3c1",
+        "creator": "0x4e59b44847b379578588920cA78FbF26c0B4956C"
+      }
+    },
+    {
+      "id": "stock-session-hook-2026-10-14",
+      "chain_id": 4663,
+      "address": "0xC15b155a3094934171A15625d1a80Aba267B6080",
+      "role": "stock_session_hook",
+      "generation": "stock-pools-2026-10-14",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "mountApp-RNywHOZ_.js / LaunchpadDoc-j28NPSkX.js dated role literal; no acquired role ABI",
+      "source_ids": [
+        "sr-stock-pool-identities-2026-10-19"
+      ],
+      "interface_ids": [],
+      "interface_status": "unknown",
+      "identity_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 394491,
+          "end_utf8_byte": 394793,
+          "bytes": 302,
+          "sha256": "b80d2f3df3d22d6e709103a525e20eba61b76ffd0130d05ee12507dcc567d6a2",
+          "locator": "0xC15b155a3094934171A15625d1a80Aba267B6080"
+        }
+      ],
+      "limits": [
+        "Fresh publisher literal establishes dated role identity; creation evidence remains attributed prior report because explorer denied.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "No role-authenticated selected ABI was acquired; interface unknown, not absent. No empty ABI or guessed selector is supplied.",
+        "October19 research reported a pending administrative-Safe handover, not accepted ownership. Refresh relevant owner/pending-owner evidence; no control ABI is inferred from that observation."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0x36d3dc42c55fd0d8a6bdf5b6248a8a11b6a8fc800025cd55832bb26bc4094af8",
+        "reported_at_and_block": "2026-10-14T12:25:23Z / 88365030",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0xb1748f1857bef8De020982aA33f6F9cC1b9aD3c1",
+        "creator": "0x4e59b44847b379578588920cA78FbF26c0B4956C"
+      }
+    },
+    {
+      "id": "market-pilot-reward-safe-2026-10-14",
+      "chain_id": 4663,
+      "address": "0x047829087f9AC81fDb05F7b750458aFE3d72415f",
+      "role": "market_pilot_reward_safe",
+      "generation": "pilot-2026-10-14",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "mountApp-RNywHOZ_.js / LaunchpadDoc-j28NPSkX.js dated role literal; no acquired role ABI",
+      "source_ids": [
+        "sr-market-pilot-rules-2026-10-19"
+      ],
+      "interface_ids": [],
+      "interface_status": "unknown",
+      "identity_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 641849,
+          "end_utf8_byte": 642151,
+          "bytes": 302,
+          "sha256": "32e548009945c8cafdad07c5c5e65a512d5a48dbd404fde4e246ce4c4e5bfdcf",
+          "locator": "0x047829087f9AC81fDb05F7b750458aFE3d72415f"
+        }
+      ],
+      "limits": [
+        "Fresh publisher literal establishes dated role identity; creation evidence remains attributed prior report because explorer denied.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "No role-authenticated selected ABI was acquired; interface unknown, not absent. No empty ABI or guessed selector is supplied.",
+        "Publisher reward custody address is an attributed Safe proxy, not a dedicated reward-distributor interface. No threshold, asset balance, payout automation or solvency is inferred here."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0x300665f036b6bfa72e6ded33e83e9c3e0d477039997d059ba660ca7ebe2e2a7b",
+        "reported_at_and_block": "2026-10-14T07:54:31Z / 88203293",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership."
+      }
+    },
+    {
+      "id": "launch-config-2026-10-19",
+      "chain_id": 4663,
+      "address": "0xc3A9aA44542Cd5dCe85f297E75c04727213f964F",
+      "role": "launch_config",
+      "generation": "urc5-2026-10-19",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "mountApp-RNywHOZ_.js / LaunchpadDoc-j28NPSkX.js dated role literal; selected L2 array; role-bound callsite object and enclosing-function fingerprints retained in abi_usage_fragments",
+      "source_ids": [
+        "sr-launchpad-bindings-2026-10-19",
+        "sr-launchpad-selected-abis-2026-10-19"
+      ],
+      "interface_ids": [
+        "launch-config-2026-10-19"
+      ],
+      "interface_status": "selective_fragment",
+      "identity_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js",
+          "artifact_sha256": "814cec3b9d08c126662241aeeb17a31833298cbadb513e4a19b81d5b3ccea262",
+          "start_utf8_byte": 362,
+          "end_utf8_byte": 664,
+          "bytes": 302,
+          "sha256": "1a3060997e209dac036ec8871777807d3d13bd14ed06884ac49c699bc7515351",
+          "locator": "0xc3A9aA44542Cd5dCe85f297E75c04727213f964F"
+        }
+      ],
+      "limits": [
+        "Fresh publisher literal establishes dated role identity; creation evidence remains attributed prior report because explorer denied.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0xd0ca847800cfdb61334555326324cfafd5896e949e65ec7c5a89b08e1890fa2e",
+        "reported_at_and_block": "2026-10-19T13:30:17Z / 92651078",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0xDAFf80AAdF44305FE95768de1aAD1d8861C9F908",
+        "creator": "0xDAFf80AAdF44305FE95768de1aAD1d8861C9F908"
+      },
+      "abi_usage_fragments": [
+        {
+          "symbol": "L2",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 635254,
+            "end_utf8_byte": 635298,
+            "bytes": 44,
+            "sha256": "618801e9454faf55f5cc682fd9fce138aa0ef5d67acb1102700b72e2793e803d",
+            "locator": "Static ABI L2 object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 635111,
+            "end_utf8_byte": 635882,
+            "bytes": 771,
+            "sha256": "58c8f3177c0579764b1e3ebd9da7a85b8a10e77b12064739ef8fb44d22de701d",
+            "locator": "Static ABI L2 enclosing_function"
+          }
+        },
+        {
+          "symbol": "L2",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 701561,
+            "end_utf8_byte": 701598,
+            "bytes": 37,
+            "sha256": "eaca7bedf1966bfa90a1843b68e8cf3060567ace8153b93be7283bb1d82f6a20",
+            "locator": "Static ABI L2 object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 701377,
+            "end_utf8_byte": 702117,
+            "bytes": 740,
+            "sha256": "81d7df19b60bb3e29b7ba0cccd257e5daf90b0459e124c98e6693a8ee76c6273",
+            "locator": "Static ABI L2 enclosing_function"
+          }
+        }
+      ]
+    },
+    {
+      "id": "creator-fee-escrow-2026-10-19",
+      "chain_id": 4663,
+      "address": "0x479B2997a7283f7d3baacc984558fe4e1D7467af",
+      "role": "creator_fee_escrow",
+      "generation": "urc5-2026-10-19",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "mountApp-RNywHOZ_.js / LaunchpadDoc-j28NPSkX.js dated role literal; selected dR array; role-bound callsite object and enclosing-function fingerprints retained in abi_usage_fragments",
+      "source_ids": [
+        "sr-launchpad-bindings-2026-10-19",
+        "sr-launchpad-selected-abis-2026-10-19"
+      ],
+      "interface_ids": [
+        "creator-fee-escrow-2026-10-19"
+      ],
+      "interface_status": "selective_fragment",
+      "identity_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js",
+          "artifact_sha256": "814cec3b9d08c126662241aeeb17a31833298cbadb513e4a19b81d5b3ccea262",
+          "start_utf8_byte": 422,
+          "end_utf8_byte": 724,
+          "bytes": 302,
+          "sha256": "e8174349c57902ebf9540a3a4d5a587471ec9cf3562a88347147f4bd5673e8b5",
+          "locator": "0x479B2997a7283f7d3baacc984558fe4e1D7467af"
+        }
+      ],
+      "limits": [
+        "Fresh publisher literal establishes dated role identity; creation evidence remains attributed prior report because explorer denied.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0x6052433339080d078b634262b137c15c8a62f29b8cf9e3f69ac025b6ff12df57",
+        "reported_at_and_block": "2026-10-19T13:30:17Z / 92651078",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0xDAFf80AAdF44305FE95768de1aAD1d8861C9F908",
+        "creator": "0xDAFf80AAdF44305FE95768de1aAD1d8861C9F908"
+      },
+      "abi_usage_fragments": [
+        {
+          "symbol": "dR",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 640589,
+            "end_utf8_byte": 640641,
+            "bytes": 52,
+            "sha256": "b5d35147dbf8de1285dc39ab7386220868007a3bdd26b1bf9bf32bd8b5c0c717",
+            "locator": "Static ABI dR object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 640397,
+            "end_utf8_byte": 640734,
+            "bytes": 337,
+            "sha256": "5eafba008af431e93e319fa43fdab3d11f24048bf2fdb47e633a4bb2e5d0e696",
+            "locator": "Static ABI dR enclosing_function"
+          }
+        }
+      ]
+    },
+    {
+      "id": "charter-drop-2026-10-19",
+      "chain_id": 4663,
+      "address": "0xb8748E02f07dd80F1DB99A49F92546B2210D844d",
+      "role": "charter_drop",
+      "generation": "urc5-2026-10-19",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "mountApp-RNywHOZ_.js / LaunchpadDoc-j28NPSkX.js dated role literal; selected D2 array; role-bound callsite object and enclosing-function fingerprints retained in abi_usage_fragments",
+      "source_ids": [
+        "sr-launchpad-bindings-2026-10-19",
+        "sr-launchpad-selected-abis-2026-10-19"
+      ],
+      "interface_ids": [
+        "charter-drop-2026-10-19"
+      ],
+      "interface_status": "selective_fragment",
+      "identity_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/LaunchpadDoc-j28NPSkX.js",
+          "artifact_sha256": "814cec3b9d08c126662241aeeb17a31833298cbadb513e4a19b81d5b3ccea262",
+          "start_utf8_byte": 484,
+          "end_utf8_byte": 786,
+          "bytes": 302,
+          "sha256": "66dabb6c084af80a6bb5eecbd1f3397645e17e749763bf94fb054f4b98eb5ba9",
+          "locator": "0xb8748E02f07dd80F1DB99A49F92546B2210D844d"
+        }
+      ],
+      "limits": [
+        "Fresh publisher literal establishes dated role identity; creation evidence remains attributed prior report because explorer denied.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority.",
+        "fn common/earlier drop array is used for common reads but drops(address) has incompatible output arity relative D2; do not full-array union."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0xaa2dd093209728f3ad8930d3a6c5621563aaa7da88f7ab303e9627b61b1875f0",
+        "reported_at_and_block": "2026-10-19T13:30:20Z / 92651109",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0xDAFf80AAdF44305FE95768de1aAD1d8861C9F908",
+        "creator": "0xDAFf80AAdF44305FE95768de1aAD1d8861C9F908"
+      },
+      "abi_usage_fragments": [
+        {
+          "symbol": "D2",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1073877,
+            "end_utf8_byte": 1073913,
+            "bytes": 36,
+            "sha256": "473ed4d2e9284534a6e36439ebfd7dafc372a51704db466ca0c551ea22a35b64",
+            "locator": "Static ABI D2 object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1073718,
+            "end_utf8_byte": 1074170,
+            "bytes": 452,
+            "sha256": "bbc4559cb684640e049d569f15c98044a5804f9da7f624583d1a6a7f9b95bd2d",
+            "locator": "Static ABI D2 enclosing_function"
+          }
+        },
+        {
+          "symbol": "D2",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1074575,
+            "end_utf8_byte": 1074636,
+            "bytes": 61,
+            "sha256": "a687ca41315f054ce62d13758155a2fa77aa7dec379165d6f156af615c7f9f78",
+            "locator": "Static ABI D2 object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1074433,
+            "end_utf8_byte": 1074639,
+            "bytes": 206,
+            "sha256": "9ba05a451054758974e17d1c272c2c1793a6e923baf11beb8e01314217cc786b",
+            "locator": "Static ABI D2 enclosing_function"
+          }
+        }
+      ]
+    },
+    {
+      "id": "branch-claim-2026-10-11",
+      "chain_id": 4663,
+      "address": "0x6FfC470fB99e3626289B5DC08DDA20B6e146Cfe3",
+      "role": "branch_claim",
+      "generation": "stimulus-2026-10-11",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "mountApp-RNywHOZ_.js / LaunchpadDoc-j28NPSkX.js dated role literal; selected FO array; role-bound callsite object and enclosing-function fingerprints retained in abi_usage_fragments",
+      "source_ids": [
+        "sr-charter-claims-bindings-2026-10-19",
+        "sr-charter-claims-selected-abis-2026-10-19"
+      ],
+      "interface_ids": [
+        "branch-claim-2026-10-11"
+      ],
+      "interface_status": "selective_fragment",
+      "identity_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 379354,
+          "end_utf8_byte": 379656,
+          "bytes": 302,
+          "sha256": "118f5c0a094ae45c0988952bfd1ededb73dea2468865439803439a0f2e540673",
+          "locator": "0x6FfC470fB99e3626289B5DC08DDA20B6e146Cfe3"
+        }
+      ],
+      "limits": [
+        "Fresh publisher literal establishes dated role identity; creation evidence remains attributed prior report because explorer denied.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0xe7569f0ded0395ff54b4c7ee2ecf0c2854e630f115039282b56fed21bc478b15",
+        "reported_at_and_block": "2026-10-11T07:03:46Z / 85646024",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0x361E3A6ccF8fF8B1D85e33ad4436F4c8270F9607",
+        "creator": "0x361E3A6ccF8fF8B1D85e33ad4436F4c8270F9607"
+      },
+      "abi_usage_fragments": [
+        {
+          "symbol": "FO",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 655572,
+            "end_utf8_byte": 655590,
+            "bytes": 18,
+            "sha256": "46707579186e69d25cd5cfafbea838eb70771eaedbbb3f111db8d5e2b7f41cbe",
+            "locator": "Static ABI FO object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 655532,
+            "end_utf8_byte": 655982,
+            "bytes": 450,
+            "sha256": "914939d4d72827653009a930cdd092f45abafa6492f1c212297423454d6c7b72",
+            "locator": "Static ABI FO enclosing_function"
+          }
+        }
+      ]
+    },
+    {
+      "id": "branch-top-up-2026-10-11",
+      "chain_id": 4663,
+      "address": "0x4a97f28A285eF48c4bB6bD1940d5aa39170A3a0a",
+      "role": "branch_top_up",
+      "generation": "stimulus-2026-10-11",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "mountApp-RNywHOZ_.js / LaunchpadDoc-j28NPSkX.js dated role literal; selected f5 array; role-bound callsite object and enclosing-function fingerprints retained in abi_usage_fragments",
+      "source_ids": [
+        "sr-charter-claims-bindings-2026-10-19",
+        "sr-charter-claims-selected-abis-2026-10-19"
+      ],
+      "interface_ids": [
+        "branch-top-up-2026-10-11"
+      ],
+      "interface_status": "selective_fragment",
+      "identity_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 379411,
+          "end_utf8_byte": 379713,
+          "bytes": 302,
+          "sha256": "4b01927c9a20ec1aebcf782b4e25102920df3b0485f61c3c169f3c92abcd9401",
+          "locator": "0x4a97f28A285eF48c4bB6bD1940d5aa39170A3a0a"
+        }
+      ],
+      "limits": [
+        "Fresh publisher literal establishes dated role identity; creation evidence remains attributed prior report because explorer denied.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0x848a7c51da1eb69ef575023ceaeec768bb2fab9666c5b67f623739ebcdcc4939",
+        "reported_at_and_block": "2026-10-11T13:54:07Z / 85882579",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0x361E3A6ccF8fF8B1D85e33ad4436F4c8270F9607",
+        "creator": "0x361E3A6ccF8fF8B1D85e33ad4436F4c8270F9607"
+      },
+      "abi_usage_fragments": [
+        {
+          "symbol": "f5",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 655883,
+            "end_utf8_byte": 655935,
+            "bytes": 52,
+            "sha256": "6857c282ec1116b025245f97e2428b33213908e7419634f81c2d94c903da5c6e",
+            "locator": "Static ABI f5 object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 655879,
+            "end_utf8_byte": 655936,
+            "bytes": 57,
+            "sha256": "0896d935f4e8f3450f1b8fa1101a0743843d4f5db9a2792f8e462b94096967a9",
+            "locator": "Static ABI f5 enclosing_function"
+          }
+        },
+        {
+          "symbol": "f5",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 657293,
+            "end_utf8_byte": 657351,
+            "bytes": 58,
+            "sha256": "1c9aab229b3e2aa2b9fa58048db535534cab996802c79aedafe84a73e42d573a",
+            "locator": "Static ABI f5 object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 656868,
+            "end_utf8_byte": 657522,
+            "bytes": 654,
+            "sha256": "3d8aded8ad50de6c0853ecb6e0d0be1d6321770edacc2b9998540747e615520a",
+            "locator": "Static ABI f5 enclosing_function"
+          }
+        }
+      ]
+    },
+    {
+      "id": "charter-refund-claim-2026-10-15",
+      "chain_id": 4663,
+      "address": "0xA079D42Cdb033836C7f8A9564426C82BB359Abae",
+      "role": "charter_refund_claim",
+      "generation": "burn-refund-2026-10-15",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "mountApp-RNywHOZ_.js / LaunchpadDoc-j28NPSkX.js dated role literal; selected bb array; role-bound callsite object and enclosing-function fingerprints retained in abi_usage_fragments",
+      "source_ids": [
+        "sr-charter-claims-bindings-2026-10-19",
+        "sr-charter-claims-selected-abis-2026-10-19"
+      ],
+      "interface_ids": [
+        "charter-refund-claim-2026-10-15"
+      ],
+      "interface_status": "selective_fragment",
+      "identity_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 379468,
+          "end_utf8_byte": 379770,
+          "bytes": 302,
+          "sha256": "4276b2db73a7ecf2278d2165334c83e979dc98ade02f40c83b52625a5c30ef65",
+          "locator": "0xA079D42Cdb033836C7f8A9564426C82BB359Abae"
+        }
+      ],
+      "limits": [
+        "Fresh publisher literal establishes dated role identity; creation evidence remains attributed prior report because explorer denied.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority.",
+        "October19 research reported a pending administrative-Safe handover, not accepted ownership. Refresh relevant owner/pending-owner evidence; no control ABI is inferred from that observation."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0x33f3f5a8f645864b9d6311ae323caca9e9416c379e23cb875acd2872c58dea69",
+        "reported_at_and_block": "2026-10-15T11:36:40Z / 89193765",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0xb1748f1857bef8De020982aA33f6F9cC1b9aD3c1",
+        "creator": "0xb1748f1857bef8De020982aA33f6F9cC1b9aD3c1"
+      },
+      "abi_usage_fragments": [
+        {
+          "symbol": "bb",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 670280,
+            "end_utf8_byte": 670298,
+            "bytes": 18,
+            "sha256": "9e378a2882e448fb16f2eea91399b337486d6e99e1236d72abd042a0f7c560c0",
+            "locator": "Static ABI bb object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 670262,
+            "end_utf8_byte": 670573,
+            "bytes": 311,
+            "sha256": "0f8247fdab55d86accb8741b8a77240d5338738a4b85e482d03871e350f49859",
+            "locator": "Static ABI bb enclosing_function"
+          }
+        },
+        {
+          "symbol": "bb",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 670805,
+            "end_utf8_byte": 670854,
+            "bytes": 49,
+            "sha256": "42e5759521d9c8dcdaec73d1af7b143ea4d9323411ead7958a2b4ae795b40cca",
+            "locator": "Static ABI bb object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 670576,
+            "end_utf8_byte": 671024,
+            "bytes": 448,
+            "sha256": "8620cfc047b062a8166f5685d05350be678148192b2c733d7fdb12e6d67942fd",
+            "locator": "Static ABI bb enclosing_function"
+          }
+        }
+      ]
+    },
+    {
+      "id": "bonding-curve-2026-10-19",
+      "chain_id": 4663,
+      "address": "0x203e8d19F2aeb84c26ffA1De9eace7D30fF9f7E6",
+      "role": "bonding_curve",
+      "generation": "urc5-2026-10-19",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "Attributed October19 contract report factory-dependency evidence; selected Ah array; role-bound callsite object and enclosing-function fingerprints retained in abi_usage_fragments",
+      "source_ids": [
+        "sr-launchpad-bindings-2026-10-19",
+        "sr-launchpad-selected-abis-2026-10-19"
+      ],
+      "interface_ids": [
+        "bonding-curve-2026-10-19"
+      ],
+      "interface_status": "selective_fragment",
+      "identity_fragments": [],
+      "limits": [
+        "No fresh literal binding found; implementation/deployer/earlier escrow/drop association is attributed October19 report factory-getter evidence, not independently refreshed.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority.",
+        "ui common curve array is used on both generations, but do not automatically union; Ah is distinct new-only selected array.",
+        "Address identifies the attributed curve implementation, not a specific launched-token clone. Authenticate factory/token/child relationship and clone implementation before applying this interface to child storage."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0xd0fb3359e07f96404925f9d2b4d2b62184b0a0a5ecc8f8af3c849afd9d4a9c45",
+        "reported_at_and_block": "2026-10-19T13:30:17Z / 92651080",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0xDAFf80AAdF44305FE95768de1aAD1d8861C9F908",
+        "creator": "0xDAFf80AAdF44305FE95768de1aAD1d8861C9F908"
+      },
+      "abi_usage_fragments": [
+        {
+          "symbol": "Ah",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 635170,
+            "end_utf8_byte": 635210,
+            "bytes": 40,
+            "sha256": "15480a07d78f763c24e549ae9b9e1ae85ce7846ed08cd511ca9517f4646f5b3e",
+            "locator": "Static ABI Ah object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 635111,
+            "end_utf8_byte": 635882,
+            "bytes": 771,
+            "sha256": "58c8f3177c0579764b1e3ebd9da7a85b8a10e77b12064739ef8fb44d22de701d",
+            "locator": "Static ABI Ah enclosing_function"
+          }
+        },
+        {
+          "symbol": "Ah",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 635315,
+            "end_utf8_byte": 635357,
+            "bytes": 42,
+            "sha256": "90a6b8155e6c9bc050e52c0d4629fc3d3cccd0ae5e9052379be2a8b171378e64",
+            "locator": "Static ABI Ah object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 635111,
+            "end_utf8_byte": 635882,
+            "bytes": 771,
+            "sha256": "58c8f3177c0579764b1e3ebd9da7a85b8a10e77b12064739ef8fb44d22de701d",
+            "locator": "Static ABI Ah enclosing_function"
+          }
+        }
+      ]
+    },
+    {
+      "id": "launch-token-deployer-2026-10-19",
+      "chain_id": 4663,
+      "address": "0xE9D178cBaad7109Acb0DBc629EEA1C1a3B17e5DA",
+      "role": "launch_token_deployer",
+      "generation": "urc5-2026-10-19",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "Attributed October19 contract report factory-dependency evidence; no acquired role ABI",
+      "source_ids": [
+        "sr-launchpad-bindings-2026-10-19"
+      ],
+      "interface_ids": [],
+      "interface_status": "unknown",
+      "identity_fragments": [],
+      "limits": [
+        "No fresh literal binding found; implementation/deployer/earlier escrow/drop association is attributed October19 report factory-getter evidence, not independently refreshed.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "No role-authenticated selected ABI was acquired; interface unknown, not absent. No empty ABI or guessed selector is supplied."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0x9a1d04f342b83fdd63d1b10788c3beeb2116ed297c70d44b5d8875a11e833048",
+        "reported_at_and_block": "2026-10-19T13:30:17Z / 92651080",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0xDAFf80AAdF44305FE95768de1aAD1d8861C9F908",
+        "creator": "0xDAFf80AAdF44305FE95768de1aAD1d8861C9F908"
+      }
+    },
+    {
+      "id": "bonding-curve-2026-10-14",
+      "chain_id": 4663,
+      "address": "0x0D6Fd6F0f07c1b6cAEC7150966a801B7D5a991e3",
+      "role": "bonding_curve",
+      "generation": "launch-2026-10-14",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "Attributed October19 contract report factory-dependency evidence; selected ui array; role-bound callsite object and enclosing-function fingerprints retained in abi_usage_fragments",
+      "source_ids": [
+        "sr-launchpad-bindings-2026-10-19",
+        "sr-launchpad-selected-abis-2026-10-19"
+      ],
+      "interface_ids": [
+        "bonding-curve-2026-10-14"
+      ],
+      "interface_status": "selective_fragment",
+      "identity_fragments": [],
+      "limits": [
+        "No fresh literal binding found; implementation/deployer/earlier escrow/drop association is attributed October19 report factory-getter evidence, not independently refreshed.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority.",
+        "Address identifies the attributed curve implementation, not a specific launched-token clone. Authenticate factory/token/child relationship and clone implementation before applying this interface to child storage."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0x52cb5fd068f127edec5f87ced3a4a535190c7d7a4f1387a7f80e7439b8f1498f",
+        "reported_at_and_block": "2026-10-14T12:17:32Z / 88360331",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0xb1748f1857bef8De020982aA33f6F9cC1b9aD3c1",
+        "creator": "0xb1748f1857bef8De020982aA33f6F9cC1b9aD3c1"
+      },
+      "abi_usage_fragments": [
+        {
+          "symbol": "ui",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 640525,
+            "end_utf8_byte": 640571,
+            "bytes": 46,
+            "sha256": "3c6a8c44ef74355d28366f919db42ac60b62d44b3f9212b92f9f1d74f43535ae",
+            "locator": "Static ABI ui object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 640397,
+            "end_utf8_byte": 640734,
+            "bytes": 337,
+            "sha256": "5eafba008af431e93e319fa43fdab3d11f24048bf2fdb47e633a4bb2e5d0e696",
+            "locator": "Static ABI ui enclosing_function"
+          }
+        },
+        {
+          "symbol": "ui",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 930132,
+            "end_utf8_byte": 930206,
+            "bytes": 74,
+            "sha256": "d6649a4127879d41943ccc80b51830cb7f11948e863f7c717128d65e8550488b",
+            "locator": "Static ABI ui object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 929047,
+            "end_utf8_byte": 930216,
+            "bytes": 1169,
+            "sha256": "561ebc9b2881064e54e4182fcca449eed928374d3e635ef2a41a241506988111",
+            "locator": "Static ABI ui enclosing_function"
+          }
+        },
+        {
+          "symbol": "ui",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 996252,
+            "end_utf8_byte": 996276,
+            "bytes": 24,
+            "sha256": "ea968883504a7e973a75a526b8b09137258bff45b376d4142db134f96ae172b1",
+            "locator": "Static ABI ui object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 996234,
+            "end_utf8_byte": 996533,
+            "bytes": 299,
+            "sha256": "e8487f70b63b894b0c7683750cd799fa7127dc086b3413f01b05a2c40ae0e39e",
+            "locator": "Static ABI ui enclosing_function"
+          }
+        },
+        {
+          "symbol": "ui",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1039542,
+            "end_utf8_byte": 1039594,
+            "bytes": 52,
+            "sha256": "d3108077fafb21c6f4d14f5ade2a0a955a5eb5bdca56de741cd2f8d474e51e2b",
+            "locator": "Static ABI ui object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1039522,
+            "end_utf8_byte": 1039595,
+            "bytes": 73,
+            "sha256": "ee6f874b054a1666a1b7592261db3baa6d9b856b47e3684e27641bfe909bfc80",
+            "locator": "Static ABI ui enclosing_function"
+          }
+        }
+      ]
+    },
+    {
+      "id": "launch-token-deployer-2026-10-14",
+      "chain_id": 4663,
+      "address": "0xf47e03BEa56C4dE656DC7423ebF66E503f84f7be",
+      "role": "launch_token_deployer",
+      "generation": "launch-2026-10-14",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "Attributed October19 contract report factory-dependency evidence; no acquired role ABI",
+      "source_ids": [
+        "sr-launchpad-bindings-2026-10-19"
+      ],
+      "interface_ids": [],
+      "interface_status": "unknown",
+      "identity_fragments": [],
+      "limits": [
+        "No fresh literal binding found; implementation/deployer/earlier escrow/drop association is attributed October19 report factory-getter evidence, not independently refreshed.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "No role-authenticated selected ABI was acquired; interface unknown, not absent. No empty ABI or guessed selector is supplied."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0x5abd72cb78a1ed5237bc928e598bfa8e3e627b0402075cd850313d8b7bd69650",
+        "reported_at_and_block": "2026-10-14T12:17:32Z / 88360331",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0xb1748f1857bef8De020982aA33f6F9cC1b9aD3c1",
+        "creator": "0xb1748f1857bef8De020982aA33f6F9cC1b9aD3c1"
+      }
+    },
+    {
+      "id": "creator-fee-escrow-2026-10-14",
+      "chain_id": 4663,
+      "address": "0xcbC8f65EF158c829379472DEe771cF3E7741440E",
+      "role": "creator_fee_escrow",
+      "generation": "launch-2026-10-14",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "Attributed October19 contract report factory-dependency evidence; selected dR array; role-bound callsite object and enclosing-function fingerprints retained in abi_usage_fragments",
+      "source_ids": [
+        "sr-launchpad-bindings-2026-10-19",
+        "sr-launchpad-selected-abis-2026-10-19"
+      ],
+      "interface_ids": [
+        "creator-fee-escrow-2026-10-14"
+      ],
+      "interface_status": "selective_fragment",
+      "identity_fragments": [],
+      "limits": [
+        "No fresh literal binding found; implementation/deployer/earlier escrow/drop association is attributed October19 report factory-getter evidence, not independently refreshed.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0xcabd433a36b245f17a0e850500920a171ab457c8f0b1db0716564c41694d5b06",
+        "reported_at_and_block": "2026-10-14T12:17:32Z / 88360331",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0xb1748f1857bef8De020982aA33f6F9cC1b9aD3c1",
+        "creator": "0xb1748f1857bef8De020982aA33f6F9cC1b9aD3c1"
+      },
+      "abi_usage_fragments": [
+        {
+          "symbol": "dR",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 640589,
+            "end_utf8_byte": 640641,
+            "bytes": 52,
+            "sha256": "b5d35147dbf8de1285dc39ab7386220868007a3bdd26b1bf9bf32bd8b5c0c717",
+            "locator": "Static ABI dR object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 640397,
+            "end_utf8_byte": 640734,
+            "bytes": 337,
+            "sha256": "5eafba008af431e93e319fa43fdab3d11f24048bf2fdb47e633a4bb2e5d0e696",
+            "locator": "Static ABI dR enclosing_function"
+          }
+        }
+      ]
+    },
+    {
+      "id": "charter-drop-2026-10-14",
+      "chain_id": 4663,
+      "address": "0xff4639d2369b7411e666C9B4a44DBFB2b51BA1E1",
+      "role": "charter_drop",
+      "generation": "launch-2026-10-14",
+      "as_of": "2026-10-19",
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "source_locator": "Attributed October19 contract report factory-dependency evidence; selected fn array; role-bound callsite object and enclosing-function fingerprints retained in abi_usage_fragments",
+      "source_ids": [
+        "sr-launchpad-bindings-2026-10-19",
+        "sr-launchpad-selected-abis-2026-10-19"
+      ],
+      "interface_ids": [
+        "charter-drop-2026-10-14"
+      ],
+      "interface_status": "selective_fragment",
+      "identity_fragments": [],
+      "limits": [
+        "No fresh literal binding found; implementation/deployer/earlier escrow/drop association is attributed October19 report factory-getter evidence, not independently refreshed.",
+        "Dated generation is deployment provenance, not a Solidity version, current target, activation proof or alias.",
+        "All role explorer metadata/ABI acquisition requests were denied (403), so no independent explorer ABI/source review is claimed.",
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0x846630ea3e12b9002ac88efacb7e6e770c4ae81918b8558841dc44eb209e4cdd",
+        "reported_at_and_block": "2026-10-14T12:29:12Z / 88367326",
+        "basis": "Attributed October19 contract research; original creation endpoints were not reacquired successfully in this review. Creation and publisher binding do not establish activation or accepted ownership.",
+        "transaction_sender": "0xb1748f1857bef8De020982aA33f6F9cC1b9aD3c1",
+        "creator": "0xb1748f1857bef8De020982aA33f6F9cC1b9aD3c1"
+      },
+      "abi_usage_fragments": [
+        {
+          "symbol": "fn",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 645566,
+            "end_utf8_byte": 645610,
+            "bytes": 44,
+            "sha256": "1ca68c8badeeda61f4dd1004193754a4337c89671757523afca9d805ba1e27fa",
+            "locator": "Static ABI fn object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 645101,
+            "end_utf8_byte": 645759,
+            "bytes": 658,
+            "sha256": "c30f5db65e5945ef58b2214559e33c9b087aedcc8880edabbab45850b6a241c7",
+            "locator": "Static ABI fn enclosing_function"
+          }
+        },
+        {
+          "symbol": "fn",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1073752,
+            "end_utf8_byte": 1073790,
+            "bytes": 38,
+            "sha256": "3de32d0ed35161d50fc060a9ad12246ca9e4c17aa684b7c824db2090d5bb1f42",
+            "locator": "Static ABI fn object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1073718,
+            "end_utf8_byte": 1074170,
+            "bytes": 452,
+            "sha256": "bbc4559cb684640e049d569f15c98044a5804f9da7f624583d1a6a7f9b95bd2d",
+            "locator": "Static ABI fn enclosing_function"
+          }
+        },
+        {
+          "symbol": "fn",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1074037,
+            "end_utf8_byte": 1074073,
+            "bytes": 36,
+            "sha256": "84b3ce500761c3ccc2e998c9df7b3a7d0a8390920a0d27183c93099c283ef057",
+            "locator": "Static ABI fn object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1073718,
+            "end_utf8_byte": 1074170,
+            "bytes": 452,
+            "sha256": "bbc4559cb684640e049d569f15c98044a5804f9da7f624583d1a6a7f9b95bd2d",
+            "locator": "Static ABI fn enclosing_function"
+          }
+        },
+        {
+          "symbol": "fn",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1074193,
+            "end_utf8_byte": 1074245,
+            "bytes": 52,
+            "sha256": "c5bce9e1b47377204a9c30fc904bd6e40eb74e63d2f7678be65daf58794c6367",
+            "locator": "Static ABI fn object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1074179,
+            "end_utf8_byte": 1074246,
+            "bytes": 67,
+            "sha256": "9a47fa47ca539da827cfeeb55c4293114c4b83539601fb22ec914b26d6290f19",
+            "locator": "Static ABI fn enclosing_function"
+          }
+        },
+        {
+          "symbol": "fn",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1074302,
+            "end_utf8_byte": 1074355,
+            "bytes": 53,
+            "sha256": "c915dff6bcd3f6fb3cf5bcdf1996f0883cb7c500009cdfe84fe59460ba10c180",
+            "locator": "Static ABI fn object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1074247,
+            "end_utf8_byte": 1074433,
+            "bytes": 186,
+            "sha256": "bf45e20076ca283f33c4de5e549df48d30a65c315a861d2a0e87981d7afd1488",
+            "locator": "Static ABI fn enclosing_function"
+          }
+        },
+        {
+          "symbol": "fn",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1074375,
+            "end_utf8_byte": 1074431,
+            "bytes": 56,
+            "sha256": "b476e2ec4cbefc8929d5ac1d71b5c6eb1872ecd6052314e3b5f995396ae98535",
+            "locator": "Static ABI fn object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1074247,
+            "end_utf8_byte": 1074433,
+            "bytes": 186,
+            "sha256": "bf45e20076ca283f33c4de5e549df48d30a65c315a861d2a0e87981d7afd1488",
+            "locator": "Static ABI fn enclosing_function"
+          }
+        },
+        {
+          "symbol": "fn",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1078421,
+            "end_utf8_byte": 1078480,
+            "bytes": 59,
+            "sha256": "f043b60f4497e4a2bf884f8d9e87b8abdb5d6effe4b64dbcfaef434479734025",
+            "locator": "Static ABI fn object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1078179,
+            "end_utf8_byte": 1078946,
+            "bytes": 767,
+            "sha256": "8faca2e0b0e5a507aedb72a15ff4d3d277099198c5915804a682ed854e6006dc",
+            "locator": "Static ABI fn enclosing_function"
+          }
+        },
+        {
+          "symbol": "fn",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1078497,
+            "end_utf8_byte": 1078557,
+            "bytes": 60,
+            "sha256": "3a4be1363860a2a9685fd63e08e02c05904fcd7d8d28c18c2d7b7dd17b612e1e",
+            "locator": "Static ABI fn object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1078179,
+            "end_utf8_byte": 1078946,
+            "bytes": 767,
+            "sha256": "8faca2e0b0e5a507aedb72a15ff4d3d277099198c5915804a682ed854e6006dc",
+            "locator": "Static ABI fn enclosing_function"
+          }
+        },
+        {
+          "symbol": "fn",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1078574,
+            "end_utf8_byte": 1078628,
+            "bytes": 54,
+            "sha256": "c7b5818ed4030fc64d6b4aade9f85c16b378ed036e4017873e55327126b2ee36",
+            "locator": "Static ABI fn object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1078179,
+            "end_utf8_byte": 1078946,
+            "bytes": 767,
+            "sha256": "8faca2e0b0e5a507aedb72a15ff4d3d277099198c5915804a682ed854e6006dc",
+            "locator": "Static ABI fn enclosing_function"
+          }
+        },
+        {
+          "symbol": "fn",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1079048,
+            "end_utf8_byte": 1079101,
+            "bytes": 53,
+            "sha256": "050d0f063b81a2b35a06bf71a08008c006cc8a69d6a5ae3d4fc544a742e5dfa8",
+            "locator": "Static ABI fn object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1079006,
+            "end_utf8_byte": 1079147,
+            "bytes": 141,
+            "sha256": "63f425739778dfbea74a2b22cff29b004c2b442c4e4475f6d15ab196332cb107",
+            "locator": "Static ABI fn enclosing_function"
+          }
+        },
+        {
+          "symbol": "fn",
+          "object_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1079173,
+            "end_utf8_byte": 1079220,
+            "bytes": 47,
+            "sha256": "a9531d6e102930891d1fb60ccfe03f2c9df4276b0d128d48c264d1c81996af77",
+            "locator": "Static ABI fn object"
+          },
+          "enclosing_function_fragment": {
+            "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+            "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+            "start_utf8_byte": 1078946,
+            "end_utf8_byte": 1079348,
+            "bytes": 402,
+            "sha256": "db188b0e8797418d71c2b2bf2cc2f9a1e93b27cd29002cdb92bcdf32fe2aae7f",
+            "locator": "Static ABI fn enclosing_function"
+          }
+        }
+      ]
     }
   ],
   "generation_gaps": [

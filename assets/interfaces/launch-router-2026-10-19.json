@@ -1,0 +1,614 @@
+{
+  "schema_version": 1,
+  "id": "launch-router-2026-10-19",
+  "role": "launch_router",
+  "generation": "urc5-2026-10-19",
+  "review_id": "publisher-ecosystem-2026-10-19",
+  "coverage": {
+    "kind": "selective_fragment",
+    "source_definition_complete": false,
+    "deployed_implementation_complete": false,
+    "source_locator": "mountApp-RNywHOZ_.js q2; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+    "source_fragment": {
+      "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+      "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+      "start_utf8_byte": 624060,
+      "end_utf8_byte": 624488,
+      "bytes": 428,
+      "sha256": "3238175868e51783b9753c0cc4d591ff76a5ec07f4bfcbaafb0fc210b56a3b83"
+    },
+    "entry_counts": {
+      "constructor": 0,
+      "error": 24,
+      "event": 0,
+      "fallback": 0,
+      "function": 2,
+      "receive": 0
+    },
+    "abi_sha256": "1d29bc1817fbaf79ef8c814d829facd5ebb16608930561abd8bdd846cb24321e"
+  },
+  "entries": [
+    {
+      "signature": "buyExactIn(address,address,uint256,uint256,uint256,address,address,(address,uint16))",
+      "declaration": "function buyExactIn(address curve, address payAsset, uint256 amountIn, uint256 minStockOut, uint256 minTokensOut, address recipient, address referrer, (address,uint16) fee) payable returns (uint256 tokensOut)",
+      "abi": {
+        "name": "buyExactIn",
+        "type": "function",
+        "stateMutability": "payable",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "curve"
+          },
+          {
+            "type": "address",
+            "name": "payAsset"
+          },
+          {
+            "type": "uint256",
+            "name": "amountIn"
+          },
+          {
+            "type": "uint256",
+            "name": "minStockOut"
+          },
+          {
+            "type": "uint256",
+            "name": "minTokensOut"
+          },
+          {
+            "type": "address",
+            "name": "recipient"
+          },
+          {
+            "type": "address",
+            "name": "referrer"
+          },
+          {
+            "type": "tuple",
+            "name": "fee",
+            "components": [
+              {
+                "type": "address",
+                "name": "recipient"
+              },
+              {
+                "type": "uint16",
+                "name": "bps"
+              }
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": "tokensOut"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Document router buy inputs, protection minima, recipients, referral and integrator fee tuple; returned tokens are not a read-only cost/refund quote.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Nested currency/token/stock fields are addresses. An ordinary PoolKey fee uses hundredths of one basis point (1000000 = 100%); dynamic-fee flag/sentinel values are not numeric fee rates; tickSpacing is signed ticks. Trading-rate BPS use 10000 = 100%; creator-buy/drop caps concern supply and trading fees concern pair-asset-side amounts. creatorShareOfBaseBps concerns a share of the base fee, not trade value, but its raw denominator is not established by its name or this ABI: do not automatically divide it by 10000 or equate it to a published percentage. Confirm source arithmetic or publisher use before scaling fee-share and other undocumented ratio fields. Raw token/pair/native-value units remain distinct; authenticate asset decimals. Time fields are seconds; byte/gas bounds are not fees. sqrtPriceRunWad is a publisher WAD-labelled curve input, not a live market price; do not infer deployed arithmetic or gross/net ordering.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x6bc046d4"
+    },
+    {
+      "signature": "sellExactIn(address,uint256,address,uint256,address,address,(address,uint16))",
+      "declaration": "function sellExactIn(address curve, uint256 tokensIn, address payoutAsset, uint256 minPayout, address recipient, address referrer, (address,uint16) fee) nonpayable returns (uint256 payout)",
+      "abi": {
+        "name": "sellExactIn",
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "curve"
+          },
+          {
+            "type": "uint256",
+            "name": "tokensIn"
+          },
+          {
+            "type": "address",
+            "name": "payoutAsset"
+          },
+          {
+            "type": "uint256",
+            "name": "minPayout"
+          },
+          {
+            "type": "address",
+            "name": "recipient"
+          },
+          {
+            "type": "address",
+            "name": "referrer"
+          },
+          {
+            "type": "tuple",
+            "name": "fee",
+            "components": [
+              {
+                "type": "address",
+                "name": "recipient"
+              },
+              {
+                "type": "uint16",
+                "name": "bps"
+              }
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": "payout"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Document router sell inputs, payout protection and integrator fee tuple; no automatic execution or guaranteed fill follows.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Nested currency/token/stock fields are addresses. An ordinary PoolKey fee uses hundredths of one basis point (1000000 = 100%); dynamic-fee flag/sentinel values are not numeric fee rates; tickSpacing is signed ticks. Trading-rate BPS use 10000 = 100%; creator-buy/drop caps concern supply and trading fees concern pair-asset-side amounts. creatorShareOfBaseBps concerns a share of the base fee, not trade value, but its raw denominator is not established by its name or this ABI: do not automatically divide it by 10000 or equate it to a published percentage. Confirm source arithmetic or publisher use before scaling fee-share and other undocumented ratio fields. Raw token/pair/native-value units remain distinct; authenticate asset decimals. Time fields are seconds; byte/gas bounds are not fees. sqrtPriceRunWad is a publisher WAD-labelled curve input, not a live market price; do not infer deployed arithmetic or gross/net ordering.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x843988c6"
+    },
+    {
+      "signature": "CurveGraduated()",
+      "declaration": "error CurveGraduated()",
+      "abi": {
+        "name": "CurveGraduated",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared curve graduated guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x025ac17e"
+    },
+    {
+      "signature": "CharterDropDisabled()",
+      "declaration": "error CharterDropDisabled()",
+      "abi": {
+        "name": "CharterDropDisabled",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared charter drop disabled guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x7d35540b"
+    },
+    {
+      "signature": "CreatorBuyClosed()",
+      "declaration": "error CreatorBuyClosed()",
+      "abi": {
+        "name": "CreatorBuyClosed",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared creator buy closed guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x92b90f7c"
+    },
+    {
+      "signature": "EmptyNameOrSymbol()",
+      "declaration": "error EmptyNameOrSymbol()",
+      "abi": {
+        "name": "EmptyNameOrSymbol",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared empty name or symbol guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x94322419"
+    },
+    {
+      "signature": "EthTransferFailed()",
+      "declaration": "error EthTransferFailed()",
+      "abi": {
+        "name": "EthTransferFailed",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared eth transfer failed guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x6d963f88"
+    },
+    {
+      "signature": "ExceedsRemainingSupply()",
+      "declaration": "error ExceedsRemainingSupply()",
+      "abi": {
+        "name": "ExceedsRemainingSupply",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared exceeds remaining supply guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x080c5d9e"
+    },
+    {
+      "signature": "ExcessiveInput()",
+      "declaration": "error ExcessiveInput()",
+      "abi": {
+        "name": "ExcessiveInput",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared excessive input guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xbd750b82"
+    },
+    {
+      "signature": "InsufficientOutput()",
+      "declaration": "error InsufficientOutput()",
+      "abi": {
+        "name": "InsufficientOutput",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared insufficient output guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xbb2875c3"
+    },
+    {
+      "signature": "InsufficientReserve()",
+      "declaration": "error InsufficientReserve()",
+      "abi": {
+        "name": "InsufficientReserve",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared insufficient reserve guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x28b35f21"
+    },
+    {
+      "signature": "InsufficientStockOut()",
+      "declaration": "error InsufficientStockOut()",
+      "abi": {
+        "name": "InsufficientStockOut",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared insufficient stock out guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x4b6a0f9c"
+    },
+    {
+      "signature": "InvalidCharterDrop()",
+      "declaration": "error InvalidCharterDrop()",
+      "abi": {
+        "name": "InvalidCharterDrop",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared invalid charter drop guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xffa34bfd"
+    },
+    {
+      "signature": "InvalidCreatorTax()",
+      "declaration": "error InvalidCreatorTax()",
+      "abi": {
+        "name": "InvalidCreatorTax",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared invalid creator tax guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x3fbdfddf"
+    },
+    {
+      "signature": "InvalidRecipient()",
+      "declaration": "error InvalidRecipient()",
+      "abi": {
+        "name": "InvalidRecipient",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared invalid recipient guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x9c8d2cd2"
+    },
+    {
+      "signature": "LaunchesPaused()",
+      "declaration": "error LaunchesPaused()",
+      "abi": {
+        "name": "LaunchesPaused",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared launches paused guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x07b3e48e"
+    },
+    {
+      "signature": "MetadataTooLong()",
+      "declaration": "error MetadataTooLong()",
+      "abi": {
+        "name": "MetadataTooLong",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared metadata too long guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x85b8e2f4"
+    },
+    {
+      "signature": "NoRoute()",
+      "declaration": "error NoRoute()",
+      "abi": {
+        "name": "NoRoute",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared no route guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x6586e129"
+    },
+    {
+      "signature": "NotFeeRecipient()",
+      "declaration": "error NotFeeRecipient()",
+      "abi": {
+        "name": "NotFeeRecipient",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared not fee recipient guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x75c4eb74"
+    },
+    {
+      "signature": "PairAssetDisabled()",
+      "declaration": "error PairAssetDisabled()",
+      "abi": {
+        "name": "PairAssetDisabled",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared pair asset disabled guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x60e5f0a4"
+    },
+    {
+      "signature": "PartialFill()",
+      "declaration": "error PartialFill()",
+      "abi": {
+        "name": "PartialFill",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared partial fill guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xd964f528"
+    },
+    {
+      "signature": "SnipeOptOutDisabled()",
+      "declaration": "error SnipeOptOutDisabled()",
+      "abi": {
+        "name": "SnipeOptOutDisabled",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared snipe opt out disabled guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xa22500c7"
+    },
+    {
+      "signature": "TransfersDisabled()",
+      "declaration": "error TransfersDisabled()",
+      "abi": {
+        "name": "TransfersDisabled",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared transfers disabled guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x8574adcf"
+    },
+    {
+      "signature": "UnknownCurve()",
+      "declaration": "error UnknownCurve()",
+      "abi": {
+        "name": "UnknownCurve",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared unknown curve guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x085fc48a"
+    },
+    {
+      "signature": "WrongEthAmount()",
+      "declaration": "error WrongEthAmount()",
+      "abi": {
+        "name": "WrongEthAmount",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared wrong eth amount guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x3acace01"
+    },
+    {
+      "signature": "ZeroAddress()",
+      "declaration": "error ZeroAddress()",
+      "abi": {
+        "name": "ZeroAddress",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared zero address guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xd92e233d"
+    }
+  ],
+  "role_usage_fragments": [
+    {
+      "symbol": "q2",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 648164,
+        "end_utf8_byte": 648278,
+        "bytes": 114,
+        "sha256": "7abfaabc47e4cf07730bcfd11ef450a42ecea15a5aafef96b2c913913415eb07",
+        "locator": "Static ABI q2 object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 648016,
+        "end_utf8_byte": 648327,
+        "bytes": 311,
+        "sha256": "28ddd143446a01ee9c91f56bead56d0f243545f80c5b52e7c46d72bd3b579c24",
+        "locator": "Static ABI q2 enclosing_function"
+      }
+    },
+    {
+      "symbol": "q2",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 648635,
+        "end_utf8_byte": 648739,
+        "bytes": 104,
+        "sha256": "030bdb5faa3401b7bc88e2d13d38ac1e8847518243f4e9a3a7b9434f0e77d424",
+        "locator": "Static ABI q2 object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 648409,
+        "end_utf8_byte": 648742,
+        "bytes": 333,
+        "sha256": "0e5af889cc7d21c5e3a4d4d68239233df63c8f189b3587864364fd3655e5d809",
+        "locator": "Static ABI q2 enclosing_function"
+      }
+    }
+  ]
+}

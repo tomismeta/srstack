@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-19",
+  "scope": "Bounded pilot announcements, conflicting publisher rules, rendered mixed-asset reward explanation and public indexer discovery; no stored points, token list, balances or exact entitlement formula.",
+  "records": [
+    {
+      "id": "sr-market-pilot-announcements-2026-10-19",
+      "url": "https://x.com/standard_rsv/article/2109652523502248183",
+      "publisher": "@standard_rsv and @0xbeans on original X",
+      "published_at": "2026-10-12",
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Complete acquired publisher bodies inspected as text/data; relevant declarations and claims scoped below. Downloaded code not executed.",
+      "claim_stage": "Dated publisher evidence; not an independent implementation, funding or safety certificate.",
+      "source_urls": [
+        "https://x.com/standard_rsv/article/2109652523502248183",
+        "https://x.com/0xbeans/status/2112221543929713122"
+      ],
+      "artifacts": [
+        {
+          "url": "https://x.com/standard_rsv/article/2109652523502248183",
+          "bytes": 114616,
+          "sha256": "f7787a9db5c9520687eb09ba4779e25bb1c4e0a303610493e736bea9eabe9de8",
+          "relationship": "Complete original X article/post body acquired as data."
+        },
+        {
+          "url": "https://x.com/0xbeans/status/2112221543929713122",
+          "bytes": 148436,
+          "sha256": "b4d9aae6a06ce3894c8b01fd05b9429ed33586d25430549db59ae2ad7f4f5ea1",
+          "relationship": "Complete original X article/post body acquired as data."
+        }
+      ],
+      "locators": [
+        "October12 King of the Markets article; October19 extension by one week."
+      ],
+      "summary": "October12 full King of the Markets article and October19 developer extension announcement describe a volume-driven pilot; original14days and extra week are distinct dated publications.",
+      "limits": [
+        "Retrieval dates identify reviewed artifacts, not freshness of mutable contract state.",
+        "Publisher descriptions and selected ABI encodings do not prove permissions, deployed implementation completeness, current fee settings, funding or execution.",
+        "Original article USDG-pool/jackpot language does not establish funding or an exact split; rendered mixed-asset opening pot and later65/35 rules need their own evidence.",
+        "An extra100k announcement does not establish denomination, custody or settlement."
+      ],
+      "publication_dates": [
+        "2026-10-12",
+        "2026-10-19"
+      ]
+    },
+    {
+      "id": "sr-market-pilot-rules-2026-10-19",
+      "url": "https://www.standardreserve.xyz/docs/king-of-the-markets/",
+      "publisher": "The Standard Reserve official publisher",
+      "published_at": null,
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Complete acquired publisher bodies inspected as text/data; relevant declarations and claims scoped below. Downloaded code not executed.",
+      "claim_stage": "Dated publisher evidence; not an independent implementation, funding or safety certificate.",
+      "source_urls": [
+        "https://www.standardreserve.xyz/docs/king-of-the-markets/",
+        "https://www.standardreserve.xyz/",
+        "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "https://www.standardreserve.xyz/assets/KotmDoc-DDm5bLls.js"
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.standardreserve.xyz/",
+          "bytes": 7026,
+          "sha256": "2a8f030906ff0bd4fdcabb134894c701896a4dbf7c8e82dea8774b695a8db57d",
+          "relationship": "Official root redirects to /liquidity/ and explicitly links mountApp-RNywHOZ_.js."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "bytes": 1139855,
+          "sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "relationship": "Root-linked complete application module; imports three product doc chunks and contains role bindings and selected ABI declarations."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/KotmDoc-DDm5bLls.js",
+          "bytes": 3704,
+          "sha256": "e4589befa7d7e3b9c35f08f2fa4d81f93eb5f705ec89337f6c3c4286b37cf515",
+          "relationship": "Complete explicitly imported King of the Markets documentation module."
+        }
+      ],
+      "locators": [
+        "KotmDoc team, points and reward-pool tables; main season constants and rewardPool binding."
+      ],
+      "summary": "Dated publisher documentation identifies four teams, trader/deployer/referral roles, points computed offchain, season timing and65/35 allocation; conflicting indexer/reward-page rules remain unresolved.",
+      "limits": [
+        "Retrieval dates identify reviewed artifacts, not freshness of mutable contract state.",
+        "Publisher descriptions and selected ABI encodings do not prove permissions, deployed implementation completeness, current fee settings, funding or execution.",
+        "Docs4.3 token points/$ and5% referrals conflict with API tokenMultiplier5 and referrerBps1000. API traderBonusBps500 is not automatically the docs referral rule.",
+        "Docs17:00UTC start conflicts with API16:45UTC. Documented Nov4 13:00America/New_York is18:00UTC after DST, not a hardwired live season.",
+        "Docs20%base-fee contribution conflicts with rendered protocol-share wording and approximately0.7%-of-trade examples.",
+        "A bound rewardPool Safe address does not establish dedicated distributor behavior, complete custody or settlement."
+      ],
+      "binding_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 641849,
+          "end_utf8_byte": 642151,
+          "bytes": 302,
+          "sha256": "32e548009945c8cafdad07c5c5e65a512d5a48dbd404fde4e246ce4c4e5bfdcf",
+          "locator": "0x047829087f9AC81fDb05F7b750458aFE3d72415f"
+        }
+      ]
+    },
+    {
+      "id": "sr-market-pilot-rewards-ui-2026-10-19",
+      "url": "https://www.standardreserve.xyz/liquidity/rewards/",
+      "publisher": "The Standard Reserve official publisher",
+      "published_at": null,
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Supplied complete original-browser capture reviewed alongside fresh shell/main bytes; no wallet connection or payout flow. No balances retained in runtime.",
+      "claim_stage": "Dated publisher evidence; not an independent implementation, funding or safety certificate.",
+      "source_urls": [
+        "https://www.standardreserve.xyz/liquidity/rewards/",
+        "https://www.standardreserve.xyz/",
+        "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js"
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.standardreserve.xyz/",
+          "bytes": 7026,
+          "sha256": "2a8f030906ff0bd4fdcabb134894c701896a4dbf7c8e82dea8774b695a8db57d",
+          "relationship": "Official root redirects to /liquidity/ and explicitly links mountApp-RNywHOZ_.js."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "bytes": 1139855,
+          "sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "relationship": "Root-linked complete application module; imports three product doc chunks and contains role bindings and selected ABI declarations."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/liquidity/rewards/",
+          "bytes": 6750,
+          "sha256": "67e678b4043bc487327c1f0d627f5d6fb229a6d50ae8b5151df6ca736b210979",
+          "relationship": "Fresh route HTML shell; substantive rendered state retained only in separately dated original-browser extraction."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/liquidity/rewards/",
+          "bytes": 2165,
+          "sha256": "03dfd81009587efba44922f9cecd44ae69770e1369b7add5e3d61a3a9ec0f700",
+          "relationship": "Exact UTF-8 serialization of supplied original-browser capture; not original HTTP response bytes. Review of this extraction 2026-10-19"
+        }
+      ],
+      "locators": [
+        "Original-browser capture2026-10-19T20:44:14.776Z: opening-pot denomination,65/35 allocation, closing bell Nov4 1PM ET, protocol-share wording."
+      ],
+      "summary": "Original-browser capture describes opening$1.1m as mixed USDG, stock tokens and STANDARD; protocol-share contribution wording conflicts with dedicated docs. Snapshot balances are not installed as current state.",
+      "limits": [
+        "Retrieval dates identify reviewed artifacts, not freshness of mutable contract state.",
+        "Publisher descriptions and selected ABI encodings do not prove permissions, deployed implementation completeness, current fee settings, funding or execution.",
+        "Browser extraction is a supplied dated original-site observation, not original HTTP response bytes or independent accounting.",
+        "Opening pot, marked asset value, custody, liabilities, allocation and settled receipts are separate. No connected-wallet payout exercised.",
+        "Rendered contribution examples are approximately0.7% of trade, not the docs20%of1% base fee; no exact entitlement formula inferred."
+      ]
+    },
+    {
+      "id": "sr-market-pilot-indexer-2026-10-19",
+      "url": "https://markets.standardreserve.xyz/v1/pilot/summary",
+      "publisher": "The Standard Reserve publisher-linked public market index",
+      "published_at": null,
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Complete acquired publisher bodies inspected as text/data; relevant declarations and claims scoped below. Downloaded code not executed.",
+      "claim_stage": "Dated publisher evidence; not an independent implementation, funding or safety certificate.",
+      "source_urls": [
+        "https://markets.standardreserve.xyz/v1/pilot/summary",
+        "https://www.standardreserve.xyz/",
+        "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "https://markets.standardreserve.xyz/v1/tokens"
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.standardreserve.xyz/",
+          "bytes": 7026,
+          "sha256": "2a8f030906ff0bd4fdcabb134894c701896a4dbf7c8e82dea8774b695a8db57d",
+          "relationship": "Official root redirects to /liquidity/ and explicitly links mountApp-RNywHOZ_.js."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "bytes": 1139855,
+          "sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "relationship": "Root-linked complete application module; imports three product doc chunks and contains role bindings and selected ABI declarations."
+        },
+        {
+          "url": "https://markets.standardreserve.xyz/v1/tokens",
+          "bytes": 425378,
+          "sha256": "a5374115d935c400ea2f6638fed1d7c58d98ed5d1198c56960f1d6a10c538877",
+          "relationship": "Complete public HTTP response retained externally; runtime stores provenance and scope, not balances, points or token lists."
+        },
+        {
+          "url": "https://markets.standardreserve.xyz/v1/pilot/summary",
+          "bytes": 1202,
+          "sha256": "6694f02d65a3f17d0f053ff8f93314c03e70193f0b04bf949ac8d624acd5fb76",
+          "relationship": "Complete public HTTP response retained externally; runtime stores provenance and scope, not balances, points or token lists."
+        }
+      ],
+      "locators": [
+        "Main markets.standardreserve.xyz binding; exercised /v1/tokens and /v1/pilot/summary.",
+        "Frontend-only leads: /v1/tokens/<address>/trades?limit=25[&before=...], /candles?window=..., /holders?limit=50; /v1/pilot/leaderboard?limit=...[&country=...]; /v1/pilot/wallets/<address>."
+      ],
+      "summary": "Publisher-linked public index supports useful token inventory and pilot-summary observations with as-of/coverage fields. Other endpoint shapes are frontend-discovered leads, not verified stable API contracts.",
+      "limits": [
+        "Retrieval dates identify reviewed artifacts, not freshness of mutable contract state.",
+        "Publisher descriptions and selected ABI encodings do not prove permissions, deployed implementation completeness, current fee settings, funding or execution.",
+        "Only GET /v1/tokens and /v1/pilot/summary were exercised. No adapter/client or ABI capability is manufactured for HTTP discovery.",
+        "stale:false is not accounting certification; absent fields remain unknown, errors are not zero records, and page/cursor/unresolved-swap coverage must remain visible.",
+        "Observed rule metadata conflicts with docs; field names do not prove applied accounting or exact entitlements.",
+        "Token inventory is not an exhaustive independent factory census; user-created tokens/tickers are not official assets."
+      ]
+    }
+  ]
+}

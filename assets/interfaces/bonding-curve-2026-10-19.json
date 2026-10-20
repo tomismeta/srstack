@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "id": "bonding-curve-2026-10-19",
+  "role": "bonding_curve",
+  "generation": "urc5-2026-10-19",
+  "review_id": "publisher-ecosystem-2026-10-19",
+  "coverage": {
+    "kind": "selective_fragment",
+    "source_definition_complete": false,
+    "deployed_implementation_complete": false,
+    "source_locator": "mountApp-RNywHOZ_.js Ah; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+    "source_fragment": {
+      "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+      "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+      "start_utf8_byte": 614080,
+      "end_utf8_byte": 614306,
+      "bytes": 226,
+      "sha256": "e17521002f4918ee77b54952f4c141e98909b65e3f9c98f20924b3e3b6447590"
+    },
+    "entry_counts": {
+      "constructor": 0,
+      "error": 0,
+      "event": 0,
+      "fallback": 0,
+      "function": 5,
+      "receive": 0
+    },
+    "abi_sha256": "224d2395faf270e9c9542a1193ead935f2f8ba31664bd02477b99dafb50161c9"
+  },
+  "entries": [
+    {
+      "signature": "config()",
+      "declaration": "function config() view returns (address)",
+      "abi": {
+        "name": "config",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "address",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Read the configured Config address; this is not evidence that the factory can replace its immutable Config address or that Config contents are immutable.",
+      "units": "EVM address, not an amount or proof of ownership authority.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x79502c55"
+    },
+    {
+      "signature": "module()",
+      "declaration": "function module() view returns (address)",
+      "abi": {
+        "name": "module",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "address",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Read the curve’s configured module address; an address does not establish full powers, tier or deployed source.",
+      "units": "EVM address, not an amount or proof of ownership authority.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xb86d5298"
+    },
+    {
+      "signature": "dropMode()",
+      "declaration": "function dropMode() view returns (uint8)",
+      "abi": {
+        "name": "dropMode",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "uint8",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Read the curve’s encoded charter-drop mode; authenticate enum semantics rather than equating every nonzero value with at-exit payout.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Remaining numeric fields retain ABI widths and names; any undocumented scale, enum meaning or economic denominator remains unknown.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xcca6e768"
+    },
+    {
+      "signature": "enforced()",
+      "declaration": "function enforced() view returns (bool)",
+      "abi": {
+        "name": "enforced",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "bool",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Read the curve’s recorded venue-policy flag, not universal router enforcement or a token permission result.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Remaining numeric fields retain ABI widths and names; any undocumented scale, enum meaning or economic denominator remains unknown.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x6dfa0743"
+    },
+    {
+      "signature": "charterDropAmount()",
+      "declaration": "function charterDropAmount() view returns (uint256)",
+      "abi": {
+        "name": "charterDropAmount",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Read the curve’s recorded launched-token drop amount; allocation does not imply presently spendable tokens.",
+      "units": "Raw launched-token units; publisher token design uses 18 decimals. Authenticate the specific token; virtual amounts are not spendable balances.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x1e51c5c3"
+    }
+  ],
+  "role_usage_fragments": [
+    {
+      "symbol": "Ah",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 635170,
+        "end_utf8_byte": 635210,
+        "bytes": 40,
+        "sha256": "15480a07d78f763c24e549ae9b9e1ae85ce7846ed08cd511ca9517f4646f5b3e",
+        "locator": "Static ABI Ah object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 635111,
+        "end_utf8_byte": 635882,
+        "bytes": 771,
+        "sha256": "58c8f3177c0579764b1e3ebd9da7a85b8a10e77b12064739ef8fb44d22de701d",
+        "locator": "Static ABI Ah enclosing_function"
+      }
+    },
+    {
+      "symbol": "Ah",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 635315,
+        "end_utf8_byte": 635357,
+        "bytes": 42,
+        "sha256": "90a6b8155e6c9bc050e52c0d4629fc3d3cccd0ae5e9052379be2a8b171378e64",
+        "locator": "Static ABI Ah object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 635111,
+        "end_utf8_byte": 635882,
+        "bytes": 771,
+        "sha256": "58c8f3177c0579764b1e3ebd9da7a85b8a10e77b12064739ef8fb44d22de701d",
+        "locator": "Static ABI Ah enclosing_function"
+      }
+    }
+  ]
+}

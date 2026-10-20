@@ -1,0 +1,469 @@
+{
+  "schema_version": 1,
+  "id": "charter-refund-claim-2026-10-15",
+  "role": "charter_refund_claim",
+  "generation": "burn-refund-2026-10-15",
+  "review_id": "publisher-ecosystem-2026-10-19",
+  "coverage": {
+    "kind": "selective_fragment",
+    "source_definition_complete": false,
+    "deployed_implementation_complete": false,
+    "source_locator": "mountApp-RNywHOZ_.js bb; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+    "source_fragment": {
+      "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+      "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+      "start_utf8_byte": 668941,
+      "end_utf8_byte": 669629,
+      "bytes": 688,
+      "sha256": "70a78e0f7599e2d5aa2d0c66e6b02d4d166e62b6f68f5aee28b6198b67faef06"
+    },
+    "entry_counts": {
+      "constructor": 0,
+      "error": 3,
+      "event": 1,
+      "fallback": 0,
+      "function": 11,
+      "receive": 0
+    },
+    "abi_sha256": "ad177c6055b9b65be142488108b37ce628a33f9bb638175d2c63de87e32f4fba"
+  },
+  "entries": [
+    {
+      "signature": "token()",
+      "declaration": "function token() view returns (address)",
+      "abi": {
+        "name": "token",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "address",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "burn-refund-2026-10-15",
+      "explanation": "Read the distribution asset address; authenticate its decimals rather than assuming STANDARD, USDG or a dollar peg.",
+      "units": "EVM address, not an amount or proof of ownership authority.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xfc0c546a"
+    },
+    {
+      "signature": "refund()",
+      "declaration": "function refund() view returns (address)",
+      "abi": {
+        "name": "refund",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "address",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "burn-refund-2026-10-15",
+      "explanation": "Read the configured refund destination, not a beneficiary’s refund amount.",
+      "units": "EVM address, not an amount or proof of ownership authority.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x590e1ae3"
+    },
+    {
+      "signature": "deadline()",
+      "declaration": "function deadline() view returns (uint64)",
+      "abi": {
+        "name": "deadline",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "uint64",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "burn-refund-2026-10-15",
+      "explanation": "Read the claim deadline timestamp; sealed/loading/claimed state remains independently relevant.",
+      "units": "Unix timestamp in seconds; not a block number or duration.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x29dcb0cf"
+    },
+    {
+      "signature": "isSealed()",
+      "declaration": "function isSealed() view returns (bool)",
+      "abi": {
+        "name": "isSealed",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "bool",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "burn-refund-2026-10-15",
+      "explanation": "Read the allocation sealing flag; unsealed/loading state is not a zero-entitlement result.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Remaining numeric fields retain ABI widths and names; any undocumented scale, enum meaning or economic denominator remains unknown.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x631f9852"
+    },
+    {
+      "signature": "totalOwed()",
+      "declaration": "function totalOwed() view returns (uint256)",
+      "abi": {
+        "name": "totalOwed",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "burn-refund-2026-10-15",
+      "explanation": "Read the distribution’s owed token accounting aggregate, not a current wallet balance, fiat valuation or independently proved funding source.",
+      "units": "Raw distribution-token units (perBranch: raw token units per counted branch); authenticate token() and decimals. Not fiat value, percentage or recurring issuance.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xe7fa9f7d"
+    },
+    {
+      "signature": "totalClaimed()",
+      "declaration": "function totalClaimed() view returns (uint256)",
+      "abi": {
+        "name": "totalClaimed",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "burn-refund-2026-10-15",
+      "explanation": "Read the distribution’s claimed token accounting aggregate, not a current wallet balance, fiat valuation or independently proved funding source.",
+      "units": "Raw distribution-token units (perBranch: raw token units per counted branch); authenticate token() and decimals. Not fiat value, percentage or recurring issuance.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xd54ad2a1"
+    },
+    {
+      "signature": "entries(address)",
+      "declaration": "function entries(address account) view returns (bool claimed, uint248 amount)",
+      "abi": {
+        "name": "entries",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "account"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "bool",
+            "name": "claimed"
+          },
+          {
+            "type": "uint248",
+            "name": "amount"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "burn-refund-2026-10-15",
+      "explanation": "Read the role-specific entry: branch claim uses loaded/claimed/branches keyed by charter ID; burn compensation uses claimed/amount keyed by historical account.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Distribution amounts/perBranch use raw authenticated distribution-token units (launched-token drops publish 18 decimals); branch/charter counts and snapshot blocks are unscaled integers; timestamp fields use Unix seconds. Snapshot cursor IDs are not token amounts. Mode is an enum requiring generation-specific meaning.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xf29ee125"
+    },
+    {
+      "signature": "claimable(address)",
+      "declaration": "function claimable(address account) view returns (uint256)",
+      "abi": {
+        "name": "claimable",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "account"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "burn-refund-2026-10-15",
+      "explanation": "Read the contract’s scoped entitlement preview using its exact account/charter/token keys; unavailable/reverting reads are unknown, not zero.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Distribution amounts/perBranch use raw authenticated distribution-token units (launched-token drops publish 18 decimals); branch/charter counts and snapshot blocks are unscaled integers; timestamp fields use Unix seconds. Snapshot cursor IDs are not token amounts. Mode is an enum requiring generation-specific meaning.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x402914f5"
+    },
+    {
+      "signature": "owed(address)",
+      "declaration": "function owed(address account) view returns (uint256)",
+      "abi": {
+        "name": "owed",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "account"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "burn-refund-2026-10-15",
+      "explanation": "Read the burn-compensation amount owed to the specified account; no restoration of burned charters is implied.",
+      "units": "Raw distribution-token units (perBranch: raw token units per counted branch); authenticate token() and decimals. Not fiat value, percentage or recurring issuance.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xdf18e047"
+    },
+    {
+      "signature": "claimed(address)",
+      "declaration": "function claimed(address account) view returns (bool)",
+      "abi": {
+        "name": "claimed",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "account"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "bool",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "burn-refund-2026-10-15",
+      "explanation": "Read the role-specific claimed flag for the exact charter/account key; it does not establish original eligibility alone.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Remaining numeric fields retain ABI widths and names; any undocumented scale, enum meaning or economic denominator remains unknown.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xc884ef83"
+    },
+    {
+      "signature": "claim()",
+      "declaration": "function claim() nonpayable returns (uint256 amount)",
+      "abi": {
+        "name": "claim",
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": "amount"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "burn-refund-2026-10-15",
+      "explanation": "Document the role-specific explicit claim transaction; a preview or successful simulation is not settled transfer evidence.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Distribution amounts/perBranch use raw authenticated distribution-token units (launched-token drops publish 18 decimals); branch/charter counts and snapshot blocks are unscaled integers; timestamp fields use Unix seconds. Snapshot cursor IDs are not token amounts. Mode is an enum requiring generation-specific meaning.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x4e71d92d"
+    },
+    {
+      "signature": "Claimed(address,uint256)",
+      "declaration": "event Claimed(address indexed account, uint256 amount)",
+      "abi": {
+        "name": "Claimed",
+        "type": "event",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "account",
+            "indexed": true
+          },
+          {
+            "type": "uint256",
+            "name": "amount",
+            "indexed": false
+          }
+        ],
+        "anonymous": false
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "burn-refund-2026-10-15",
+      "explanation": "Decode the role-specific claim record with its exact indexed beneficiary/key fields; corroborate successful receipt and asset transfers.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Distribution amounts/perBranch use raw authenticated distribution-token units (launched-token drops publish 18 decimals); branch/charter counts and snapshot blocks are unscaled integers; timestamp fields use Unix seconds. Snapshot cursor IDs are not token amounts. Mode is an enum requiring generation-specific meaning.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "topic0": "0xd8138f8a3f377c5259ca548e70e4c2de94f129f5a11036a15b69513cba2b426a",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "account",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "amount",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "NotSealed()",
+      "declaration": "error NotSealed()",
+      "abi": {
+        "name": "NotSealed",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "burn-refund-2026-10-15",
+      "explanation": "Decode the declared not sealed guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xc1f31ec9"
+    },
+    {
+      "signature": "ClaimClosed()",
+      "declaration": "error ClaimClosed()",
+      "abi": {
+        "name": "ClaimClosed",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "burn-refund-2026-10-15",
+      "explanation": "Decode the declared claim closed guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xf6e85041"
+    },
+    {
+      "signature": "NothingToClaim()",
+      "declaration": "error NothingToClaim()",
+      "abi": {
+        "name": "NothingToClaim",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "burn-refund-2026-10-15",
+      "explanation": "Decode the declared nothing to claim guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x969bf728"
+    }
+  ],
+  "role_usage_fragments": [
+    {
+      "symbol": "bb",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 670280,
+        "end_utf8_byte": 670298,
+        "bytes": 18,
+        "sha256": "9e378a2882e448fb16f2eea91399b337486d6e99e1236d72abd042a0f7c560c0",
+        "locator": "Static ABI bb object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 670262,
+        "end_utf8_byte": 670573,
+        "bytes": 311,
+        "sha256": "0f8247fdab55d86accb8741b8a77240d5338738a4b85e482d03871e350f49859",
+        "locator": "Static ABI bb enclosing_function"
+      }
+    },
+    {
+      "symbol": "bb",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 670805,
+        "end_utf8_byte": 670854,
+        "bytes": 49,
+        "sha256": "42e5759521d9c8dcdaec73d1af7b143ea4d9323411ead7958a2b4ae795b40cca",
+        "locator": "Static ABI bb object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 670576,
+        "end_utf8_byte": 671024,
+        "bytes": 448,
+        "sha256": "8620cfc047b062a8166f5685d05350be678148192b2c733d7fdb12e6d67942fd",
+        "locator": "Static ABI bb enclosing_function"
+      }
+    }
+  ]
+}

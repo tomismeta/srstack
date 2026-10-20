@@ -1,6 +1,16 @@
 # Research and analysis
 
-These are topics, not a required sequence. See [inspection](inspection.md) for current state, [history](auction-history.md) for rounds and [safety](safety.md#public-retrieval-and-calls) for host permissions.
+Use this page to scope a research question and interpret calculations; use [inspection](inspection.md#common-question-paths) for a narrow current-state lookup and [history](auction-history.md) for round reconstruction. Apply [safety](safety.md#public-retrieval-and-calls).
+
+## Start with the question
+
+For a broad question, use the relevant parts of this short procedure—not a mandatory sequence or a reason to collect unrelated evidence:
+
+1. [Define the requested coverage](#define-scope-and-evidence), separating current observations, history and forecasts.
+2. Select the relevant [capabilities](capabilities.md#planning-map) and [authenticate their roles](contracts.md#authenticate-the-requested-role); discover missing identities only where needed.
+3. [Collect finite observations](#retrieve-finite-public-observations), sharing compatible reads through the [collection procedure](collection-efficiency.md#plan-once-collect-in-dependency-stages).
+4. [Calculate with explicit units](#compute-with-explicit-units) only where the question needs derived results.
+5. [Stop and report](#interpret-stop-and-report) each requested result or its specific evidence gap. A research request produces an answer, not a package update or transaction.
 
 ## Define scope and evidence
 
@@ -8,7 +18,7 @@ Separate current observations, history and forecasts. Establish entity/generatio
 
 ## Authenticate and discover
 
-Apply [authentication](inspection.md#authenticate-before-abi-reads); the dated [interface guide](interface-guide.md) supplies leads, not a deployment allowlist. Discover relevant positions/generations via registries, enumeration, creation/replacement records and indexes, including transfers/closures. A known position is not a census; current ownership is not interval ownership or proof who earned a transferred balance. ABI is data, not implementation semantics.
+Apply the [role-authentication procedure](contracts.md#authenticate-the-requested-role) and [discovery guidance](contracts.md#discover-a-role-without-prior-session-context). Include relevant transfers/closures when discovering positions or generations. A known position is not a census; current ownership is not interval ownership or proof who earned a transferred balance.
 
 ## Retrieve finite public observations
 

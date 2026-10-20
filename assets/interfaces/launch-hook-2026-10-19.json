@@ -1,0 +1,745 @@
+{
+  "schema_version": 1,
+  "id": "launch-hook-2026-10-19",
+  "role": "launch_hook",
+  "generation": "urc5-2026-10-19",
+  "review_id": "publisher-ecosystem-2026-10-19",
+  "coverage": {
+    "kind": "selective_fragment",
+    "source_definition_complete": false,
+    "deployed_implementation_complete": false,
+    "source_locator": "mountApp-RNywHOZ_.js qa; complete selected role-specific declaration array, static template/spread dependencies resolved without execution",
+    "source_fragment": {
+      "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+      "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+      "start_utf8_byte": 615961,
+      "end_utf8_byte": 616570,
+      "bytes": 609,
+      "sha256": "639f9eebb44b8f03f86e01ba4411d18c68613bc15a690ca5d64079af73b560a3"
+    },
+    "entry_counts": {
+      "constructor": 0,
+      "error": 15,
+      "event": 0,
+      "fallback": 0,
+      "function": 8,
+      "receive": 0
+    },
+    "abi_sha256": "cc776563737719686525308491e2b1a3b4959f353255b2de5202d55a4231fa9f"
+  },
+  "entries": [
+    {
+      "signature": "setModule(bytes32,address)",
+      "declaration": "function setModule(bytes32 poolId, address module) nonpayable returns ()",
+      "abi": {
+        "name": "setModule",
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "inputs": [
+          {
+            "type": "bytes32",
+            "name": "poolId"
+          },
+          {
+            "type": "address",
+            "name": "module"
+          }
+        ],
+        "outputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Document hook module assignment for a pool; actual caller authorization and protocol disable controls remain separate.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Remaining numeric fields retain ABI widths and names; any undocumented scale, enum meaning or economic denominator remains unknown.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x541cd468"
+    },
+    {
+      "signature": "clearModule(bytes32)",
+      "declaration": "function clearModule(bytes32 poolId) nonpayable returns ()",
+      "abi": {
+        "name": "clearModule",
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "inputs": [
+          {
+            "type": "bytes32",
+            "name": "poolId"
+          }
+        ],
+        "outputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Document hook module removal for a pool; do not infer identical controls for the older hook.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Remaining numeric fields retain ABI widths and names; any undocumented scale, enum meaning or economic denominator remains unknown.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x86b760b2"
+    },
+    {
+      "signature": "poolOf(address)",
+      "declaration": "function poolOf(address module) view returns (bytes32)",
+      "abi": {
+        "name": "poolOf",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "module"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "bytes32",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Read the pool identifier associated with a module; the identifier is not a complete LP position.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Remaining numeric fields retain ABI widths and names; any undocumented scale, enum meaning or economic denominator remains unknown.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x988b1fa7"
+    },
+    {
+      "signature": "NotFeeRecipient()",
+      "declaration": "error NotFeeRecipient()",
+      "abi": {
+        "name": "NotFeeRecipient",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared not fee recipient guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x75c4eb74"
+    },
+    {
+      "signature": "BlockedByModule(address)",
+      "declaration": "error BlockedByModule(address module)",
+      "abi": {
+        "name": "BlockedByModule",
+        "type": "error",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "module"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared blocked by module guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x79b27649"
+    },
+    {
+      "signature": "VenueNotAllowed(address,bytes32,bool)",
+      "declaration": "error VenueNotAllowed(address venue, bytes32 poolId, bool inbound)",
+      "abi": {
+        "name": "VenueNotAllowed",
+        "type": "error",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "venue"
+          },
+          {
+            "type": "bytes32",
+            "name": "poolId"
+          },
+          {
+            "type": "bool",
+            "name": "inbound"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared venue not allowed guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x99b6a9eb"
+    },
+    {
+      "signature": "CannotGraduate()",
+      "declaration": "error CannotGraduate()",
+      "abi": {
+        "name": "CannotGraduate",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared cannot graduate guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x2967f2a9"
+    },
+    {
+      "signature": "InsufficientGas()",
+      "declaration": "error InsufficientGas()",
+      "abi": {
+        "name": "InsufficientGas",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared insufficient gas guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x1c26714c"
+    },
+    {
+      "signature": "ModuleFailed(address)",
+      "declaration": "error ModuleFailed(address module)",
+      "abi": {
+        "name": "ModuleFailed",
+        "type": "error",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "module"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared module failed guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x7c55f3e1"
+    },
+    {
+      "signature": "NotModuleDeployer(address)",
+      "declaration": "error NotModuleDeployer(address module)",
+      "abi": {
+        "name": "NotModuleDeployer",
+        "type": "error",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "module"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared not module deployer guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x2f383ead"
+    },
+    {
+      "signature": "ModuleBound(address,bytes32)",
+      "declaration": "error ModuleBound(address module, bytes32 poolId)",
+      "abi": {
+        "name": "ModuleBound",
+        "type": "error",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "module"
+          },
+          {
+            "type": "bytes32",
+            "name": "poolId"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared module bound guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xafe62af7"
+    },
+    {
+      "signature": "InvalidModule(address)",
+      "declaration": "error InvalidModule(address module)",
+      "abi": {
+        "name": "InvalidModule",
+        "type": "error",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "module"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared invalid module guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xb927fe5e"
+    },
+    {
+      "signature": "ModuleIsDisabled(address)",
+      "declaration": "error ModuleIsDisabled(address module)",
+      "abi": {
+        "name": "ModuleIsDisabled",
+        "type": "error",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "module"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared module is disabled guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xdf15546d"
+    },
+    {
+      "signature": "Tier2Disabled()",
+      "declaration": "error Tier2Disabled()",
+      "abi": {
+        "name": "Tier2Disabled",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared tier2 disabled guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x07ec29a9"
+    },
+    {
+      "signature": "InModule()",
+      "declaration": "error InModule()",
+      "abi": {
+        "name": "InModule",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared in module guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x1006f5ec"
+    },
+    {
+      "signature": "UnknownPool()",
+      "declaration": "error UnknownPool()",
+      "abi": {
+        "name": "UnknownPool",
+        "type": "error",
+        "inputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared unknown pool guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xf7139e33"
+    },
+    {
+      "signature": "ExecutionFailed(uint256,bytes)",
+      "declaration": "error ExecutionFailed(uint256 commandIndex, bytes message)",
+      "abi": {
+        "name": "ExecutionFailed",
+        "type": "error",
+        "inputs": [
+          {
+            "type": "uint256",
+            "name": "commandIndex"
+          },
+          {
+            "type": "bytes",
+            "name": "message"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared execution failed guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x2c4029e9"
+    },
+    {
+      "signature": "WrappedError(address,bytes4,bytes,bytes)",
+      "declaration": "error WrappedError(address target, bytes4 selector, bytes reason, bytes details)",
+      "abi": {
+        "name": "WrappedError",
+        "type": "error",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "target"
+          },
+          {
+            "type": "bytes4",
+            "name": "selector"
+          },
+          {
+            "type": "bytes",
+            "name": "reason"
+          },
+          {
+            "type": "bytes",
+            "name": "details"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Decode the declared wrapped error guard error. Name-derived diagnostic only: the exact triggering paths and authorization are not established by the selected ABI.",
+      "units": "No amount or rate is inferred from the error name; preserve any declared argument widths and types.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x90bfb865"
+    },
+    {
+      "signature": "moduleOf(bytes32)",
+      "declaration": "function moduleOf(bytes32 poolId) view returns (address)",
+      "abi": {
+        "name": "moduleOf",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [
+          {
+            "type": "bytes32",
+            "name": "poolId"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "address",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Read the module associated with a pool identifier; refresh disable and configuration evidence separately.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Remaining numeric fields retain ABI widths and names; any undocumented scale, enum meaning or economic denominator remains unknown.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0x31b4a958"
+    },
+    {
+      "signature": "disabled(address)",
+      "declaration": "function disabled(address module) view returns (bool)",
+      "abi": {
+        "name": "disabled",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "module"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "bool",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Read the hook’s module-disabled flag; it does not certify safe behavior or all possible trading outcomes.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Remaining numeric fields retain ABI widths and names; any undocumented scale, enum meaning or economic denominator remains unknown.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xb27f74b3"
+    },
+    {
+      "signature": "swapIndex(bytes32)",
+      "declaration": "function swapIndex(bytes32 poolId) view returns (uint64)",
+      "abi": {
+        "name": "swapIndex",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [
+          {
+            "type": "bytes32",
+            "name": "poolId"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "uint64",
+            "name": ""
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Read the pool’s reported swap counter; not offchain pilot points or proof of complete trade-volume history.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Remaining numeric fields retain ABI widths and names; any undocumented scale, enum meaning or economic denominator remains unknown.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xe20a5fda"
+    },
+    {
+      "signature": "pools(bytes32)",
+      "declaration": "function pools(bytes32 poolId) view returns (address curve, address token, address stock, bool stockIsCurrency0, bool enforced, uint64 graduatedAt, address config)",
+      "abi": {
+        "name": "pools",
+        "type": "function",
+        "stateMutability": "view",
+        "inputs": [
+          {
+            "type": "bytes32",
+            "name": "poolId"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "address",
+            "name": "curve"
+          },
+          {
+            "type": "address",
+            "name": "token"
+          },
+          {
+            "type": "address",
+            "name": "stock"
+          },
+          {
+            "type": "bool",
+            "name": "stockIsCurrency0"
+          },
+          {
+            "type": "bool",
+            "name": "enforced"
+          },
+          {
+            "type": "uint64",
+            "name": "graduatedAt"
+          },
+          {
+            "type": "address",
+            "name": "config"
+          }
+        ]
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Read the hook’s pool association tuple including curve, token, pair asset, direction, policy flag, graduation time and Config address.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Nested currency/token/stock fields are addresses. An ordinary PoolKey fee uses hundredths of one basis point (1000000 = 100%); dynamic-fee flag/sentinel values are not numeric fee rates; tickSpacing is signed ticks. Trading-rate BPS use 10000 = 100%; creator-buy/drop caps concern supply and trading fees concern pair-asset-side amounts. creatorShareOfBaseBps concerns a share of the base fee, not trade value, but its raw denominator is not established by its name or this ABI: do not automatically divide it by 10000 or equate it to a published percentage. Confirm source arithmetic or publisher use before scaling fee-share and other undocumented ratio fields. Raw token/pair/native-value units remain distinct; authenticate asset decimals. Time fields are seconds; byte/gas bounds are not fees. sqrtPriceRunWad is a publisher WAD-labelled curve input, not a live market price; do not infer deployed arithmetic or gross/net ordering.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xb5217bb4"
+    },
+    {
+      "signature": "checkModule(address,bytes32,address,address)",
+      "declaration": "function checkModule(address module, bytes32 poolId, address binder, address config) nonpayable returns ()",
+      "abi": {
+        "name": "checkModule",
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "module"
+          },
+          {
+            "type": "bytes32",
+            "name": "poolId"
+          },
+          {
+            "type": "address",
+            "name": "binder"
+          },
+          {
+            "type": "address",
+            "name": "config"
+          }
+        ],
+        "outputs": []
+      },
+      "review_id": "publisher-ecosystem-2026-10-19",
+      "generation": "urc5-2026-10-19",
+      "explanation": "Document the nonpayable module-check entry; it is not a view getter or independent certification of module behavior.",
+      "units": "Addresses identify roles/assets; booleans are flags; IDs/counts are integers, not amounts. Remaining numeric fields retain ABI widths and names; any undocumented scale, enum meaning or economic denominator remains unknown.",
+      "limitations": [
+        "Complete selected publisher array only: broader deployed methods, permissions and event coverage are unknown. Authenticate chain, role, child instance where relevant, and observation block; listing transactions grants no preparation or submission authority."
+      ],
+      "selector": "0xee9f7741"
+    }
+  ],
+  "role_usage_fragments": [
+    {
+      "symbol": "qa",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 635376,
+        "end_utf8_byte": 635432,
+        "bytes": 56,
+        "sha256": "45b89cdd73cbf19a14a86763fd1c8f7bfc153408b67c9ef3edafd20ec8a736b9",
+        "locator": "Static ABI qa object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 635111,
+        "end_utf8_byte": 635882,
+        "bytes": 771,
+        "sha256": "58c8f3177c0579764b1e3ebd9da7a85b8a10e77b12064739ef8fb44d22de701d",
+        "locator": "Static ABI qa enclosing_function"
+      }
+    },
+    {
+      "symbol": "qa",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 635694,
+        "end_utf8_byte": 635747,
+        "bytes": 53,
+        "sha256": "843393a1b425a59ef42d23dadaf2ad22490ac17f8b8c94749d4566c602fceaba",
+        "locator": "Static ABI qa object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 635111,
+        "end_utf8_byte": 635882,
+        "bytes": 771,
+        "sha256": "58c8f3177c0579764b1e3ebd9da7a85b8a10e77b12064739ef8fb44d22de701d",
+        "locator": "Static ABI qa enclosing_function"
+      }
+    },
+    {
+      "symbol": "qa",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 933779,
+        "end_utf8_byte": 933849,
+        "bytes": 70,
+        "sha256": "41280ccaffe6070cc38aa963802acbfdde00530db4203b8782f5b9002f7a69fa",
+        "locator": "Static ABI qa object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 933541,
+        "end_utf8_byte": 933953,
+        "bytes": 412,
+        "sha256": "8209467f43383e73658e48e9255a711c640c44d644ab0d2587e76cfd2b690401",
+        "locator": "Static ABI qa enclosing_function"
+      }
+    },
+    {
+      "symbol": "qa",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 933976,
+        "end_utf8_byte": 934052,
+        "bytes": 76,
+        "sha256": "40e1f6d0609d0ca3a1fd61b93f8767e2486be0e550db00be0d315031b5ff49e9",
+        "locator": "Static ABI qa object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 933962,
+        "end_utf8_byte": 934053,
+        "bytes": 91,
+        "sha256": "9bebca69572eed4edad4cd15300dfb9a284b4f300469b57488e72ad053073a07",
+        "locator": "Static ABI qa enclosing_function"
+      }
+    },
+    {
+      "symbol": "qa",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 934069,
+        "end_utf8_byte": 934145,
+        "bytes": 76,
+        "sha256": "06606e0c1d59d87295e6387a43ad18b36e032440cfce8c4309df9aee05d9c7fe",
+        "locator": "Static ABI qa object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 934057,
+        "end_utf8_byte": 934146,
+        "bytes": 89,
+        "sha256": "5466b911fcf74d3e353e5bf7581073b29a630a9d1b740843f87b09ad0ba57287",
+        "locator": "Static ABI qa enclosing_function"
+      }
+    },
+    {
+      "symbol": "qa",
+      "object_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 999026,
+        "end_utf8_byte": 999100,
+        "bytes": 74,
+        "sha256": "8a19c7a40d12f657ef9e47f7c1605bd0501828ca931c804f8b235e92ea8b25ad",
+        "locator": "Static ABI qa object"
+      },
+      "enclosing_function_fragment": {
+        "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+        "start_utf8_byte": 998951,
+        "end_utf8_byte": 999444,
+        "bytes": 493,
+        "sha256": "f30b89aca525873c49da362662cdf7de8e76a4dba7709a1785eb3fe018c1e3f0",
+        "locator": "Static ABI qa enclosing_function"
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
-# Question-driven interface guide
+# Interface encoding and decoding guide
 
-**Core/auction review 2026-09-27; launch S-Bills review 2026-10-02.** This is a question-driven summary, not the complete data inventory, a question whitelist, call sequence, deployment router or execution allowlist. The [full reviewed inventory](interface-inventory.md) includes identified protocol-role definitions in the September27 complete publisher module and the October2 selected S-Bills frontend array, with explicit role gaps; [capabilities](capabilities.md) distinguishes available reads from scoped absences and unknowns. Authenticate the chain, emitting/called address, generation and block under [contracts](contracts.md#authenticate-the-requested-role). Other authenticated interfaces remain usable. No signing or submission is authorized here.
+**Core/auction review 2026-09-27; launch S-Bills review 2026-10-02; selected ecosystem review 2026-10-19.** Use this guide for selected canonical signatures, selectors/topics, layouts and decoding examples—not question routing. Select evidence in the [capability planning map](capabilities.md#planning-map), and authenticate chain, address, generation and block under [contracts](contracts.md#authenticate-the-requested-role). These are not a mandatory sequence, whitelist, deployment router or execution allowlist. The [reviewed inventory](interface-inventory.md) preserves each review's full or partial source-definition scope and explicit role gaps; [capabilities](capabilities.md) distinguishes available reads, scoped absences and unknowns. Other authenticated interfaces remain usable. No signing or submission is authorized here.
 
 ## Dated provenance
 
@@ -22,23 +22,6 @@ Scope keys below denote **reviewed roles/generations**, never address aliases:
 The reviewed v1.1 mapping replaces the **license** auction; it does not identify a separate v1.1 charter replacement. C0 is the charter interface retained through that publisher generation. The source's current-target override is not evidence that historical queries should use the current address. Historical addresses and activation/creation facts remain in dated source records, not this guide's call tables.
 
 Deltas: `AUCTION_DAY()` is original; `auctionPeriod()` is L11/L12/C12. Original per-day license-cap methods are replaced by window methods in L11/L12. Order views/events below are L12 only. `DECAY_HALF_LIFE_MAX()` is removed from the newer license and charter ABIs; no guessed replacement is supplied. `dayAnchorTime()` is absent from the reviewed complete auction ABIs: the authenticated schedule input is `auctionAnchor()`.
-
-## Question map
-
-Choose the evidence needed for the question; these are examples, not mandatory steps.
-
-| Question | Entries | Remaining distinction or gap |
-| --- | --- | --- |
-| How many branches, whose charter, how much pending? | [Core state](#core-state): `totalBranches`, `branchCountOf`, `ownerOf`, `pendingOf`, `charters` | Unsold inventory is separate; current owner is not historical buyer; pending is not verified earned funding. |
-| What could accrue over an interval? | [Accrual inputs](#accrual-inputs), epoch/branch events below | Full accumulator/checkpoint/rounding and deployment correspondence remain unestablished; see [accrual evidence](research-workflow.md#accrual-evidence). |
-| Is this an earned-only budget? | [Ledger/ownership events](#ledger-and-ownership-events), purchase events, anchored balances and checkpoints | Complete deposit/spend/withdrawal/transfer history and origin-consumption rules are needed; mixed origins may remain indeterminate. See [earned-only accounting](research-workflow.md#earned-only-projections-and-reinvestment). |
-| What can be bought, at what price and when? | [Separate auction families](#auction-state), [license allowance/orders](#allowance-and-orders), `MAX_BRANCHES` and family-specific funding | A new ETH-priced charter is not a STANDARD-funded branch-license expansion. Inventory, allowance, capacity, ownership, pause and funds are independent; see [purchase constraints](research-workflow.md#fixed-price-and-windowed-purchases). |
-| When can this charter buy one branch license from accrued STANDARD, using historical license sales? | [Inventory/next-window gate](auctions.md#current-license-availability-and-next-opportunity), `pendingOf`, charter constraints, [historical executions](auction-history.md), [empirical pace](research-workflow.md#empirical-pending-delta-pace) and [dilution scenarios](research-workflow.md#dilution-scenarios) | Sold-out is not buyable now. Pending is not earned-origin proof; historical prints are not the live ask. Separate policy opening, repeat-demand and still-unsold scenarios; clip to evidenced epoch/issuance limits. |
-| What orders exist or filled? | `openBidCount`, `openBids`, `bids`, `fillable`, bid/purchase events | Raw page IDs need authenticated interpretation; bidder need not be current owner. Limit, current ask and settled price differ. |
-| What actually sold or changed? | [Auction events](#auction-events), [history](auction-history.md) | Receipt/canonicality/coverage and historically effective settings are required; no-sale average is undefined. |
-| Is the token restriction enabled, active, or applicable? | [Restrictions](#restrictions) | Enabled, resolved active and the separate gate are not interchangeable; flags do not prove a particular transfer succeeds. |
-| S-Bills configuration, wallet bills, booked premium or payout preview? | [S-Bills full selected interface](interface-inventory-sbills.md): `term`, `budget`, `currentRate`, `quote`, `billCount`, `billsOf`, `bills`, `quoteExit`, `quoteRedeem` | WAD term rate, STANDARD18 amounts and BPS differ; selected frontend ABI is not verified Solidity or full administration. Manual redeem/roll, not automatic renewal. |
-| Bills maturing on a calendar day? | Pinned `bills(id)` state plus authenticated ID discovery; [S-Bills cohorts](sbills.md) | Stored per-bill maturity in timezone-explicit `[start,end)`; ID0 valid, active/settled distinct. Global completeness requires complete discovery, not a 30-day chart or assumed events. |
 
 ## Encoding and decoding
 
@@ -72,6 +55,12 @@ For `LicensesPurchased`, topics 1/2 contain charterId/day and data contains coun
 - **Events/accounting:** publisher event-denomination evidence supports license STANDARD consideration and charter ETH price; core ledger events expose distinct amount/cost/gross/net/bounty fields, not independently reconciled transfers. `feeWad` is a WAD-labelled field; authenticate its arithmetic use rather than treating a fee fraction as a token amount. `ParamQueued`/`ParamApplied` use opaque `bytes32` keys; no key-to-policy mapping is invented. Apply [ledger accounting](research-workflow.md#earned-only-projections-and-reinvestment) and [history rules](auction-history.md), including canonical deduplication and no double-counting supporting logs.
 - **Limits deliberately retained:** no core source/bytecode equivalence; no independently proved accrual eligibility/rounding or mixed-origin consumption order; no proven allowance reset implementation, FCFS, escrow/refunds, keeper permissions, expiry or guaranteed fill; no universal authorization/transfer-success claim; no complete historical coverage. No saved balances, prices, rates, ownership or active deployment defaults.
 - **S-Bills:** current rate, amount quote, booked premium, early-exit preview, redemption preview and realized settlement are distinct. Rates use WAD term fractions, amounts STANDARD18, fees BPS and maturity Unix seconds. The current `term()` cannot replace each bill's stored timestamps. Sample-book fallback and frontend floating-point models are not live defaults or source-equivalent arithmetic; [selected interface qualifications](interface-inventory-sbills.md) apply.
+
+### Launchpad, stock-market and distribution layouts
+
+The October 19 product review adds separate [launchpad role inventories](interface-inventory-launchpad.md), [stock-market coverage](interface-inventory-stock-markets.md) and [claim/drop inventories](interface-inventory-charter-distributions.md). Each recording role and generation has its own ABI scope; do not union factory, curve, router, hook or claim declarations into one interface. Missing stock-hook or token-policy ABI evidence remains an explicit gap, not permission to encode a prose method name.
+
+Stock-hook fee units are **hundredths of a basis point**; divide raw fee units by 100 for bps. This differs from launch base/module BPS, where 100 units equal 1% of the documented assessment base. Dynamic-fee flags are not static fee amounts. Authenticate pair-token decimals and distinguish native ETH, WETH, USDG and stock units; tuple components and dynamic/event layouts remain in the per-role JSON. Quotes, actual consideration/refunds and final receipts are separate evidence.
 
 ## Core state
 

@@ -1,6 +1,6 @@
 # Reviewed interface inventory
 
-**Reviews dated 2026-09-27 and 2026-10-02.** Full data for every identified protocol-role ABI definition in the September27 reviewed complete publisher module, plus the complete selected launch S-Bills frontend array reviewed October2 with explicitly partial contract coverage. This is optional research/decoding evidence, not a runtime client, an execution allowlist, current address routing or implementation certification. Fresh authenticated interfaces remain usable without catalog membership.
+**Reviews dated 2026-09-27, 2026-10-02 and 2026-10-19.** Full data for every identified protocol-role ABI definition in the September27 reviewed complete publisher module, the complete selected launch S-Bills frontend array reviewed October2, and generation-qualified selected launchpad/distribution arrays reviewed October19. Both later additions have explicitly partial contract coverage. This is optional research/decoding evidence, not a runtime client, an execution allowlist, current address routing or implementation certification. Fresh authenticated interfaces remain usable without catalog membership.
 
 Use the [capability map](capabilities.md) for available, not-exposed and unknown questions; the [question guide](interface-guide.md) for common reads and units; [contracts](contracts.md) for identity; and the [required addition methodology](inventory-methodology.md) for future contracts/interfaces. Missing implementation proof limits the affected interpretation, not all useful public observations.
 
@@ -10,7 +10,11 @@ The complete [official application module](https://www.standardreserve.xyz/asset
 
 The October2 [S-Bills review](interface-inventory-sbills.md) independently reacquired the official staking page, its 863138-byte main module and the 37814-byte staking chunk. All 51 selected declaration strings are represented as 50 ABI entries plus the source-only `Bill` struct. Exact parent-chunk offsets/hashes and [new source records](../assets/sources/sbills.json) retain this distinct review without changing September27 IDs or evidence.
 
-**16 interfaces, 955 entries, 20 dated bindings, two reviews.** Twelve full protocol literals plus the explicit v1.1 license adaptation account for complete publisher definitions; three selective fragments supply control, shared Multicall and launch S-Bills evidence. Constructors, functions, events, errors and receive entries are retained wherever present. No fallback is declared by these definitions. “Complete” means the reviewed publisher definition is fully represented, **not** that every deployed method or historical generation is known; S-Bills is explicitly partial despite preserving its entire selected frontend array.
+The October19 [launchpad](interface-inventory-launchpad.md), [stock-market gaps](interface-inventory-stock-markets.md) and [charter-distribution](interface-inventory-charter-distributions.md) review follows the independently acquired root/main-module/doc-import chain. Fifteen role-specific selected arrays and twenty dated role bindings preserve both launch generations without unioning differing arrays or roles. Five roles have unknown interfaces: the earlier launch hook, both token deployers, stock SessionFeeHook and reward Safe. All forty fresh explorer metadata/ABI requests were denied; there is no explorer review or fabricated empty ABI. Exact parent/fragment and role-use fingerprints are retained in the new interface data, bindings and shared review.
+
+The original inventory's twelve full protocol literals and explicit v1.1 license adaptation retain their complete publisher-definition scope. Selective control, shared Multicall, S-Bills and ecosystem arrays retain partial contract coverage even when every selected entry is preserved. Constructors, functions, events, errors and receive entries are retained wherever present; no fallback is declared by the retained definitions. “Complete” means the reviewed publisher definition is fully represented, **not** that every deployed method or historical generation is known.
+
+**33 interfaces, 1,273 entries, 40 dated bindings, three reviews and 46 capability records**, as checked by `validate_inventory(files)` for this corpus. Counts describe reviewed evidence membership, not deployed completeness.
 
 | Role / generation | Data | Entries | Discovery note |
 | --- | --- | --- | --- |
@@ -30,6 +34,23 @@ The October2 [S-Bills review](interface-inventory-sbills.md) independently reacq
 | Publisher control fragment | [publisher-control-fragment](../assets/interfaces/publisher-control-fragment.json) | 3 | [Infrastructure and gaps](interface-inventory-infrastructure.md): selective reads, not full Registry ABI |
 | Multicall infrastructure fragment | [multicall3-fragment](../assets/interfaces/multicall3-fragment.json) | 3 | [Infrastructure and gaps](interface-inventory-infrastructure.md): shared infrastructure, not project-authored protocol |
 | S-Bills / launch-2026-10-01 | [sbills-launch-2026-10-01](../assets/interfaces/sbills-launch-2026-10-01.json) | 50 | [S-Bills](interface-inventory-sbills.md): selected frontend configuration, bills, quotes, manual actions, Deposited/Exited and errors; broader admin/event scope unknown |
+| Launch factory / launch-2026-10-14 | [launch-factory-2026-10-14](../assets/interfaces/launch-factory-2026-10-14.json) | 29 | [Launchpad](interface-inventory-launchpad.md): primary `Wr`; generation-specific launch/config/event layouts |
+| Factory point association / launch-2026-10-14 | [launch-factory-association-2026-10-14](../assets/interfaces/launch-factory-association-2026-10-14.json) | 1 | Exact `curveOfToken(address)` declaration and both-generation dispatch provenance; no common-array union |
+| Launch router / launch-2026-10-14 | [launch-router-2026-10-14](../assets/interfaces/launch-router-2026-10-14.json) | 26 | Selected `q2` transaction/error layout, not a quote getter |
+| Bonding curve / launch-2026-10-14 | [bonding-curve-2026-10-14](../assets/interfaces/bonding-curve-2026-10-14.json) | 38 | Selected `ui` child lifecycle/fee inputs; implementation binding is not child storage |
+| Creator fee escrow / launch-2026-10-14 | [creator-fee-escrow-2026-10-14](../assets/interfaces/creator-fee-escrow-2026-10-14.json) | 26 | Curve-keyed accounting and claim layout |
+| Charter drop / launch-2026-10-14 | [charter-drop-2026-10-14](../assets/interfaces/charter-drop-2026-10-14.json) | 38 | [Distributions](interface-inventory-charter-distributions.md): primary `fn`, eight-output drop state |
+| Launch factory / urc5-2026-10-19 | [launch-factory-2026-10-19](../assets/interfaces/launch-factory-2026-10-19.json) | 12 | [Launchpad](interface-inventory-launchpad.md): primary `zo`, distinct dynamic launch/event tuples |
+| Factory point association / urc5-2026-10-19 | [launch-factory-association-2026-10-19](../assets/interfaces/launch-factory-association-2026-10-19.json) | 1 | Same exact declaration, independently generation-bound to the newer factory |
+| Launch router / urc5-2026-10-19 | [launch-router-2026-10-19](../assets/interfaces/launch-router-2026-10-19.json) | 26 | Selected `q2`, independently dated router binding |
+| Launch hook / urc5-2026-10-19 | [launch-hook-2026-10-19](../assets/interfaces/launch-hook-2026-10-19.json) | 23 | Module/pool/disable context; not stock SessionFeeHook |
+| Bonding curve / urc5-2026-10-19 | [bonding-curve-2026-10-19](../assets/interfaces/bonding-curve-2026-10-19.json) | 5 | Primary `Ah` configuration/module/drop/policy fields; no automatic common-array union |
+| Launch Config / urc5-2026-10-19 | [launch-config-2026-10-19](../assets/interfaces/launch-config-2026-10-19.json) | 2 | Distinct `get` and `hookConfig` tuple layouts |
+| Creator fee escrow / urc5-2026-10-19 | [creator-fee-escrow-2026-10-19](../assets/interfaces/creator-fee-escrow-2026-10-19.json) | 26 | Curve-keyed accounting; not pilot reward custody |
+| Charter drop / urc5-2026-10-19 | [charter-drop-2026-10-19](../assets/interfaces/charter-drop-2026-10-19.json) | 3 | [Distributions](interface-inventory-charter-distributions.md): primary `D2`, nine-output drop state and snapshot |
+| Branch claim / stimulus-2026-10-11 | [branch-claim-2026-10-11](../assets/interfaces/branch-claim-2026-10-11.json) | 27 | Historical counted-branch entries, loading/sealed/deadline/claim state |
+| Branch top-up / stimulus-2026-10-11 | [branch-top-up-2026-10-11](../assets/interfaces/branch-top-up-2026-10-11.json) | 20 | Charter-keyed allocations; separate historical shortfall distribution |
+| Charter refund claim / burn-refund-2026-10-15 | [charter-refund-claim-2026-10-15](../assets/interfaces/charter-refund-claim-2026-10-15.json) | 15 | Historical account-keyed compensation, not charter restoration |
 
 ## Coverage and explicit gaps
 
@@ -38,6 +59,8 @@ The **September27** AST review classified **all 24 pure ABI-shaped literal array
 Registry, Genesis Liquidity Manager (`polManager`), POL Buyback and Incentives Vault have **no complete role ABI bound here**. The publisher control fragment supplies only scoped administrator reads; `executionPermissionless()` is explicitly attributed to Registry alone. PoolManager has a dated shared-infrastructure identity but **no bound ABI**. These are unknown broader interfaces, not claims that the contracts lack other capabilities. Historical POL event evidence elsewhere remains separately scoped and does not manufacture a complete POL ABI.
 
 Imported/chunk-specific interfaces outside those specifically reviewed and all-time deployment history are not claimed complete. Original/v1.1/v1.2 auction definitions are present because the September27 publisher module retains explicit historical definitions and generation selection. The v1.1 license adapter removes the constructor and named original declarations, then adds literal window declarations; its complete adapter does not establish the deployed constructor. No separate v1.1 charter replacement is invented. Launch S-Bills contributes 36 functions, two events and 12 errors, but no negative claims about broader administration, constructors or lifecycle events.
+
+October19 selected coverage is deliberately role-specific, not every frontend call. Common `ps` factory declarations contain useful separately authenticatable association reads but incompatible full launch/config/event layouts relative to the primary generation arrays. Common curve/drop arrays also do not automatically transfer across generations. See the [precise exclusions and callsite leads](interface-inventory-launchpad.md#primary-arrays-are-not-every-frontend-call). Missing primary coverage is unknown, not a negative claim or ban on further public-read evidence. Stock-hook fees/backing and pilot entitlement retain [explicit gaps](interface-inventory-stock-markets.md).
 
 ## Data layout and event decoding
 
@@ -53,6 +76,8 @@ Each interface has stable `id`, `role`, `generation`, one shared `review_id`, ex
 For example, license `LicensesPurchased` has charterId/day in topics 1/2 and count/unitPrice in data. Charter `CharterPurchased` has charterId/buyer/day in topics 1/2/3 and only price in data. Bank `CheckedIn` has indexed wallet and empty data. NFT and ERC20 `Transfer(address,address,uint256)` share topic0 but place their third field differently; authenticate emitter/role before decoding. Full definitions are directly adjacent to these explanations in the JSON, avoiding signature-only indexing loss.
 
 License and S-Bills `quote(uint256)` share selector `0xed1bd76c` but return two versus three words. Decode by authenticated role/interface, not selector alone. S-Bills Deposited/Exited both index id/owner; a valid ID zero is not missing. Per-bill maturity and active/settled state support conditional cohort analysis, not a complete global census by themselves.
+
+The two launchpad `Launched` events have different generation-specific dynamic info tuples; authenticate the factory and its exact topic/layout. Earlier and URC5 `drops(address)` share a selector but return eight versus nine flat outputs. Compensation `entries(address)` is account-keyed, unlike stimulus `entries(uint256)` keyed by charter; no selector-only or current-owner substitution is valid.
 
 ## Dated contract bindings
 

@@ -1,0 +1,294 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-19",
+  "scope": "Separate protocol-surplus stimulus/top-up, developer-attributed burn compensation and check-in updates, plus authenticated selected claim encoding surfaces; not universal entitlement or recurring issuance.",
+  "records": [
+    {
+      "id": "sr-charter-stimulus-announcement-2026-10-19",
+      "url": "https://x.com/standard_rsv/status/2109227448399433909",
+      "publisher": "@standard_rsv and @0xbeans on original X, plus official application",
+      "published_at": "2026-10-11",
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Complete acquired publisher bodies inspected as text/data; relevant declarations and claims scoped below. Downloaded code not executed.",
+      "claim_stage": "Dated publisher evidence; not an independent implementation, funding or safety certificate.",
+      "source_urls": [
+        "https://x.com/standard_rsv/status/2109227448399433909",
+        "https://x.com/0xbeans/status/2109286629462655439",
+        "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js"
+      ],
+      "artifacts": [
+        {
+          "url": "https://x.com/standard_rsv/status/2109227448399433909",
+          "bytes": 151544,
+          "sha256": "84235441ec35ec84abe611d107f1920007a6c509f8fa4d82cd7d1a9f49b8f710",
+          "relationship": "Complete original X post body acquired as data."
+        },
+        {
+          "url": "https://x.com/0xbeans/status/2109286629462655439",
+          "bytes": 145042,
+          "sha256": "dcd30e2285fe04df95b892e4293b208a9fc3498f3fe45c74fe7dbbedf7c85358",
+          "relationship": "Complete original X post body acquired as data."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "bytes": 1139855,
+          "sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "relationship": "Root-linked complete application module; imports three product doc chunks and contains role bindings and selected ABI declarations."
+        }
+      ],
+      "locators": [
+        "Official2109227448399433909 published2026-10-11T10:19UTC; developer2109286629462655439 published14:14UTC; main Charter Stimulus/Stimulus Top-Up announcement copy."
+      ],
+      "summary": "October11 official monetary-policy announcement reduced available branches to25 per auction and described one-time POL-earned STANDARD surplus for eligible auction-participating charters, approximately0.7x issuance equivalent.",
+      "limits": [
+        "Retrieval dates identify reviewed artifacts, not freshness of mutable contract state.",
+        "Publisher descriptions and selected ABI encodings do not prove permissions, deployed implementation completeness, current fee settings, funding or execution.",
+        "Heading toward0.2x is an announcement, not a current observed multiplier. One-time0.7x-equivalent stimulus is neither ongoing issuance nor a changed floor.",
+        "25 licenses per announced auction period is not necessarily25 per calendar day or an immutable duration.",
+        "October11 developer top-up follow-up says holders with more than10 branches should check again; frontend says per-owner-cap shortfall. Exact top-up arithmetic is not inferred."
+      ]
+    },
+    {
+      "id": "sr-charter-burn-compensation-2026-10-19",
+      "url": "https://x.com/0xbeans/article/2110650614871146854",
+      "publisher": "@0xbeans and @standard_rsv on original X, plus official application",
+      "published_at": "2026-10-15",
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Complete acquired publisher bodies inspected as text/data; relevant declarations and claims scoped below. Downloaded code not executed.",
+      "claim_stage": "Dated publisher evidence; not an independent implementation, funding or safety certificate.",
+      "source_urls": [
+        "https://x.com/0xbeans/article/2110650614871146854",
+        "https://x.com/standard_rsv/status/2110701828543590735",
+        "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js"
+      ],
+      "artifacts": [
+        {
+          "url": "https://x.com/0xbeans/article/2110650614871146854",
+          "bytes": 118101,
+          "sha256": "cee6626abd189a6dbc1804dca142c5f56eae9a6efae985869a3862cd86d46f31",
+          "relationship": "Complete original Great Burn article body acquired."
+        },
+        {
+          "url": "https://x.com/standard_rsv/status/2110701828543590735",
+          "bytes": 140050,
+          "sha256": "14493273cd742ed0e2460afe86a17d40c3b679d6837bc9cdf755ef76c5018f49",
+          "relationship": "Original official claims-live post."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "bytes": 1139855,
+          "sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "relationship": "Root-linked complete application module; imports three product doc chunks and contains role bindings and selected ABI declarations."
+        }
+      ],
+      "locators": [
+        "Original Great Burn article2110650614871146854; official2110701828543590735; main Burned Charter Claim announcement/dialog."
+      ],
+      "summary": "October15 Great Burn article attributes one-time revocation-loss compensation to team-earned fees, not protocol funds; current frontend describes70%of pending STANDARD. Neither restores burned charters or removes dormancy.",
+      "limits": [
+        "Retrieval dates identify reviewed artifacts, not freshness of mutable contract state.",
+        "Publisher descriptions and selected ABI encodings do not prove permissions, deployed implementation completeness, current fee settings, funding or execution.",
+        "Developer0%-fee-equivalent exit wording and frontend70%-of-pending wording have different scopes; exact gross/net/bounty ordering is not established.",
+        "Team-fee funding is an attributed publisher claim, not independently reconstructed flow provenance or standing insurance.",
+        "Burn-claim preview fixture amount5000 and IDs214/655 are not real entitlement evidence."
+      ]
+    },
+    {
+      "id": "sr-charter-claims-bindings-2026-10-19",
+      "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+      "publisher": "The Standard Reserve official publisher",
+      "published_at": null,
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Complete acquired publisher bodies inspected as text/data; relevant declarations and claims scoped below. Downloaded code not executed.",
+      "claim_stage": "Dated publisher evidence; not an independent implementation, funding or safety certificate.",
+      "source_urls": [
+        "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "https://www.standardreserve.xyz/",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x6FfC470fB99e3626289B5DC08DDA20B6e146Cfe3",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0x4a97f28A285eF48c4bB6bD1940d5aa39170A3a0a",
+        "https://robinhoodchain.blockscout.com/api/v2/addresses/0xA079D42Cdb033836C7f8A9564426C82BB359Abae"
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.standardreserve.xyz/",
+          "bytes": 7026,
+          "sha256": "2a8f030906ff0bd4fdcabb134894c701896a4dbf7c8e82dea8774b695a8db57d",
+          "relationship": "Official root redirects to /liquidity/ and explicitly links mountApp-RNywHOZ_.js."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "bytes": 1139855,
+          "sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "relationship": "Root-linked complete application module; imports three product doc chunks and contains role bindings and selected ABI declarations."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0x6FfC470fB99e3626289B5DC08DDA20B6e146Cfe3",
+          "bytes": 5671,
+          "sha256": "1937eadd008971f7507459f6d5ac7e8c0749b105c328adf11b7e6f0e305f52bf",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0x4a97f28A285eF48c4bB6bD1940d5aa39170A3a0a",
+          "bytes": 5671,
+          "sha256": "f4ba03cab593ea648fcbb30fbf1c907e7fbb2b473868d019c176b6f369673f11",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/addresses/0xA079D42Cdb033836C7f8A9564426C82BB359Abae",
+          "bytes": 5671,
+          "sha256": "268f89fa3b4197e953c4a0c306b3c541b818a3f58508f69d4c68e7c0d1b2fad7",
+          "relationship": "Denied HTTP response; no source or ABI acquired."
+        }
+      ],
+      "locators": [
+        "Main contracts.branchClaim, contracts.branchTopUp, contracts.refundClaim exact literals."
+      ],
+      "summary": "Root-linked publisher contracts bind branchClaim, branchTopUp and refundClaim as distinct claim products; launchpad drop role bindings remain generation-qualified in the launchpad group.",
+      "limits": [
+        "Retrieval dates identify reviewed artifacts, not freshness of mutable contract state.",
+        "Publisher descriptions and selected ABI encodings do not prove permissions, deployed implementation completeness, current fee settings, funding or execution.",
+        "Fresh claim-role metadata denied403; creation, sealed state, deadline and pending ownership in prior report are dated observations, not runtime defaults.",
+        "Historical beneficiary/entry, token scale, loading/sealed/deadline/already-claimed state matter; current charter ownership or a button is not entitlement proof.",
+        "Ownership-transfer initiation is not accepted ownership."
+      ],
+      "binding_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 379354,
+          "end_utf8_byte": 379656,
+          "bytes": 302,
+          "sha256": "118f5c0a094ae45c0988952bfd1ededb73dea2468865439803439a0f2e540673",
+          "locator": "0x6FfC470fB99e3626289B5DC08DDA20B6e146Cfe3"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 379411,
+          "end_utf8_byte": 379713,
+          "bytes": 302,
+          "sha256": "4b01927c9a20ec1aebcf782b4e25102920df3b0485f61c3c169f3c92abcd9401",
+          "locator": "0x4a97f28A285eF48c4bB6bD1940d5aa39170A3a0a"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 379468,
+          "end_utf8_byte": 379770,
+          "bytes": 302,
+          "sha256": "4276b2db73a7ecf2278d2165334c83e979dc98ade02f40c83b52625a5c30ef65",
+          "locator": "0xA079D42Cdb033836C7f8A9564426C82BB359Abae"
+        }
+      ]
+    },
+    {
+      "id": "sr-charter-claims-selected-abis-2026-10-19",
+      "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+      "publisher": "The Standard Reserve official publisher",
+      "published_at": null,
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Complete acquired publisher bodies inspected as text/data; relevant declarations and claims scoped below. Downloaded code not executed.",
+      "claim_stage": "Dated publisher evidence; not an independent implementation, funding or safety certificate.",
+      "source_urls": [
+        "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+        "https://www.standardreserve.xyz/"
+      ],
+      "artifacts": [
+        {
+          "url": "https://www.standardreserve.xyz/",
+          "bytes": 7026,
+          "sha256": "2a8f030906ff0bd4fdcabb134894c701896a4dbf7c8e82dea8774b695a8db57d",
+          "relationship": "Official root redirects to /liquidity/ and explicitly links mountApp-RNywHOZ_.js."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "bytes": 1139855,
+          "sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "relationship": "Root-linked complete application module; imports three product doc chunks and contains role bindings and selected ABI declarations."
+        }
+      ],
+      "locators": [
+        "FO=BranchClaim via VO abi/address and contracts.branchClaim; f5=top-up read claimable via contracts.branchTopUp; bb=refundClaim entry/claim read."
+      ],
+      "summary": "Complete selected publisher arrays authenticate partial encoding surfaces for BranchClaim27entries, BranchTopUp20entries and RefundClaim15entries; no deployed Solidity correspondence is asserted.",
+      "limits": [
+        "Retrieval dates identify reviewed artifacts, not freshness of mutable contract state.",
+        "Publisher descriptions and selected ABI encodings do not prove permissions, deployed implementation completeness, current fee settings, funding or execution.",
+        "All three explorer ABI requests denied. Complete selected arrays are still partial contract interfaces; source_definition_complete=false and deployed_implementation_complete=false.",
+        "Missing, reverting, malformed or unavailable reads are not zero entitlement; no connected-wallet claim performed.",
+        "No exact historical allocation/funding formula follows merely from claimable(), entries() or visible UI."
+      ],
+      "source_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 652585,
+          "end_utf8_byte": 653545,
+          "bytes": 960,
+          "sha256": "ddccf962bcb5dc281b3433e385520a7a1805f43be090438e054c4646b5ecb09a"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 653553,
+          "end_utf8_byte": 654971,
+          "bytes": 1418,
+          "sha256": "ab0724f1042d314e308dd45cd0b0dee9d5e62dac1ffe57f9a0065025dc20d687"
+        },
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 668941,
+          "end_utf8_byte": 669629,
+          "bytes": 688,
+          "sha256": "70a78e0f7599e2d5aa2d0c66e6b02d4d166e62b6f68f5aee28b6198b67faef06"
+        }
+      ]
+    },
+    {
+      "id": "sr-charter-check-in-update-2026-10-19",
+      "url": "https://x.com/0xbeans/status/2110703147824136526",
+      "publisher": "@0xbeans on original X and official application",
+      "published_at": "2026-10-15",
+      "retrieved_at": "2026-10-19",
+      "review_depth": "Complete acquired publisher bodies inspected as text/data; relevant declarations and claims scoped below. Downloaded code not executed.",
+      "claim_stage": "Dated publisher evidence; not an independent implementation, funding or safety certificate.",
+      "source_urls": [
+        "https://x.com/0xbeans/status/2110703147824136526",
+        "https://x.com/0xbeans/status/2110774295161168278",
+        "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js"
+      ],
+      "artifacts": [
+        {
+          "url": "https://x.com/0xbeans/status/2110703147824136526",
+          "bytes": 143310,
+          "sha256": "6240a935c24ed457dcdbd0a20215f6860467d9d9c887e3f220284b9586933f0f",
+          "relationship": "Complete original developer post body acquired; screenshots remain publisher UI evidence."
+        },
+        {
+          "url": "https://x.com/0xbeans/status/2110774295161168278",
+          "bytes": 129726,
+          "sha256": "c5c9f46e9470ba40564f5ce060fbc9145348da64af42b5d662058f016ddeb595",
+          "relationship": "Complete original developer post body acquired; screenshots remain publisher UI evidence."
+        },
+        {
+          "url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "bytes": 1139855,
+          "sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "relationship": "Root-linked complete application module; imports three product doc chunks and contains role bindings and selected ABI declarations."
+        }
+      ],
+      "locators": [
+        "2110703147824136526 persistent bank-page check-in;2110774295161168278 anytime reset clarification; main frontend UI."
+      ],
+      "summary": "October15 developer announces persistent bank-page check-in display and stronger dormancy warnings; later reply says check-in may restart the countdown anytime. The30day rule remains.",
+      "limits": [
+        "Retrieval dates identify reviewed artifacts, not freshness of mutable contract state.",
+        "Publisher descriptions and selected ABI encodings do not prove permissions, deployed implementation completeness, current fee settings, funding or execution.",
+        "No connected-wallet check-in flow exercised, no permission to prepare/sign/submit a transaction.",
+        "Older conditional button-visibility descriptions remain historical, not timeless guidance.",
+        "Published UI improvements and one-time compensation do not remove dormancy or insure later losses."
+      ]
+    }
+  ]
+}
