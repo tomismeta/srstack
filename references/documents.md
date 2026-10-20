@@ -31,6 +31,8 @@ The [September27 bounded reconciliation](updates.md#september-27-bounded-reconci
 
 The separate October 19 product review follows the actual root/import chain and bounded social/contract research. [Launchpad](../assets/sources/launchpad.json), [stock](../assets/sources/stock-pools.json), [pilot](../assets/sources/market-pilot.json) and [distribution](../assets/sources/charter-distributions.json) source groups preserve original URLs, fingerprints and acquisition limits. This does not expand the older whitepaper review date or claim all videos, private channels, contracts or applied reward accounting were reviewed.
 
+The October20 [stock-hook review](interface-inventory-stock-markets.md) separately acquired the address-specific explorer ABI and source through the reader, superseding the earlier missing-interface boundary for that role only. Its retained parsed/pretty-printed JSON fingerprint is not an original HTTP-byte fingerprint. Complete interface coverage and bounded calendar/fee source inspection do not certify deployed implementation, current rates or issuer backing; the October19 denied-acquisition evidence remains historical.
+
 ## Whitepaper: all sixteen sections
 
 Locators belong to `sr-whitepaper-v1` in the [website source record](../assets/sources/website-v1.json), reviewed through **2026-09-27**.

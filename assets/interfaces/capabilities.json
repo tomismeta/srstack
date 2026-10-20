@@ -815,35 +815,85 @@
     {
       "id": "stock-pool-fees",
       "question": "What effective stock-pool fee applies to this pool, sender and time?",
-      "status": "unknown",
+      "status": "available",
       "interface_ids": [
-        "launch-factory-2026-10-14",
-        "launch-factory-2026-10-19"
+        "stock-session-hook-2026-10-20"
       ],
       "review_ids": [
-        "publisher-ecosystem-2026-10-19"
+        "explorer-stock-hook-2026-10-20"
       ],
-      "functions": [],
-      "events": [],
+      "functions": [
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "pools(bytes32)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "classDefined(uint8)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "classFees(uint8)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "allPaused()"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "allResumedAt()"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "feeExempt(address)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "feeFor(bytes32,address,uint256)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "globalOverride()"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "closures()"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "currentSession()"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "dstMode()"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "holiday(uint32)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "localDay(uint256)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "openRamp()"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "sessionAt(uint256)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "sessionStart(uint256)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "sessionTimes()"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "utcOffset(uint256)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "weeklyClosure()"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "initializer(address)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "operator()"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "owner()"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "pendingOwner()"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "poolManager()"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "MAX_CLOSURES()"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "MAX_CLOSURE_DURATION()"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "MAX_FEE()"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "MAX_OPEN_RAMP()"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "MAX_OVERRIDE_DURATION()"}
+      ],
+      "events": [
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "PoolRegistered(bytes32,(address,address,uint24,int24,address),uint8)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "PoolClassSet(bytes32,uint8)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "ClassFeesSet(uint8,uint24[4])"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "FeeExemptSet(address,bool)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "FeeOverrideSet(bytes32,uint24,uint64)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "FeeOverrideCleared(bytes32)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "GlobalFeeOverrideSet(uint24,uint64)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "GlobalFeeOverrideCleared()"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "PausedSet(bytes32,bool)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "AllPausedSet(bool)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "HolidaysSet(uint32[],bool)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "ClosureAdded(uint256,uint64,uint64)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "ClosureRemoved(uint256,uint64,uint64)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "SessionTimesSet((uint16,uint16,uint16,uint16))"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "WeeklyClosureSet((uint8,uint16,uint8,uint16))"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "DstModeSet(uint8)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "OpenRampSet(uint16)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "InitializerSet(address,bool)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "OperatorSet(address)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "OwnershipTransferStarted(address,address)"},
+        {"interface_id": "stock-session-hook-2026-10-20", "signature": "OwnershipTransferred(address,address)"}
+      ],
       "absent_signatures": [],
-      "explanation": "No SessionFeeHook ABI was acquired. The cited factory arrays are only neighboring launched-token/stock pool identity/configuration evidence; they do not implement stock-pool session, class, exemption or effective-fee reads. No stock-hook selectors are guessed.",
-      "alternative_evidence": "Acquire an address-authenticated SessionFeeHook interface; authenticate full stock/USDG PoolKeys, class/global/pool overrides, exemptions and sender/time at a pinned block. Numeric hook rates use hundredths of a basis point; a dynamic-fee sentinel is not a rate. The October16 schedule is historical, not a failed-read fallback. Optional publisher index observations are separately bounded in liquidity-markets.md."
+      "explanation": "Address-specific SessionFeeHook ABI, complete within the retained reader-parsed explorer representation, supports public fee/configuration reads; this is not original HTTP-byte or deployed-implementation certification. Authenticate the full PoolKey/PoolId and immutable PoolManager, then read pools' nested registered,paused,classId,resumedAt,override_(fee,expiry), classDefined, global pause/resume, sender exemption, class fees, overrides and relevant calendar/ramp state at a pinned block. feeFor alone checks neither registration, defined class nor pause; beforeSwap enforces pauses before fee selection. Exemption yields zero fee, then active overrides use max(pool,global), otherwise a decreasing class fee ramps while increases apply immediately. Rates are hundredths of a basis point, not BPS or dynamic/override flags.",
+      "alternative_evidence": "Available interface is not guaranteed transport availability, fresh fee state or successful trading. Supply the actual callback sender (possibly router), timestamp, block identity and full pool key; holiday reads require relevant Eastern local day and adjacent days at schedule boundaries. An arbitrary timestamp evaluates the configuration at the selected read block, not historical state reconstruction. Current-state failures stay unknown; do not reuse October16 schedules, constructor settings or earlier observed rates. LP income, custody, token backing and completed swap evidence require separate position/issuer/receipt/flow evidence."
     },
     {
       "id": "stock-pool-backing-and-income",
       "question": "What proves stock backing, reserve custody or realized LP income?",
       "status": "unknown",
       "interface_ids": [
-        "launch-factory-2026-10-14",
-        "launch-factory-2026-10-19"
+        "stock-session-hook-2026-10-20"
       ],
       "review_ids": [
-        "publisher-ecosystem-2026-10-19"
+        "explorer-stock-hook-2026-10-20"
       ],
       "functions": [],
       "events": [],
       "absent_signatures": [],
-      "explanation": "Nearest reviewed factories identify launched-token/stock relationships only, not issuer backing, Reserve stock/USDG positions or income. No stock hook interface, whole-portfolio accounting or realized LP income is established by these arrays.",
+      "explanation": "The complete reviewed SessionFeeHook exposes pool registration, fee selection, calendar and administrative controls, not issuer backing, Reserve-wide custody, position ownership or realized LP income. This enclosing hook scope does not implement the missing economic proof; no backing or income read is inferred from a fee quote.",
       "alternative_evidence": "Use issuer/legal/custody evidence, authenticated full pool/position identities, fee growth, ownership, asset balances, receipts and bounded flows. Separate gross protocol fees, LP share, annualized short intervals and settled user income. A publisher stock symbol or shared PoolManager is insufficient."
     },
     {

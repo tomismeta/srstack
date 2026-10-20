@@ -154,7 +154,8 @@ class InventoryChecks(unittest.TestCase):
         document["coverage"]["adaptation"]["removed_names"].remove("AUCTION_DAY")
         reviews_path = "assets/interfaces/reviews.json"
         reviews = self.document(reviews_path)
-        reviews["reviews"][0]["interfaces"][document["id"]] = document["coverage"]
+        review = next(item for item in reviews["reviews"] if item["id"] == document["review_id"])
+        review["interfaces"][document["id"]] = document["coverage"]
         changed = self.changed(path, document)
         changed[reviews_path] = json.dumps(reviews).encode()
         with self.assertRaises(ValueError):
@@ -163,7 +164,8 @@ class InventoryChecks(unittest.TestCase):
     def test_source_provenance_can_be_direct_artifact_without_html_shell(self):
         path = "assets/interfaces/reviews.json"
         document = self.document(path)
-        review = document["reviews"][0]
+        interface = self.document("assets/interfaces/standard.json")
+        review = next(item for item in document["reviews"] if item["id"] == interface["review_id"])
         review["source_chain"] = [artifact for artifact in review["source_chain"] if artifact["url"].endswith(".js")]
         report = INVENTORY.validate_inventory(self.changed(path, document))
         self.assertEqual(sum(len(item["interfaces"]) for item in document["reviews"]), report["interfaces"])

@@ -25,7 +25,7 @@ All forty fresh explorer metadata/ABI requests were denied and stopped. Conseque
 | `launch-hook-2026-10-14` | No acquired role ABI | Identity-only binding; callbacks, fees and authority remain unknown |
 | `launch-token-deployer-2026-10-14` and `launch-token-deployer-2026-10-19` | No acquired role ABI | Identity-only bindings; no token ABI or module deployment is inferred |
 
-Both [charter-drop interfaces](interface-inventory-charter-distributions.md) have their own role files. The stock SessionFeeHook and reward Safe are separate [unknown interfaces](interface-inventory-stock-markets.md), not these launch hooks or a reward distributor.
+Both [charter-drop interfaces](interface-inventory-charter-distributions.md) have their own role files. The stock SessionFeeHook has a separate October20 full-ABI review in the [stock-market inventory](interface-inventory-stock-markets.md); it is not one of these launch hooks. The reward Safe remains identity-only, not a reviewed reward-distributor interface.
 
 ## Primary arrays are not every frontend call
 

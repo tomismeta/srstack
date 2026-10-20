@@ -23,10 +23,11 @@
         "sr-stock-pool-docs-2026-10-19",
         "sr-stock-pool-identities-2026-10-19",
         "sr-stock-hook-verified-abi-2026-10-19",
+        "sr-stock-hook-verified-abi-2026-10-20",
         "sr-stock-fee-change-2026-10-19",
         "sr-stock-fee-announcement-2026-10-19"
       ],
-      "scope": "Dated stock-pool identity, publisher economics, historical fee changes and explicit missing explorer ABI evidence; no current fee table, issuer-backing or realized-income certificate."
+      "scope": "Dated stock-pool identity, publisher economics, historical fee changes and complete explorer-returned SessionFeeHook ABI with inspected source semantics; no current fee table, issuer-backing or realized-income certificate."
     },
     {
       "id": "market-pilot",

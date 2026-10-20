@@ -8,6 +8,10 @@ Current onchain questions favor authenticated contract reads, not social announc
 
 Use [documents](documents.md) for published rules, [contracts](contracts.md) for identities, and [inspection](inspection.md) to interpret freshly requested observations. Unavailable state remains unknown. User-requested monitoring, schedules and external evidence caches follow [safety](safety.md); do not start unsolicited background activity or silently update installed sources during research.
 
+## October 20 stock-hook interface review
+
+The separate [SessionFeeHook review](interface-inventory-stock-markets.md) adds the complete 93-entry address-specific explorer ABI and bounded fee/calendar source interpretation. The retained reader-parsed JSON is not original HTTP bytes; full interface coverage is not deployed-implementation certification or fresh fee state. The October19 denied-acquisition record remains historical. Packaged encoding evidence now supports public fee reads even if the explorer is unavailable, while current identity/RPC/coverage failures still leave dependent observations unknown. [Stock liquidity](liquidity-markets.md#fees-and-lp-economics) distinguishes callback sender, registration/class/pauses, overrides and time-vs-state context; no current rate table is installed.
+
 ## October 19 ecosystem catch-up
 
 The bounded October 19, 2026 review supersedes the **announcement-only product/deployment boundary** of the October 7 scan, not the true scope of those older artifacts. Native topic homes are [stock liquidity and fees](liquidity-markets.md), [two coexisting launchpad generations](launchpad.md), [King of the Markets](market-pilot.md) and [charter distributions](charter-distributions.md). Root-linked documentation and publisher ABI arrays were acquired as data; fresh explorer requests were denied, so earlier explorer/source observations remain attributed dated research and missing interfaces remain explicit.

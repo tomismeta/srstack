@@ -1179,6 +1179,49 @@
       }
     },
     {
+      "id": "stock-session-hook-2026-10-20",
+      "chain_id": 4663,
+      "address": "0xC15b155a3094934171A15625d1a80Aba267B6080",
+      "role": "stock_session_hook",
+      "generation": "stock-pools-2026-10-14",
+      "as_of": "2026-10-20",
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "source_locator": "October19 root-linked mountApp-RNywHOZ_.js stock-pool hook binding, independently paired with October20 address-specific Blockscout complete returned ABI and decoded source.",
+      "source_ids": [
+        "sr-stock-pool-identities-2026-10-19",
+        "sr-stock-hook-verified-abi-2026-10-20"
+      ],
+      "interface_ids": [
+        "stock-session-hook-2026-10-20"
+      ],
+      "interface_status": "complete_publisher_definition",
+      "identity_fragments": [
+        {
+          "artifact_url": "https://www.standardreserve.xyz/assets/mountApp-RNywHOZ_.js",
+          "artifact_sha256": "6f614bf7a6b1e51260100315752ac5a0ff31b272f7ecc696190e1d53d1d68b91",
+          "start_utf8_byte": 394491,
+          "end_utf8_byte": 394793,
+          "bytes": 302,
+          "sha256": "b80d2f3df3d22d6e709103a525e20eba61b76ffd0130d05ee12507dcc567d6a2",
+          "locator": "0xC15b155a3094934171A15625d1a80Aba267B6080"
+        }
+      ],
+      "limits": [
+        "Complete-definition status denotes the complete explorer-returned ABI, not independent deployed-implementation certification or a current/default routing alias.",
+        "Independent publisher identity remains dated October19. The stock-session-hook-2026-10-14 identity-only binding/review is preserved as historical evidence, not rewritten.",
+        "Source semantics require registered/classDefined, pauses, sender exemption, pool/global overrides, calendar/ramp and read-block state alongside feeFor; no current rates are embedded.",
+        "October19 pending administrative-Safe handover remains attributed historical research, not accepted ownership. Read owner and pendingOwner for the relevant block.",
+        "Shared PoolManager, creator, transaction sender, owner, operator and fee-exempt callback sender are distinct identities; creation and registration do not prove activation or LP ownership."
+      ],
+      "creation_evidence": {
+        "transaction_hash": "0x36d3dc42c55fd0d8a6bdf5b6248a8a11b6a8fc800025cd55832bb26bc4094af8",
+        "reported_at_and_block": "2026-10-14T12:25:23Z / 88365030",
+        "basis": "Attributed October19 contract research retained from the identity-only binding; creation endpoints were not reacquired by this review. Explorer ABI/source acquisition does not refresh creation or accepted ownership.",
+        "transaction_sender": "0xb1748f1857bef8De020982aA33f6F9cC1b9aD3c1",
+        "creator": "0x4e59b44847b379578588920cA78FbF26c0B4956C"
+      }
+    },
+    {
       "id": "market-pilot-reward-safe-2026-10-14",
       "chain_id": 4663,
       "address": "0x047829087f9AC81fDb05F7b750458aFE3d72415f",

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-10-19",
-  "scope": "Dated stock-pool identity, publisher economics, historical fee changes and explicit missing explorer ABI evidence; no current fee table, issuer-backing or realized-income certificate.",
+  "reviewed_at": "2026-10-20",
+  "scope": "Dated stock-pool identity, publisher economics, historical fee changes and complete explorer-returned SessionFeeHook ABI with inspected source semantics; no current fee table, issuer-backing or realized-income certificate.",
   "records": [
     {
       "id": "sr-stock-pool-docs-2026-10-19",
@@ -132,6 +132,66 @@
       "limits": [
         "The prior report selectively inspected verified SessionFeeHook source and fee units; its narrative is not a substitute for original ABI bytes.",
         "Stock fee capability remains unknown in this acquisition unless separately authenticated exact encoding evidence becomes available."
+      ]
+    },
+    {
+      "id": "sr-stock-hook-verified-abi-2026-10-20",
+      "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xC15b155a3094934171A15625d1a80Aba267B6080",
+      "publisher": "Blockscout public explorer",
+      "published_at": null,
+      "retrieved_at": "2026-10-20T15:26:35.433357+00:00",
+      "review_depth": "Complete 93-entry returned ABI preserved; SessionFeeHook, MarketCalendar and inherited Ownable/Ownable2Step decoded source inspected for fee applicability and administrative semantics. Downloaded code not executed.",
+      "claim_stage": "Address-specific explorer interface evidence, combined with independent dated publisher identity; not independent deployed-implementation certification.",
+      "artifacts": [
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xC15b155a3094934171A15625d1a80Aba267B6080",
+          "bytes": 209828,
+          "sha256": "5632c25b1e57edb626850a75dbfca71c11ca795b6c2d75619b96a691c37265a8",
+          "relationship": "Successful reader-parsed, pretty-printed JSON representation retained on 2026-10-20; NOT original HTTP response bytes. Direct urllib capture subsequently returned403 and was not retried."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xC15b155a3094934171A15625d1a80Aba267B6080#abi-canonical-json",
+          "bytes": 19072,
+          "sha256": "907fc7fadc9cc8110516bfa59d187bd3178714355ee650fb7f9184d4deaaf579",
+          "relationship": "Derived complete abi field canonical UTF-8 JSON: sorted keys, compact separators and original array order. Fragment denotes a derived representation, not a separately fetched URL or HTTP bytes."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xC15b155a3094934171A15625d1a80Aba267B6080#decoded-source:src/sessionhook/SessionFeeHook.sol",
+          "bytes": 17210,
+          "sha256": "3a0bec33395f15d032d040a8c69a76f682d37ca17e4348a30f50978bdba671bb",
+          "relationship": "Decoded primary source_code string encoded UTF-8 without added newline; derived representation, not separately fetched URL or HTTP bytes."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xC15b155a3094934171A15625d1a80Aba267B6080#decoded-source:src/sessionhook/libraries/MarketCalendar.sol",
+          "bytes": 10503,
+          "sha256": "13ba690e1a81eab882d5b4b424f1ee2f8106f2ab0191e774413ee6f4e44c1dee",
+          "relationship": "Decoded additional source_code string encoded UTF-8 without added newline; derived representation, not separately fetched URL or HTTP bytes."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xC15b155a3094934171A15625d1a80Aba267B6080#decoded-source:lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+          "bytes": 3102,
+          "sha256": "38578bd71c0a909840e67202db527cc6b4e6b437e0f39f0c909da32c1e30cb81",
+          "relationship": "Decoded inherited source_code string encoded UTF-8 without added newline; derived representation, not separately fetched URL or HTTP bytes."
+        },
+        {
+          "url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xC15b155a3094934171A15625d1a80Aba267B6080#decoded-source:lib/openzeppelin-contracts/contracts/access/Ownable2Step.sol",
+          "bytes": 2476,
+          "sha256": "c75345d7b9feef17ae29f2a800ca2f65f8021cf80436a41d6ec00f57f5180f36",
+          "relationship": "Decoded inherited source_code string encoded UTF-8 without added newline; derived representation, not separately fetched URL or HTTP bytes."
+        }
+      ],
+      "locators": [
+        "Complete abi array in retained reader representation at zero-based half-open UTF-8 bytes [174276,209579), 35303 bytes, SHA-256 3ce1e835ff755399f6c78ee6df0d49290d6d22271a6e81c845e4ba4865e58068.",
+        "SessionFeeHook.feeFor, beforeSwap, beforeInitialize, PoolConfig, classDefined, setters and anomaly controls; MarketCalendar session/DST/holiday logic; inherited Ownable2Step handover.",
+        "Independent dated role identity remains sr-stock-pool-identities-2026-10-19 and its root-linked application binding fragment."
+      ],
+      "summary": "Explorer returned verified SessionFeeHook with all 93 ABI declarations: 53 functions, 21 events, 18 errors and one constructor. Source establishes exemption priority, maximum of active pool/global overrides, class/ramp semantics and callback pause enforcement; it does not establish fresh fee state.",
+      "limits": [
+        "Reader JSON representation and decoded/canonical fields are honestly fingerprinted; no original HTTP-byte fingerprint is claimed. Subsequent direct capture denial was not retried.",
+        "October19 denied acquisition remains preserved historical evidence; this new review does not rewrite its scope.",
+        "Verified explorer metadata and inspected source are not an independent certificate of full deployed behavior, code/proxy identity at a current block, issuer backing, custody, realized income or execution.",
+        "feeFor does not establish registered/classDefined or unpaused status; beforeSwap enforces pause even for exempt senders. Callback sender can be a router rather than the end wallet.",
+        "Configuration is mutable; a supplied timestamp evaluates the state at the chosen read block, not reconstructed historical configuration. No live fee table or constructor default is installed as current state."
       ]
     },
     {

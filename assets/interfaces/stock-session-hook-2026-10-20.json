@@ -1,0 +1,3358 @@
+{
+  "schema_version": 1,
+  "id": "stock-session-hook-2026-10-20",
+  "role": "stock_session_hook",
+  "generation": "stock-pools-2026-10-14",
+  "review_id": "explorer-stock-hook-2026-10-20",
+  "coverage": {
+    "kind": "complete_literal",
+    "source_definition_complete": true,
+    "deployed_implementation_complete": false,
+    "source_locator": "Complete abi JSON array in retained reader-parsed/pretty-printed Blockscout representation; source semantics inspected in SessionFeeHook.sol, MarketCalendar.sol and inherited Ownable sources.",
+    "source_fragment": {
+      "artifact_url": "https://robinhoodchain.blockscout.com/api/v2/smart-contracts/0xC15b155a3094934171A15625d1a80Aba267B6080",
+      "artifact_sha256": "5632c25b1e57edb626850a75dbfca71c11ca795b6c2d75619b96a691c37265a8",
+      "start_utf8_byte": 174276,
+      "end_utf8_byte": 209579,
+      "bytes": 35303,
+      "sha256": "3ce1e835ff755399f6c78ee6df0d49290d6d22271a6e81c845e4ba4865e58068"
+    },
+    "entry_counts": {
+      "constructor": 1,
+      "error": 18,
+      "event": 21,
+      "fallback": 0,
+      "function": 53,
+      "receive": 0
+    },
+    "abi_sha256": "907fc7fadc9cc8110516bfa59d187bd3178714355ee650fb7f9184d4deaaf579"
+  },
+  "entries": [
+    {
+      "signature": "constructor(address,address)",
+      "declaration": "constructor(address initialOwner, address poolManager_) nonpayable",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "initialOwner",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IPoolManager",
+            "name": "poolManager_",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Initializes Ownable ownership, immutable PoolManager and mutable calendar/ramp configuration. Constructor settings are deployment inputs/defaults, not a current fee or schedule observation.",
+      "units": "initialOwner and poolManager_ are EVM addresses.",
+      "limitations": [
+        "Do not replay constructor calendar defaults as current state; no live configuration is embedded here.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ]
+    },
+    {
+      "signature": "ClassUndefined()",
+      "declaration": "error ClassUndefined()",
+      "abi": {
+        "inputs": [],
+        "name": "ClassUndefined",
+        "type": "error"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "A registration or class reassignment references a class never defined by setClassFees.",
+      "units": "No ABI arguments; this custom error carries no rate, amount or timestamp.",
+      "limitations": [
+        "Read classDefined rather than interpreting a zero table as defined.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xb88d781f"
+    },
+    {
+      "signature": "FeeTooHigh()",
+      "declaration": "error FeeTooHigh()",
+      "abi": {
+        "inputs": [],
+        "name": "FeeTooHigh",
+        "type": "error"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "A class-table or override rate exceeds MAX_FEE.",
+      "units": "No ABI arguments; this custom error carries no rate, amount or timestamp.",
+      "limitations": [
+        "This reports a setter rejection, not the effective fee of a successful swap.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xcd4e6167"
+    },
+    {
+      "signature": "InvalidClosure()",
+      "declaration": "error InvalidClosure()",
+      "abi": {
+        "inputs": [],
+        "name": "InvalidClosure",
+        "type": "error"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "An added closure has start>=end or duration exceeding MAX_CLOSURE_DURATION.",
+      "units": "No ABI arguments; this custom error carries no rate, amount or timestamp.",
+      "limitations": [
+        "The error does not imply every past interval is invalid; past valid intervals are accepted.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x4e68090c"
+    },
+    {
+      "signature": "InvalidExpiry()",
+      "declaration": "error InvalidExpiry()",
+      "abi": {
+        "inputs": [],
+        "name": "InvalidExpiry",
+        "type": "error"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "An override expiry is not later than the setter block timestamp or exceeds MAX_OVERRIDE_DURATION ahead.",
+      "units": "No ABI arguments; this custom error carries no rate, amount or timestamp.",
+      "limitations": [
+        "Expiry validity is checked when setting; later expiry comparisons use strict timestamp<expiry.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xd36c8500"
+    },
+    {
+      "signature": "InvalidOpenRamp()",
+      "declaration": "error InvalidOpenRamp()",
+      "abi": {
+        "inputs": [],
+        "name": "InvalidOpenRamp",
+        "type": "error"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "The requested open-ramp minutes exceed MAX_OPEN_RAMP.",
+      "units": "No ABI arguments; this custom error carries no rate, amount or timestamp.",
+      "limitations": [
+        "Zero is allowed and disables ramping.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xb2d4b769"
+    },
+    {
+      "signature": "InvalidSessionTimes()",
+      "declaration": "error InvalidSessionTimes()",
+      "abi": {
+        "inputs": [],
+        "name": "InvalidSessionTimes",
+        "type": "error"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Session boundaries fail ordering, daily range or unambiguous DST-hour validation.",
+      "units": "No ABI arguments; this custom error carries no rate, amount or timestamp.",
+      "limitations": [
+        "The input boundary minutes are Eastern local time, not UTC.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xc4b4f90c"
+    },
+    {
+      "signature": "InvalidWeeklyClosure()",
+      "declaration": "error InvalidWeeklyClosure()",
+      "abi": {
+        "inputs": [],
+        "name": "InvalidWeeklyClosure",
+        "type": "error"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Weekly closure days/minutes or DST-hour edges fail calendar validation.",
+      "units": "No ABI arguments; this custom error carries no rate, amount or timestamp.",
+      "limitations": [
+        "Equal start/end disables the weekly closure rather than representing a full-week closure.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xe4b6f94f"
+    },
+    {
+      "signature": "NotDynamicFee()",
+      "declaration": "error NotDynamicFee()",
+      "abi": {
+        "inputs": [],
+        "name": "NotDynamicFee",
+        "type": "error"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "registerPool received a key whose fee field is not the dynamic-fee flag.",
+      "units": "No ABI arguments; this custom error carries no rate, amount or timestamp.",
+      "limitations": [
+        "The flag is not a numeric current fee rate.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xcf587f14"
+    },
+    {
+      "signature": "NotInitializer()",
+      "declaration": "error NotInitializer()",
+      "abi": {
+        "inputs": [],
+        "name": "NotInitializer",
+        "type": "error"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "beforeInitialize sender is not on the initializer allowlist.",
+      "units": "No ABI arguments; this custom error carries no rate, amount or timestamp.",
+      "limitations": [
+        "A fee-exempt sender is not automatically an allowed initializer.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xceeb95b3"
+    },
+    {
+      "signature": "NotOperator()",
+      "declaration": "error NotOperator()",
+      "abi": {
+        "inputs": [],
+        "name": "NotOperator",
+        "type": "error"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "An anomaly-control caller is neither accepted owner nor operator.",
+      "units": "No ABI arguments; this custom error carries no rate, amount or timestamp.",
+      "limitations": [
+        "Pending ownership alone does not pass this check.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x7c214f04"
+    },
+    {
+      "signature": "NotPoolManager()",
+      "declaration": "error NotPoolManager()",
+      "abi": {
+        "inputs": [],
+        "name": "NotPoolManager",
+        "type": "error"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "A hook callback caller is not the immutable PoolManager.",
+      "units": "No ABI arguments; this custom error carries no rate, amount or timestamp.",
+      "limitations": [
+        "An ordinary eth_call from an arbitrary caller can revert even when other pool conditions hold.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xae18210a"
+    },
+    {
+      "signature": "OwnableInvalidOwner(address)",
+      "declaration": "error OwnableInvalidOwner(address owner)",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          }
+        ],
+        "name": "OwnableInvalidOwner",
+        "type": "error"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Inherited ownership initialization rejects an invalid zero owner.",
+      "units": "owner is the rejected EVM address, not a balance.",
+      "limitations": [
+        "Ownable2Step transferOwnership in this source permits zero to cancel a pending transfer; do not misapply this error as its rule.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x1e4fbdf7"
+    },
+    {
+      "signature": "OwnableUnauthorizedAccount(address)",
+      "declaration": "error OwnableUnauthorizedAccount(address account)",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          }
+        ],
+        "name": "OwnableUnauthorizedAccount",
+        "type": "error"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "An inherited owner-only or pending-owner acceptance check rejects the caller.",
+      "units": "account is the unauthorized EVM caller address.",
+      "limitations": [
+        "The supplied account identifies the failed caller, not accepted control ownership.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x118cdaa7"
+    },
+    {
+      "signature": "PoolAlreadyRegistered()",
+      "declaration": "error PoolAlreadyRegistered()",
+      "abi": {
+        "inputs": [],
+        "name": "PoolAlreadyRegistered",
+        "type": "error"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "registerPool encountered a PoolId already marked registered.",
+      "units": "No ABI arguments; this custom error carries no rate, amount or timestamp.",
+      "limitations": [
+        "Does not prove liquidity exists or a first price was initialized.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xb3e8301e"
+    },
+    {
+      "signature": "PoolIsPaused()",
+      "declaration": "error PoolIsPaused()",
+      "abi": {
+        "inputs": [],
+        "name": "PoolIsPaused",
+        "type": "error"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "beforeSwap rejected the global pause or the selected pool pause.",
+      "units": "No ABI arguments; this custom error carries no rate, amount or timestamp.",
+      "limitations": [
+        "Fee exemption and a successful feeFor result do not bypass this rejection.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x21081abf"
+    },
+    {
+      "signature": "PoolNotRegistered()",
+      "declaration": "error PoolNotRegistered()",
+      "abi": {
+        "inputs": [],
+        "name": "PoolNotRegistered",
+        "type": "error"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "beforeInitialize or a registered-pool administrative path requires a registered PoolId.",
+      "units": "No ABI arguments; this custom error carries no rate, amount or timestamp.",
+      "limitations": [
+        "feeFor and beforeSwap do not themselves provide a universal explicit registration assertion.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x739f4185"
+    },
+    {
+      "signature": "TooManyClosures()",
+      "declaration": "error TooManyClosures()",
+      "abi": {
+        "inputs": [],
+        "name": "TooManyClosures",
+        "type": "error"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "addClosure would exceed MAX_CLOSURES stored intervals.",
+      "units": "No ABI arguments; this custom error carries no rate, amount or timestamp.",
+      "limitations": [
+        "Expired intervals still occupy storage until removed.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x9c44c913"
+    },
+    {
+      "signature": "WrongHook()",
+      "declaration": "error WrongHook()",
+      "abi": {
+        "inputs": [],
+        "name": "WrongHook",
+        "type": "error"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "registerPool received a key whose hooks address differs from this hook.",
+      "units": "No ABI arguments; this custom error carries no rate, amount or timestamp.",
+      "limitations": [
+        "A matching address alone does not establish the other PoolKey fields or LP ownership.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xb07a5703"
+    },
+    {
+      "signature": "AllPausedSet(bool)",
+      "declaration": "event AllPausedSet(bool paused)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "bool",
+            "name": "paused",
+            "type": "bool"
+          }
+        ],
+        "name": "AllPausedSet",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records the new global pause flag.",
+      "units": "paused boolean.",
+      "limitations": [
+        "Read allResumedAt separately for resume timestamp; event does not promise exemption bypass.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0xcb376f32ca33e6978a15221efe95cf9ddcc8712483bad367881cfb0421ff6f2f",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "paused",
+            "canonical_type": "bool",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "ClassFeesSet(uint8,uint24[4])",
+      "declaration": "event ClassFeesSet(uint8 indexed classId, uint24[4] fees)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "uint8",
+            "name": "classId",
+            "type": "uint8"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint24[4]",
+            "name": "fees",
+            "type": "uint24[4]"
+          }
+        ],
+        "name": "ClassFeesSet",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records replacement/definition of the four rates for indexed classId.",
+      "units": "classId identifier; fees fixed uint24[4] ordered Regular,Extended,Overnight,Closed. Fees are hundredths of one basis point (1e-6 of trade value); divide by 100 for bps. ",
+      "limitations": [
+        "Existing assigned pools use the changed class; this log is historical, not necessarily current effective fees.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0x1068c6ca22b4b0249866e2f2ddd02325f56b5f7a521beb7f18f3f4aa25555015",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "classId",
+            "canonical_type": "uint8",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "fees",
+            "canonical_type": "uint24[4]",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "ClosureAdded(uint256,uint64,uint64)",
+      "declaration": "event ClosureAdded(uint256 index, uint64 start, uint64 end)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "index",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint64",
+            "name": "start",
+            "type": "uint64"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint64",
+            "name": "end",
+            "type": "uint64"
+          }
+        ],
+        "name": "ClosureAdded",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records appending an absolute closed interval at an array position.",
+      "units": "index zero-based; start/end Unix UTC seconds, [start,end).",
+      "limitations": [
+        "Index may change after swap-and-pop removal; event does not establish current membership.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0x65e13465d7e27f55209750a866fb85f677366acc589edb99f57742f2a948af2d",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 3,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "index",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 1,
+            "name": "start",
+            "canonical_type": "uint64",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 2,
+            "name": "end",
+            "canonical_type": "uint64",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 2,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "ClosureRemoved(uint256,uint64,uint64)",
+      "declaration": "event ClosureRemoved(uint256 index, uint64 start, uint64 end)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "index",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint64",
+            "name": "start",
+            "type": "uint64"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint64",
+            "name": "end",
+            "type": "uint64"
+          }
+        ],
+        "name": "ClosureRemoved",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records the removed interval and its former array position.",
+      "units": "index zero-based; start/end Unix UTC seconds.",
+      "limitations": [
+        "Last element replaces the removed index; do not reconstruct stable IDs from array positions.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0xa91aa128c4c6b6b8654ade99531a4a34f73993b4d7a0e072081a133b0d257493",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 3,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "index",
+            "canonical_type": "uint256",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 1,
+            "name": "start",
+            "canonical_type": "uint64",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 2,
+            "name": "end",
+            "canonical_type": "uint64",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 2,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "DstModeSet(uint8)",
+      "declaration": "event DstModeSet(uint8 mode)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "enum MarketCalendar.DstMode",
+            "name": "mode",
+            "type": "uint8"
+          }
+        ],
+        "name": "DstModeSet",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records selecting the Eastern daylight-saving mode.",
+      "units": "mode uint8: Auto0, Standard1, Daylight2.",
+      "limitations": [
+        "Later changes supersede this event; timestamp input alone cannot reconstruct historical mode.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0xb8d4add2ca9beaea86202e9751902c310f503b481d19557a5797a49584eb0769",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "mode",
+            "canonical_type": "uint8",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "FeeExemptSet(address,bool)",
+      "declaration": "event FeeExemptSet(address indexed account, bool exempt)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "bool",
+            "name": "exempt",
+            "type": "bool"
+          }
+        ],
+        "name": "FeeExemptSet",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records changing one indexed account fee-exemption flag.",
+      "units": "account address; exempt boolean.",
+      "limitations": [
+        "Exemption follows callback sender and never bypasses the pause check.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0x5a8cf666a272afd6dec6788d33967c676fffa92e289eee1b38172982c4b4914d",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "account",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "exempt",
+            "canonical_type": "bool",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "FeeOverrideCleared(bytes32)",
+      "declaration": "event FeeOverrideCleared(bytes32 indexed id)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "PoolId",
+            "name": "id",
+            "type": "bytes32"
+          }
+        ],
+        "name": "FeeOverrideCleared",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records clearing expiry for one indexed pool override.",
+      "units": "PoolId is bytes32 from the full PoolKey; not a PoolManager address. ",
+      "limitations": [
+        "Stored fee can remain nonzero; cleared does not mean class fee is zero.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0xbc404b6cdd150ae70af567acd93d8b4c3ce399806110949df9fdbfa951847bc7",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "id",
+            "canonical_type": "bytes32",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "FeeOverrideSet(bytes32,uint24,uint64)",
+      "declaration": "event FeeOverrideSet(bytes32 indexed id, uint24 fee, uint64 expiry)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "PoolId",
+            "name": "id",
+            "type": "bytes32"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint24",
+            "name": "fee",
+            "type": "uint24"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint64",
+            "name": "expiry",
+            "type": "uint64"
+          }
+        ],
+        "name": "FeeOverrideSet",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records a new timed override for one indexed pool.",
+      "units": "PoolId is bytes32 from the full PoolKey; not a PoolManager address. Fees are hundredths of one basis point (1e-6 of trade value); divide by 100 for bps. expiry Unix UTC seconds.",
+      "limitations": [
+        "Active global override competes via maximum; this log alone does not establish an effective fee.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0x0b855df9c67e9a1a34febed5b78f825b96d2911ca01bc2222cfde29ce0e23f6f",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 2,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "id",
+            "canonical_type": "bytes32",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "fee",
+            "canonical_type": "uint24",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 2,
+            "name": "expiry",
+            "canonical_type": "uint64",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "GlobalFeeOverrideCleared()",
+      "declaration": "event GlobalFeeOverrideCleared()",
+      "abi": {
+        "anonymous": false,
+        "inputs": [],
+        "name": "GlobalFeeOverrideCleared",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records clearing the global override expiry.",
+      "units": "No event fields beyond topic0.",
+      "limitations": [
+        "Does not clear per-pool overrides or erase stored global fee.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0x0fad902d552a02bee0da5ce35bf405dd0fd478d1397c40f26c351e009383ebf2",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 0,
+        "fields": []
+      }
+    },
+    {
+      "signature": "GlobalFeeOverrideSet(uint24,uint64)",
+      "declaration": "event GlobalFeeOverrideSet(uint24 fee, uint64 expiry)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint24",
+            "name": "fee",
+            "type": "uint24"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint64",
+            "name": "expiry",
+            "type": "uint64"
+          }
+        ],
+        "name": "GlobalFeeOverrideSet",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records setting the timed global override.",
+      "units": "Fees are hundredths of one basis point (1e-6 of trade value); divide by 100 for bps. expiry Unix UTC seconds.",
+      "limitations": [
+        "An exempt sender still pays zero; higher active pool override wins.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0x09ba4c263e8c01d46585ba888579a3000387103330d642aea2ae7bd8d34c27cc",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 2,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "fee",
+            "canonical_type": "uint24",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 1,
+            "name": "expiry",
+            "canonical_type": "uint64",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "HolidaysSet(uint32[],bool)",
+      "declaration": "event HolidaysSet(uint32[] localDays, bool isHoliday)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint32[]",
+            "name": "localDays",
+            "type": "uint32[]"
+          },
+          {
+            "indexed": false,
+            "internalType": "bool",
+            "name": "isHoliday",
+            "type": "bool"
+          }
+        ],
+        "name": "HolidaysSet",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records setting or clearing the listed Eastern local-day holiday flags.",
+      "units": "localDays dynamic uint32 array of local epoch days; isHoliday boolean.",
+      "limitations": [
+        "This is a delta for listed days, not a complete holiday enumeration.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0xd0a026980a24d2246ff9f4831bf943c49319dee5504198f46525fd0af658ef4c",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 2,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "localDays",
+            "canonical_type": "uint32[]",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 1,
+            "name": "isHoliday",
+            "canonical_type": "bool",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "InitializerSet(address,bool)",
+      "declaration": "event InitializerSet(address indexed account, bool allowed)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "bool",
+            "name": "allowed",
+            "type": "bool"
+          }
+        ],
+        "name": "InitializerSet",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records changing an indexed account initialization permission.",
+      "units": "account address; allowed boolean.",
+      "limitations": [
+        "Does not imply fee exemption, registration or successful initialization.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0x7176efd3b1f37e0dd301af7f7695af1cb9cec0158b480cc0ccd7c3fb31bfe8be",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "account",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "allowed",
+            "canonical_type": "bool",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "OpenRampSet(uint16)",
+      "declaration": "event OpenRampSet(uint16 minutes_)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint16",
+            "name": "minutes_",
+            "type": "uint16"
+          }
+        ],
+        "name": "OpenRampSet",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records changing the downward fee-ramp duration.",
+      "units": "minutes_ uint16 minutes.",
+      "limitations": [
+        "Does not imply a ramp currently applies; active overrides bypass the table ramp.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0x89884989f55877a42b0edb40b9a6e4101a0f7c615c7648858cf9a8835d3995a2",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "minutes_",
+            "canonical_type": "uint16",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "OperatorSet(address)",
+      "declaration": "event OperatorSet(address operator)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "operator",
+            "type": "address"
+          }
+        ],
+        "name": "OperatorSet",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records replacement of the anomaly-control operator.",
+      "units": "operator nonindexed address.",
+      "limitations": [
+        "Operator authority is narrower than owner structure controls; later changes may supersede this log.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0x99d737e0adf2c449d71890b86772885ec7959b152ddb265f76325b6e68e105d3",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "operator",
+            "canonical_type": "address",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "OwnershipTransferStarted(address,address)",
+      "declaration": "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "previousOwner",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "newOwner",
+            "type": "address"
+          }
+        ],
+        "name": "OwnershipTransferStarted",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records nomination of a pending owner, not completed handover.",
+      "units": "previousOwner and newOwner indexed EVM addresses.",
+      "limitations": [
+        "A later acceptance event/read is required; zero nomination cancels pending transfer in this implementation.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0x38d16b8cac22d99fc7c124b9cd0de2d3fa1faef420bfe791d8c362d765e22700",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "previousOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "newOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "OwnershipTransferred(address,address)",
+      "declaration": "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "previousOwner",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "newOwner",
+            "type": "address"
+          }
+        ],
+        "name": "OwnershipTransferred",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records accepted ownership changing, including construction or renunciation.",
+      "units": "previousOwner and newOwner indexed EVM addresses.",
+      "limitations": [
+        "New zero owner is renunciation, not proof existing operator is disabled.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 3,
+        "data_parameter_count": 0,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "previousOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "newOwner",
+            "canonical_type": "address",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 2,
+            "encoding": "abi_word"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "PausedSet(bytes32,bool)",
+      "declaration": "event PausedSet(bytes32 indexed id, bool paused)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "PoolId",
+            "name": "id",
+            "type": "bytes32"
+          },
+          {
+            "indexed": false,
+            "internalType": "bool",
+            "name": "paused",
+            "type": "bool"
+          }
+        ],
+        "name": "PausedSet",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records the pause flag for one indexed PoolId.",
+      "units": "PoolId is bytes32 from the full PoolKey; not a PoolManager address. paused boolean.",
+      "limitations": [
+        "Read resumedAt and global pause separately; repeated unpaused flag does not necessarily reset resume time.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0x3d9703ae692f59da46128607926bc0dcb210280bfee30c4bfb7e060c24d66ae1",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "id",
+            "canonical_type": "bytes32",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "paused",
+            "canonical_type": "bool",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "PoolClassSet(bytes32,uint8)",
+      "declaration": "event PoolClassSet(bytes32 indexed id, uint8 classId)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "PoolId",
+            "name": "id",
+            "type": "bytes32"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint8",
+            "name": "classId",
+            "type": "uint8"
+          }
+        ],
+        "name": "PoolClassSet",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records reassignment of an indexed registered pool to classId.",
+      "units": "PoolId is bytes32 from the full PoolKey; not a PoolManager address. classId uint8 identifier.",
+      "limitations": [
+        "Does not contain the class rates; later reassignment/table changes can supersede it.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0x7a5727b2b3a8aa19c72777e60c516fdbfb3112a1effb2342629b6cc46d09421d",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "id",
+            "canonical_type": "bytes32",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "classId",
+            "canonical_type": "uint8",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "PoolRegistered(bytes32,(address,address,uint24,int24,address),uint8)",
+      "declaration": "event PoolRegistered(bytes32 indexed id, (address,address,uint24,int24,address) key, uint8 classId)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "PoolId",
+            "name": "id",
+            "type": "bytes32"
+          },
+          {
+            "components": [
+              {
+                "internalType": "Currency",
+                "name": "currency0",
+                "type": "address"
+              },
+              {
+                "internalType": "Currency",
+                "name": "currency1",
+                "type": "address"
+              },
+              {
+                "internalType": "uint24",
+                "name": "fee",
+                "type": "uint24"
+              },
+              {
+                "internalType": "int24",
+                "name": "tickSpacing",
+                "type": "int24"
+              },
+              {
+                "internalType": "contract IHooks",
+                "name": "hooks",
+                "type": "address"
+              }
+            ],
+            "indexed": false,
+            "internalType": "struct PoolKey",
+            "name": "key",
+            "type": "tuple"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint8",
+            "name": "classId",
+            "type": "uint8"
+          }
+        ],
+        "name": "PoolRegistered",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records a registered PoolId, full key and initial class assignment.",
+      "units": "PoolId is bytes32 from the full PoolKey; not a PoolManager address. PoolKey tuple: currency0 address, currency1 address, fee uint24 dynamic flag, tickSpacing int24 signed ticks, hooks address. classId uint8 identifier.",
+      "limitations": [
+        "Registration event is not first-price initialization, added liquidity or LP income proof.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0x218d4e548df83e9ce2820c28ec1d078dbd1bf93b01e541d326aff7e58734cc55",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 2,
+        "data_parameter_count": 2,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "id",
+            "canonical_type": "bytes32",
+            "indexed": true,
+            "location": "topic",
+            "topic_index": 1,
+            "encoding": "abi_word"
+          },
+          {
+            "abi_index": 1,
+            "name": "key",
+            "canonical_type": "(address,address,uint24,int24,address)",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          },
+          {
+            "abi_index": 2,
+            "name": "classId",
+            "canonical_type": "uint8",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 1,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "SessionTimesSet((uint16,uint16,uint16,uint16))",
+      "declaration": "event SessionTimesSet((uint16,uint16,uint16,uint16) times)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "components": [
+              {
+                "internalType": "uint16",
+                "name": "extendedOpen",
+                "type": "uint16"
+              },
+              {
+                "internalType": "uint16",
+                "name": "regularOpen",
+                "type": "uint16"
+              },
+              {
+                "internalType": "uint16",
+                "name": "regularClose",
+                "type": "uint16"
+              },
+              {
+                "internalType": "uint16",
+                "name": "extendedClose",
+                "type": "uint16"
+              }
+            ],
+            "indexed": false,
+            "internalType": "struct MarketCalendar.SessionTimes",
+            "name": "times",
+            "type": "tuple"
+          }
+        ],
+        "name": "SessionTimesSet",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records replacement of Eastern session boundaries.",
+      "units": "times static tuple of four uint16 local-midnight minute offsets: extendedOpen,regularOpen,regularClose,extendedClose.",
+      "limitations": [
+        "Not UTC seconds or immutable NYSE hours; later administrative changes can supersede this schedule.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0xa5dbce42022a76225653efecebfd7052dd74f26063cba1832fb6e8bb08c717cf",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "times",
+            "canonical_type": "(uint16,uint16,uint16,uint16)",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "WeeklyClosureSet((uint8,uint16,uint8,uint16))",
+      "declaration": "event WeeklyClosureSet((uint8,uint16,uint8,uint16) window)",
+      "abi": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "components": [
+              {
+                "internalType": "uint8",
+                "name": "startDay",
+                "type": "uint8"
+              },
+              {
+                "internalType": "uint16",
+                "name": "startMinute",
+                "type": "uint16"
+              },
+              {
+                "internalType": "uint8",
+                "name": "endDay",
+                "type": "uint8"
+              },
+              {
+                "internalType": "uint16",
+                "name": "endMinute",
+                "type": "uint16"
+              }
+            ],
+            "indexed": false,
+            "internalType": "struct MarketCalendar.WeeklyClosure",
+            "name": "window",
+            "type": "tuple"
+          }
+        ],
+        "name": "WeeklyClosureSet",
+        "type": "event"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Records replacement of the recurring Eastern weekly closed window.",
+      "units": "window static tuple=(startDay uint8,startMinute uint16,endDay uint8,endMinute uint16), Sunday=0 and local minutes.",
+      "limitations": [
+        "Equal endpoints disable it; closures and holidays remain separate inputs.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "topic0": "0xb725ce4923b45658a3c2fb3de3bb47ece83386ef68b08afbc528c8b4a5918959",
+      "event_layout": {
+        "anonymous": false,
+        "topic_count": 1,
+        "data_parameter_count": 1,
+        "fields": [
+          {
+            "abi_index": 0,
+            "name": "window",
+            "canonical_type": "(uint8,uint16,uint8,uint16)",
+            "indexed": false,
+            "location": "data",
+            "data_parameter_index": 0,
+            "encoding": "abi_parameter"
+          }
+        ]
+      }
+    },
+    {
+      "signature": "MAX_CLOSURES()",
+      "declaration": "function MAX_CLOSURES() view returns (uint256)",
+      "abi": {
+        "inputs": [],
+        "name": "MAX_CLOSURES",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads the source-defined bound on simultaneously stored ad-hoc closure intervals.",
+      "units": "Unsigned count of intervals.",
+      "limitations": [
+        "A capacity bound is not the current closures array length.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x0d9c2443"
+    },
+    {
+      "signature": "MAX_CLOSURE_DURATION()",
+      "declaration": "function MAX_CLOSURE_DURATION() view returns (uint256)",
+      "abi": {
+        "inputs": [],
+        "name": "MAX_CLOSURE_DURATION",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads the maximum duration allowed for each added ad-hoc closure.",
+      "units": "Seconds per closure interval.",
+      "limitations": [
+        "Does not restrict the total calendar closure produced by overlapping intervals, holidays or weekly windows.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x564575af"
+    },
+    {
+      "signature": "MAX_FEE()",
+      "declaration": "function MAX_FEE() view returns (uint24)",
+      "abi": {
+        "inputs": [],
+        "name": "MAX_FEE",
+        "outputs": [
+          {
+            "internalType": "uint24",
+            "name": "",
+            "type": "uint24"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads the upper bound checked when setting class fees or overrides.",
+      "units": "Fees are hundredths of one basis point (1e-6 of trade value); divide by 100 for bps. ",
+      "limitations": [
+        "A cap is not the fee charged to any pool or sender.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xbc063e1a"
+    },
+    {
+      "signature": "MAX_OPEN_RAMP()",
+      "declaration": "function MAX_OPEN_RAMP() view returns (uint16)",
+      "abi": {
+        "inputs": [],
+        "name": "MAX_OPEN_RAMP",
+        "outputs": [
+          {
+            "internalType": "uint16",
+            "name": "",
+            "type": "uint16"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads the upper bound accepted by setOpenRamp.",
+      "units": "Minutes of ramp duration.",
+      "limitations": [
+        "Not the currently configured openRamp value.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x50f6c7b0"
+    },
+    {
+      "signature": "MAX_OVERRIDE_DURATION()",
+      "declaration": "function MAX_OVERRIDE_DURATION() view returns (uint256)",
+      "abi": {
+        "inputs": [],
+        "name": "MAX_OVERRIDE_DURATION",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads the maximum future expiry distance accepted for an override.",
+      "units": "Seconds from the setter transaction block timestamp.",
+      "limitations": [
+        "Does not imply an override exists or remains active.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x33fada9a"
+    },
+    {
+      "signature": "acceptOwnership()",
+      "declaration": "function acceptOwnership() nonpayable returns ()",
+      "abi": {
+        "inputs": [],
+        "name": "acceptOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Pending owner accepts ownership through Ownable2Step; acceptance clears the pending owner.",
+      "units": "No arguments or return values; caller identity is an EVM address.",
+      "limitations": [
+        "Only the pending owner can accept; an OwnershipTransferStarted event is not acceptance.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x79ba5097"
+    },
+    {
+      "signature": "addClosure(uint64,uint64)",
+      "declaration": "function addClosure(uint64 start, uint64 end) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "uint64",
+            "name": "start",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "end",
+            "type": "uint64"
+          }
+        ],
+        "name": "addClosure",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner or operator appends an absolute UTC closed interval; rejects nonpositive or overlong intervals and a full array.",
+      "units": "start and end are Unix UTC seconds, interval [start,end).",
+      "limitations": [
+        "Past intervals are accepted without changing present sessions; this is a state-changing administrative method, not a read.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x77232597"
+    },
+    {
+      "signature": "allPaused()",
+      "declaration": "function allPaused() view returns (bool)",
+      "abi": {
+        "inputs": [],
+        "name": "allPaused",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads the global swap-pause flag enforced by beforeSwap before exemption or fee selection.",
+      "units": "Boolean pause flag.",
+      "limitations": [
+        "feeFor does not enforce this flag; a valid fee response is not swap permission.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x697a80b7"
+    },
+    {
+      "signature": "allResumedAt()",
+      "declaration": "function allResumedAt() view returns (uint64)",
+      "abi": {
+        "inputs": [],
+        "name": "allResumedAt",
+        "outputs": [
+          {
+            "internalType": "uint64",
+            "name": "",
+            "type": "uint64"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads the last global true-to-false pause transition timestamp used in decrease ramps.",
+      "units": "Timestamps and durations are Unix UTC seconds unless stated otherwise. ",
+      "limitations": [
+        "This records a resume transition, not whether trading is currently allowed; read allPaused separately.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x94733af5"
+    },
+    {
+      "signature": "beforeInitialize(address,(address,address,uint24,int24,address),uint160)",
+      "declaration": "function beforeInitialize(address sender, (address,address,uint24,int24,address) key, uint160) view returns (bytes4)",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "Currency",
+                "name": "currency0",
+                "type": "address"
+              },
+              {
+                "internalType": "Currency",
+                "name": "currency1",
+                "type": "address"
+              },
+              {
+                "internalType": "uint24",
+                "name": "fee",
+                "type": "uint24"
+              },
+              {
+                "internalType": "int24",
+                "name": "tickSpacing",
+                "type": "int24"
+              },
+              {
+                "internalType": "contract IHooks",
+                "name": "hooks",
+                "type": "address"
+              }
+            ],
+            "internalType": "struct PoolKey",
+            "name": "key",
+            "type": "tuple"
+          },
+          {
+            "internalType": "uint160",
+            "name": "",
+            "type": "uint160"
+          }
+        ],
+        "name": "beforeInitialize",
+        "outputs": [
+          {
+            "internalType": "bytes4",
+            "name": "",
+            "type": "bytes4"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "PoolManager-only callback checks that the full key is registered and sender is an allowed initializer, then returns its callback selector.",
+      "units": "PoolKey tuple: currency0 address, currency1 address, fee uint24 dynamic flag, tickSpacing int24 signed ticks, hooks address. sender is the initializer address; uint160 is the unused initial sqrt-price argument. Return is bytes4.",
+      "limitations": [
+        "Not an ordinary permissionless quote; successful callback checks do not prove complete PoolManager initialization success.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xdc98354e"
+    },
+    {
+      "signature": "beforeSwap(address,(address,address,uint24,int24,address),(bool,int256,uint160),bytes)",
+      "declaration": "function beforeSwap(address sender, (address,address,uint24,int24,address) key, (bool,int256,uint160), bytes) view returns (bytes4, int256, uint24)",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "Currency",
+                "name": "currency0",
+                "type": "address"
+              },
+              {
+                "internalType": "Currency",
+                "name": "currency1",
+                "type": "address"
+              },
+              {
+                "internalType": "uint24",
+                "name": "fee",
+                "type": "uint24"
+              },
+              {
+                "internalType": "int24",
+                "name": "tickSpacing",
+                "type": "int24"
+              },
+              {
+                "internalType": "contract IHooks",
+                "name": "hooks",
+                "type": "address"
+              }
+            ],
+            "internalType": "struct PoolKey",
+            "name": "key",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "bool",
+                "name": "zeroForOne",
+                "type": "bool"
+              },
+              {
+                "internalType": "int256",
+                "name": "amountSpecified",
+                "type": "int256"
+              },
+              {
+                "internalType": "uint160",
+                "name": "sqrtPriceLimitX96",
+                "type": "uint160"
+              }
+            ],
+            "internalType": "struct IPoolManager.SwapParams",
+            "name": "",
+            "type": "tuple"
+          },
+          {
+            "internalType": "bytes",
+            "name": "",
+            "type": "bytes"
+          }
+        ],
+        "name": "beforeSwap",
+        "outputs": [
+          {
+            "internalType": "bytes4",
+            "name": "",
+            "type": "bytes4"
+          },
+          {
+            "internalType": "BeforeSwapDelta",
+            "name": "",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint24",
+            "name": "",
+            "type": "uint24"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "PoolManager-only callback rejects global or per-pool pause, then selects feeFor at block.timestamp; returns selector, zero BeforeSwapDelta and fee ORed with the override flag.",
+      "units": "PoolKey tuple: currency0 address, currency1 address, fee uint24 dynamic flag, tickSpacing int24 signed ticks, hooks address. sender is the callback sender; SwapParams=(zeroForOne bool,amountSpecified int256 raw currency units,sqrtPriceLimitX96 uint160 Q64.96); hookData bytes unused. Return int256 packs swap deltas; uint24 includes a flag, not only a fee.",
+      "limitations": [
+        "Exemption does not bypass pause. This callback does not explicitly assert registration; authenticate registered/classDefined separately. Callback return is not proof of a completed swap.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x575e24b4"
+    },
+    {
+      "signature": "classDefined(uint8)",
+      "declaration": "function classDefined(uint8 classId) view returns (bool)",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "uint8",
+            "name": "classId",
+            "type": "uint8"
+          }
+        ],
+        "name": "classDefined",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads whether this fee class has explicitly been defined by setClassFees.",
+      "units": "classId is an unsigned uint8 identifier; result is boolean.",
+      "limitations": [
+        "An all-zero classFees result alone cannot distinguish an undefined class from configured zero fees.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x2f640e3e"
+    },
+    {
+      "signature": "classFees(uint8)",
+      "declaration": "function classFees(uint8 classId) view returns (uint24[4])",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "uint8",
+            "name": "classId",
+            "type": "uint8"
+          }
+        ],
+        "name": "classFees",
+        "outputs": [
+          {
+            "internalType": "uint24[4]",
+            "name": "",
+            "type": "uint24[4]"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads the four mutable fees for a class in Regular, Extended, Overnight, Closed order.",
+      "units": "Fees are hundredths of one basis point (1e-6 of trade value); divide by 100 for bps. Input classId is an identifier; output is a fixed four-element uint24 array.",
+      "limitations": [
+        "Check classDefined and the pool class assignment; exemptions, active overrides and ramps can replace the table result.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x7d170c6d"
+    },
+    {
+      "signature": "clearFeeOverride(bytes32)",
+      "declaration": "function clearFeeOverride(bytes32 id) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "PoolId",
+            "name": "id",
+            "type": "bytes32"
+          }
+        ],
+        "name": "clearFeeOverride",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner or operator clears a registered pool override by zeroing its expiry only.",
+      "units": "PoolId is bytes32 from the full PoolKey; not a PoolManager address. No return value.",
+      "limitations": [
+        "The stored fee field can remain nonzero after clearing; expiry determines whether the override is active.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xf43d504e"
+    },
+    {
+      "signature": "clearGlobalFeeOverride()",
+      "declaration": "function clearGlobalFeeOverride() nonpayable returns ()",
+      "abi": {
+        "inputs": [],
+        "name": "clearGlobalFeeOverride",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner or operator clears the global override by zeroing expiry only.",
+      "units": "No arguments or return values.",
+      "limitations": [
+        "The stored global fee field can remain nonzero; a nonzero fee is not evidence of an active override.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x58cba3de"
+    },
+    {
+      "signature": "closures()",
+      "declaration": "function closures() view returns ((uint64,uint64)[])",
+      "abi": {
+        "inputs": [],
+        "name": "closures",
+        "outputs": [
+          {
+            "components": [
+              {
+                "internalType": "uint64",
+                "name": "start",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint64",
+                "name": "end",
+                "type": "uint64"
+              }
+            ],
+            "internalType": "struct MarketCalendar.Closure[]",
+            "name": "",
+            "type": "tuple[]"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads the complete currently stored ad-hoc closure interval array.",
+      "units": "Dynamic tuple array of (uint64 start,uint64 end), Unix UTC seconds with [start,end) bounds.",
+      "limitations": [
+        "Array indexes are not durable IDs: removal swaps in the final element. This excludes holiday and weekly closure state.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x3bbd5a8b"
+    },
+    {
+      "signature": "currentSession()",
+      "declaration": "function currentSession() view returns (uint8)",
+      "abi": {
+        "inputs": [],
+        "name": "currentSession",
+        "outputs": [
+          {
+            "internalType": "enum MarketCalendar.Session",
+            "name": "",
+            "type": "uint8"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Evaluates the mutable calendar at the read block timestamp.",
+      "units": "Session enum: 0 Regular, 1 Extended, 2 Overnight, 3 Closed. ",
+      "limitations": [
+        "Closed is a fee class session, not necessarily a swap pause; calendar evidence does not prove trading permission.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xd4166763"
+    },
+    {
+      "signature": "dstMode()",
+      "declaration": "function dstMode() view returns (uint8)",
+      "abi": {
+        "inputs": [],
+        "name": "dstMode",
+        "outputs": [
+          {
+            "internalType": "enum MarketCalendar.DstMode",
+            "name": "",
+            "type": "uint8"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads the mutable Eastern-time daylight-saving rule.",
+      "units": "Enum uint8: 0 Auto (US transition rule), 1 Standard, 2 Daylight.",
+      "limitations": [
+        "Not a signed UTC offset; utcOffset returns seconds to subtract at a supplied timestamp.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x9b610aa2"
+    },
+    {
+      "signature": "feeExempt(address)",
+      "declaration": "function feeExempt(address sender) view returns (bool)",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          }
+        ],
+        "name": "feeExempt",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads whether a callback sender receives zero fee before override or class selection.",
+      "units": "Input sender is an EVM address; result is boolean.",
+      "limitations": [
+        "Callback sender may be a router rather than the end wallet; exemption does not bypass beforeSwap pause checks.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x398daa85"
+    },
+    {
+      "signature": "feeFor(bytes32,address,uint256)",
+      "declaration": "function feeFor(bytes32 id, address sender, uint256 timestamp) view returns (uint24 fee, uint8 session)",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "PoolId",
+            "name": "id",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          }
+        ],
+        "name": "feeFor",
+        "outputs": [
+          {
+            "internalType": "uint24",
+            "name": "fee",
+            "type": "uint24"
+          },
+          {
+            "internalType": "enum MarketCalendar.Session",
+            "name": "session",
+            "type": "uint8"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Evaluates session first, then sender exemption to zero, then the maximum of active pool/global overrides, otherwise the ramped class fee at the supplied timestamp.",
+      "units": "PoolId is bytes32 from the full PoolKey; not a PoolManager address. Fees are hundredths of one basis point (1e-6 of trade value); divide by 100 for bps. Session enum: 0 Regular, 1 Extended, 2 Overnight, 3 Closed. sender is an address; timestamp is Unix UTC seconds.",
+      "limitations": [
+        "Does not check registered, classDefined or pause flags. Uses configuration at the selected state block even for other timestamps, not historical state reconstruction. Overrides are active only while timestamp<expiry; decreases ramp using integer floor division, increases apply immediately.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xff8f9c15"
+    },
+    {
+      "signature": "globalOverride()",
+      "declaration": "function globalOverride() view returns (uint24 fee, uint64 expiry)",
+      "abi": {
+        "inputs": [],
+        "name": "globalOverride",
+        "outputs": [
+          {
+            "internalType": "uint24",
+            "name": "fee",
+            "type": "uint24"
+          },
+          {
+            "internalType": "uint64",
+            "name": "expiry",
+            "type": "uint64"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads the stored global fee override and expiry.",
+      "units": "Fees are hundredths of one basis point (1e-6 of trade value); divide by 100 for bps. expiry is Unix UTC seconds; output fields are fee,expiry.",
+      "limitations": [
+        "An expired/cleared override may retain its fee. When both overrides are active the higher fee wins; exemption takes priority.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x19828b14"
+    },
+    {
+      "signature": "holiday(uint32)",
+      "declaration": "function holiday(uint32 localDay) view returns (bool)",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "uint32",
+            "name": "localDay",
+            "type": "uint32"
+          }
+        ],
+        "name": "holiday",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads whether an Eastern local-day number is marked a holiday.",
+      "units": "localDay is days since 1970-01-01 after applying configured Eastern offset; result boolean.",
+      "limitations": [
+        "Session selection also checks the next day after extendedClose and previous day before regularOpen; one day alone is insufficient at those boundaries.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x427192e5"
+    },
+    {
+      "signature": "initializer(address)",
+      "declaration": "function initializer(address sender) view returns (bool)",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          }
+        ],
+        "name": "initializer",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads whether a callback sender may initialize registered pools.",
+      "units": "sender is an address; result boolean.",
+      "limitations": [
+        "This is initialization permission, not swap fee exemption or proof that a pool is initialized.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xa33920af"
+    },
+    {
+      "signature": "localDay(uint256)",
+      "declaration": "function localDay(uint256 timestamp) view returns (uint32)",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          }
+        ],
+        "name": "localDay",
+        "outputs": [
+          {
+            "internalType": "uint32",
+            "name": "",
+            "type": "uint32"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Converts a supplied UTC timestamp to an Eastern calendar-day key under the configured DST mode.",
+      "units": "Input Unix UTC seconds; output uint32 count of local days since 1970-01-01.",
+      "limitations": [
+        "Use this key for holiday reads, not the UTC day number; supplied timestamp does not select historical DST configuration.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xad51bdf3"
+    },
+    {
+      "signature": "openRamp()",
+      "declaration": "function openRamp() view returns (uint16)",
+      "abi": {
+        "inputs": [],
+        "name": "openRamp",
+        "outputs": [
+          {
+            "internalType": "uint16",
+            "name": "",
+            "type": "uint16"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads the mutable duration for downward session/resume fee transitions.",
+      "units": "Minutes; zero disables ramping.",
+      "limitations": [
+        "Does not ramp fee increases or active overrides; latest eligible global/pool resume can restart from Closed class fee.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x2a820084"
+    },
+    {
+      "signature": "operator()",
+      "declaration": "function operator() view returns (address)",
+      "abi": {
+        "inputs": [],
+        "name": "operator",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads the account authorized alongside owner for anomaly controls.",
+      "units": "EVM address, possibly zero.",
+      "limitations": [
+        "Operator can pause, override, edit holidays/closures, but does not inherit owner-only class, schedule, exemption or initializer powers.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x570ca735"
+    },
+    {
+      "signature": "owner()",
+      "declaration": "function owner() view returns (address)",
+      "abi": {
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads the accepted Ownable administrator for structural configuration and operator assignment.",
+      "units": "EVM address; zero after renunciation.",
+      "limitations": [
+        "Do not substitute pendingOwner or transaction creator; ownership is block-specific.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x8da5cb5b"
+    },
+    {
+      "signature": "pendingOwner()",
+      "declaration": "function pendingOwner() view returns (address)",
+      "abi": {
+        "inputs": [],
+        "name": "pendingOwner",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads the proposed recipient in the two-step ownership transfer.",
+      "units": "EVM address; zero means no pending recipient.",
+      "limitations": [
+        "Initiation does not grant accepted owner authority; acceptance must be established separately.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xe30c3978"
+    },
+    {
+      "signature": "poolManager()",
+      "declaration": "function poolManager() view returns (address)",
+      "abi": {
+        "inputs": [],
+        "name": "poolManager",
+        "outputs": [
+          {
+            "internalType": "contract IPoolManager",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads the immutable PoolManager allowed to invoke hook callbacks.",
+      "units": "EVM contract address.",
+      "limitations": [
+        "Shared PoolManager identity is not an individual pool key, LP position or whole-portfolio custody proof.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xdc4c90d3"
+    },
+    {
+      "signature": "pools(bytes32)",
+      "declaration": "function pools(bytes32 id) view returns ((bool,bool,uint8,uint64,(uint24,uint64)))",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "PoolId",
+            "name": "id",
+            "type": "bytes32"
+          }
+        ],
+        "name": "pools",
+        "outputs": [
+          {
+            "components": [
+              {
+                "internalType": "bool",
+                "name": "registered",
+                "type": "bool"
+              },
+              {
+                "internalType": "bool",
+                "name": "paused",
+                "type": "bool"
+              },
+              {
+                "internalType": "uint8",
+                "name": "classId",
+                "type": "uint8"
+              },
+              {
+                "internalType": "uint64",
+                "name": "resumedAt",
+                "type": "uint64"
+              },
+              {
+                "components": [
+                  {
+                    "internalType": "uint24",
+                    "name": "fee",
+                    "type": "uint24"
+                  },
+                  {
+                    "internalType": "uint64",
+                    "name": "expiry",
+                    "type": "uint64"
+                  }
+                ],
+                "internalType": "struct SessionFeeHook.Override",
+                "name": "override_",
+                "type": "tuple"
+              }
+            ],
+            "internalType": "struct SessionFeeHook.PoolConfig",
+            "name": "",
+            "type": "tuple"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads nested PoolConfig: registered, paused, classId, resumedAt, override_(fee,expiry) for one PoolId.",
+      "units": "PoolId is bytes32 from the full PoolKey; not a PoolManager address. registered/paused are booleans; classId uint8; resumedAt/expiry Unix UTC seconds; override fee is hundredths of a basis point.",
+      "limitations": [
+        "Default all-zero tuple can be unregistered. Combine classDefined, global pause/resume, exemptions and overrides; nested tuple is six static ABI words, not five flat scalar fields.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xb5217bb4"
+    },
+    {
+      "signature": "registerPool((address,address,uint24,int24,address),uint8)",
+      "declaration": "function registerPool((address,address,uint24,int24,address) key, uint8 classId) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "components": [
+              {
+                "internalType": "Currency",
+                "name": "currency0",
+                "type": "address"
+              },
+              {
+                "internalType": "Currency",
+                "name": "currency1",
+                "type": "address"
+              },
+              {
+                "internalType": "uint24",
+                "name": "fee",
+                "type": "uint24"
+              },
+              {
+                "internalType": "int24",
+                "name": "tickSpacing",
+                "type": "int24"
+              },
+              {
+                "internalType": "contract IHooks",
+                "name": "hooks",
+                "type": "address"
+              }
+            ],
+            "internalType": "struct PoolKey",
+            "name": "key",
+            "type": "tuple"
+          },
+          {
+            "internalType": "uint8",
+            "name": "classId",
+            "type": "uint8"
+          }
+        ],
+        "name": "registerPool",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner registers a full key for a defined class; requires this hook, dynamic fee flag and no prior registration.",
+      "units": "PoolKey tuple: currency0 address, currency1 address, fee uint24 dynamic flag, tickSpacing int24 signed ticks, hooks address. classId uint8 identifies the fee class.",
+      "limitations": [
+        "Registration is not pool initialization, liquidity provision or activation proof; no wallet action is authorized by this inventory.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x10e4edcb"
+    },
+    {
+      "signature": "removeClosure(uint256)",
+      "declaration": "function removeClosure(uint256 index) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "index",
+            "type": "uint256"
+          }
+        ],
+        "name": "removeClosure",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner or operator removes a closure by array index using swap-and-pop.",
+      "units": "index is a zero-based array position, not a timestamp or permanent closure ID.",
+      "limitations": [
+        "Removal changes another interval index when it is not the last element; out-of-range indexes revert.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x12482ef0"
+    },
+    {
+      "signature": "renounceOwnership()",
+      "declaration": "function renounceOwnership() nonpayable returns ()",
+      "abi": {
+        "inputs": [],
+        "name": "renounceOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner relinquishes accepted ownership and clears pending ownership.",
+      "units": "No arguments or return values; new accepted owner is zero address.",
+      "limitations": [
+        "Existing operator permissions can remain; renunciation is not proof all anomaly controls are disabled.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x715018a6"
+    },
+    {
+      "signature": "sessionAt(uint256)",
+      "declaration": "function sessionAt(uint256 timestamp) view returns (uint8)",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          }
+        ],
+        "name": "sessionAt",
+        "outputs": [
+          {
+            "internalType": "enum MarketCalendar.Session",
+            "name": "",
+            "type": "uint8"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Evaluates the configured calendar for the supplied timestamp, including weekly/absolute closures and neighboring holidays.",
+      "units": "Timestamps and durations are Unix UTC seconds unless stated otherwise. Session enum: 0 Regular, 1 Extended, 2 Overnight, 3 Closed. ",
+      "limitations": [
+        "Uses present-at-read calendar state, not the historical configuration at that timestamp; Closed does not itself imply a pause.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xecd8e907"
+    },
+    {
+      "signature": "sessionStart(uint256)",
+      "declaration": "function sessionStart(uint256 timestamp) view returns (uint64)",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          }
+        ],
+        "name": "sessionStart",
+        "outputs": [
+          {
+            "internalType": "uint64",
+            "name": "",
+            "type": "uint64"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Searches backward for a session transition with a seven-day lookback, skipping candidate edges that did not change session.",
+      "units": "Timestamps and durations are Unix UTC seconds unless stated otherwise. Input and uint64 output are Unix UTC instants.",
+      "limitations": [
+        "A candidate at or older than the lookback bound is returned without checking a session change; do not promise an unbounded exact historical start.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xa621385e"
+    },
+    {
+      "signature": "sessionTimes()",
+      "declaration": "function sessionTimes() view returns (uint16 extendedOpen, uint16 regularOpen, uint16 regularClose, uint16 extendedClose)",
+      "abi": {
+        "inputs": [],
+        "name": "sessionTimes",
+        "outputs": [
+          {
+            "internalType": "uint16",
+            "name": "extendedOpen",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "regularOpen",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "regularClose",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "extendedClose",
+            "type": "uint16"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads mutable Eastern wall-clock session boundaries in extendedOpen, regularOpen, regularClose, extendedClose order.",
+      "units": "Four uint16 minute counts since Eastern local midnight, up to 1440.",
+      "limitations": [
+        "Not UTC timestamps. Owner can replace boundaries subject to ordering and exclusion of ambiguous DST hours.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xfc3ab60d"
+    },
+    {
+      "signature": "setAllPaused(bool)",
+      "declaration": "function setAllPaused(bool paused) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "bool",
+            "name": "paused",
+            "type": "bool"
+          }
+        ],
+        "name": "setAllPaused",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner or operator changes global pause; true-to-false transition stamps allResumedAt for reopening ramp logic.",
+      "units": "paused is boolean; no return value.",
+      "limitations": [
+        "Repeated false does not reset resume time. Pause blocks exempt senders too through beforeSwap.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x89820e98"
+    },
+    {
+      "signature": "setClassFees(uint8,uint24[4])",
+      "declaration": "function setClassFees(uint8 classId, uint24[4] fees) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "uint8",
+            "name": "classId",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint24[4]",
+            "name": "fees",
+            "type": "uint24[4]"
+          }
+        ],
+        "name": "setClassFees",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner defines or replaces a class table; existing pools assigned that class use it on their next fee selection.",
+      "units": "classId uint8; fees uint24[4] in Regular,Extended,Overnight,Closed order. Fees are hundredths of one basis point (1e-6 of trade value); divide by 100 for bps. ",
+      "limitations": [
+        "Each rate must not exceed MAX_FEE; class identity is not immutable economics and exemption/overrides/ramp still apply.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x897891ba"
+    },
+    {
+      "signature": "setDstMode(uint8)",
+      "declaration": "function setDstMode(uint8 mode) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "enum MarketCalendar.DstMode",
+            "name": "mode",
+            "type": "uint8"
+          }
+        ],
+        "name": "setDstMode",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner selects Auto, Standard or Daylight Eastern offset behavior.",
+      "units": "mode enum uint8: 0 Auto, 1 Standard, 2 Daylight.",
+      "limitations": [
+        "Changing mode changes calendar evaluation without changing the supplied timestamp; enum encoding does not certify current mode.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xb6a96e76"
+    },
+    {
+      "signature": "setFeeExempt(address,bool)",
+      "declaration": "function setFeeExempt(address account, bool exempt) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "exempt",
+            "type": "bool"
+          }
+        ],
+        "name": "setFeeExempt",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner adds or removes sender exemption from fees.",
+      "units": "account address; exempt boolean.",
+      "limitations": [
+        "Exemption is tested against callback sender, not automatically transaction origin, and does not remove pauses.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x8ebfc796"
+    },
+    {
+      "signature": "setFeeOverride(bytes32,uint24,uint64)",
+      "declaration": "function setFeeOverride(bytes32 id, uint24 fee, uint64 expiry) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "PoolId",
+            "name": "id",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint24",
+            "name": "fee",
+            "type": "uint24"
+          },
+          {
+            "internalType": "uint64",
+            "name": "expiry",
+            "type": "uint64"
+          }
+        ],
+        "name": "setFeeOverride",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner or operator replaces a registered pool timed override after fee and expiry bounds checks.",
+      "units": "PoolId is bytes32 from the full PoolKey; not a PoolManager address. Fees are hundredths of one basis point (1e-6 of trade value); divide by 100 for bps. expiry is Unix UTC seconds, later than block.timestamp and within MAX_OVERRIDE_DURATION.",
+      "limitations": [
+        "When a global override is also active, max(pool,global) wins; sender exemption wins over both.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xb4f2396c"
+    },
+    {
+      "signature": "setGlobalFeeOverride(uint24,uint64)",
+      "declaration": "function setGlobalFeeOverride(uint24 fee, uint64 expiry) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "uint24",
+            "name": "fee",
+            "type": "uint24"
+          },
+          {
+            "internalType": "uint64",
+            "name": "expiry",
+            "type": "uint64"
+          }
+        ],
+        "name": "setGlobalFeeOverride",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner or operator replaces the timed global override after fee and expiry bounds checks.",
+      "units": "Fees are hundredths of one basis point (1e-6 of trade value); divide by 100 for bps. expiry is Unix UTC seconds, later than block.timestamp and within MAX_OVERRIDE_DURATION.",
+      "limitations": [
+        "Active pool override can be higher; active global override does not defeat sender exemption.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x39721dbe"
+    },
+    {
+      "signature": "setHolidays(uint32[],bool)",
+      "declaration": "function setHolidays(uint32[] localDays, bool isHoliday) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "uint32[]",
+            "name": "localDays",
+            "type": "uint32[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "isHoliday",
+            "type": "bool"
+          }
+        ],
+        "name": "setHolidays",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner or operator sets or clears holiday flags for an explicit list of Eastern local days.",
+      "units": "localDays dynamic uint32 array, local epoch-day keys; isHoliday boolean.",
+      "limitations": [
+        "Does not replace all holidays; boundary effects include neighboring days and depend on mutable schedule/DST.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xdec7f16c"
+    },
+    {
+      "signature": "setInitializer(address,bool)",
+      "declaration": "function setInitializer(address account, bool allowed) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "allowed",
+            "type": "bool"
+          }
+        ],
+        "name": "setInitializer",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner adds or removes an account from the beforeInitialize allowlist.",
+      "units": "account address; allowed boolean.",
+      "limitations": [
+        "Allowlisting does not register or initialize a pool and does not confer fee exemption.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x2cc72980"
+    },
+    {
+      "signature": "setOpenRamp(uint16)",
+      "declaration": "function setOpenRamp(uint16 minutes_) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "uint16",
+            "name": "minutes_",
+            "type": "uint16"
+          }
+        ],
+        "name": "setOpenRamp",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner changes the duration of downward fee ramps, bounded by MAX_OPEN_RAMP.",
+      "units": "minutes_ uint16 in minutes; zero disables ramps.",
+      "limitations": [
+        "Changing duration is immediate configuration, not a promise of a fixed two-minute ramp.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x68077043"
+    },
+    {
+      "signature": "setOperator(address)",
+      "declaration": "function setOperator(address operator_) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "operator_",
+            "type": "address"
+          }
+        ],
+        "name": "setOperator",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner replaces the anomaly-control operator address.",
+      "units": "operator_ is an EVM address; no return value.",
+      "limitations": [
+        "This does not transfer ownership or all structural configuration authority.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xb3ab15fb"
+    },
+    {
+      "signature": "setPaused(bytes32,bool)",
+      "declaration": "function setPaused(bytes32 id, bool paused) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "PoolId",
+            "name": "id",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bool",
+            "name": "paused",
+            "type": "bool"
+          }
+        ],
+        "name": "setPaused",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner or operator changes a registered pool pause; true-to-false records resumedAt.",
+      "units": "PoolId is bytes32 from the full PoolKey; not a PoolManager address. paused boolean.",
+      "limitations": [
+        "Repeated false does not reset resume time; global pause can still block that pool.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x8ea9db9e"
+    },
+    {
+      "signature": "setPoolClass(bytes32,uint8)",
+      "declaration": "function setPoolClass(bytes32 id, uint8 classId) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "PoolId",
+            "name": "id",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint8",
+            "name": "classId",
+            "type": "uint8"
+          }
+        ],
+        "name": "setPoolClass",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner changes a registered pool to an already-defined fee class.",
+      "units": "PoolId is bytes32 from the full PoolKey; not a PoolManager address. classId uint8 identifier.",
+      "limitations": [
+        "Assignment is mutable and takes effect on later fee selection; not a deployed immutable fee.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xa8993018"
+    },
+    {
+      "signature": "setSessionTimes((uint16,uint16,uint16,uint16))",
+      "declaration": "function setSessionTimes((uint16,uint16,uint16,uint16) times) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "components": [
+              {
+                "internalType": "uint16",
+                "name": "extendedOpen",
+                "type": "uint16"
+              },
+              {
+                "internalType": "uint16",
+                "name": "regularOpen",
+                "type": "uint16"
+              },
+              {
+                "internalType": "uint16",
+                "name": "regularClose",
+                "type": "uint16"
+              },
+              {
+                "internalType": "uint16",
+                "name": "extendedClose",
+                "type": "uint16"
+              }
+            ],
+            "internalType": "struct MarketCalendar.SessionTimes",
+            "name": "times",
+            "type": "tuple"
+          }
+        ],
+        "name": "setSessionTimes",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner replaces Eastern session boundaries after validation.",
+      "units": "times tuple=(extendedOpen,regularOpen,regularClose,extendedClose), uint16 minutes since local midnight.",
+      "limitations": [
+        "Requires extendedOpen<=regularOpen<regularClose<=extendedClose<=1440 and excludes [60,180) minute edges; not UTC times.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xbeba1fbf"
+    },
+    {
+      "signature": "setWeeklyClosure((uint8,uint16,uint8,uint16))",
+      "declaration": "function setWeeklyClosure((uint8,uint16,uint8,uint16) window) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "components": [
+              {
+                "internalType": "uint8",
+                "name": "startDay",
+                "type": "uint8"
+              },
+              {
+                "internalType": "uint16",
+                "name": "startMinute",
+                "type": "uint16"
+              },
+              {
+                "internalType": "uint8",
+                "name": "endDay",
+                "type": "uint8"
+              },
+              {
+                "internalType": "uint16",
+                "name": "endMinute",
+                "type": "uint16"
+              }
+            ],
+            "internalType": "struct MarketCalendar.WeeklyClosure",
+            "name": "window",
+            "type": "tuple"
+          }
+        ],
+        "name": "setWeeklyClosure",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner replaces the recurring Eastern weekly closed window after validation.",
+      "units": "window=(startDay uint8,startMinute uint16,endDay uint8,endMinute uint16); Sunday=0; minutes since local midnight.",
+      "limitations": [
+        "Equal start/end disables window; end<=start wraps week otherwise. Days<=6, minutes<=1440 and ambiguous DST-hour edges excluded.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x3410396d"
+    },
+    {
+      "signature": "transferOwnership(address)",
+      "declaration": "function transferOwnership(address newOwner) nonpayable returns ()",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "newOwner",
+            "type": "address"
+          }
+        ],
+        "name": "transferOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Owner nominates a pending owner under Ownable2Step; does not immediately transfer accepted ownership.",
+      "units": "newOwner is an EVM address; zero cancels a pending transfer in this inherited implementation.",
+      "limitations": [
+        "Only acceptance by the pending owner completes handover; do not infer acceptance from nomination.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xf2fde38b"
+    },
+    {
+      "signature": "utcOffset(uint256)",
+      "declaration": "function utcOffset(uint256 timestamp) view returns (uint256)",
+      "abi": {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          }
+        ],
+        "name": "utcOffset",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Computes seconds to subtract from UTC to obtain Eastern wall-clock time under configured DST mode.",
+      "units": "Input Unix UTC seconds; unsigned output seconds, not hours or a signed negative offset.",
+      "limitations": [
+        "Evaluation uses DST mode at the selected read block; it is not an immutable timezone lookup for past configuration.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0xc5817691"
+    },
+    {
+      "signature": "weeklyClosure()",
+      "declaration": "function weeklyClosure() view returns (uint8 startDay, uint16 startMinute, uint8 endDay, uint16 endMinute)",
+      "abi": {
+        "inputs": [],
+        "name": "weeklyClosure",
+        "outputs": [
+          {
+            "internalType": "uint8",
+            "name": "startDay",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint16",
+            "name": "startMinute",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint8",
+            "name": "endDay",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint16",
+            "name": "endMinute",
+            "type": "uint16"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      "review_id": "explorer-stock-hook-2026-10-20",
+      "generation": "stock-pools-2026-10-14",
+      "explanation": "Reads the mutable recurring Eastern weekly window.",
+      "units": "startDay/endDay uint8 with Sunday=0; startMinute/endMinute uint16 minutes since local midnight.",
+      "limitations": [
+        "Window is [start,end), wraps if end<start and disabled if equal; it is separate from ad-hoc closures and holidays.",
+        "Explorer-returned interface and inspected source, not independent whole-deployment certification; current state and successful execution are not established by this declaration."
+      ],
+      "selector": "0x230f2c3b"
+    }
+  ]
+}

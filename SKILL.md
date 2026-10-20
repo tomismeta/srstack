@@ -1,6 +1,6 @@
 ---
 name: srstack
-description: Standard Reserve contracts, state, history and calculations.
+description: Standard Reserve research covering charters, branch auctions, S-Bills, stock pools and fees, launchpad generations, URC5 controls, charter drops, market-pilot points and rewards, contract state, history and calculations.
 license: MIT
 metadata:
   version: "0.5.0"

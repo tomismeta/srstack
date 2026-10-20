@@ -14,6 +14,10 @@ Select the actual configured skill root and a stable working directory outside i
 
 Set `SRSTACK_BACKUPS` outside **every** skill-discovery root, on the same filesystem as `SKILL_PARENT`. It will retain the review clone, staging and any previous installation. Do not use another discovered skill directory as a backup, or leave a shadowing same-name installation in another root. Keep customizations for review; do not merge them into the reviewed runtime.
 
+For a predictable recovery location, optionally set `SRSTACK_WORK` to a new absolute directory path whose parent already exists, for example `"$SRSTACK_BACKUPS/srstack-0.5.0-dogfood-01"`. It must satisfy the same outside-discovery and same-filesystem requirements as `SRSTACK_BACKUPS`. The procedure creates it exclusively and stops if it already exists; choose a new path for each attempt, never reuse or empty an earlier recovery directory. Leave `SRSTACK_WORK` unset for the unique `mktemp` default.
+
+Before cloning, the snippet checks separation from the selected `SKILL_PARENT` and filesystem compatibility. You must also check every other configured discovery root; this host-independent procedure cannot enumerate those roots. The checks repeat before replacement to catch changed paths.
+
 ```sh
 # Select these paths for your host before continuing:
 SKILL_PARENT="$HOME/.hermes/skills"
@@ -21,7 +25,25 @@ SRSTACK_BACKUPS="$HOME/srstack-backups"
 
 cd "$HOME" &&
 mkdir -p "$SKILL_PARENT" "$SRSTACK_BACKUPS" &&
-WORK="$(mktemp -d "$SRSTACK_BACKUPS/srstack-release.XXXXXXXX")" &&
+if test -n "${SRSTACK_WORK:-}"; then
+  case "$SRSTACK_WORK" in
+    /*) WORK="$SRSTACK_WORK" && mkdir "$WORK" ;;
+    *) printf '%s\n' 'SRSTACK_WORK must be an absolute new directory path' >&2; false ;;
+  esac
+else
+  WORK="$(mktemp -d "$SRSTACK_BACKUPS/srstack-release.XXXXXXXX")"
+fi &&
+python3 -B - "$SKILL_PARENT" "$WORK" <<'PY' &&
+import sys
+from pathlib import Path
+
+parent = Path(sys.argv[1]).resolve(strict=True)
+work = Path(sys.argv[2]).resolve(strict=True)
+if parent == work or parent in work.parents or work in parent.parents:
+    raise SystemExit("Skill and recovery directories must be separate")
+if parent.stat().st_dev != work.stat().st_dev:
+    raise SystemExit("Recovery directory must be on the skill root's filesystem")
+PY
 REVIEW_ROOT="$WORK/source" &&
 if test -n "${SRSTACK_COMMIT:-}"; then
   case "$SRSTACK_COMMIT" in *[!0-9a-f]*) false ;; *) test "${#SRSTACK_COMMIT}" -eq 40 ;; esac &&
